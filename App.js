@@ -2,12 +2,22 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
+import reducers from './reducers';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import axios from 'axios';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
+
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Button, colors, ThemeProvider } from 'react-native-elements';
 
 import AppNavigator from './navigation/AppNavigator';
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
 
 const theme = {
   colors: {
@@ -17,6 +27,11 @@ const theme = {
     })
   }
 };
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducers, applyMiddleware(sagaMiddleware));
+
+sagaMiddleware.run(rootSaga);
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -30,13 +45,14 @@ export default function App(props) {
       />
     );
   } else {
+    console.log('in App');
     return (
-      <ThemeProvider theme={theme}>
+      <Provider store={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
           <AppNavigator />
         </View>
-      </ThemeProvider>
+      </Provider>
     );
   }
 }
