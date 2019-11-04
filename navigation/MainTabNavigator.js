@@ -1,20 +1,22 @@
-import React from "react";
-import { Platform } from "react-native";
+import React from 'react';
+import { Platform } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator
-} from "react-navigation";
+} from 'react-navigation';
 
-import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
-import NewsScreen from "../screens/NewsScreen";
-import ProductsScreen from "../screens/ProductsScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import TabBarIcon from '../components/TabBarIcon';
+import HomeScreen from '../screens/HomeScreen';
+import NewsScreen from '../screens/NewsScreen';
+import ProductsScreen from '../screens/ProductsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 
 const config = Platform.select({
-  web: { headerMode: "screen" },
+  web: { headerMode: 'screen' },
   default: {}
 });
+
+// Home screen
 
 const HomeStack = createStackNavigator(
   {
@@ -24,20 +26,63 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: "Home",
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
-      }
+      name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
     />
   )
 };
 
-HomeStack.path = "";
+HomeStack.path = '';
+
+// End Home screen
+// Tools screen
+
+const ToolsStack = createStackNavigator(
+  {
+    Tools: NewsScreen
+  },
+  config
+);
+
+ToolsStack.navigationOptions = {
+  tabBarLabel: 'Find Tool',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+    />
+  )
+};
+
+ToolsStack.path = '';
+
+// End Tools screen
+// Jobs screen
+
+const JobsStack = createStackNavigator(
+  {
+    Jobs: NewsScreen
+  },
+  config
+);
+
+JobsStack.navigationOptions = {
+  tabBarLabel: 'My Jobs',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+    />
+  )
+};
+
+JobsStack.path = '';
+
+// End Jobs screen
+// News screen
 
 const NewsStack = createStackNavigator(
   {
@@ -47,16 +92,23 @@ const NewsStack = createStackNavigator(
 );
 
 NewsStack.navigationOptions = {
-  tabBarLabel: "News",
+  tabBarLabel: 'News',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
     />
   )
 };
 
-NewsStack.path = "";
+NewsStack.path = '';
+
+// End News screen
+// Products screen
 
 const ProductsStack = createStackNavigator(
   {
@@ -66,16 +118,41 @@ const ProductsStack = createStackNavigator(
 );
 
 ProductsStack.navigationOptions = {
-  tabBarLabel: "Products",
+  tabBarLabel: 'Products',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={Platform.OS === 'ios' ? 'ios-book' : 'md-link'}
     />
   )
 };
 
-ProductsStack.path = "";
+ProductsStack.path = '';
+
+// End Products screen
+// LTP screen
+
+const LTPStack = createStackNavigator(
+  {
+    LTP: NewsScreen
+  },
+  config
+);
+
+LTPStack.navigationOptions = {
+  tabBarLabel: 'LTP',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-swap' : 'md-link'}
+    />
+  )
+};
+
+LTPStack.path = '';
+
+// End LTP screen
+// Settings screen
 
 const SettingsStack = createStackNavigator(
   {
@@ -85,24 +162,53 @@ const SettingsStack = createStackNavigator(
 );
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
+  tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
     />
   )
 };
 
-SettingsStack.path = "";
+SettingsStack.path = '';
+
+// End Settings screen
+// Settings screen
+
+const OptionsStack = createStackNavigator(
+  {
+    Options: SettingsScreen
+  },
+  config
+);
+
+OptionsStack.navigationOptions = {
+  tabBarLabel: 'Settings',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-settings' : 'md-options'}
+    />
+  )
+};
+
+OptionsStack.path = '';
+
+// End Options screen
+
+// Panel at bottom
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
+  ToolsStack,
+  JobsStack,
+  LTPStack,
   NewsStack,
-  ProductsStack,
-  SettingsStack
+  ProductsStack
+
+  //   OptionsStack
 });
 
-tabNavigator.path = "";
+tabNavigator.path = '';
 
 export default tabNavigator;

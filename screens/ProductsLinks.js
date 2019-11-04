@@ -1,10 +1,10 @@
-import * as WebBrowser from "expo-web-browser";
-import React from "react";
-import { StyleSheet, Image, Text, View } from "react-native";
-import Touchable from "react-native-platform-touchable";
-import { Ionicons } from "@expo/vector-icons";
+import * as WebBrowser from 'expo-web-browser';
+import React from 'react';
+import { StyleSheet, Image, Text, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
+import { Ionicons } from '@expo/vector-icons';
 
-export default class NewsLinks extends React.Component {
+export default class ProductsLinks extends React.Component {
   render() {
     return (
       <View>
@@ -14,14 +14,14 @@ export default class NewsLinks extends React.Component {
 
         <Touchable
           style={styles.option}
-          background={Touchable.Ripple("#ccc", false)}
+          background={Touchable.Ripple('#ccc', false)}
           onPress={this._handlePressDocs}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.optionIconContainer}>
               <Image
-                source={require("../assets/images/icon.png")}
-                resizeMode="contain"
+                source={require('../assets/images/icon.png')}
+                resizeMode='contain'
                 fadeDuration={0}
                 style={{ width: 20, height: 20, marginTop: 1 }}
               />
@@ -34,15 +34,15 @@ export default class NewsLinks extends React.Component {
 
         <Touchable
           style={styles.option}
-          background={Touchable.Ripple("#ccc", false)}
+          background={Touchable.Ripple('#ccc', false)}
           onPress={this._handlePressForums}
         >
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <View style={styles.optionIconContainer}>
-              <Ionicons name="ios-chatboxes" size={22} color="#ccc" />
+              <Ionicons name='ios-chatboxes' size={22} color='#ccc' />
             </View>
             <View style={styles.optionTextContainer}>
-              <Text style={styles.optionText}>Hammer</Text>
+              <Text style={styles.optionText}>Hammer Kit</Text>
             </View>
           </View>
         </Touchable>
@@ -51,11 +51,11 @@ export default class NewsLinks extends React.Component {
   }
 
   _handlePressDocs = () => {
-    WebBrowser.openBrowserAsync("http://bbc.co.uk");
+    WebBrowser.openBrowserAsync('http://bbc.co.uk');
   };
 
   _handlePressForums = () => {
-    WebBrowser.openBrowserAsync("http://chelseafc.com");
+    WebBrowser.openBrowserAsync('http://chelseafc.com');
   };
 }
 
@@ -74,11 +74,11 @@ const styles = StyleSheet.create({
     marginRight: 9
   },
   option: {
-    backgroundColor: "#fdfdfd",
+    backgroundColor: '#fdfdfd',
     paddingHorizontal: 15,
     paddingVertical: 15,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#EDEDED"
+    borderBottomColor: '#EDEDED'
   },
   optionText: {
     fontSize: 15,
