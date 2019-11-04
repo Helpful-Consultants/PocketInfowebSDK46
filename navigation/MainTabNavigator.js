@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import UsersScreen from '../screens/UsersScreen';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -144,7 +145,7 @@ LTPStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-swap' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
     />
   )
 };
@@ -152,6 +153,28 @@ LTPStack.navigationOptions = {
 LTPStack.path = '';
 
 // End LTP screen
+// Users screen
+
+const UsersStack = createStackNavigator(
+  {
+    Users: UsersScreen
+  },
+  config
+);
+
+UsersStack.navigationOptions = {
+  tabBarLabel: 'Users',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-people' : 'md-people'}
+    />
+  )
+};
+
+UsersStack.path = '';
+
+// End Users screen
 // Settings screen
 
 const SettingsStack = createStackNavigator(
@@ -174,7 +197,7 @@ SettingsStack.navigationOptions = {
 SettingsStack.path = '';
 
 // End Settings screen
-// Settings screen
+// Options screen
 
 const OptionsStack = createStackNavigator(
   {
@@ -204,7 +227,8 @@ const tabNavigator = createBottomTabNavigator({
   JobsStack,
   LTPStack,
   NewsStack,
-  ProductsStack
+  ProductsStack,
+  UsersStack
 
   //   OptionsStack
 });
