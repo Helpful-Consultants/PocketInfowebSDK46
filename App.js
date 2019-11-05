@@ -17,7 +17,8 @@ import { Button, colors, ThemeProvider } from 'react-native-elements';
 import AppNavigator from './navigation/AppNavigator';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
+// axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
+axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 
 const theme = {
   colors: {

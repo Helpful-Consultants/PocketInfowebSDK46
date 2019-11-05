@@ -1,22 +1,22 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, Text } from 'react-native';
 // import { NewsLinksView } from '@expo/samples';
-import ProductsLinks from './ProductsLinks';
+// import LTPLinks from "./LTPLinks";
 
-export default function ProductsScreen() {
+export default function LTPScreen() {
   return (
     <ScrollView style={styles.container}>
       {/**
        * Go ahead and delete ExpoLinksView and replace it with your content;
        * we just wanted to provide you with some helpful links.
        */}
-      <ProductsLinks />
+      <Text>LTP Stuff here</Text>
     </ScrollView>
   );
 }
 
-ProductsScreen.navigationOptions = {
-  title: 'Products'
+LTPScreen.navigationOptions = {
+  title: 'Loan Tool Programme'
 };
 
 const styles = StyleSheet.create({

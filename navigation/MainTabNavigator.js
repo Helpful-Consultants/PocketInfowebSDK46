@@ -9,6 +9,9 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
+import LTPScreen from '../screens/LTPScreen';
+import LocatorScreen from '../screens/LocatorScreen';
+import JobsScreen from '../screens/JobsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import UsersScreen from '../screens/UsersScreen';
 
@@ -41,15 +44,15 @@ HomeStack.path = '';
 // End Home screen
 // Tools screen
 
-const ToolsStack = createStackNavigator(
+const LocatorStack = createStackNavigator(
   {
-    Tools: NewsScreen
+    Tools: LocatorScreen
   },
   config
 );
 
-ToolsStack.navigationOptions = {
-  tabBarLabel: 'Find Tool',
+LocatorStack.navigationOptions = {
+  tabBarLabel: 'Find',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -58,20 +61,20 @@ ToolsStack.navigationOptions = {
   )
 };
 
-ToolsStack.path = '';
+LocatorStack.path = '';
 
 // End Tools screen
 // Jobs screen
 
 const JobsStack = createStackNavigator(
   {
-    Jobs: NewsScreen
+    Jobs: JobsScreen
   },
   config
 );
 
 JobsStack.navigationOptions = {
-  tabBarLabel: 'My Jobs',
+  tabBarLabel: 'Jobs',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -135,7 +138,7 @@ ProductsStack.path = '';
 
 const LTPStack = createStackNavigator(
   {
-    LTP: NewsScreen
+    LTP: LTPScreen
   },
   config
 );
@@ -223,12 +226,12 @@ OptionsStack.path = '';
 // Panel at bottom
 
 const tabNavigator = createBottomTabNavigator({
-  ToolsStack,
+  LocatorStack,
   JobsStack,
   LTPStack,
   NewsStack,
-  ProductsStack,
-  UsersStack
+  ProductsStack
+  //   UsersStack
 
   //   OptionsStack
 });
