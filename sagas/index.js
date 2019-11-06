@@ -2,8 +2,15 @@ import userSagas from './users';
 import newsSagas from './news';
 import productsSagas from './products';
 import ltpSagas from './ltp';
+import odisSagas from './odis';
 import { all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
-  yield all([...userSagas, ...newsSagas, ...productsSagas, ...ltpSagas]);
+  yield all([
+    ...userSagas,
+    ...newsSagas,
+    ...productsSagas,
+    ...ltpSagas,
+    ...odisSagas
+  ]);
 }

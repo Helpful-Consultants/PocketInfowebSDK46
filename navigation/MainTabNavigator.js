@@ -12,6 +12,7 @@ import ProductsScreen from '../screens/ProductsScreen';
 import LtpScreen from '../screens/LtpScreen';
 import LocatorScreen from '../screens/LocatorScreen';
 import JobsScreen from '../screens/JobsScreen';
+import OdisScreen from '../screens/OdisScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import UsersScreen from '../screens/UsersScreen';
 
@@ -110,6 +111,32 @@ NewsStack.navigationOptions = {
 };
 
 NewsStack.path = '';
+
+// End News screen
+// ODIS screen
+
+const OdisStack = createStackNavigator(
+  {
+    Odis: OdisScreen
+  },
+  config
+);
+
+OdisStack.navigationOptions = {
+  tabBarLabel: 'ODIS',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  )
+};
+
+OdisStack.path = '';
 
 // End News screen
 // Products screen
@@ -230,10 +257,8 @@ const tabNavigator = createBottomTabNavigator({
   JobsStack,
   LtpStack,
   NewsStack,
-  ProductsStack
-  //   UsersStack
-
-  //   OptionsStack
+  ProductsStack,
+  OdisStack
 });
 
 tabNavigator.path = '';
