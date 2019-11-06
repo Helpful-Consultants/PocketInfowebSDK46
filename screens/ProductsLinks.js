@@ -20,7 +20,7 @@ export default function ProductsLinks({ ...props }) {
         <ScrollView>
           <Text style={styles.tipText}>
             You can scroll through these products and touch one to open up the
-            story on Tools Infoweb.
+            story on Tools Infoweb. (Not styled up yet!)
           </Text>
           {items.map((item, i) => (
             <Touchable onPress={() => _handlePressDocs(item.linkTo)} key={i}>

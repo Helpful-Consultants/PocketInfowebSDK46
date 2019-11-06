@@ -1,22 +1,22 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
+import { Card, ListItem, Button, Icon, Text } from 'react-native-elements';
 // import { NewsLinksView } from '@expo/samples';
 // import LocatorLinks from "./LocatorLinks";
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
 export default function LocatorScreen() {
   return (
     <ScrollView style={styles.container}>
-      {/**
-       * Go ahead and delete ExpoLinksView and replace it with your content;
-       * we just wanted to provide you with some helpful links.
-       */}
-      <Text>Locator Stuff here</Text>
+      <Card>
+        <Text>Locator will go here when built.</Text>
+      </Card>
     </ScrollView>
   );
 }
 
 LocatorScreen.navigationOptions = {
-  title: 'Loan Tool Programme'
+  headerTitle: <TitleWithAppLogo title='Tool Finder' />
 };
 
 const styles = StyleSheet.create({

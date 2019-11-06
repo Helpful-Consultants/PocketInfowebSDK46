@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExpoConfigView } from '@expo/samples';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
 export default function SettingsScreen() {
   /**
@@ -10,5 +11,5 @@ export default function SettingsScreen() {
 }
 
 SettingsScreen.navigationOptions = {
-  title: 'app.json',
+  headerTitle: <TitleWithAppLogo title='Settings' />
 };

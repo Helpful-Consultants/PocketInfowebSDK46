@@ -23,7 +23,9 @@ export default class LtpList extends React.Component {
       <View>
         {items && items.length > 0 ? (
           <ScrollView>
-            <Text style={styles.tipText}>LTP Items</Text>
+            <Text style={styles.tipText}>
+              LTP Items (Still things to do on this screen!)
+            </Text>
             {items.map((item, i) => (
               <ListItem
                 key={i}

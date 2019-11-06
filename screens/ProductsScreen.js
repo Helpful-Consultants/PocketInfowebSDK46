@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Text } from 'react-native-elements';
 // import { Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getProductsRequest } from '../actions/products';
 
 import ProductsLinks from './ProductsLinks';
 import productsDummyData from '../dummyData/productsDummyData.js';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
 class ProductsScreen extends Component {
   constructor(props) {
     super(props);
     // console.log('in ProductsScreen constructor', this.props);
-    this.props.getProductsRequest();
+    // this.props.getProductsRequest();
 
     // console.log(this.props.getProductsRequest);
   }
   render() {
     // const { products } = this.props;
     // console.log('in ProductsScreen, products ', this.props.productsItems);
-    const items = this.props.productsItems || [];
-    // const items = productsDummyData;
+    // const items = this.props.productsItems || [];
+    const items = productsDummyData;
     // console.log('in ProductsScreen, products ', products && products.items);
     // console.log('in ProductsScreen, products ', products && products);
     // console.log('in ProductsScreen, products', products && products);
@@ -35,7 +37,8 @@ class ProductsScreen extends Component {
 }
 
 ProductsScreen.navigationOptions = {
-  title: 'Products'
+  //   title: 'Products'
+  headerTitle: <TitleWithAppLogo title='Products' />
 };
 
 const styles = StyleSheet.create({
@@ -43,6 +46,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff'
+  },
+  titleRowWithImage: {
+    flexDirection: 'row',
+    alignItems: 'center'
   }
 });
 

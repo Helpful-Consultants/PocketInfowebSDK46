@@ -22,7 +22,7 @@ export default function NewsLinks({ ...props }) {
         <ScrollView>
           <Text style={styles.tipText}>
             You can scroll through these news items and touch one to open up the
-            story on Tools Infoweb.
+            story on Tools Infoweb. (Not styled up yet!)
           </Text>
           {items.map((item, i) => (
             <Touchable

@@ -7,6 +7,7 @@ import UserList from '../components/UserList';
 
 // import { NewsLinksView } from '@expo/samples';
 import NewsLinks from './NewsLinks';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
 class UsersScreen extends Component {
   constructor(props) {

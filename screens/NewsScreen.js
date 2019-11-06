@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getNewsRequest } from '../actions/news';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 // import UserList from '../components/UserList';
 
 // import { NewsLinksView } from '@expo/samples';
@@ -14,15 +15,15 @@ class NewsScreen extends Component {
   constructor(props) {
     super(props);
     // console.log('in NewsScreen constructor', this.props);
-    this.props.getNewsRequest();
+    // this.props.getNewsRequest();
 
     // console.log(this.props.getNewsRequest);
   }
   render() {
     // const { news } = this.props;
     // console.log('in NewsScreen, news ', this.props.newsItems);
-    const newsItems = this.props.newsItems;
-    // const newsItems = newsDummyData;
+    // const newsItems = this.props.newsItems;
+    const newsItems = newsDummyData;
     // console.log('in NewsScreen, news ', news && news.items);
     // console.log('in NewsScreen, news ', news && news);
     // console.log('in NewsScreen,news', news && news);
@@ -43,14 +44,12 @@ class NewsScreen extends Component {
 }
 
 NewsScreen.navigationOptions = {
-  title: 'News',
+  headerTitle: <TitleWithAppLogo title='News' />,
   headerStyle: {
     backgroundColor: '#efefef'
   },
   headerTintColor: '#333',
-  headerTitleStyle: {
-    fontWeight: 'bold'
-  }
+  headerTitleStyle: {}
 };
 
 const styles = StyleSheet.create({
