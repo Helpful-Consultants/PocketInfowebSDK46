@@ -8,6 +8,8 @@ import { getNewsRequest } from '../actions/news';
 // import { NewsLinksView } from '@expo/samples';
 import NewsLinks from './NewsLinks';
 
+import newsDummyData from '../dummyData/newsDummyData.js';
+
 class NewsScreen extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,7 @@ class NewsScreen extends Component {
     // const { news } = this.props;
     // console.log('in NewsScreen, news ', this.props.newsItems);
     const newsItems = this.props.newsItems;
+    // const newsItems = newsDummyData;
     // console.log('in NewsScreen, news ', news && news.items);
     // console.log('in NewsScreen, news ', news && news);
     // console.log('in NewsScreen,news', news && news);

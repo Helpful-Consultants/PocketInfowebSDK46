@@ -1,68 +1,64 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Image, Text, View } from 'react-native';
+import { StyleSheet, Image, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import placeholderImage from '../assets/images/robot-prod.png';
 
 export default class ProductsLinks extends React.Component {
   render() {
+    // console.log(this.props.items);
+    const items = this.props.items || [];
+    // console.log('start newsDummyData');
+    // console.log(newsDummyData);
+    // console.log('newsDummyData');
+    imageSource =
+      'https://react-native-elements.github.io/react-native-elements/img/card.png';
     return (
       <View>
-        <Text style={styles.optionsTitleText}>
-          Select a prduct from the list
-        </Text>
-
-        <Touchable
-          style={styles.option}
-          background={Touchable.Ripple('#ccc', false)}
-          onPress={this._handlePressDocs}
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.optionIconContainer}>
-              <Image
-                source={require('../assets/images/icon.png')}
-                resizeMode='contain'
-                fadeDuration={0}
-                style={{ width: 20, height: 20, marginTop: 1 }}
-              />
-            </View>
-            <View style={styles.optionTextContainer}>
-              <Text style={styles.optionText}>Widgets</Text>
-            </View>
-          </View>
-        </Touchable>
-
-        <Touchable
-          style={styles.option}
-          background={Touchable.Ripple('#ccc', false)}
-          onPress={this._handlePressForums}
-        >
-          <View style={{ flexDirection: 'row' }}>
-            <View style={styles.optionIconContainer}>
-              <Ionicons name='ios-chatboxes' size={22} color='#ccc' />
-            </View>
-            <View style={styles.optionTextContainer}>
-              <Text style={styles.optionText}>Hammer Kit</Text>
-            </View>
-          </View>
-        </Touchable>
+        {items && items.length > 0 ? (
+          <ScrollView>
+            <Text style={styles.tipText}>
+              You can scroll through these products and touch one to open up the
+              story on Tools Infoweb.
+            </Text>
+            {items.map((item, i) => (
+              <Touchable
+                onPress={() => this._handlePressDocs(item.linkTo)}
+                key={i}
+              >
+                {/* <Card title={item.headline} image={placeholderImage}> */}
+                <Card title={item.headline}>
+                  <Image style={styles.image} source={{ imageSource }} />
+                  <Text style={{ marginBottom: 10 }}>{item.newstext}</Text>
+                </Card>
+              </Touchable>
+            ))}
+          </ScrollView>
+        ) : (
+          <Text>Loading...</Text>
+        )}
       </View>
     );
   }
 
-  _handlePressDocs = () => {
-    WebBrowser.openBrowserAsync('http://bbc.co.uk');
-  };
-
-  _handlePressForums = () => {
-    WebBrowser.openBrowserAsync('http://chelseafc.com');
+  _handlePressDocs = url => {
+    WebBrowser.openBrowserAsync(url);
   };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15
+    paddingTop: 15,
+    backgroundColor: '#222'
+  },
+  tipText: {
+    fontSize: 12,
+    marginLeft: 15,
+    marginTop: 3,
+    marginBottom: 20
   },
   optionsTitleText: {
     fontSize: 16,
@@ -74,14 +70,24 @@ const styles = StyleSheet.create({
     marginRight: 9
   },
   option: {
-    backgroundColor: '#fdfdfd',
+    backgroundColor: '#eee',
     paddingHorizontal: 15,
     paddingVertical: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EDEDED'
+    borderBottomWidth: 3,
+    borderBottomColor: '#fff',
+    marginLeft: 10,
+    marginRight: 10,
+    paddingRight: 20
   },
   optionText: {
     fontSize: 15,
-    marginTop: 1
+    marginTop: 1,
+    color: '#000'
+  },
+  summaryText: {
+    fontSize: 12,
+    marginTop: 5,
+    color: '#000',
+    marginRight: 20
   }
 });

@@ -46,7 +46,7 @@ export default function App(props) {
       />
     );
   } else {
-    console.log('in App');
+    // console.log('in App');
     return (
       <Provider store={store}>
         <View style={styles.container}>

@@ -9,7 +9,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
-import LTPScreen from '../screens/LTPScreen';
+import LtpScreen from '../screens/LtpScreen';
 import LocatorScreen from '../screens/LocatorScreen';
 import JobsScreen from '../screens/JobsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -126,7 +126,7 @@ ProductsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-book' : 'md-link'}
+      name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
     />
   )
 };
@@ -136,14 +136,14 @@ ProductsStack.path = '';
 // End Products screen
 // LTP screen
 
-const LTPStack = createStackNavigator(
+const LtpStack = createStackNavigator(
   {
-    LTP: LTPScreen
+    LTP: LtpScreen
   },
   config
 );
 
-LTPStack.navigationOptions = {
+LtpStack.navigationOptions = {
   tabBarLabel: 'LTP',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -153,7 +153,7 @@ LTPStack.navigationOptions = {
   )
 };
 
-LTPStack.path = '';
+LtpStack.path = '';
 
 // End LTP screen
 // Users screen
@@ -228,7 +228,7 @@ OptionsStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   LocatorStack,
   JobsStack,
-  LTPStack,
+  LtpStack,
   NewsStack,
   ProductsStack
   //   UsersStack
