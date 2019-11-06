@@ -7,48 +7,46 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import placeholderImage from '../assets/images/robot-prod.png';
 import newsDummyData from '../dummyData/newsDummyData.js';
 
-export default class NewsLinks extends React.Component {
-  render() {
-    // console.log(this.props.items);
-    const items = this.props.items || [];
-    //   const items = newsDummyData || [];
-    // console.log('start newsDummyData');
-    // console.log(newsDummyData);
-    // console.log('newsDummyData');
-    imageSource =
-      'https://react-native-elements.github.io/react-native-elements/img/card.png';
-    return (
-      <View>
-        {items && items.length > 0 ? (
-          <ScrollView>
-            <Text style={styles.tipText}>
-              You can scroll through these news items and touch one to open up
-              the story on Tools Infoweb.
-            </Text>
-            {items.map((item, i) => (
-              <Touchable
-                onPress={() => this._handlePressDocs(item.linkTo)}
-                key={i}
-              >
-                {/* <Card title={item.headline} image={placeholderImage}> */}
-                <Card title={item.headline}>
-                  <Image style={styles.image} source={{ imageSource }} />
-                  <Text style={{ marginBottom: 10 }}>{item.newstext}</Text>
-                </Card>
-              </Touchable>
-            ))}
-          </ScrollView>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </View>
-    );
-  }
-
-  _handlePressDocs = url => {
-    WebBrowser.openBrowserAsync(url);
-  };
+export default function NewsLinks({ ...props }) {
+  // console.log(this.props.items);
+  const items = props.items || [];
+  //   const items = newsDummyData || [];
+  // console.log('start newsDummyData');
+  // console.log(newsDummyData);
+  // console.log('newsDummyData');
+  imageSource =
+    'https://react-native-elements.github.io/react-native-elements/img/card.png';
+  return (
+    <View>
+      {items && items.length > 0 ? (
+        <ScrollView>
+          <Text style={styles.tipText}>
+            You can scroll through these news items and touch one to open up the
+            story on Tools Infoweb.
+          </Text>
+          {items.map((item, i) => (
+            <Touchable
+              onPress={() => this._handlePressDocs(item.linkTo)}
+              key={i}
+            >
+              {/* <Card title={item.headline} image={placeholderImage}> */}
+              <Card title={item.headline}>
+                <Image style={styles.image} source={{ imageSource }} />
+                <Text style={{ marginBottom: 10 }}>{item.newstext}</Text>
+              </Card>
+            </Touchable>
+          ))}
+        </ScrollView>
+      ) : (
+        <Text>Loading...</Text>
+      )}
+    </View>
+  );
 }
+
+_handlePressDocs = url => {
+  WebBrowser.openBrowserAsync(url);
+};
 
 const styles = StyleSheet.create({
   container: {
