@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     // height: 50,
     width: 205,
     height: 70,
-
+    resizeMode: 'contain',
     marginTop: 200,
     marginLeft: 'auto',
     marginRight: 'auto'
