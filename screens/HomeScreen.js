@@ -1,25 +1,24 @@
-import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { Component } from 'react';
 import {
-  Image,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View
 } from 'react-native';
+import { Button, Icon, Image, Text } from 'react-native-elements';
+// import AppNavigator from '../navigation/AppNavigator';
+import Touchable from 'react-native-platform-touchable';
 
-import { MonoText } from '../components/StyledText';
-
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.welcomeContainer}>
+export default class HomeScreen extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          {/* <View style={styles.welcomeContainer}>
           <Image
             source={
               __DEV__
@@ -28,95 +27,188 @@ export default function HomeScreen() {
             }
             style={styles.welcomeImage}
           />
-        </View>
+        </View> */}
 
-        <View style={styles.getStartedContainer}>
-          <DevelopmentModeNotice />
-
-          <Text style={styles.getStartedText}>
-            Get it all started by opening up:
-          </Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.homeScreenFilename]}
-          >
-            <MonoText>screens/HomeScreen.js</MonoText>
+          <View style={styles.welcomeContainer}>
+            <Image
+              source={require('../assets/images/logos/tiw-app-logo-trans.png')}
+              style={styles.welcomeImage}
+            />
+            <Text>Pocket Infoweb</Text>
+          </View>
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.announcementText}>QUICK LINKS</Text>
           </View>
 
-          <Text style={styles.getStartedText}>
-            Change this text and your app will automatically reload.
-          </Text>
-        </View>
+          <View style={styles.gridRow}>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('Tools')}
+            >
+              <View>
+                <Icon
+                  name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+                  type='ionicon'
+                />
 
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
-            <Text style={styles.helpLinkText}>
-              Help, it didn’t automatically reload!
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+                <Text style={styles.gridCellText}>Find tool</Text>
+              </View>
+            </Touchable>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('Jobs')}
+            >
+              <View>
+                <Icon
+                  name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+                  type='ionicon'
+                />
 
-      <View style={styles.tabBarInfoContainer}>
-        <Text style={styles.tabBarInfoText}>
-          Below is a tab bar. You can edit it in:
-        </Text>
+                <Text style={styles.gridCellText}>My Jobs</Text>
+              </View>
+            </Touchable>
+          </View>
+          <View style={styles.gridRow}>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('Tools')}
+            >
+              <View>
+                <Icon
+                  name={
+                    Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'
+                  }
+                  type='ionicon'
+                />
 
-        <View
-          style={[styles.codeHighlightContainer, styles.navigationFilename]}
-        >
-          <Text>navigation/MainTabNavigator.js </Text>
-        </View>
+                <Text style={styles.gridCellText}>Return tools</Text>
+              </View>
+            </Touchable>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('LTP')}
+            >
+              <View>
+                <Icon
+                  name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+                  type='ionicon'
+                />
+
+                <Text style={styles.gridCellText}>LTP</Text>
+              </View>
+            </Touchable>
+          </View>
+          <View style={styles.gridRow}>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('Products')}
+            >
+              <View>
+                <Icon
+                  name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+                  type='ionicon'
+                />
+                <Text style={styles.gridCellText}>Products</Text>
+              </View>
+            </Touchable>
+            <Touchable
+              style={styles.gridCell}
+              onPress={() => this.props.navigation.navigate('News')}
+            >
+              <View>
+                <Icon
+                  name={
+                    Platform.OS === 'ios'
+                      ? 'ios-information-circle-outline'
+                      : 'md-information-circle'
+                  }
+                  type='ionicon'
+                />
+
+                <Text style={styles.gridCellText}>News</Text>
+              </View>
+            </Touchable>
+          </View>
+          <Touchable onPress={() => this.props.navigation.navigate('Odis')}>
+            <View style={styles.gridRow}>
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
+                type='ionicon'
+              />
+              <Text style={styles.gridCellText}> </Text>
+              <Text style={styles.gridCellText}>See latest ODIS versions</Text>
+            </View>
+          </Touchable>
+          {/* <View style={styles.gridRow}>
+            <Touchable
+              style={styles.doubleGridCell}
+              onPress={() => this.props.navigation.navigate('Odis')}
+            >
+              <View>
+                <Text style={styles.gridCellText}>Products</Text>
+              </View>
+            </Touchable>
+          </View> */}
+        </ScrollView>
       </View>
-    </View>
-  );
-}
-
-HomeScreen.navigationOptions = {
-  header: null
-};
-
-function DevelopmentModeNotice() {
-  if (__DEV__) {
-    const learnMoreButton = (
-      <Text onPress={handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-      </Text>
-    );
-
-    return (
-      <Text style={styles.developmentModeText}>
-        Development mode is enabled: your app will be slower but you can use
-        useful development tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
-      </Text>
     );
   }
 }
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
-}
-
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/up-and-running/#cant-see-your-changes'
-  );
-}
+HomeScreen.navigationOptions = {
+  header: null,
+  tabBarVisible: false
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
   },
-  developmentModeText: {
+  gridRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+
+    // backgroundColor: 'red'
+  },
+  gridCell: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '45%',
+    borderColor: '#aaa',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    color: '#333',
+    backgroundColor: 'white',
+    margin: 5,
+    height: 80
+    // padding: 5
+  },
+  doubleGridCell: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '93%',
+    height: 50,
+    borderColor: '#aaa',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    color: '#333',
+
+    backgroundColor: '#eee',
+    margin: 5,
+    padding: 5
+  },
+
+  gridCellText: {
+    color: '#333',
+    fontSize: 14,
+
+    textAlign: 'center'
+  },
+  announcementText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,

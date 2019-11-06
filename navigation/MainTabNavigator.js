@@ -127,11 +127,7 @@ OdisStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
     />
   )
 };
@@ -253,11 +249,12 @@ OptionsStack.path = '';
 // Panel at bottom
 
 const tabNavigator = createBottomTabNavigator({
+  HomeStack,
   LocatorStack,
   JobsStack,
   LtpStack,
-  NewsStack,
   ProductsStack,
+  NewsStack,
   OdisStack
 });
 
