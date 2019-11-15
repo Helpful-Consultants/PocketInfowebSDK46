@@ -7,7 +7,7 @@ export default function getLogoTitle(props) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Image source={appLogo} style={{ width: 26, height: 26 }} />
-      <Text style={{ fontWeight: 'bold', fontSize: 16, paddingLeft: 5 }}>
+      <Text style={{ fontWeight: 'bold', fontSize: 12, paddingLeft: 5 }}>
         {props.title}
       </Text>
     </View>
