@@ -84,7 +84,7 @@ OdisStack.navigationOptions = {
 };
 
 OdisStack.path = '';
-// End News screen
+// End ODIS screen
 
 // Products screen
 const ProductsStack = createStackNavigator(
