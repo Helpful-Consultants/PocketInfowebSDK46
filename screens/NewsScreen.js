@@ -21,6 +21,7 @@ class NewsScreen extends Component {
 
     // console.log(this.props.getNewsRequest);
   }
+
   render() {
     // const { news } = this.props;
     // console.log('in NewsScreen, news ', this.props.newsItems);
@@ -66,7 +67,7 @@ NewsScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
           console.log('pressed menu icon');
-          navigation.navigate.openDrawer;
+          navigation.toggleDrawer();
         }}
       />
     </HeaderButtons>

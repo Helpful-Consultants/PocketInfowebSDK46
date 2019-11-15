@@ -1,30 +1,48 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
-import AppNameWithLogo from '../components/AppNameWithLogo';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+// import { connect } from 'react-redux';
+// import { getNewsRequest } from '../actions/news';
+import { Text } from 'react-native-elements';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import HeaderButton from '../components/HeaderButton';
 
 export default StatsScreen = props => {
   return (
-    <View
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}
-    >
-      <AppNameWithLogo />
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {/* <AppNameWithLogo /> */}
       <Text>Stats will go here.</Text>
-      <View>
-        <Button
-          title='Home'
-          type='clear'
-          onPress={() => {
-            props.navigation.navigate('Home');
-          }}
-          style={{
-            marginTop: 200
-          }}
-        />
-      </View>
     </View>
   );
 };
+
+StatsScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='Stats' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='ODIS versions'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('Home');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.openDrawer();
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 const styles = StyleSheet.create({
   container: {

@@ -124,9 +124,30 @@ LtpStack.navigationOptions = {
 LtpStack.path = '';
 // End LTP screen
 
+// const AppDrawerNavigator = createDrawerNavigator({
+//     'Quick Start': {
+//         screen: HomeScreen
+//     },
+//     'Main menu': {
+//         screen: WipTabNavigator
+//     },
+//     'News menu': {
+//         screen: NewsTabNavigator
+//     },
+//     'Odis versions': {
+//         screen: OdisScreen
+//     },
+//     Stats: {
+//         screen: StatsScreen
+//     },
+//     'Sign out': {
+//         screen: SignOutScreen
+//     }
+// });
+
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
+  //   Home: HomeScreen,
   FindToolsStack,
   ReturnToolsStack,
   JobsStack,

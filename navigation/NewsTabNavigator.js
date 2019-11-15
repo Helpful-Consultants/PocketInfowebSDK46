@@ -109,7 +109,7 @@ ProductsStack.path = '';
 
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
-  Home: HomeScreen,
+  //   Home: HomeScreen,
   NewsStack,
   ProductsStack,
   OdisStack

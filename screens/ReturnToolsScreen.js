@@ -36,7 +36,7 @@ ReturnToolsScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
           console.log('pressed menu icon');
-          navigation.navigate.openDrawer;
+          navigation.toggleDrawer();
         }}
       />
     </HeaderButtons>

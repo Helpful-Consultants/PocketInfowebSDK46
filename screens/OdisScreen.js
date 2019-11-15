@@ -16,15 +16,15 @@ class OdisScreen extends Component {
   constructor(props) {
     super(props);
     // console.log('in OdisScreen constructor', this.props);
-    this.props.getOdisRequest();
+    // this.props.getOdisRequest();
 
     // console.log(this.props.getOdisRequest);
   }
   render() {
     // const { odis } = this.props;
     // console.log('in OdisScreen, odis ', this.props.odisItems);
-    const items = this.props.odisItems || [];
-    // const items = odisDummyData;
+    // const items = this.props.odisItems || [];
+    const items = odisDummyData;
     // console.log('in OdisScreen, odis ', odis && odis.items);
     // console.log('in OdisScreen, odis ', odis && odis);
     // console.log('in OdisScreen, odis', odis && odis);
@@ -66,7 +66,7 @@ OdisScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
           console.log('pressed menu icon');
-          navigation.navigate.openDrawer;
+          navigation.openDrawer();
         }}
       />
     </HeaderButtons>
