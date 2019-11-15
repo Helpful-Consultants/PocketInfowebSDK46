@@ -11,4 +11,6 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  transparentBackground: 'rgba(0, 0, 0, 0)',
+  iosBlue: 'rgba(0, 122, 125, 1)'
 };
