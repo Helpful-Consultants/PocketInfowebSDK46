@@ -8,6 +8,8 @@ import { getLtpRequest } from '../actions/ltp';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 
+import headerWithHomeAndMenu from '../components/headerWithHomeAndMenu';
+
 // import { LTPLinksView } from '@expo/samples';
 import LtpList from './LtpList';
 
@@ -56,6 +58,11 @@ class LtpScreen extends Component {
 //   }
 // };
 console.log(this.props);
+
+LtpScreen.navigationOptions = ({ navigation }) => ({
+  headerWithHomeAndMenu
+});
+
 LtpScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='LTP' />,
   headerLeft: (
@@ -65,7 +72,7 @@ LtpScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
           console.log('pressed homescreen icon');
-          navigation.navigate('HomeScreen');
+          navigation.navigate('Home');
         }}
       />
     </HeaderButtons>
