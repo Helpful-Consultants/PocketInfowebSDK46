@@ -28,6 +28,7 @@ class LtpScreen extends Component {
     // console.log('in LtpScreen, ltp ', this.props.ltpItems);
     // const items = this.props.ltpItems || [];
     const items = ltpDummyData;
+
     // console.log('in LtpScreen, ltp ', ltp && ltp.items);
     // console.log('in LtpScreen, ltp ', ltp && ltp);
     // console.log('in LtpScreen,ltp', ltp && ltp);
@@ -57,11 +58,11 @@ class LtpScreen extends Component {
 //     // fontWeight: 'bold'
 //   }
 // };
-console.log(this.props);
+// console.log(this.props);
 
-LtpScreen.navigationOptions = ({ navigation }) => ({
-  headerWithHomeAndMenu
-});
+// LtpScreen.navigationOptions = ({ navigation }) => ({
+//   headerWithHomeAndMenu(navigation )
+// });
 
 LtpScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='LTP' />,

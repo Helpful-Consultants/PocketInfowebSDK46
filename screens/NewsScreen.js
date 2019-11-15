@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Header } from 'react-native-elements';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { getNewsRequest } from '../actions/news';
+import { Text } from 'react-native-elements';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import HeaderButton from '../components/HeaderButton';
 // import UserList from '../components/UserList';
 
 // import { NewsLinksView } from '@expo/samples';
@@ -43,9 +45,33 @@ class NewsScreen extends Component {
   }
 }
 
-NewsScreen.navigationOptions = {
-  header: null
-};
+NewsScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='News' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='home'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('Home');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.navigate.openDrawer;
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 const styles = StyleSheet.create({
   container: {

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Image, Text } from 'react-native-elements';
-// import { Header } from 'react-native-elements';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
+import { Text } from 'react-native-elements';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import HeaderButton from '../components/HeaderButton';
 import { getProductsRequest } from '../actions/products';
 
 import ProductsLinks from './ProductsLinks';
 import productsDummyData from '../dummyData/productsDummyData.js';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
 class ProductsScreen extends Component {
   constructor(props) {
@@ -37,10 +37,33 @@ class ProductsScreen extends Component {
   }
 }
 
-ProductsScreen.navigationOptions = {
-  //   title: 'Products'
-  header: null
-};
+ProductsScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='Products' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='home'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('Home');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.navigate.openDrawer;
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 const styles = StyleSheet.create({
   container: {

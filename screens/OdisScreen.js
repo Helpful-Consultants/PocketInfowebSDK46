@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { Image, Text } from 'react-native-elements';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
+import { Image, Text } from 'react-native-elements';
 
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import HeaderButton from '../components/HeaderButton';
 import { getOdisRequest } from '../actions/odis';
 
 import OdisVersions from './OdisVersions';
@@ -43,10 +45,33 @@ class OdisScreen extends Component {
   }
 }
 
-OdisScreen.navigationOptions = {
-  //   headerTitle: <TitleWithAppLogo title='ODIS Versions' />
-  header: null
-};
+OdisScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='ODIS versions' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='ODIS versions'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('Home');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.navigate.openDrawer;
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 const styles = StyleSheet.create({
   tipText: {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
-import { Card, ListItem, Button, Icon, Text } from 'react-native-elements';
-// import { NewsLinksView } from '@expo/samples';
-// import LocatorLinks from "./LocatorLinks";
+import { Platform, ScrollView, StyleSheet } from 'react-native';
+import { Card, Text } from 'react-native-elements';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import HeaderButton from '../components/HeaderButton';
 
 export default function FindToolsScreen() {
   return (
@@ -15,9 +15,33 @@ export default function FindToolsScreen() {
   );
 }
 
-FindToolsScreen.navigationOptions = {
-  header: null
-};
+FindToolsScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='Find tools' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='home'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('Home');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.navigate.openDrawer;
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 // LocatorScreen.navigationOptions = {
 //   headerTitle: <TitleWithAppLogo title='Tool Finder' />
