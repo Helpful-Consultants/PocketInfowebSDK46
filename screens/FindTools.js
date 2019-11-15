@@ -5,7 +5,7 @@ import { Card, ListItem, Button, Icon, Text } from 'react-native-elements';
 // import LocatorLinks from "./LocatorLinks";
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 
-export default function LocatorScreen() {
+export default function FindToolsScreen() {
   return (
     <ScrollView style={styles.container}>
       <Card>
@@ -15,9 +15,13 @@ export default function LocatorScreen() {
   );
 }
 
-LocatorScreen.navigationOptions = {
-  headerTitle: <TitleWithAppLogo title='Tool Finder' />
+FindToolsScreen.navigationOptions = {
+  header: null
 };
+
+// LocatorScreen.navigationOptions = {
+//   headerTitle: <TitleWithAppLogo title='Tool Finder' />
+// };
 
 const styles = StyleSheet.create({
   container: {

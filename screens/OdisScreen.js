@@ -44,7 +44,8 @@ class OdisScreen extends Component {
 }
 
 OdisScreen.navigationOptions = {
-  headerTitle: <TitleWithAppLogo title='ODIS Versions' />
+  //   headerTitle: <TitleWithAppLogo title='ODIS Versions' />
+  header: null
 };
 
 const styles = StyleSheet.create({

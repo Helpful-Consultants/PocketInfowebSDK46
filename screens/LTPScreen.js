@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+
 import { Header } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getLtpRequest } from '../actions/ltp';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
-// import UserList from '../components/UserList';
+import HeaderButton from '../components/HeaderButton';
 
 // import { LTPLinksView } from '@expo/samples';
 import LtpList from './LtpList';
@@ -17,11 +19,11 @@ class LtpScreen extends Component {
     // console.log('in LtpScreen constructor', this.props);
     // this.props.getLtpRequest();
 
-    // console.log(this.props.getLTPRequest);
+    // console.log(props);
   }
   render() {
     // const { ltp } = this.props;
-    console.log('in LtpScreen, ltp ', this.props.ltpItems);
+    // console.log('in LtpScreen, ltp ', this.props.ltpItems);
     // const items = this.props.ltpItems || [];
     const items = ltpDummyData;
     // console.log('in LtpScreen, ltp ', ltp && ltp.items);
@@ -43,16 +45,44 @@ class LtpScreen extends Component {
   }
 }
 
-LtpScreen.navigationOptions = {
-  headerTitle: <TitleWithAppLogo title='Loan Tool Programme' />,
-  headerStyle: {
-    backgroundColor: '#efefef'
-  },
-  headerTintColor: '#333',
-  headerTitleStyle: {
-    // fontWeight: 'bold'
-  }
-};
+// LtpScreen.navigationOptions = {
+//   headerTitle: <TitleWithAppLogo title='Loan Tool Programme' />,
+//   headerStyle: {
+//     backgroundColor: '#efefef'
+//   },
+//   headerTintColor: '#333',
+//   headerTitleStyle: {
+//     // fontWeight: 'bold'
+//   }
+// };
+console.log(this.props);
+LtpScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='LTP' />,
+  headerLeft: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='home'
+        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        onPress={() => {
+          console.log('pressed homescreen icon');
+          navigation.navigate('HomeScreen');
+        }}
+      />
+    </HeaderButtons>
+  ),
+  headerRight: (
+    <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      <Item
+        title='menu'
+        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+        onPress={() => {
+          console.log('pressed menu icon');
+          navigation.navigate.openDrawer;
+        }}
+      />
+    </HeaderButtons>
+  )
+});
 
 const styles = StyleSheet.create({
   container: {

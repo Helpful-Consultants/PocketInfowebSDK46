@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Icon, Image, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
+import AppNameWithLogo from '../components/AppNameWithLogo';
 
 export default class HomeScreen extends Component {
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <ScrollView
@@ -29,21 +25,15 @@ export default class HomeScreen extends Component {
           />
         </View> */}
 
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/logos/tiw-app-logo-trans.png')}
-              style={styles.welcomeImage}
-            />
-            <Text>Pocket Infoweb</Text>
-          </View>
-          <View style={styles.getStartedContainer}>
+          <AppNameWithLogo />
+          {/* <View style={styles.getStartedContainer}>
             <Text style={styles.announcementText}>QUICK LINKS</Text>
-          </View>
+          </View> */}
 
           <View style={styles.gridRow}>
             <Touchable
               style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Tools')}
+              onPress={() => this.props.navigation.navigate('FindTools')}
             >
               <View>
                 <Icon
@@ -51,7 +41,7 @@ export default class HomeScreen extends Component {
                   type='ionicon'
                 />
 
-                <Text style={styles.gridCellText}>Find tool</Text>
+                <Text style={styles.gridCellText}>Find tools</Text>
               </View>
             </Touchable>
             <Touchable
@@ -64,14 +54,14 @@ export default class HomeScreen extends Component {
                   type='ionicon'
                 />
 
-                <Text style={styles.gridCellText}>My Jobs</Text>
+                <Text style={styles.gridCellText}>My jobs</Text>
               </View>
             </Touchable>
           </View>
           <View style={styles.gridRow}>
             <Touchable
               style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Tools')}
+              onPress={() => this.props.navigation.navigate('ReturnTools')}
             >
               <View>
                 <Icon
@@ -86,7 +76,7 @@ export default class HomeScreen extends Component {
             </Touchable>
             <Touchable
               style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('LTP')}
+              onPress={() => this.props.navigation.navigate('Ltp')}
             >
               <View>
                 <Icon
@@ -130,15 +120,31 @@ export default class HomeScreen extends Component {
             </Touchable>
           </View>
           <Touchable onPress={() => this.props.navigation.navigate('Odis')}>
-            <View style={styles.gridRow}>
+            <View style={styles.odisRow}>
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
                 type='ionicon'
+                size={20}
               />
-              <Text style={styles.gridCellText}> </Text>
-              <Text style={styles.gridCellText}>See latest ODIS versions</Text>
+              <Text style={styles.odisCellText}> </Text>
+              <Text style={styles.odisCellText}>See latest ODIS versions</Text>
             </View>
           </Touchable>
+          <Touchable
+            style={{ marginTop: 60 }}
+            onPress={() => this.props.navigation.navigate('SignIn')}
+          >
+            <View style={styles.odisRow}>
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
+                type='ionicon'
+                size={20}
+              />
+              <Text style={styles.odisCellText}> </Text>
+              <Text style={styles.odisCellText}>Sign out</Text>
+            </View>
+          </Touchable>
+
           {/* <View style={styles.gridRow}>
             <Touchable
               style={styles.doubleGridCell}
@@ -165,10 +171,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
+  appName: {
+    color: '#0096da',
+    fontSize: 18
+  },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+
+    // backgroundColor: 'red'
+  },
+  odisRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20
 
     // backgroundColor: 'red'
   },
@@ -183,6 +201,7 @@ const styles = StyleSheet.create({
     color: '#333',
     backgroundColor: 'white',
     margin: 5,
+    borderRadius: 10,
     height: 80
     // padding: 5
   },
@@ -199,7 +218,8 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#eee',
     margin: 5,
-    padding: 5
+    padding: 5,
+    borderRadius: 5
   },
 
   gridCellText: {
@@ -207,6 +227,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
 
     textAlign: 'center'
+  },
+  odisCellText: {
+    color: '#333',
+    fontSize: 12,
+
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   announcementText: {
     marginBottom: 20,

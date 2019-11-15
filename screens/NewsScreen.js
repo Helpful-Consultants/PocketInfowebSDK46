@@ -44,12 +44,7 @@ class NewsScreen extends Component {
 }
 
 NewsScreen.navigationOptions = {
-  headerTitle: <TitleWithAppLogo title='News' />,
-  headerStyle: {
-    backgroundColor: '#efefef'
-  },
-  headerTintColor: '#333',
-  headerTitleStyle: {}
+  header: null
 };
 
 const styles = StyleSheet.create({

@@ -5,15 +5,20 @@ import {
   createBottomTabNavigator
 } from 'react-navigation';
 
+import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 import LtpScreen from '../screens/LtpScreen';
-import LocatorScreen from '../screens/LocatorScreen';
+import FindToolsScreen from '../screens/FindTools';
 import JobsScreen from '../screens/JobsScreen';
 import OdisScreen from '../screens/OdisScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import ReturnToolsScreen from '../screens/ReturnToolsScreen';
 import UsersScreen from '../screens/UsersScreen';
 
 const config = Platform.select({
@@ -45,15 +50,15 @@ HomeStack.path = '';
 // End Home screen
 // Tools screen
 
-const LocatorStack = createStackNavigator(
+const FindToolsStack = createStackNavigator(
   {
-    Tools: LocatorScreen
+    Tools: FindToolsScreen
   },
   config
 );
 
-LocatorStack.navigationOptions = {
-  tabBarLabel: 'Find',
+FindToolsStack.navigationOptions = {
+  tabBarLabel: 'Find tools',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -62,7 +67,7 @@ LocatorStack.navigationOptions = {
   )
 };
 
-LocatorStack.path = '';
+FindToolsStack.path = '';
 
 // End Tools screen
 // Jobs screen
@@ -87,6 +92,28 @@ JobsStack.navigationOptions = {
 JobsStack.path = '';
 
 // End Jobs screen
+// Return screen
+
+const ReturnToolsStack = createStackNavigator(
+  {
+    ReturnTools: ReturnToolsScreen
+  },
+  config
+);
+
+ReturnToolsStack.navigationOptions = {
+  tabBarLabel: 'Return',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'}
+    />
+  )
+};
+
+ReturnToolsStack.path = '';
+
+// End Return screen
 // News screen
 
 const NewsStack = createStackNavigator(
@@ -167,7 +194,7 @@ const LtpStack = createStackNavigator(
 );
 
 LtpStack.navigationOptions = {
-  tabBarLabel: 'LTP',
+  tabBarLabel: 'Loan tools',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -248,16 +275,64 @@ OptionsStack.path = '';
 
 // Panel at bottom
 
-const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LocatorStack,
-  JobsStack,
-  LtpStack,
-  ProductsStack,
-  NewsStack,
-  OdisStack
-});
+const DashboardDrawerNavigator = createBottomTabNavigator(
+  {
+    'Find Tools': FindToolsStack,
+    'My Jobs': JobsStack,
+    'Return Tools': ReturnToolsStack,
+    'LoanTool Programme': LtpStack
+  },
+  {
+    navigationOptions: ({ navigation }) => {
+      const { routeName } = navigation.state.routes[navigation.state.index];
+      return {
+        headerTitle: <TitleWithAppLogo title={routeName} />
+      };
+    }
+  }
+);
 
-tabNavigator.path = '';
+// DashboardDrawerNavigator.navigationOptions = {
+//     tabBarLabel: 'Settings',
+//     tabBarIcon: ({ focused }) => (
+//         <TabBarIcon
+//             focused={focused}
+//             name={Platform.OS === 'ios' ? 'ios-settings' : 'md-options'}
+//         />
+//     )
+// };
 
-export default tabNavigator;
+DashboardDrawerNavigator.path = '';
+
+const DashboardStackNavigator = createStackNavigator(
+  {
+    DashboardDrawerNavigator: DashboardDrawerNavigator,
+    Odis: OdisScreen
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        headerLeft: (
+          <Icon
+            name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+            size={22}
+            style={{ paddingLeft: 20 }}
+            type='ionicon'
+            onPress={() => navigation.navigate('Home')}
+          />
+        ),
+        headerRight: (
+          <Icon
+            name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+            size={22}
+            type='ionicon'
+            style={{ paddingRight: 30 }}
+            onPress={() => navigation.openDrawer()}
+          />
+        )
+      };
+    }
+  }
+);
+
+export default DashboardStackNavigator;

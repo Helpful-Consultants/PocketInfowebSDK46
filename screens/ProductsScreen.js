@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Image, Text } from 'react-native-elements';
 // import { Header } from 'react-native-elements';
 import { connect } from 'react-redux';
@@ -38,7 +39,7 @@ class ProductsScreen extends Component {
 
 ProductsScreen.navigationOptions = {
   //   title: 'Products'
-  headerTitle: <TitleWithAppLogo title='Products' />
+  header: null
 };
 
 const styles = StyleSheet.create({

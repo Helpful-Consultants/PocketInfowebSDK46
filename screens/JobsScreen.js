@@ -15,7 +15,7 @@ export default function JobsScreen() {
   );
 }
 JobsScreen.navigationOptions = {
-  headerTitle: <TitleWithAppLogo title='My Jobs' />
+  header: null
 };
 
 const styles = StyleSheet.create({
