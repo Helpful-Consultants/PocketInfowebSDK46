@@ -10,7 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 // import NewsScreen from '../screens/NewsScreen';
 // import ProductsScreen from '../screens/ProductsScreen';
 import LtpScreen from '../screens/LtpScreen';
-import FindToolsScreen from '../screens/FindTools';
+import FindToolsScreen from '../screens/FindToolsScreen';
 import JobsScreen from '../screens/JobsScreen';
 import ReturnToolsScreen from '../screens/ReturnToolsScreen';
 

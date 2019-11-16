@@ -17,7 +17,7 @@ class NewsScreen extends Component {
   constructor(props) {
     super(props);
     // console.log('in NewsScreen constructor', this.props);
-    // this.props.getNewsRequest();
+    this.props.getNewsRequest();
 
     // console.log(this.props.getNewsRequest);
   }
@@ -25,8 +25,8 @@ class NewsScreen extends Component {
   render() {
     // const { news } = this.props;
     // console.log('in NewsScreen, news ', this.props.newsItems);
-    // const newsItems = this.props.newsItems;
-    const newsItems = newsDummyData;
+    const newsItems = this.props.newsItems;
+    // const newsItems = newsDummyData;
     // console.log('in NewsScreen, news ', news && news.items);
     // console.log('in NewsScreen, news ', news && news);
     // console.log('in NewsScreen,news', news && news);

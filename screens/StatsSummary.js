@@ -8,12 +8,15 @@ import audiLogo from '../assets/images/logos/audi-logo.png';
 import skodaLogo from '../assets/images/logos/skoda-logo.png';
 import seatLogo from '../assets/images/logos/seat-logo.png';
 import cvLogo from '../assets/images/logos/cv-logo.png';
-import odisGrab from '../assets/images/content/odis.jpg';
-export default function OdisVersions({ ...props }) {
-  // console.log(props.items);
+// import statsGrab from '../assets/images/content/stats.jpg';
+
+export default function StatsSummary({ ...props }) {
+  console.log('props.statsItems');
+  console.log(props.statsItems);
+  console.log('props.statsItems');
   //   const items = props.items[0].brandVersions || [];
-  //   const items = odisDummyData[0].brandVersions || [];
-  const items = props.items[0].brandVersions || [];
+  const statsItems = (props.statsItems && props.statsItems) || [];
+  const userData = props.userData[0] || {};
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -21,34 +24,63 @@ export default function OdisVersions({ ...props }) {
     vw: vwLogo,
     sk: skodaLogo
   };
-  // console.log('start odisDummyData');
-  // console.log(odisDummyData);
-  //   console.log('odisData', items);
+  // console.log('start statsDummyData');
+  // console.log(statsDummyData);
+  //   console.log('statsData', items);
   //   console.log(logoChooser);
-  //   console.log('odisDummyData', odisDummyData);
+  //   console.log('statsDummyData', statsDummyData);
   imageSource =
     'https://react-native-elements.github.io/react-native-elements/img/card.png';
   return (
     <View style={styles.container}>
-      {items && items.length > 0 ? (
+      {statsItems && statsItems.length > 0 ? (
         <View>
-          {items.map((item, i) => (
+          {statsItems.map((item, i) => (
             <Card key={i}>
-              <View style={styles.odisRow}>
-                <Image
+              <View style={styles.statsRow}>
+                {/* <Image
                   source={logoChooser[item.brandCode.toLowerCase()]}
                   style={styles.logo}
-                />
+                /> */}
                 <View>
-                  <Text style={styles.odisVersionText}>
-                    Product: {item.productVersion}
+                  <Text style={styles.statsVersionText}>
+                    User Name: {userData.userName}
                   </Text>
-                  <Text style={styles.odisVersionText}>
-                    Main feature: {item.mainFeatureVersion}
+                  <Text style={styles.statsVersionText}>
+                    User ID: {userData.userId}
                   </Text>
-                  <Text style={styles.odisVersionText}>
-                    Data: {item.dataVersion}
+                  <Text style={styles.statsVersionText}>
+                    Dealer Id: {userData.dealerId}
                   </Text>
+                  <Text style={styles.statsVersionText}>
+                    Dealer Name: {item.userName}
+                  </Text>
+
+                  <Card title='Mandatory Tools'>
+                    <Text style={styles.statsVersionText}>
+                      {`2,556 Mandatory; ${item.loggedTools} logged`}
+                    </Text>
+                  </Card>
+                  <Card title='Loan Tool Usage'>
+                    <Text style={styles.statsVersionText}>
+                      {`99 Usage; 99 Current bookings`}
+                    </Text>
+                  </Card>
+                  <Card title='Support Tickets'>
+                    <Text style={styles.statsVersionText}>
+                      {`${item.tiwTicketsRaised} raised; ${item.tiwTicketsClosed} closed`}
+                    </Text>
+                  </Card>
+                  <Card title='Active Jobs'>
+                    <Text style={styles.statsVersionText}>
+                      `XX active; X.XX% Effectiveness`
+                    </Text>
+                  </Card>
+                  <Card title='Service Measures'>
+                    <Text style={styles.statsVersionText}>
+                      {`${item.completedServiceMeasures} active; ${item.activeServiceMeasures} completed`}
+                    </Text>
+                  </Card>
                 </View>
               </View>
             </Card>
@@ -71,13 +103,13 @@ const styles = StyleSheet.create({
     padding: 0
     // backgroundColor: '#00889d'
   },
-  odisRow: {
+  statsRow: {
     flexDirection: 'row',
     padding: 5,
     borderColor: '#000',
     fontSize: 12
   },
-  odisVersionText: {
+  statsVersionText: {
     fontSize: 12
   },
   logo: {

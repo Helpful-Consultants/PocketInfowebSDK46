@@ -29,7 +29,6 @@ class ProductsScreen extends Component {
     return (
       <View>
         <ScrollView>
-          {/* <Text>Products, count is {items && items.length}</Text> */}
           <ProductsLinks items={items} />
         </ScrollView>
       </View>
