@@ -12,9 +12,9 @@ import * as api from '../api/products';
 function* getProducts() {
   try {
     const result = yield call(api.getProducts);
-    console.log('in saga get products, success');
+    // console.log('in saga get products, success');
     // console.log(result);
-    console.log('end results in saga get products, success');
+    // console.log('end results in saga get products, success');
     yield put(
       actions.getProductsSuccess({
         items: result.data
@@ -31,7 +31,7 @@ function* getProducts() {
 }
 
 function* watchGetProductsRequest() {
-  console.log('in saga watch for products');
+  //   console.log('in saga watch for products');
   yield takeEvery(actions.Types.GET_PRODUCTS_REQUEST, getProducts);
 }
 

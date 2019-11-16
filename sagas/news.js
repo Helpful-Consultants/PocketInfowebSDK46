@@ -12,9 +12,9 @@ import * as api from '../api/news';
 function* getNews() {
   try {
     const result = yield call(api.getNews);
-    console.log('in saga get news, success');
+    // console.log('in saga get news, success');
     // console.log(result);
-    console.log('end results in saga get news, success');
+    // console.log('end results in saga get news, success');
     yield put(
       actions.getNewsSuccess({
         items: result.data
@@ -31,7 +31,7 @@ function* getNews() {
 }
 
 function* watchGetNewsRequest() {
-  console.log('in saga watch for news');
+  //   console.log('in saga watch for news');
   yield takeEvery(actions.Types.GET_NEWS_REQUEST, getNews);
 }
 

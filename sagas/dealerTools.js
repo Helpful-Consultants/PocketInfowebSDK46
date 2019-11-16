@@ -12,16 +12,16 @@ import * as api from '../api/dealerTools';
 function* getDealerTools() {
   try {
     const result = yield call(api.getDealerTools);
-    console.log('in saga get dealerTools, success');
+    // console.log('in saga get dealerTools, success');
     // console.log(result);
-    console.log('end results in saga get dealerTools, success');
+    // console.log('end results in saga get dealerTools, success');
     yield put(
       actions.getDealerToolsSuccess({
         items: result.data
       })
     );
   } catch (e) {
-    console.log('error!!!!!!!!!!!!!!');
+    console.log('error in saga get dealerTools !!!!!!!!!!!!!!');
     yield put(
       actions.dealerToolsError({
         error: 'An error occurred when trying to get the dealerTools'

@@ -1,7 +1,7 @@
 export const Types = {
-  GET_USER_WIPS_REQUEST: 'userWips/get_userWips_request',
-  GET_USER_WIPS_SUCCESS: 'userWips/get_userWips_success',
-  USER_WIPS_ERROR: 'userWips/userWips_error'
+  GET_USER_WIPS_REQUEST: 'userWips/get_user_wips_request',
+  GET_USER_WIPS_SUCCESS: 'userWips/get_user_wips_success',
+  USER_WIPS_ERROR: 'userWips/user_wips_error'
 };
 
 export const getUserWipsRequest = () => ({

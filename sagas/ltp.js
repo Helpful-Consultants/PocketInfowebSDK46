@@ -12,9 +12,9 @@ import * as api from '../api/ltp';
 function* getLtp() {
   try {
     const result = yield call(api.getLtp);
-    console.log('in saga get ltp, success');
+    // console.log('in saga get ltp, success');
     // console.log(result);
-    console.log('end results in saga get ltp, success');
+    // console.log('end results in saga get ltp, success');
     yield put(
       actions.getLtpSuccess({
         items: result.data
@@ -31,7 +31,7 @@ function* getLtp() {
 }
 
 function* watchGetLtpRequest() {
-  console.log('in saga watch for ltp');
+  //   console.log('in saga watch for ltp');
   yield takeEvery(actions.Types.GET_LTP_REQUEST, getLtp);
 }
 

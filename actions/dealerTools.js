@@ -1,7 +1,7 @@
 export const Types = {
-  GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealerTools_request',
-  GET_DEALER_TOOLS_SUCCESS: 'dealerTools/get_dealerTools_success',
-  DEALER_TOOLS_ERROR: 'dealerTools/dealerTools_error'
+  GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealer_tools_request',
+  GET_DEALER_TOOLS_SUCCESS: 'dealerTools/get_dealer_tools_success',
+  DEALER_TOOLS_ERROR: 'dealerTools/dealer_tools_error'
 };
 
 export const getDealerToolsRequest = () => ({

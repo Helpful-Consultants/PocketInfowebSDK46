@@ -1,8 +1,11 @@
-import userSagas from './users';
+import userSagas from './user';
 import newsSagas from './news';
 import productsSagas from './products';
 import ltpSagas from './ltp';
 import odisSagas from './odis';
+import statsSagas from './stats';
+import dealerToolsSagas from './dealerTools';
+import userWipsSagas from './userWips';
 import { all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -11,6 +14,9 @@ export default function* rootSaga() {
     ...newsSagas,
     ...productsSagas,
     ...ltpSagas,
-    ...odisSagas
+    ...statsSagas,
+    ...odisSagas,
+    ...dealerToolsSagas,
+    ...userWipsSagas
   ]);
 }
