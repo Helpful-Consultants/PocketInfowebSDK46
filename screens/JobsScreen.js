@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { Card, SearchBar, Text } from 'react-native-elements';
+import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-import { getUserWipsRequest } from '../actions/userWips';
+import { deleteUserWipRequest, getUserWipsRequest } from '../actions/userWips';
 
 import JobsList from './JobsList';
 import userWipsDummyData from '../dummyData/userWipsDummyData.js';
@@ -28,13 +28,14 @@ class JobsScreen extends Component {
   //   };
 
   render() {
-    // const { userWipsItems } = this.props;
-    // console.log('in UserWipsScreen, userWips ', this.props.userWipsItems);
+    const { userWipsItems } = this.props;
+    // console.log('in UserWipsScreen, userWips ', this.props);
+    // console.log('in UserWipsScreen, userWips end');
     // console.log('Find Tools screen');
     // console.log(userWipsItems);
     // console.log('Find Tools screen end');
-    // const items = userWipsItems || [];
-    const items = userWipsDummyData;
+    const items = userWipsItems && userWipsItems;
+    // const items = userWipsDummyData;
     // const { search } = this.state;
     // console.log('items');
     // console.log(items);
@@ -50,8 +51,33 @@ class JobsScreen extends Component {
           value={search}
           platform={Platform.OS === 'ios' ? 'ios' : 'android'}
         /> */}
+        <Button
+          title='New job'
+          onPress={() => alert('pressed')}
+          buttonStyle={{
+            marginBottom: 10,
+            marginTop: 10,
+            marginLeft: 15,
+            marginRight: 15,
+            borderRadius: 20
+          }}
+          icon={
+            <Icon
+              name={
+                Platform.OS === 'ios'
+                  ? 'add-circle-outline'
+                  : 'add-circle-outline'
+              }
+              size={20}
+              color='white'
+            />
+          }
+        />
         <ScrollView>
-          <JobsList items={items} />
+          <JobsList
+            items={items}
+            deleteUserWipRequest={this.props.deleteUserWipRequest}
+          />
         </ScrollView>
       </View>
     );
@@ -99,31 +125,22 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state);
   //   const { friends } = state;
-  console.log('in mapStateToProps');
-  //   console.log(
-  //     state.userWips.userWipsItems && state.userWips.userWipsItems
-  //   );
-  const userWipsItems = (state.userWipsItems && state.userWipsItems) || {};
+  console.log('in JobScrre mapStateToProps');
+  console.log(state.userWips && state.userWips.length);
+  console.log('in JobScrre mapStateToProps - end');
+  const userWipsItems = state.userWips && state.userWips;
   //   console.log('end mapStateToProps');
   return userWipsItems;
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getUserWipsRequest: () => dispatch(getUserWipsRequest())
+    getUserWipsRequest: () => dispatch(getUserWipsRequest()),
+    deleteUserWipRequest: wipData => dispatch(deleteUserWipRequest(wipData))
   };
 };
 
 // export default connect(mapStateToProps)(UserWipsScreen);
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  //   ({ news }) => ({ news }),
-  //   {
-  //     getUserWipsRequest,
-  //     createUserRequest,
-  //     deleteUserRequest,
-  //     newsError
-  //   }
-)(JobsScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(JobsScreen);

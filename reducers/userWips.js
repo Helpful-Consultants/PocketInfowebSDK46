@@ -1,7 +1,7 @@
 import { Types } from '../actions/userWips';
 
 const INITIAL_STATE = {
-  userWipItems: []
+  userWipsItems: []
 };
 
 export default function userWips(state = INITIAL_STATE, action) {
@@ -11,7 +11,7 @@ export default function userWips(state = INITIAL_STATE, action) {
     case Types.GET_USER_WIPS_SUCCESS: {
       return {
         ...state,
-        userWipItems: action.payload.items
+        userWipsItems: action.payload.items
       };
     }
     case Types.USER_WIPS_ERROR: {

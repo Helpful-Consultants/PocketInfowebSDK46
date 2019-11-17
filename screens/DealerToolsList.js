@@ -44,10 +44,25 @@ export default function DealerToolsList({ ...props }) {
               }
               bottomDivider
               rightIcon={
-                <Icon
-                  name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
-                  type='ionicon'
-                />
+                <View>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+                    type='ionicon'
+                    onPress={() =>
+                      alert(
+                        `add tool ${item.id} to job 999? ; OK; change job; cancel`
+                      )
+                    }
+                  />
+                  <Icon
+                    name={
+                      Platform.OS === 'ios'
+                        ? 'ios-arrow-round-up'
+                        : 'md-arrow-round-up'
+                    }
+                    type='ionicon'
+                  />
+                </View>
               }
             />
           ))}

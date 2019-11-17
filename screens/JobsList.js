@@ -20,7 +20,8 @@ export default function DealerToolsList({ ...props }) {
   //   console.log(props);
   //   console.log('props end');
   const limit = 50;
-  const allItems = props.items || [];
+  const allItems = (props.items && props.items) || [];
+  //   const allItems = props.items || [];
   const items = allItems.slice(0, limit);
   //   const items = dealerToolsDummyData || [];
   // console.log('start dealerToolsDummyData');
@@ -43,15 +44,85 @@ export default function DealerToolsList({ ...props }) {
               }}
             >
               <View>
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: '600',
-                      textAlign: 'left',
-                      marginBottom: 5
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: '600',
+                    textAlign: 'left',
+                    marginBottom: 5
+                  }}
+                >{`Job ${item.wipNumber}`}</Text>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Button
+                    title=' Add tools'
+                    type='clear'
+                    onPress={() =>
+                      alert(`pressed add tools to job ${item.wipNumber}`)
+                    }
+                    buttonStyle={{
+                      backgroundColor: 'transparent'
                     }}
-                  >{`Job ${item.wipNumber}`}</Text>
+                    titleStyle={{
+                      fontSize: 14,
+                      color: '#000',
+                      backgroundColor: 'transparent'
+                    }}
+                    icon={
+                      <Icon
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'ios-add-circle-outline'
+                            : 'md-add-circle-outline'
+                        }
+                        type='ionicon'
+                        size={16}
+                        iconStyle={{
+                          color: 'black',
+                          backgroundColor: 'transparent'
+                        }}
+                      />
+                    }
+                  />
+                  <Button
+                    title=' Finished'
+                    type='clear'
+                    onPress={() => {
+                      {
+                        /* alert(`pressed finished ${item.wipNumber}`); */
+                      }
+                      props.deleteUserWipRequest({
+                        id: item.id,
+                        wipNumber: item.wipNumber,
+                        intId: item.userIntId
+                      });
+                    }}
+                    buttonStyle={{
+                      backgroundColor: 'transparent'
+                    }}
+                    titleStyle={{
+                      fontSize: 14,
+                      color: '#000',
+                      backgroundColor: 'transparent'
+                    }}
+                    icon={
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                        type='ionicon'
+                        size={16}
+                        iconStyle={{
+                          color: 'black',
+                          backgroundColor: 'transparent'
+                        }}
+                      />
+                    }
+                  />
                 </View>
                 <View>
                   {item.tools.map((item, i) => (
@@ -99,7 +170,11 @@ export default function DealerToolsList({ ...props }) {
                           type='ionicon'
                           color='#2089dc'
                           reverse
-                          onPress={() => console.log('hello')}
+                          onPress={() =>
+                            alert(
+                              `return tool finished ${item.id}, job ${item.wipNumber}`
+                            )
+                          }
                           size={10}
                         />
                       }
@@ -107,7 +182,9 @@ export default function DealerToolsList({ ...props }) {
                   ))}
                 </View>
                 <View>
-                  <Text>{`${item.createdDate} ${item.createdBy}`}</Text>
+                  <Text
+                    style={{ fontSize: 10, textAlign: 'right' }}
+                  >{`${item.createdBy} ${item.createdDate}`}</Text>
                 </View>
               </View>
             </Card>
@@ -119,10 +196,6 @@ export default function DealerToolsList({ ...props }) {
     </View>
   );
 }
-
-_handlePressDocs = url => {
-  WebBrowser.openBrowserAsync(url);
-};
 
 const styles = StyleSheet.create({
   container: {
