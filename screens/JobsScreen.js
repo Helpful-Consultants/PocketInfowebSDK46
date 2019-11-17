@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableHighlight,
+  View
+} from 'react-native';
 import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -18,6 +25,12 @@ class JobsScreen extends Component {
     // this.props.getUserWipsRequest();
 
     // console.log(this.props.getUserWipsRequest);
+  }
+  state = {
+    modalVisible: false
+  };
+  toggleModal(visible) {
+    this.setState({ modalVisible: visible });
   }
 
   //   state = {
@@ -53,7 +66,9 @@ class JobsScreen extends Component {
         /> */}
         <Button
           title='New job'
-          onPress={() => alert('pressed')}
+          onPress={() => {
+            this.toggleModal(true);
+          }}
           buttonStyle={{
             marginBottom: 10,
             marginTop: 10,
@@ -73,6 +88,49 @@ class JobsScreen extends Component {
             />
           }
         />
+        <Modal
+          animationType={'slide'}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            console.log('Modal has been closed.');
+          }}
+        >
+          <View style={styles.modal}>
+            <Text style={styles.text}>Create job</Text>
+
+            <TouchableHighlight
+              onPress={() => {
+                this.toggleModal(!this.state.modalVisible);
+              }}
+            >
+              <Text style={styles.text}>Cancel</Text>
+            </TouchableHighlight>
+            <Button
+              title='  Save job'
+              onPress={() => {
+                this.toggleModal(false);
+              }}
+              buttonStyle={{
+                marginBottom: 10,
+                marginTop: 50,
+                marginLeft: 15,
+                marginRight: 15,
+                borderRadius: 10
+              }}
+              icon={
+                <Icon
+                  name={
+                    Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'
+                  }
+                  type='ionicon'
+                  size={30}
+                  color='white'
+                />
+              }
+            />
+          </View>
+        </Modal>
         <ScrollView>
           <JobsList
             items={items}
@@ -121,6 +179,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff'
+  },
+  modal: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#ccc',
+    padding: 100
+  },
+  text: {
+    color: '#3f2949',
+    marginTop: 10
   }
 });
 
@@ -138,7 +206,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getUserWipsRequest: () => dispatch(getUserWipsRequest()),
-    deleteUserWipRequest: wipData => dispatch(deleteUserWipRequest(wipData))
+    deleteUserWipRequest: wipData => dispatch(deleteUserWipRequest(wipData)),
+    createUserWipRequest: wipData => dispatch(createUserWipRequest(wipData))
   };
 };
 

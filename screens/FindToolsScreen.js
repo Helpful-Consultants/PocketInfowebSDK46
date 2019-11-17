@@ -50,9 +50,7 @@ class FindToolsScreen extends Component {
           value={search}
           platform={Platform.OS === 'ios' ? 'ios' : 'android'}
         />
-        <ScrollView>
-          <DealerToolsList items={items} />
-        </ScrollView>
+        <DealerToolsList items={items} />
       </View>
     );
   }
