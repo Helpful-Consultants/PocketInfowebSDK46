@@ -148,9 +148,9 @@ LtpStack.path = '';
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
+  JobsStack,
   FindToolsStack,
   ReturnToolsStack,
-  JobsStack,
   LtpStack
 });
 
