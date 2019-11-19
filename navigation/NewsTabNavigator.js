@@ -11,7 +11,7 @@ import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 // import LtpScreen from '../screens/LtpScreen';
 // import FindToolsScreen from '../screens/FindTools';
-// import JobsScreen from '../screens/JobsScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import OdisScreen from '../screens/OdisScreen';
 
 const config = Platform.select({
@@ -112,7 +112,8 @@ const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
   NewsStack,
   ProductsStack,
-  OdisStack
+  OdisStack,
+  SettingsScreen
 });
 
 tabNavigator.path = '';

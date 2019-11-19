@@ -9,18 +9,22 @@ import {
 import * as actions from '../actions/user';
 import * as api from '../api/user';
 
-function* getUser() {
+function* getUser({ payload }) {
+  console.log('in user saga - getUser called', payload);
   try {
-    const result = yield call(api.getUser);
-    // console.log('in user saga - success');
-    // console.log(result);
+    const result = yield call(api.getUser, {
+      email: payload.email,
+      pin: payload.pin
+    });
+    console.log('in user saga - success');
+    console.log(result);
     yield put(
       actions.getUserSuccess({
-        items: result.data.data
+        items: result.data
       })
     );
   } catch (e) {
-    console.log('error!!!!!!!!!!!!!!');
+    console.log('in user saga - error!!!!!!!!!!!!!!');
     yield put(
       actions.userError({
         error: 'An error occurred when trying to get the user'
@@ -31,7 +35,7 @@ function* getUser() {
 
 function* watchGetUserRequest() {
   //   console.log('in saga watch');
-  yield takeEvery(actions.Types.GET_USER_REQUEST, getUser);
+  yield takeLatest(actions.Types.GET_USER_REQUEST, getUser);
 }
 
 const userSagas = [fork(watchGetUserRequest)];

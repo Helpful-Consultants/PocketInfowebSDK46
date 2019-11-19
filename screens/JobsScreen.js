@@ -12,7 +12,11 @@ import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-import { deleteUserWipRequest, getUserWipsRequest } from '../actions/userWips';
+import {
+  createUserWipRequest,
+  deleteUserWipRequest,
+  getUserWipsRequest
+} from '../actions/userWips';
 
 import JobsList from './JobsList';
 import userWipsDummyData from '../dummyData/userWipsDummyData.js';
@@ -56,6 +60,7 @@ class JobsScreen extends Component {
     // console.log('in UserWipsScreen, userWips ', userWips && userWips.items);
     // console.log('in UserWipsScreen, userWips ', userWips && userWips);
     // console.log('in UserWipsScreen, userWips', userWips && userWips);
+
     return (
       <View>
         {/* <SearchBar
@@ -88,6 +93,7 @@ class JobsScreen extends Component {
             />
           }
         />
+
         <Modal
           animationType={'slide'}
           transparent={false}
@@ -107,8 +113,9 @@ class JobsScreen extends Component {
               <Text style={styles.text}>Cancel</Text>
             </TouchableHighlight>
             <Button
-              title='  Save job'
+              title='Save job'
               onPress={() => {
+                this.props.createUserWipRequest('3333');
                 this.toggleModal(false);
               }}
               buttonStyle={{

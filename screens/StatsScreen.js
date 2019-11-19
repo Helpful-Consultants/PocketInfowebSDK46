@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
 import { Image, Text } from 'react-native-elements';
@@ -15,39 +15,42 @@ import userDummyData from '../dummyData/userDummyData.js';
 import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/content/stats.jpg';
 
-class StatsScreen extends Component {
-  constructor(props) {
-    super(props);
-    // console.log('in StatsScreen constructor', this.props);
-    this.props.getUserRequest();
-    this.props.getStatsRequest();
-    this.props.getUserWipsRequest();
-    // console.log(this.props.getStatsRequest);
-  }
-  render() {
-    // const { stats } = this.props;
-    // console.log('in StatsScreen, stats ', statsDummyData);
-    // const statsItems = this.props.statsItems || [];
-    const userData = userDummyData;
-    const statsItems = statsDummyData;
-    // const statsItems = this.props.statsItems && this.props.statsItems;
-    // console.log('in StatsScreen, statsItems', statsItems && statsItems);
-    return (
-      <View style={styles.container}>
-        <ScrollView>
-          {/* <Text>Stats, count is {items && items.length}</Text> */}
-          {/* <Text style={styles.tipText}>
+const StatsScreen = ({ ...props }) => {
+  // class StatsScreen extends Component {
+  //   constructor(props) {
+  //     super(props);
+  //     // console.log('in StatsScreen constructor', this.props);
+  //     this.props.getUserRequest();
+  //     this.props.getStatsRequest();
+  //     this.props.getUserWipsRequest();
+  //     // console.log(this.props.getStatsRequest);
+  //   }
+
+  // const { stats } = this.props;
+  // console.log('in StatsScreen, stats ', statsDummyData);
+  // const statsItems = this.props.statsItems || [];
+  const userData = userDummyData;
+  //   const statsItems = statsDummyData;
+  const statsItems = props.statsItems && props.statsItems;
+  // console.log('in StatsScreen, statsItems', statsItems && statsItems);
+  console.log(props);
+  props.getUserRequest();
+  props.getStatsRequest();
+  return (
+    <View style={styles.container}>
+      <ScrollView>
+        {/* <Text>Stats, count is {items && items.length}</Text> */}
+        {/* <Text style={styles.tipText}>
             Offboard Diagnostic Information System
           </Text> */}
-          {/* <View style={styles.rowWithImage}>
+        {/* <View style={styles.rowWithImage}>
                         <Image source={statsGrab} style={styles.contentImage} />
                     </View> */}
-          <StatsSummary statsItems={statsItems} userData={userData} />
-        </ScrollView>
-      </View>
-    );
-  }
-}
+        <StatsSummary statsItems={statsItems} userData={userData} />
+      </ScrollView>
+    </View>
+  );
+};
 
 StatsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Stats' />,
@@ -118,17 +121,17 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   //   const { friends } = state;
-  //   console.log('in mapStateToProps');
-  //   console.log(state);
-  //   console.log('end mapStateToProps');
+  console.log('in stats mapStateToProps');
+  console.log(state);
+  console.log('end stats mapStateToProps');
   return { statsItems: state.statsItems, userData: state.userData };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getUserRequest: () => dispatch(getUserRequest()),
-    getStatsRequest: () => dispatch(getStatsRequest()),
-    getUserWipsRequest: () => dispatch(getUserWipsRequest())
+    getStatsRequest: () => dispatch(getStatsRequest())
+    // getUserWipsRequest: () => dispatch(getUserWipsRequest())
   };
 };
 

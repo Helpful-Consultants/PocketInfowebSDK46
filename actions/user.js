@@ -4,8 +4,12 @@ export const Types = {
   USER_ERROR: 'user/user_error'
 };
 
-export const getUserRequest = () => ({
-  type: Types.GET_USER_REQUEST
+export const getUserRequest = ({ email, pin }) => ({
+  type: Types.GET_USER_REQUEST,
+  payload: {
+    email,
+    pin
+  }
 });
 
 export const getUserSuccess = ({ items }) => ({

@@ -10,7 +10,7 @@ export default function stats(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.GET_STATS_SUCCESS: {
       console.log('in stats reducer');
-      console.log();
+      console.log(action.type);
       return {
         ...state,
         statsItems: action.payload.items

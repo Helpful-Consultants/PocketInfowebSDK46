@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import UserReducer from './user';
 import UsersReducer from './users';
 import NewsReducer from './news';
 import ProductsReducer from './products';
@@ -10,6 +11,7 @@ import DealerToolsReducer from './dealerTools';
 
 export default combineReducers({
   users: UsersReducer,
+  user: UserReducer,
   news: NewsReducer,
   products: ProductsReducer,
   ltp: LtpReducer,
