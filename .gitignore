@@ -10,4 +10,5 @@ npm-debug.*
 web-build/
 web-report/
 .expo-shared
+.watchmanconfig
 yarn-error.log
