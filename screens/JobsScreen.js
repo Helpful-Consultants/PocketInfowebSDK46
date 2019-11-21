@@ -23,8 +23,6 @@ import JobsList from './JobsList';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
 export default JobsScreen = ({ ...props }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
   const dispatch = useDispatch();
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
@@ -33,15 +31,13 @@ export default JobsScreen = ({ ...props }) => {
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
   const intId = userData && userData.intId;
-  //   state = {
-  //     search: ''
-  //   };
-  //   updateSearch = search => {
-  //     this.setState({ search });
-  //   };
-  //   if (!userIsSignedIn) {
-  //     props.navigation.navigate('SignIn');
-  //   }
+  // Search function
+  const [searchInput, setSearchInput] = useState('');
+  const [selectedItem, setSelectedItem] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  if (!userIsSignedIn) {
+    props.navigation.navigate('SignIn');
+  }
   const getWips = useCallback(getWipsData => {
     console.log('getWips', getWipsData);
     dispatch(getDealerWipsRequest(getWipsData)), [dealerWipsItems];
@@ -67,6 +63,11 @@ export default JobsScreen = ({ ...props }) => {
   // console.log(dealerWipsItems);
   // console.log('Find DealerWips screen end');
 
+  const searchInputHandler = searchInput => {
+    console.log(searchInput);
+    setSearchInput(searchInput);
+  };
+
   const refreshRequestHandler = () => {
     const getWipsData = {
       dealerId: dealerId,
@@ -87,12 +88,11 @@ export default JobsScreen = ({ ...props }) => {
 
   return (
     <View>
-      {/* <SearchBar
-          placeholder='Type Here...'
-          onChangeText={this.updateSearch}
-          value={search}
-          platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-        /> */}
+      <SearchBar
+        onChangeText={searchInputHandler}
+        value={searchInput}
+        platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+      />
       <Button
         title='New job'
         onPress={() => {

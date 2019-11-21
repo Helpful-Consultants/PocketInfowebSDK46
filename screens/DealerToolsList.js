@@ -82,17 +82,13 @@ export default function DealerToolsList({ ...props }) {
 
   return (
     <View>
-      {items && items.length > 0 ? (
-        <FlatList
-          data={items && items}
-          renderItem={itemData => (
-            <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
-          )}
-          keyExtractor={item => item.id}
-        />
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      <FlatList
+        data={items && items}
+        renderItem={itemData => (
+          <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
+        )}
+        keyExtractor={item => item.id}
+      />
     </View>
   );
 }

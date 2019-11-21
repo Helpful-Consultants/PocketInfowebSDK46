@@ -30,169 +30,165 @@ export default function DealerToolsList({ ...props }) {
 
   return (
     <View>
-      {items && items.length > 0 ? (
-        <ScrollView>
-          {items.map((item, i) => (
-            <Card
-              key={i}
-              containerStyle={{
-                backgroundColor: '#ededed',
-                borderColor: '#666',
-                borderStyle: 'solid',
-                borderWidth: 1,
-                borderRadius: 6
-              }}
-            >
-              <View>
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: '600',
-                    textAlign: 'left',
-                    marginBottom: 5
+      <ScrollView>
+        {items.map((item, i) => (
+          <Card
+            key={i}
+            containerStyle={{
+              backgroundColor: '#ededed',
+              borderColor: '#666',
+              borderStyle: 'solid',
+              borderWidth: 1,
+              borderRadius: 6
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  textAlign: 'left',
+                  marginBottom: 5
+                }}
+              >{`Job ${item.wipNumber}`}</Text>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <Button
+                  title=' Add tools'
+                  type='clear'
+                  onPress={() =>
+                    alert(`pressed add tools to job ${item.wipNumber}`)
+                  }
+                  buttonStyle={{
+                    backgroundColor: 'transparent'
                   }}
-                >{`Job ${item.wipNumber}`}</Text>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
+                  titleStyle={{
+                    fontSize: 14,
+                    color: '#000',
+                    backgroundColor: 'transparent'
                   }}
-                >
-                  <Button
-                    title=' Add tools'
-                    type='clear'
-                    onPress={() =>
-                      alert(`pressed add tools to job ${item.wipNumber}`)
+                  icon={
+                    <Icon
+                      name={
+                        Platform.OS === 'ios'
+                          ? 'ios-add-circle-outline'
+                          : 'md-add-circle-outline'
+                      }
+                      type='ionicon'
+                      size={16}
+                      iconStyle={{
+                        color: 'black',
+                        backgroundColor: 'transparent'
+                      }}
+                    />
+                  }
+                />
+                <Button
+                  title=' Finished'
+                  type='clear'
+                  onPress={() => {
+                    {
+                      /* alert(`pressed finished ${item.wipNumber}`); */
                     }
-                    buttonStyle={{
-                      backgroundColor: 'transparent'
+                    props.deleteDealerWipRequest({
+                      id: item.id,
+                      wipNumber: item.wipNumber,
+                      intId: item.userIntId
+                    });
+                  }}
+                  buttonStyle={{
+                    backgroundColor: 'transparent'
+                  }}
+                  titleStyle={{
+                    fontSize: 14,
+                    color: '#000',
+                    backgroundColor: 'transparent'
+                  }}
+                  icon={
+                    <Icon
+                      name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                      type='ionicon'
+                      size={16}
+                      iconStyle={{
+                        color: 'black',
+                        backgroundColor: 'transparent'
+                      }}
+                    />
+                  }
+                />
+              </View>
+              <View>
+                {item.tools.map((item, i) => (
+                  <ListItem
+                    containerStyle={{
+                      backgroundColor: '#f6f6f6',
+                      marginBottom: 5,
+                      borderColor: '#2089dc',
+                      borderStyle: 'solid',
+                      borderWidth: 1,
+                      borderRadius: 6
                     }}
                     titleStyle={{
                       fontSize: 14,
-                      color: '#000',
-                      backgroundColor: 'transparent'
+                      color: '#2089dc',
+                      textAlign: 'left'
                     }}
-                    icon={
+                    key={i}
+                    title={`${item.partNumber} (${item.toolNumber})`}
+                    subtitle={
+                      <View>
+                        <Text
+                          style={{
+                            color: '#2089dc',
+                            marginBottom: 3
+                          }}
+                        >{`${item.partDescription}`}</Text>
+                        {item.location.length > 0 ? (
+                          <Text>{`Last location was ${item.location}`}</Text>
+                        ) : null}
+
+                        {item.lastWIP.length > 0 ? (
+                          <Text>{`Last booked to job ${item.lastWIP}`}</Text>
+                        ) : null}
+                      </View>
+                    }
+                    topDivider={i > 0 ? true : false}
+                    rightIcon={
                       <Icon
                         name={
                           Platform.OS === 'ios'
-                            ? 'ios-add-circle-outline'
-                            : 'md-add-circle-outline'
+                            ? 'ios-return-left'
+                            : 'md-return-left'
                         }
                         type='ionicon'
-                        size={16}
-                        iconStyle={{
-                          color: 'black',
-                          backgroundColor: 'transparent'
-                        }}
+                        color='#2089dc'
+                        reverse
+                        onPress={() =>
+                          alert(
+                            `return tool finished ${item.id}, job ${item.wipNumber}`
+                          )
+                        }
+                        size={10}
                       />
                     }
                   />
-                  <Button
-                    title=' Finished'
-                    type='clear'
-                    onPress={() => {
-                      {
-                        /* alert(`pressed finished ${item.wipNumber}`); */
-                      }
-                      props.deleteDealerWipRequest({
-                        id: item.id,
-                        wipNumber: item.wipNumber,
-                        intId: item.userIntId
-                      });
-                    }}
-                    buttonStyle={{
-                      backgroundColor: 'transparent'
-                    }}
-                    titleStyle={{
-                      fontSize: 14,
-                      color: '#000',
-                      backgroundColor: 'transparent'
-                    }}
-                    icon={
-                      <Icon
-                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                        type='ionicon'
-                        size={16}
-                        iconStyle={{
-                          color: 'black',
-                          backgroundColor: 'transparent'
-                        }}
-                      />
-                    }
-                  />
-                </View>
-                <View>
-                  {item.tools.map((item, i) => (
-                    <ListItem
-                      containerStyle={{
-                        backgroundColor: '#f6f6f6',
-                        marginBottom: 5,
-                        borderColor: '#2089dc',
-                        borderStyle: 'solid',
-                        borderWidth: 1,
-                        borderRadius: 6
-                      }}
-                      titleStyle={{
-                        fontSize: 14,
-                        color: '#2089dc',
-                        textAlign: 'left'
-                      }}
-                      key={i}
-                      title={`${item.partNumber} (${item.toolNumber})`}
-                      subtitle={
-                        <View>
-                          <Text
-                            style={{
-                              color: '#2089dc',
-                              marginBottom: 3
-                            }}
-                          >{`${item.partDescription}`}</Text>
-                          {item.location.length > 0 ? (
-                            <Text>{`Last location was ${item.location}`}</Text>
-                          ) : null}
-
-                          {item.lastWIP.length > 0 ? (
-                            <Text>{`Last booked to job ${item.lastWIP}`}</Text>
-                          ) : null}
-                        </View>
-                      }
-                      topDivider={i > 0 ? true : false}
-                      rightIcon={
-                        <Icon
-                          name={
-                            Platform.OS === 'ios'
-                              ? 'ios-return-left'
-                              : 'md-return-left'
-                          }
-                          type='ionicon'
-                          color='#2089dc'
-                          reverse
-                          onPress={() =>
-                            alert(
-                              `return tool finished ${item.id}, job ${item.wipNumber}`
-                            )
-                          }
-                          size={10}
-                        />
-                      }
-                    />
-                  ))}
-                </View>
-                <View>
-                  <Text
-                    style={{ fontSize: 10, textAlign: 'right' }}
-                  >{`${item.createdBy} ${item.createdDate}`}</Text>
-                </View>
+                ))}
               </View>
-            </Card>
-          ))}
-        </ScrollView>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+              <View>
+                <Text
+                  style={{ fontSize: 10, textAlign: 'right' }}
+                >{`${item.createdBy} ${item.createdDate}`}</Text>
+              </View>
+            </View>
+          </Card>
+        ))}
+      </ScrollView>
     </View>
   );
 }
