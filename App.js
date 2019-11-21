@@ -13,8 +13,8 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
-import { AsyncStorage } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage'; //breaks
+import { AsyncStorage } from 'react-native'; // deprecated
 
 import { Ionicons } from '@expo/vector-icons';
 import { Button, colors, ThemeProvider } from 'react-native-elements';
