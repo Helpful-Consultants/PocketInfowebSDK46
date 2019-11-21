@@ -9,17 +9,32 @@ import {
 import * as actions from '../actions/dealerTools';
 import * as api from '../api/dealerTools';
 
-function* getDealerTools() {
+function* getDealerTools({ payload }) {
+  console.log('in saga get dealerTools, payload', payload && payload);
   try {
-    const result = yield call(api.getDealerTools);
-    // console.log('in saga get dealerTools, success');
+    const result = yield call(api.getDealerTools, {
+      dealerId: payload.dealerId
+    });
+    console.log('in saga get dealerTools - 200');
+    console.log(result);
+
+    if (result.data.length > 0) {
+      console.log('in tools saga - good 200');
+      yield put(
+        actions.getDealerToolsSuccess({
+          items: result.data
+        })
+      );
+    } else {
+      console.log('in tools saga - bad 200');
+      yield put(
+        actions.getDealerToolsError({
+          error: 'in tools saga - bad 200'
+        })
+      );
+    }
     // console.log(result);
     // console.log('end results in saga get dealerTools, success');
-    yield put(
-      actions.getDealerToolsSuccess({
-        items: result.data
-      })
-    );
   } catch (e) {
     console.log('error in saga get dealerTools !!!!!!!!!!!!!!');
     yield put(

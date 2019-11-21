@@ -13,10 +13,10 @@ import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import placeholderImage from '../assets/images/robot-prod.png';
-import userWipsDummyData from '../dummyData/userWipsDummyData.js';
+import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
 export default function DealerToolsList({ ...props }) {
-  //   console.log('props');
+  console.log('props');
   //   console.log(props);
   //   console.log('props end');
   const limit = 50;
@@ -97,7 +97,7 @@ export default function DealerToolsList({ ...props }) {
                       {
                         /* alert(`pressed finished ${item.wipNumber}`); */
                       }
-                      props.deleteUserWipRequest({
+                      props.deleteDealerWipRequest({
                         id: item.id,
                         wipNumber: item.wipNumber,
                         intId: item.userIntId

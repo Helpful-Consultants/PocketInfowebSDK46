@@ -1,6 +1,12 @@
-import React from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
+import React, { useCallback, useReducer } from 'react';
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from 'react-native';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Image, Text } from 'react-native-elements';
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -8,34 +14,55 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getUserRequest } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
-import { getUserWipsRequest } from '../actions/userWips';
+// import { getDealerWipsRequest } from '../actions/dealerWips';
 
 import StatsSummary from './StatsSummary';
 import userDummyData from '../dummyData/userDummyData.js';
 import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/content/stats.jpg';
 
-const StatsScreen = ({ ...props }) => {
+export default StatsScreen = ({ ...props }) => {
   // class StatsScreen extends Component {
   //   constructor(props) {
   //     super(props);
   //     // console.log('in StatsScreen constructor', this.props);
   //     this.props.getUserRequest();
   //     this.props.getStatsRequest();
-  //     this.props.getUserWipsRequest();
+  //     this.props.getDealerWipsRequest();
   //     // console.log(this.props.getStatsRequest);
   //   }
 
   // const { stats } = this.props;
   // console.log('in StatsScreen, stats ', statsDummyData);
-  // const statsItems = this.props.statsItems || [];
-  const userData = userDummyData;
-  //   const statsItems = statsDummyData;
-  const statsItems = props.statsItems && props.statsItems;
-  // console.log('in StatsScreen, statsItems', statsItems && statsItems);
-  console.log(props);
-  props.getUserRequest();
-  props.getStatsRequest();
+  // const statsObj = this.props.statsObj || [];
+  const dispatch = useDispatch();
+  const statsObj = useSelector(state => state.stats.statsItems[0]);
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userDataObj = useSelector(state => state.user.userData[0]);
+  const getStats = useCallback(() => dispatch(getStatsRequest()), [statsObj]);
+  const getUserData = useCallback(() => dispatch(getUserRequest()), [
+    userDataObj
+  ]);
+
+  if (statsObj && Object.keys(statsObj).length > 0) {
+    console.log('in stats screen,statsObj', statsObj);
+  } else {
+    console.log('in stats screen, no statsObj', statsObj);
+    getStats();
+  }
+  if (userDataObj && Object.keys(userDataObj).length > 0) {
+    console.log('in stats screen,userDataObj', userDataObj);
+  } else {
+    console.log('in stats screen, no userDataObj', userDataObj);
+    getUserData();
+  }
+  //   const userDataObj = userDummyData;
+  //   const statsObj = statsDummyData;
+
+  // console.log('in StatsScreen, statsObj', statsObj && statsObj);
+  //   console.log('in stats screen,statsObj', statsObj);
+  //   props.getUserRequest();
+  //   props.getStatsRequest();
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -46,7 +73,7 @@ const StatsScreen = ({ ...props }) => {
         {/* <View style={styles.rowWithImage}>
                         <Image source={statsGrab} style={styles.contentImage} />
                     </View> */}
-        <StatsSummary statsItems={statsItems} userData={userData} />
+        <StatsSummary statsObj={statsObj} userDataObj={userDataObj} />
       </ScrollView>
     </View>
   );
@@ -57,13 +84,11 @@ StatsScreen.navigationOptions = ({ navigation }) => ({
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
-        title='ODIS versions'
+        title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
+          console.log('pressed homescreen icon');
+          navigation.navigate('HomeScreen');
         }}
       />
     </HeaderButtons>
@@ -74,10 +99,8 @@ StatsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          {
-            /* console.log('pressed menu icon'); */
-          }
-          navigation.openDrawer();
+          console.log('pressed menu icon');
+          navigation.toggleDrawer();
         }}
       />
     </HeaderButtons>
@@ -118,32 +141,3 @@ const styles = StyleSheet.create({
     marginLeft: -10
   }
 });
-
-const mapStateToProps = state => {
-  //   const { friends } = state;
-  console.log('in stats mapStateToProps');
-  console.log(state);
-  console.log('end stats mapStateToProps');
-  return { statsItems: state.statsItems, userData: state.userData };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getUserRequest: () => dispatch(getUserRequest()),
-    getStatsRequest: () => dispatch(getStatsRequest())
-    // getUserWipsRequest: () => dispatch(getUserWipsRequest())
-  };
-};
-
-// export default connect(mapStateToProps)(OdisScreen);
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  //   ({ news }) => ({ news }),
-  //   {
-  //     getNewsRequest,
-  //     createUserRequest,
-  //     deleteUserRequest,
-  //     newsError
-  //   }
-)(StatsScreen);

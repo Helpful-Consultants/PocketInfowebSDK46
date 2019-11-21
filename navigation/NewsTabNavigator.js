@@ -11,7 +11,7 @@ import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 // import LtpScreen from '../screens/LtpScreen';
 // import FindToolsScreen from '../screens/FindTools';
-import SettingsScreen from '../screens/SettingsScreen';
+import StatsScreen from '../screens/StatsScreen';
 import OdisScreen from '../screens/OdisScreen';
 
 const config = Platform.select({
@@ -103,9 +103,29 @@ ProductsStack.navigationOptions = {
     />
   )
 };
-
 ProductsStack.path = '';
 // End Products screen
+
+// Stats screen
+const StatsStack = createStackNavigator(
+  {
+    Stats: StatsScreen
+  },
+  config
+);
+
+StatsStack.navigationOptions = {
+  tabBarLabel: 'Stats',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
+    />
+  )
+};
+
+StatsStack.path = '';
+// End Stats screen
 
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
@@ -113,7 +133,7 @@ const tabNavigator = createBottomTabNavigator({
   NewsStack,
   ProductsStack,
   OdisStack,
-  SettingsScreen
+  StatsStack
 });
 
 tabNavigator.path = '';

@@ -10,81 +10,71 @@ import seatLogo from '../assets/images/logos/seat-logo.png';
 import cvLogo from '../assets/images/logos/cv-logo.png';
 // import statsGrab from '../assets/images/content/stats.jpg';
 
-export default function StatsSummary({ ...props }) {
-  console.log('props.statsItems');
-  console.log(props.statsItems);
-  console.log('props.statsItems');
+export default function StatsSummary(props) {
+  //   console.log('props.statsItems');
+  //   console.log(props.statsItems);
+  //   console.log('props.statsItems');
   //   const items = props.items[0].brandVersions || [];
-  const statsItems = (props.statsItems && props.statsItems) || [];
-  const userData = props.userData[0] || {};
-  const logoChooser = {
-    au: audiLogo,
-    cv: cvLogo,
-    se: seatLogo,
-    vw: vwLogo,
-    sk: skodaLogo
-  };
+  //   console.log(props);
+  const { statsObj, userDataObj } = props;
+
   // console.log('start statsDummyData');
   // console.log(statsDummyData);
   //   console.log('statsData', items);
   //   console.log(logoChooser);
   //   console.log('statsDummyData', statsDummyData);
-  imageSource =
-    'https://react-native-elements.github.io/react-native-elements/img/card.png';
   return (
     <View style={styles.container}>
-      {statsItems && statsItems.length > 0 ? (
+      {userDataObj ? (
         <View>
-          {statsItems.map((item, i) => (
-            <Card key={i}>
-              <View style={styles.statsRow}>
-                {/* <Image
+          <Card>
+            <View style={styles.statsRow}>
+              {/* <Image
                   source={logoChooser[item.brandCode.toLowerCase()]}
                   style={styles.logo}
                 /> */}
-                <View>
-                  <Text style={styles.statsVersionText}>
-                    User Name: {userData.userName}
-                  </Text>
-                  <Text style={styles.statsVersionText}>
-                    User ID: {userData.userId}
-                  </Text>
-                  <Text style={styles.statsVersionText}>
-                    Dealer Id: {userData.dealerId}
-                  </Text>
-                  <Text style={styles.statsVersionText}>
-                    Dealer Name: {item.userName}
-                  </Text>
+              <View>
+                <Text style={styles.statsVersionText}>
+                  User Name: {userDataObj.userName}
+                </Text>
+                <Text style={styles.statsVersionText}>
+                  User ID: {userDataObj.userId}
+                </Text>
+                <Text style={styles.statsVersionText}>
+                  Dealer Id: {userDataObj.dealerId}
+                </Text>
+                <Text style={styles.statsVersionText}>
+                  Dealer Name: {statsObj.userName}
+                </Text>
 
-                  <Card title='Mandatory Tools'>
-                    <Text style={styles.statsVersionText}>
-                      {`2,556 Mandatory; ${item.loggedTools} logged`}
-                    </Text>
-                  </Card>
-                  <Card title='Loan Tool Usage'>
-                    <Text style={styles.statsVersionText}>
-                      {`99 Usage; 99 Current bookings`}
-                    </Text>
-                  </Card>
-                  <Card title='Support Tickets'>
-                    <Text style={styles.statsVersionText}>
-                      {`${item.tiwTicketsRaised} raised; ${item.tiwTicketsClosed} closed`}
-                    </Text>
-                  </Card>
-                  <Card title='Active Jobs'>
-                    <Text style={styles.statsVersionText}>
-                      `XX active; X.XX% Effectiveness`
-                    </Text>
-                  </Card>
-                  <Card title='Service Measures'>
-                    <Text style={styles.statsVersionText}>
-                      {`${item.completedServiceMeasures} active; ${item.activeServiceMeasures} completed`}
-                    </Text>
-                  </Card>
-                </View>
+                <Card title='Mandatory Tools!'>
+                  <Text style={styles.statsVersionText}>
+                    {`2,556 Mandatory; ${statsObj.loggedTools} logged`}
+                  </Text>
+                </Card>
+                <Card title='Loan Tool Usage'>
+                  <Text style={styles.statsVersionText}>
+                    {`99 Usage; 99 Current bookings`}
+                  </Text>
+                </Card>
+                <Card title='Support Tickets'>
+                  <Text style={styles.statsVersionText}>
+                    {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
+                  </Text>
+                </Card>
+                <Card title='Active Jobs'>
+                  <Text style={styles.statsVersionText}>
+                    `XX active; X.XX% Effectiveness`
+                  </Text>
+                </Card>
+                <Card title='Service Measures'>
+                  <Text style={styles.statsVersionText}>
+                    {`${statsObj.completedServiceMeasures} active; ${statsObj.activeServiceMeasures} completed`}
+                  </Text>
+                </Card>
               </View>
-            </Card>
-          ))}
+            </View>
+          </Card>
         </View>
       ) : (
         <Text>Loading...</Text>

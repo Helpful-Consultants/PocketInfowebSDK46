@@ -21,7 +21,7 @@ export default function DealerToolsList({ ...props }) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
-  const limit = 3;
+  const limit = 10;
   const allItems = props.items || [];
   //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
   const items = allItems && allItems.slice(0, limit);

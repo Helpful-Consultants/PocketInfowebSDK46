@@ -16,13 +16,29 @@ function* getUser({ payload }) {
       email: payload.email,
       pin: payload.pin
     });
-    console.log('in user saga - success');
-    console.log(result);
-    yield put(
-      actions.getUserSuccess({
-        items: result.data
-      })
-    );
+    console.log('in user saga - 200');
+    // console.log(result.data);
+    // console.log('result is:', result.data[0]);
+    // console.log('result userId is:', result.data[0].userId);
+    // console.log('result intIdis:', result.data[0].intId);
+
+    // const userId = result.data[0].userId && result.data[0].userId;
+    // const userIntId = result.data[0].intId && result.data[0].intId;
+    if (result.data[0].intId.length > 0 || result.data[0].userId.length > 0) {
+      console.log('in user saga - good 200');
+      yield put(
+        actions.getUserSuccess({
+          items: result.data
+        })
+      );
+    } else {
+      console.log('in user saga - bad 200');
+      yield put(
+        actions.userError({
+          error: 'User credentials not verified'
+        })
+      );
+    }
   } catch (e) {
     console.log('in user saga - error!!!!!!!!!!!!!!');
     yield put(

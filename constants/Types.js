@@ -33,12 +33,12 @@ export default {
   CREATE_USER_REQUEST: 'users/create_user_request',
   USERS_ERROR: 'users/user_error',
 
-  GET_USER_WIPS_REQUEST: 'userWips/get_user_wips_request',
-  GET_USER_WIPS_SUCCESS: 'userWips/get_user_wips_success',
-  DELETE_USER_WIP_REQUEST: 'userWips/delete_user_wip_request',
-  CREATE_USER_WIP_REQUEST: 'userWips/create_user_wip_request',
-  UPDATE_USER_WIP_REQUEST: 'userWips/update_user_wip_request',
-  USER_WIPS_ERROR: 'userWips/user_wips_error',
+  GET_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
+  GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',
+  DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',
+  CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
+  UPDATE_DEALER_WIP_REQUEST: 'dealerWips/update_dealer_wip_request',
+  DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error',
 
   FORM_INPUT_UPDATE: 'FORM_INPUT_UPDATE'
 };

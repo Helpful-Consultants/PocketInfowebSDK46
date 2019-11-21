@@ -14,13 +14,14 @@ export default function user(state = INITIAL_STATE, action) {
       console.log('action.payload is:', action.payload.items);
       return {
         ...state,
-        userData: action.payload.items,
-        userIsSignedIn: true
+        userIsSignedIn: true,
+        userData: action.payload.items
       };
     }
     case Types.USER_ERROR: {
       return {
         ...state,
+        userIsSignedIn: false,
         error: action.payload.error
       };
     }

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { connect } from 'react-redux';
 import { Button, Icon, Image, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   render() {
     // console.log(this.props);
+    const { userIsSignedIn, userData } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView
@@ -60,6 +62,7 @@ export default class HomeScreen extends Component {
           </View>
           <View style={styles.gridRow}>
             <Touchable
+              disabled
               style={styles.gridCell}
               onPress={() => this.props.navigation.navigate('ReturnTools')}
             >
@@ -72,6 +75,7 @@ export default class HomeScreen extends Component {
                 />
 
                 <Text style={styles.gridCellText}>Return tools</Text>
+                <Text style={styles.gridCellText}>(Coming soon..)</Text>
               </View>
             </Touchable>
             <Touchable
@@ -130,8 +134,33 @@ export default class HomeScreen extends Component {
               <Text style={styles.odisCellText}>See latest ODIS versions</Text>
             </View>
           </Touchable>
+          <View
+            style={{
+              marginTop: 15
+            }}
+          >
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 12
+              }}
+            >
+              {userIsSignedIn
+                ? `Signed in as ${userData.userName}`
+                : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
+            </Text>
+            <Text
+              style={{
+                marginTop: 5,
+                textAlign: 'center',
+                fontSize: 12
+              }}
+            >
+              {userIsSignedIn ? `${userData.dealerName}` : null}
+            </Text>
+          </View>
           <Touchable
-            style={{ marginTop: 60 }}
+            style={{ marginTop: 0 }}
             onPress={() => this.props.navigation.navigate('SignIn')}
           >
             <View style={styles.odisRow}>
@@ -186,7 +215,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20
+    marginTop: 10
 
     // backgroundColor: 'red'
   },
@@ -230,7 +259,7 @@ const styles = StyleSheet.create({
   },
   odisCellText: {
     color: '#333',
-    fontSize: 12,
+    fontSize: 14,
 
     flexDirection: 'column',
     justifyContent: 'center',
@@ -319,3 +348,27 @@ const styles = StyleSheet.create({
     color: '#2e78b7'
   }
 });
+
+const mapStateToProps = state => {
+  console.log('in SignInScreen mapStateToProps');
+  //   console.log(state);
+  //   const { friends } = state;
+  console.log(state.user.userData && state.user.userData.length);
+  console.log(state.user.userIsSignedIn && state.user.userIsSignedIn);
+  console.log('SignInScreen mapStateToProps - end');
+
+  //   console.log('end mapStateToProps');
+  return {
+    userIsSignedIn: state.user.userIsSignedIn && state.user.userIsSignedIn,
+    userData: (state.user.userData && state.user.userData[0]) || {}
+  };
+};
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getUserRequest: signInData => dispatch(getUserRequest(signInData))
+//   };
+// };
+
+// export default SignInScreen;
+export default connect(mapStateToProps)(HomeScreen);

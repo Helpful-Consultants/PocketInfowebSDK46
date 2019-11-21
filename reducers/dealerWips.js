@@ -1,20 +1,20 @@
-import { Types } from '../actions/userWips';
+import { Types } from '../actions/dealerWips';
 
 const INITIAL_STATE = {
-  userWipsItems: []
+  dealerWipsItems: []
 };
 
-export default function userWips(state = INITIAL_STATE, action) {
+export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
   console.log('action.type is:', action.type);
   switch (action.type) {
-    case Types.GET_USER_WIPS_SUCCESS: {
+    case Types.GET_DEALER_WIPS_SUCCESS: {
       return {
         ...state,
-        userWipsItems: action.payload.items
+        dealerWipsItems: action.payload.items
       };
     }
-    case Types.USER_WIPS_ERROR: {
+    case Types.DEALER_WIPS_ERROR: {
       return {
         ...state,
         error: action.payload.error

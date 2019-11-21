@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Icon, Overlay, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -10,23 +10,33 @@ import { getDealerToolsRequest } from '../actions/dealerTools';
 import DealerToolsList from './DealerToolsList';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-const FindToolsScreen = ({ ...props }) => {
-  //   constructor(props) {
-  //     super(props);
-  //     console.log('in DealerToolsScreen constructor');
-  //     // console.log(this.props);
-  //     // this.props.getDealerToolsRequest();
+export default FindToolsScreen = ({ ...props }) => {
+  const dispatch = useDispatch();
+  const dealerToolsItems = useSelector(
+    state => state.dealerTools.dealerToolsItems
+  );
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userData = useSelector(state => state.user.userData[0]);
+  const dealerId = userData && userData.dealerId;
 
-  //     // console.log(this.props.getDealerToolsRequest);
-  //   }
+  //   const signInToServer = useCallback(
+  //     signInData => dispatch(getUserRequest(signInData)),
+  //     [userIsSignedIn]
+  //   );
 
-  //   state = {
-  //     search: ''
-  //   };
-  //   updateSearch = search => {
-  //     this.setState({ search });
-  //   };
-  const [searchInput, setSearchInput] = useState('search text');
+  const getTools = useCallback(
+    getToolsData => dispatch(getDealerToolsRequest(getToolsData)),
+    [dealerToolsItems]
+  );
+
+  if (dealerToolsItems && dealerToolsItems.length > 0) {
+    // console.log('in tools screen,toolsItems', dealerToolsItems);
+  } else {
+    console.log('in tools screen, no toolsItems');
+  }
+
+  // Search function
+  const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -42,10 +52,20 @@ const FindToolsScreen = ({ ...props }) => {
     console.log(searchInput);
     setSearchInput(searchInput);
   };
-  const { dealerToolsItems } = props;
+
+  const refreshRequestHandler = () => {
+    const getToolsData = {
+      dealerId: dealerId
+    };
+    console.log('in refreshRequestHandler');
+    dealerId && getTools(getToolsData);
+  };
+  // Search function - end
+
+  //   const { dealerToolsItems } = props;
   // const { dealerToolsItems } = this.props;
-  //   const items = dealerToolsItems;
-  const items = dealerToolsDummyData;
+  const items = dealerToolsItems;
+  //   const items = dealerToolsDummyData;
 
   // const { search } = this.state;
   return (
@@ -115,10 +135,34 @@ const FindToolsScreen = ({ ...props }) => {
         </View>
       </Overlay>
       <SearchBar
-        placeholder='Type Here...'
         onChangeText={searchInputHandler}
         value={searchInput}
         platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+      />
+
+      <Button
+        title='Refresh list'
+        onPress={() => {
+          refreshRequestHandler();
+        }}
+        buttonStyle={{
+          marginBottom: 10,
+          marginTop: 10,
+          marginLeft: 15,
+          marginRight: 15,
+          borderRadius: 20
+        }}
+        icon={
+          <Icon
+            name={
+              Platform.OS === 'ios'
+                ? 'add-circle-outline'
+                : 'add-circle-outline'
+            }
+            size={20}
+            color='white'
+          />
+        }
       />
       <DealerToolsList items={items} onSelectItem={selectItemHandler} />
     </View>
@@ -134,7 +178,7 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
           console.log('pressed homescreen icon');
-          navigation.navigate('Home');
+          navigation.navigate('HomeScreen');
         }}
       />
     </HeaderButtons>
@@ -174,32 +218,32 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => {
-  //   const { friends } = state;
-  console.log('in mapStateToProps');
-  //   console.log(
-  //     state.dealerTools.dealerToolsItems && state.dealerTools.dealerToolsItems
-  //   );
-  const dealerToolsItems = (state.dealerTools && state.dealerTools) || {};
-  //   console.log('end mapStateToProps');
-  return dealerToolsItems;
-};
+// const mapStateToProps = state => {
+//   //   const { friends } = state;
+//   console.log('in mapStateToProps');
+//   //   console.log(
+//   //     state.dealerTools.dealerToolsItems && state.dealerTools.dealerToolsItems
+//   //   );
+//   const dealerToolsItems = (state.dealerTools && state.dealerTools) || {};
+//   //   console.log('end mapStateToProps');
+//   return dealerToolsItems;
+// };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    getDealerToolsRequest: () => dispatch(getDealerToolsRequest())
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getDealerToolsRequest: () => dispatch(getDealerToolsRequest())
+//   };
+// };
 
-// export default connect(mapStateToProps)(DealerToolsScreen);
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  //   ({ news }) => ({ news }),
-  //   {
-  //     getDealerToolsRequest,
-  //     createUserRequest,
-  //     deleteUserRequest,
-  //     newsError
-  //   }
-)(FindToolsScreen);
+// // export default connect(mapStateToProps)(DealerToolsScreen);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+//   //   ({ news }) => ({ news }),
+//   //   {
+//   //     getDealerToolsRequest,
+//   //     createUserRequest,
+//   //     deleteUserRequest,
+//   //     newsError
+//   //   }
+// )(FindToolsScreen);

@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 import { Platform, SafeAreaView, StyleSheet, View, Alert } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { getUserRequest } from '../actions/user';
@@ -8,18 +8,28 @@ import { getUserRequest } from '../actions/user';
 
 import Types from '../constants/Types';
 
-const SignInScreen = props => {
+export default SignInScreen = props => {
   //   const [enteredEmail, setEnteredEmail] = useState('name@business.co.uk');
   //   const [enteredPin, setEnteredPin] = useState('123456');
   //   const [emailIsValid] = useState(false);
   //   const [pinIsValid] = useState(false);
   //   const emailChangeHandler = text => {};
 
-  const { userIsSignedIn, userData } = props;
+  //   const { userIsSignedIn, userDataObj } = props;
   //   console.log(props);
-  console.log('userIsSignedIn', userIsSignedIn);
-  console.log('userData', userData && userData);
 
+  const dispatch = useDispatch();
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userDataObj = useSelector(state => state.user.userData[0]);
+  console.log('userIsSignedIn', userIsSignedIn);
+  console.log('userDataObj', userDataObj && userDataObj);
+
+  //   const signInToServer = useCallback(() => dispatch(getUserRequest()), [
+  //     userIsSignedIn
+  //   ]);
+  if (userIsSignedIn) {
+    props.navigation.navigate('HomeScreen');
+  }
   const formReducer = (state, action) => {
     if (action.type === Types.FORM_INPUT_UPDATE) {
       const updatedValues = {
@@ -45,7 +55,7 @@ const SignInScreen = props => {
   //   const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
-    inputValues: { email: 'bobbie', pin: '123' },
+    inputValues: { email: '', pin: '' },
     inputValidities: {
       email: false,
       pin: false
@@ -68,7 +78,7 @@ const SignInScreen = props => {
     }
     dispatchFormState({
       type: Types.FORM_INPUT_UPDATE,
-      value: text,
+      value: inputIdentifier === 'email' ? text.toLowerCase() : text,
       isValid: isValid,
       inputId: inputIdentifier
     });
@@ -95,27 +105,32 @@ const SignInScreen = props => {
         email: formState.inputValues.email,
         pin: formState.inputValues.pin
       };
-      props.getUserRequest(signInData);
+      //   const signInToServer = useCallback(
+      //     signInData => dispatch(getUserRequest(signInData)),
+      //     [userIsSignedIn]
+      //   );
+      dispatch(getUserRequest(signInData));
+      //   signInToServer(signInData);
+      //   props.getUserRequest(signInData);
     }
   };
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}
-      >
+      <View style={{ alignItems: 'center', justifyContent: 'flex-start' }}>
         <AppNameWithLogo />
         <Text
           style={{
-            margin: 20,
-            textAlign: 'center'
+            margin: 10,
+            textAlign: 'center',
+            fontSize: 12
           }}
         >
-          Pocket Infoweb is only available to registered users of Tools Infoweb.
+          {userIsSignedIn
+            ? `Signed in as ${userDataObj.userName}`
+            : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
         </Text>
-        <Text>{`Signed in ${userIsSignedIn}`}</Text>
         <Input
           value={formState.inputValues.email}
-          textContentType='username'
           onChangeText={inputChangeHandler.bind(this, 'email')}
           style={{
             marginTop: 20
@@ -135,10 +150,10 @@ const SignInScreen = props => {
         />
         <Input
           value={formState.inputValues.pin}
-          textContentType='password'
           onChangeText={inputChangeHandler.bind(this, 'pin')}
           style={{
-            marginTop: 20
+            marginVertical: 20,
+            marginHorizontal: 40
           }}
           label='Your Pocket Infoweb access PIN'
           placeholder='12345'
@@ -152,45 +167,13 @@ const SignInScreen = props => {
           onSubmitEditing={text => console.log(text)}
           errorStyle={{ color: 'red' }}
         />
-        <View
-          style={{
-            margin: 20,
-            textAlign: 'center'
-          }}
-        >
-          <Text
-            style={{
-              margin: 5,
-              textAlign: 'center'
-            }}
-          >
-            To activate Pocket Infoweb you will need to generate an access PIN
-            for your userId.
-          </Text>
-          <Text
-            style={{
-              margin: 5,
-              textAlign: 'center'
-            }}
-          >
-            Log in to the Tools Infoweb website.
-          </Text>
-          <Text
-            style={{
-              margin: 5,
-              textAlign: 'center'
-            }}
-          >
-            Go to FAQ | About. Click on the Generate App PIN button.
-          </Text>
-        </View>
-
         <View>
           <Button
             title='Sign in'
             onPress={submitHandler}
             style={{
-              margin: 40
+              marginVertical: 20,
+              marginHorizontal: 40
             }}
             leftIcon={
               <Icon
@@ -208,9 +191,44 @@ const SignInScreen = props => {
               props.navigation.navigate('ForgottenPassword');
             }}
             style={{
-              marginTop: 20
+              marginTop: 10
             }}
           />
+        </View>
+        <View
+          style={{
+            margin: 20,
+            textAlign: 'center'
+          }}
+        >
+          <Text
+            style={{
+              margin: 5,
+              textAlign: 'center',
+              fontSize: 12
+            }}
+          >
+            To activate Pocket Infoweb you will need to generate an access PIN
+            for your userId.
+          </Text>
+          <Text
+            style={{
+              margin: 3,
+              textAlign: 'center',
+              fontSize: 12
+            }}
+          >
+            Log in to the Tools Infoweb website.
+          </Text>
+          <Text
+            style={{
+              margin: 3,
+              textAlign: 'center',
+              fontSize: 12
+            }}
+          >
+            Go to FAQ | About. Click on the Generate App PIN button.
+          </Text>
         </View>
       </View>
     </SafeAreaView>
@@ -255,26 +273,3 @@ const styles = StyleSheet.create({
     marginLeft: -10
   }
 });
-const mapStateToProps = state => {
-  console.log('in SignInScreen mapStateToProps');
-  //   console.log(state);
-  //   const { friends } = state;
-  console.log(state.user.userData && state.user.userData.length);
-  console.log(state.user.userIsSignedIn && state.user.userIsSignedIn);
-  console.log('SignInScreen mapStateToProps - end');
-
-  //   console.log('end mapStateToProps');
-  return {
-    userIsSignedIn: state.user.userIsSignedIn && state.user.userIsSignedIn,
-    userData: (state.user.userData && state.user.userData) || []
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getUserRequest: signInData => dispatch(getUserRequest(signInData))
-  };
-};
-
-// export default SignInScreen;
-export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);

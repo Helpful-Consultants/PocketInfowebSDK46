@@ -49,7 +49,7 @@ const FindToolsStack = createStackNavigator(
 );
 
 FindToolsStack.navigationOptions = {
-  tabBarLabel: 'Find',
+  tabBarLabel: 'Tools',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -150,7 +150,7 @@ const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
   JobsStack,
   FindToolsStack,
-  ReturnToolsStack,
+  //   ReturnToolsStack,
   LtpStack
 });
 

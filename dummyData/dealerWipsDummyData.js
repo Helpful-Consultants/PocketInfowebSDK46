@@ -1,4 +1,4 @@
-export default userWipsDummyData = [
+export default dealerWipsDummyData = [
   {
     id: 2405,
     userIntId: 52,

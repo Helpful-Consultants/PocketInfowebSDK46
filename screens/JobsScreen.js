@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import {
   Modal,
@@ -13,30 +14,25 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import {
-  createUserWipRequest,
-  deleteUserWipRequest,
-  getUserWipsRequest
-} from '../actions/userWips';
+  createDealerWipRequest,
+  deleteDealerWipRequest,
+  getDealerWipsRequest
+} from '../actions/dealerWips';
 
 import JobsList from './JobsList';
-import userWipsDummyData from '../dummyData/userWipsDummyData.js';
+import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
-class JobsScreen extends Component {
-  constructor(props) {
-    super(props);
-    console.log('in UserWipsScreen constructor');
-    // console.log(this.props);
-    // this.props.getUserWipsRequest();
+export default JobsScreen = ({ ...props }) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-    // console.log(this.props.getUserWipsRequest);
-  }
-  state = {
-    modalVisible: false
-  };
-  toggleModal(visible) {
-    this.setState({ modalVisible: visible });
-  }
-
+  const dispatch = useDispatch();
+  const dealerWipsItems = useSelector(
+    state => state.dealerWips.dealerWipsItems
+  );
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userData = useSelector(state => state.user.userData[0]);
+  const dealerId = userData && userData.dealerId;
+  const intId = userData && userData.intId;
   //   state = {
   //     search: ''
   //   };
@@ -44,110 +40,158 @@ class JobsScreen extends Component {
   //     this.setState({ search });
   //   };
 
-  render() {
-    const { userWipsItems } = this.props;
-    // console.log('in UserWipsScreen, userWips ', this.props);
-    // console.log('in UserWipsScreen, userWips end');
-    // console.log('Find Tools screen');
-    // console.log(userWipsItems);
-    // console.log('Find Tools screen end');
-    const items = userWipsItems && userWipsItems;
-    // const items = userWipsDummyData;
-    // const { search } = this.state;
-    // console.log('items');
-    // console.log(items);
-    // console.log('items end');
-    // console.log('in UserWipsScreen, userWips ', userWips && userWips.items);
-    // console.log('in UserWipsScreen, userWips ', userWips && userWips);
-    // console.log('in UserWipsScreen, userWips', userWips && userWips);
+  const getWips = useCallback(getWipsData => {
+    console.log('getWips', getWipsData);
+    dispatch(getDealerWipsRequest(getWipsData)), [dealerWipsItems];
+  });
+  const deleteDealerWip = useCallback(
+    wipData => dispatch(deleteDealerWipRequest(wipData)),
+    [dealerWipsItems]
+  );
+  const createDealerWip = useCallback(
+    wipData => dispatch(createDealerWipRequest(wipData)),
+    [dealerWipsItems]
+  );
 
-    return (
-      <View>
-        {/* <SearchBar
+  if (dealerWipsItems && dealerWipsItems.length > 0) {
+    // console.log('in tools screen,toolsItems', dealerWipsItems);
+  } else {
+    console.log('in jobs screen, no wipsItems');
+  }
+  // const { dealerWipsItems } = this.props;
+  // console.log('in DealerWipsScreen, dealerWips ', this.props);
+  // console.log('in DealerWipsScreen, dealerWips end');
+  // console.log('Find DealerWips screen');
+  // console.log(dealerWipsItems);
+  // console.log('Find DealerWips screen end');
+
+  const refreshRequestHandler = () => {
+    const getWipsData = {
+      dealerId: dealerId,
+      intId: intId
+    };
+    console.log('in refreshRequestHandler');
+    console.log('in refreshRequestHandler', getWipsData);
+    dealerId && intId && getWips(getWipsData);
+  };
+  //   const items = dealerWipsItems;
+  // const items = dealerWipsDummyData;
+  // const { search } = this.state;
+  // console.log('items');
+  // console.log(items);
+  // console.log('items end');
+  // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips.items);
+  // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips);
+  // console.log('in DealerWipsScreen, dealerWips', dealerWips && dealerWips);
+
+  return (
+    <View>
+      {/* <SearchBar
           placeholder='Type Here...'
           onChangeText={this.updateSearch}
           value={search}
           platform={Platform.OS === 'ios' ? 'ios' : 'android'}
         /> */}
-        <Button
-          title='New job'
-          onPress={() => {
-            this.toggleModal(true);
-          }}
-          buttonStyle={{
-            marginBottom: 10,
-            marginTop: 10,
-            marginLeft: 15,
-            marginRight: 15,
-            borderRadius: 20
-          }}
-          icon={
-            <Icon
-              name={
-                Platform.OS === 'ios'
-                  ? 'add-circle-outline'
-                  : 'add-circle-outline'
-              }
-              size={20}
-              color='white'
-            />
-          }
-        />
-
-        <Modal
-          animationType={'slide'}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            console.log('Modal has been closed.');
-          }}
-        >
-          <View style={styles.modal}>
-            <Text style={styles.text}>Create job</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                this.toggleModal(!this.state.modalVisible);
-              }}
-            >
-              <Text style={styles.text}>Cancel</Text>
-            </TouchableHighlight>
-            <Button
-              title='Save job'
-              onPress={() => {
-                this.props.createUserWipRequest('3333');
-                this.toggleModal(false);
-              }}
-              buttonStyle={{
-                marginBottom: 10,
-                marginTop: 50,
-                marginLeft: 15,
-                marginRight: 15,
-                borderRadius: 10
-              }}
-              icon={
-                <Icon
-                  name={
-                    Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'
-                  }
-                  type='ionicon'
-                  size={30}
-                  color='white'
-                />
-              }
-            />
-          </View>
-        </Modal>
-        <ScrollView>
-          <JobsList
-            items={items}
-            deleteUserWipRequest={this.props.deleteUserWipRequest}
+      <Button
+        title='New job'
+        onPress={() => {
+          setIsModalVisible(true);
+        }}
+        buttonStyle={{
+          marginBottom: 10,
+          marginTop: 10,
+          marginLeft: 15,
+          marginRight: 15,
+          borderRadius: 20
+        }}
+        icon={
+          <Icon
+            name={
+              Platform.OS === 'ios'
+                ? 'add-circle-outline'
+                : 'add-circle-outline'
+            }
+            size={20}
+            color='white'
           />
-        </ScrollView>
-      </View>
-    );
-  }
-}
+        }
+      />
+
+      <Modal
+        animationType={'slide'}
+        transparent={false}
+        visible={isModalVisible}
+        onRequestClose={() => {
+          console.log('Modal has been closed.');
+        }}
+      >
+        <View style={styles.modal}>
+          <Text style={styles.text}>Create job</Text>
+
+          <TouchableHighlight
+            onPress={() => {
+              setIsModalVisible(false);
+            }}
+          >
+            <Text style={styles.text}>Cancel</Text>
+          </TouchableHighlight>
+          <Button
+            title='Save job'
+            onPress={() => {
+              createDealerWip('3333');
+              setIsModalVisible(false);
+            }}
+            buttonStyle={{
+              marginBottom: 10,
+              marginTop: 50,
+              marginLeft: 15,
+              marginRight: 15,
+              borderRadius: 10
+            }}
+            icon={
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'}
+                type='ionicon'
+                size={30}
+                color='white'
+              />
+            }
+          />
+        </View>
+      </Modal>
+      <Button
+        title='Refresh list'
+        onPress={() => {
+          refreshRequestHandler();
+        }}
+        buttonStyle={{
+          marginBottom: 10,
+          marginTop: 10,
+          marginLeft: 15,
+          marginRight: 15,
+          borderRadius: 20
+        }}
+        icon={
+          <Icon
+            name={
+              Platform.OS === 'ios'
+                ? 'add-circle-outline'
+                : 'add-circle-outline'
+            }
+            size={20}
+            color='white'
+          />
+        }
+      />
+      <ScrollView>
+        <JobsList
+          items={dealerWipsItems}
+          deleteDealerWipRequest={deleteDealerWip}
+        />
+      </ScrollView>
+    </View>
+  );
+};
 
 JobsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='My jobs' />,
@@ -158,7 +202,7 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
           console.log('pressed homescreen icon');
-          navigation.navigate('Home');
+          navigation.navigate('HomeScreen');
         }}
       />
     </HeaderButtons>
@@ -178,7 +222,7 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
 });
 
 // LocatorScreen.navigationOptions = {
-//   headerTitle: <TitleWithAppLogo title='Tool Finder' />
+//   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />
 // };
 
 const styles = StyleSheet.create({
@@ -198,25 +242,3 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 });
-
-const mapStateToProps = state => {
-  console.log(state);
-  //   const { friends } = state;
-  console.log('in JobScrre mapStateToProps');
-  console.log(state.userWips && state.userWips.length);
-  console.log('in JobScrre mapStateToProps - end');
-  const userWipsItems = state.userWips && state.userWips;
-  //   console.log('end mapStateToProps');
-  return userWipsItems;
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getUserWipsRequest: () => dispatch(getUserWipsRequest()),
-    deleteUserWipRequest: wipData => dispatch(deleteUserWipRequest(wipData)),
-    createUserWipRequest: wipData => dispatch(createUserWipRequest(wipData))
-  };
-};
-
-// export default connect(mapStateToProps)(UserWipsScreen);
-export default connect(mapStateToProps, mapDispatchToProps)(JobsScreen);

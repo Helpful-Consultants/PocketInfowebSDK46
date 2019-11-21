@@ -55,7 +55,7 @@ NewsScreen.navigationOptions = ({ navigation }) => ({
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
           console.log('pressed homescreen icon');
-          navigation.navigate('Home');
+          navigation.navigate('HomeScreen');
         }}
       />
     </HeaderButtons>

@@ -4,8 +4,11 @@ export const Types = {
   DEALER_TOOLS_ERROR: 'dealerTools/dealer_tools_error'
 };
 
-export const getDealerToolsRequest = () => ({
-  type: Types.GET_DEALER_TOOLS_REQUEST
+export const getDealerToolsRequest = ({ dealerId }) => ({
+  type: Types.GET_DEALER_TOOLS_REQUEST,
+  payload: {
+    dealerId: dealerId
+  }
 });
 
 export const getDealerToolsSuccess = ({ items }) => ({

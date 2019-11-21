@@ -104,11 +104,11 @@ const AppDrawerNavigator = createDrawerNavigator({
     navigationOptions: { drawerLabel: 'News & products' }
   },
   OdisStack: {
-    screen: OdisStack,
+    screen: NewsTabNavigator,
     navigationOptions: { drawerLabel: 'Odis versions' }
   },
   StatsScreen: {
-    screen: StatsStack,
+    screen: NewsTabNavigator,
     navigationOptions: { drawerLabel: 'Stats' }
   },
   SignedOutStack: {

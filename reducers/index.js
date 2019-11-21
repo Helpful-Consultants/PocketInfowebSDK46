@@ -6,7 +6,7 @@ import ProductsReducer from './products';
 import LtpReducer from './ltp';
 import OdisReducer from './odis';
 import StatsReducer from './stats';
-import UserWipsReducer from './userWips';
+import DealerWipsReducer from './dealerWips';
 import DealerToolsReducer from './dealerTools';
 
 export default combineReducers({
@@ -18,5 +18,5 @@ export default combineReducers({
   odis: OdisReducer,
   stats: StatsReducer,
   dealerTools: DealerToolsReducer,
-  userWips: UserWipsReducer
+  dealerWips: DealerWipsReducer
 });
