@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { Image, Text } from 'react-native-elements';
-
+import Constants from 'expo-constants';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
@@ -44,6 +44,10 @@ export default StatsScreen = ({ ...props }) => {
     userDataObj
   ]);
 
+  if (!userIsSignedIn) {
+    props.navigation.navigate('SignIn');
+  }
+
   if (statsObj && Object.keys(statsObj).length > 0) {
     console.log('in stats screen,statsObj', statsObj);
   } else {
@@ -66,19 +70,33 @@ export default StatsScreen = ({ ...props }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {/* <Text>Stats, count is {items && items.length}</Text> */}
-        {/* <Text style={styles.tipText}>
-            Offboard Diagnostic Information System
-          </Text> */}
-        {/* <View style={styles.rowWithImage}>
-                        <Image source={statsGrab} style={styles.contentImage} />
-                    </View> */}
         <StatsSummary statsObj={statsObj} userDataObj={userDataObj} />
+        <View style={styles.appData}>
+          <Text>
+            {`${Constants.manifest.name} Version ${Constants.manifest.version}`}
+          </Text>
+          <Text>
+            {`Builds ${Constants.nativeAppVersion} - ${Constants.nativeBuildVersion}`}
+          </Text>
+          <Text>
+            {`${
+              Platform.OS === 'ios'
+                ? Constants.platform.ios.buildNumber
+                  ? Constants.platform.ios.buildNumber
+                  : ''
+                : Constants.platform.android.versionCode
+                ? Constants.platform.android.versionCode
+                : ''
+            }`}
+          </Text>
+        </View>
       </ScrollView>
     </View>
   );
 };
-
+{
+  Platform.OS === 'ios' ? 'ios-home' : 'md-home';
+}
 StatsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Stats' />,
   headerLeft: (
@@ -111,6 +129,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  appData: {
+    alignItems: 'center'
   },
   appName: {
     color: '#0096da',

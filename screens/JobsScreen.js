@@ -39,7 +39,9 @@ export default JobsScreen = ({ ...props }) => {
   //   updateSearch = search => {
   //     this.setState({ search });
   //   };
-
+  //   if (!userIsSignedIn) {
+  //     props.navigation.navigate('SignIn');
+  //   }
   const getWips = useCallback(getWipsData => {
     console.log('getWips', getWipsData);
     dispatch(getDealerWipsRequest(getWipsData)), [dealerWipsItems];
@@ -70,7 +72,6 @@ export default JobsScreen = ({ ...props }) => {
       dealerId: dealerId,
       intId: intId
     };
-    console.log('in refreshRequestHandler');
     console.log('in refreshRequestHandler', getWipsData);
     dealerId && intId && getWips(getWipsData);
   };
@@ -160,7 +161,7 @@ export default JobsScreen = ({ ...props }) => {
         </View>
       </Modal>
       <Button
-        title='Refresh list'
+        title=' Refresh list'
         onPress={() => {
           refreshRequestHandler();
         }}
@@ -173,11 +174,8 @@ export default JobsScreen = ({ ...props }) => {
         }}
         icon={
           <Icon
-            name={
-              Platform.OS === 'ios'
-                ? 'add-circle-outline'
-                : 'add-circle-outline'
-            }
+            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
+            type='ionicon'
             size={20}
             color='white'
           />

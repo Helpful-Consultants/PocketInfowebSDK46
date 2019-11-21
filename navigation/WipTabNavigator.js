@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { StyleSheet, Text, Platform } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator
@@ -10,10 +10,10 @@ import HomeScreen from '../screens/HomeScreen';
 // import NewsScreen from '../screens/NewsScreen';
 // import ProductsScreen from '../screens/ProductsScreen';
 import LtpScreen from '../screens/LtpScreen';
-import FindToolsScreen from '../screens/FindToolsScreen';
+import ToolsScreen from '../screens/ToolsScreen';
 import JobsScreen from '../screens/JobsScreen';
 import ReturnToolsScreen from '../screens/ReturnToolsScreen';
-
+import Colors from '../constants/Colors';
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {}
@@ -28,7 +28,9 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'WipHome',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Home</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -41,15 +43,17 @@ HomeStack.path = '';
 // End Home screen
 
 // Find Tools screen
-const FindToolsStack = createStackNavigator(
+const ToolsStack = createStackNavigator(
   {
-    FindTools: FindToolsScreen
+    Tools: ToolsScreen
   },
   config
 );
 
-FindToolsStack.navigationOptions = {
-  tabBarLabel: 'Tools',
+ToolsStack.navigationOptions = {
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Tools</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -58,7 +62,7 @@ FindToolsStack.navigationOptions = {
   )
 };
 
-FindToolsStack.path = '';
+ToolsStack.path = '';
 // End Find Tools screen
 
 // ReturnTools screen
@@ -70,7 +74,11 @@ const ReturnToolsStack = createStackNavigator(
 );
 
 ReturnToolsStack.navigationOptions = {
-  tabBarLabel: 'Return tools',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>
+      Return tools
+    </Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -91,7 +99,9 @@ const JobsStack = createStackNavigator(
 );
 
 JobsStack.navigationOptions = {
-  tabBarLabel: 'Jobs',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Jobs</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -112,7 +122,9 @@ const LtpStack = createStackNavigator(
 );
 
 LtpStack.navigationOptions = {
-  tabBarLabel: 'LTP',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>LTP</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -148,13 +160,25 @@ LtpStack.path = '';
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
+
   JobsStack,
-  FindToolsStack,
+  ToolsStack,
   //   ReturnToolsStack,
   LtpStack
 });
 
 tabNavigator.path = '';
 // End Tab navigator
+
+const styles = StyleSheet.create({
+  focused: {
+    color: Colors.vwgDeepBlue,
+    fontSize: 12
+  },
+  notFocused: {
+    color: Colors.vwgDarkSkyBlue,
+    fontSize: 12
+  }
+});
 
 export default tabNavigator;

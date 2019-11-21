@@ -1,46 +1,45 @@
 import React, { Component } from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  SafeAreaView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View
+} from 'react-native';
 import { connect } from 'react-redux';
 import { Button, Icon, Image, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
-import AppNameWithLogo from '../components/AppNameWithLogo';
+import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import Colors from '../constants/Colors';
 
 class HomeScreen extends Component {
   render() {
     // console.log(this.props);
     const { userIsSignedIn, userData } = this.props;
+    const buttonColor = Colors.vwgDeepBlue;
+    const buttonTextColor = Colors.vwgWhite;
+    const disabledButtonTextColor = Colors.vwgDarkGay;
+    const actionTextColor = Colors.vwgDeepBlue;
+    const disabledButtonColor = Colors.vwgMidGray;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
-          {/* <View style={styles.welcomeContainer}>
-          <Image
-            source={
-              __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
-            }
-            style={styles.welcomeImage}
-          />
-        </View> */}
-
-          <AppNameWithLogo />
-          {/* <View style={styles.getStartedContainer}>
-            <Text style={styles.announcementText}>QUICK LINKS</Text>
-          </View> */}
+          <AppLogoWithHeader />
 
           <View style={styles.gridRow}>
             <Touchable
               style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('FindTools')}
+              onPress={() => this.props.navigation.navigate('Tools')}
             >
               <View>
                 <Icon
                   name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
                   type='ionicon'
+                  color={buttonTextColor}
                 />
 
                 <Text style={styles.gridCellText}>Find tools</Text>
@@ -54,16 +53,17 @@ class HomeScreen extends Component {
                 <Icon
                   name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
                   type='ionicon'
+                  color={buttonTextColor}
                 />
 
-                <Text style={styles.gridCellText}>My jobs</Text>
+                <Text style={styles.gridCellText}>Jobs</Text>
               </View>
             </Touchable>
           </View>
           <View style={styles.gridRow}>
             <Touchable
               disabled
-              style={styles.gridCell}
+              style={styles.gridCellDisabled}
               onPress={() => this.props.navigation.navigate('ReturnTools')}
             >
               <View>
@@ -72,10 +72,13 @@ class HomeScreen extends Component {
                     Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'
                   }
                   type='ionicon'
+                  color={disabledButtonTextColor}
                 />
 
-                <Text style={styles.gridCellText}>Return tools</Text>
-                <Text style={styles.gridCellText}>(Coming soon..)</Text>
+                <Text style={styles.gridCellTextDisabled}>Return tools</Text>
+                <Text style={styles.gridCellTextDisabledSmall}>
+                  Coming soon..
+                </Text>
               </View>
             </Touchable>
             <Touchable
@@ -86,6 +89,7 @@ class HomeScreen extends Component {
                 <Icon
                   name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
                   type='ionicon'
+                  color={buttonTextColor}
                 />
 
                 <Text style={styles.gridCellText}>LTP</Text>
@@ -101,6 +105,7 @@ class HomeScreen extends Component {
                 <Icon
                   name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
                   type='ionicon'
+                  color={buttonTextColor}
                 />
                 <Text style={styles.gridCellText}>Products</Text>
               </View>
@@ -117,6 +122,7 @@ class HomeScreen extends Component {
                       : 'md-information-circle'
                   }
                   type='ionicon'
+                  color={buttonTextColor}
                 />
 
                 <Text style={styles.gridCellText}>News</Text>
@@ -129,9 +135,10 @@ class HomeScreen extends Component {
                 name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
                 type='ionicon'
                 size={20}
+                color={actionTextColor}
               />
-              <Text style={styles.odisCellText}> </Text>
-              <Text style={styles.odisCellText}>See latest ODIS versions</Text>
+
+              <Text style={styles.odisCellText}> See latest ODIS versions</Text>
             </View>
           </Touchable>
           <View
@@ -142,7 +149,8 @@ class HomeScreen extends Component {
             <Text
               style={{
                 textAlign: 'center',
-                fontSize: 12
+                fontSize: 12,
+                fontStyle: 'italic'
               }}
             >
               {userIsSignedIn
@@ -153,7 +161,8 @@ class HomeScreen extends Component {
               style={{
                 marginTop: 5,
                 textAlign: 'center',
-                fontSize: 12
+                fontSize: 12,
+                fontStyle: 'italic'
               }}
             >
               {userIsSignedIn ? `${userData.dealerName}` : null}
@@ -168,6 +177,7 @@ class HomeScreen extends Component {
                 name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                 type='ionicon'
                 size={20}
+                color={actionTextColor}
               />
               <Text style={styles.odisCellText}> </Text>
               <Text style={styles.odisCellText}>Sign out</Text>
@@ -185,7 +195,7 @@ class HomeScreen extends Component {
             </Touchable>
           </View> */}
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -198,12 +208,18 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+
+    backgroundColor: 'white',
+    marginTop: 10
+  },
+  contentContainer: {
+    paddingTop: 0
   },
   appName: {
     color: '#0096da',
     fontSize: 18
   },
+
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -224,14 +240,29 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '45%',
-    borderColor: '#aaa',
+    borderColor: Colors.vwgDeepBlue,
     borderStyle: 'solid',
     borderWidth: 1,
-    color: '#333',
-    backgroundColor: 'white',
+    color: Colors.vwgDeepBlue,
+    backgroundColor: Colors.vwgDeepBlue,
     margin: 5,
     borderRadius: 10,
-    height: 80
+    height: 70
+    // padding: 5
+  },
+  gridCellDisabled: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '45%',
+    borderColor: Colors.vwgLightGray,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    color: Colors.vwgLightGray,
+    backgroundColor: Colors.vwgLightGray,
+    margin: 5,
+    borderRadius: 10,
+    height: 70
     // padding: 5
   },
   doubleGridCell: {
@@ -239,7 +270,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '93%',
-    height: 50,
+    height: 40,
     borderColor: '#aaa',
     borderStyle: 'solid',
     borderWidth: 1,
@@ -252,13 +283,25 @@ const styles = StyleSheet.create({
   },
 
   gridCellText: {
-    color: '#333',
+    color: 'white',
+    fontSize: 14,
+
+    textAlign: 'center'
+  },
+  gridCellTextDisabledSmall: {
+    color: Colors.disabledButtonTextColor,
+    fontSize: 10,
+
+    textAlign: 'center'
+  },
+  gridCellTextDisabled: {
+    color: Colors.disabledButtonTextColor,
     fontSize: 14,
 
     textAlign: 'center'
   },
   odisCellText: {
-    color: '#333',
+    color: Colors.vwgDeepBlue,
     fontSize: 14,
 
     flexDirection: 'column',
@@ -272,9 +315,7 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center'
   },
-  contentContainer: {
-    paddingTop: 30
-  },
+
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,

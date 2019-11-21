@@ -133,7 +133,7 @@ export default LtpScreen = ({ ...props }) => {
       />
 
       <Button
-        title='Refresh list'
+        title=' Refresh list'
         onPress={() => {
           refreshRequestHandler();
         }}
@@ -146,11 +146,8 @@ export default LtpScreen = ({ ...props }) => {
         }}
         icon={
           <Icon
-            name={
-              Platform.OS === 'ios'
-                ? 'add-circle-outline'
-                : 'add-circle-outline'
-            }
+            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
+            type='ionicon'
             size={20}
             color='white'
           />

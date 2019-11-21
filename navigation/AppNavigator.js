@@ -46,27 +46,27 @@ const SignedOutStack = createStackNavigator({
   }
 });
 
-// ODIS stack
-const OdisStack = createStackNavigator({
-  Odis: OdisScreen
-});
+// // ODIS stack
+// const OdisStack = createStackNavigator({
+//   Odis: OdisScreen
+// });
 
 // Stats stack
 const StatsStack = createStackNavigator({
   Stats: StatsScreen
 });
 
-// OdisStack.navigationOptions = {
-//   tabBarLabel: 'ODIS',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
-//     />
-//   )
-// };
+// // OdisStack.navigationOptions = {
+// //   tabBarLabel: 'ODIS',
+// //   tabBarIcon: ({ focused }) => (
+// //     <TabBarIcon
+// //       focused={focused}
+// //       name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
+// //     />
+// //   )
+// // };
 
-OdisStack.path = '';
+// OdisStack.path = '';
 // End ODIS screen
 
 // const AppDrawerNavigator = createDrawerNavigator({
@@ -103,17 +103,22 @@ const AppDrawerNavigator = createDrawerNavigator({
     screen: NewsTabNavigator,
     navigationOptions: { drawerLabel: 'News & products' }
   },
-  OdisStack: {
+  OdisScreen: {
     screen: NewsTabNavigator,
-    navigationOptions: { drawerLabel: 'Odis versions' }
+    navigationOptions: {
+      drawerLabel: 'Odis versions',
+      initialRouteName: 'OdisScreen'
+    }
   },
-  StatsScreen: {
+  StatsStack: {
     screen: NewsTabNavigator,
-    navigationOptions: { drawerLabel: 'Stats' }
+    navigationOptions: { drawerLabel: 'Stats', initialRouteName: 'OdisScreen' }
   },
   SignedOutStack: {
     screen: SignedOutStack,
-    navigationOptions: { drawerLabel: 'Sign out' }
+    navigationOptions: {
+      drawerLabel: 'Sign out'
+    }
   }
 });
 
@@ -128,9 +133,8 @@ MainTabNavigator.path = '';
 
 export default createAppContainer(
   createSwitchNavigator({
+    //   AuthLoading: AuthLoadingScreen,
     Main: AppDrawerNavigator,
     Auth: SignedOutStack
-
-    // Main: MainTabNavigator
   })
 );

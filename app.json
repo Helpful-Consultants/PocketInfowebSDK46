@@ -1,12 +1,15 @@
 {
   "expo": {
-    "name": "Pocket Infoweb Dev",
+    "name": "Pocket Infoweb Pro",
     "slug": "PocketInfoweb-Dev",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
-    "orientation": "portrait",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.18",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -16,10 +19,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "buildNumber": "20",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro"
     },
-    "description": ""
+    "description": "This is the development version of the app and might break."
   }
 }

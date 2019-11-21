@@ -72,7 +72,7 @@ export default function App(props) {
         <PersistGate loading={<Loading />} persistor={persistor}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-            <AppNavigator />
+            <AppNavigator userIsSignedIn={true} />
           </View>
         </PersistGate>
       </Provider>

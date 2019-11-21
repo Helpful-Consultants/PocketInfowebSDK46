@@ -15,9 +15,9 @@ import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements';
 import placeholderImage from '../assets/images/robot-prod.png';
-import ltpDummyData from '../dummyData/ltpDummyData.js';
+import ltpDummyData from '../dummyData/ltpDummyData';
 import { tsConstructSignatureDeclaration } from '@babel/types';
-
+import Colors from '../constants/Colors';
 export default function LtpList({ ...props }) {
   //   console.log('props');
   //   console.log(props);
@@ -51,7 +51,7 @@ export default function LtpList({ ...props }) {
       >
         <ListItem
           title={`${item.loanToolNo} (${item.supplierPartNo})`}
-          titleStyle={{ color: 'green' }}
+          titleStyle={{ color: Colors.vwgDarkSkyBlue }}
           bottomDivider
           rightIcon={
             <View>
@@ -72,7 +72,9 @@ export default function LtpList({ ...props }) {
           subtitle={
             <View>
               <Text
-                style={{ color: 'green' }}
+                style={{
+                  color: Colors.vwgDeepBlue
+                }}
               >{`${item.toolDescription}`}</Text>
               <Text>{`Order as ${item.orderPartNo}, from ${moment(
                 item.nextAvailableDate,

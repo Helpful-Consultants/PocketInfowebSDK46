@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { StyleSheet, Text, Platform } from 'react-native';
 import {
   createStackNavigator,
   createBottomTabNavigator
@@ -10,9 +10,10 @@ import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
 // import LtpScreen from '../screens/LtpScreen';
-// import FindToolsScreen from '../screens/FindTools';
+// import ToolsScreen from '../screens/FindTools';
 import StatsScreen from '../screens/StatsScreen';
 import OdisScreen from '../screens/OdisScreen';
+import Colors from '../constants/Colors';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -28,7 +29,9 @@ const HomeStack = createStackNavigator(
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'News Home',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Home</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -49,7 +52,9 @@ const NewsStack = createStackNavigator(
 );
 
 NewsStack.navigationOptions = {
-  tabBarLabel: 'News',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>News</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -74,7 +79,9 @@ const OdisStack = createStackNavigator(
 );
 
 OdisStack.navigationOptions = {
-  tabBarLabel: 'ODIS',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>ODIS</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -95,7 +102,9 @@ const ProductsStack = createStackNavigator(
 );
 
 ProductsStack.navigationOptions = {
-  tabBarLabel: 'Products',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Products</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -115,7 +124,9 @@ const StatsStack = createStackNavigator(
 );
 
 StatsStack.navigationOptions = {
-  tabBarLabel: 'Stats',
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Stats</Text>
+  ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -130,6 +141,7 @@ StatsStack.path = '';
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
+
   NewsStack,
   ProductsStack,
   OdisStack,
@@ -138,5 +150,16 @@ const tabNavigator = createBottomTabNavigator({
 
 tabNavigator.path = '';
 // End Tab navigator
+
+const styles = StyleSheet.create({
+  focused: {
+    color: Colors.vwgDeepBlue,
+    fontSize: 12
+  },
+  notFocused: {
+    color: Colors.vwgDarkSkyBlue,
+    fontSize: 12
+  }
+});
 
 export default tabNavigator;
