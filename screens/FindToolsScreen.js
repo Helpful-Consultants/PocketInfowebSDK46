@@ -11,7 +11,7 @@ import Colors from '../constants/Colors';
 import DealerToolsList from './DealerToolsList';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-export default ToolsScreen = ({ ...props }) => {
+export default FindToolsScreen = ({ ...props }) => {
   const dispatch = useDispatch();
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
@@ -213,7 +213,7 @@ export default ToolsScreen = ({ ...props }) => {
   );
 };
 
-ToolsScreen.navigationOptions = ({ navigation }) => ({
+FindToolsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Find tools' />,
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
