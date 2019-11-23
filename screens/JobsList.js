@@ -11,15 +11,18 @@ import {
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
+import { Card, ListItem, Button, Icon, colors } from 'react-native-elements';
 import placeholderImage from '../assets/images/robot-prod.png';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
+import Colors from '../constants/Colors';
 
-export default function DealerToolsList({ ...props }) {
+export default function DealerToolsList(props) {
   console.log('props');
   //   console.log(props);
   //   console.log('props end');
   const limit = 50;
+  const userIntId = props.userIntId;
+  console.log('userIntId ', userIntId);
   const allItems = (props.items && props.items) || [];
   //   const allItems = props.items || [];
   const items = allItems.slice(0, limit);
@@ -35,7 +38,8 @@ export default function DealerToolsList({ ...props }) {
           <Card
             key={i}
             containerStyle={{
-              backgroundColor: '#ededed',
+              backgroundColor:
+                item.userIntId == userIntId ? Colors.vwgSkyBlue : '#ededed',
               borderColor: '#666',
               borderStyle: 'solid',
               borderWidth: 1,
@@ -50,79 +54,85 @@ export default function DealerToolsList({ ...props }) {
                   textAlign: 'left',
                   marginBottom: 5
                 }}
-              >{`Job ${item.wipNumber}`}</Text>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
               >
-                <Button
-                  title=' Add tools'
-                  type='clear'
-                  onPress={() =>
-                    alert(`pressed add tools to job ${item.wipNumber}`)
-                  }
-                  buttonStyle={{
-                    backgroundColor: 'transparent'
+                {item.userIntId == userIntId
+                  ? `My job ${item.wipNumber}`
+                  : `${item.createdBy}'s job ${item.wipNumber}`}
+              </Text>
+              {item.userIntId == userIntId ? (
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
                   }}
-                  titleStyle={{
-                    fontSize: 14,
-                    color: '#000',
-                    backgroundColor: 'transparent'
-                  }}
-                  icon={
-                    <Icon
-                      name={
-                        Platform.OS === 'ios'
-                          ? 'ios-add-circle-outline'
-                          : 'md-add-circle-outline'
-                      }
-                      type='ionicon'
-                      size={16}
-                      iconStyle={{
-                        color: 'black',
-                        backgroundColor: 'transparent'
-                      }}
-                    />
-                  }
-                />
-                <Button
-                  title=' Finished'
-                  type='clear'
-                  onPress={() => {
-                    {
-                      /* alert(`pressed finished ${item.wipNumber}`); */
+                >
+                  <Button
+                    title=' Add tools'
+                    type='clear'
+                    onPress={() =>
+                      alert(`pressed add tools to job ${item.wipNumber}`)
                     }
-                    props.deleteDealerWipRequest({
-                      id: item.id,
-                      wipNumber: item.wipNumber,
-                      intId: item.userIntId
-                    });
-                  }}
-                  buttonStyle={{
-                    backgroundColor: 'transparent'
-                  }}
-                  titleStyle={{
-                    fontSize: 14,
-                    color: '#000',
-                    backgroundColor: 'transparent'
-                  }}
-                  icon={
-                    <Icon
-                      name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                      type='ionicon'
-                      size={16}
-                      iconStyle={{
-                        color: 'black',
-                        backgroundColor: 'transparent'
-                      }}
-                    />
-                  }
-                />
-              </View>
+                    buttonStyle={{
+                      backgroundColor: 'transparent'
+                    }}
+                    titleStyle={{
+                      fontSize: 14,
+                      color: '#000',
+                      backgroundColor: 'transparent'
+                    }}
+                    icon={
+                      <Icon
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'ios-add-circle-outline'
+                            : 'md-add-circle-outline'
+                        }
+                        type='ionicon'
+                        size={16}
+                        iconStyle={{
+                          color: 'black',
+                          backgroundColor: 'transparent'
+                        }}
+                      />
+                    }
+                  />
+                  <Button
+                    title=' Finished'
+                    type='clear'
+                    onPress={() => {
+                      {
+                        /* alert(`pressed finished ${item.wipNumber}`); */
+                      }
+                      props.deleteDealerWipRequest({
+                        id: item.id,
+                        wipNumber: item.wipNumber,
+                        intId: item.userIntId
+                      });
+                    }}
+                    buttonStyle={{
+                      backgroundColor: 'transparent'
+                    }}
+                    titleStyle={{
+                      fontSize: 14,
+                      color: '#000',
+                      backgroundColor: 'transparent'
+                    }}
+                    icon={
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                        type='ionicon'
+                        size={16}
+                        iconStyle={{
+                          color: 'black',
+                          backgroundColor: 'transparent'
+                        }}
+                      />
+                    }
+                  />
+                </View>
+              ) : null}
               <View>
                 {item.tools.map((item, i) => (
                   <ListItem

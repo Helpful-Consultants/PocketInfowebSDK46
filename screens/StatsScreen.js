@@ -17,8 +17,8 @@ import { getStatsRequest } from '../actions/stats';
 // import { getDealerWipsRequest } from '../actions/dealerWips';
 
 import StatsSummary from './StatsSummary';
-import userDummyData from '../dummyData/userDummyData.js';
-import statsDummyData from '../dummyData/statsDummyData.js';
+// import userDummyData from '../dummyData/userDummyData.js';
+// import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/content/stats.jpg';
 
 export default StatsScreen = ({ ...props }) => {

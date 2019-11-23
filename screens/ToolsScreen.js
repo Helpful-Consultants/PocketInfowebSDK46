@@ -5,15 +5,17 @@ import { Button, Icon, Overlay, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-import { getLtpRequest } from '../actions/ltp';
+import { getDealerToolsRequest } from '../actions/dealerTools';
 import Colors from '../constants/Colors';
 
-import LtpList from './LtpList';
-import ltpDummyData from '../dummyData/ltpDummyData.js';
+import DealerToolsList from './DealerToolsList';
+import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-export default LtpScreen = ({ ...props }) => {
+export default ToolsScreen = ({ ...props }) => {
   const dispatch = useDispatch();
-  const ltpItems = useSelector(state => state.ltp.ltpItems);
+  const dealerToolsItems = useSelector(
+    state => state.dealerTools.dealerToolsItems
+  );
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
@@ -23,12 +25,15 @@ export default LtpScreen = ({ ...props }) => {
   //     [userIsSignedIn]
   //   );
 
-  const getTools = useCallback(() => dispatch(getLtpRequest()), [ltpItems]);
+  const getTools = useCallback(
+    getToolsData => dispatch(getDealerToolsRequest(getToolsData)),
+    [dealerToolsItems]
+  );
 
-  if (ltpItems && ltpItems.length > 0) {
-    // console.log('in ltp screen,ltpItems', ltpItems);
+  if (dealerToolsItems && dealerToolsItems.length > 0) {
+    // console.log('in tools screen,toolsItems', dealerToolsItems);
   } else {
-    console.log('in ltp screen, no ltpItems');
+    console.log('in tools screen, no toolsItems');
   }
 
   // Search function
@@ -40,7 +45,7 @@ export default LtpScreen = ({ ...props }) => {
     setSelectedItem(item.partDescription);
     setIsModalVisible(true);
     // return alert(
-    //   `the user selected  ${item.partDescription} for job 999? ; OK; change job; cancel`
+    //   `the user selected tool ${item.partDescription} for job 999? ; OK; change job; cancel`
     // );
   };
 
@@ -50,46 +55,56 @@ export default LtpScreen = ({ ...props }) => {
   };
 
   const refreshRequestHandler = () => {
+    const getToolsData = {
+      dealerId: dealerId
+    };
     console.log('in refreshRequestHandler');
-    dealerId && getTools();
+    dealerId && getTools(getToolsData);
   };
   // Search function - end
 
-  //   const { ltpItems } = props;
-  // const { ltpItems } = this.props;
-  const items = ltpItems;
-  //   const items = ltpDummyData;
+  //   const { dealerToolsItems } = props;
+  // const { dealerToolsItems } = this.props;
+  const items = dealerToolsItems;
+  //   const items = dealerToolsDummyData;
 
   // const { search } = this.state;
   return (
-    // const { ltpItems } = this.props;
-    // console.log('in LtpScreen, ltp ', this.props.ltpItems);
+    // const { dealerToolsItems } = this.props;
+    // console.log('in DealerToolsScreen, dealerTools ', this.props.dealerToolsItems);
     // console.log('Find Tools screen');
-    // console.log(ltpItems);
+    // console.log(dealerToolsItems);
     // console.log('Find Tools screen end');
-    // const items = ltpItems || [];
+    // const items = dealerToolsItems || [];
 
     // console.log('items');
     // console.log(items);
     // console.log('items end');
-    // console.log('in LtpScreen, ltp ', ltp && ltp.items);
-    // console.log('in LtpScreen, ltp ', ltp && ltp);
-    // console.log('in LtpScreen, ltp', ltp && ltp);
+    // console.log('in DealerToolsScreen, dealerTools ', dealerTools && dealerTools.items);
+    // console.log('in DealerToolsScreen, dealerTools ', dealerTools && dealerTools);
+    // console.log('in DealerToolsScreen, dealerTools', dealerTools && dealerTools);
 
     <View>
       <Overlay isVisible={isModalVisible} animationType={'fade'}>
         <View>
-          <Text>Add tool to LTP basket</Text>
+          <Text>Book tool XXXXXX to job 9999, job 222, 3333 </Text>
           <Text>{selectedItem}</Text>
           <View style={styles.buttonContainer}>
             <View style={styles.buttonView}>
               <Button
-                title='Confirm'
+                title=' Confirm'
                 onPress={() => {
                   setIsModalVisible(false);
                 }}
+                titleStyle={{ fontSize: 10 }}
                 buttonStyle={{
-                  borderRadius: 10
+                  height: 30,
+                  marginBottom: 2,
+                  marginTop: 2,
+                  marginLeft: 15,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: Colors.vwgDeepBlue
                 }}
                 icon={
                   <Icon
@@ -99,7 +114,36 @@ export default LtpScreen = ({ ...props }) => {
                         : 'md-checkmark-circle-outline'
                     }
                     type='ionicon'
-                    size={30}
+                    size={15}
+                    color='white'
+                  />
+                }
+              />
+            </View>
+
+            <View style={styles.buttonView}>
+              <Button
+                title=' Create new job'
+                onPress={() => {}}
+                titleStyle={{ fontSize: 10 }}
+                buttonStyle={{
+                  height: 30,
+                  marginBottom: 2,
+                  marginTop: 2,
+                  marginLeft: 15,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: Colors.vwgDeepBlue
+                }}
+                icon={
+                  <Icon
+                    name={
+                      Platform.OS === 'ios'
+                        ? 'ios-checkmark-circle-outline'
+                        : 'md-checkmark-circle-outline'
+                    }
+                    type='ionicon'
+                    size={15}
                     color='white'
                   />
                 }
@@ -107,18 +151,25 @@ export default LtpScreen = ({ ...props }) => {
             </View>
             <View style={styles.buttonView}>
               <Button
-                title='Close'
+                title=' Close'
                 onPress={() => {
                   setIsModalVisible(false);
                 }}
+                titleStyle={{ fontSize: 10 }}
                 buttonStyle={{
-                  borderRadius: 10
+                  height: 30,
+                  marginBottom: 2,
+                  marginTop: 2,
+                  marginLeft: 15,
+                  marginRight: 15,
+                  borderRadius: 20,
+                  backgroundColor: Colors.vwgWarmRed
                 }}
                 icon={
                   <Icon
                     name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                     type='ionicon'
-                    size={30}
+                    size={15}
                     color='white'
                   />
                 }
@@ -157,13 +208,13 @@ export default LtpScreen = ({ ...props }) => {
           />
         }
       />
-      <LtpList items={items} onSelectItem={selectItemHandler} />
+      <DealerToolsList items={items} onSelectItem={selectItemHandler} />
     </View>
   );
 };
 
-LtpScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='LTP' />,
+ToolsScreen.navigationOptions = ({ navigation }) => ({
+  headerTitle: <TitleWithAppLogo title='Find tools' />,
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
@@ -202,7 +253,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '60%'
   },
   buttonView: {
@@ -210,3 +261,33 @@ const styles = StyleSheet.create({
     fontSize: 12
   }
 });
+
+// const mapStateToProps = state => {
+//   //   const { friends } = state;
+//   console.log('in mapStateToProps');
+//   //   console.log(
+//   //     state.dealerTools.dealerToolsItems && state.dealerTools.dealerToolsItems
+//   //   );
+//   const dealerToolsItems = (state.dealerTools && state.dealerTools) || {};
+//   //   console.log('end mapStateToProps');
+//   return dealerToolsItems;
+// };
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getDealerToolsRequest: () => dispatch(getDealerToolsRequest())
+//   };
+// };
+
+// // export default connect(mapStateToProps)(DealerToolsScreen);
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+//   //   ({ news }) => ({ news }),
+//   //   {
+//   //     getDealerToolsRequest,
+//   //     createUserRequest,
+//   //     deleteUserRequest,
+//   //     newsError
+//   //   }
+// )(ToolsScreen);

@@ -27,9 +27,9 @@ export default SignInScreen = props => {
   //   const signInToServer = useCallback(() => dispatch(getUserRequest()), [
   //     userIsSignedIn
   //   ]);
-  //   if (userIsSignedIn) {
-  //     props.navigation.navigate('HomeScreen');
-  //   }
+  if (userIsSignedIn) {
+    props.navigation.navigate('Main');
+  }
   const formReducer = (state, action) => {
     if (action.type === Types.FORM_INPUT_UPDATE) {
       const updatedValues = {

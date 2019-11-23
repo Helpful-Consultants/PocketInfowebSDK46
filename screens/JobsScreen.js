@@ -18,7 +18,7 @@ import {
   deleteDealerWipRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
-
+import Colors from '../constants/Colors';
 import JobsList from './JobsList';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
@@ -30,7 +30,7 @@ export default JobsScreen = ({ ...props }) => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
-  const intId = userData && userData.intId;
+  const userIntId = userData && userData.intId;
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -71,10 +71,10 @@ export default JobsScreen = ({ ...props }) => {
   const refreshRequestHandler = () => {
     const getWipsData = {
       dealerId: dealerId,
-      intId: intId
+      userIntId: userIntId
     };
     console.log('in refreshRequestHandler', getWipsData);
-    dealerId && intId && getWips(getWipsData);
+    dealerId && userIntId && getWips(getWipsData);
   };
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
@@ -85,7 +85,7 @@ export default JobsScreen = ({ ...props }) => {
   // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips.items);
   // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips);
   // console.log('in DealerWipsScreen, dealerWips', dealerWips && dealerWips);
-
+  console.log('userIntId ', userIntId);
   return (
     <View>
       <SearchBar
@@ -94,16 +94,19 @@ export default JobsScreen = ({ ...props }) => {
         platform={Platform.OS === 'ios' ? 'ios' : 'android'}
       />
       <Button
-        title='New job'
+        title='Add new job'
         onPress={() => {
           setIsModalVisible(true);
         }}
+        titleStyle={{ fontSize: 10 }}
         buttonStyle={{
-          marginBottom: 10,
-          marginTop: 10,
+          height: 30,
+          marginBottom: 2,
+          marginTop: 2,
           marginLeft: 15,
           marginRight: 15,
-          borderRadius: 20
+          borderRadius: 20,
+          backgroundColor: Colors.vwgDeepBlue
         }}
         icon={
           <Icon
@@ -112,7 +115,7 @@ export default JobsScreen = ({ ...props }) => {
                 ? 'add-circle-outline'
                 : 'add-circle-outline'
             }
-            size={20}
+            size={15}
             color='white'
           />
         }
@@ -137,23 +140,26 @@ export default JobsScreen = ({ ...props }) => {
             <Text style={styles.text}>Cancel</Text>
           </TouchableHighlight>
           <Button
-            title='Save job'
+            title=' Save job'
             onPress={() => {
               createDealerWip('3333');
               setIsModalVisible(false);
             }}
+            titleStyle={{ fontSize: 10 }}
             buttonStyle={{
-              marginBottom: 10,
-              marginTop: 50,
+              height: 30,
+              marginBottom: 2,
+              marginTop: 2,
               marginLeft: 15,
               marginRight: 15,
-              borderRadius: 10
+              borderRadius: 20,
+              backgroundColor: Colors.vwgDeepBlue
             }}
             icon={
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'}
                 type='ionicon'
-                size={30}
+                size={25}
                 color='white'
               />
             }
@@ -165,18 +171,21 @@ export default JobsScreen = ({ ...props }) => {
         onPress={() => {
           refreshRequestHandler();
         }}
+        titleStyle={{ fontSize: 10 }}
         buttonStyle={{
-          marginBottom: 10,
-          marginTop: 10,
+          height: 30,
+          marginBottom: 2,
+          marginTop: 2,
           marginLeft: 15,
           marginRight: 15,
-          borderRadius: 20
+          borderRadius: 20,
+          backgroundColor: Colors.vwgDeepBlue
         }}
         icon={
           <Icon
             name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
             type='ionicon'
-            size={20}
+            size={15}
             color='white'
           />
         }
@@ -185,6 +194,7 @@ export default JobsScreen = ({ ...props }) => {
         <JobsList
           items={dealerWipsItems}
           deleteDealerWipRequest={deleteDealerWip}
+          userIntId={userIntId}
         />
       </ScrollView>
     </View>

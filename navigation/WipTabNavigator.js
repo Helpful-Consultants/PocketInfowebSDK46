@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   notFocused: {
-    color: Colors.vwgDarkSkyBlue,
+    color: Colors.vwgSkyBlue,
     fontSize: 12
   }
 });
