@@ -40,6 +40,41 @@ export default ForgottenPasswordScreen = props => {
           }}
         />
       </View>
+      <View
+        style={{
+          margin: 20,
+          textAlign: 'center'
+        }}
+      >
+        <Text
+          style={{
+            margin: 5,
+            textAlign: 'center',
+            fontSize: 12
+          }}
+        >
+          To activate Pocket Infoweb you will need to generate an access PIN for
+          your userId.
+        </Text>
+        <Text
+          style={{
+            margin: 3,
+            textAlign: 'center',
+            fontSize: 12
+          }}
+        >
+          Log in to the Tools Infoweb website.
+        </Text>
+        <Text
+          style={{
+            margin: 3,
+            textAlign: 'center',
+            fontSize: 12
+          }}
+        >
+          Go to FAQ | About. Click on the Generate App PIN button.
+        </Text>
+      </View>
     </View>
   );
 };
