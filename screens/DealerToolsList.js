@@ -13,6 +13,7 @@ import {
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements';
+import Colors from '../constants/Colors';
 import placeholderImage from '../assets/images/robot-prod.png';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 import { tsConstructSignatureDeclaration } from '@babel/types';
@@ -54,8 +55,12 @@ export default function DealerToolsList({ ...props }) {
           subtitle={
             <View>
               <Text>{`${item.partDescription}`}</Text>
-              <Text>{`Last location: ${item.location}`}</Text>
-              <Text>{`Last Job: ${item.lastWIP}`}</Text>
+              {item.location ? (
+                <Text>{`Location: ${item.location}`}</Text>
+              ) : (
+                <Text>Location not recorded</Text>
+              )}
+              {item.lastWIP ? <Text>{`Last Job: ${item.lastWIP}`}</Text> : null}
             </View>
           }
           bottomDivider
