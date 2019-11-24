@@ -25,6 +25,7 @@ export default {
 
   GET_USER_REQUEST: 'user/get_user_request',
   GET_USER_SUCCESS: 'user/get_user_success',
+  SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
   USER_ERROR: 'user/user_error',
 
   GET_USERS_REQUEST: 'users/get_users_request',
