@@ -39,6 +39,30 @@ export default function LtpList({ ...props }) {
   //     );
   //   };
 
+  const orderAs = () => (
+    // not wanted yet
+    <Text>{`Order as ${item.orderPartNo}, from ${moment(
+      item.nextAvailableDate,
+      'YYYY-MM-DD'
+    ).format('Do MMM') || null}`}</Text>
+  );
+
+  const rightIcon = () => (
+    // not wanted yet
+    <View>
+      <Icon
+        name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+        type='ionicon'
+      />
+      <Icon
+        name={
+          Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-arrow-round-up'
+        }
+        type='ionicon'
+      />
+    </View>
+  );
+
   const FlatListItem = ({ ...props }) => {
     const { item } = props;
     const { onSelectItem } = props;
@@ -53,22 +77,6 @@ export default function LtpList({ ...props }) {
           title={`${item.loanToolNo} (${item.supplierPartNo})`}
           titleStyle={{ color: Colors.vwgDarkSkyBlue }}
           bottomDivider
-          rightIcon={
-            <View>
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
-                type='ionicon'
-              />
-              <Icon
-                name={
-                  Platform.OS === 'ios'
-                    ? 'ios-arrow-round-up'
-                    : 'md-arrow-round-up'
-                }
-                type='ionicon'
-              />
-            </View>
-          }
           subtitle={
             <View>
               <Text
@@ -76,10 +84,6 @@ export default function LtpList({ ...props }) {
                   color: Colors.vwgDeepBlue
                 }}
               >{`${item.toolDescription}`}</Text>
-              <Text>{`Order as ${item.orderPartNo}, from ${moment(
-                item.nextAvailableDate,
-                'YYYY-MM-DD'
-              ).format('Do MMM') || null}`}</Text>
             </View>
           }
         ></ListItem>
@@ -105,6 +109,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#222'
+  },
+  noItems: {
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 5
   },
   tipText: {
     fontSize: 12,

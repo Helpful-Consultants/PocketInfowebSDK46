@@ -1,8 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { Button, Icon, Overlay, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { createFilter } from 'react-native-search-filter';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getLtpRequest } from '../actions/ltp';
@@ -11,6 +18,7 @@ import Colors from '../constants/Colors';
 import LtpList from './LtpList';
 import ltpDummyData from '../dummyData/ltpDummyData.js';
 
+const KEYS_TO_FILTERS = ['orderPartNo', 'toolDescription'];
 export default LtpScreen = ({ ...props }) => {
   const dispatch = useDispatch();
   const ltpItems = useSelector(state => state.ltp.ltpItems);
@@ -58,6 +66,10 @@ export default LtpScreen = ({ ...props }) => {
   //   const { ltpItems } = props;
   // const { ltpItems } = this.props;
   const items = ltpItems;
+
+  const filteredItems = items.filter(
+    createFilter(searchInput, KEYS_TO_FILTERS)
+  );
   //   const items = ltpDummyData;
 
   // const { search } = this.state;
@@ -127,37 +139,46 @@ export default LtpScreen = ({ ...props }) => {
           </View>
         </View>
       </Overlay>
-      <SearchBar
-        onChangeText={searchInputHandler}
-        value={searchInput}
-        platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-      />
-
-      <Button
-        title=' Refresh list'
-        onPress={() => {
-          refreshRequestHandler();
-        }}
-        titleStyle={{ fontSize: 10 }}
-        buttonStyle={{
-          height: 30,
-          marginBottom: 2,
-          marginTop: 2,
-          marginLeft: 15,
-          marginRight: 15,
-          borderRadius: 20,
-          backgroundColor: Colors.vwgDeepBlue
-        }}
-        icon={
+      <View style={styles.searchBarRow}>
+        <TouchableOpacity
+          style={styles.searchBarRowRefreshButton}
+          onPress={() => {
+            refreshRequestHandler();
+          }}
+        >
           <Icon
             name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
             type='ionicon'
-            size={15}
-            color='white'
+            size={25}
+            color='black'
           />
-        }
-      />
-      <LtpList items={items} onSelectItem={selectItemHandler} />
+        </TouchableOpacity>
+        <View style={styles.searchBarRowSearchInput}>
+          <SearchBar
+            onChangeText={searchInputHandler}
+            value={searchInput}
+            platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+            containerStyle={styles.searchBarContainer}
+            inputContainerStyle={styles.searchBarInputContainer}
+          />
+        </View>
+      </View>
+      {searchInput.length > 0 && filteredItems.length > 0 ? (
+        <View style={styles.searchFoundPrompt}>
+          <Text style={styles.searchFoundPromptText}>
+            Please visit the LTP website to make your booking.
+          </Text>
+        </View>
+      ) : null}
+      {searchInput.length > 0 && filteredItems.length === 0 ? (
+        <View style={styles.noneFoundPrompt}>
+          <Text style={styles.noneFoundPromptText}>
+            Your search found no results.
+          </Text>
+        </View>
+      ) : null}
+
+      <LtpList items={filteredItems} onSelectItem={selectItemHandler} />
     </View>
   );
 };
@@ -198,8 +219,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-
     backgroundColor: '#fff'
+  },
+  searchBarRow: {
+    flexDirection: 'row',
+    backgroundColor: Colors.vwgSearchBarContainer
+  },
+  searchBarRowRefreshButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyItems: 'center',
+    backgroundColor: Colors.vwgSearchBarContainer,
+    padding: 10
+  },
+  searchBarInputContainer: {
+    // backgroundColor: Colors.vwgSearchBarInputContainer,
+    borderColor: Colors.vwgSearchBarInputContainer
+  },
+  searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
+  searchBarRowSearchInput: { width: '85%' },
+  searchFoundPrompt: {
+    padding: 10,
+    backgroundColor: Colors.vwgMintGreen
+  },
+  searchFoundPromptText: {
+    textAlign: 'center',
+
+    color: Colors.vwgWhite
+  },
+  noneFoundPrompt: {
+    padding: 10,
+    backgroundColor: Colors.vwgWarmRed
+  },
+  noneFoundPromptText: {
+    textAlign: 'center',
+    color: Colors.vwgWhite
+  },
+  buttonContainer: {
+    flexDirection: 'column',
+    width: '60%'
   },
   buttonContainer: {
     flexDirection: 'row',
