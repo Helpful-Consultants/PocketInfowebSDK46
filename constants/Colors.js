@@ -1,7 +1,9 @@
 const tintColor = '#2f95dc';
+const errorText = '#a9043f';
 
 export default {
   tintColor,
+  errorText,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',
@@ -34,5 +36,9 @@ export default {
   vwgLightGray: '#ccc',
   vwgMidGray: '#999',
   vwgDarkGray: '#666',
-  vwgWhite: '#fff'
+  vwgBlack: '#000',
+  vwgWhite: '#fff',
+  //   vwgSearchBarContainer: '#80b0c8',
+  vwgSearchBarContainer: '#fff',
+  vwgSearchBarInputContainer: '#c6dfe7'
 };
