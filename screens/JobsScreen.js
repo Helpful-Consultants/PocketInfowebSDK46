@@ -13,6 +13,8 @@ import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
+import NewJobButton from '../components/NewJobButton';
+import BookToJobModal from '../components/BookToJobModal';
 import {
   createDealerWipRequest,
   deleteDealerWipRequest,
@@ -52,7 +54,10 @@ export default JobsScreen = ({ ...props }) => {
   );
 
   if (dealerWipsItems && dealerWipsItems.length > 0) {
-    // console.log('in tools screen,toolsItems', dealerWipsItems);
+    console.log('in jobs screen, wipsItems', dealerWipsItems);
+    userWipsItems =
+      props.userIntId &&
+      dealerWipsItems.filter(item => item.userIntId === props.userIntId);
   } else {
     console.log('in jobs screen, no wipsItems');
   }
@@ -76,6 +81,7 @@ export default JobsScreen = ({ ...props }) => {
     console.log('in refreshRequestHandler', getWipsData);
     dealerId && userIntId && getWips(getWipsData);
   };
+
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
   // const { search } = this.state;
@@ -88,84 +94,14 @@ export default JobsScreen = ({ ...props }) => {
   console.log('userIntId ', userIntId);
   return (
     <View>
-      <SearchBar
+      {/* <SearchBar
         onChangeText={searchInputHandler}
         value={searchInput}
         platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-      />
-      <Button
-        title='Add new job'
-        onPress={() => {
-          setIsModalVisible(true);
-        }}
-        titleStyle={{ fontSize: 10 }}
-        buttonStyle={{
-          height: 30,
-          marginBottom: 2,
-          marginTop: 2,
-          marginLeft: 15,
-          marginRight: 15,
-          borderRadius: 20,
-          backgroundColor: Colors.vwgDeepBlue
-        }}
-        icon={
-          <Icon
-            name={
-              Platform.OS === 'ios'
-                ? 'add-circle-outline'
-                : 'add-circle-outline'
-            }
-            size={15}
-            color='white'
-          />
-        }
-      />
+      /> */}
 
-      <Modal
-        animationType={'slide'}
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => {
-          console.log('Modal has been closed.');
-        }}
-      >
-        <View style={styles.modal}>
-          <Text style={styles.text}>Create job</Text>
+      {/* <NewJobButton setIsModalVisible={setIsModalVisible} /> */}
 
-          <TouchableHighlight
-            onPress={() => {
-              setIsModalVisible(false);
-            }}
-          >
-            <Text style={styles.text}>Cancel</Text>
-          </TouchableHighlight>
-          <Button
-            title=' Save job'
-            onPress={() => {
-              createDealerWip('3333');
-              setIsModalVisible(false);
-            }}
-            titleStyle={{ fontSize: 10 }}
-            buttonStyle={{
-              height: 30,
-              marginBottom: 2,
-              marginTop: 2,
-              marginLeft: 15,
-              marginRight: 15,
-              borderRadius: 20,
-              backgroundColor: Colors.vwgDeepBlue
-            }}
-            icon={
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-checkmark' : 'md-checkmark'}
-                type='ionicon'
-                size={25}
-                color='white'
-              />
-            }
-          />
-        </View>
-      </Modal>
       <Button
         title=' Refresh list'
         onPress={() => {

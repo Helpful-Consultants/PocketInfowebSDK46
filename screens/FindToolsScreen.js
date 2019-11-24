@@ -41,8 +41,10 @@ export default FindToolsScreen = ({ ...props }) => {
     state => state.dealerWips.dealerWipsItems
   );
   //   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-  const userData = useSelector(state => state.user.userData[0]);
-  const dealerId = userData && userData.dealerId;
+  const userDataObj = useSelector(state => state.user.userData[0]);
+  const dealerId = userDataObj && userDataObj.dealerId;
+  const userName = userDataObj && userDataObj.userName;
+  const userIntId = userDataObj && userDataObj.intId;
 
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -62,7 +64,7 @@ export default FindToolsScreen = ({ ...props }) => {
     [dealerToolsItems]
   );
   const saveToJob = useCallback(
-    getToolsData => dispatch(createDealerWipRequest(wipData)),
+    newWipObj => dispatch(createDealerWipRequest(newWipObj)),
     [dealerWipsItems]
   );
 
@@ -77,7 +79,7 @@ export default FindToolsScreen = ({ ...props }) => {
     console.log(newItem.id, ' to be added');
     const newBasket = toolBasket;
     const dup = toolBasket.filter(item => item.id === newItem.id);
-    console.log('dup, ', dup);
+    console.log('dup, ');
     if (dup.length === 0) {
       newBasket.push(newItem);
       setToolBasket(newBasket);
@@ -124,6 +126,21 @@ export default FindToolsScreen = ({ ...props }) => {
     console.log('in refreshRequestHandler');
     dealerId && getTools(getToolsData);
   };
+  const saveToJobRequestHandler = () => {
+    console.log(userDataObj);
+
+    const newWipObj = {
+      wipNumber: '2042',
+      createdBy: userName,
+      createdDate: new Date(),
+      userIntId: userIntId,
+      dealerId: dealerId,
+      tools: toolBasket
+    };
+    console.log('in refreshRequestHandler', newWipObj);
+    saveToJob(newWipObj);
+    // dealerId && getTools(getToolsData);
+  };
   // Search function - end
 
   //   const { dealerToolsItems } = props;
@@ -143,7 +160,17 @@ export default FindToolsScreen = ({ ...props }) => {
               toolBasket.length > 1 ? `tools` : `tool`
             } in basket.`}
           </Text>
-          <Text style={styles.basketText}>{`Book to job`}</Text>
+
+          <TouchableOpacity onPress={() => saveToJobRequestHandler()}>
+            <Text style={styles.basketText}>{`Book to job`}</Text>
+            <Icon
+              name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+              type='ionicon'
+              size={15}
+              color='red'
+            />
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => toggleShowBasketHandler()}>
             <Text>{isBasketExpanded ? `-` : `+`}</Text>
             <Icon
@@ -230,31 +257,9 @@ export default FindToolsScreen = ({ ...props }) => {
       </View>
     ) : null;
 
-  console.log(basketView);
-  //   let basketView = null;
-  //   useEffect(() => {
-  //     console.log('toolBasket is ', toolBasket && toolBasket);
-  //     basketView =
-  //       toolBasket && toolBasket.length === 0 ? (
-  //         <View style={styles.searchFoundPrompt}>
-  //           <Text
-  //             style={styles.searchFoundPromptText}
-  //           >{`${toolBasket.length} tools in basket`}</Text>
-  //         </View>
-  //       ) : (
-  //         <View style={styles.searchFoundPrompt}>
-  //           <Text
-  //             style={styles.searchFoundPromptText}
-  //           >{`${toolBasket.length} tools in basket`}</Text>
-  //         </View>
-  //       );
-  //     console.log(basketView);
-  //   }, [toolBasket]);
-  //   console.log(filteredItems);
-  //   const items = dealerToolsDummyData;
+  //   console.log(basketView);
 
-  // const { search } = this.state;
-  console.log(searchInput.length, filteredItems.length);
+  //   console.log(searchInput.length, filteredItems.length);
 
   return (
     // const { dealerToolsItems } = this.props;

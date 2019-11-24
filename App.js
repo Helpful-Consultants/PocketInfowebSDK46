@@ -56,6 +56,8 @@ export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   //   persistStore(store).purge();
 
+  const userIsSignedIn = true;
+
   const persistor = persistStore(store);
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
@@ -72,7 +74,7 @@ export default function App(props) {
         <PersistGate loading={<Loading />} persistor={persistor}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-            <AppNavigator userIsSignedIn={true} />
+            <AppNavigator userIsSignedIn={userIsSignedIn} />
           </View>
         </PersistGate>
       </Provider>
