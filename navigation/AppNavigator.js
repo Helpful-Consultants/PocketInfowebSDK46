@@ -7,13 +7,14 @@ import {
   createBottomTabNavigator
 } from 'react-navigation';
 import { useScreens } from 'react-native-screens';
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignOutScreen from '../screens/SignOutScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
-import OdisScreen from '../screens/OdisScreen';
-import StatsScreen from '../screens/StatsScreen';
+// import StatsScreen from '../screens/StatsScreen';
+// import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 
@@ -46,15 +47,10 @@ const SignedOutStack = createStackNavigator({
   }
 });
 
-// // ODIS stack
-// const OdisStack = createStackNavigator({
-//   Odis: OdisScreen
-// });
-
 // Stats stack
-const StatsStack = createStackNavigator({
-  Stats: StatsScreen
-});
+// const StatsStack = createStackNavigator({
+//   Stats: StatsScreen
+// });
 
 // // OdisStack.navigationOptions = {
 // //   tabBarLabel: 'ODIS',
@@ -95,24 +91,30 @@ const AppDrawerNavigator = createDrawerNavigator({
     screen: HomeScreen,
     navigationOptions: { drawerLabel: 'Home' }
   },
-  JobsScreen: {
+  FindToolsStack: {
     screen: WipTabNavigator,
-    navigationOptions: { drawerLabel: 'Tools & jobs' }
+    navigationOptions: {
+      drawerLabel: 'Tools & jobs',
+      initialRouteName: 'FindTools'
+    }
   },
-  NewsScreen: {
+  NewsStack: {
     screen: NewsTabNavigator,
-    navigationOptions: { drawerLabel: 'News & products' }
+    navigationOptions: {
+      drawerLabel: 'News & products',
+      initialRouteName: 'News'
+    }
   },
-  OdisScreen: {
+  OdisStack: {
     screen: NewsTabNavigator,
     navigationOptions: {
       drawerLabel: 'Odis versions',
-      initialRouteName: 'OdisScreen'
+      initialRouteName: 'Odis'
     }
   },
   StatsStack: {
     screen: NewsTabNavigator,
-    navigationOptions: { drawerLabel: 'Stats', initialRouteName: 'OdisScreen' }
+    navigationOptions: { drawerLabel: 'Stats', initialRouteName: 'Stats' }
   },
   SignedOutStack: {
     screen: SignedOutStack,
@@ -132,9 +134,13 @@ const MainTabNavigator = createBottomTabNavigator({
 MainTabNavigator.path = '';
 
 export default createAppContainer(
-  createSwitchNavigator({
-    //   AuthLoading: AuthLoadingScreen,
-    Main: AppDrawerNavigator,
-    Auth: SignedOutStack
-  })
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      Auth: SignedOutStack,
+      Main: AppDrawerNavigator
+    },
+    // { initialRouteName: userIsSignedIn ? 'Main' : 'Auth' }
+    { initialRouteName: 'AuthLoading' }
+  )
 );

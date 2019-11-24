@@ -10,7 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 // import NewsScreen from '../screens/NewsScreen';
 // import ProductsScreen from '../screens/ProductsScreen';
 import LtpScreen from '../screens/LtpScreen';
-import ToolsScreen from '../screens/ToolsScreen';
+import FindToolsScreen from '../screens/FindToolsScreen';
 import JobsScreen from '../screens/JobsScreen';
 import ReturnToolsScreen from '../screens/ReturnToolsScreen';
 import Colors from '../constants/Colors';
@@ -43,16 +43,16 @@ HomeStack.path = '';
 // End Home screen
 
 // Find Tools screen
-const ToolsStack = createStackNavigator(
+const FindToolsStack = createStackNavigator(
   {
-    Tools: ToolsScreen
+    FindTools: FindToolsScreen
   },
   config
 );
 
-ToolsStack.navigationOptions = {
+FindToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Tools</Text>
+    <Text style={focused ? styles.focused : styles.notFocused}>Find Tools</Text>
   ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -62,7 +62,7 @@ ToolsStack.navigationOptions = {
   )
 };
 
-ToolsStack.path = '';
+FindToolsStack.path = '';
 // End Find Tools screen
 
 // ReturnTools screen
@@ -75,9 +75,7 @@ const ReturnToolsStack = createStackNavigator(
 
 ReturnToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>
-      Return tools
-    </Text>
+    <Text style={focused ? styles.focused : styles.notFocused}>Return</Text>
   ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -136,34 +134,12 @@ LtpStack.navigationOptions = {
 LtpStack.path = '';
 // End LTP screen
 
-// const AppDrawerNavigator = createDrawerNavigator({
-//     'Quick Start': {
-//         screen: HomeScreen
-//     },
-//     'Main menu': {
-//         screen: WipTabNavigator
-//     },
-//     'News menu': {
-//         screen: NewsTabNavigator
-//     },
-//     'Odis versions': {
-//         screen: OdisScreen
-//     },
-//     Stats: {
-//         screen: StatsScreen
-//     },
-//     'Sign out': {
-//         screen: SignOutScreen
-//     }
-// });
-
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
-
+  FindToolsStack,
+  ReturnToolsStack,
   JobsStack,
-  ToolsStack,
-  //   ReturnToolsStack,
   LtpStack
 });
 

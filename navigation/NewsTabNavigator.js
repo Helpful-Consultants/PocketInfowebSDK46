@@ -9,8 +9,6 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
-// import LtpScreen from '../screens/LtpScreen';
-// import ToolsScreen from '../screens/FindTools';
 import StatsScreen from '../screens/StatsScreen';
 import OdisScreen from '../screens/OdisScreen';
 import Colors from '../constants/Colors';
@@ -70,6 +68,28 @@ NewsStack.navigationOptions = {
 NewsStack.path = '';
 // End News screen
 
+// Products screen
+const ProductsStack = createStackNavigator(
+  {
+    Products: ProductsScreen
+  },
+  config
+);
+
+ProductsStack.navigationOptions = {
+  tabBarLabel: ({ focused }) => (
+    <Text style={focused ? styles.focused : styles.notFocused}>Products</Text>
+  ),
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+    />
+  )
+};
+ProductsStack.path = '';
+// End Products screen
+
 // ODIS screen
 const OdisStack = createStackNavigator(
   {
@@ -92,28 +112,6 @@ OdisStack.navigationOptions = {
 
 OdisStack.path = '';
 // End ODIS screen
-
-// Products screen
-const ProductsStack = createStackNavigator(
-  {
-    Products: ProductsScreen
-  },
-  config
-);
-
-ProductsStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Products</Text>
-  ),
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
-    />
-  )
-};
-ProductsStack.path = '';
-// End Products screen
 
 // Stats screen
 const StatsStack = createStackNavigator(
@@ -140,8 +138,6 @@ StatsStack.path = '';
 
 // Tab navigator
 const tabNavigator = createBottomTabNavigator({
-  //   Home: HomeScreen,
-
   NewsStack,
   ProductsStack,
   OdisStack,
