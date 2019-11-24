@@ -14,7 +14,7 @@ function* getLtp() {
     const result = yield call(api.getLtp);
     // console.log('in saga get ltp, success');
     // console.log(result);
-    // console.log('end results in saga get ltp, success');
+    console.log('end results in saga get ltp, success');
     yield put(
       actions.getLtpSuccess({
         items: result.data

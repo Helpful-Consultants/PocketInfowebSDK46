@@ -16,7 +16,7 @@ function* getDealerTools({ payload }) {
       dealerId: payload.dealerId
     });
     console.log('in saga get dealerTools - 200');
-    console.log(result);
+    // console.log(result);
 
     if (result.data.length > 0) {
       console.log('in tools saga - good 200');
@@ -46,7 +46,7 @@ function* getDealerTools({ payload }) {
 }
 
 function* watchGetDealerToolsRequest() {
-  console.log('in saga watch for dealerTools');
+  //   console.log('in saga watch for dealerTools');
   yield takeEvery(actions.Types.GET_DEALER_TOOLS_REQUEST, getDealerTools);
 }
 

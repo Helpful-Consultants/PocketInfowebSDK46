@@ -31,7 +31,7 @@ function* getStats() {
 }
 
 function* watchGetStatsRequest() {
-  console.log('in saga watch for stats');
+  //   console.log('in saga watch for stats');
   yield takeEvery(actions.Types.GET_STATS_REQUEST, getStats);
 }
 

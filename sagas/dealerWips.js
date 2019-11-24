@@ -11,7 +11,7 @@ import * as api from '../api/dealerWips';
 
 // Get WIPS
 function* getDealerWips({ payload }) {
-  console.log('in saga get dealerWips, payload', payload && payload);
+  //   console.log('in saga get dealerWips, payload', payload && payload);
   try {
     const result = yield call(api.getDealerWips, {
       dealerId: payload.dealerId,
@@ -46,7 +46,7 @@ function* getDealerWips({ payload }) {
 }
 
 function* watchGetDealerWipsRequest() {
-  console.log('in saga watch for dealerWips');
+  //   console.log('in saga watch for dealerWips');
   yield takeEvery(actions.Types.GET_DEALER_WIPS_REQUEST, getDealerWips);
 }
 // Get WIPS end
@@ -56,7 +56,7 @@ function* watchGetDealerWipsRequest() {
 
 // Delete WIP
 function* deleteDealerWip(wipData) {
-  console.log('in saga DELETE dealerWip called');
+  //   console.log('in saga DELETE dealerWip called');
   console.log(wipData);
   try {
     yield call(api.deleteDealerWip, wipData);
@@ -71,7 +71,7 @@ function* deleteDealerWip(wipData) {
 }
 
 function* watchDeleteDealerWipRequest() {
-  console.log('in saga watch for DELETE dealerWip');
+  //   console.log('in saga watch for DELETE dealerWip');
   while (true) {
     const { payload } = yield take(actions.Types.DELETE_DEALER_WIP_REQUEST);
     yield call(deleteDealerWip, payload);
