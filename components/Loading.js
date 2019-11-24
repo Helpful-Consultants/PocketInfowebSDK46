@@ -8,7 +8,8 @@ import {
   View
 } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import AppLogoWithHeader from '../components/AppLogoWithHeader';
+// import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
@@ -16,7 +17,7 @@ export default Loading = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <AppLogoWithHeader />
+        <AppNameWithLogo />
         <View style={styles.loadingMessage}>
           <Text style={styles.loadingText}>LOADING DATA</Text>
           <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
