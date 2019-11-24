@@ -54,6 +54,12 @@ export default SignInScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
 
+  console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
+
+  if (userIsSignedIn) {
+    props.navigation.navigate('Main');
+  }
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { email: '', pin: '' },
     inputValidities: {

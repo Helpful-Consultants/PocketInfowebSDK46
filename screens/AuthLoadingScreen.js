@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -8,27 +8,21 @@ import {
   View,
   Alert
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
-import { signOutUserRequest } from '../actions/user';
+import { getUserRequest } from '../actions/user';
 // import validation from 'validate';
 
-export default SignOutScreen = props => {
-  const dispatch = useDispatch();
+export default AuthLoadingScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
 
-  const signOutUser = useCallback(() => {
-    console.log('signingOut');
-    dispatch(signOutUserRequest()), [userIsSignedIn];
-  });
-
   if (userIsSignedIn) {
-    console.log('signed in ');
-    signOutUser();
+    console.log('signed in , going to Main');
+    props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
   } else {
-    console.log('signed out');
-    signOutUser();
+    console.log('signed out , going to Main');
+    props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
   }
 
   return (
