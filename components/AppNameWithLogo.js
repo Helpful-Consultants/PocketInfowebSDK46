@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
@@ -24,20 +25,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   appName: {
-    color: Colors.vwgDarkGray,
-    fontSize: 18,
-    textTransform: 'uppercase'
+    color: Colors.vwgBlack,
+    fontSize: RFPercentage(3.5)
+    // textTransform: 'uppercase'
   },
   logoContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 0
   },
   appLogo: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10
+    marginTop: 3
   }
 });

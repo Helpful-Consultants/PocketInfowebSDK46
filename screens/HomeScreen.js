@@ -1,6 +1,9 @@
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  Dimensions,
   SafeAreaView,
+  //   PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -10,131 +13,165 @@ import { connect } from 'react-redux';
 import { Button, Icon, Image, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
-import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 
-class HomeScreen extends Component {
-  render() {
-    // console.log(this.props);
-    const { userIsSignedIn, userData } = this.props;
-    const buttonColor = Colors.vwgDeepBlue;
-    const buttonTextColor = Colors.vwgWhite;
-    const disabledButtonTextColor = Colors.vwgDarkGay;
-    const actionTextColor = Colors.vwgDeepBlue;
-    const disabledButtonColor = Colors.vwgMidGray;
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <AppLogoWithHeader />
+import { signOutUserRequest } from '../actions/user';
 
-          <View style={styles.gridRow}>
-            <Touchable
-              style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Tools')}
-            >
-              <View>
-                <Icon
-                  name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
-                  type='ionicon'
-                  color={buttonTextColor}
-                />
+const buttonColor = Colors.vwgDeepBlue;
+const buttonTextColor = Colors.vwgWhite;
+const disabledButtonTextColor = Colors.vwgDarkGay;
+const actionTextColor = Colors.vwgDeepBlue;
+const disabledButtonColor = Colors.vwgMidGray;
 
-                <Text style={styles.gridCellText}>Find tools</Text>
-              </View>
-            </Touchable>
-            <Touchable
-              style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Jobs')}
-            >
-              <View>
-                <Icon
-                  name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
-                  type='ionicon'
-                  color={buttonTextColor}
-                />
+// var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
+// var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 
-                <Text style={styles.gridCellText}>Jobs</Text>
-              </View>
-            </Touchable>
+var { screenHeight, screenWidth } = Dimensions.get('window');
+var gridHeight = screenHeight * 0.18;
+var gridWidth = screenWidth * 0.3;
+console.log(screenHeight, screenWidth);
+var iconSize = RFPercentage(5);
+var iconSizeSmall = RFPercentage(4);
+
+export default HomeScreen = props => {
+  // console.log(props);
+  const dispatch = useDispatch();
+
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userDataObj = useSelector(state => state.user.userData[0]);
+
+  const requestSignOutHandler = useCallback(() => {
+    console.log('in requestSignOutHandler');
+    console.log('signingOut');
+    dispatch(signOutUserRequest()), [userIsSignedIn];
+    props.navigation.navigate('AuthLoading');
+  });
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <AppNameWithLogo />
+        <View style={styles.contentContainer}>
+          <View>
+            <View style={styles.gridRow}>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('FindTools')}
+              >
+                <View>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+
+                  <Text style={styles.gridCellText}>Find tools</Text>
+                </View>
+              </Touchable>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('Jobs')}
+              >
+                <View>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+
+                  <Text style={styles.gridCellText}>Jobs</Text>
+                </View>
+              </Touchable>
+            </View>
+            <View style={styles.gridRow}>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('ReturnTools')}
+              >
+                <View>
+                  <Icon
+                    name={
+                      Platform.OS === 'ios'
+                        ? 'ios-return-left'
+                        : 'md-return-left'
+                    }
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+
+                  <Text style={styles.gridCellText}>Return tools</Text>
+                  <Text style={styles.gridCellTextDisabledSmall}>
+                    Coming soon..
+                  </Text>
+                </View>
+              </Touchable>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('Ltp')}
+              >
+                <View>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+
+                  <Text style={styles.gridCellText}>LTP</Text>
+                </View>
+              </Touchable>
+            </View>
+            <View style={styles.gridRow}>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('Products')}
+              >
+                <View>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+                  <Text style={styles.gridCellText}>Products</Text>
+                </View>
+              </Touchable>
+              <Touchable
+                style={styles.gridCell}
+                onPress={() => props.navigation.navigate('News')}
+              >
+                <View>
+                  <Icon
+                    name={
+                      Platform.OS === 'ios'
+                        ? 'ios-information-circle-outline'
+                        : 'md-information-circle'
+                    }
+                    type='ionicon'
+                    color={buttonTextColor}
+                    size={iconSize}
+                  />
+
+                  <Text style={styles.gridCellText}>News</Text>
+                </View>
+              </Touchable>
+            </View>
           </View>
-          <View style={styles.gridRow}>
-            <Touchable
-              disabled
-              style={styles.gridCellDisabled}
-              onPress={() => this.props.navigation.navigate('ReturnTools')}
-            >
-              <View>
-                <Icon
-                  name={
-                    Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'
-                  }
-                  type='ionicon'
-                  color={disabledButtonTextColor}
-                />
-
-                <Text style={styles.gridCellTextDisabled}>Return tools</Text>
-                <Text style={styles.gridCellTextDisabledSmall}>
-                  Coming soon..
-                </Text>
-              </View>
-            </Touchable>
-            <Touchable
-              style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Ltp')}
-            >
-              <View>
-                <Icon
-                  name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
-                  type='ionicon'
-                  color={buttonTextColor}
-                />
-
-                <Text style={styles.gridCellText}>LTP</Text>
-              </View>
-            </Touchable>
-          </View>
-          <View style={styles.gridRow}>
-            <Touchable
-              style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('Products')}
-            >
-              <View>
-                <Icon
-                  name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
-                  type='ionicon'
-                  color={buttonTextColor}
-                />
-                <Text style={styles.gridCellText}>Products</Text>
-              </View>
-            </Touchable>
-            <Touchable
-              style={styles.gridCell}
-              onPress={() => this.props.navigation.navigate('News')}
-            >
-              <View>
-                <Icon
-                  name={
-                    Platform.OS === 'ios'
-                      ? 'ios-information-circle-outline'
-                      : 'md-information-circle'
-                  }
-                  type='ionicon'
-                  color={buttonTextColor}
-                />
-
-                <Text style={styles.gridCellText}>News</Text>
-              </View>
-            </Touchable>
-          </View>
-          <Touchable onPress={() => this.props.navigation.navigate('Odis')}>
+          <Touchable onPress={() => props.navigation.navigate('Odis')}>
             <View style={styles.odisRow}>
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
                 type='ionicon'
-                size={20}
+                size={iconSizeSmall}
                 color={actionTextColor}
               />
 
@@ -146,31 +183,18 @@ class HomeScreen extends Component {
               marginTop: 15
             }}
           >
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 12,
-                fontStyle: 'italic'
-              }}
-            >
+            <Text style={styles.instructionsText}>
               {userIsSignedIn
-                ? `Signed in as ${userData.userName}`
+                ? `Signed in as ${userDataObj.userName}`
                 : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
             </Text>
-            <Text
-              style={{
-                marginTop: 5,
-                textAlign: 'center',
-                fontSize: 12,
-                fontStyle: 'italic'
-              }}
-            >
-              {userIsSignedIn ? `${userData.dealerName}` : null}
+            <Text style={styles.instructionsTextSmall}>
+              {userIsSignedIn ? `${userDataObj.dealerName}` : null}
             </Text>
           </View>
           <Touchable
             style={{ marginTop: 0 }}
-            onPress={() => this.props.navigation.navigate('SignIn')}
+            onPress={() => requestSignOutHandler()}
           >
             <View style={styles.odisRow}>
               <Icon
@@ -187,18 +211,18 @@ class HomeScreen extends Component {
           {/* <View style={styles.gridRow}>
             <Touchable
               style={styles.doubleGridCell}
-              onPress={() => this.props.navigation.navigate('Odis')}
+              onPress={() => props.navigation.navigate('Odis')}
             >
               <View>
                 <Text style={styles.gridCellText}>Products</Text>
               </View>
             </Touchable>
           </View> */}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 HomeScreen.navigationOptions = {
   header: null,
@@ -208,18 +232,18 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
 
     backgroundColor: 'white',
     marginTop: 10
   },
   contentContainer: {
-    paddingTop: 0
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'white'
   },
-  appName: {
-    color: '#0096da',
-    fontSize: 18
-  },
-
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -239,7 +263,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '45%',
+    // width: PixelRatio.getPixelSizeForLayoutSize(50),
+    height: RFPercentage(14),
     borderColor: Colors.vwgDeepBlue,
     borderStyle: 'solid',
     borderWidth: 1,
@@ -247,7 +272,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgDeepBlue,
     margin: 5,
     borderRadius: 10,
-    height: 70
+    // height: PixelRatio.getPixelSizeForLayoutSize(40),
+    width: RFPercentage(25)
     // padding: 5
   },
   gridCellDisabled: {
@@ -284,12 +310,13 @@ const styles = StyleSheet.create({
 
   gridCellText: {
     color: 'white',
-    fontSize: 14,
+    // fontSize: 14,
+    fontSize: RFPercentage(3),
 
     textAlign: 'center'
   },
   gridCellTextDisabledSmall: {
-    color: Colors.disabledButtonTextColor,
+    color: Colors.vwgWhite,
     fontSize: 10,
 
     textAlign: 'center'
@@ -302,7 +329,7 @@ const styles = StyleSheet.create({
   },
   odisCellText: {
     color: Colors.vwgDeepBlue,
-    fontSize: 14,
+    fontSize: RFPercentage(3),
 
     flexDirection: 'column',
     justifyContent: 'center',
@@ -315,7 +342,16 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center'
   },
-
+  instructionsText: {
+    fontSize: RFPercentage(2.5),
+    marginTop: 5,
+    textAlign: 'center'
+  },
+  instructionsTextSmall: {
+    fontSize: RFPercentage(2),
+    marginTop: 5,
+    textAlign: 'center'
+  },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
@@ -389,27 +425,3 @@ const styles = StyleSheet.create({
     color: '#2e78b7'
   }
 });
-
-const mapStateToProps = state => {
-  console.log('in SignInScreen mapStateToProps');
-  //   console.log(state);
-  //   const { friends } = state;
-  console.log(state.user.userData && state.user.userData.length);
-  console.log(state.user.userIsSignedIn && state.user.userIsSignedIn);
-  console.log('SignInScreen mapStateToProps - end');
-
-  //   console.log('end mapStateToProps');
-  return {
-    userIsSignedIn: state.user.userIsSignedIn && state.user.userIsSignedIn,
-    userData: (state.user.userData && state.user.userData[0]) || {}
-  };
-};
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getUserRequest: signInData => dispatch(getUserRequest(signInData))
-//   };
-// };
-
-// export default SignInScreen;
-export default connect(mapStateToProps)(HomeScreen);
