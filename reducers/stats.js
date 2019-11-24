@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 
 export default function stats(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  console.log('action.type is:', action.type);
+  //   console.log('action.type is:', action.type);
   switch (action.type) {
     case Types.GET_STATS_SUCCESS: {
       console.log('in stats reducer');
