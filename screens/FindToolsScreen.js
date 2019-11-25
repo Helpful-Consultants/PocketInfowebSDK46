@@ -29,7 +29,7 @@ import Colors from '../constants/Colors';
 // import ToolPic from '../assets/images/icon.png';
 
 import DealerToolsList from './DealerToolsList';
-import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
+// import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const KEYS_TO_FILTERS = ['toolNumber', 'partNumber', 'partDescription'];
 
@@ -70,11 +70,9 @@ export default FindToolsScreen = ({ ...props }) => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
-  const userIntId = userDataObj && userDataObj.intId;
+  const userIntId = userDataObj && userDataObj.intId.toString();
 
   const [searchInput, setSearchInput] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [isBasketExpanded, setIsBasketExpanded] = useState(false);
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
@@ -188,16 +186,16 @@ export default FindToolsScreen = ({ ...props }) => {
       setWipNumber(formState.inputValues.wipNumber);
       setMode('confirm');
       const newWipObj = {
-        wipNumber: formState.inputValues.wipNumber,
+        wipNumber: formState.inputValues.wipNumber.toString(),
         createdBy: userName,
         createdDate: new Date(),
-        userIntId: userIntId,
-        dealerId: dealerId,
+        userIntId: userIntId.toString(),
+        dealerId: dealerId.toString(),
         tools: toolBasket
       };
       const getWipsDataObj = {
-        dealerId: dealerId,
-        intId: userIntId
+        dealerId: dealerId.toString(),
+        intId: userIntId.toString()
       };
       const newWipPkgObj = {
         getWipsDataObj,
@@ -232,7 +230,9 @@ export default FindToolsScreen = ({ ...props }) => {
     (inputIdentifier, text) => {
       let isValid = false;
       if (text.trim().length > 0) {
-        isValid = true;
+        if (text[0] != 0) {
+          isValid = true;
+        }
       }
       dispatchFormState({
         type: Types.FORM_INPUT_UPDATE,
@@ -417,7 +417,7 @@ export default FindToolsScreen = ({ ...props }) => {
               placeholder='Job number'
               required
               autoCapitalize='none'
-              keyboardType='numeric'
+              keyboardType='number-pad'
               autoCorrect={false}
               returnKeyType='done'
               onSubmitEditing={text => console.log(text)}
@@ -480,7 +480,7 @@ export default FindToolsScreen = ({ ...props }) => {
           >
             <View style={styles.searchFoundPrompt}>
               <Text style={styles.searchFoundPromptText}>
-                {`Tools have been saved to ${wipNumber}. Hit this to start again.`}
+                {`Tools booked to job ${wipNumber}. Hit this to find tools for another job.`}
               </Text>
             </View>
           </TouchableOpacity>

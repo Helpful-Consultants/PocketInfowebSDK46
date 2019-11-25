@@ -65,12 +65,12 @@ const dummyData = [
 ];
 
 const postUrl = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
-console.log(postUrl);
+// console.log(postUrl);
 
 const deleteUrl =
   '/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=' +
   dummyDealerId;
-console.log(deleteUrl);
+// console.log(deleteUrl);
 
 export const getDealerWips = ({ dealerId, intId }) => {
   console.log('here in getDealerWips dealerId is ', dealerId, intId);
@@ -81,28 +81,33 @@ export const getDealerWips = ({ dealerId, intId }) => {
     dealerId;
   console.log(url);
   return axios.get(url, {
-    params: {
-      //   limit: 1000
+    headers: {
+      //   'Content-Type': 'text/plain'
+      Accept: 'text/json'
+      //   'Content-Type': 'text/json'
+      //   'Content-Type': 'text / text; charset=UTF - 8'
+      //   'Content-Type': 'application/json;charset=UTF - 8'
+      // 'Content-Type': 'application/json'
     }
   });
 };
 
-export const createDealerWip = newWipNr => {
-  const stuff = {
-    wipNumber: 1802,
-    createdBy: userName,
-    createdDate: new Date(),
-    userIntId: intIdString,
-    tools: tools
-  };
-  const strung = JSON.stringify(stuff);
+export const createDealerWip = newWipObj => {
+  console.log('in create wip api', newWipObj);
+
+  const strung = JSON.stringify(newWipObj);
+  console.log('in create wip api, strung is ', strung);
+
+  const wipArr = [newWipObj];
+
+  console.log('wipArr', wipArr);
 
   //   const strung = queryString.stringify(stuff);
   //   const strung = stuff.toString();
   const strungArray = '[' + strung + ']';
   //   console.log(postUrl);
   //   console.log(stuff);
-  console.log(strungArray);
+  console.log('in create wip api, strungArray is ', strungArray);
   //   console.log(strungArray);
   //   return fetch(postUrl, {
   //     method: 'POST',
@@ -113,18 +118,18 @@ export const createDealerWip = newWipNr => {
   //     data: dummyData
   //   });
 
-  //   return axios.post(postUrl, strungArray);
+  return axios.post(postUrl, wipArr);
 
-  return axios.post(postUrl, dummyData, {
-    headers: {
-      data: dummyData,
-      Accept: '*/*',
-      'Content-Type': 'application/json'
-      //   //   'Content-Type': 'text/json'
-      //   'Content-Type': 'text/plain'
-      //   'Content-Type': 'text/json'
-    }
-  });
+  //   return axios.post(postUrl, dummyData, {
+  //     headers: {
+  //       data: dummyData,
+  //       Accept: '*/*',
+  //       'Content-Type': 'application/json'
+  //       //   //   'Content-Type': 'text/json'
+  //       //   'Content-Type': 'text/plain'
+  //       //   'Content-Type': 'text/json'
+  //     }
+  //   });
   // return axios.post(postUrl, dummyData, {
   //     headers: {
   //         data: '',
@@ -138,14 +143,16 @@ export const createDealerWip = newWipNr => {
   //   return axios.post(postUrl, strungArray);
   //   return axios.post(postUrl, dummyData);
   //   return axios.post(postUrl, strungArray, {
-  //   return axios.post(postUrl, dummyData, {
-  //     headers: {
-  //       //   'Content-Type': 'text/plain'
-  //       //   'Content-Type': 'text/json'
-  //       // 'Content-Type': 'text / text; charset=UTF - 8'
-  //       'Content-Type': 'application/json'
-  //     }
-  //   });
+  return axios.post(postUrl, wipArr, {
+    headers: {
+      //   'Content-Type': 'text/plain'
+      Accept: '*/*',
+      //   'Content-Type': 'text/json'
+      //   'Content-Type': 'text / text; charset=UTF - 8'
+      'Content-Type': 'application/json;charset=UTF - 8'
+      // 'Content-Type': 'application/json'
+    }
+  });
   //   return axios.post(postUrl, strungArray);
 };
 

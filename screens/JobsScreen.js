@@ -32,7 +32,7 @@ export default JobsScreen = ({ ...props }) => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId;
+  const userIntId = userDataObj && userDataObj.intId.toString();
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -63,11 +63,19 @@ export default JobsScreen = ({ ...props }) => {
 
   if (dealerWipsItems && dealerWipsItems.length > 0) {
     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
-    userWipsItems =
-      userIntId && dealerWipsItems.filter(item => item.userIntId == userIntId);
   } else {
     console.log('in jobs screen, no wipsItems');
   }
+
+  const userWipsItems =
+    (userIntId &&
+      dealerWipsItems &&
+      dealerWipsItems.length > 0 &&
+      dealerWipsItems.filter(
+        item => item.userIntId.toString() == userIntId.toString()
+      )) ||
+    [];
+  //   console.log('userWipsItems ', userWipsItems);
   // const { dealerWipsItems } = this.props;
   // console.log('in DealerWipsScreen, dealerWips ', this.props);
   // console.log('in DealerWipsScreen, dealerWips end');

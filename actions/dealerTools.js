@@ -1,8 +1,13 @@
 export const Types = {
+  EMPTY_DEALER_TOOLS_REQUEST: 'dealerTools/empty_dealer_tools_request',
   GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealer_tools_request',
   GET_DEALER_TOOLS_SUCCESS: 'dealerTools/get_dealer_tools_success',
   DEALER_TOOLS_ERROR: 'dealerTools/dealer_tools_error'
 };
+
+export const emptyDealerToolsRequest = () => ({
+  type: Types.EMPTY_DEALER_TOOLS_REQUEST
+});
 
 export const getDealerToolsRequest = ({ dealerId }) => ({
   type: Types.GET_DEALER_TOOLS_REQUEST,

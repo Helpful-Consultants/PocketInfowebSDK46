@@ -21,8 +21,8 @@ export default function DealerToolsList(props) {
   //   console.log(props);
   //   console.log('props end');
   const limit = 0;
-  const userIntId = props.userIntId || '';
-  console.log('userIntId ', userIntId);
+  const userIntId = props.userIntId.toString() || '';
+  //   console.log('userIntId ', userIntId);
   //   const allItems = (props.items && props.items) || [];
   const items = (props.items && props.items) || [];
   //   const allItems = props.items || [];
@@ -32,7 +32,7 @@ export default function DealerToolsList(props) {
   // console.log(dealerToolsDummyData);
   // console.log('dealerToolsDummyData');
 
-  console.log('in dealer list - items', items.length);
+  //   console.log('in dealer list - items', items.length);
 
   if (items)
     return (
@@ -48,7 +48,9 @@ export default function DealerToolsList(props) {
                 key={i}
                 containerStyle={{
                   backgroundColor:
-                    item.userIntId == userIntId ? Colors.vwgSkyBlue : '#ededed',
+                    item.userIntId.toString() == userIntId.toString()
+                      ? Colors.vwgSkyBlue
+                      : '#ededed',
                   borderColor: '#666',
                   borderStyle: 'solid',
                   borderWidth: 1,
@@ -64,11 +66,11 @@ export default function DealerToolsList(props) {
                       marginBottom: 5
                     }}
                   >
-                    {item.userIntId == userIntId
+                    {item.userIntId.toString() == userIntId.toString()
                       ? `My job ${item.wipNumber}`
                       : `${item.createdBy}'s job ${item.wipNumber}`}
                   </Text>
-                  {item.userIntId != userIntId ? (
+                  {item.userIntId.toString() !== userIntId.toString() ? (
                     <View
                       style={{
                         flex: 1,
@@ -117,7 +119,7 @@ export default function DealerToolsList(props) {
                           props.deleteDealerWipRequest({
                             id: item.id,
                             wipNumber: item.wipNumber,
-                            intId: item.userIntId
+                            intId: item.userIntId.toString()
                           });
                         }}
                         buttonStyle={{
@@ -145,61 +147,62 @@ export default function DealerToolsList(props) {
                     </View>
                   ) : null}
                   <View>
-                    {item.tools.map((item, i) => (
-                      <ListItem
-                        containerStyle={{
-                          backgroundColor: '#f6f6f6',
-                          marginBottom: 5,
-                          borderColor: '#2089dc',
-                          borderStyle: 'solid',
-                          borderWidth: 1,
-                          borderRadius: 6
-                        }}
-                        titleStyle={{
-                          fontSize: 14,
-                          color: '#2089dc',
-                          textAlign: 'left'
-                        }}
-                        key={i}
-                        title={`${item.partNumber} (${item.toolNumber})`}
-                        subtitle={
-                          <View>
-                            <Text
-                              style={{
-                                color: '#2089dc',
-                                marginBottom: 3
-                              }}
-                            >{`${item.partDescription}`}</Text>
-                            {item.location.length > 0 ? (
-                              <Text>{`Last location was ${item.location}`}</Text>
-                            ) : null}
+                    {item.tools && // crashes without this if no tools in job
+                      item.tools.map((item, i) => (
+                        <ListItem
+                          containerStyle={{
+                            backgroundColor: '#f6f6f6',
+                            marginBottom: 5,
+                            borderColor: '#2089dc',
+                            borderStyle: 'solid',
+                            borderWidth: 1,
+                            borderRadius: 6
+                          }}
+                          titleStyle={{
+                            fontSize: 14,
+                            color: '#2089dc',
+                            textAlign: 'left'
+                          }}
+                          key={i}
+                          title={`${item.partNumber} (${item.toolNumber})`}
+                          subtitle={
+                            <View>
+                              <Text
+                                style={{
+                                  color: '#2089dc',
+                                  marginBottom: 3
+                                }}
+                              >{`${item.partDescription}`}</Text>
+                              {item.location.length > 0 ? (
+                                <Text>{`Last location was ${item.location}`}</Text>
+                              ) : null}
 
-                            {item.lastWIP.length > 0 ? (
-                              <Text>{`Last booked to job ${item.lastWIP}`}</Text>
-                            ) : null}
-                          </View>
-                        }
-                        topDivider={i > 0 ? true : false}
-                        rightIcon={
-                          <Icon
-                            name={
-                              Platform.OS === 'ios'
-                                ? 'ios-return-left'
-                                : 'md-return-left'
-                            }
-                            type='ionicon'
-                            color='#2089dc'
-                            reverse
-                            onPress={() =>
-                              alert(
-                                `Coming feature: this button will record you returning the tool.`
-                              )
-                            }
-                            size={10}
-                          />
-                        }
-                      />
-                    ))}
+                              {item.lastWIP.length > 0 ? (
+                                <Text>{`Last booked to job ${item.lastWIP}`}</Text>
+                              ) : null}
+                            </View>
+                          }
+                          topDivider={i > 0 ? true : false}
+                          rightIcon={
+                            <Icon
+                              name={
+                                Platform.OS === 'ios'
+                                  ? 'ios-return-left'
+                                  : 'md-return-left'
+                              }
+                              type='ionicon'
+                              color='#2089dc'
+                              reverse
+                              onPress={() =>
+                                alert(
+                                  `Coming feature: this button will record you returning the tool.`
+                                )
+                              }
+                              size={10}
+                            />
+                          }
+                        />
+                      ))}
                   </View>
                   <View>
                     <Text

@@ -1,4 +1,5 @@
 export default {
+  EMPTY_DEALER_TOOLS_REQUEST: 'dealerTools/empty_dealer_tools_request',
   GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealer_tools_request',
   GET_DEALER_TOOLS_SUCCESS: 'dealerTools/get_dealer_tools_success',
   DEALER_TOOLS_ERROR: 'dealerTools/dealer_tools_error',
@@ -34,6 +35,7 @@ export default {
   CREATE_USER_REQUEST: 'users/create_user_request',
   USERS_ERROR: 'users/user_error',
 
+  EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/empty_dealer_wips_request',
   GET_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
   GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',
   DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',

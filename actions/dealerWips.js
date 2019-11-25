@@ -1,4 +1,5 @@
 export const Types = {
+  EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
   GET_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
   GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',
   DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',
@@ -7,6 +8,10 @@ export const Types = {
   UPDATE_DEALER_WIP_REQUEST: 'dealerWips/update_dealer_wip_request',
   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error'
 };
+
+export const emptyDealerWipsRequest = () => ({
+  type: Types.EMPTY_DEALER_WIPS_REQUEST
+});
 
 export const getDealerWipsRequest = ({ dealerId, intId }) => ({
   type: Types.GET_DEALER_WIPS_REQUEST,

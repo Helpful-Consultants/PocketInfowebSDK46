@@ -14,6 +14,14 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         dealerToolsItems: action.payload.items
       };
     }
+    case Types.EMPTY_DEALER_TOOLS_REQUEST: {
+      //   console.log(action.payload);
+      //   console.log('reducer end data');
+      return {
+        ...state,
+        dealerToolsItems: []
+      };
+    }
     case Types.DEALER_TOOLS_ERROR: {
       return {
         ...state,

@@ -19,6 +19,8 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 
 import { signOutUserRequest } from '../actions/user';
+import { emptyDealerToolsRequest } from '../actions/dealerTools';
+import { emptyDealerWipsRequest } from '../actions/dealerWips';
 
 const buttonColor = Colors.vwgDeepBlue;
 const buttonTextColor = Colors.vwgWhite;
@@ -46,7 +48,10 @@ export default HomeScreen = props => {
   const requestSignOutHandler = useCallback(() => {
     console.log('in requestSignOutHandler');
     console.log('signingOut');
-    dispatch(signOutUserRequest()), [userIsSignedIn];
+    dispatch(emptyDealerWipsRequest());
+    dispatch(emptyDealerToolsRequest());
+    // dispatch(signOutUserRequest()), [userIsSignedIn];
+    dispatch(signOutUserRequest());
     props.navigation.navigate('AuthLoading');
   });
 
