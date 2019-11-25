@@ -3,6 +3,7 @@ export const Types = {
   GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',
   DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',
   CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
+  CREATE_DEALER_WIP_SUCCESS: 'dealerWips/create_dealer_wip_success',
   UPDATE_DEALER_WIP_REQUEST: 'dealerWips/update_dealer_wip_request',
   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error'
 };
@@ -19,6 +20,13 @@ export const getDealerWipsSuccess = ({ items }) => ({
   type: Types.GET_DEALER_WIPS_SUCCESS,
   payload: {
     items: items
+  }
+});
+export const createDealerWipSuccess = ({ code, message }) => ({
+  type: Types.CREATE_DEALER_WIP_SUCCESS,
+  payload: {
+    code,
+    message
   }
 });
 

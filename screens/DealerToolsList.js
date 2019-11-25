@@ -51,7 +51,7 @@ export default function DealerToolsList({ ...props }) {
       >
         <ListItem
           title={`${item.partNumber} (${item.toolNumber})`}
-          titleStyle={{ color: 'green' }}
+          titleStyle={{ color: Colors.vwgMidBlue }}
           subtitle={
             <View>
               <Text>{`${item.partDescription}`}</Text>
@@ -64,22 +64,6 @@ export default function DealerToolsList({ ...props }) {
             </View>
           }
           bottomDivider
-          rightIcon={
-            <View>
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
-                type='ionicon'
-              />
-              <Icon
-                name={
-                  Platform.OS === 'ios'
-                    ? 'ios-arrow-round-up'
-                    : 'md-arrow-round-up'
-                }
-                type='ionicon'
-              />
-            </View>
-          }
         />
       </Touchable>
     );

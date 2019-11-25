@@ -30,9 +30,9 @@ export default JobsScreen = ({ ...props }) => {
     state => state.dealerWips.dealerWipsItems
   );
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-  const userData = useSelector(state => state.user.userData[0]);
-  const dealerId = userData && userData.dealerId;
-  const userIntId = userData && userData.intId;
+  const userDataObj = useSelector(state => state.user.userData[0]);
+  const dealerId = userDataObj && userDataObj.dealerId;
+  const userIntId = userDataObj && userDataObj.intId;
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -40,24 +40,31 @@ export default JobsScreen = ({ ...props }) => {
   if (!userIsSignedIn) {
     props.navigation.navigate('SignIn');
   }
-  const getWips = useCallback(getWipsData => {
-    console.log('getWips', getWipsData);
-    dispatch(getDealerWipsRequest(getWipsData)), [dealerWipsItems];
+  //   console.log('@@@@@@@@@@@@@', userDataObj);
+
+  const getWipsDataObj = userDataObj && {
+    dealerId: userDataObj.dealerId,
+    intId: userDataObj.intId
+  };
+  const getWips = useCallback(getWipsDataObj => {
+    // console.log('getWips', getWipsDataObj);
+    dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
   const deleteDealerWip = useCallback(
     wipData => dispatch(deleteDealerWipRequest(wipData)),
     [dealerWipsItems]
   );
-  const createDealerWip = useCallback(
-    wipData => dispatch(createDealerWipRequest(wipData)),
-    [dealerWipsItems]
-  );
+  //   const createDealerWip = useCallback(
+  //     wipData => dispatch(createDealerWipRequest(wipData)),
+  //     [dealerWipsItems]
+  //   );
+
+  //   console.log('in jobs screen, wipsItems', JSON.parse(dealerWipsItems));
 
   if (dealerWipsItems && dealerWipsItems.length > 0) {
-    console.log('in jobs screen, wipsItems', dealerWipsItems);
+    console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
     userWipsItems =
-      props.userIntId &&
-      dealerWipsItems.filter(item => item.userIntId === props.userIntId);
+      userIntId && dealerWipsItems.filter(item => item.userIntId == userIntId);
   } else {
     console.log('in jobs screen, no wipsItems');
   }
@@ -74,12 +81,8 @@ export default JobsScreen = ({ ...props }) => {
   };
 
   const refreshRequestHandler = () => {
-    const getWipsData = {
-      dealerId: dealerId,
-      userIntId: userIntId
-    };
-    console.log('in refreshRequestHandler', getWipsData);
-    dealerId && userIntId && getWips(getWipsData);
+    console.log('in refreshRequestHandler', getWipsDataObj);
+    dealerId && userIntId && getWips(getWipsDataObj);
   };
 
   //   const items = dealerWipsItems;
@@ -91,7 +94,8 @@ export default JobsScreen = ({ ...props }) => {
   // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips.items);
   // console.log('in DealerWipsScreen, dealerWips ', dealerWips && dealerWips);
   // console.log('in DealerWipsScreen, dealerWips', dealerWips && dealerWips);
-  console.log('userIntId ', userIntId);
+  //   console.log('userIntId ', userIntId);
+  //   console.log('userWipsItems sent to JobsList', userWipsItems);
   return (
     <View>
       {/* <SearchBar
@@ -128,7 +132,7 @@ export default JobsScreen = ({ ...props }) => {
       />
       <ScrollView>
         <JobsList
-          items={dealerWipsItems}
+          items={userWipsItems}
           deleteDealerWipRequest={deleteDealerWip}
           userIntId={userIntId}
         />

@@ -11,30 +11,32 @@ import * as api from '../api/dealerWips';
 
 // Get WIPS
 function* getDealerWips({ payload }) {
-  //   console.log('in saga get dealerWips, payload', payload && payload);
+  console.log('in saga get dealerWips, payload', payload && payload);
   try {
     const result = yield call(api.getDealerWips, {
       dealerId: payload.dealerId,
       intId: payload.intId
     });
     console.log('in saga get dealerWips -200');
-    console.log(result.length);
+
     console.log('end results in saga get dealerWips, success');
     if (result.data.length > 0) {
-      console.log('in wips saga - good 200');
+      console.log('in Wips saga - good 200');
       yield put(
         actions.getDealerWipsSuccess({
           items: result.data
         })
       );
     } else {
-      console.log('in wips saga - bad 200');
+      console.log('in Wips saga - bad 200');
       yield put(
         actions.getDealerWipsError({
-          error: 'in wips saga - bad 200'
+          error: 'in Wips saga - bad 200'
         })
       );
     }
+    // console.log(result);
+    // console.log('end results in saga get dealerWips, success');
   } catch (e) {
     console.log('error in saga get dealerWips !!!!!!!!!!!!!!');
     yield put(
@@ -80,10 +82,21 @@ function* watchDeleteDealerWipRequest() {
 // Delete WIP end
 
 // Create WIP start
-function* createDealerWip({ newWipData }) {
+function* createDealerWip({ payload }) {
+  console.log('in create wip saga', payload);
+
   try {
-    yield call(api.createDealerWip, newWipData);
-    yield call(getDealerWips);
+    yield call(api.createDealerWip, payload.newWipObj);
+    console.log('in wips saga - good 200', payload.getWipsDataObj);
+    yield put(
+      actions.createDealerWipSuccess({
+        code: '200',
+        message: 'Successfull'
+      })
+    );
+    yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
+
+    yield put(actions.getDealerToolsRequest(payload.getWipsDataObj.dealerId));
   } catch (error) {
     if (error.response) {
       // console.error(error);if (error.response) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ActivityIndicator,
@@ -12,6 +12,7 @@ import {
 import {
   Button,
   Icon,
+  Input,
   ListItem,
   Overlay,
   SearchBar,
@@ -32,6 +33,31 @@ import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const KEYS_TO_FILTERS = ['toolNumber', 'partNumber', 'partDescription'];
 
+import Types from '../constants/Types';
+
+const formReducer = (state, action) => {
+  if (action.type === Types.FORM_INPUT_UPDATE) {
+    const updatedValues = {
+      ...state.inputValues,
+      [action.inputId]: action.value
+    };
+    const updatedValidities = {
+      ...state.inputValidities,
+      [action.inputId]: action.isValid
+    };
+    let updatedFormIsValid = true;
+    for (const key in updatedValidities) {
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
+    }
+    return {
+      formIsValid: updatedFormIsValid,
+      inputValues: updatedValues,
+      inputValidities: updatedValidities
+    };
+  }
+  return state;
+};
+
 export default FindToolsScreen = ({ ...props }) => {
   const dispatch = useDispatch();
   const dealerToolsItems = useSelector(
@@ -49,9 +75,12 @@ export default FindToolsScreen = ({ ...props }) => {
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isBasketExpanded, setIsBasketExpanded] = useState(true);
+  const [isBasketExpanded, setIsBasketExpanded] = useState(false);
+  const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
+
   const [counter, setCounter] = useState(0);
+  const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
 
   //   const signInToServer = useCallback(
@@ -64,47 +93,68 @@ export default FindToolsScreen = ({ ...props }) => {
     [dealerToolsItems]
   );
   const saveToJob = useCallback(
-    newWipObj => dispatch(createDealerWipRequest(newWipObj)),
+    newWipPkgObj => dispatch(createDealerWipRequest(newWipPkgObj)),
     [dealerWipsItems]
   );
 
   if (dealerToolsItems && dealerToolsItems.length > 0) {
-    // console.log('in tools screen,toolsItems', dealerToolsItems);
+    console.log('in tools screen,toolsItems', dealerToolsItems.length);
   } else {
     console.log('in tools screen, no toolsItems');
   }
 
   const selectItemHandler = newItem => {
     setCounter(counter + 1);
-    console.log(newItem.id, ' to be added');
+    // console.log(newItem.id, ' to be added');
     const newBasket = toolBasket;
     const dup = toolBasket.filter(item => item.id === newItem.id);
-    console.log('dup, ');
+    // console.log('dup, ');
     if (dup.length === 0) {
       newBasket.push(newItem);
       setToolBasket(newBasket);
-      console.log('newBasket', newBasket);
-      console.log(newItem.id, ' added to... ');
+      //   console.log('newBasket', newBasket);
+      //   console.log(newItem.id, ' added to... ');
     } else {
       console.log('dup');
     }
-    console.log(toolBasket.length);
+    // console.log(toolBasket.length);
   };
 
-  const removeBasketItemHandler = deadItemId => {
-    console.log(deadItemId, ' to be removed');
-    const newBasket = toolBasket.filter(item => item.id !== deadItemId);
+  const removeBasketHandler = () => {
+    console.log('basket', ' to be removed');
 
-    setToolBasket(newBasket);
-    console.log('newBasket', newBasket);
-    console.log(deadItemId, '  removed from to... ');
-    // console.log(toolBasket);
+    setToolBasket([]);
+
     console.log(toolBasket.length);
     // updateBasketView();
   };
 
+  const removeBasketItemHandler = deadItemId => {
+    // console.log(deadItemId, ' to be removed');
+    const newBasket = toolBasket.filter(item => item.id !== deadItemId);
+
+    setToolBasket(newBasket);
+    // console.log('newBasket', newBasket);
+    // console.log(deadItemId, '  removed from to... ');
+    // console.log(toolBasket);
+    // console.log(toolBasket.length);
+    // updateBasketView();
+  };
+
+  const acceptMessageHandler = () => {
+    console.log('basket', ' to be removed');
+
+    setToolBasket([]);
+    removeBasketHandler();
+    setMode('list');
+    // inputChangeHandler('wipNumber', '');
+
+    // console.log(toolBasket.length);
+    // updateBasketView();
+  };
+
   toggleShowBasketHandler = action => {
-    console.log('toggling ', isBasketExpanded);
+    // console.log('toggling ', isBasketExpanded);
     if (action) {
       setIsBasketExpanded(action);
     } else if (isBasketExpanded === true) {
@@ -115,7 +165,7 @@ export default FindToolsScreen = ({ ...props }) => {
   };
   // Search function
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
+    // console.log(searchInput);
     toggleShowBasketHandler(false);
     setSearchInput(searchInput);
   };
@@ -123,23 +173,42 @@ export default FindToolsScreen = ({ ...props }) => {
     const getToolsData = {
       dealerId: dealerId
     };
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     dealerId && getTools(getToolsData);
   };
-  const saveToJobRequestHandler = () => {
-    console.log(userDataObj);
 
-    const newWipObj = {
-      wipNumber: '2042',
-      createdBy: userName,
-      createdDate: new Date(),
-      userIntId: userIntId,
-      dealerId: dealerId,
-      tools: toolBasket
-    };
-    console.log('in refreshRequestHandler', newWipObj);
-    saveToJob(newWipObj);
-    // dealerId && getTools(getToolsData);
+  const saveToJobRequestHandler = () => {
+    // console.log(userDataObj);
+    if (formState.formIsValid) {
+      //   console.log(
+      //     'formState.inputValues.wipNumber ',
+      //     formState.inputValues.wipNumber
+      //   );
+      //   console.log('formIsValid', formState.inputValues.wipNumber);
+      setWipNumber(formState.inputValues.wipNumber);
+      setMode('confirm');
+      const newWipObj = {
+        wipNumber: formState.inputValues.wipNumber,
+        createdBy: userName,
+        createdDate: new Date(),
+        userIntId: userIntId,
+        dealerId: dealerId,
+        tools: toolBasket
+      };
+      const getWipsDataObj = {
+        dealerId: dealerId,
+        intId: userIntId
+      };
+      const newWipPkgObj = {
+        getWipsDataObj,
+        newWipObj
+      };
+      //   console.log('in saveToJobRequestHandler', newWipPkgObj);
+      saveToJob(newWipPkgObj);
+    } else {
+      setMode('book');
+      //   console.log('formIs NOT Valid', formState.inputValues.wipNumber);
+    }
   };
   // Search function - end
 
@@ -151,36 +220,104 @@ export default FindToolsScreen = ({ ...props }) => {
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
 
+  const [formState, dispatchFormState] = useReducer(formReducer, {
+    inputValues: { wipNumber: '' },
+    inputValidities: {
+      wipNumber: false
+    },
+    formIsValid: false
+  });
+
+  const inputChangeHandler = useCallback(
+    (inputIdentifier, text) => {
+      let isValid = false;
+      if (text.trim().length > 0) {
+        isValid = true;
+      }
+      dispatchFormState({
+        type: Types.FORM_INPUT_UPDATE,
+        value: text,
+        isValid: isValid,
+        inputId: inputIdentifier
+      });
+    },
+    [dispatchFormState]
+  );
+
   let basketView =
     toolBasket && toolBasket.length > 0 ? (
       <View style={styles.basket}>
         <View style={styles.basketHeader}>
-          <Text style={styles.basketText}>
-            {`${toolBasket.length} ${
-              toolBasket.length > 1 ? `tools` : `tool`
-            } in basket.`}
-          </Text>
+          <TouchableOpacity
+            onPress={() => toggleShowBasketHandler()}
+            style={{ flexDirection: 'row' }}
+          >
+            <View>
+              <Text style={styles.basketText}>
+                {`${toolBasket.length} ${
+                  toolBasket.length > 1 ? `tools` : `tool`
+                } in job basket.`}
+              </Text>
 
-          <TouchableOpacity onPress={() => saveToJobRequestHandler()}>
-            <Text style={styles.basketText}>{`Book to job`}</Text>
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
-              type='ionicon'
-              size={15}
-              color='red'
-            />
+              {isBasketExpanded ? (
+                <View style={styles.bookButton}>
+                  <Icon
+                    name={
+                      Platform.OS === 'ios' ? 'ios-arrow-up' : 'md-arrow-up'
+                    }
+                    type='ionicon'
+                    size={15}
+                    color={Colors.vwgDeepBlue}
+                  />
+                  <Text style={styles.basketText}>{` Hide job tools`}</Text>
+                </View>
+              ) : (
+                <View style={styles.bookButton}>
+                  <Icon
+                    name={
+                      Platform.OS === 'ios' ? 'ios-arrow-down' : 'md-arrow-down'
+                    }
+                    type='ionicon'
+                    size={15}
+                    color={Colors.vwgDeepBlue}
+                  />
+                  <Text style={styles.basketText}>{` Show job tools`}</Text>
+                </View>
+              )}
+            </View>
           </TouchableOpacity>
+          {mode === 'list' ? (
+            <TouchableOpacity
+              style={styles.bookButton}
+              onPress={() => setMode('book')}
+            >
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
+                type='ionicon'
+                size={15}
+                color={Colors.vwgDeepBlue}
+              />
+              <Text style={styles.basketText}>{` Book to job`}</Text>
+            </TouchableOpacity>
+          ) : null}
+          {mode === 'confirm' ? (
+            <Text style={styles.basketText}>{`Saved to ${wipNumber}`}</Text>
+          ) : null}
 
-          <TouchableOpacity onPress={() => toggleShowBasketHandler()}>
-            <Text>{isBasketExpanded ? `-` : `+`}</Text>
+          <TouchableOpacity
+            style={styles.bookButton}
+            onPress={() => removeBasketHandler()}
+          >
+            <Text style={styles.basketText}>{`Clear `}</Text>
             <Icon
               name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
               type='ionicon'
               size={15}
-              color='red'
+              color={Colors.vwgDeepBlue}
             />
           </TouchableOpacity>
         </View>
+
         {isBasketExpanded ? (
           <View style={styles.basketContents}>
             {toolBasket.map((item, i) => (
@@ -207,7 +344,7 @@ export default FindToolsScreen = ({ ...props }) => {
                         style={{
                           height: 40,
                           width: 80,
-                          borderColor: 'gray',
+                          borderColor: 'white',
                           borderType: 'solid',
                           borderWidth: 1
                         }}
@@ -231,19 +368,21 @@ export default FindToolsScreen = ({ ...props }) => {
                           {item.lastWIP ? (
                             <Text
                               style={styles.basketItemText}
-                            >{`Booked out by Bob, job ${item.lastWip}`}</Text>
+                            >{`Also booked to job ${item.lastWIP}`}</Text>
                           ) : null}
                         </View>
                         <TouchableOpacity
+                          style={styles.bookButton}
                           onPress={() => removeBasketItemHandler(item.id)}
                         >
+                          <Text style={styles.basketText}>{`Clear tool `}</Text>
                           <Icon
                             name={
                               Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'
                             }
                             type='ionicon'
                             size={20}
-                            color={Colors.vwgWarmRed}
+                            color={Colors.vwgDeepBlue}
                           />
                         </TouchableOpacity>
                       </View>
@@ -252,6 +391,9 @@ export default FindToolsScreen = ({ ...props }) => {
                 }
               ></ListItem>
             ))}
+            <Text
+              style={{ ...styles.basketText, textAlign: 'right' }}
+            >{`Tool pictures coming soon.`}</Text>
           </View>
         ) : null}
       </View>
@@ -262,158 +404,111 @@ export default FindToolsScreen = ({ ...props }) => {
   //   console.log(searchInput.length, filteredItems.length);
 
   return (
-    // const { dealerToolsItems } = this.props;
-    // console.log('in DealerToolsScreen, dealerTools ', this.props.dealerToolsItems);
-    // console.log('Find Tools screen');
-    // console.log(dealerToolsItems);
-    // console.log('Find Tools screen end');
-    // const items = dealerToolsItems || [];
-
-    // console.log('items');
-    // console.log(items);
-    // console.log('items end');
-    // console.log('in DealerToolsScreen, dealerTools ', dealerTools && dealerTools.items);
-    // console.log('in DealerToolsScreen, dealerTools ', dealerTools && dealerTools);
-    // console.log('in DealerToolsScreen, dealerTools', dealerTools && dealerTools);
-
     <View>
-      <Overlay isVisible={isModalVisible} animationType={'fade'}>
-        <View>
-          <Text>Book tool XXXXXX to job 9999, job 222, 3333 </Text>
-          <Text>{selectedItem}</Text>
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonView}>
-              <Button
-                title=' Confirm'
-                onPress={() => {
-                  setIsModalVisible(false);
-                }}
-                titleStyle={{ fontSize: 10 }}
-                buttonStyle={{
-                  height: 30,
-                  marginBottom: 2,
-                  marginTop: 2,
-                  marginLeft: 15,
-                  marginRight: 15,
-                  borderRadius: 20,
-                  backgroundColor: Colors.vwgDeepBlue
-                }}
-                icon={
-                  <Icon
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'ios-checkmark-circle-outline'
-                        : 'md-checkmark-circle-outline'
-                    }
-                    type='ionicon'
-                    size={15}
-                    color='white'
-                  />
-                }
-              />
-            </View>
-
-            <View style={styles.buttonView}>
-              <Button
-                title=' Create new job'
-                onPress={() => {}}
-                titleStyle={{ fontSize: 10 }}
-                buttonStyle={{
-                  height: 30,
-                  marginBottom: 2,
-                  marginTop: 2,
-                  marginLeft: 15,
-                  marginRight: 15,
-                  borderRadius: 20,
-                  backgroundColor: Colors.vwgDeepBlue
-                }}
-                icon={
-                  <Icon
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'ios-checkmark-circle-outline'
-                        : 'md-checkmark-circle-outline'
-                    }
-                    type='ionicon'
-                    size={15}
-                    color='white'
-                  />
-                }
-              />
-            </View>
-            <View style={styles.buttonView}>
-              <Button
-                title=' Close'
-                onPress={() => {
-                  setIsModalVisible(false);
-                }}
-                titleStyle={{ fontSize: 10 }}
-                buttonStyle={{
-                  height: 30,
-                  marginBottom: 2,
-                  marginTop: 2,
-                  marginLeft: 15,
-                  marginRight: 15,
-                  borderRadius: 20,
-                  backgroundColor: Colors.vwgBlack
-                }}
-                icon={
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                    type='ionicon'
-                    size={15}
-                    color='white'
-                  />
-                }
-              />
-            </View>
+      {mode === 'book' ? (
+        <View style={{ flexDirection: 'row' }}>
+          <View style={{ width: '90%' }}>
+            <Input
+              style={{ flexDirection: 'row' }}
+              number
+              value={formState.inputValues.wipNumber}
+              onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
+              style={styles.inputLabeText}
+              placeholder='Job number'
+              required
+              autoCapitalize='none'
+              keyboardType='numeric'
+              autoCorrect={false}
+              returnKeyType='done'
+              onSubmitEditing={text => console.log(text)}
+              errorStyle={{ color: Colors.errorText }}
+              errorText='Job number'
+            />
           </View>
+          {formState.formIsValid ? (
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={() => {
+                saveToJobRequestHandler();
+                setMode('confirm');
+              }}
+            >
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-checkbox' : 'md-chekbox'}
+                type='ionicon'
+                size={25}
+                color={Colors.vwgMintGreen}
+              />
+              <Text style={{ color: Colors.vwgMintGreen }}>Save</Text>
+            </TouchableOpacity>
+          ) : null}
         </View>
-      </Overlay>
+      ) : null}
       <KeyboardAvoidingView>
         {toolBasket.length !== 0 ? basketView : null}
-        <View style={styles.searchBarRow}>
+        {mode === 'list' ? (
+          <View style={styles.searchBarRow}>
+            <TouchableOpacity
+              style={styles.searchBarRowRefreshButton}
+              onPress={() => {
+                refreshRequestHandler();
+              }}
+            >
+              <Icon
+                name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
+                type='ionicon'
+                size={25}
+                color='black'
+              />
+            </TouchableOpacity>
+            <View style={styles.searchBarRowSearchInput}>
+              <SearchBar
+                onChangeText={searchInputHandler}
+                value={searchInput}
+                platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+                containerStyle={styles.searchBarContainer}
+                inputContainerStyle={styles.searchBarInputContainer}
+              />
+            </View>
+          </View>
+        ) : null}
+        {mode === 'confirm' ? (
           <TouchableOpacity
-            style={styles.searchBarRowRefreshButton}
             onPress={() => {
-              refreshRequestHandler();
+              acceptMessageHandler();
             }}
           >
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-              type='ionicon'
-              size={25}
-              color='black'
-            />
+            <View style={styles.searchFoundPrompt}>
+              <Text style={styles.searchFoundPromptText}>
+                {`Tools have been saved to ${wipNumber}. Hit this to start again.`}
+              </Text>
+            </View>
           </TouchableOpacity>
-          <View style={styles.searchBarRowSearchInput}>
-            <SearchBar
-              onChangeText={searchInputHandler}
-              value={searchInput}
-              platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-              containerStyle={styles.searchBarContainer}
-              inputContainerStyle={styles.searchBarInputContainer}
-            />
-          </View>
-        </View>
-        {searchInput.length > 0 && filteredItems.length === 0 ? (
+        ) : null}
+        {mode === 'list' &&
+        searchInput.length > 0 &&
+        filteredItems.length === 0 ? (
           <View style={styles.noneFoundPrompt}>
             <Text style={styles.noneFoundPromptText}>
               Your search found no results.
             </Text>
           </View>
         ) : null}
-        {toolBasket.length === 0 && filteredItems.length > 0 ? (
+        {mode === 'list' &&
+        toolBasket.length === 0 &&
+        filteredItems.length > 0 ? (
           <View style={styles.searchFoundPrompt}>
             <Text style={styles.searchFoundPromptText}>
               {`Press on a tool to add it to your job.`}
             </Text>
           </View>
         ) : null}
-        <DealerToolsList
-          items={filteredItems}
-          onSelectItem={selectItemHandler}
-        />
+        {mode === 'list' ? (
+          <DealerToolsList
+            items={filteredItems}
+            onSelectItem={selectItemHandler}
+          />
+        ) : null}
       </KeyboardAvoidingView>
     </View>
   );
@@ -454,6 +549,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#fff'
   },
+  confirmButton: { width: '10%' },
   basket: {
     color: Colors.vwgDeepBlue,
     borderColor: Colors.vwgMintGreen,
@@ -477,10 +573,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   basketItemText: {
-    color: Colors.wgDarkSkyBlue
+    color: Colors.vwgDeepBlue
   },
-  basketItemNumbers: { flexDirection: 'column', width: '40%' },
-  basketItemDesc: { flexDirection: 'column', width: '30%' },
+  basketItemNumbers: { flexDirection: 'column', width: '50%' },
+  basketItemDesc: { flexDirection: 'column', width: '32%' },
   basketItemImg: {
     flex: 1,
     width: '100%',
@@ -495,6 +591,10 @@ const styles = StyleSheet.create({
   searchBarRow: {
     flexDirection: 'row',
     backgroundColor: Colors.vwgSearchBarContainer
+  },
+  bookButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
@@ -525,6 +625,13 @@ const styles = StyleSheet.create({
   noneFoundPromptText: {
     textAlign: 'center',
     color: Colors.vwgWhite
+  },
+  inputLabelText: {
+    marginBottom: 20,
+    color: 'black',
+    fontSize: 14,
+    lineHeight: 19,
+    textAlign: 'center'
   },
   buttonContainer: {
     flexDirection: 'column',

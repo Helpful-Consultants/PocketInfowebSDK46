@@ -17,13 +17,13 @@ import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 import Colors from '../constants/Colors';
 
 export default function DealerToolsList(props) {
-  console.log('props');
+  //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
   const limit = 0;
   const userIntId = props.userIntId || '';
   console.log('userIntId ', userIntId);
-  const allItems = (props.items && props.items) || [];
+  //   const allItems = (props.items && props.items) || [];
   const items = (props.items && props.items) || [];
   //   const allItems = props.items || [];
   //   const items = allItems.slice(0, limit);
@@ -31,21 +31,19 @@ export default function DealerToolsList(props) {
   // console.log('start dealerToolsDummyData');
   // console.log(dealerToolsDummyData);
   // console.log('dealerToolsDummyData');
-  console.log('dealerWips', items);
-  const userWips = items.filter(item => item.userIntId == userIntId); // == not ===
 
-  console.log('userWips', userWips);
+  console.log('in dealer list - items', items.length);
 
-  if (userWips)
+  if (items)
     return (
       <View>
         <ScrollView>
-          {!userWips || userWips.length === 0 ? (
+          {!items || items.length === 0 ? (
             <View>
               <Text style={styles.noItems}>No jobs yet</Text>
             </View>
           ) : (
-            userWips.map((item, i) => (
+            items.map((item, i) => (
               <Card
                 key={i}
                 containerStyle={{
@@ -194,7 +192,7 @@ export default function DealerToolsList(props) {
                             reverse
                             onPress={() =>
                               alert(
-                                `return tool finished ${item.id}, job ${item.wipNumber}`
+                                `Coming feature: this button will record you returning the tool.`
                               )
                             }
                             size={10}

@@ -34,7 +34,7 @@ var gridHeight = screenHeight * 0.18;
 var gridWidth = screenWidth * 0.3;
 console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
-var iconSizeSmall = RFPercentage(4);
+var iconSizeSmall = RFPercentage(3.5);
 
 export default HomeScreen = props => {
   // console.log(props);
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
     color: Colors.vwgDeepBlue,
     backgroundColor: Colors.vwgDeepBlue,
     margin: 5,
-    borderRadius: 10,
+    borderRadius: 5,
     // height: PixelRatio.getPixelSizeForLayoutSize(40),
     width: RFPercentage(25)
     // padding: 5
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
   gridCellText: {
     color: 'white',
     // fontSize: 14,
-    fontSize: RFPercentage(3),
+    fontSize: RFPercentage(2.5),
 
     textAlign: 'center'
   },
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   odisCellText: {
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(3),
+    fontSize: RFPercentage(2.5),
 
     flexDirection: 'column',
     justifyContent: 'center',
