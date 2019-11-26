@@ -77,7 +77,6 @@ export default FindToolsScreen = ({ ...props }) => {
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
 
-  const [counter, setCounter] = useState(0);
   const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
 
@@ -102,7 +101,6 @@ export default FindToolsScreen = ({ ...props }) => {
   }
 
   const selectItemHandler = newItem => {
-    setCounter(counter + 1);
     // console.log(newItem.id, ' to be added');
     const newBasket = toolBasket;
     const dup = toolBasket.filter(item => item.id === newItem.id);
