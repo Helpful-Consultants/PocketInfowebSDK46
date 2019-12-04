@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 // import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     color: Colors.vwgDeepBlue,
-    fontSize: 22,
+    fontSize: RFPercentage(2.5),
 
     flexDirection: 'column',
     justifyContent: 'center',

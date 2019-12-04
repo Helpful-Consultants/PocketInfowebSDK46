@@ -25,8 +25,10 @@ export default {
   STATS_ERROR: 'stats/stats_error',
 
   GET_USER_REQUEST: 'user/get_user_request',
+  GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
   GET_USER_SUCCESS: 'user/get_user_success',
   SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
+  GET_USER_INVALID_CREDS: 'user/get_user_invalid_credentials',
   USER_ERROR: 'user/user_error',
 
   GET_USERS_REQUEST: 'users/get_users_request',

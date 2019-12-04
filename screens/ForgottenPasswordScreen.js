@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
+import Colors from '../constants/Colors';
+import Urls from '../constants/Urls';
+import { conditionalExpression } from '@babel/types';
 
 export default ForgottenPasswordScreen = props => {
   return (
@@ -10,69 +13,127 @@ export default ForgottenPasswordScreen = props => {
     >
       <AppNameWithLogo />
       <View>
-        <Text
+        <View
           style={{
-            marginTop: 40,
+            margin: 20,
             textAlign: 'center'
           }}
         >
-          Forgot your password?
-        </Text>
+          <Text
+            style={{
+              marginTop: 10,
+              marginBottom: 20,
+              marginHorizontal: 20,
+              textAlign: 'center',
+              fontSize: 14
+            }}
+          >
+            To activate Pocket Infoweb you will need to generate an access PIN
+            for your user ID.
+          </Text>
+
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 30,
+                marginRight: 3,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              1.
+            </Text>
+
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 3,
+                marginRight: 30,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              Log in to the Tools Infoweb website on a PC or on this phone with
+              with link below.
+            </Text>
+          </View>
+
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 30,
+                marginRight: 3,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              2.
+            </Text>
+
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 3,
+                marginRight: 30,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              Go to FAQ | About.
+            </Text>
+          </View>
+
+          <View style={{ flexDirection: 'row' }}>
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 30,
+                marginRight: 3,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              3.
+            </Text>
+
+            <Text
+              style={{
+                marginVertical: 3,
+                marginLeft: 3,
+                marginRight: 30,
+                textAlign: 'left',
+                fontSize: 14
+              }}
+            >
+              Click on the 'Generate App PIN' button.
+            </Text>
+          </View>
+        </View>
 
         <Button
-          title='Reset password'
+          title='Check registration on toolsinfoweb.co.uk'
           type='clear'
           onPress={() => {
-            props.navigation.navigate('ForgottenPassword');
+            Linking.openURL(Urls.toolsInfoweb);
           }}
-          style={{
+          buttonStyle={{
             marginTop: 20
           }}
-        />
-        <Button
-          title='Reset code'
-          type='clear'
-          onPress={() => {
-            props.navigation.navigate('ForgottenPassword');
-          }}
-          style={{
-            marginTop: 20
+          titleStyle={{
+            color: Colors.vwgIosLink
           }}
         />
-      </View>
-      <View
-        style={{
-          margin: 20,
-          textAlign: 'center'
-        }}
-      >
         <Text
           style={{
-            margin: 5,
+            marginVertical: 10,
+            marginHorizontal: 20,
             textAlign: 'center',
-            fontSize: 12
+            fontSize: 14
           }}
         >
-          To activate Pocket Infoweb you will need to generate an access PIN for
-          your userId.
-        </Text>
-        <Text
-          style={{
-            margin: 3,
-            textAlign: 'center',
-            fontSize: 12
-          }}
-        >
-          Log in to the Tools Infoweb website.
-        </Text>
-        <Text
-          style={{
-            margin: 3,
-            textAlign: 'center',
-            fontSize: 12
-          }}
-        >
-          Go to FAQ | About. Click on the Generate App PIN button.
+          (This opens toolsinfoweb.co.uk in your usual web browser)
         </Text>
       </View>
     </View>
