@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   odisRow: {
     flexDirection: 'row',
-    padding: 5,
+    // padding: 5,
     borderColor: '#000',
     fontSize: RFPercentage(1.9)
   },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     width: 225,
     height: 70,
     resizeMode: 'contain',
-    marginBottom: 35,
+    marginBottom: 15,
     marginLeft: 'auto',
     marginRight: 'auto'
     // paddingLeft: 20,

@@ -344,8 +344,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 5
-
-    // backgroundColor: 'red'
   },
   signOutCellText: {
     color: Colors.vwgIosLink,
