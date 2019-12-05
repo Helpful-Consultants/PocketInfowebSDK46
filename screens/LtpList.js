@@ -10,10 +10,12 @@ export default function LtpList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
-  const limit = 10;
-  const allItems = props.items || [];
-  //   const allItems = ltpDummyData && ltpDummyData;
-  const items = allItems && allItems.slice(0, limit);
+  //   const limit = 10;
+  //   const allItems = props.items || [];
+  //   //   const allItems = ltpDummyData && ltpDummyData;
+  //   const items = allItems && allItems.slice(0, limit);
+
+  const items = props.items || [];
 
   //   const items = ltpDummyData.slice(0, limit);
   //   const items = ltpDummyData;

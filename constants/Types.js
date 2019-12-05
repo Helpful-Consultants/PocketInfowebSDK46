@@ -45,6 +45,7 @@ export default {
   CREATE_USER_REQUEST: 'users/create_user_request',
   USERS_ERROR: 'users/user_error',
 
+  GET_DEALER_WIPS_START: 'dealerWips/get_dealer_wips_start',
   GET_DEALER_WIPS: 'dealerWips/get_dealer_wips_start',
   GET_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
   GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',

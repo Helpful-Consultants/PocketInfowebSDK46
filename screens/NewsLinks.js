@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     color: 'red',
     marginHorizontal: 10,
     paddingBottom: 10,
-    borderBottomColor: Colors.vwgSkyBlue,
+    borderBottomColor: Colors.vwgLightGray,
     borderTopColor: Colors.vwgWhite,
     borderLeftColor: Colors.vwgWhite,
     borderRightColor: Colors.vwgWhite,

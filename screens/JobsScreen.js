@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import {
@@ -10,6 +10,7 @@ import {
   View
 } from 'react-native';
 import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
+import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
@@ -20,11 +21,19 @@ import {
   deleteDealerWipRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
+import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import JobsList from './JobsList';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
-export default JobsScreen = ({ ...props }) => {
+const KEYS_TO_FILTERS = [
+  'tools.partNumber',
+  'tools.toolNumber',
+  'tools.partDescription'
+];
+
+export default JobsScreen = props => {
   const dispatch = useDispatch();
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
@@ -33,6 +42,9 @@ export default JobsScreen = ({ ...props }) => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
+
+  const isLoading = useSelector(state => state.news.isLoading);
+  const dataError = useSelector(state => state.news.error);
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -46,7 +58,7 @@ export default JobsScreen = ({ ...props }) => {
     dealerId: userDataObj.dealerId,
     intId: userDataObj.intId
   };
-  const getWips = useCallback(getWipsDataObj => {
+  const getItems = useCallback(getWipsDataObj => {
     // console.log('getWips', getWipsDataObj);
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
@@ -60,6 +72,15 @@ export default JobsScreen = ({ ...props }) => {
   //   );
 
   //   console.log('in jobs screen, wipsItems', JSON.parse(dealerWipsItems));
+
+  useEffect(() => {
+    // runs only once
+    const getItemsAsync = async () => {
+      console.log('in news use effect');
+      getItems();
+    };
+    getItemsAsync();
+  }, [dispatch]);
 
   if (dealerWipsItems && dealerWipsItems.length > 0) {
     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
@@ -90,8 +111,16 @@ export default JobsScreen = ({ ...props }) => {
 
   const refreshRequestHandler = () => {
     console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userIntId && getWips(getWipsDataObj);
+    dealerId && userIntId && getItems(getWipsDataObj);
   };
+
+  const items = (!isLoading && !dataError && userWipsItems) || [];
+  //   console.log('items AREEEEEEEEEE', items);
+  console.log('isLoading ', isLoading, 'dataError ', dataError);
+
+  const filteredItems =
+    (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+    [];
 
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
@@ -113,34 +142,18 @@ export default JobsScreen = ({ ...props }) => {
       /> */}
 
       {/* <NewJobButton setIsModalVisible={setIsModalVisible} /> */}
-
-      <Button
-        title=' Refresh list'
-        onPress={() => {
-          refreshRequestHandler();
-        }}
-        titleStyle={{ fontSize: 10 }}
-        buttonStyle={{
-          height: 30,
-          marginBottom: 2,
-          marginTop: 2,
-          marginLeft: 15,
-          marginRight: 15,
-          borderRadius: 20,
-          backgroundColor: Colors.vwgDeepBlue
-        }}
-        icon={
-          <Icon
-            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-            type='ionicon'
-            size={15}
-            color='white'
-          />
-        }
+      <SearchBarWithRefresh
+        refreshRequestHandler={refreshRequestHandler}
+        searchInputHandler={searchInputHandler}
+        searchInput={searchInput}
+        isLoading={isLoading}
+        dataError={dataError}
+        dataCount={userWipsItems.length}
       />
+
       <ScrollView>
         <JobsList
-          items={userWipsItems}
+          items={filteredItems}
           deleteDealerWipRequest={deleteDealerWip}
           userIntId={userIntId}
         />

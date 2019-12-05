@@ -6,10 +6,10 @@ import {
   put,
   fork
 } from 'redux-saga/effects';
-import * as actions from '../actions/dealerWips';
-import * as api from '../api/dealerWips';
 
 import Types from '../constants/Types';
+import * as actions from '../actions/dealerWips';
+import * as api from '../api/dealerWips';
 
 // Get WIPS
 function* getDealerWips({ payload }) {
