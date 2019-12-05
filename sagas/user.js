@@ -9,10 +9,12 @@ import {
 import * as actions from '../actions/user';
 import * as api from '../api/user';
 
+import Types from '../constants/Types';
+
 function* getUser({ payload }) {
   console.log('in user saga - getUser called', payload && payload);
-  yield put(actions.getUserResetErrors());
-
+  yield put(actions.getUserStart());
+  //   yield put(actions.getUserResetErrors());
   try {
     const result = yield call(api.getUser, {
       email: payload.email,
@@ -69,7 +71,7 @@ function* getUser({ payload }) {
 
 function* watchGetUserRequest() {
   //   console.log('in saga watch');
-  yield takeLatest(actions.Types.GET_USER_REQUEST, getUser);
+  yield takeLatest(Types.GET_USER_REQUEST, getUser);
 }
 
 const userSagas = [fork(watchGetUserRequest)];

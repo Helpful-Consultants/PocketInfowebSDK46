@@ -9,7 +9,10 @@ import {
 import * as actions from '../actions/odis';
 import * as api from '../api/odis';
 
+import Types from '../constants/Types';
+
 function* getOdis() {
+  yield put(actions.getOdisStart());
   try {
     const result = yield call(api.getOdis);
     // console.log('in saga');
@@ -31,7 +34,7 @@ function* getOdis() {
 
 function* watchGetOdisRequest() {
   //   console.log('in saga watch');
-  yield takeEvery(actions.Types.GET_ODIS_REQUEST, getOdis);
+  yield takeEvery(Types.GET_ODIS_REQUEST, getOdis);
 }
 
 const odisSagas = [fork(watchGetOdisRequest)];

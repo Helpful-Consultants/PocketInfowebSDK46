@@ -7,9 +7,11 @@ import {
   fork
 } from 'redux-saga/effects';
 import * as actions from '../actions/stats';
-import * as api from '../api/stats';
+// import * as api from '../api/stats';
+import Types from '../constants/Types';
 
 function* getStats() {
+  yield put(actions.getStatsStart());
   try {
     const result = yield call(api.getStats);
     // console.log('in saga get stats, success');
@@ -32,7 +34,7 @@ function* getStats() {
 
 function* watchGetStatsRequest() {
   //   console.log('in saga watch for stats');
-  yield takeEvery(actions.Types.GET_STATS_REQUEST, getStats);
+  yield takeEvery(Types.GET_STATS_REQUEST, getStats);
 }
 
 const statsSagas = [fork(watchGetStatsRequest)];

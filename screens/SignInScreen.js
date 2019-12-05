@@ -62,7 +62,7 @@ export default SignInScreen = props => {
 
   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
   console.log('in sign in, userError', userError ? 'Yes' : 'No');
-  console.log('in sign in, state', state);
+  //   console.log('in sign in, state', state);
 
   if (userIsSignedIn) {
     props.navigation.navigate('Main');

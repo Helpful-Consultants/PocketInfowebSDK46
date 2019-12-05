@@ -8,9 +8,11 @@ import {
 } from 'redux-saga/effects';
 import * as actions from '../actions/dealerTools';
 import * as api from '../api/dealerTools';
+import Types from '../constants/Types';
 
 function* getDealerTools({ payload }) {
   console.log('in saga get dealerTools, payload', payload && payload);
+  yield put(actions.getDealerToolsStart());
   try {
     const result = yield call(api.getDealerTools, {
       dealerId: payload.dealerId
@@ -47,7 +49,7 @@ function* getDealerTools({ payload }) {
 
 function* watchGetDealerToolsRequest() {
   //   console.log('in saga watch for dealerTools');
-  yield takeEvery(actions.Types.GET_DEALER_TOOLS_REQUEST, getDealerTools);
+  yield takeEvery(Types.GET_DEALER_TOOLS_REQUEST, getDealerTools);
 }
 
 const dealerToolsSagas = [fork(watchGetDealerToolsRequest)];

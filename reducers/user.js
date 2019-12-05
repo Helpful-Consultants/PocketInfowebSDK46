@@ -1,8 +1,10 @@
-import { Types } from '../actions/user';
+// import { Types } from '../actions/user';
+import Types from '../constants/Types';
 
 const INITIAL_STATE = {
   userData: [],
   userIsSignedIn: false,
+  isLoading: false,
   error: null
 };
 
@@ -11,13 +13,12 @@ export default function user(state = INITIAL_STATE, action) {
   //   console.log('in user reducer');
   //   console.log('action.type is:', action.type);
   switch (action.type) {
-    case Types.GET_USER_RESET_ERRORS: {
-      console.log('action is:', action.type);
+    case Types.GET_USER_START: {
       return {
         ...state,
-        userIsSignedIn: false,
-        error: null,
-        userData: []
+        userData: [],
+        isLoading: true,
+        error: null
       };
     }
     case Types.GET_USER_SUCCESS: {
@@ -25,8 +26,9 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: true,
-        error: null,
-        userData: action.payload.items
+        userData: action.payload.items,
+        isLoading: false,
+        error: null
       };
     }
     case Types.GET_USER_INVALID_CREDS: {
@@ -34,6 +36,8 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: false,
+        isLoading: false,
+
         error: action.payload.error
       };
     }
@@ -42,8 +46,9 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: false,
-        error: null,
-        userData: []
+        userData: [],
+        isLoading: false,
+        error: null
       };
     }
     case Types.USER_ERROR: {
@@ -51,6 +56,7 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: false,
+        isLoading: false,
         error: action.payload.error
       };
     }

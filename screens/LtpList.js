@@ -1,24 +1,12 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Image,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View
-} from 'react-native';
-import Touchable from 'react-native-platform-touchable';
+import { FlatList, StyleSheet, Platform, Text, View } from 'react-native';
+import { ListItem, Icon } from 'react-native-elements';
+// import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
-import { Ionicons } from '@expo/vector-icons';
-import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements';
-import placeholderImage from '../assets/images/robot-prod.png';
 import ltpDummyData from '../dummyData/ltpDummyData';
-import { tsConstructSignatureDeclaration } from '@babel/types';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
-export default function LtpList({ ...props }) {
+export default function LtpList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
@@ -26,7 +14,7 @@ export default function LtpList({ ...props }) {
   const allItems = props.items || [];
   //   const allItems = ltpDummyData && ltpDummyData;
   const items = allItems && allItems.slice(0, limit);
-  const { onSelectItem } = props;
+
   //   const items = ltpDummyData.slice(0, limit);
   //   const items = ltpDummyData;
   // console.log('start ltpDummyData');
@@ -68,38 +56,33 @@ export default function LtpList({ ...props }) {
     const { onSelectItem } = props;
 
     return (
-      <Touchable
-        style={styles.toolItem}
-        background={Touchable.Ripple('#FFD700')}
-        onPress={() => onSelectItem(item)}
-      >
-        <ListItem
-          title={`${item.loanToolNo} (${item.supplierPartNo})`}
-          titleStyle={{ color: Colors.vwgDarkSkyBlue }}
-          bottomDivider
-          subtitle={
-            <View>
-              <Text
-                style={{
-                  color: Colors.vwgDeepBlue
-                }}
-              >{`${item.toolDescription}`}</Text>
-            </View>
-          }
-        ></ListItem>
-      </Touchable>
+      <ListItem
+        title={`${item.loanToolNo} (${item.supplierPartNo})`}
+        titleStyle={{ color: Colors.vwgDarkSkyBlue }}
+        bottomDivider
+        subtitle={
+          <View>
+            <Text
+              style={{
+                color: Colors.vwgDeepBlue
+              }}
+            >{`${item.toolDescription}`}</Text>
+          </View>
+        }
+      ></ListItem>
     );
   };
-  console.log(items & items);
+  //   console.log(items && items);
+
   return (
     <View>
-      <FlatList
-        data={items && items}
-        renderItem={itemData => (
-          <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
-        )}
-        keyExtractor={item => item.id}
-      />
+      {items && items.length > 0 ? (
+        <FlatList
+          data={items && items}
+          renderItem={itemData => <FlatListItem item={itemData.item} />}
+          keyExtractor={item => item.id}
+        />
+      ) : null}
     </View>
   );
 }

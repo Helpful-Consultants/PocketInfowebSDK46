@@ -1,8 +1,13 @@
-export const Types = {
-  GET_ODIS_REQUEST: 'odis/get_odis_request',
-  GET_ODIS_SUCCESS: 'odis/get_odis_success',
-  ODIS_ERROR: 'odis/odis_error'
-};
+// export const Types = {
+//   GET_ODIS_REQUEST: 'odis/get_odis_request',
+//   GET_ODIS_SUCCESS: 'odis/get_odis_success',
+//   ODIS_ERROR: 'odis/odis_error'
+// };
+import Types from '../constants/Types';
+
+export const getOdisStart = () => ({
+  type: Types.GET_ODIS_START
+});
 
 export const getOdisRequest = () => ({
   type: Types.GET_ODIS_REQUEST

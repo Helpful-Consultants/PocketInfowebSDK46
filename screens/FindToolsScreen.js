@@ -1,7 +1,6 @@
 import React, { useCallback, useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -9,20 +8,13 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import {
-  Button,
-  Icon,
-  Input,
-  ListItem,
-  Overlay,
-  SearchBar,
-  Text
-} from 'react-native-elements';
+import { Icon, Input, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Image from 'react-native-scalable-image';
 import { createFilter } from 'react-native-search-filter';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
+import ToolBasket from '../components/ToolBasket';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Colors from '../constants/Colors';
@@ -100,19 +92,31 @@ export default FindToolsScreen = ({ ...props }) => {
     console.log('in tools screen, no toolsItems');
   }
 
+  const toggleExpandBasketHandler = action => {
+    console.log('toggling ', isBasketExpanded);
+    if (action) {
+      setIsBasketExpanded(action);
+    } else {
+      setIsBasketExpanded(!isBasketExpanded);
+    }
+  };
+
   const selectItemHandler = newItem => {
-    // console.log(newItem.id, ' to be added');
-    const newBasket = toolBasket;
-    const dup = toolBasket.filter(item => item.id === newItem.id);
+    console.log(newItem.id, ' to be added');
+    let newBasket = toolBasket;
+    let dup = toolBasket.filter(item => item.id === newItem.id);
     // console.log('dup, ');
     if (dup.length === 0) {
+      // newItem.key = newItem.id
       newBasket.push(newItem);
       setToolBasket(newBasket);
+      toggleExpandBasketHandler(true);
       //   console.log('newBasket', newBasket);
       //   console.log(newItem.id, ' added to... ');
     } else {
       console.log('dup');
     }
+    // console.log('toolBasket update', toolBasket);
     // console.log(toolBasket.length);
   };
 
@@ -149,20 +153,10 @@ export default FindToolsScreen = ({ ...props }) => {
     // updateBasketView();
   };
 
-  toggleShowBasketHandler = action => {
-    // console.log('toggling ', isBasketExpanded);
-    if (action) {
-      setIsBasketExpanded(action);
-    } else if (isBasketExpanded === true) {
-      setIsBasketExpanded(false);
-    } else {
-      setIsBasketExpanded(true);
-    }
-  };
   // Search function
   const searchInputHandler = searchInput => {
     // console.log(searchInput);
-    toggleShowBasketHandler(false);
+    // toggleShowBasketHandler(false);
     setSearchInput(searchInput);
   };
   const refreshRequestHandler = () => {
@@ -210,9 +204,9 @@ export default FindToolsScreen = ({ ...props }) => {
 
   //   const { dealerToolsItems } = props;
   // const { dealerToolsItems } = this.props;
-  const items = dealerToolsItems;
+
   //   console.log(items);
-  const filteredItems = items.filter(
+  let filteredItems = dealerToolsItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
 
@@ -241,165 +235,7 @@ export default FindToolsScreen = ({ ...props }) => {
     },
     [dispatchFormState]
   );
-
-  let basketView =
-    toolBasket && toolBasket.length > 0 ? (
-      <View style={styles.basket}>
-        <View style={styles.basketHeader}>
-          <TouchableOpacity
-            onPress={() => toggleShowBasketHandler()}
-            style={{ flexDirection: 'row' }}
-          >
-            <View>
-              <Text style={styles.basketText}>
-                {`${toolBasket.length} ${
-                  toolBasket.length > 1 ? `tools` : `tool`
-                } in job basket.`}
-              </Text>
-
-              {isBasketExpanded ? (
-                <View style={styles.bookButton}>
-                  <Icon
-                    name={
-                      Platform.OS === 'ios' ? 'ios-arrow-up' : 'md-arrow-up'
-                    }
-                    type='ionicon'
-                    size={15}
-                    color={Colors.vwgDeepBlue}
-                  />
-                  <Text style={styles.basketText}>{` Hide job tools`}</Text>
-                </View>
-              ) : (
-                <View style={styles.bookButton}>
-                  <Icon
-                    name={
-                      Platform.OS === 'ios' ? 'ios-arrow-down' : 'md-arrow-down'
-                    }
-                    type='ionicon'
-                    size={15}
-                    color={Colors.vwgDeepBlue}
-                  />
-                  <Text style={styles.basketText}>{` Show job tools`}</Text>
-                </View>
-              )}
-            </View>
-          </TouchableOpacity>
-          {mode === 'list' ? (
-            <TouchableOpacity
-              style={styles.bookButton}
-              onPress={() => setMode('book')}
-            >
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
-                type='ionicon'
-                size={15}
-                color={Colors.vwgDeepBlue}
-              />
-              <Text style={styles.basketText}>{` Book to job`}</Text>
-            </TouchableOpacity>
-          ) : null}
-          {mode === 'confirm' ? (
-            <Text style={styles.basketText}>{`Saved to ${wipNumber}`}</Text>
-          ) : null}
-
-          <TouchableOpacity
-            style={styles.bookButton}
-            onPress={() => removeBasketHandler()}
-          >
-            <Text style={styles.basketText}>{`Clear `}</Text>
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-              type='ionicon'
-              size={15}
-              color={Colors.vwgDeepBlue}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {isBasketExpanded ? (
-          <View style={styles.basketContents}>
-            {toolBasket.map((item, i) => (
-              <ListItem
-                key={i}
-                bottomDivider
-                subtitle={
-                  <View>
-                    <View style={styles.basketItem}>
-                      <View style={styles.basketItemNumbers}>
-                        <Text
-                          style={styles.basketItemText}
-                        >{`Part ${item.partNumber}`}</Text>
-                        <Text
-                          style={styles.basketItemText}
-                        >{`Tool ${item.toolNumber}`}</Text>
-                      </View>
-                      <View style={styles.basketItemDesc}>
-                        <Text
-                          style={styles.basketItemText}
-                        >{`${item.partDescription}`}</Text>
-                      </View>
-                      <View
-                        style={{
-                          height: 40,
-                          width: 80,
-                          borderColor: 'white',
-                          borderType: 'solid',
-                          borderWidth: 1
-                        }}
-                      >
-                        <Image
-                          source={{ uri: '../assets/images/icon.png' }}
-                          size={{ height: 40, width: 40 }}
-                          height={40}
-                          width={40}
-                        />
-                      </View>
-                    </View>
-                    <View>
-                      <View style={styles.basketItemFooterRow}>
-                        <View style={styles.basketItemLocation}>
-                          <Text style={styles.basketItemText}>
-                            {item.location
-                              ? `Location: ${item.location}`
-                              : `Location not recorded`}
-                          </Text>
-                          {item.lastWIP ? (
-                            <Text
-                              style={styles.basketItemText}
-                            >{`Also booked to job ${item.lastWIP}`}</Text>
-                          ) : null}
-                        </View>
-                        <TouchableOpacity
-                          style={styles.bookButton}
-                          onPress={() => removeBasketItemHandler(item.id)}
-                        >
-                          <Text style={styles.basketText}>{`Clear tool `}</Text>
-                          <Icon
-                            name={
-                              Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'
-                            }
-                            type='ionicon'
-                            size={20}
-                            color={Colors.vwgDeepBlue}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
-                }
-              ></ListItem>
-            ))}
-            <Text
-              style={{ ...styles.basketText, textAlign: 'right' }}
-            >{`Tool pictures coming soon.`}</Text>
-          </View>
-        ) : null}
-      </View>
-    ) : null;
-
-  //   console.log(basketView);
-
-  //   console.log(searchInput.length, filteredItems.length);
+  console.log('toolBasket', toolBasket);
 
   return (
     <View>
@@ -443,7 +279,26 @@ export default FindToolsScreen = ({ ...props }) => {
         </View>
       ) : null}
       <KeyboardAvoidingView>
-        {toolBasket.length !== 0 ? basketView : null}
+        <ToolBasket
+          mode={mode}
+          toolBasket={toolBasket}
+          wipNumber={wipNumber}
+          key={Math.random()}
+          removeBasketHandler={removeBasketHandler}
+          removeBasketItemHandler={removeBasketItemHandler}
+          isBasketExpanded={isBasketExpanded}
+          toggleExpandBasketHandler={toggleExpandBasketHandler}
+        />
+        {mode === 'list' &&
+        toolBasket.length === 0 &&
+        filteredItems.length > 0 &&
+        searchInput.length === 0 ? (
+          <View style={styles.searchFoundPrompt}>
+            <Text style={styles.searchFoundPromptText}>
+              {`Search the list to find a tool to add to your job.`}
+            </Text>
+          </View>
+        ) : null}
         {mode === 'list' ? (
           <View style={styles.searchBarRow}>
             <TouchableOpacity
@@ -470,6 +325,7 @@ export default FindToolsScreen = ({ ...props }) => {
             </View>
           </View>
         ) : null}
+
         {mode === 'confirm' ? (
           <TouchableOpacity
             onPress={() => {
@@ -483,6 +339,7 @@ export default FindToolsScreen = ({ ...props }) => {
             </View>
           </TouchableOpacity>
         ) : null}
+
         {mode === 'list' &&
         searchInput.length > 0 &&
         filteredItems.length === 0 ? (
@@ -494,10 +351,11 @@ export default FindToolsScreen = ({ ...props }) => {
         ) : null}
         {mode === 'list' &&
         toolBasket.length === 0 &&
-        filteredItems.length > 0 ? (
+        filteredItems.length > 0 &&
+        searchInput.length > 0 ? (
           <View style={styles.searchFoundPrompt}>
             <Text style={styles.searchFoundPromptText}>
-              {`Press on a tool to add it to your job.`}
+              {`Press on the tool to add it to your job.`}
             </Text>
           </View>
         ) : null}

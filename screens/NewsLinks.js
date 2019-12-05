@@ -1,93 +1,107 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Image, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
-import { Ionicons } from '@expo/vector-icons';
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import placeholderImage from '../assets/images/robot-prod.png';
-import newsDummyData from '../dummyData/newsDummyData.js';
+import moment from 'moment';
+import ScaledImage from '../components/ScaledImage';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import Colors from '../constants/Colors';
 
-export default function NewsLinks({ ...props }) {
-  // console.log(this.props.items);
+export default function NewsLinks(props) {
+  // console.log(props.items);
   const items = props.items || [];
   //   const items = newsDummyData || [];
   // console.log('start newsDummyData');
   // console.log(newsDummyData);
-  // console.log('newsDummyData');
-  imageSource =
-    'https://react-native-elements.github.io/react-native-elements/img/card.png';
+  console.log('in NewsLinks ', props.baseImageUrl);
+
   return (
     <View>
       {items && items.length > 0 ? (
         <ScrollView>
-          <Text style={styles.tipText}>
-            You can scroll through these news items and touch one to open up the
-            story on Tools Infoweb. (Not styled up yet!)
-          </Text>
           {items.map((item, i) => (
             <Touchable
-              onPress={() => this._handlePressDocs(item.linkTo)}
+              onPress={() => props.pressOpenHandler(item.linkTo)}
               key={i}
             >
-              {/* <Card title={item.headline} image={placeholderImage}> */}
-              <Card title={item.headline}>
-                <Image style={styles.image} source={{ imageSource }} />
-                <Text style={{ marginBottom: 10 }}>{item.newstext}</Text>
-              </Card>
+              <View style={styles.item}>
+                <View style={styles.itemTopRow}>
+                  <ScaledImage
+                    width={120}
+                    uri={`${props.baseImageUrl}${item.imageName}`}
+                  />
+                  <View style={styles.itemTitleContainer}>
+                    <Text style={styles.itemTitle}>{item.headline}</Text>
+                    <Text style={styles.itemLastUpdated}>
+                      {`${moment(
+                        item.lastUpdated,
+                        'YYYY-MM-DD hh:mm:ss'
+                      ).format('Do MMM h:MM a') || null}`}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.itemMainRow}>
+                  <Text style={styles.itemMainText}>{item.newstext}</Text>
+                </View>
+              </View>
             </Touchable>
           ))}
         </ScrollView>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      ) : null}
     </View>
   );
 }
 
-_handlePressDocs = url => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#222'
+  item: {
+    marginTop: 10,
+    color: 'red',
+    marginHorizontal: 10,
+    paddingBottom: 10,
+    borderBottomColor: Colors.vwgSkyBlue,
+    borderTopColor: Colors.vwgWhite,
+    borderLeftColor: Colors.vwgWhite,
+    borderRightColor: Colors.vwgWhite,
+    borderWidth: 1
   },
-  tipText: {
-    fontSize: 12,
-    marginLeft: 15,
-    marginTop: 3,
-    marginBottom: 20
+  itemTopRow: {
+    flexDirection: 'row',
+    // minHeight: 200,
+    marginHorizontal: 0,
+    marginBottom: 10
+    // borderColor: 'teal',
+    // borderWidth: 1
   },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12
+  itemTitleContainer: {
+    width: '70%',
+    paddingLeft: 15,
+    paddingRight: 25
   },
-  optionIconContainer: {
-    marginRight: 9
+  itemTitle: {
+    flexWrap: 'wrap',
+    fontSize: RFPercentage(2.2),
+    fontWeight: 600,
+    color: Colors.vwgIosLink
+
+    // borderColor: 'orange',
+    // borderWidth: 1
   },
-  option: {
-    backgroundColor: '#eee',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderBottomWidth: 3,
-    borderBottomColor: '#fff',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingRight: 20
+  itemLastUpdated: {
+    fontSize: RFPercentage(1.6),
+    color: Colors.vwgDarkGray,
+    paddingTop: 5
+    // marginRight: 20,
+    // borderColor: 'orange',
+    // borderWidth: 1
   },
-  optionText: {
-    fontSize: 15,
-    marginTop: 1,
-    color: '#000'
+  itemMainRow: {
+    fontSize: RFPercentage(1.8)
+    // borderColor: 'yellow',
+    // borderWidth: 1
   },
-  summaryText: {
-    fontSize: 12,
-    marginTop: 5,
-    color: '#000',
-    marginRight: 20
+  itemMainText: {
+    fontSize: RFPercentage(1.9),
+    textAlign: 'justify'
+    // borderColor: 'yellow',
+    // borderWidth: 1
   }
 });

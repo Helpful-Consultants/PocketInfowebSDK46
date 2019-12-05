@@ -1,55 +1,80 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  ActivityIndicator,
   Platform,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
   View
 } from 'react-native';
-import { Button, Icon, Overlay, SearchBar, Text } from 'react-native-elements';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Text } from 'react-native-elements';
+import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import HeaderButton from '../components/HeaderButton';
 import { getLtpRequest } from '../actions/ltp';
-import Colors from '../constants/Colors';
-
+import Urls from '../constants/Urls';
 import LtpList from './LtpList';
-import ltpDummyData from '../dummyData/ltpDummyData.js';
+import Colors from '../constants/Colors';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import ltpDummyData from '../dummyData/ltpDummyData.js';
 
-const KEYS_TO_FILTERS = ['orderPartNo', 'toolDescription'];
-export default LtpScreen = ({ ...props }) => {
+const KEYS_TO_FILTERS = ['loanToolNo', 'orderPartNo', 'toolDescription'];
+
+const checkUrl = rawUrl => {
+  if (rawUrl.substring(0, 4) == 'http') {
+    return rawUrl;
+  } else {
+    return Urls.toolsInfoweb + '/' + rawUrl;
+  }
+};
+
+export default LtpScreen = props => {
   const dispatch = useDispatch();
   const ltpItems = useSelector(state => state.ltp.ltpItems);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
-
-  //   const signInToServer = useCallback(
-  //     signInData => dispatch(getUserRequest(signInData)),
-  //     [userIsSignedIn]
-  //   );
-
-  const getTools = useCallback(() => dispatch(getLtpRequest()), [ltpItems]);
+  //   const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(state => state.ltp.isLoading);
+  const dataError = useSelector(state => state.ltp.error);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   if (ltpItems && ltpItems.length > 0) {
-    // console.log('in ltp screen,ltpItems', ltpItems);
+    console.log('in ltp screen,ltpItems', ltpItems.length);
   } else {
     console.log('in ltp screen, no ltpItems');
   }
-
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  //   const [isLoading, setIsLoading] = useState(false);
 
-  const selectItemHandler = item => {
-    setSelectedItem(item.partDescription);
-    setIsModalVisible(true);
-    // return alert(
-    //   `the user selected  ${item.partDescription} for job 999? ; OK; change job; cancel`
-    // );
+  const getItems = useCallback(async () => dispatch(getLtpRequest()), [
+    ltpItems
+  ]);
+
+  useEffect(() => {
+    // runs only once
+    const getItemsAsync = async () => {
+      console.log('in ltp use effect');
+      getItems();
+    };
+    getItemsAsync();
+  }, [dispatch]);
+
+  const pressOpenHandler = async url => {
+    // console.log('in pressOpenHandler', url);
+    let checkedUrl = checkUrl(url);
+
+    if (Platform.OS === 'ios') {
+      let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
+    } else {
+      let result = await WebBrowser.openBrowserAsync(checkedUrl);
+    }
   };
 
   const searchInputHandler = searchInput => {
@@ -59,132 +84,55 @@ export default LtpScreen = ({ ...props }) => {
 
   const refreshRequestHandler = () => {
     console.log('in refreshRequestHandler');
-    dealerId && getTools();
+    getItems();
   };
-  // Search function - end
-
-  //   const { ltpItems } = props;
-  // const { ltpItems } = this.props;
-  const items = ltpItems;
-
-  const filteredItems = items.filter(
-    createFilter(searchInput, KEYS_TO_FILTERS)
+  //   console.log('ltpItems AREEEEEEEEEE', ltpItems);
+  //   const items = ltpItems || [];
+  const items = (!isLoading && !dataError && ltpItems) || [];
+  //   console.log('items AREEEEEEEEEE', items);
+  console.log(
+    'isLoading ',
+    isLoading,
+    'dataError ',
+    dataError,
+    ' items ',
+    items.length
   );
-  //   const items = ltpDummyData;
 
-  // const { search } = this.state;
+  const filteredItems =
+    (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+    [];
+
   return (
-    // const { ltpItems } = this.props;
-    // console.log('in LtpScreen, ltp ', this.props.ltpItems);
-    // console.log('Find Tools screen');
-    // console.log(ltpItems);
-    // console.log('Find Tools screen end');
-    // const items = ltpItems || [];
-
-    // console.log('items');
-    // console.log(items);
-    // console.log('items end');
-    // console.log('in LtpScreen, ltp ', ltp && ltp.items);
-    // console.log('in LtpScreen, ltp ', ltp && ltp);
-    // console.log('in LtpScreen, ltp', ltp && ltp);
-
     <View>
-      <Overlay isVisible={isModalVisible} animationType={'fade'}>
-        <View>
-          <Text>Add tool to LTP basket</Text>
-          <Text>{selectedItem}</Text>
-          <View style={styles.buttonContainer}>
-            <View style={styles.buttonView}>
-              <Button
-                title='Confirm'
-                onPress={() => {
-                  setIsModalVisible(false);
-                }}
-                buttonStyle={{
-                  borderRadius: 10
-                }}
-                icon={
-                  <Icon
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'ios-checkmark-circle-outline'
-                        : 'md-checkmark-circle-outline'
-                    }
-                    type='ionicon'
-                    size={30}
-                    color='white'
-                  />
-                }
-              />
-            </View>
-            <View style={styles.buttonView}>
-              <Button
-                title='Close'
-                onPress={() => {
-                  setIsModalVisible(false);
-                }}
-                buttonStyle={{
-                  borderRadius: 10
-                }}
-                icon={
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                    type='ionicon'
-                    size={30}
-                    color='white'
-                  />
-                }
-              />
-            </View>
+      <SearchBarWithRefresh
+        refreshRequestHandler={refreshRequestHandler}
+        searchInputHandler={searchInputHandler}
+        searchInput={searchInput}
+        dataError={dataError}
+        isLoading={isLoading}
+        dataCount={ltpItems.length}
+      />
+      <ScrollView>
+        {searchInput && filteredItems && filteredItems.length > 0 ? (
+          <View style={styles.lookupPrompt}>
+            <Text style={styles.searchFoundPromptText}>
+              Please visit the LTP website to make your booking.
+            </Text>
           </View>
-        </View>
-      </Overlay>
-      <View style={styles.searchBarRow}>
-        <TouchableOpacity
-          style={styles.searchBarRowRefreshButton}
-          onPress={() => {
-            refreshRequestHandler();
-          }}
-        >
-          <Icon
-            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-            type='ionicon'
-            size={25}
-            color='black'
-          />
-        </TouchableOpacity>
-        <View style={styles.searchBarRowSearchInput}>
-          <SearchBar
-            onChangeText={searchInputHandler}
-            value={searchInput}
-            platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-            containerStyle={styles.searchBarContainer}
-            inputContainerStyle={styles.searchBarInputContainer}
-          />
-        </View>
-      </View>
-      {searchInput.length > 0 && filteredItems.length > 0 ? (
-        <View style={styles.searchFoundPrompt}>
-          <Text style={styles.searchFoundPromptText}>
-            Please visit the LTP website to make your booking.
-          </Text>
-        </View>
-      ) : null}
-      {searchInput.length > 0 && filteredItems.length === 0 ? (
-        <View style={styles.noneFoundPrompt}>
-          <Text style={styles.noneFoundPromptText}>
-            Your search found no results.
-          </Text>
-        </View>
-      ) : null}
-
-      <LtpList items={filteredItems} onSelectItem={selectItemHandler} />
+        ) : null}
+        <LtpList
+          items={filteredItems}
+          pressOpenHandler={pressOpenHandler}
+          baseImageUrl={Urls.ltpHeadlineImage}
+        />
+      </ScrollView>
     </View>
   );
 };
 
 LtpScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='LTP' />,
+  headerTitle: <TitleWithAppLogo title='Ltp' />,
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
@@ -211,33 +159,13 @@ LtpScreen.navigationOptions = ({ navigation }) => ({
   )
 });
 
-// LocatorScreen.navigationOptions = {
-//   headerTitle: <TitleWithAppLogo title='Tool Finder' />
-// };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#fff'
   },
-  searchBarRow: {
-    flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer
-  },
-  searchBarRowRefreshButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyItems: 'center',
-    backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10
-  },
-  searchBarInputContainer: {
-    // backgroundColor: Colors.vwgSearchBarInputContainer,
-    borderColor: Colors.vwgSearchBarInputContainer
-  },
-  searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
-  searchBarRowSearchInput: { width: '85%' },
   searchFoundPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
@@ -247,24 +175,13 @@ const styles = StyleSheet.create({
 
     color: Colors.vwgWhite
   },
-  noneFoundPrompt: {
+  lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgWarmRed
+    backgroundColor: Colors.vwgMintGreen
   },
-  noneFoundPromptText: {
+  lookupPromptText: {
     textAlign: 'center',
-    color: Colors.vwgWhite
-  },
-  buttonContainer: {
-    flexDirection: 'column',
-    width: '60%'
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    width: '60%'
-  },
-  buttonView: {
-    // width: 200,
-    fontSize: 12
+    color: Colors.vwgWhite,
+    fontSize: RFPercentage(1.9)
   }
 });

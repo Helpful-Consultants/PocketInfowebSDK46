@@ -18,7 +18,7 @@ import placeholderImage from '../assets/images/robot-prod.png';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 import { tsConstructSignatureDeclaration } from '@babel/types';
 
-export default function DealerToolsList({ ...props }) {
+export default function DealerToolsList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
@@ -39,7 +39,7 @@ export default function DealerToolsList({ ...props }) {
   //     );
   //   };
 
-  const FlatListItem = ({ ...props }) => {
+  const FlatListItem = props => {
     const { item } = props;
     const { onSelectItem } = props;
 

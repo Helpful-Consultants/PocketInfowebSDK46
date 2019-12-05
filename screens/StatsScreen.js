@@ -52,7 +52,7 @@ export default StatsScreen = ({ ...props }) => {
     console.log('in stats screen,statsObj', statsObj);
   } else {
     console.log('in stats screen, no statsObj', statsObj);
-    getStats();
+    // getStats();
   }
   if (userDataObj && Object.keys(userDataObj).length > 0) {
     console.log('in stats screen,userDataObj', userDataObj);

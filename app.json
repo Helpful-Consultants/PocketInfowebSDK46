@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": ["ios"],
-    "version": "1.0.23",
+    "version": "1.0.25",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splashNoText.png",
@@ -18,7 +18,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "23",
+      "buildNumber": "25",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro"
     },
     "description": "This is the development version of the app and might break."

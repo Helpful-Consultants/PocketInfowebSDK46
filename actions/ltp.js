@@ -1,8 +1,13 @@
-export const Types = {
-  GET_LTP_REQUEST: 'ltp/get_ltp_request',
-  GET_LTP_SUCCESS: 'ltp/get_ltp_success',
-  LTP_ERROR: 'ltp/ltp_error'
-};
+// export const Types = {
+//   GET_LTP_REQUEST: 'ltp/get_ltp_request',
+//   GET_LTP_SUCCESS: 'ltp/get_ltp_success',
+//   LTP_ERROR: 'ltp/ltp_error'
+// };
+import Types from '../constants/Types';
+
+export const getLtpStart = () => ({
+  type: Types.GET_LTP_START
+});
 
 export const getLtpRequest = () => ({
   type: Types.GET_LTP_REQUEST

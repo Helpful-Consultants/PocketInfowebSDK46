@@ -1,8 +1,13 @@
-export const Types = {
-  GET_PRODUCTS_REQUEST: 'products/get_products_request',
-  GET_PRODUCTS_SUCCESS: 'products/get_products_success',
-  PRODUCTS_ERROR: 'products/products_error'
-};
+// export const Types = {
+//   GET_PRODUCTS_REQUEST: 'products/get_products_request',
+//   GET_PRODUCTS_SUCCESS: 'products/get_products_success',
+//   PRODUCTS_ERROR: 'products/products_error'
+// };
+import Types from '../constants/Types';
+
+export const getProductsStart = () => ({
+  type: Types.GET_PRODUCTS_START
+});
 
 export const getProductsRequest = () => ({
   type: Types.GET_PRODUCTS_REQUEST

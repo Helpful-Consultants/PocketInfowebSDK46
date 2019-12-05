@@ -8,8 +8,10 @@ import {
 } from 'redux-saga/effects';
 import * as actions from '../actions/users';
 import * as api from '../api/users';
+import Types from '../constants/Types';
 
 function* getUsers() {
+  yield put(actions.getUsersStart());
   try {
     const result = yield call(api.getUsers);
     // console.log('in saga');
@@ -31,7 +33,7 @@ function* getUsers() {
 
 function* watchGetUsersRequest() {
   //   console.log('in saga watch');
-  yield takeEvery(actions.Types.GET_USERS_REQUEST, getUsers);
+  yield takeEvery(Types.GET_USERS_REQUEST, getUsers);
 }
 
 function* deleteUser(userId) {
@@ -50,7 +52,7 @@ function* deleteUser(userId) {
 
 function* watchDeleteUserRequest() {
   while (true) {
-    const { payload } = yield take(actions.Types.DELETE_USER_REQUEST);
+    const { payload } = yield take(Types.DELETE_USER_REQUEST);
     yield call(deleteUser, payload.userId);
   }
 }
@@ -73,7 +75,7 @@ function* createUser({ payload }) {
 }
 
 function* watchCreateUserRequest() {
-  yield takeLatest(actions.Types.CREATE_USER_REQUEST, createUser);
+  yield takeLatest(Types.CREATE_USER_REQUEST, createUser);
 }
 
 const userSagas = [
