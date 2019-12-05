@@ -8,12 +8,15 @@ import audiLogo from '../assets/images/logos/audi-logo.png';
 import skodaLogo from '../assets/images/logos/skoda-logo.png';
 import seatLogo from '../assets/images/logos/seat-logo.png';
 import cvLogo from '../assets/images/logos/cv-logo.png';
-import odisGrab from '../assets/images/content/odis.jpg';
-export default function OdisVersions({ ...props }) {
-  // console.log(props.items);
+
+import Colors from '../constants/Colors';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
+export default function OdisVersions(props) {
+  //   console.log(props.items);
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
-  const items = props.items[0].brandVersions || [];
+  const items = (props.items && props.items) || [];
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -26,71 +29,90 @@ export default function OdisVersions({ ...props }) {
   //   console.log('odisData', items);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
-  imageSource =
-    'https://react-native-elements.github.io/react-native-elements/img/card.png';
+
   return (
     <View style={styles.container}>
-      {items && items.length > 0 ? (
-        <View>
-          {items.map((item, i) => (
-            <Card key={i}>
-              <View style={styles.odisRow}>
+      <View style={styles.rowWithImage}>
+        <Image
+          source={require('../assets/images/content/odis.jpg')}
+          style={styles.contentImage}
+        />
+      </View>
+
+      <View>
+        {items.map((item, i) => (
+          <View key={i}>
+            <View style={styles.odisRow}>
+              <View style={styles.odisLogoContainer}>
                 <Image
                   source={logoChooser[item.brandCode.toLowerCase()]}
                   style={styles.logo}
                 />
-                <View>
-                  <Text style={styles.odisVersionText}>
-                    Product: {item.productVersion}
-                  </Text>
-                  <Text style={styles.odisVersionText}>
-                    Main feature: {item.mainFeatureVersion}
-                  </Text>
-                  <Text style={styles.odisVersionText}>
-                    Data: {item.dataVersion}
-                  </Text>
-                </View>
               </View>
-            </Card>
-          ))}
-        </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+              <View style={styles.odisVersionRow}>
+                <Text style={styles.odisVersionText}>
+                  Product: {item.productVersion}
+                </Text>
+                <Text style={styles.odisVersionText}>
+                  Main feature: {item.mainFeatureVersion}
+                </Text>
+                <Text style={styles.odisVersionText}>
+                  Data: {item.dataVersion}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
 
-_handlePressDocs = url => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    padding: 0
-    // backgroundColor: '#00889d'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
   },
   odisRow: {
     flexDirection: 'row',
     padding: 5,
     borderColor: '#000',
-    fontSize: 12
+    fontSize: RFPercentage(1.9)
+  },
+  odisImageContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  },
+  odisVersionRow: {
+    flexDirection: 'column',
+    padding: 5,
+    borderColor: '#000',
+    fontSize: RFPercentage(1.9)
   },
   odisVersionText: {
-    fontSize: 12
+    fontSize: RFPercentage(2.1)
   },
   logo: {
-    height: 50,
-    width: 50,
+    height: 70,
+    width: 70,
     marginRight: 10
+  },
+  rowWithImage: {
+    marginTop: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 0
   },
   contentImage: {
     // height: 50,
-    width: 205,
+    width: 225,
     height: 70,
     resizeMode: 'contain',
-    marginTop: 200,
+    marginBottom: 35,
     marginLeft: 'auto',
     marginRight: 'auto'
     // paddingLeft: 20,

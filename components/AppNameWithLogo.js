@@ -10,7 +10,7 @@ export default AppNameWithLogo = () => {
     <View>
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/logos/tiw-app-logo-trans.png')}
+          source={require('../assets/images/logos/tiw-app-logo-less-whitespace.png')}
           style={styles.appLogo}
         />
         <Text style={styles.appName}>Pocket Infoweb</Text>
@@ -21,8 +21,7 @@ export default AppNameWithLogo = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    flex: 1
   },
   appName: {
     color: Colors.vwgBlack,
@@ -31,13 +30,13 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 0,
     marginBottom: 0
   },
   appLogo: {
-    width: 100,
+    width: 120,
     height: 80,
     resizeMode: 'contain',
-    marginTop: 3
+    marginTop: 0
   }
 });

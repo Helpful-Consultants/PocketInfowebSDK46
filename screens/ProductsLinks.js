@@ -31,12 +31,6 @@ export default function ProductsLinks(props) {
                   />
                   <View style={styles.itemTitleContainer}>
                     <Text style={styles.itemTitle}>{item.headline}</Text>
-                    <Text style={styles.itemLastUpdated}>
-                      {`${moment(
-                        item.lastUpdated,
-                        'YYYY-MM-DD hh:mm:ss'
-                      ).format('Do MMM h:MM a') || null}`}
-                    </Text>
                   </View>
                 </View>
                 <View style={styles.itemMainRow}>

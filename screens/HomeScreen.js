@@ -201,14 +201,13 @@ export default HomeScreen = props => {
             style={{ marginTop: 0 }}
             onPress={() => requestSignOutHandler()}
           >
-            <View style={styles.odisRow}>
+            <View style={styles.signOutRow}>
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                 type='ionicon'
                 size={20}
                 color={Colors.vwgIosLink}
               />
-              <Text style={styles.signOutCellText}> </Text>
               <Text style={styles.signOutCellText}>Sign out</Text>
             </View>
           </Touchable>
@@ -340,14 +339,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  signOutRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5
+
+    // backgroundColor: 'red'
+  },
   signOutCellText: {
     color: Colors.vwgIosLink,
     fontSize: RFPercentage(2.5),
-
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingBottom: 3
   },
+
   announcementText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',

@@ -22,6 +22,7 @@ export default function odis(state = INITIAL_STATE, action) {
       return {
         ...state,
         odisItems: action.payload.items,
+        // odisItems: [],
         isLoading: false,
         error: null
       };

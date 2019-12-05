@@ -2,12 +2,11 @@ import axios from 'axios';
 
 export const getOdis = () => {
   //   console.log('here');
-  return axios.get(
-    '?controller=api&action=listSoftwareVersionsAsJSON&appName=ODIS',
-    {
-      params: {
-        //   limit: 1000
-      }
+  const url = '?controller=api&action=listSoftwareVersionsAsJSON&appName=ODIS';
+  //   console.log('in get Odis, url', url);
+  return axios.get(url, {
+    params: {
+      //   limit: 1000
     }
-  );
+  });
 };
