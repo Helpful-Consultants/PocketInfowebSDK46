@@ -16,7 +16,7 @@ function* getNews() {
   yield put(actions.getNewsStart());
   try {
     const result = yield call(api.getNews);
-    console.log('in saga get news, success');
+    // console.log('in saga get news, success');
     // console.log(result);
     // console.log('end results in saga get news, success');
     // yield put(
@@ -39,7 +39,7 @@ function* getNews() {
       result.data[0].createdDate &&
       result.data[0].createdDate.length > 0
     ) {
-      console.log('in news saga - good 200');
+      //   console.log('in news saga - good 200');
       yield put(
         actions.getNewsSuccess({
           items: result.data

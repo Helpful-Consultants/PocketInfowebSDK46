@@ -9,8 +9,11 @@ export const getStatsStart = () => ({
   type: Types.GET_STATS_START
 });
 
-export const getStatsRequest = () => ({
-  type: Types.GET_STATS_REQUEST
+export const getStatsRequest = ({ dealerId }) => ({
+  type: Types.GET_STATS_REQUEST,
+  payload: {
+    dealerId: dealerId
+  }
 });
 
 export const getStatsSuccess = ({ items }) => ({

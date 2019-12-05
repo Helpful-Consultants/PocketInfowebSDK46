@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Platform,
   SafeAreaView,
@@ -11,6 +11,7 @@ import { Image, Text } from 'react-native-elements';
 import Constants from 'expo-constants';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import HeaderButton from '../components/HeaderButton';
 import { getUserRequest } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
@@ -39,27 +40,64 @@ export default StatsScreen = ({ ...props }) => {
   const statsObj = useSelector(state => state.stats.statsItems[0]);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
-  const getStats = useCallback(() => dispatch(getStatsRequest()), [statsObj]);
+  const isLoading = useSelector(state => state.stats.isLoading);
+  const dataError = useSelector(state => state.stats.error);
+
   const getUserData = useCallback(() => dispatch(getUserRequest()), [
     userDataObj
   ]);
 
+  const dealerId = (userDataObj.dealerId && userDataObj.dealerId) || '';
+
+  const getStatsData = {
+    dealerId: dealerId
+  };
+
+  console.log('getStatsData', getStatsData);
+
+  const getItems = useCallback(
+    getStatsData => dispatch(getStatsRequest(getStatsData)),
+    [statsObj]
+  );
+
+  useEffect(() => {
+    // runs only once
+    console.log('in stats use effect');
+    const getItemsAsync = async () => {
+      getItems(getStatsData);
+    };
+    getItemsAsync();
+  }, [dispatch]);
+
+  const refreshRequestHandler = () => {
+    console.log('in refreshRequestHandler', getStatsData);
+    getItems(getStatsData);
+  };
+
   if (!userIsSignedIn) {
     props.navigation.navigate('SignIn');
   }
+  const userDataCount =
+    (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+  const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
-  if (statsObj && Object.keys(statsObj).length > 0) {
-    console.log('in stats screen,statsObj', statsObj);
+  if (userDataCount > 0) {
+    console.log('in stats screen,userDataObj OK');
   } else {
-    console.log('in stats screen, no statsObj', statsObj);
-    // getStats();
-  }
-  if (userDataObj && Object.keys(userDataObj).length > 0) {
-    console.log('in stats screen,userDataObj', userDataObj);
-  } else {
-    console.log('in stats screen, no userDataObj', userDataObj);
+    console.log('in stats screen, no userDataObj');
     getUserData();
   }
+
+  if (statsDataCount > 0) {
+    console.log('in stats screen,statsObj OK', statsObj);
+  } else {
+    console.log('in stats screen, no statsObj');
+    // getStats();
+  }
+
+  //   console.log('items AREEEEEEEEEE', items);
+  console.log('isLoading ', isLoading, 'dataError ', dataError);
+
   //   const userDataObj = userDummyData;
   //   const statsObj = statsDummyData;
 
@@ -69,6 +107,12 @@ export default StatsScreen = ({ ...props }) => {
   //   props.getStatsRequest();
   return (
     <View style={styles.container}>
+      <DataAlertBarWithRefresh
+        refreshRequestHandler={refreshRequestHandler}
+        isLoading={isLoading}
+        dataError={dataError}
+        dataCount={statsDataCount}
+      />
       <ScrollView>
         <StatsSummary statsObj={statsObj} userDataObj={userDataObj} />
         <View style={styles.appData}>
@@ -94,9 +138,7 @@ export default StatsScreen = ({ ...props }) => {
     </View>
   );
 };
-{
-  Platform.OS === 'ios' ? 'ios-home' : 'md-home';
-}
+
 StatsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Stats' />,
   headerLeft: (

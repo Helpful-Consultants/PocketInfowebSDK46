@@ -16,7 +16,7 @@ import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
 export default SearchBarWithRefresh = props => {
-  console.log('SearchBarWithRefresh props', props);
+  //   console.log('SearchBarWithRefresh props', props);
   return (
     <View style={styles.searchBarRow}>
       {props.isLoading ? (

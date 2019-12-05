@@ -14,6 +14,7 @@ import odisDummyData from '../dummyData/odisDummyData.js';
 
 export default OdisScreen = props => {
   const dispatch = useDispatch();
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const odisItems = useSelector(state => state.odis.odisItems);
   const isLoading = useSelector(state => state.odis.isLoading);
   const dataError = useSelector(state => state.odis.error);
@@ -34,6 +35,10 @@ export default OdisScreen = props => {
     console.log('in refreshRequestHandler');
     getItems();
   };
+
+  if (!userIsSignedIn) {
+    props.navigation.navigate('SignIn');
+  }
 
   if (odisItems && odisItems.length > 0) {
     console.log('in odis screen,odisItems', odisItems.length);

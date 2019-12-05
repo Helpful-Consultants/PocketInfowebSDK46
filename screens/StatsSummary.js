@@ -18,6 +18,10 @@ export default function StatsSummary(props) {
   //   console.log(props);
   const { statsObj, userDataObj } = props;
 
+  const userDataCount =
+    (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+  const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
+
   // console.log('start statsDummyData');
   // console.log(statsDummyData);
   //   console.log('statsData', items);
@@ -25,7 +29,7 @@ export default function StatsSummary(props) {
   //   console.log('statsDummyData', statsDummyData);
   return (
     <View style={styles.container}>
-      {userDataObj ? (
+      {userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <Card>
             <View style={styles.statsRow}>
@@ -37,12 +41,7 @@ export default function StatsSummary(props) {
                 <Text style={styles.statsVersionText}>
                   User Name: {userDataObj.userName}
                 </Text>
-                <Text style={styles.statsVersionText}>
-                  User ID: {userDataObj.userId}
-                </Text>
-                <Text style={styles.statsVersionText}>
-                  Dealer Id: {userDataObj.dealerId}
-                </Text>
+
                 <Text style={styles.statsVersionText}>
                   Dealer Name: {statsObj.userName}
                 </Text>
@@ -76,9 +75,7 @@ export default function StatsSummary(props) {
             </View>
           </Card>
         </View>
-      ) : (
-        <Text>Loading...</Text>
-      )}
+      ) : null}
     </View>
   );
 }

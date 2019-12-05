@@ -37,9 +37,9 @@ export default NewsScreen = props => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   if (newsItems && newsItems.length > 0) {
-    console.log('in news screen,newsItems', newsItems.length);
+    // console.log('in news screen,newsItems', newsItems.length);
   } else {
-    console.log('in news screen, no newsItems');
+    // console.log('in news screen, no newsItems');
   }
   // Search function
   const [searchInput, setSearchInput] = useState('');
@@ -54,7 +54,7 @@ export default NewsScreen = props => {
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
-      console.log('in news use effect');
+      //   console.log('in news use effect');
       getItems();
     };
     getItemsAsync();
@@ -72,12 +72,12 @@ export default NewsScreen = props => {
   };
 
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
+    // console.log(searchInput);
     setSearchInput(searchInput);
   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItems();
   };
   //   console.log('newsItems AREEEEEEEEEE', newsItems);

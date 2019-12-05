@@ -9,7 +9,7 @@ const INITIAL_STATE = {
 
 export default function stats(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  //   console.log('action.type is:', action.type);
+  console.log('action.type is:', action.type);
   switch (action.type) {
     case Types.GET_STATS_START: {
       return {
@@ -29,10 +29,11 @@ export default function stats(state = INITIAL_STATE, action) {
       };
     }
     case Types.STATS_ERROR: {
+      console.log(action);
       return {
         ...state,
+        statsItems: [],
         isLoading: false,
-
         error: action.payload.error
       };
     }

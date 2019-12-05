@@ -12,7 +12,7 @@ export default function NewsLinks(props) {
   //   const items = newsDummyData || [];
   // console.log('start newsDummyData');
   // console.log(newsDummyData);
-  console.log('in NewsLinks ', props.baseImageUrl);
+  //   console.log('in NewsLinks ', props.baseImageUrl);
 
   return (
     <View>
