@@ -13,19 +13,23 @@ import {
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements';
+
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
+import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';
-import placeholderImage from '../assets/images/robot-prod.png';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
-import { tsConstructSignatureDeclaration } from '@babel/types';
 
 export default function DealerToolsList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
-  const limit = 10;
-  const allItems = props.items || [];
-  //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
-  const items = allItems && allItems.slice(0, limit);
+  //   const limit = 10;
+  //   const allItems = props.items || [];
+  //   //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
+  //   const items = allItems && allItems.slice(0, limit);
+
+  const items = props.items || [];
   const { onSelectItem } = props;
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = dealerToolsDummyData;
@@ -51,16 +55,26 @@ export default function DealerToolsList(props) {
       >
         <ListItem
           title={`${item.partNumber} (${item.toolNumber})`}
-          titleStyle={{ color: Colors.vwgMidBlue }}
+          titleStyle={{ color: Colors.vwgMidBlue, fontSize: RFPercentage(2.1) }}
           subtitle={
             <View>
-              <Text>{`${item.partDescription}`}</Text>
+              <Text
+                style={{ fontSize: RFPercentage(2.0) }}
+              >{`${item.partDescription}`}</Text>
               {item.location ? (
-                <Text>{`Location: ${item.location}`}</Text>
+                <Text
+                  style={{ fontSize: RFPercentage(2.0) }}
+                >{`Location: ${item.location}`}</Text>
               ) : (
-                <Text>Location not recorded</Text>
+                <Text style={{ fontSize: RFPercentage(2.0) }}>
+                  Location not recorded
+                </Text>
               )}
-              {item.lastWIP ? <Text>{`Last Job: ${item.lastWIP}`}</Text> : null}
+              {item.lastWIP ? (
+                <Text
+                  style={{ fontSize: RFPercentage(2.0) }}
+                >{`Last Job: ${item.lastWIP}`}</Text>
+              ) : null}
             </View>
           }
           bottomDivider
@@ -70,7 +84,14 @@ export default function DealerToolsList(props) {
   };
 
   return (
-    <View>
+    <ScrollView>
+      {props.showPrompt === true ? (
+        <View style={styles.searchFoundPrompt}>
+          <Text style={styles.searchFoundPromptText}>
+            {`Search the list to find a tool to add to your job.`}
+          </Text>
+        </View>
+      ) : null}
       <FlatList
         data={items && items}
         renderItem={itemData => (
@@ -78,7 +99,7 @@ export default function DealerToolsList(props) {
         )}
         keyExtractor={item => item.id}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -87,6 +108,15 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#222'
+  },
+  searchFoundPrompt: {
+    padding: 10,
+    backgroundColor: Colors.vwgMintGreen
+  },
+  searchFoundPromptText: {
+    textAlign: 'center',
+
+    color: Colors.vwgWhite
   },
   tipText: {
     fontSize: 12,

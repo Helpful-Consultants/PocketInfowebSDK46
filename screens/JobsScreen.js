@@ -43,8 +43,8 @@ export default JobsScreen = props => {
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
 
-  const isLoading = useSelector(state => state.news.isLoading);
-  const dataError = useSelector(state => state.news.error);
+  const isLoading = useSelector(state => state.dealerWips.isLoading);
+  const dataError = useSelector(state => state.dealerWips.error);
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -76,7 +76,7 @@ export default JobsScreen = props => {
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
-      console.log('in news use effect');
+      console.log('in jobs use effect');
       getItems();
     };
     getItemsAsync();
@@ -156,6 +156,7 @@ export default JobsScreen = props => {
           items={filteredItems}
           deleteDealerWipRequest={deleteDealerWip}
           userIntId={userIntId}
+          baseImageUrl={Urls.toolImage}
         />
       </ScrollView>
     </View>

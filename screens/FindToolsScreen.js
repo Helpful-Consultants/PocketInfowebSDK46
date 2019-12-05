@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   KeyboardAvoidingView,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Icon, Input, SearchBar, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import Image from 'react-native-scalable-image';
 import { createFilter } from 'react-native-search-filter';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -18,6 +19,7 @@ import ToolBasket from '../components/ToolBasket';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Colors from '../constants/Colors';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import ToolPic from '../assets/images/icon.png';
 
 import DealerToolsList from './DealerToolsList';
@@ -59,7 +61,10 @@ export default FindToolsScreen = ({ ...props }) => {
     state => state.dealerWips.dealerWipsItems
   );
   //   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
+  const isLoading = useSelector(state => state.dealerTools.isLoading);
+  const dataError = useSelector(state => state.dealerTools.error);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
   const userIntId = userDataObj && userDataObj.intId.toString();
@@ -77,14 +82,35 @@ export default FindToolsScreen = ({ ...props }) => {
   //     [userIsSignedIn]
   //   );
 
+  const userDataCount =
+    (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+
+  const getDealerToolsDataObj = {
+    dealerId: dealerId
+  };
+
   const getTools = useCallback(
-    getToolsData => dispatch(getDealerToolsRequest(getToolsData)),
+    getDealerToolsDataObj =>
+      dispatch(getDealerToolsRequest(getDealerToolsDataObj)),
     [dealerToolsItems]
   );
   const saveToJob = useCallback(
     newWipPkgObj => dispatch(createDealerWipRequest(newWipPkgObj)),
     [dealerWipsItems]
   );
+
+  useEffect(() => {
+    // runs only once
+    console.log('in stats use effect');
+    const getItemsAsync = async () => {
+      getItems(getDealerToolsDataObj);
+    };
+    getItemsAsync();
+  }, [dispatch]);
+
+  if (!userIsSignedIn) {
+    props.navigation.navigate('SignIn');
+  }
 
   if (dealerToolsItems && dealerToolsItems.length > 0) {
     console.log('in tools screen,toolsItems', dealerToolsItems.length);
@@ -160,6 +186,7 @@ export default FindToolsScreen = ({ ...props }) => {
     setSearchInput(searchInput);
   };
   const refreshRequestHandler = () => {
+    console.log('in tools refreshRequestHandler');
     const getToolsData = {
       dealerId: dealerId
     };
@@ -237,6 +264,14 @@ export default FindToolsScreen = ({ ...props }) => {
   );
   console.log('toolBasket', toolBasket);
 
+  let showPrompt =
+    mode === 'list' &&
+    toolBasket.length === 0 &&
+    filteredItems.length > 0 &&
+    searchInput.length === 0
+      ? true
+      : false;
+
   return (
     <View>
       {mode === 'book' ? (
@@ -289,41 +324,17 @@ export default FindToolsScreen = ({ ...props }) => {
           isBasketExpanded={isBasketExpanded}
           toggleExpandBasketHandler={toggleExpandBasketHandler}
         />
-        {mode === 'list' &&
-        toolBasket.length === 0 &&
-        filteredItems.length > 0 &&
-        searchInput.length === 0 ? (
-          <View style={styles.searchFoundPrompt}>
-            <Text style={styles.searchFoundPromptText}>
-              {`Search the list to find a tool to add to your job.`}
-            </Text>
-          </View>
-        ) : null}
+
         {mode === 'list' ? (
-          <View style={styles.searchBarRow}>
-            <TouchableOpacity
-              style={styles.searchBarRowRefreshButton}
-              onPress={() => {
-                refreshRequestHandler();
-              }}
-            >
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-                type='ionicon'
-                size={25}
-                color='black'
-              />
-            </TouchableOpacity>
-            <View style={styles.searchBarRowSearchInput}>
-              <SearchBar
-                onChangeText={searchInputHandler}
-                value={searchInput}
-                platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-                containerStyle={styles.searchBarContainer}
-                inputContainerStyle={styles.searchBarInputContainer}
-              />
-            </View>
-          </View>
+          <SearchBarWithRefresh
+            refreshRequestHandler={refreshRequestHandler}
+            searchInputHandler={searchInputHandler}
+            searchInput={searchInput}
+            isLoading={isLoading}
+            dataError={dataError}
+            dataCount={dealerToolsItems.length}
+            platform={Platform.OS === 'ios' ? 'ios' : 'android'}
+          />
         ) : null}
 
         {mode === 'confirm' ? (
@@ -363,6 +374,15 @@ export default FindToolsScreen = ({ ...props }) => {
           <DealerToolsList
             items={filteredItems}
             onSelectItem={selectItemHandler}
+            mode={mode}
+            showPrompt={
+              mode === 'list' &&
+              toolBasket.length === 0 &&
+              filteredItems.length > 0 &&
+              searchInput.length === 0
+                ? true
+                : false
+            }
           />
         ) : null}
       </KeyboardAvoidingView>

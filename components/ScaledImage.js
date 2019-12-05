@@ -27,6 +27,7 @@ export default class ScaledImage extends Component {
 
   render() {
     // console.log(this.props);
+    // console.log(this.state.source);
     return (
       <Image
         source={this.state.source}

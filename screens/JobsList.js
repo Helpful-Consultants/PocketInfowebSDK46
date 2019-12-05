@@ -7,19 +7,23 @@ import {
   Platform,
   ScrollView,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon, colors } from 'react-native-elements';
-import placeholderImage from '../assets/images/robot-prod.png';
+
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import ScaledImageFinder from '../components/ScaledImageFinder';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
+
 import Colors from '../constants/Colors';
 
 export default function DealerToolsList(props) {
-  //   console.log('props');
-  //   console.log(props);
-  //   console.log('props end');
+  console.log('props');
+  console.log(props.baseImageUrl);
+  console.log('props end');
   const limit = 0;
   const userIntId = props.userIntId.toString() || '';
   //   console.log('userIntId ', userIntId);
@@ -33,6 +37,28 @@ export default function DealerToolsList(props) {
   // console.log('dealerToolsDummyData');
 
   //   console.log('in dealer list - items', items.length);
+  const stripForImage = toolNumber => {
+    console.log(toolNumber);
+    let retValue =
+      props.baseImageUrl + toolNumber.replace(/[^a-z0-9+]+/gi, '') + '.png';
+    console.log('retValeu is ', retValue);
+    return retValue;
+  };
+  const getImageName = item => {
+    console.log(item);
+
+    let imageName = '';
+    if (item.toolType && item.toolType.toLowerCase() == 'tool') {
+      console.log('part ', item.toolType);
+      retValue = stripForImage(item.partNumber && item.partNumber);
+    } else {
+      console.log('tool ', item.toolType);
+      retValue = stripForImage(item.toolNumber && item.toolNumber);
+    }
+    //console.log(toolType,toolType.toLowerCase(), partNumber, toolNumber, retValue);
+    console.log(imageName);
+    return imageName;
+  };
 
   if (items)
     return (
@@ -44,23 +70,29 @@ export default function DealerToolsList(props) {
             </View>
           ) : (
             items.map((item, i) => (
-              <Card
+              <View
                 key={i}
-                containerStyle={{
+                style={{
                   backgroundColor:
                     item.userIntId.toString() == userIntId.toString()
-                      ? Colors.vwgSkyBlue
+                      ? Colors.vwgWhite
                       : '#ededed',
-                  borderColor: '#666',
+                  borderTopColor: Colors.vwgWhite,
+                  borderLeftColor: Colors.vwgWhite,
+                  borderRightColor: Colors.vwgWhite,
+                  borderBottomColor: Colors.vwgLightGray,
                   borderStyle: 'solid',
                   borderWidth: 1,
-                  borderRadius: 6
+                  borderRadius: 0,
+                  marginHorizontal: 10,
+                  paddingTop: 10,
+                  paddingBottom: 10
                 }}
               >
                 <View>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: RFPercentage(2.2),
                       fontWeight: '600',
                       textAlign: 'left',
                       marginBottom: 5
@@ -147,70 +179,106 @@ export default function DealerToolsList(props) {
                     </View>
                   ) : null}
                   <View>
-                    {item.tools && // crashes without this if no tools in job
+                    {item.tools ? ( // crashes without this if no tools in job
                       item.tools.map((item, i) => (
-                        <ListItem
-                          containerStyle={{
-                            backgroundColor: '#f6f6f6',
-                            marginBottom: 5,
-                            borderColor: '#2089dc',
-                            borderStyle: 'solid',
-                            borderWidth: 1,
-                            borderRadius: 6
-                          }}
-                          titleStyle={{
-                            fontSize: 14,
-                            color: '#2089dc',
-                            textAlign: 'left'
-                          }}
-                          key={i}
-                          title={`${item.partNumber} (${item.toolNumber})`}
-                          subtitle={
-                            <View>
-                              <Text
-                                style={{
-                                  color: '#2089dc',
-                                  marginBottom: 3
-                                }}
-                              >{`${item.partDescription}`}</Text>
-                              {item.location.length > 0 ? (
-                                <Text>{`Last location was ${item.location}`}</Text>
-                              ) : null}
-
-                              {item.lastWIP.length > 0 ? (
-                                <Text>{`Last booked to job ${item.lastWIP}`}</Text>
-                              ) : null}
-                            </View>
+                        <TouchableOpacity
+                          onPress={() =>
+                            alert(
+                              `Coming feature: this button will record you returning the tool.`
+                            )
                           }
-                          topDivider={i > 0 ? true : false}
-                          rightIcon={
-                            <Icon
-                              name={
-                                Platform.OS === 'ios'
-                                  ? 'ios-return-left'
-                                  : 'md-return-left'
-                              }
-                              type='ionicon'
-                              color='#2089dc'
-                              reverse
-                              onPress={() =>
-                                alert(
-                                  `Coming feature: this button will record you returning the tool.`
-                                )
-                              }
-                              size={10}
-                            />
-                          }
-                        />
-                      ))}
+                        >
+                          <ListItem
+                            containerStyle={{
+                              backgroundColor: '#fff',
+                              marginBottom: 5
+                            }}
+                            titleStyle={{
+                              fontSize: RFPercentage(2.2),
+                              color: '#2089dc',
+                              textAlign: 'left'
+                            }}
+                            key={i}
+                            title={`${item.partNumber} (${item.toolNumber})`}
+                            subtitle={
+                              <View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    marginTop: 10
+                                  }}
+                                >
+                                  <ScaledImageFinder
+                                    width={60}
+                                    item={item}
+                                    baseImageUrl={props.baseImageUrl}
+                                  />
+                                  <Text
+                                    style={{
+                                      color: Colors.vwgVeryDarkGray,
+                                      marginBottom: 3,
+                                      paddingLeft: 10,
+                                      fontSize: RFPercentage(2.1)
+                                    }}
+                                  >{`${item.partDescription}`}</Text>
+                                </View>
+                                {item.location.length > 0 ? (
+                                  <Text
+                                    style={{
+                                      color: Colors.vwgVeryDarkGray,
+                                      marginBottom: 3,
+                                      paddingLeft: 10,
+                                      fontSize: RFPercentage(2.1)
+                                    }}
+                                  >{`Last location was: ${item.location}`}</Text>
+                                ) : null}
+                                {item.lastWIP.length > 0 ? (
+                                  <Text
+                                    style={{
+                                      color: Colors.vwgVeryDarkGray,
+                                      marginBottom: 3,
+                                      paddingLeft: 10,
+                                      fontSize: RFPercentage(2.1)
+                                    }}
+                                  >{`Last booked to job: ${item.lastWIP}`}</Text>
+                                ) : null}
+                              </View>
+                            }
+                            topDivider={i > 0 ? true : false}
+                            rightIcon={
+                              <Icon
+                                name={
+                                  Platform.OS === 'ios'
+                                    ? 'ios-return-left'
+                                    : 'md-return-left'
+                                }
+                                type='ionicon'
+                                color='#2089dc'
+                                reverse
+                                size={10}
+                              />
+                            }
+                          />
+                        </TouchableOpacity>
+                      ))
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: RFPercentage(2),
+                          color: Colors.vwgWarmRed
+                        }}
+                      >
+                        No tools booked to this job
+                      </Text>
+                    )}
                   </View>
                   <View>
                     <Text
-                      style={{ fontSize: 10, textAlign: 'right' }}
-                    >{`${item.createdBy} ${item.createdDate}`}</Text>
+                      style={{ fontSize: RFPercentage(1.9), textAlign: 'left' }}
+                    >{`Job added/changed ${item.createdDate}`}</Text>
                   </View>
                 </View>
-              </Card>
+              </View>
             ))
           )}
         </ScrollView>
