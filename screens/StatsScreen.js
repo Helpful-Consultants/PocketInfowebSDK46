@@ -53,7 +53,7 @@ export default StatsScreen = ({ ...props }) => {
     dealerId: dealerId
   };
 
-  console.log('getStatsData', getStatsData);
+  //   console.log('getStatsData', getStatsData);
 
   const getItems = useCallback(
     getStatsData => dispatch(getStatsRequest(getStatsData)),
@@ -70,7 +70,7 @@ export default StatsScreen = ({ ...props }) => {
   }, [dispatch]);
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler', getStatsData);
+    // console.log('in refreshRequestHandler', getStatsData);
     getItems(getStatsData);
   };
 
@@ -88,15 +88,15 @@ export default StatsScreen = ({ ...props }) => {
     getUserData();
   }
 
-  if (statsDataCount > 0) {
-    console.log('in stats screen,statsObj OK', statsObj);
-  } else {
-    console.log('in stats screen, no statsObj');
-    // getStats();
-  }
+  //   if (statsDataCount > 0) {
+  //     console.log('in stats screen,statsObj OK', statsObj);
+  //   } else {
+  //     console.log('in stats screen, no statsObj');
+  //     // getStats();
+  //   }
 
   //   console.log('items AREEEEEEEEEE', items);
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
   //   const userDataObj = userDummyData;
   //   const statsObj = statsDummyData;
@@ -115,25 +115,6 @@ export default StatsScreen = ({ ...props }) => {
       />
       <ScrollView>
         <StatsSummary statsObj={statsObj} userDataObj={userDataObj} />
-        <View style={styles.appData}>
-          <Text>
-            {`${Constants.manifest.name} Version ${Constants.manifest.version}`}
-          </Text>
-          <Text>
-            {`Builds ${Constants.nativeAppVersion} - ${Constants.nativeBuildVersion}`}
-          </Text>
-          <Text>
-            {`${
-              Platform.OS === 'ios'
-                ? Constants.platform.ios.buildNumber
-                  ? Constants.platform.ios.buildNumber
-                  : ''
-                : Constants.platform.android.versionCode
-                ? Constants.platform.android.versionCode
-                : ''
-            }`}
-          </Text>
-        </View>
       </ScrollView>
     </View>
   );

@@ -3,11 +3,12 @@ import React from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
-import vwLogo from '../assets/images/logos/vw-logo.png';
-import audiLogo from '../assets/images/logos/audi-logo.png';
-import skodaLogo from '../assets/images/logos/skoda-logo.png';
-import seatLogo from '../assets/images/logos/seat-logo.png';
-import cvLogo from '../assets/images/logos/cv-logo.png';
+import Constants from 'expo-constants';
+
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
+import Colors from '../constants/Colors';
+
 // import statsGrab from '../assets/images/content/stats.jpg';
 
 export default function StatsSummary(props) {
@@ -31,64 +32,84 @@ export default function StatsSummary(props) {
     <View style={styles.container}>
       {userDataCount > 0 && statsDataCount > 0 ? (
         <View>
-          <Card>
-            <View style={styles.statsRow}>
-              {/* <Image
-                  source={logoChooser[item.brandCode.toLowerCase()]}
-                  style={styles.logo}
-                /> */}
-              <View>
-                <Text style={styles.statsVersionText}>
-                  User Name: {userDataObj.userName}
-                </Text>
+          <View>
+            <Text style={styles.statsTitle}>App User</Text>
+            <Text style={styles.statsText}>{userDataObj.userName}</Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Dealer</Text>
+            <Text style={styles.statsText}>{statsObj.userName}</Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Mandatory Tools</Text>
+            <Text style={styles.statsText}>
+              {`2,556 Mandatory (Coming soon); ${statsObj.loggedTools} logged`}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Loan Tool Usage</Text>
+            <Text style={styles.statsText}>
+              {`99 Usage; 99 Current bookings`}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Support Tickets</Text>
+            <Text style={styles.statsText}>
+              {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Active Jobs</Text>
+            <Text style={styles.statsText}>
+              `XX active; X.XX% Effectiveness (Coming soon)`
+            </Text>
+          </View>
+          <View>
+            <Text style={styles.statsTitle}>Service Measures</Text>
+            <Text style={styles.statsText}>
+              {`${statsObj.completedServiceMeasures} active; ${statsObj.activeServiceMeasures} completed`}
+            </Text>
+          </View>
 
-                <Text style={styles.statsVersionText}>
-                  Dealer Name: {statsObj.userName}
-                </Text>
-
-                <Card title='Mandatory Tools!'>
-                  <Text style={styles.statsVersionText}>
-                    {`2,556 Mandatory; ${statsObj.loggedTools} logged`}
-                  </Text>
-                </Card>
-                <Card title='Loan Tool Usage'>
-                  <Text style={styles.statsVersionText}>
-                    {`99 Usage; 99 Current bookings`}
-                  </Text>
-                </Card>
-                <Card title='Support Tickets'>
-                  <Text style={styles.statsVersionText}>
-                    {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
-                  </Text>
-                </Card>
-                <Card title='Active Jobs'>
-                  <Text style={styles.statsVersionText}>
-                    `XX active; X.XX% Effectiveness`
-                  </Text>
-                </Card>
-                <Card title='Service Measures'>
-                  <Text style={styles.statsVersionText}>
-                    {`${statsObj.completedServiceMeasures} active; ${statsObj.activeServiceMeasures} completed`}
-                  </Text>
-                </Card>
-              </View>
-            </View>
-          </Card>
+          <View style={styles.appData}>
+            <Text style={styles.statsText}>
+              {`${Constants.manifest.name} Version ${Constants.manifest.version}`}
+            </Text>
+            <Text style={styles.statsText}>
+              {`Builds ${Constants.nativeAppVersion} - ${Constants.nativeBuildVersion}`}
+            </Text>
+            <Text style={styles.statsText}>
+              {`${
+                Platform.OS === 'ios'
+                  ? Constants.platform.ios.buildNumber
+                    ? Constants.platform.ios.buildNumber
+                    : ''
+                  : Constants.platform.android.versionCode
+                  ? Constants.platform.android.versionCode
+                  : ''
+              }`}
+            </Text>
+          </View>
         </View>
       ) : null}
     </View>
   );
 }
 
-_handlePressDocs = url => {
-  WebBrowser.openBrowserAsync(url);
-};
-
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    padding: 0
+    flex: 1,
+    paddingLeft: 30,
+    paddingRight: 30
     // backgroundColor: '#00889d'
+  },
+  statsTitle: {
+    color: Colors.vwgDeepBlue,
+    fontSize: RFPercentage(2.2),
+    verticalPadding: 10,
+    marginTop: 20,
+    marginBottom: 5,
+    fontweight: 600
   },
   statsRow: {
     flexDirection: 'row',
@@ -96,30 +117,15 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     fontSize: 12
   },
-  statsVersionText: {
-    fontSize: 12
+  statsText: {
+    color: Colors.vwgVeryDarkGray,
+    fontSize: RFPercentage(2),
+    marginBottom: 5
   },
-  logo: {
-    height: 50,
-    width: 50,
-    marginRight: 10
-  },
-  contentImage: {
-    // height: 50,
-    width: 205,
-    height: 70,
-    resizeMode: 'contain',
-    marginTop: 200,
-    marginLeft: 'auto',
-    marginRight: 'auto'
-    // paddingLeft: 20,
-    // paddingRight: 20
-  },
-  tipText: {
-    fontSize: 12,
-    marginLeft: 15,
-    marginTop: 3,
-    marginBottom: 20
+  appData: {
+    color: Colors.vwgDarkGray,
+    fontSize: RFPercentage(2),
+    marginTop: 25
   },
   optionsTitleText: {
     fontSize: 16,

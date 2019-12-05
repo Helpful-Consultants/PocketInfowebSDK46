@@ -7,7 +7,7 @@
 import Types from '../constants/Types';
 
 // console.log(Types);
-console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);
+// console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);
 
 export const getNewsStart = () => ({
   type: Types.GET_NEWS_START

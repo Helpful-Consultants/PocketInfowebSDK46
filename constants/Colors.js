@@ -36,6 +36,7 @@ export default {
   vwgLightGray: '#ccc',
   vwgMidGray: '#999',
   vwgDarkGray: '#666',
+  vwgVeryDarkGray: '#333',
   vwgBlack: '#000',
   vwgWhite: '#fff',
   //   vwgSearchBarContainer: '#80b0c8',
