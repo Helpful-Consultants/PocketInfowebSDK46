@@ -13,6 +13,7 @@ import {
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Card, ListItem, Button, Icon, colors } from 'react-native-elements';
+import moment from 'moment';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import ScaledImageFinder from '../components/ScaledImageFinder';
@@ -179,7 +180,10 @@ export default function DealerToolsList(props) {
                         textAlign: 'left',
                         marginBottom: 5
                       }}
-                    >{`Job added/changed ${item.createdDate}`}</Text>
+                    >{`Job added/changed ${moment(
+                      item.createdDate,
+                      'YYYY-MM-DD hh:mm:ss'
+                    ).format('h:MMa Do MMM ') || null}`}</Text>
                   </View>
                   <View>
                     {item.tools ? ( // crashes without this if no tools in job

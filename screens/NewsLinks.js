@@ -35,7 +35,7 @@ export default function NewsLinks(props) {
                       {`${moment(
                         item.lastUpdated,
                         'YYYY-MM-DD hh:mm:ss'
-                      ).format('Do MMM h:MM a') || null}`}
+                      ).format('h:MMa Do MMM ') || null}`}
                     </Text>
                   </View>
                 </View>
