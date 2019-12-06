@@ -58,8 +58,10 @@ export default JobsScreen = props => {
     dealerId: userDataObj.dealerId,
     intId: userDataObj.intId
   };
+  //   console.log('before getWips', getWipsDataObj);
+
   const getItems = useCallback(getWipsDataObj => {
-    // console.log('getWips', getWipsDataObj);
+    // console.log('in getItems', getWipsDataObj);
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
   const deleteDealerWip = useCallback(
@@ -75,18 +77,18 @@ export default JobsScreen = props => {
 
   useEffect(() => {
     // runs only once
+    // console.log('in jobs use effect');
     const getItemsAsync = async () => {
-      console.log('in jobs use effect');
-      getItems();
+      getItems(getWipsDataObj);
     };
     getItemsAsync();
   }, [dispatch]);
 
-  if (dealerWipsItems && dealerWipsItems.length > 0) {
-    console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
-  } else {
-    console.log('in jobs screen, no wipsItems');
-  }
+  //   if (dealerWipsItems && dealerWipsItems.length > 0) {
+  //     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
+  //   } else {
+  //     console.log('in jobs screen, no wipsItems');
+  //   }
 
   const userWipsItems =
     (userIntId &&

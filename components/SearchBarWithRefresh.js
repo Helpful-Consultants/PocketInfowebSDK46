@@ -44,7 +44,7 @@ export default SearchBarWithRefresh = props => {
         </View>
       ) : props.dataError ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
-          <Text style={styles.searchBarRowNoDataText}>
+          <Text style={styles.searchBarRowErrorText}>
             There was a problem downloading the data. Please refresh.
           </Text>
         </View>
@@ -103,8 +103,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer
   },
-  searchBarRowNoDataText: {
+  searchBarRowErrorText: {
     color: Colors.vwgWarmRed
+  },
+  searchBarRowNoDataText: {
+    color: Colors.vwgDarkSkyBlue
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
@@ -115,9 +118,14 @@ const styles = StyleSheet.create({
   },
   searchBarInputContainer: {
     // backgroundColor: Colors.vwgSearchBarInputContainer,
-    borderColor: Colors.vwgSearchBarInputContainer
+    borderColor: Colors.vwgSearchBarInputContainer,
+    height: 30
   },
-  searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
+  searchBarContainer: {
+    backgroundColor: Colors.vwgSearchBarContainer,
+    height: 45
+    // height: 30
+  },
   searchBarRowSearchInput: { width: '85%' },
   searchFoundPrompt: {
     padding: 10,

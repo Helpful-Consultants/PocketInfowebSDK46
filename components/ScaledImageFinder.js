@@ -8,7 +8,7 @@ export default ScaledImageFinder = props => {
     // console.log(toolNumber);
     let retValue =
       props.baseImageUrl + toolNumber.replace(/[^a-z0-9+]+/gi, '') + '.png';
-    console.log('strip retValue is ', retValue);
+    // console.log('strip retValue is ', retValue);
     return retValue;
   };
 

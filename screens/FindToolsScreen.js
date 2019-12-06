@@ -89,11 +89,11 @@ export default FindToolsScreen = ({ ...props }) => {
     dealerId: dealerId
   };
 
-  const getTools = useCallback(
-    getDealerToolsDataObj =>
-      dispatch(getDealerToolsRequest(getDealerToolsDataObj)),
-    [dealerToolsItems]
-  );
+  const getItems = useCallback(getDealerToolsDataObj => {
+    // console.log('in getItems', getDealerToolsDataObj);
+    dispatch(getDealerToolsRequest(getDealerToolsDataObj)), [dealerToolsItems];
+  });
+
   const saveToJob = useCallback(
     newWipPkgObj => dispatch(createDealerWipRequest(newWipPkgObj)),
     [dealerWipsItems]
@@ -101,7 +101,7 @@ export default FindToolsScreen = ({ ...props }) => {
 
   useEffect(() => {
     // runs only once
-    console.log('in stats use effect');
+    // console.log('in tools use effect');
     const getItemsAsync = async () => {
       getItems(getDealerToolsDataObj);
     };
@@ -112,11 +112,11 @@ export default FindToolsScreen = ({ ...props }) => {
     props.navigation.navigate('SignIn');
   }
 
-  if (dealerToolsItems && dealerToolsItems.length > 0) {
-    console.log('in tools screen,toolsItems', dealerToolsItems.length);
-  } else {
-    console.log('in tools screen, no toolsItems');
-  }
+  //   if (dealerToolsItems && dealerToolsItems.length > 0) {
+  //     console.log('in tools screen,toolsItems', dealerToolsItems.length);
+  //   } else {
+  //     console.log('in tools screen, no toolsItems');
+  //   }
 
   const toggleExpandBasketHandler = action => {
     console.log('toggling ', isBasketExpanded);
@@ -128,7 +128,7 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const selectItemHandler = newItem => {
-    console.log(newItem.id, ' to be added');
+    // console.log(newItem.id, ' to be added');
     let newBasket = toolBasket;
     let dup = toolBasket.filter(item => item.id === newItem.id);
     // console.log('dup, ');
@@ -140,7 +140,7 @@ export default FindToolsScreen = ({ ...props }) => {
       //   console.log('newBasket', newBasket);
       //   console.log(newItem.id, ' added to... ');
     } else {
-      console.log('dup');
+      //   console.log('dup');
     }
     // console.log('toolBasket update', toolBasket);
     // console.log(toolBasket.length);
@@ -187,11 +187,11 @@ export default FindToolsScreen = ({ ...props }) => {
   };
   const refreshRequestHandler = () => {
     console.log('in tools refreshRequestHandler');
-    const getToolsData = {
-      dealerId: dealerId
-    };
+    // const getItemsData = {
+    //   dealerId: dealerId
+    // };
     // console.log('in refreshRequestHandler');
-    dealerId && getTools(getToolsData);
+    dealerId && getItems(getDealerToolsDataObj);
   };
 
   const saveToJobRequestHandler = () => {
