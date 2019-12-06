@@ -77,13 +77,7 @@ export default function DealerToolsList(props) {
                     item.userIntId.toString() == userIntId.toString()
                       ? Colors.vwgWhite
                       : '#ededed',
-                  borderTopColor: Colors.vwgWhite,
-                  borderLeftColor: Colors.vwgWhite,
-                  borderRightColor: Colors.vwgWhite,
-                  borderBottomColor: Colors.vwgLightGray,
-                  borderStyle: 'solid',
-                  borderWidth: 1,
-                  borderRadius: 0,
+
                   marginHorizontal: 10,
                   paddingTop: 10,
                   paddingBottom: 10
@@ -99,7 +93,7 @@ export default function DealerToolsList(props) {
                     }}
                   >
                     {item.userIntId.toString() == userIntId.toString()
-                      ? `My job ${item.wipNumber}`
+                      ? `Job ${item.wipNumber}`
                       : `${item.createdBy}'s job ${item.wipNumber}`}
                   </Text>
                   {item.userIntId.toString() !== userIntId.toString() ? (
@@ -179,6 +173,15 @@ export default function DealerToolsList(props) {
                     </View>
                   ) : null}
                   <View>
+                    <Text
+                      style={{
+                        fontSize: RFPercentage(1.8),
+                        textAlign: 'left',
+                        marginBottom: 5
+                      }}
+                    >{`Job added/changed ${item.createdDate}`}</Text>
+                  </View>
+                  <View>
                     {item.tools ? ( // crashes without this if no tools in job
                       item.tools.map((item, i) => (
                         <TouchableOpacity
@@ -191,7 +194,10 @@ export default function DealerToolsList(props) {
                           <ListItem
                             containerStyle={{
                               backgroundColor: '#fff',
-                              marginBottom: 5
+                              marginBottom: 3,
+                              borderColor: Colors.vwgLightGray,
+                              borderStyle: 'solid',
+                              borderWidth: 1
                             }}
                             titleStyle={{
                               fontSize: RFPercentage(2.2),
@@ -209,7 +215,7 @@ export default function DealerToolsList(props) {
                                   }}
                                 >
                                   <ScaledImageFinder
-                                    width={60}
+                                    width={70}
                                     item={item}
                                     baseImageUrl={props.baseImageUrl}
                                   />
@@ -227,7 +233,7 @@ export default function DealerToolsList(props) {
                                     style={{
                                       color: Colors.vwgVeryDarkGray,
                                       marginBottom: 3,
-                                      paddingLeft: 10,
+                                      paddingLeft: 0,
                                       fontSize: RFPercentage(2.1)
                                     }}
                                   >{`Last location was: ${item.location}`}</Text>
@@ -237,7 +243,7 @@ export default function DealerToolsList(props) {
                                     style={{
                                       color: Colors.vwgVeryDarkGray,
                                       marginBottom: 3,
-                                      paddingLeft: 10,
+                                      paddingLeft: 0,
                                       fontSize: RFPercentage(2.1)
                                     }}
                                   >{`Last booked to job: ${item.lastWIP}`}</Text>
@@ -271,11 +277,6 @@ export default function DealerToolsList(props) {
                         No tools booked to this job
                       </Text>
                     )}
-                  </View>
-                  <View>
-                    <Text
-                      style={{ fontSize: RFPercentage(1.9), textAlign: 'left' }}
-                    >{`Job added/changed ${item.createdDate}`}</Text>
                   </View>
                 </View>
               </View>
