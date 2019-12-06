@@ -1,0 +1,10 @@
+
+
+Tool pictures added
+---------------------------------
+Stats versions now taken live from web server.
+ODIS versions now taken live from web server.
+Sign in more robust, to get ready for pilot, with error messages if sign-in is unsuccessful.
+Re-styled News and Products pages with pictures. 
+Add search to tools list.
+Much work on behind the scenes fetch of data and dealing with problems.
