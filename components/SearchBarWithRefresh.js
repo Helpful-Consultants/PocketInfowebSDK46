@@ -38,8 +38,11 @@ export default SearchBarWithRefresh = props => {
           />
         </TouchableOpacity>
       )}
-
-      {props.dataError ? (
+      {props.isLoading ? (
+        <View style={styles.searchBarRowNoDataTextContainer}>
+          <Text style={styles.searchBarRowNoDataText}>Fetching data.</Text>
+        </View>
+      ) : props.dataError ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
             There was a problem downloading the data. Please refresh.
