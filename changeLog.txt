@@ -1,4 +1,6 @@
 
+Warning: The tools basket crashes when you save
+---------------------------------
 Autoload tools and jobs
 Improved download status messages
 Reformatted jobs page
