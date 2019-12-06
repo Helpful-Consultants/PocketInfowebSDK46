@@ -19,7 +19,8 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "31",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro"
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "usesNonExemptEncryption": false
     },
     "description": "This is the development version of the app and might break."
   }
