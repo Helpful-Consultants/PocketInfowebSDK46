@@ -4,7 +4,9 @@
     "slug": "PocketInfoweb-Dev",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios"],
+    "platforms": [
+      "ios"
+    ],
     "version": "1.0.31",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
@@ -16,12 +18,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "31",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
-      "usesNonExemptEncryption": false
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "description": "This is the development version of the app and might break."
   }

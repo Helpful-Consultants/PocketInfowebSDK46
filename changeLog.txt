@@ -1,5 +1,7 @@
 
-
+Autoload tools and jobs
+Improved download status messages
+Reformatted jobs page
 Tool pictures added
 ---------------------------------
 Stats versions now taken live from web server.
