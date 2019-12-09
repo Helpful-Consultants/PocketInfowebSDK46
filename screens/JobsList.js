@@ -189,6 +189,7 @@ export default function DealerToolsList(props) {
                     {item.tools ? ( // crashes without this if no tools in job
                       item.tools.map((item, i) => (
                         <TouchableOpacity
+                          key={i}
                           onPress={() =>
                             alert(
                               `Coming feature: this button will record you returning the tool.`
