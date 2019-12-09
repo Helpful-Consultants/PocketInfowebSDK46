@@ -18,6 +18,7 @@ import HeaderButton from '../components/HeaderButton';
 import ToolBasket from '../components/ToolBasket';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { createDealerWipRequest } from '../actions/dealerWips';
+import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import ToolPic from '../assets/images/icon.png';
@@ -319,10 +320,12 @@ export default FindToolsScreen = ({ ...props }) => {
           toolBasket={toolBasket}
           wipNumber={wipNumber}
           key={Math.random()}
+          setMode={setMode}
           removeBasketHandler={removeBasketHandler}
           removeBasketItemHandler={removeBasketItemHandler}
           isBasketExpanded={isBasketExpanded}
           toggleExpandBasketHandler={toggleExpandBasketHandler}
+          baseImageUrl={Urls.toolImage}
         />
 
         {mode === 'list' ? (
@@ -431,7 +434,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.vwgMintGreen,
     backgroundColor: Colors.vwgWhite,
     borderColor: Colors.vwgDarkSkyBlue,
-    borderType: 'solid',
+    borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 5,
     margin: 5,
@@ -475,7 +478,7 @@ const styles = StyleSheet.create({
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
     padding: 10
   },
