@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
     padding: 10
   },
