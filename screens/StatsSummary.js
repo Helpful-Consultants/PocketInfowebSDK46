@@ -106,10 +106,10 @@ const styles = StyleSheet.create({
   statsTitle: {
     color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(2.2),
-    verticalPadding: 10,
+    paddingVertical: 10,
     marginTop: 20,
     marginBottom: 5,
-    fontweight: 600
+    fontWeight: '600'
   },
   statsRow: {
     flexDirection: 'row',

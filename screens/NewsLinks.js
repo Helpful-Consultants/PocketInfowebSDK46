@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     flexWrap: 'wrap',
     fontSize: RFPercentage(2.2),
-    fontWeight: 600,
+    fontWeight: '600',
     color: Colors.vwgIosLink
 
     // borderColor: 'orange',

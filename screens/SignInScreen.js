@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     margin: 10,
     alignItems: 'center',
-    justiftyContent: 'center',
+    justifyContent: 'center',
     color: Colors.vwgWarmMidBlue,
     fontSize: 16,
     lineHeight: 19,
