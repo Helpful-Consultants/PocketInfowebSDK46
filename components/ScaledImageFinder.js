@@ -13,7 +13,7 @@ export default ScaledImageFinder = props => {
   };
 
   const getImageUrl = item => {
-    // console.log(item);
+    // console.log('in ScaledImageFinder', item);
 
     let retValue = '';
     if (item.toolType && item.toolType.toLowerCase() == 'tool') {

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon, Image, ListItem, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';
 
 export default ToolBasket = props => {
   //   const { mode, props.toolBasket, wipNumber } = props;
   //   const [isBasketExpanded, setIsBasketExpanded] = useState(false);
-  console.log('props', props.toolBasket.length);
-  console.log('props MODEEEEEEE ', props.mode);
+  //   console.log('props', props.toolBasket.length);
+  //   console.log('props MODEEEEEEE ', props.mode);
 
   //   const [toolBasket, setToolBasket] = useState(props.toolBasket);
   //   // This will launch only if propName value has chaged.
@@ -52,7 +53,7 @@ export default ToolBasket = props => {
                     size={15}
                     color={Colors.vwgDeepBlue}
                   />
-                  <Text style={styles.basketText}>{` Hide job tools`}</Text>
+                  <Text style={styles.basketText}>{` Show less`}</Text>
                 </View>
               ) : (
                 <View style={styles.bookButton}>
@@ -64,16 +65,27 @@ export default ToolBasket = props => {
                     size={15}
                     color={Colors.vwgDeepBlue}
                   />
-                  <Text style={styles.basketText}>{` Show job tools`}</Text>
+                  <Text style={styles.basketText}>{` Show more`}</Text>
                 </View>
               )}
             </View>
           </TouchableOpacity>
 
+          {props.mode === 'confirm' ? (
+            <Text style={styles.basketText}>{`Saved to ${wipNumber}`}</Text>
+          ) : null}
+
+          <TouchableOpacity
+            style={styles.bookButton}
+            onPress={() => props.removeBasketHandler()}
+          >
+            <Text style={styles.basketText}>{`Empty basket `}</Text>
+          </TouchableOpacity>
+
           {props.mode === 'list' ? (
             <TouchableOpacity
               style={styles.bookButton}
-              onPress={() => setMode('book')}
+              onPress={() => props.setMode('book')}
             >
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
@@ -84,23 +96,6 @@ export default ToolBasket = props => {
               <Text style={styles.basketText}>{` Book to job`}</Text>
             </TouchableOpacity>
           ) : null}
-
-          {props.mode === 'confirm' ? (
-            <Text style={styles.basketText}>{`Saved to ${wipNumber}`}</Text>
-          ) : null}
-
-          <TouchableOpacity
-            style={styles.bookButton}
-            onPress={() => props.removeBasketHandler()}
-          >
-            <Text style={styles.basketText}>{`Clear `}</Text>
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-              type='ionicon'
-              size={15}
-              color={Colors.vwgDeepBlue}
-            />
-          </TouchableOpacity>
         </View>
       </View>
     );
@@ -119,6 +114,11 @@ export default ToolBasket = props => {
               <View>
                 <View style={styles.basketItem}>
                   <View style={styles.basketItemNumbers}>
+                    <ScaledImageFinder
+                      width={70}
+                      item={item}
+                      baseImageUrl={props.baseImageUrl}
+                    />
                     <Text
                       style={styles.basketItemText}
                     >{`Part ${item.partNumber}`}</Text>
@@ -136,7 +136,7 @@ export default ToolBasket = props => {
                       height: 40,
                       width: 80,
                       borderColor: 'white',
-                      borderType: 'solid',
+                      borderStyle: 'solid',
                       borderWidth: 1
                     }}
                   >
@@ -166,7 +166,6 @@ export default ToolBasket = props => {
                       style={styles.bookButton}
                       onPress={() => props.removeBasketItemHandler(item.id)}
                     >
-                      <Text style={styles.basketText}>{`Clear tool `}</Text>
                       <Icon
                         name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                         type='ionicon'
@@ -180,10 +179,6 @@ export default ToolBasket = props => {
             }
           ></ListItem>
         ))}
-
-        <Text style={{ ...styles.basketText, textAlign: 'right' }}>
-          Tool pictures coming soon.
-        </Text>
       </View>
     );
   }
@@ -217,7 +212,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.vwgMintGreen,
     backgroundColor: Colors.vwgWhite,
     borderColor: Colors.vwgDarkSkyBlue,
-    borderType: 'solid',
+    borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 5,
     margin: 5,
@@ -263,7 +258,7 @@ const styles = StyleSheet.create({
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
     padding: 10
   },
