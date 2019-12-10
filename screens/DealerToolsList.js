@@ -80,22 +80,24 @@ export default function DealerToolsList(props) {
   };
 
   return (
-    <View>
-      {props.showPrompt === true ? (
-        <View style={styles.searchFoundPrompt}>
-          <Text style={styles.searchFoundPromptText}>
-            {`Search for the tool then press to book it out.`}
-          </Text>
-        </View>
-      ) : null}
-      <FlatList
-        data={items && items}
-        renderItem={itemData => (
-          <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
-        )}
-        keyExtractor={item => item.id}
-      />
-    </View>
+    <ScrollView>
+      <View>
+        {props.showPrompt === true ? (
+          <View style={styles.searchPrompt}>
+            <Text style={styles.searchPromptText}>
+              {`Search for the tool then press to book it out.`}
+            </Text>
+          </View>
+        ) : null}
+        <FlatList
+          data={items && items}
+          renderItem={itemData => (
+            <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
+          )}
+          keyExtractor={item => item.id}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
@@ -104,11 +106,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15
   },
-  searchFoundPrompt: {
+  searchPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgDarkSkyBlue
   },
-  searchFoundPromptText: {
+  searchPromptText: {
     textAlign: 'center',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
