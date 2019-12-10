@@ -48,14 +48,10 @@ export default function DealerToolsList(props) {
     const { onSelectItem } = props;
 
     return (
-      <Touchable
-        style={styles.toolItem}
-        background={Touchable.Ripple('#FFD700')}
-        onPress={() => onSelectItem(item)}
-      >
+      <Touchable style={styles.toolItem} onPress={() => onSelectItem(item)}>
         <ListItem
           title={`${item.partNumber} (${item.toolNumber})`}
-          titleStyle={{ color: Colors.vwgMidBlue, fontSize: RFPercentage(2.1) }}
+          titleStyle={{ color: Colors.vwgIosLink, fontSize: RFPercentage(2.1) }}
           subtitle={
             <View>
               <Text
@@ -84,11 +80,11 @@ export default function DealerToolsList(props) {
   };
 
   return (
-    <ScrollView>
+    <View>
       {props.showPrompt === true ? (
         <View style={styles.searchFoundPrompt}>
           <Text style={styles.searchFoundPromptText}>
-            {`Search the list to find a tool to add to your job.`}
+            {`Search for the tool then press to book it out.`}
           </Text>
         </View>
       ) : null}
@@ -99,15 +95,14 @@ export default function DealerToolsList(props) {
         )}
         keyExtractor={item => item.id}
       />
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#222'
+    paddingTop: 15
   },
   searchFoundPrompt: {
     padding: 10,
@@ -115,7 +110,7 @@ const styles = StyleSheet.create({
   },
   searchFoundPromptText: {
     textAlign: 'center',
-
+    fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
   },
   tipText: {
