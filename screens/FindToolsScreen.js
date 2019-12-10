@@ -3,47 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   KeyboardAvoidingView,
   Platform,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View
 } from 'react-native';
-import {
-  Button,
-  Divider,
-  Icon,
-  Input,
-  SearchBar,
-  Text
-} from 'react-native-elements';
+import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-// import BottomDrawer from 'rn-bottom-drawer';
-import BottomDrawer from 'rn-bottom-sheet';
 import Modal from 'react-native-modal';
-import Image from 'react-native-scalable-image';
 import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
-
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-// import ToolBasket from '../components/ToolBasket';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
-// import ToolPic from '../assets/images/icon.png';
-
+import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const KEYS_TO_FILTERS = ['toolNumber', 'partNumber', 'partDescription'];
-
-import Types from '../constants/Types';
-
-const TAB_BAR_HEIGHT = 49;
-const HEADER_HEIGHT = 60;
 
 const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
@@ -87,7 +67,6 @@ export default FindToolsScreen = ({ ...props }) => {
 
   const [searchInput, setSearchInput] = useState('');
   const [isBasketVisible, setIsBasketVisible] = useState(true);
-  const [isBasketExpanded, setIsBasketExpanded] = useState(false);
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
 
@@ -215,7 +194,7 @@ export default FindToolsScreen = ({ ...props }) => {
     removeBasketHandler();
     setMode('list');
     setIsBasketVisible(false);
-    // inputChangeHandler('wipNumber', '');
+    inputChangeHandler('wipNumber', '');
 
     // console.log(toolBasket.length);
     // updateBasketView();
@@ -265,6 +244,7 @@ export default FindToolsScreen = ({ ...props }) => {
       };
       //   console.log('in saveToJobRequestHandler', newWipPkgObj);
       saveToJob(newWipPkgObj);
+      inputChangeHandler('wipNumber', '');
     } else {
       setMode('book');
       setIsBasketVisible(true);
