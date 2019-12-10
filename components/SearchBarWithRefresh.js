@@ -16,7 +16,7 @@ import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
 export default SearchBarWithRefresh = props => {
-  console.log('SearchBarWithRefresh props', props);
+  //   console.log('SearchBarWithRefresh props', props);
   return (
     <View style={styles.searchBarRow}>
       {props.isLoading ? (
@@ -34,7 +34,7 @@ export default SearchBarWithRefresh = props => {
             name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
             type='ionicon'
             size={25}
-            color='black'
+            color={Colors.vwgIosLink}
           />
         </TouchableOpacity>
       )}
@@ -56,6 +56,7 @@ export default SearchBarWithRefresh = props => {
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={styles.searchBarContainer}
             inputContainerStyle={styles.searchBarInputContainer}
+            autoCapitalize='none'
           />
         </View>
       ) : (

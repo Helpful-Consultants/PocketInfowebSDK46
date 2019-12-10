@@ -35,7 +35,7 @@ export default DataAlertBarWithRefresh = props => {
             name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
             type='ionicon'
             size={25}
-            color='black'
+            color={Colors.vwgIosLink}
           />
         </TouchableOpacity>
       )}
