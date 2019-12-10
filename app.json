@@ -5,7 +5,7 @@
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": ["ios"],
-    "version": "1.0.32",
+    "version": "1.0.33",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -19,7 +19,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "32",
+      "buildNumber": "33",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
