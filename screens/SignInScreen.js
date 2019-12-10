@@ -242,7 +242,7 @@ export default SignInScreen = props => {
             containerStyle={styles.inputContainer}
             inputStyle={styles.inputStyle}
             required
-            maxLength='6'
+            maxLength={6}
             placeholder='123456 (six digits)'
             leftIcon={{
               type: 'ionicon',
@@ -382,11 +382,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     margin: 10,
     alignItems: 'center',
-    justifyContent: 'center',
-    color: Colors.vwgWarmMidBlue,
-    fontSize: 16,
-    lineHeight: 19,
-    textAlign: 'center'
+    justifyContent: 'center'
   },
   contentContainer: {
     paddingTop: 30
