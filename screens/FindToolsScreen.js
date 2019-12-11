@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   KeyboardAvoidingView,
@@ -575,6 +581,7 @@ export default FindToolsScreen = ({ ...props }) => {
   //     }
   //   };
 
+  console.log('aboutto render');
   return (
     <View>
       <View style={styles.arse}>
@@ -749,9 +756,9 @@ const styles = StyleSheet.create({
   closedBasket: {
     position: 'absolute',
     width: '100%',
-    height: 50,
+    height: 40,
     // bottom: TAB_BAR_HEIGHT,
-    bottom: 70,
+    bottom: 45,
     left: 0,
     backgroundColor: Colors.vwgIosLink,
     paddingTop: 10,
