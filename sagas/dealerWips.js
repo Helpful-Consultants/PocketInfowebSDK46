@@ -9,6 +9,7 @@ import {
 
 import Types from '../constants/Types';
 import * as actions from '../actions/dealerWips';
+// import * as toolsActions from '../actions/dealerTools';
 import * as api from '../api/dealerWips';
 
 // Get WIPS
@@ -99,7 +100,9 @@ function* createDealerWip({ payload }) {
     );
     yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
 
-    yield put(actions.getDealerToolsRequest(payload.getWipsDataObj.dealerId));
+    // yield put(
+    //   toolsActions.getDealerToolsRequest(payload.getWipsDataObj.dealerId)
+    // );
   } catch (error) {
     if (error.response) {
       // console.error(error);if (error.response) {
