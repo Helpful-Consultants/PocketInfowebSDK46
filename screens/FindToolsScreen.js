@@ -190,7 +190,7 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const acceptMessageHandler = () => {
-    console.log('basket', ' to be removed');
+    console.log('basket all done and closed');
     removeBasketHandler();
     setMode('list');
     setIsBasketVisible(false);
@@ -331,7 +331,7 @@ export default FindToolsScreen = ({ ...props }) => {
               formState.inputValues.wipNumber.length > 0 ? (
                 <Text>{` `}</Text>
               ) : (
-                <Text>Please record a job number or name</Text>
+                <Text>Please record a job number or job name</Text>
               )}
             </View>
           </View>
@@ -515,7 +515,7 @@ export default FindToolsScreen = ({ ...props }) => {
                     >{`Also booked to job ${item.lastWIP}`}</Text>
                   ) : null}
                 </View>
-                {toolBasket.length > 1 ? (
+                {mode !== 'confirm' && toolBasket.length > 1 ? (
                   <TouchableOpacity
                     style={styles.trashButton}
                     onPress={() => removeBasketItemHandler(item.id)}
