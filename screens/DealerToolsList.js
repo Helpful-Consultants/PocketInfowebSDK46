@@ -1,5 +1,4 @@
-import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   StyleSheet,
@@ -24,14 +23,17 @@ export default function DealerToolsList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
+
   //   const limit = 10;
   //   const allItems = props.items || [];
   //   //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
   //   const items = allItems && allItems.slice(0, limit);
 
-  const items = props.items || [];
-  const { onSelectItem } = props;
+  //   const items = props.items || [];
+  const { items, onSelectItem, showPrompt } = props;
   //   const items = dealerToolsDummyData.slice(0, limit);
+
+  const [list, setList] = useState();
   //   const items = dealerToolsDummyData;
   // console.log('start dealerToolsDummyData');
   //   console.log(items);
@@ -79,26 +81,34 @@ export default function DealerToolsList(props) {
     );
   };
 
-  return (
-    <ScrollView>
-      <View>
-        {props.showPrompt === true ? (
-          <View style={styles.searchPrompt}>
-            <Text style={styles.searchPromptText}>
-              {`Search for the tool then press to book it out.`}
-            </Text>
-          </View>
-        ) : null}
-        <FlatList
-          data={items && items}
-          renderItem={itemData => (
-            <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
-          )}
-          keyExtractor={item => item.id}
-        />
-      </View>
-    </ScrollView>
-  );
+  useEffect(() => {
+    console.log('in use effect');
+    let newList = (
+      <ScrollView>
+        <View>
+          {showPrompt === true ? (
+            <View style={styles.searchPrompt}>
+              <Text style={styles.searchPromptText}>
+                {`Search for the tool then press to book it out.`}
+              </Text>
+            </View>
+          ) : null}
+          <FlatList
+            data={items && items}
+            renderItem={itemData => (
+              <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
+            )}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      </ScrollView>
+    );
+    // console.log(newList);
+    setList(newList);
+  }, []);
+
+  console.log('about to render tools list');
+  return list || null;
 }
 
 const styles = StyleSheet.create({
