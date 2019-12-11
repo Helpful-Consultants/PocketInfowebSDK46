@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
   },
   itemMainText: {
     fontSize: RFPercentage(1.9),
-    textAlign: 'justify'
-    // borderColor: 'yellow',
+    textAlign: 'justify',
+    color: Colors.vwgVeryDarkGray
     // borderWidth: 1
   }
 });

@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(1.9)
   },
   odisVersionText: {
-    fontSize: RFPercentage(2.1)
+    fontSize: RFPercentage(2.1),
+    color: Colors.vwgVeryDarkGray
   },
   logo: {
     height: 70,

@@ -94,7 +94,8 @@ const styles = StyleSheet.create({
   },
   itemMainText: {
     fontSize: RFPercentage(1.9),
-    textAlign: 'justify'
+    textAlign: 'justify',
+    color: Colors.vwgVeryDarkGray
     // borderColor: 'yellow',
     // borderWidth: 1
   }
