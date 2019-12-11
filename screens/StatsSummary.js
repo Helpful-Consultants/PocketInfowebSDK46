@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
 import Constants from 'expo-constants';
