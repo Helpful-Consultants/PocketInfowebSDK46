@@ -11,24 +11,24 @@ import * as api from '../api/dealerTools';
 import Types from '../constants/Types';
 
 function* getDealerTools({ payload }) {
-  console.log('in saga get dealerTools, payload', payload && payload);
+  //   console.log('in saga get dealerTools, payload', payload && payload);
   yield put(actions.getDealerToolsStart());
   try {
     const result = yield call(api.getDealerTools, {
       dealerId: payload.dealerId
     });
-    console.log('in saga get dealerTools - 200');
+    // console.log('in saga get dealerTools - 200');
     // console.log(result);
 
     if (result.data.length > 0) {
-      console.log('in tools saga - good 200');
+      //   console.log('in tools saga - good 200');
       yield put(
         actions.getDealerToolsSuccess({
           items: result.data
         })
       );
     } else {
-      console.log('in tools saga - bad 200');
+      //   console.log('in tools saga - bad 200');
       yield put(
         actions.getDealerToolsError({
           error: 'in tools saga - bad 200'
