@@ -11,13 +11,14 @@ import {
 } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
-import { Card, ListItem, Button, Icon, Overlay } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';
 import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
+import ltpDummyData from '../dummyData/ltpDummyData.js';
 
 export default function DealerToolsList(props) {
   //   console.log('props');
@@ -31,7 +32,9 @@ export default function DealerToolsList(props) {
 
   //   const items = props.items || [];
   const { items, onSelectItem, showPrompt } = props;
+  //   const { onSelectItem, showPrompt } = props;
   //   const items = dealerToolsDummyData.slice(0, limit);
+  //   const items = ltpDummyData.slice(0, limit);
 
   const [list, setList] = useState();
   //   const items = dealerToolsDummyData;
@@ -52,14 +55,24 @@ export default function DealerToolsList(props) {
     return (
       <Touchable style={styles.toolItem} onPress={() => onSelectItem(item)}>
         <ListItem
-          title={`${item.partNumber} (${item.toolNumber})`}
+          title={
+            item.partNumber
+              ? `${item.partNumber} (${item.toolNumber})`
+              : `${item.loanToolNo} (${item.supplierPartNo})`
+          }
           titleStyle={{ color: Colors.vwgIosLink, fontSize: RFPercentage(2.1) }}
           subtitle={
             <View>
-              <Text
-                style={{ fontSize: RFPercentage(2.0) }}
-              >{`${item.partDescription}`}</Text>
-              {item.location ? (
+              <Text style={{ fontSize: RFPercentage(2.0) }}>
+                {item.partDescription
+                  ? item.partDescription
+                  : item.toolDescription}
+              </Text>
+              {item.loanToolNo ? (
+                <Text
+                  style={{ fontSize: RFPercentage(2.0) }}
+                >{`Loan tool`}</Text>
+              ) : item.location ? (
                 <Text
                   style={{ fontSize: RFPercentage(2.0) }}
                 >{`Location: ${item.location}`}</Text>
@@ -105,7 +118,7 @@ export default function DealerToolsList(props) {
     );
     // console.log(newList);
     setList(newList);
-  }, []);
+  }, [items]);
 
   console.log('about to render tools list');
   return list || null;

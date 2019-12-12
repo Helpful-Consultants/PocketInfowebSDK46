@@ -22,6 +22,7 @@ import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
+import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
@@ -29,7 +30,14 @@ import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-const KEYS_TO_FILTERS = ['toolNumber', 'partNumber', 'partDescription'];
+const KEYS_TO_FILTERS = [
+  'toolNumber',
+  'partNumber',
+  'orderPartNo',
+  'partDescription',
+  'toolDescription',
+  'loanToolNo'
+];
 
 const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
@@ -59,6 +67,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
   );
+  const ltpItems = useSelector(state => state.ltp.ltpItems);
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
@@ -94,6 +103,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const getItems = useCallback(getDealerToolsDataObj => {
     // console.log('in getItems', getDealerToolsDataObj);
     dispatch(getDealerToolsRequest(getDealerToolsDataObj)), [dealerToolsItems];
+    dispatch(getLtpRequest()), [ltpItems];
   });
 
   const saveToJob = useCallback(
@@ -262,10 +272,16 @@ export default FindToolsScreen = ({ ...props }) => {
   //   const { dealerToolsItems } = props;
   // const { dealerToolsItems } = this.props;
 
-  //   console.log(items);
-  let filteredItems = dealerToolsItems.filter(
+  console.log('dealerToolsItems.length ', dealerToolsItems.length);
+  console.log('ltpItems.length ', ltpItems.length);
+
+  const concatItems = dealerToolsItems.concat(ltpItems);
+  console.log('concatItems.length ', concatItems.length);
+
+  let filteredItems = concatItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
+  console.log('filteredItems.length ', filteredItems.length);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },
@@ -499,22 +515,37 @@ export default FindToolsScreen = ({ ...props }) => {
                   <ScaledImageFinder
                     width={70}
                     item={item}
-                    baseImageUrl={Urls.toolImage}
+                    baseImageUrl={
+                      item.loanToolNo ? Urls.ltpImage : Urls.toolImage
+                    }
                   />
                 </View>
                 <View style={styles.basketItemDescCol}>
-                  <Text
-                    style={styles.basketItemTextEmph}
-                  >{`Part: ${item.partNumber} - ${item.partDescription}`}</Text>
-
-                  <Text
-                    style={styles.basketItemTextEmph}
-                  >{`Tool: ${item.toolNumber}`}</Text>
-                  <Text style={styles.basketItemText}>
-                    {item.location
-                      ? `Location: ${item.location}`
-                      : `Location not recorded`}
-                  </Text>
+                  {item.partNumber ? (
+                    <Text
+                      style={styles.basketItemTextEmph}
+                    >{`Part: ${item.partNumber} - ${item.partDescription}`}</Text>
+                  ) : null}
+                  {item.loanToolNo ? (
+                    <Text
+                      style={styles.basketItemTextEmph}
+                    >{`Part: ${item.loanToolNo} - ${item.toolDescription}`}</Text>
+                  ) : null}
+                  {item.loanToolNo ? (
+                    <Text style={styles.basketItemText}>Loan tool</Text>
+                  ) : null}
+                  {item.toolNumber ? (
+                    <Text
+                      style={styles.basketItemTextEmph}
+                    >{`Tool: ${item.toolNumber}`}</Text>
+                  ) : null}
+                  {item.toolNumber ? (
+                    <Text style={styles.basketItemText}>
+                      {item.location
+                        ? `Location: ${item.location}`
+                        : `Location not recorded`}
+                    </Text>
+                  ) : null}
                   {item.lastWIP ? (
                     <Text
                       style={styles.basketItemText}
@@ -547,8 +578,16 @@ export default FindToolsScreen = ({ ...props }) => {
       isVisible={isBasketVisible}
       onBackdropPress={() => backdropPressHandler()}
       onSwipeComplete={() => setIsBasketVisible(false)}
+      avoidKeyboard
       swipeDirection='down'
-      style={styles.drawer}
+      style={styles.drawerBottom}
+      backdropOpacity={0.6}
+      animationIn='zoomInDown'
+      animationOut='zoomOutUp'
+      animationInTiming={600}
+      animationOutTiming={600}
+      backdropTransitionInTiming={600}
+      backdropTransitionOutTiming={600}
     >
       <View style={{ backgroundColor: Colors.vwgWhite }}>
         {mode === 'basket' ? (
@@ -596,30 +635,6 @@ export default FindToolsScreen = ({ ...props }) => {
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
           />
 
-          {mode === 'confirm' ? (
-            <TouchableOpacity
-              onPress={() => {
-                acceptMessageHandler();
-              }}
-            >
-              <View style={styles.confirmedPrompt}>
-                <Icon
-                  name={
-                    Platform.OS === 'ios'
-                      ? 'ios-checkmark-circle-outline'
-                      : 'md-checkmark-circle-outline'
-                  }
-                  type='ionicon'
-                  size={20}
-                  color={Colors.vwgMintGreen}
-                />
-                <Text style={styles.confirmedPromptText}>
-                  {`Tools booked to job ${wipNumber}. Hit this to find tools for another job.`}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : null}
-
           {mode === 'list' &&
           searchInput.length > 0 &&
           filteredItems.length === 0 ? (
@@ -629,16 +644,7 @@ export default FindToolsScreen = ({ ...props }) => {
               </Text>
             </View>
           ) : null}
-          {mode === 'list' &&
-          toolBasket.length === 0 &&
-          filteredItems.length > 0 &&
-          searchInput.length > 0 ? (
-            <View style={styles.searchFoundPrompt}>
-              <Text style={styles.searchFoundPromptText}>
-                {`Press on the tool to add it to your job.`}
-              </Text>
-            </View>
-          ) : null}
+
           {isLoading ? null : (
             <View style={styles.toolsList}>
               <DealerToolsList
@@ -656,8 +662,8 @@ export default FindToolsScreen = ({ ...props }) => {
               />
             </View>
           )}
+          {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
         </KeyboardAvoidingView>
-        {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
       </View>
       {mode === 'list' && toolBasket.length > 0 ? (
         <View style={styles.closedBasket}>
@@ -719,7 +725,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   confirmButton: { width: '10%' },
-  drawer: {
+  drawerBottom: {
     justifyContent: 'flex-end',
     margin: 0
   },

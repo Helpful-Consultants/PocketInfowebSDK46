@@ -73,13 +73,13 @@ const deleteUrl =
 // console.log(deleteUrl);
 
 export const getDealerWips = ({ dealerId, intId }) => {
-  console.log('here in getDealerWips dealerId is ', dealerId, intId);
+  //   console.log('here in getDealerWips dealerId is ', dealerId, intId);
   const url =
     '/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=' +
     intId +
     '&dealerId=' +
     dealerId;
-  console.log(url);
+  //   console.log(url);
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
@@ -93,21 +93,21 @@ export const getDealerWips = ({ dealerId, intId }) => {
 };
 
 export const createDealerWip = newWipObj => {
-  console.log('in create wip api', newWipObj);
+  //   console.log('in create wip api', newWipObj);
 
   const strung = JSON.stringify(newWipObj);
-  console.log('in create wip api, strung is ', strung);
+  //   console.log('in create wip api, strung is ', strung);
 
   const wipArr = [newWipObj];
 
-  console.log('wipArr', wipArr);
+  //   console.log('wipArr', wipArr);
 
   //   const strung = queryString.stringify(stuff);
   //   const strung = stuff.toString();
   const strungArray = '[' + strung + ']';
   //   console.log(postUrl);
   //   console.log(stuff);
-  console.log('in create wip api, strungArray is ', strungArray);
+  //   console.log('in create wip api, strungArray is ', strungArray);
   //   console.log(strungArray);
   //   return fetch(postUrl, {
   //     method: 'POST',
