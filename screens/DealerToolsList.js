@@ -36,7 +36,7 @@ export default function DealerToolsList(props) {
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = ltpDummyData.slice(0, limit);
 
-  const [list, setList] = useState();
+  const [listView, setListView] = useState();
   //   const items = dealerToolsDummyData;
   // console.log('start dealerToolsDummyData');
   //   console.log(items);
@@ -48,54 +48,63 @@ export default function DealerToolsList(props) {
   //     );
   //   };
 
-  const FlatListItem = props => {
+  const CustomListItem = props => {
     const { item } = props;
-    const { onSelectItem } = props;
 
     return (
-      <Touchable style={styles.toolItem} onPress={() => onSelectItem(item)}>
-        <ListItem
-          title={
-            item.partNumber
-              ? `${item.partNumber} (${item.toolNumber})`
-              : `${item.loanToolNo} (${item.supplierPartNo})`
-          }
-          titleStyle={{ color: Colors.vwgIosLink, fontSize: RFPercentage(2.1) }}
-          subtitle={
-            <View>
+      <ListItem
+        title={
+          item.partNumber
+            ? `${item.partNumber} (${item.toolNumber})`
+            : `${item.loanToolNo} (${item.supplierPartNo})`
+        }
+        titleStyle={{ color: Colors.vwgIosLink, fontSize: RFPercentage(2.1) }}
+        subtitle={
+          <View>
+            <Text style={{ fontSize: RFPercentage(2.0) }}>
+              {item.partDescription
+                ? item.partDescription
+                : item.toolDescription}
+            </Text>
+            {item.loanToolNo ? (
+              <Text
+                style={{ fontSize: RFPercentage(2.0) }}
+              >{`Available through the Loan Tool Programme`}</Text>
+            ) : item.location ? (
+              <Text
+                style={{ fontSize: RFPercentage(2.0) }}
+              >{`Location: ${item.location}`}</Text>
+            ) : (
               <Text style={{ fontSize: RFPercentage(2.0) }}>
-                {item.partDescription
-                  ? item.partDescription
-                  : item.toolDescription}
+                Location not recorded
               </Text>
-              {item.loanToolNo ? (
-                <Text
-                  style={{ fontSize: RFPercentage(2.0) }}
-                >{`Loan tool`}</Text>
-              ) : item.location ? (
-                <Text
-                  style={{ fontSize: RFPercentage(2.0) }}
-                >{`Location: ${item.location}`}</Text>
-              ) : (
-                <Text style={{ fontSize: RFPercentage(2.0) }}>
-                  Location not recorded
-                </Text>
-              )}
-              {item.lastWIP ? (
-                <Text
-                  style={{ fontSize: RFPercentage(2.0) }}
-                >{`Last Job: ${item.lastWIP}`}</Text>
-              ) : null}
-            </View>
-          }
-          bottomDivider
-        />
+            )}
+            {item.lastWIP ? (
+              <Text
+                style={{ fontSize: RFPercentage(2.0) }}
+              >{`Last Job: ${item.lastWIP}`}</Text>
+            ) : null}
+          </View>
+        }
+        bottomDivider
+      />
+    );
+  };
+
+  const FlatListItem = props => {
+    const { item, onSelectItem } = props;
+
+    return item.loanToolNo ? (
+      <CustomListItem item={item}></CustomListItem>
+    ) : (
+      <Touchable style={styles.toolItem} onPress={() => onSelectItem(item)}>
+        <CustomListItem item={item}></CustomListItem>
       </Touchable>
     );
   };
 
   useEffect(() => {
-    console.log('in use effect');
+    // console.log('in use effect');
     let newList = (
       <ScrollView>
         <View>
@@ -111,17 +120,17 @@ export default function DealerToolsList(props) {
             renderItem={itemData => (
               <FlatListItem item={itemData.item} onSelectItem={onSelectItem} />
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.loanToolNo || item.id}
           />
         </View>
       </ScrollView>
     );
     // console.log(newList);
-    setList(newList);
+    setListView(newList);
   }, [items]);
 
-  console.log('about to render tools list');
-  return list || null;
+  //   console.log('about to render tools list');
+  return listView || null;
 }
 
 const styles = StyleSheet.create({
@@ -170,9 +179,7 @@ const styles = StyleSheet.create({
   },
   toolItem: {
     backgroundColor: '#888',
-    marginLeft: 10,
-    marginRight: 10,
-    marginVertical: 5
+    margin: 0
   },
   summaryText: {
     fontSize: 12,

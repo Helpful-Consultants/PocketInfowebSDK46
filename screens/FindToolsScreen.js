@@ -154,18 +154,18 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const removeBasketHandler = () => {
-    console.log('basket', ' to be removed');
+    // console.log('basket', ' to be removed');
 
     setToolBasket([]);
     setMode('list');
     setIsBasketVisible(false);
 
-    console.log(toolBasket.length);
+    // console.log(toolBasket.length);
     // updateBasketView();
   };
 
   const bookToolsHandler = () => {
-    console.log('in book Tools handler');
+    // console.log('in book Tools handler');
     setMode('book');
     setWipNumber('');
     // input.current.clear();
@@ -174,7 +174,7 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const backdropPressHandler = () => {
-    console.log('background pressed');
+    // console.log('background pressed');
     setMode('list');
     setIsBasketVisible(false);
     // updateBasketView();
@@ -206,7 +206,7 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const acceptMessageHandler = () => {
-    console.log('basket all done and closed');
+    // console.log('basket all done and closed');
     removeBasketHandler();
     setMode('list');
     setIsBasketVisible(false);
@@ -223,7 +223,7 @@ export default FindToolsScreen = ({ ...props }) => {
     setSearchInput(searchInput);
   };
   const refreshRequestHandler = () => {
-    console.log('in tools refreshRequestHandler');
+    // console.log('in tools refreshRequestHandler');
     // const getItemsData = {
     //   dealerId: dealerId
     // };
@@ -272,16 +272,16 @@ export default FindToolsScreen = ({ ...props }) => {
   //   const { dealerToolsItems } = props;
   // const { dealerToolsItems } = this.props;
 
-  console.log('dealerToolsItems.length ', dealerToolsItems.length);
-  console.log('ltpItems.length ', ltpItems.length);
+  //   console.log('dealerToolsItems.length ', dealerToolsItems.length);
+  //   console.log('ltpItems.length ', ltpItems.length);
 
   const concatItems = dealerToolsItems.concat(ltpItems);
-  console.log('concatItems.length ', concatItems.length);
+  //   console.log('concatItems.length ', concatItems.length);
 
   let filteredItems = concatItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
-  console.log('filteredItems.length ', filteredItems.length);
+  //   console.log('filteredItems.length ', filteredItems.length);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },
@@ -512,13 +512,15 @@ export default FindToolsScreen = ({ ...props }) => {
             <View>
               <View style={styles.basketItemRow}>
                 <View style={styles.basketItemImageCol}>
-                  <ScaledImageFinder
-                    width={70}
-                    item={item}
-                    baseImageUrl={
-                      item.loanToolNo ? Urls.ltpImage : Urls.toolImage
-                    }
-                  />
+                  {item.loanToolNo ? null : (
+                    <ScaledImageFinder
+                      width={70}
+                      item={item}
+                      baseImageUrl={
+                        item.loanToolNo ? Urls.ltpImage : Urls.toolImage
+                      }
+                    />
+                  )}
                 </View>
                 <View style={styles.basketItemDescCol}>
                   {item.partNumber ? (
@@ -584,10 +586,6 @@ export default FindToolsScreen = ({ ...props }) => {
       backdropOpacity={0.6}
       animationIn='zoomInDown'
       animationOut='zoomOutUp'
-      animationInTiming={600}
-      animationOutTiming={600}
-      backdropTransitionInTiming={600}
-      backdropTransitionOutTiming={600}
     >
       <View style={{ backgroundColor: Colors.vwgWhite }}>
         {mode === 'basket' ? (
@@ -620,7 +618,7 @@ export default FindToolsScreen = ({ ...props }) => {
   //     }
   //   };
 
-  console.log('aboutto render');
+  console.log('FTS about to render');
   return (
     <View>
       <View style={styles.arse}>
