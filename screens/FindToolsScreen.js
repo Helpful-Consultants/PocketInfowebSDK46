@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View
@@ -25,7 +26,7 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { getDealerWipsRequest } from '../actions/dealerWips';
-import { getLtpRequest } from '../actions/ltp';
+// import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
@@ -70,7 +71,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
   );
-  const ltpItems = useSelector(state => state.ltp.ltpItems);
+  //   const ltpItems = useSelector(state => state.ltp.ltpItems);
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
@@ -111,7 +112,7 @@ export default FindToolsScreen = ({ ...props }) => {
     // console.log('in getItems', getDealerToolsDataObj);
     dispatch(getDealerToolsRequest(getDealerToolsDataObj)), [dealerToolsItems];
     // dispatch(getDealerWipsRequest()), [dealerWipsItems];
-    dispatch(getLtpRequest()), [ltpItems];
+    // dispatch(getLtpRequest()), [ltpItems];
   });
 
   const saveToJob = useCallback(
@@ -139,8 +140,8 @@ export default FindToolsScreen = ({ ...props }) => {
   //   }
 
   const selectItemHandler = tool => {
-    console.log(tool, ' to be added to ');
-    console.log(toolBasket);
+    // console.log(tool, ' to be added to ');
+    // console.log(toolBasket);
 
     let dup =
       (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
@@ -305,7 +306,8 @@ export default FindToolsScreen = ({ ...props }) => {
   //   console.log('dealerToolsItems.length ', dealerToolsItems.length);
   //   console.log('ltpItems.length ', ltpItems.length);
 
-  const concatItems = dealerToolsItems.concat(ltpItems);
+  //   const concatItems = dealerToolsItems.concat(ltpItems);
+  const concatItems = dealerToolsItems;
   //   console.log('concatItems.length ', concatItems.length);
 
   let allFilteredItems = concatItems.filter(
@@ -529,79 +531,84 @@ export default FindToolsScreen = ({ ...props }) => {
 
   if (toolBasket && toolBasket.length > 0) {
     basketContents = (
-      <View style={styles.basketContents}>
-        {toolBasket.map((item, i) => (
-          <View key={i}>
-            {i > 0 ? (
-              <Divider
-                style={{
-                  backgroundColor: Colors.vwgDarkGray,
-                  marginVertical: 8
-                }}
-              />
-            ) : null}
-            <View>
-              <View style={styles.basketItemRow}>
-                <View style={styles.basketItemImageCol}>
-                  {item.loanToolNo ? null : (
-                    <ScaledImageFinder
-                      width={70}
-                      item={item}
-                      baseImageUrl={
-                        item.loanToolNo ? Urls.ltpImage : Urls.toolImage
-                      }
-                    />
-                  )}
+      <View>
+        <ScrollView
+          style={styles.basketContents}
+          showsVerticalScrollIndicator={true}
+        >
+          {toolBasket.map((item, i) => (
+            <View key={i}>
+              {i > 0 ? (
+                <Divider
+                  style={{
+                    backgroundColor: Colors.vwgDarkGray,
+                    marginVertical: 8
+                  }}
+                />
+              ) : null}
+              <View>
+                <View style={styles.basketItemRow}>
+                  <View style={styles.basketItemImageCol}>
+                    {item.loanToolNo ? null : (
+                      <ScaledImageFinder
+                        width={70}
+                        item={item}
+                        baseImageUrl={
+                          item.loanToolNo ? Urls.ltpImage : Urls.toolImage
+                        }
+                      />
+                    )}
+                  </View>
+                  <View style={styles.basketItemDescCol}>
+                    {item.partNumber ? (
+                      <Text
+                        style={styles.basketItemTextEmph}
+                      >{`Part: ${item.partNumber} - ${item.partDescription}`}</Text>
+                    ) : null}
+                    {item.loanToolNo ? (
+                      <Text
+                        style={styles.basketItemTextEmph}
+                      >{`Part: ${item.loanToolNo} - ${item.toolDescription}`}</Text>
+                    ) : null}
+                    {item.loanToolNo ? (
+                      <Text style={styles.basketItemText}>Loan tool</Text>
+                    ) : null}
+                    {item.toolNumber ? (
+                      <Text
+                        style={styles.basketItemTextEmph}
+                      >{`Tool: ${item.toolNumber}`}</Text>
+                    ) : null}
+                    {item.toolNumber ? (
+                      <Text style={styles.basketItemText}>
+                        {item.location
+                          ? `Location: ${item.location}`
+                          : `Location not recorded`}
+                      </Text>
+                    ) : null}
+                    {item.lastWIP ? (
+                      <Text
+                        style={styles.basketItemText}
+                      >{`Also booked to job ${item.lastWIP}`}</Text>
+                    ) : null}
+                  </View>
+                  {mode !== 'confirm' && toolBasket.length > 1 ? (
+                    <TouchableOpacity
+                      style={styles.trashButton}
+                      onPress={() => removeBasketItemHandler(item.id)}
+                    >
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                        type='ionicon'
+                        size={20}
+                        color={Colors.vwgWarmRed}
+                      />
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
-                <View style={styles.basketItemDescCol}>
-                  {item.partNumber ? (
-                    <Text
-                      style={styles.basketItemTextEmph}
-                    >{`Part: ${item.partNumber} - ${item.partDescription}`}</Text>
-                  ) : null}
-                  {item.loanToolNo ? (
-                    <Text
-                      style={styles.basketItemTextEmph}
-                    >{`Part: ${item.loanToolNo} - ${item.toolDescription}`}</Text>
-                  ) : null}
-                  {item.loanToolNo ? (
-                    <Text style={styles.basketItemText}>Loan tool</Text>
-                  ) : null}
-                  {item.toolNumber ? (
-                    <Text
-                      style={styles.basketItemTextEmph}
-                    >{`Tool: ${item.toolNumber}`}</Text>
-                  ) : null}
-                  {item.toolNumber ? (
-                    <Text style={styles.basketItemText}>
-                      {item.location
-                        ? `Location: ${item.location}`
-                        : `Location not recorded`}
-                    </Text>
-                  ) : null}
-                  {item.lastWIP ? (
-                    <Text
-                      style={styles.basketItemText}
-                    >{`Also booked to job ${item.lastWIP}`}</Text>
-                  ) : null}
-                </View>
-                {mode !== 'confirm' && toolBasket.length > 1 ? (
-                  <TouchableOpacity
-                    style={styles.trashButton}
-                    onPress={() => removeBasketItemHandler(item.id)}
-                  >
-                    <Icon
-                      name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
-                      type='ionicon'
-                      size={20}
-                      color={Colors.vwgWarmRed}
-                    />
-                  </TouchableOpacity>
-                ) : null}
               </View>
             </View>
-          </View>
-        ))}
+          ))}
+        </ScrollView>
       </View>
     );
   }
@@ -611,8 +618,8 @@ export default FindToolsScreen = ({ ...props }) => {
       isVisible={isBasketVisible}
       onBackdropPress={() => backdropPressHandler()}
       onSwipeComplete={() => setIsBasketVisible(false)}
+      propagateSwipe
       avoidKeyboard
-      swipeDirection='down'
       style={styles.drawerBottom}
       backdropOpacity={0.6}
       animationIn='zoomInDown'
@@ -649,7 +656,7 @@ export default FindToolsScreen = ({ ...props }) => {
   //     }
   //   };
 
-  console.log('FTS about to render');
+  //   console.log('FTS about to render');
   return (
     <View>
       <View style={styles.arse}>
@@ -734,7 +741,7 @@ export default FindToolsScreen = ({ ...props }) => {
           {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
         </KeyboardAvoidingView>
       </View>
-      {mode === 'list' && toolBasket.length > 0 ? (
+      {mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0 ? (
         <View style={styles.closedBasket}>
           <TouchableOpacity
             onPress={() => {
@@ -766,7 +773,9 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-         {/* console.log('pressed homescreen icon'); */}
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -778,7 +787,9 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          {/*  console.log('pressed menu icon'); */}
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.toggleDrawer();
         }}
       />
