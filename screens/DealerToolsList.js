@@ -73,16 +73,16 @@ export default function DealerToolsList(props) {
             ) : item.location ? (
               <Text
                 style={{ fontSize: RFPercentage(2.0) }}
-              >{`Location: ${item.location}`}</Text>
+              >{`Storage location: ${item.location}`}</Text>
             ) : (
               <Text style={{ fontSize: RFPercentage(2.0) }}>
-                Location not recorded
+                Storage location not recorded
               </Text>
             )}
             {item.lastWIP ? (
               <Text
                 style={{ fontSize: RFPercentage(2.0) }}
-              >{`Last Job: ${item.lastWIP}`}</Text>
+              >{`Last booked out by: ${item.createdBy}, job ${item.lastWIP}`}</Text>
             ) : null}
           </View>
         }
