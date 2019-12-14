@@ -52,6 +52,7 @@ export default OdisScreen = props => {
   return (
     <View>
       <DataAlertBarWithRefresh
+        dataName={'odis versions'}
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}

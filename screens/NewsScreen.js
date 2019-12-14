@@ -92,6 +92,7 @@ export default NewsScreen = props => {
   return (
     <View>
       <SearchBarWithRefresh
+        dataName={'news'}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}

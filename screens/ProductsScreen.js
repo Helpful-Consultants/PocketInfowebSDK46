@@ -105,6 +105,7 @@ export default ProductsScreen = props => {
   return (
     <View>
       <SearchBarWithRefresh
+        dataName={'products'}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}

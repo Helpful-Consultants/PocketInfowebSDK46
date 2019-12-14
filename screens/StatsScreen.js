@@ -108,6 +108,7 @@ export default StatsScreen = ({ ...props }) => {
   return (
     <View style={styles.container}>
       <DataAlertBarWithRefresh
+        dataName={'stats'}
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}

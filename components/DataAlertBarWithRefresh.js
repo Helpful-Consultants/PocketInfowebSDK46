@@ -1,22 +1,20 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  SafeAreaView,
   Platform,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   View
 } from 'react-native';
-import { Button, Icon, Input, SearchBar, Text } from 'react-native-elements';
-// import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import { Icon, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import Colors from '../constants/Colors';
-// import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
-
 export default DataAlertBarWithRefresh = props => {
   //   console.log('DataAlertWithRefresh props', props);
+
+  let { dataName } = props;
+  dataName = dataName || 'data';
 
   return props.dataCount && props.dataCount > 0 ? null : (
     <View style={styles.searchBarRow}>
@@ -41,18 +39,20 @@ export default DataAlertBarWithRefresh = props => {
       )}
       {props.isLoading ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
-          <Text style={styles.searchBarRowNoDataText}>Fetching data.</Text>
+          <Text style={styles.searchBarRowNoDataText}>
+            Updating {`${dataName}`}.
+          </Text>
         </View>
       ) : props.dataError ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowErrorText}>
-            There was a problem downloading the data. Please refresh.
+            {`There was a problem downloading the ${dataName}. Please refresh.`}
           </Text>
         </View>
       ) : (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
-            Nothing downloaded yet. Please refresh. Thanks.
+            {`No ${dataName} downloaded yet. Please refresh. Thanks.`}
           </Text>
         </View>
       )}
