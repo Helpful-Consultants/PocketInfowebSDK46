@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
 import {
+  Alert,
   Modal,
   Platform,
   ScrollView,
@@ -12,18 +13,22 @@ import {
 import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-import NewJobButton from '../components/NewJobButton';
-import BookToJobModal from '../components/BookToJobModal';
+// import NewJobButton from '../components/NewJobButton';
+// import BookToJobModal from '../components/BookToJobModal';
+// import Alert from '../components/Alert';
 import {
   createDealerWipRequest,
   deleteDealerWipRequest,
+  updateDealerWipRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
-import JobsList from './JobsList';
+import JobsList from './JobsListReturnAll';
+// import JobsList from './JobsList';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
@@ -41,14 +46,16 @@ export default JobsScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId.toString();
 
   const isLoading = useSelector(state => state.dealerWips.isLoading);
   const dataError = useSelector(state => state.dealerWips.error);
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
+  const [currentJob, setCurrentJob] = useState({});
+  const [currentTool, setCurrentTool] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [listView, setListView] = useState({});
   if (!userIsSignedIn) {
     props.navigation.navigate('SignIn');
   }
@@ -64,8 +71,14 @@ export default JobsScreen = props => {
     // console.log('in getItems', getWipsDataObj);
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
+
   const deleteDealerWip = useCallback(
-    wipData => dispatch(deleteDealerWipRequest(wipData)),
+    payload => dispatch(deleteDealerWipRequest(payload)),
+    [dealerWipsItems]
+  );
+
+  const updateDealerWip = useCallback(
+    payload => dispatch(updateDealerWipRequest(payload)),
     [dealerWipsItems]
   );
   //   const createDealerWip = useCallback(
@@ -91,11 +104,11 @@ export default JobsScreen = props => {
   //   }
 
   const userWipsItems =
-    (userIntId &&
+    (userDataObj.intId &&
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
       dealerWipsItems.filter(
-        item => item.userIntId.toString() == userIntId.toString()
+        item => item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
     [];
   //   console.log('userWipsItems ', userWipsItems);
@@ -111,9 +124,78 @@ export default JobsScreen = props => {
     setSearchInput(searchInput);
   };
 
+  const returnToolHandler = ({ job, tool }) => {
+    // console.log('in returnToolHandler', job, tool);
+    setCurrentJob(job);
+    setCurrentTool(tool);
+
+    setIsModalVisible(true);
+  };
+
+  const confirmReturnToolHandler = () => {
+    console.log('in confirmreturnToolHandler', currentTool);
+    console.log('in confirmreturnToolHandler', currentJob);
+    setIsModalVisible(false);
+    if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
+      let payload = {
+        dealerId: dealerId,
+        wipObj: currentJob,
+        getWipsDataObj: getWipsDataObj
+      };
+
+      console.log('delete wip ' + currentJob.id);
+      console.log('delete wip ', payload);
+      //   deleteDealerWip(payload);
+    } else {
+      let newJobTools = currentJob.tools.filter(
+        tool => tool.id !== currentTool.id
+      );
+      console.log('newJobTools', newJobTools);
+      let newJob = {
+        wipNumber: currentJob.wipNumber.toString(),
+        createdBy: userDataObj.userName,
+        createdDate: new Date(),
+        userIntId: userDataObj.intId.toString(),
+        dealerId: dealerId,
+        tools: newJobTools
+      };
+      let payload = {
+        dealerId: dealerId,
+        wipObj: newJob,
+        getWipsDataObj: getWipsDataObj
+      };
+      console.log(currentJob);
+      console.log(newJob);
+      console.log('remove ' + currentTool.id + 'from ' + currentJob.id);
+      console.log('update wip ' + currentJob.id);
+      console.log('update wip ', payload);
+      //   updateDealerWip(payload);
+    }
+  };
+
+  const returnAllToolsHandler = job => {
+    console.log('in returnToolHandler', job);
+    setCurrentJob(job);
+    setIsModalVisible(true);
+  };
+
+  const confirmReturnAllToolsHandler = () => {
+    console.log('in confirmreturnToolHandler', currentJob);
+    setIsModalVisible(false);
+
+    let payload = {
+      dealerId: dealerId,
+      wipObj: currentJob,
+      getWipsDataObj: getWipsDataObj
+    };
+    console.log('delete wip ' + currentJob.id);
+    console.log('delete wip ', payload);
+    deleteDealerWip(payload);
+  };
+
   const refreshRequestHandler = () => {
     console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userIntId && getItems(getWipsDataObj);
+    dealerId && userDataObj.intId && getItems(getWipsDataObj);
   };
 
   const items = (!isLoading && !dataError && userWipsItems) || [];
@@ -135,6 +217,7 @@ export default JobsScreen = props => {
   // console.log('in DealerWipsScreen, dealerWips', dealerWips && dealerWips);
   //   console.log('userIntId ', userIntId);
   //   console.log('userWipsItems sent to JobsList', userWipsItems);
+
   return (
     <View>
       {/* <SearchBar
@@ -142,9 +225,9 @@ export default JobsScreen = props => {
         value={searchInput}
         platform={Platform.OS === 'ios' ? 'ios' : 'android'}
       /> */}
-
       {/* <NewJobButton setIsModalVisible={setIsModalVisible} /> */}
       <SearchBarWithRefresh
+        dataName={'jobs'}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
@@ -152,15 +235,38 @@ export default JobsScreen = props => {
         dataError={dataError}
         dataCount={userWipsItems.length}
       />
-
       <ScrollView>
         <JobsList
           items={filteredItems}
           deleteDealerWipRequest={deleteDealerWip}
-          userIntId={userIntId}
+          userIntId={userDataObj.intId}
           baseImageUrl={Urls.toolImage}
+          returnToolHandler={returnToolHandler}
+          returnAllToolsHandler={returnAllToolsHandler}
         />
       </ScrollView>
+      {isModalVisible ? (
+        <AwesomeAlert
+          show={isModalVisible}
+          showProgress={false}
+          title='Return tools'
+          message={`Have you returned all tools in this job to their correct locations?`}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText='Not yet'
+          confirmText='Yes'
+          confirmButtonColor={Colors.vwgMintGreen}
+          cancelButtonColor={Colors.vwgWarmRed}
+          onCancelPressed={() => {
+            setIsModalVisible(false);
+          }}
+          onConfirmPressed={() => {
+            confirmReturnAllToolsHandler();
+          }}
+        />
+      ) : null}
     </View>
   );
 };
