@@ -84,6 +84,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
+  const [toolBasketIds, setToolBasketIds] = useState([]);
 
   const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
@@ -236,6 +237,11 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const saveToJobRequestHandler = () => {
+    const removeLastWip = item => {
+      const newItem = { ...item };
+      delete newItem.lastWIP;
+      return newItem;
+    };
     // console.log(userDataObj);
     if (formState.formIsValid) {
       //   console.log(
@@ -246,24 +252,27 @@ export default FindToolsScreen = ({ ...props }) => {
       setWipNumber(formState.inputValues.wipNumber);
       setMode('confirm');
       setIsBasketVisible(true);
-      const newWipObj = {
+
+      let newToolBasket = toolBasket.map(item => removeLastWip(item));
+
+      const wipObj = {
         wipNumber: formState.inputValues.wipNumber.toString(),
         createdBy: userName,
         createdDate: new Date(),
         userIntId: userIntId.toString(),
         dealerId: dealerId.toString(),
-        tools: toolBasket
+        tools: newToolBasket
       };
       const getWipsDataObj = {
         dealerId: dealerId.toString(),
         intId: userIntId.toString()
       };
-      const newWipPkgObj = {
+      const payload = {
         getWipsDataObj,
-        newWipObj
+        wipObj
       };
-      //   console.log('in saveToJobRequestHandler', newWipPkgObj);
-      saveToJob(newWipPkgObj);
+      //   console.log('in saveToJobRequestHandler', payload);
+      saveToJob(payload);
       inputChangeHandler('wipNumber', '');
     } else {
       setMode('book');
