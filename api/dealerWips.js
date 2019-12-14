@@ -72,14 +72,15 @@ const deleteUrl =
   dummyDealerId;
 // console.log(deleteUrl);
 
-export const getDealerWips = ({ dealerId, intId }) => {
-  //   console.log('here in getDealerWips dealerId is ', dealerId, intId);
+export const getDealerWips = wipObj => {
+  console.log('here in getDealerWips  ', wipObj);
+  const { dealerId, intId } = wipObj;
   const url =
     '/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=' +
     intId +
     '&dealerId=' +
     dealerId;
-  //   console.log(url);
+  console.log(url);
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
@@ -92,15 +93,17 @@ export const getDealerWips = ({ dealerId, intId }) => {
   });
 };
 
-export const createDealerWip = newWipObj => {
-  //   console.log('in create wip api', newWipObj);
+export const createDealerWip = wipObj => {
+  console.log('!!!!!!!!!!!! in create wip api', wipObj);
 
-  const strung = JSON.stringify(newWipObj);
+  const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
+
+  const strung = JSON.stringify(wipObj);
   //   console.log('in create wip api, strung is ', strung);
 
-  const wipArr = [newWipObj];
+  const wipArr = [wipObj];
 
-  //   console.log('wipArr', wipArr);
+  console.log('!!!!!!!!wipArr', wipArr);
 
   //   const strung = queryString.stringify(stuff);
   //   const strung = stuff.toString();
@@ -118,7 +121,7 @@ export const createDealerWip = newWipObj => {
   //     data: dummyData
   //   });
 
-  return axios.post(postUrl, wipArr);
+  return axios.post(url, wipArr);
 
   //   return axios.post(postUrl, dummyData, {
   //     headers: {
@@ -156,20 +159,62 @@ export const createDealerWip = newWipObj => {
   //   return axios.post(postUrl, strungArray);
 };
 
+export const updateDealerWip = updateWipObj => {
+  //   console.log('in create wip api', wipObj);
+
+  const strung = JSON.stringify(updateWipObj);
+  //   console.log('in create wip api, strung is ', strung);
+
+  const wipArr = [updateWipObj];
+
+  //   console.log('wipArr', wipArr);
+
+  //   const strung = queryString.stringify(stuff);
+  //   const strung = stuff.toString();
+  //   const strungArray = '[' + strung + ']';
+  //   console.log(postUrl);
+  //   console.log(stuff);
+  //   console.log('in create wip api, strungArray is ', strungArray);
+  //   console.log(strungArray);
+  //   return fetch(postUrl, {
+  //     method: 'POST',
+  //     headers: {
+  //       //   Accept: 'application/json',
+  //       'Content-Type': 'application/json'
+  //     },
+  //     data: dummyData
+  //   });
+
+  return axios.post(postUrl, wipArr);
+};
+
 // export const deleteDealerWip = ({ dealerWipId, wipNumber, intId }) => {
 //   return axios.delete(`/dealerWips/${(dealerWipId, wipNumber, intId)}`);
 // };
 
-export const deleteDealerWip = wipData => {
+// export const deleteDealerWip = ({ dealerId, wipObj }) => {
+
+export const deleteDealerWip = payload => {
+  console.log('in delete dealer wip api', payload);
+
+  const dealerId = payload.dealerId;
+  const wipObj = payload.wipObj;
   const sendData =
     'id=' +
-    wipData.id +
+    wipObj.id +
     '&wipNumber=' +
-    wipData.wipNumber +
+    wipObj.wipNumber +
     '&contact_id=' +
-    wipData.intId +
+    wipObj.userIntId +
     '';
-  //   console.log(sendData);
-  return axios.post(deleteUrl, sendData);
+  console.log(sendData);
+  const url =
+    '/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=' + dealerId;
+  console.log(url);
+  return axios.post(url, sendData, {
+    headers: {
+      //   'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  });
   //   return console.log('will axios a delete dealerWip');
 };

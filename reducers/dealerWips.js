@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  //   console.log('action.type is:', action.type);
+  console.log('action.type is:', action.type);
   switch (action.type) {
     case Types.GET_DEALER_WIPS_START: {
       return {
@@ -29,6 +29,33 @@ export default function dealerWips(state = INITIAL_STATE, action) {
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
       console.log(action.payload);
+      return {
+        ...state,
+        lastWipProcessed: {
+          code: action.payload.code,
+          message: action.payload.message,
+          wipNumber: action.payload.wipNumber || ''
+        },
+        isLoading: false,
+        error: null
+      };
+    }
+    case Types.UPDATE_DEALER_WIP_SUCCESS: {
+      console.log(action.payload);
+      return {
+        ...state,
+        lastWipProcessed: {
+          code: action.payload.code,
+          message: action.payload.message,
+          wipNumber: action.payload.wipNumber || ''
+        },
+        isLoading: false,
+        error: null
+      };
+    }
+    case Types.DELETE_DEALER_WIP_SUCCESS: {
+      console.log(action.payload);
+      //   console.log('reducer end data');
       return {
         ...state,
         lastWipProcessed: {

@@ -33,8 +33,8 @@ export const emptyDealerWipsRequest = () => ({
   type: Types.EMPTY_DEALER_WIPS_REQUEST
 });
 
-export const createDealerWipSuccess = ({ code, message }) => ({
-  type: Types.CREATE_DEALER_WIP_SUCCESS,
+export const updateDealerWipSuccess = ({ code, message }) => ({
+  type: Types.UPDATE_DEALER_WIP_SUCCESS,
   payload: {
     code,
     message
@@ -57,39 +57,43 @@ export const createDealerWipSuccess = ({ code, message }) => ({
 //     tools
 //   }
 // });
-export const createDealerWipRequest = newWipData => ({
-  type: Types.CREATE_DEALER_WIP_REQUEST,
-  payload: newWipData
-});
+export const createDealerWipRequest = wipData => {
+  console.log('in delete action');
+  console.log(wipData);
+  return { type: Types.CREATE_DEALER_WIP_REQUEST, payload: wipData };
+};
 
-export const updateDealerWipRequest = ({
-  dealerWipId,
-  wipNumber,
-  createdBy,
-  createdDate,
-  userIntId,
-  tools
-}) => ({
-  type: Types.CREATE_DEALER_WIP_REQUEST,
+export const createDealerWipSuccess = ({ code, message }) => ({
+  type: Types.CREATE_DEALER_WIP_SUCCESS,
   payload: {
-    dealerWipId,
-    wipNumber,
-    createdBy,
-    createdDate,
-    userIntId,
-    tools
+    code,
+    message
   }
 });
 
-export const deleteDealerWipRequest = wipData => {
-  console.log('in delete action');
+export const updateDealerWipRequest = wipData => {
+  console.log('in update action');
   console.log(wipData);
+  return { type: Types.UPDATE_DEALER_WIP_REQUEST, payload: wipData };
+};
+
+export const deleteDealerWipRequest = payload => {
+  console.log('in delete action');
+  console.log(payload);
   //   console.log(id, wipNumber, intId);
   return {
     type: Types.DELETE_DEALER_WIP_REQUEST,
-    payload: wipData
+    payload: payload
   };
 };
+
+export const deleteDealerWipSuccess = ({ code, message }) => ({
+  type: Types.DELETE_DEALER_WIP_SUCCESS,
+  payload: {
+    code,
+    message
+  }
+});
 
 export const dealerWipsError = ({ error }) => ({
   type: Types.DEALER_WIPS_ERROR,
