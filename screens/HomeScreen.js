@@ -99,7 +99,7 @@ export default HomeScreen = props => {
             <View style={styles.gridRow}>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('ReturnTools')}
+                onPress={() => props.navigation.navigate('BookedOutTools')}
               >
                 <View>
                   <Icon
@@ -114,9 +114,9 @@ export default HomeScreen = props => {
                   />
 
                   <Text style={styles.gridCellText}>Return tools</Text>
-                  <Text style={styles.gridCellTextDisabledSmall}>
+                  {/* <Text style={styles.gridCellTextDisabledSmall}>
                     Coming soon..
-                  </Text>
+                  </Text> */}
                 </View>
               </Touchable>
               <Touchable
