@@ -12,7 +12,7 @@ import HomeScreen from '../screens/HomeScreen';
 import LtpScreen from '../screens/LtpScreen';
 import FindToolsScreen from '../screens/FindToolsScreen';
 import JobsScreen from '../screens/JobsScreen';
-import ReturnToolsScreen from '../screens/ReturnToolsScreen';
+import BookedOutToolsScreen from '../screens/BookedOutToolsScreen';
 import Colors from '../constants/Colors';
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -65,15 +65,15 @@ FindToolsStack.navigationOptions = {
 FindToolsStack.path = '';
 // End Find Tools screen
 
-// ReturnTools screen
-const ReturnToolsStack = createStackNavigator(
+// BookedOutTools screen
+const BookedOutToolsStack = createStackNavigator(
   {
-    ReturnTools: ReturnToolsScreen
+    BookedOutTools: BookedOutToolsScreen
   },
   config
 );
 
-ReturnToolsStack.navigationOptions = {
+BookedOutToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
     <Text style={focused ? styles.focused : styles.notFocused}>Return</Text>
   ),
@@ -85,7 +85,7 @@ ReturnToolsStack.navigationOptions = {
   )
 };
 
-ReturnToolsStack.path = '';
+BookedOutToolsStack.path = '';
 // End Return Tools screen
 
 // Jobs screen
@@ -138,7 +138,7 @@ LtpStack.path = '';
 const tabNavigator = createBottomTabNavigator({
   //   Home: HomeScreen,
   FindToolsStack,
-  ReturnToolsStack,
+  BookedOutToolsStack,
   JobsStack,
   LtpStack
 });
