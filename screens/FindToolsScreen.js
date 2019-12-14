@@ -107,7 +107,7 @@ export default FindToolsScreen = ({ ...props }) => {
   });
 
   const saveToJob = useCallback(
-    newWipPkgObj => dispatch(createDealerWipRequest(newWipPkgObj)),
+    payload => dispatch(createDealerWipRequest(payload)),
     [dealerWipsItems]
   );
 
@@ -130,15 +130,19 @@ export default FindToolsScreen = ({ ...props }) => {
   //     console.log('in tools screen, no toolsItems');
   //   }
 
-  const selectItemHandler = newItem => {
-    // console.log(newItem.id, ' to be added');
-    let newBasket = toolBasket;
-    let dup = toolBasket.filter(item => item.id === newItem.id);
+  const selectItemHandler = tool => {
+    console.log(tool, ' to be added to ');
+    console.log(toolBasket);
+
+    let dup =
+      (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
     // console.log('dup, ');
     if (dup.length === 0) {
       // newItem.key = newItem.id
-      newBasket.push(newItem);
-      setToolBasket(newBasket);
+
+      setToolBasket([...toolBasket, tool]);
+      setToolBasketIds([...toolBasketIds, tool.id]);
+
       //   toggleExpandBasketHandler(true);
       setMode('basket');
       setIsBasketVisible(true);
@@ -278,9 +282,10 @@ export default FindToolsScreen = ({ ...props }) => {
   const concatItems = dealerToolsItems.concat(ltpItems);
   //   console.log('concatItems.length ', concatItems.length);
 
-  let filteredItems = concatItems.filter(
+  let allFilteredItems = concatItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
+  let filteredItems = allFilteredItems.slice(0, 200);
   //   console.log('filteredItems.length ', filteredItems.length);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -624,6 +629,7 @@ export default FindToolsScreen = ({ ...props }) => {
       <View style={styles.arse}>
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
+            dataName={'tools'}
             refreshRequestHandler={refreshRequestHandler}
             searchInputHandler={searchInputHandler}
             searchInput={searchInput}
