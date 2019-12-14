@@ -87,12 +87,11 @@ export default function BookedOutToolsList(props) {
                       item={item}
                       baseImageUrl={baseImageUrl}
                     />
-                    <View style={{ flexDirection: 'column' }}>
+                    <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
                       <Text
                         style={{
                           color: Colors.vwgVeryDarkGray,
                           marginBottom: 3,
-                          paddingLeft: 10,
                           fontSize: RFPercentage(2.1)
                         }}
                       >{`${item.partDescription}`}</Text>
@@ -101,24 +100,21 @@ export default function BookedOutToolsList(props) {
                           style={{
                             color: Colors.vwgVeryDarkGray,
                             marginBottom: 3,
-                            paddingLeft: 10,
                             fontSize: RFPercentage(2.1)
                           }}
                         >{`Storage Location: ${item.location}`}</Text>
                       ) : null}
+                      {item.wipNumber.length > 0 ? (
+                        <Text
+                          style={{
+                            color: Colors.vwgVeryDarkGray,
+                            marginBottom: 3,
+                            fontSize: RFPercentage(2.1)
+                          }}
+                        >{`Booked out to job ${item.wipNumber}`}</Text>
+                      ) : null}
                     </View>
                   </View>
-
-                  {item.wipNumber.length > 0 ? (
-                    <Text
-                      style={{
-                        color: Colors.vwgVeryDarkGray,
-                        marginBottom: 3,
-                        paddingLeft: 0,
-                        fontSize: RFPercentage(2.1)
-                      }}
-                    >{`Booked out to job ${item.wipNumber}`}</Text>
-                  ) : null}
                 </View>
               </View>
             ))}
