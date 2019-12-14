@@ -54,6 +54,7 @@ export default BookedOutToolsScreen = props => {
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(true);
 
   const [bookedOutItems, setBookedOutItems] = useState([]);
   const [listView, setListView] = useState({});
@@ -133,25 +134,25 @@ export default BookedOutToolsScreen = props => {
 
   useEffect(() => {
     // console.log('in use effect');
-    console.log(
-      'in useEffect dealerWips for ' + userDataObj && userDataObj.intId,
-      dealerWipsItems && dealerWipsItems.length
-    );
+    // console.log(
+    //   'in useEffect dealerWips for ' + userDataObj && userDataObj.intId,
+    //   dealerWipsItems && dealerWipsItems.length
+    // );
     let userWipsItems = [];
     if (userDataObj.intId && dealerWipsItems && dealerWipsItems.length > 0) {
-      console.log('calling the builders in');
+      //   console.log('calling the builders in');
 
       userWipsItems = dealerWipsItems.filter(
         item => item.userIntId.toString() == userDataObj.intId.toString()
       );
     }
-    console.log('userWips length', userWipsItems.length);
+    // console.log('userWips length', userWipsItems.length);
 
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
-    console.log(
-      'in useEffect bookedOutToolItems.length ',
-      bookedOutToolItems && bookedOutToolItems.length
-    );
+    // console.log(
+    //   'in useEffect bookedOutToolItems.length ',
+    //   bookedOutToolItems && bookedOutToolItems.length
+    // );
 
     bookedOutToolItems.sort((a, b) => a.partNumber > b.partNumber);
 
@@ -260,7 +261,6 @@ export default BookedOutToolsScreen = props => {
   //       items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
   //     [];
   const filteredItems = bookedOutItems;
-
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
   // const { search } = this.state;
@@ -316,6 +316,22 @@ export default BookedOutToolsScreen = props => {
           }}
         />
       ) : null}
+      {isLyndonAlertVisible ? (
+        <AwesomeAlert
+          show={isLyndonAlertVisible}
+          showProgress={false}
+          title='Hello Lyndon'
+          message={`There's a problem with the data from the web server so we can't strip out duplicates just yet.`}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          cancelText='Close'
+          cancelButtonColor={Colors.vwgDeepBlue}
+          onCancelPressed={() => {
+            setIsLyndonAlertVisible(false);
+          }}
+        />
+      ) : null}
     </View>
   );
 };
@@ -328,7 +344,9 @@ BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          console.log('pressed homescreen icon');
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -340,7 +358,9 @@ BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          console.log('pressed menu icon');
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.toggleDrawer();
         }}
       />

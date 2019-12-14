@@ -23,7 +23,7 @@ ReturnToolsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          console.log('pressed homescreen icon');
+         {/* console.log('pressed homescreen icon'); */}
           navigation.navigate('HomeScreen');
         }}
       />
@@ -35,7 +35,7 @@ ReturnToolsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          console.log('pressed menu icon');
+          {/*  console.log('pressed menu icon'); */}
           navigation.toggleDrawer();
         }}
       />

@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 12
   },
   notFocused: {
-    color: Colors.vwgSkyBlue,
+    color: Colors.vwgIosLink,
     fontSize: 12
   }
 });

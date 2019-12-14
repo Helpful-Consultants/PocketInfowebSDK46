@@ -54,7 +54,8 @@ export default JobsScreen = props => {
   const [selectedItem, setSelectedItem] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
   const [listView, setListView] = useState({});
   if (!userIsSignedIn) {
     props.navigation.navigate('SignIn');
@@ -97,6 +98,12 @@ export default JobsScreen = props => {
     getItemsAsync();
   }, [dispatch]);
 
+  useEffect(() => {
+    // runs only once
+    // console.log('in jobs use effect');
+    setIsLyndonAlertVisible(true);
+  }, [items]);
+
   //   if (dealerWipsItems && dealerWipsItems.length > 0) {
   //     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
   //   } else {
@@ -129,13 +136,13 @@ export default JobsScreen = props => {
     setCurrentJob(job);
     setCurrentTool(tool);
 
-    setIsModalVisible(true);
+    setIsAlertVisible(true);
   };
 
   const confirmReturnToolHandler = () => {
     console.log('in confirmreturnToolHandler', currentTool);
     console.log('in confirmreturnToolHandler', currentJob);
-    setIsModalVisible(false);
+    setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
         dealerId: dealerId,
@@ -176,12 +183,12 @@ export default JobsScreen = props => {
   const returnAllToolsHandler = job => {
     console.log('in returnToolHandler', job);
     setCurrentJob(job);
-    setIsModalVisible(true);
+    setIsAlertVisible(true);
   };
 
   const confirmReturnAllToolsHandler = () => {
     console.log('in confirmreturnToolHandler', currentJob);
-    setIsModalVisible(false);
+    setIsAlertVisible(false);
 
     let payload = {
       dealerId: dealerId,
@@ -225,7 +232,7 @@ export default JobsScreen = props => {
         value={searchInput}
         platform={Platform.OS === 'ios' ? 'ios' : 'android'}
       /> */}
-      {/* <NewJobButton setIsModalVisible={setIsModalVisible} /> */}
+      {/* <NewJobButton setIsAlertVisible={setIsAlertVisible} /> */}
       <SearchBarWithRefresh
         dataName={'jobs'}
         refreshRequestHandler={refreshRequestHandler}
@@ -245,9 +252,9 @@ export default JobsScreen = props => {
           returnAllToolsHandler={returnAllToolsHandler}
         />
       </ScrollView>
-      {isModalVisible ? (
+      {isAlertVisible ? (
         <AwesomeAlert
-          show={isModalVisible}
+          show={isAlertVisible}
           showProgress={false}
           title='Return tools'
           message={`Have you returned all tools in this job to their correct locations?`}
@@ -260,10 +267,26 @@ export default JobsScreen = props => {
           confirmButtonColor={Colors.vwgMintGreen}
           cancelButtonColor={Colors.vwgWarmRed}
           onCancelPressed={() => {
-            setIsModalVisible(false);
+            setIsAlertVisible(false);
           }}
           onConfirmPressed={() => {
             confirmReturnAllToolsHandler();
+          }}
+        />
+      ) : null}
+      {isLyndonAlertVisible ? (
+        <AwesomeAlert
+          show={isLyndonAlertVisible}
+          showProgress={false}
+          title='Hello Lyndon'
+          message={`There's a problem with the data from the web server so we can't return one tool at a time just yet. Till that's fixed, you we only retun all the tools for a job in one go.`}
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showCancelButton={true}
+          cancelText='Close'
+          cancelButtonColor={Colors.vwgDeepBlue}
+          onCancelPressed={() => {
+            setIsLyndonAlertVisible(false);
           }}
         />
       ) : null}
@@ -279,7 +302,9 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          console.log('pressed homescreen icon');
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -291,7 +316,9 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          console.log('pressed menu icon');
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.toggleDrawer();
         }}
       />

@@ -21,9 +21,9 @@ import Colors from '../constants/Colors';
 import FriendlyDate from '../components/FriendlyDate';
 
 export default function BookedOutToolsList(props) {
-  console.log('BookedOutToolsList props');
-  console.log(props);
-  console.log('BookedOutToolsList props end');
+  //   console.log('BookedOutToolsList props');
+  //   console.log(props);
+  //   console.log('BookedOutToolsList props end');
   const {
     items,
     baseImageUrl,
@@ -53,7 +53,7 @@ export default function BookedOutToolsList(props) {
       <ScrollView>
         <View style={styles.searchPrompt}>
           <Text style={styles.searchPromptText}>
-            {`You have ${items.length ? items.length : `no`} booked out tools.`}
+            {`You have ${items.length ? items.length : `no`} tools booked out.`}
           </Text>
         </View>
         {!items || items.length === 0 ? null : (

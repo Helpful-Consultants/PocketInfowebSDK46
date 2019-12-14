@@ -17,11 +17,14 @@ import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
+
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
+import { getDealerWipsRequest } from '../actions/dealerWips';
 import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
@@ -82,6 +85,9 @@ export default FindToolsScreen = ({ ...props }) => {
 
   const [searchInput, setSearchInput] = useState('');
   const [isBasketVisible, setIsBasketVisible] = useState(true);
+  const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
+  const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
+
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
   const [toolBasketIds, setToolBasketIds] = useState([]);
@@ -104,6 +110,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const getItems = useCallback(getDealerToolsDataObj => {
     // console.log('in getItems', getDealerToolsDataObj);
     dispatch(getDealerToolsRequest(getDealerToolsDataObj)), [dealerToolsItems];
+    // dispatch(getDealerWipsRequest()), [dealerWipsItems];
     dispatch(getLtpRequest()), [ltpItems];
   });
 
@@ -152,10 +159,20 @@ export default FindToolsScreen = ({ ...props }) => {
     } else {
       //   console.log('dup');
       setMode('basket');
-      setIsBasketVisible(true);
+      setIsBasketVisible(false);
+      setIsDupPickedAlertVisible(true);
     }
     // console.log('toolBasket update', toolBasket);
     // console.log(toolBasket.length);
+  };
+
+  const cancelDupPickedHandler = () => {
+    // console.log('basket', ' to be removed');
+    setIsDupPickedAlertVisible(false);
+    setIsBasketVisible(true);
+
+    // console.log(toolBasket.length);
+    // updateBasketView();
   };
 
   const removeBasketHandler = () => {
@@ -675,6 +692,45 @@ export default FindToolsScreen = ({ ...props }) => {
               />
             </View>
           )}
+          {isDupBookedAlertVisible ? (
+            <AwesomeAlert
+              show={isDupBookedAlertVisible}
+              showProgress={false}
+              title='Tool already out'
+              message={`You already have that tool booked out`}
+              closeOnTouchOutside={true}
+              closeOnHardwareBackPress={false}
+              showCancelButton={true}
+              showConfirmButton={true}
+              cancelText='Cancel'
+              confirmText='OK'
+              confirmButtonColor={Colors.vwgMintGreen}
+              cancelButtonColor={Colors.vwgWarmRed}
+              onCancelPressed={() => {
+                cancelDupPickedHandler();
+              }}
+              onConfirmPressed={() => {
+                cancelDupPickedHandler();
+              }}
+            />
+          ) : null}
+          {isDupPickedAlertVisible ? (
+            <AwesomeAlert
+              show={isDupPickedAlertVisible}
+              showProgress={false}
+              title='Duplicate'
+              message={`You already have that tool in your basket `}
+              closeOnTouchOutside={true}
+              closeOnHardwareBackPress={false}
+              showConfirmButton={true}
+              confirmText='Close'
+              confirmButtonColor={Colors.vwgDeepBlue}
+              onConfirmPressed={() => {
+                cancelDupPickedHandler();
+              }}
+            />
+          ) : null}
+
           {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
         </KeyboardAvoidingView>
       </View>
@@ -710,7 +766,7 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          console.log('pressed homescreen icon');
+         {/* console.log('pressed homescreen icon'); */}
           navigation.navigate('HomeScreen');
         }}
       />
@@ -722,7 +778,7 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          console.log('pressed menu icon');
+          {/*  console.log('pressed menu icon'); */}
           navigation.toggleDrawer();
         }}
       />

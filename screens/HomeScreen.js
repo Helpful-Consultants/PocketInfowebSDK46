@@ -206,7 +206,7 @@ export default HomeScreen = props => {
                 name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                 type='ionicon'
                 size={20}
-                color={Colors.vwgIosLink}
+                color={Colors.vwgDeepBlue}
               />
               <Text style={styles.signOutCellText}>Sign out</Text>
             </View>
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   signOutCellText: {
-    color: Colors.vwgIosLink,
+    color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(2.5),
     flexDirection: 'column',
     justifyContent: 'center',
