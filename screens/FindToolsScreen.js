@@ -162,8 +162,9 @@ export default FindToolsScreen = ({ ...props }) => {
   //     console.log('in tools screen, no toolsItems');
   //   }
 
-  const selectItemHandler = tool => {
+  const selectItemHandler = (tool, lastPerson) => {
     // console.log(tool, ' to be added to ');
+    // console.log('last job details', lastPerson);
     // console.log(toolBasket);
 
     let dup =
@@ -172,8 +173,12 @@ export default FindToolsScreen = ({ ...props }) => {
     if (dup.length === 0) {
       // newItem.key = newItem.id
 
-      setToolBasket([...toolBasket, tool]);
-      setToolBasketIds([...toolBasketIds, tool.id]);
+      const pickedTool = { ...tool, lastPerson };
+
+      //   console.log(pickedTool);
+
+      setToolBasket([...toolBasket, pickedTool]);
+      setToolBasketIds([...toolBasketIds, pickedTool.id]);
 
       //   toggleExpandBasketHandler(true);
       setMode('basket');
@@ -336,7 +341,7 @@ export default FindToolsScreen = ({ ...props }) => {
   let allFilteredItems = concatItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
-  let filteredItems = allFilteredItems.slice(0, 200);
+  let filteredItems = allFilteredItems.slice(0, 4);
   //   console.log('filteredItems.length ', filteredItems.length);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -475,7 +480,7 @@ export default FindToolsScreen = ({ ...props }) => {
           <Button
             title='Close'
             type='clear'
-            titleStyle={Colors.vwgMintGreen}
+            titleStyle={styles.closeButtonTitle}
             onPress={() => {
               acceptMessageHandler();
             }}
@@ -611,7 +616,7 @@ export default FindToolsScreen = ({ ...props }) => {
                     {item.lastWIP ? (
                       <Text
                         style={styles.basketItemText}
-                      >{`Also booked to job ${item.lastWIP}`}</Text>
+                      >{`Last booked out to ${item.lastPerson}, job ${item.lastWIP}`}</Text>
                     ) : null}
                   </View>
                   {mode !== 'confirm' && toolBasket.length > 1 ? (
@@ -709,6 +714,7 @@ export default FindToolsScreen = ({ ...props }) => {
             <View style={styles.toolsList}>
               <DealerToolsList
                 items={filteredItems}
+                dealerWipsItems={dealerWipsItems}
                 onSelectItem={selectItemHandler}
                 mode={mode}
                 showPrompt={
@@ -1073,6 +1079,10 @@ const styles = StyleSheet.create({
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
     // width: '10%'
+  },
+  closeButtonTitle: {
+    fontSize: RFPercentage(1.9),
+    color: Colors.vwgIosLink
   },
   bookButton: {
     backgroundColor: Colors.vwgIosLink

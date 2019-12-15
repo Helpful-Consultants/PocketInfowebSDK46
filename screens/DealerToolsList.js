@@ -31,12 +31,45 @@ export default function DealerToolsList(props) {
   //   const items = allItems && allItems.slice(0, limit);
 
   //   const items = props.items || [];
-  const { items, onSelectItem, showPrompt } = props;
+  const { items, dealerWipsItems, onSelectItem, showPrompt } = props;
   //   const { onSelectItem, showPrompt } = props;
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = ltpDummyData.slice(0, limit);
 
   const [listView, setListView] = useState();
+
+  const findLastBookedOutBy = item => {
+    let lastWIP = (item.lastWIP && item.lastWIP.toString()) || '';
+    // console.log('lastWIP ', lastWIP);
+    // if (lastWIP === '6') {
+    //   console.log(item);
+    //   console.log(dealerWipsItems);
+    // }
+
+    // if (lastWIP === '6') {
+    //   console.log('findLastBookedOutBy, lastWIP is ', lastWIP);
+    // }
+    if (lastWIP.length > 0) {
+      const matchingJobs = dealerWipsItems.filter(
+        item => item.wipNumber.toString() === lastWIP.toString()
+      );
+      //   if (lastWIP === '6') {
+      //     console.log('matchingJobs', matchingJobs);
+      //   }
+      if (matchingJobs.length > 0) {
+        const person = matchingJobs[0].createdBy && matchingJobs[0].createdBy;
+        // if (lastWIP === '6') {
+        //   console.log('person ', person);
+        // }
+        return person;
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
+  };
+
   //   const items = dealerToolsDummyData;
   // console.log('start dealerToolsDummyData');
   //   console.log(items);
@@ -49,7 +82,12 @@ export default function DealerToolsList(props) {
   //   };
 
   const CustomListItem = props => {
-    const { item } = props;
+    const { item, lastJobDetails } = props;
+    let person = '';
+    if (item.lastWIP && item.lastWIP.length > 0) {
+      person = findLastBookedOutBy(item);
+    }
+    // const person = '';
 
     return (
       <ListItem
@@ -79,11 +117,8 @@ export default function DealerToolsList(props) {
                 Storage location not recorded
               </Text>
             )}
-            {item.lastWIP ? (
-              <Text
-                style={{ fontSize: RFPercentage(2.0) }}
-              >{`Last booked out by: ${item.createdBy}, job ${item.lastWIP}`}</Text>
-            ) : null}
+
+            {lastJobDetails}
           </View>
         }
         bottomDivider
@@ -93,12 +128,28 @@ export default function DealerToolsList(props) {
 
   const FlatListItem = props => {
     const { item, onSelectItem } = props;
+    let person = '';
+    let lastJobDetails = null;
+    if (item.lastWIP && item.lastWIP.length > 0) {
+      person = findLastBookedOutBy(item);
 
+      lastJobDetails = (
+        <Text
+          style={{ fontSize: RFPercentage(2.0) }}
+        >{`Last booked out by ${person}, job ${item.lastWIP}`}</Text>
+      );
+    }
     return item.loanToolNo ? (
       <CustomListItem item={item}></CustomListItem>
     ) : (
-      <Touchable style={styles.toolItem} onPress={() => onSelectItem(item)}>
-        <CustomListItem item={item}></CustomListItem>
+      <Touchable
+        style={styles.toolItem}
+        onPress={() => onSelectItem(item, person)}
+      >
+        <CustomListItem
+          item={item}
+          lastJobDetails={lastJobDetails}
+        ></CustomListItem>
       </Touchable>
     );
   };

@@ -279,7 +279,7 @@ export default JobsScreen = props => {
           show={isLyndonAlertVisible}
           showProgress={false}
           title='Hello Lyndon'
-          message={`There's a problem with the data from the web server so we can't return one tool at a time just yet. Till that's fixed, you we only retun all the tools for a job in one go.`}
+          message={`We are enhancing the feed to and from the web server to remove one tool at a time from a job. Till that's done, you can only return all the tools for a job in one go.`}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={true}
