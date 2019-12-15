@@ -37,10 +37,10 @@ import DealerToolsList from './DealerToolsList';
 const KEYS_TO_FILTERS = [
   'toolNumber',
   'partNumber',
-  'orderPartNo',
-  'partDescription',
-  'toolDescription',
-  'loanToolNo'
+  'partDescription'
+  //   'orderPartNo', // LTP
+  //   'toolDescription', // LTP
+  //   'loanToolNo' //LTP
 ];
 
 const formReducer = (state, action) => {
@@ -71,19 +71,23 @@ export default FindToolsScreen = ({ ...props }) => {
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
   );
-  //   const ltpItems = useSelector(state => state.ltp.ltpItems);
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
+  //   const ltpItems = useSelector(state => state.ltp.ltpItems);
   //   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
-  const isLoading = useSelector(state => state.dealerTools.isLoading);
-  const dataError = useSelector(state => state.dealerTools.error);
+  const isLoadingTools = useSelector(state => state.dealerTools.isLoading);
+  const dataErrorTools = useSelector(state => state.dealerTools.error);
+  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
+  const dataErrorWips = useSelector(state => state.dealerWips.error);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
   const userIntId = userDataObj && userDataObj.intId.toString();
 
+  const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const [dataErrorAny, setDataErrorAny] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
@@ -104,14 +108,15 @@ export default FindToolsScreen = ({ ...props }) => {
   const userDataCount =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
-  const getDealerToolsDataObj = {
-    dealerId: dealerId
+  const getDealerItemsDataObj = {
+    dealerId: dealerId,
+    userId: userIntId
   };
 
-  const getItems = useCallback(getDealerToolsDataObj => {
-    // console.log('in getItems', getDealerToolsDataObj);
-    dispatch(getDealerToolsRequest(getDealerToolsDataObj)), [dealerToolsItems];
-    // dispatch(getDealerWipsRequest()), [dealerWipsItems];
+  const getItems = useCallback(getDealerItemsDataObj => {
+    // console.log('in getItems', getDealerItemsDataObj);
+    dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
+    dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
     // dispatch(getLtpRequest()), [ltpItems];
   });
 
@@ -124,7 +129,7 @@ export default FindToolsScreen = ({ ...props }) => {
     // runs only once
     // console.log('in tools use effect');
     const getItemsAsync = async () => {
-      getItems(getDealerToolsDataObj);
+      getItems(getDealerItemsDataObj);
     };
     getItemsAsync();
   }, [dispatch]);
@@ -132,7 +137,25 @@ export default FindToolsScreen = ({ ...props }) => {
   if (!userIsSignedIn) {
     navigation.navigate('SignIn');
   }
+  useEffect(() => {
+    // runs only once
+    // console.log('in tools use effect');
+    if (isLoadingTools || isLoadingWips) {
+      setIsLoadingAny(true);
+    } else {
+      setIsLoadingAny(false);
+    }
+  }, [isLoadingTools, isLoadingWips]);
 
+  useEffect(() => {
+    // runs only once
+    // console.log('in tools use effect');
+    if (dataErrorTools || dataErrorWips) {
+      setDataErrorAny(true);
+    } else {
+      setDataErrorAny(false);
+    }
+  }, [dataErrorTools, dataErrorWips]);
   //   if (dealerToolsItems && dealerToolsItems.length > 0) {
   //     console.log('in tools screen,toolsItems', dealerToolsItems.length);
   //   } else {
@@ -251,7 +274,7 @@ export default FindToolsScreen = ({ ...props }) => {
     //   dealerId: dealerId
     // };
     // console.log('in refreshRequestHandler');
-    dealerId && getItems(getDealerToolsDataObj);
+    dealerId && getItems(getDealerItemsDataObj);
   };
 
   const saveToJobRequestHandler = () => {
@@ -666,8 +689,8 @@ export default FindToolsScreen = ({ ...props }) => {
             refreshRequestHandler={refreshRequestHandler}
             searchInputHandler={searchInputHandler}
             searchInput={searchInput}
-            isLoading={isLoading}
-            dataError={dataError}
+            isLoading={isLoadingAny}
+            dataError={dataErrorAny}
             dataCount={dealerToolsItems.length}
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
           />
@@ -682,7 +705,7 @@ export default FindToolsScreen = ({ ...props }) => {
             </View>
           ) : null}
 
-          {isLoading ? null : (
+          {isLoadingAny ? null : (
             <View style={styles.toolsList}>
               <DealerToolsList
                 items={filteredItems}
