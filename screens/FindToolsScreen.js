@@ -672,7 +672,7 @@ export default FindToolsScreen = ({ ...props }) => {
         ) : null}
         <View style={styles.basket}>
           <View style={{ backgroundColor: Colors.vwgWhite }}>
-            {basketContents}
+            {mode === 'basket' ? basketContents : null}
             {basketActionRows}
           </View>
         </View>
