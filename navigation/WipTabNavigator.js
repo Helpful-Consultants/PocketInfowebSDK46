@@ -75,7 +75,9 @@ const BookedOutToolsStack = createStackNavigator(
 
 BookedOutToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Return</Text>
+    <Text style={focused ? styles.focused : styles.notFocused}>
+      Booked tools
+    </Text>
   ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon

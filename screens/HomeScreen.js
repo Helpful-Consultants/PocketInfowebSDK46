@@ -113,7 +113,7 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>Return tools</Text>
+                  <Text style={styles.gridCellText}>Booked tools</Text>
                   {/* <Text style={styles.gridCellTextDisabledSmall}>
                     Coming soon..
                   </Text> */}

@@ -337,7 +337,7 @@ export default BookedOutToolsScreen = props => {
 };
 
 BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Return tools' />,
+  headerTitle: <TitleWithAppLogo title='Booked tools' />,
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
