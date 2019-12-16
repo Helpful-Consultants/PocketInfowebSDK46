@@ -230,6 +230,12 @@ export default FindToolsScreen = ({ ...props }) => {
     setIsBasketVisible(false);
     // updateBasketView();
   };
+  const basketBackHandler = () => {
+    // console.log('background pressed');
+    inputChangeHandler('wipNumber', '');
+    setMode('basket');
+    // updateBasketView();
+  };
 
   const removeBasketItemHandler = deadItemId => {
     // console.log(deadItemId, ' to be removed');
@@ -390,11 +396,12 @@ export default FindToolsScreen = ({ ...props }) => {
               <Input
                 ref={input}
                 style={{ flexDirection: 'row' }}
+                inputStyle={styles.inputStyle}
                 number
                 value={formState.inputValues.wipNumber}
                 onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
                 style={styles.inputLabeText}
-                placeholder='Job number/name'
+                placeholder='Job number/job name'
                 required
                 autoCapitalize='none'
                 keyboardType='number-pad'
@@ -421,17 +428,17 @@ export default FindToolsScreen = ({ ...props }) => {
         </View>
         <View style={styles.basketActionRow}>
           <Button
-            title='Cancel'
+            title='Back'
             type='outline'
-            onPress={() => removeBasketHandler()}
+            onPress={() => basketBackHandler()}
             titleStyle={styles.cancelButtonTitle}
             buttonStyle={styles.cancelButton}
             icon={
               <Icon
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-close-circle-outline'
-                    : 'md-close-circle-outline'
+                    ? 'ios-arrow-round-back'
+                    : 'md-arrow-round-back'
                 }
                 type='ionicon'
                 size={20}
@@ -843,6 +850,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
     // height: '80%'
   },
+  inputStyle: {
+    color: Colors.vwgDarkSkyBlue,
+    fontSize: RFPercentage(2.4)
+  },
+
   basket: {
     color: Colors.vwgDeepBlue,
     borderColor: Colors.vwgMintGreen,
