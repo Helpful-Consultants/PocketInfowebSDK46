@@ -341,7 +341,7 @@ export default FindToolsScreen = ({ ...props }) => {
   let allFilteredItems = concatItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
-  let filteredItems = allFilteredItems.slice(0, 4);
+  let filteredItems = allFilteredItems.slice(0, 100);
   //   console.log('filteredItems.length ', filteredItems.length);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
