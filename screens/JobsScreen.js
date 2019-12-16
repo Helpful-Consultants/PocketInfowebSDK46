@@ -98,11 +98,11 @@ export default JobsScreen = props => {
     getItemsAsync();
   }, [dispatch]);
 
-  useEffect(() => {
-    // runs only once
-    // console.log('in jobs use effect');
-    setIsLyndonAlertVisible(true);
-  }, [items]);
+  //   useEffect(() => {
+  //     // runs only once
+  //     // console.log('in jobs use effect');
+  //     setIsLyndonAlertVisible(true);
+  //   }, [items]);
 
   //   if (dealerWipsItems && dealerWipsItems.length > 0) {
   //     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);

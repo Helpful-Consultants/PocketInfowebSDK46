@@ -54,7 +54,7 @@ export default BookedOutToolsScreen = props => {
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(true);
+  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
 
   const [bookedOutItems, setBookedOutItems] = useState([]);
   const [listView, setListView] = useState({});
