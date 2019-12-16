@@ -497,7 +497,12 @@ export default FindToolsScreen = ({ ...props }) => {
       </View>
     ) : mode === 'basket' ? (
       <View>
-        <View style={styles.basketActionRow}>
+        <View
+          style={
+            ({ ...styles.basketActionRow },
+            { alignItems: 'flex-end', marginTop: 10 })
+          }
+        >
           <TouchableOpacity
             style={styles.basketItemRow}
             onPress={() => addBasketItemHandler()}
