@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, ScrollView, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -58,10 +58,10 @@ export default StatsScreen = ({ ...props }) => {
     getItemsAsync();
   }, [dispatch]);
 
-  //   const refreshRequestHandler = () => {
-  //     // console.log('in refreshRequestHandler', getStatsData);
-  //     getItems();
-  //   };
+  const refreshRequestHandler = () => {
+    // console.log('in refreshRequestHandler', getStatsData);
+    getItems();
+  };
 
   if (!userIsSignedIn) {
     props.navigation.navigate('SignIn');
@@ -155,4 +155,13 @@ StatsScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   )
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  }
 });

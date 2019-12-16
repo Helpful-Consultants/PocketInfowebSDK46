@@ -1,4 +1,4 @@
-Finished info on stats screen
+Finished info on stats screen, and fixed crash
 Reformatting jobs screen
 ____________________________________
 Speeded up the revised tools basket
