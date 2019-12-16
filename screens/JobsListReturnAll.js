@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Platform, ScrollView, Text, View } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
-import { Card, ListItem, Button, Icon, colors } from 'react-native-elements';
+import { Divider, Button, Icon, colors } from 'react-native-elements';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import ScaledImageFinder from '../components/ScaledImageFinder';
@@ -32,50 +32,54 @@ export default function DealerToolsList(props) {
       <View>
         {job.tools ? ( // crashes without this if no tools in job
           job.tools.map((item, i) => (
-            <View key={i}>
-              <ListItem
-                containerStyle={{
-                  backgroundColor: '#fff',
-                  marginBottom: 3,
-                  borderColor: Colors.vwgLightGray,
-                  borderStyle: 'solid',
-                  borderWidth: 1
-                }}
-                titleStyle={{
-                  fontSize: RFPercentage(2.2),
-                  color: '#2089dc',
-                  textAlign: 'left'
-                }}
-                key={i}
-                title={`${item.partNumber} (${item.toolNumber})`}
-                subtitle={
-                  <View>
-                    <View
+            <View key={i} style={{ marginRight: 30 }}>
+              <View>
+                <Text
+                  style={{
+                    fontSize: RFPercentage(2.2),
+                    color: Colors.vwgDeepBlue,
+                    textAlign: 'left',
+                    marginRight: 10
+                  }}
+                >{`${item.partNumber} (${item.toolNumber})`}</Text>
+              </View>
+              <View style={{ marginRight: 10 }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 5,
+                    marginBottom: 10
+                  }}
+                >
+                  <View style={{ alignItems: 'flex-start' }}>
+                    <ScaledImageFinder
+                      width={70}
+                      item={item}
+                      baseImageUrl={baseImageUrl}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      paddingLeft: 10,
+                      marginRight: 10
+                    }}
+                  >
+                    <Text
                       style={{
-                        flexDirection: 'row',
-                        marginTop: 10
+                        color: Colors.vwgVeryDarkGray,
+                        marginBottom: 3,
+                        paddingLeft: 0,
+                        marginRight: 10,
+                        fontSize: RFPercentage(2.1)
                       }}
-                    >
-                      <ScaledImageFinder
-                        width={70}
-                        item={item}
-                        baseImageUrl={baseImageUrl}
-                      />
-                      <Text
-                        style={{
-                          color: Colors.vwgVeryDarkGray,
-                          marginBottom: 3,
-                          paddingLeft: 10,
-                          fontSize: RFPercentage(2.1)
-                        }}
-                      >{`${item.partDescription}`}</Text>
-                    </View>
+                    >{`${item.partDescription}`}</Text>
                     {item.location.length > 0 ? (
                       <Text
                         style={{
                           color: Colors.vwgVeryDarkGray,
                           marginBottom: 3,
                           paddingLeft: 0,
+                          marginRight: 10,
                           fontSize: RFPercentage(2.1)
                         }}
                       >{`Storage Location: ${item.location}`}</Text>
@@ -86,14 +90,14 @@ export default function DealerToolsList(props) {
                           color: Colors.vwgVeryDarkGray,
                           marginBottom: 3,
                           paddingLeft: 0,
+                          marginRight: 10,
                           fontSize: RFPercentage(2.1)
                         }}
                       >{`Last booked out by: ${job.createdBy}, job ${item.lastWIP}`}</Text>
                     ) : null}
                   </View>
-                }
-                topDivider={i > 0 ? true : false}
-              />
+                </View>
+              </View>
             </View>
           ))
         ) : (
@@ -130,6 +134,14 @@ export default function DealerToolsList(props) {
                     paddingBottom: 10
                   }}
                 >
+                  {i > 0 ? (
+                    <Divider
+                      style={{
+                        backgroundColor: Colors.vwgDarkGray,
+                        marginVertical: 8
+                      }}
+                    />
+                  ) : null}
                   <View>
                     <View
                       style={{
@@ -144,7 +156,8 @@ export default function DealerToolsList(props) {
                           fontSize: RFPercentage(2.2),
                           fontWeight: '600',
                           textAlign: 'left',
-                          marginBottom: 5
+                          marginBottom: 5,
+                          color: Colors.vwgDeepBlue
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()
@@ -166,7 +179,7 @@ export default function DealerToolsList(props) {
                         }}
                         titleStyle={{
                           fontSize: 14,
-                          color: '#000',
+                          color: Colors.vwgIosLink,
                           backgroundColor: 'transparent'
                         }}
                         icon={
@@ -177,7 +190,7 @@ export default function DealerToolsList(props) {
                                 : 'md-return-left'
                             }
                             type='ionicon'
-                            color='#2089dc'
+                            color={Colors.vwgIosLink}
                             reverse
                             size={10}
                           />
