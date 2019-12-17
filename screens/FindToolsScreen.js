@@ -83,6 +83,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
   const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
@@ -269,9 +270,27 @@ export default FindToolsScreen = ({ ...props }) => {
 
   // Search function
   const searchInputHandler = searchInput => {
-    // console.log(searchInput);
+    console.log('searchInput ', searchInput);
     // toggleShowBasketHandler(false);
-    setSearchInput(searchInput);
+    console.log(searchInput);
+
+    let searchStringStart = searchInput.toLowerCase();
+    let adjustedSearchInput = '';
+
+    if (
+      searchStringStart.substring(0, 3) === 'ase' ||
+      searchStringStart.substring(0, 3) === 'vas' ||
+      searchStringStart.substring(0, 3) === 'vag'
+    ) {
+      //   console.log('@@@@@ ', searchInput.substring(0, 3));
+      adjustedSearchInput = searchInput.substr(3);
+      //   console.log('@@@@@cut' + adjustedSearchInput);
+      setSearchInput(searchInput);
+      setAdjustedSearchString(adjustedSearchInput);
+    } else {
+      setSearchInput(searchInput);
+      setAdjustedSearchString(searchInput);
+    }
   };
   const refreshRequestHandler = () => {
     // console.log('in tools refreshRequestHandler');
