@@ -83,20 +83,7 @@ export default productsDummyData = [
     updatedBy: 'Simon Groves',
     ipAddress: '86.177.21.133'
   },
-  {
-    id: '7',
-    newsType: 'Product',
-    headline: 'Diagnostic device \u0147Professional\u0148 VAS 6150E',
-    newstext:
-      'Our diagnostic device \u0147Professional\u0148 VAS 6150E belongs to the latest generation of diagnostics equipment.\r\nWith its special Microsoft Windows 10 Enterprise LTSB 2016 operating system as basis it offers\r\nmaximum user friendliness and optimal security and reliability.',
-    imageName: 'VAS6150E.png',
-    linkTo:
-      'https://toolsinfoweb.co.uk/content/documents/inventory/17/VAS_6150E_VAS_6160E_diagnostic_platform.pdf',
-    createdDate: '31/08/2018 11:26:05',
-    lastUpdated: '',
-    updatedBy: 'Simon Groves',
-    ipAddress: '86.177.21.133'
-  },
+
   {
     id: '6',
     newsType: 'Product',
