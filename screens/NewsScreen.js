@@ -19,9 +19,9 @@ const KEYS_TO_FILTERS = ['headline', 'newstext'];
 
 const checkUrl = rawUrl => {
   if (rawUrl.substring(0, 4) == 'http') {
-    return rawUrl;
+    return encodeURI(rawUrl);
   } else {
-    return Urls.toolsInfoweb + '/' + rawUrl;
+    return Urls.toolsInfoweb + '/' + encodeURI(rawUrl);
   }
 };
 
@@ -35,6 +35,7 @@ export default NewsScreen = props => {
   const isLoading = useSelector(state => state.news.isLoading);
   const dataError = useSelector(state => state.news.error);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [browserResult, setBrowserResult] = useState(null);
 
   if (newsItems && newsItems.length > 0) {
     // console.log('in news screen,newsItems', newsItems.length);
@@ -63,11 +64,18 @@ export default NewsScreen = props => {
   const pressOpenHandler = async url => {
     // console.log('in pressOpenHandler', url);
     let checkedUrl = checkUrl(url);
+    // console.log(checkedUrl);
 
     if (Platform.OS === 'ios') {
-      let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
-    } else {
+      //   let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
+      WebBrowser.dismissBrowser();
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      console.log(result);
+      setBrowserResult(result);
+    } else {
+      WebBrowser.dismissBrowser();
+      let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      setBrowserResult(result);
     }
   };
 
@@ -83,7 +91,8 @@ export default NewsScreen = props => {
   //   console.log('newsItems AREEEEEEEEEE', newsItems);
   const items = (!isLoading && !dataError && newsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log(items);
 
   const filteredItems =
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
@@ -126,7 +135,9 @@ NewsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-         {/* console.log('pressed homescreen icon'); */}
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -138,7 +149,9 @@ NewsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          {/*  console.log('pressed menu icon'); */}
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.toggleDrawer();
         }}
       />

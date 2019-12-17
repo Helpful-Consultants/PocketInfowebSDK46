@@ -40,7 +40,9 @@ export default ProductsScreen = props => {
   //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector(state => state.products.isLoading);
   const dataError = useSelector(state => state.products.error);
+
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [browserResult, setBrowserResult] = useState(null);
 
   if (productsItems && productsItems.length > 0) {
     console.log('in products screen,productsItems', productsItems.length);
@@ -71,9 +73,14 @@ export default ProductsScreen = props => {
     let checkedUrl = checkUrl(url);
 
     if (Platform.OS === 'ios') {
-      let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
-    } else {
+      //   let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
+      WebBrowser.dismissBrowser();
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      setBrowserResult(result);
+    } else {
+      WebBrowser.dismissBrowser();
+      let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      setBrowserResult(result);
     }
   };
 
@@ -86,6 +93,7 @@ export default ProductsScreen = props => {
     console.log('in refreshRequestHandler');
     getItems();
   };
+
   //   console.log('productsItems AREEEEEEEEEE', productsItems);
   const items = (!isLoading && !dataError && productsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
@@ -104,6 +112,7 @@ export default ProductsScreen = props => {
 
   return (
     <View>
+      {/* <Text>{browserResult && JSON.stringify(browserResult)}</Text> */}
       <SearchBarWithRefresh
         dataName={'products'}
         refreshRequestHandler={refreshRequestHandler}
@@ -113,6 +122,7 @@ export default ProductsScreen = props => {
         dataError={dataError}
         dataCount={productsItems.length}
       />
+
       <ScrollView>
         {filteredItems && filteredItems.length > 0 ? (
           <View style={styles.lookupPrompt}>
@@ -139,7 +149,9 @@ ProductsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-         {/* console.log('pressed homescreen icon'); */}
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -151,7 +163,9 @@ ProductsScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          {/*  console.log('pressed menu icon'); */}
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.toggleDrawer();
         }}
       />

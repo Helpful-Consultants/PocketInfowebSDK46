@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { connect } from 'react-redux';
-import {
-  Alert,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableHighlight,
-  View
-} from 'react-native';
-import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
@@ -20,7 +12,7 @@ import HeaderButton from '../components/HeaderButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
 import {
-  createDealerWipRequest,
+  //   createDealerWipRequest,
   deleteDealerWipRequest,
   updateDealerWipRequest,
   getDealerWipsRequest
@@ -29,8 +21,8 @@ import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import JobsList from './JobsListReturnAll';
 // import JobsList from './JobsList';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
+
+// import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
 const KEYS_TO_FILTERS = [
   'tools.partNumber',
@@ -118,6 +110,20 @@ export default JobsScreen = props => {
         item => item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
     [];
+  //   console.log('£££££unsortedUserWipsItems start');
+  //   console.log(unsortedUserWipsItems);
+  //   console.log('£££££unsortedUserWipsItems end');
+
+  //   const userWipsItems = [].concat(unsortedUserWipsItems);
+
+  //   userWipsItems.sort((a, b) =>
+  //     moment(a.createdDate, 'DD/MM/YYYY HH:MM:SS').isAfter(
+  //       moment(b.createdDate, 'DD/MM/YYYY HH:MM:SS')
+  //     )
+  //   );
+  //   console.log('£££££userWipsItems start');
+  //   console.log(userWipsItems);
+  //   console.log('£££££userWipsItems end');
   //   console.log('userWipsItems ', userWipsItems);
   // const { dealerWipsItems } = this.props;
   // console.log('in DealerWipsScreen, dealerWips ', this.props);
