@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ActivityIndicator,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View
-} from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
@@ -19,7 +13,7 @@ import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-// import productsDummyData from '../dummyData/productsDummyData.js';
+import productsDummyData from '../dummyData/productsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
 
@@ -182,7 +176,7 @@ const styles = StyleSheet.create({
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgDarkSkyBlue
   },
   lookupPromptText: {
     textAlign: 'center',

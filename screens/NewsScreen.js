@@ -70,7 +70,7 @@ export default NewsScreen = props => {
       //   let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
       WebBrowser.dismissBrowser();
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
-      console.log(result);
+      //   console.log(result);
       setBrowserResult(result);
     } else {
       WebBrowser.dismissBrowser();
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgDarkSkyBlue
   },
   lookupPromptText: {
     textAlign: 'center',
