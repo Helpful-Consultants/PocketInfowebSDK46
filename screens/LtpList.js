@@ -29,29 +29,29 @@ export default function LtpList(props) {
   //     );
   //   };
 
-  const orderAs = () => (
-    // not wanted yet
-    <Text>{`Order as ${item.orderPartNo}, from ${moment(
-      item.nextAvailableDate,
-      'YYYY-MM-DD'
-    ).format('Do MMM') || null}`}</Text>
-  );
+  //   const orderAs = () => (
+  //     // not wanted yet
+  //     <Text>{`Order as ${item.orderPartNo}, from ${moment(
+  //       item.nextAvailableDate,
+  //       'YYYY-MM-DD'
+  //     ).format('Do MMM') || null}`}</Text>
+  //   );
 
-  const rightIcon = () => (
-    // not wanted yet
-    <View>
-      <Icon
-        name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
-        type='ionicon'
-      />
-      <Icon
-        name={
-          Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-arrow-round-up'
-        }
-        type='ionicon'
-      />
-    </View>
-  );
+  //   const rightIcon = () => (
+  //     // not wanted yet
+  //     <View>
+  //       <Icon
+  //         name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+  //         type='ionicon'
+  //       />
+  //       <Icon
+  //         name={
+  //           Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-arrow-round-up'
+  //         }
+  //         type='ionicon'
+  //       />
+  //     </View>
+  //   );
 
   const FlatListItem = ({ ...props }) => {
     const { item } = props;
@@ -60,13 +60,18 @@ export default function LtpList(props) {
     return (
       <ListItem
         title={`${item.loanToolNo} (${item.supplierPartNo})`}
-        titleStyle={{ color: Colors.vwgDarkSkyBlue }}
+        titleStyle={{
+          color: Colors.vwgBlack,
+          fontSize: RFPercentage(1.9)
+        }}
+        contentContainerStyle={styles.listItem}
         bottomDivider
         subtitle={
           <View>
             <Text
               style={{
-                color: Colors.vwgDeepBlue
+                color: Colors.vwgVeryDarkGray,
+                fontSize: RFPercentage(1.9)
               }}
             >{`${item.toolDescription}`}</Text>
           </View>
@@ -102,41 +107,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 5
   },
-  tipText: {
-    fontSize: 12,
-    marginLeft: 15,
-    marginTop: 3,
-    marginBottom: 20
-  },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12
-  },
-  optionIconContainer: {
-    marginRight: 9
-  },
-  option: {
-    backgroundColor: '#eee',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderBottomWidth: 3,
-    borderBottomColor: '#fff',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingRight: 20
-  },
-  optionText: {
-    fontSize: 15,
-    marginTop: 1,
-    color: '#333'
-  },
-  toolItem: {
-    backgroundColor: '#888',
-    marginLeft: 10,
-    marginRight: 10,
-    marginVertical: 5
+
+  listItem: {
+    marginLeft: 0,
+    marginRight: 0,
+    marginVertical: 0
   },
   summaryText: {
     fontSize: 12,

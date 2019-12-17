@@ -114,14 +114,12 @@ export default LtpScreen = props => {
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
+      <View style={styles.ltpPrompt}>
+        <Text style={styles.ltpPromptText}>
+          Please visit the LTP website to make your booking.
+        </Text>
+      </View>
       <ScrollView>
-        {searchInput && filteredItems && filteredItems.length > 0 ? (
-          <View style={styles.lookupPrompt}>
-            <Text style={styles.searchFoundPromptText}>
-              Please visit the LTP website to make your booking.
-            </Text>
-          </View>
-        ) : null}
         <LtpList
           items={filteredItems}
           pressOpenHandler={pressOpenHandler}
@@ -175,9 +173,12 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
   },
-  searchFoundPromptText: {
+  ltpPrompt: {
+    padding: 10,
+    backgroundColor: Colors.vwgDarkSkyBlue
+  },
+  ltpPromptText: {
     textAlign: 'center',
-
     color: Colors.vwgWhite
   },
   lookupPrompt: {
