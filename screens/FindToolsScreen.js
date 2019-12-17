@@ -356,9 +356,7 @@ export default FindToolsScreen = ({ ...props }) => {
     (inputIdentifier, text) => {
       let isValid = false;
       if (text.trim().length > 0) {
-        if (text[0] != 0) {
-          isValid = true;
-        }
+        isValid = true;
       }
       dispatchFormState({
         type: Types.FORM_INPUT_UPDATE,
