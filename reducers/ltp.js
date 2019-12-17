@@ -18,6 +18,7 @@ export default function ltp(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_LTP_SUCCESS: {
+      action.payload.items.sort((a, b) => a.loanToolNo > b.loanToolNo);
       return {
         ...state,
         ltpItems: action.payload.items,

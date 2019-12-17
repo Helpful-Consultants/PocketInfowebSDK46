@@ -19,6 +19,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_DEALER_TOOLS_SUCCESS: {
+      action.payload.items.sort((a, b) => a.partNumber > b.partNumber);
       return {
         ...state,
         dealerToolsItems: action.payload.items,
