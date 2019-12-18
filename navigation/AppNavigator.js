@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  createAppContainer,
-  createStackNavigator,
-  createSwitchNavigator,
-  createDrawerNavigator,
-  createBottomTabNavigator
-} from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import { useScreens } from 'react-native-screens';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';

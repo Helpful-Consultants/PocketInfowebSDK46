@@ -1,10 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, Platform } from 'react-native';
-import {
-  createStackNavigator,
-  createBottomTabNavigator
-} from 'react-navigation';
-
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
@@ -150,11 +148,11 @@ tabNavigator.path = '';
 const styles = StyleSheet.create({
   focused: {
     color: Colors.vwgDeepBlue,
-    fontSize: 12
+    fontSize: RFPercentage(1.8)
   },
   notFocused: {
     color: Colors.vwgIosLink,
-    fontSize: 12
+    fontSize: RFPercentage(1.8)
   }
 });
 
