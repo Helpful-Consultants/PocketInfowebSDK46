@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   },
   ltpPromptText: {
     textAlign: 'center',
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgWhite
   },
   lookupPrompt: {
