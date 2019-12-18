@@ -132,6 +132,11 @@ export default JobsScreen = props => {
   // console.log(dealerWipsItems);
   // console.log('Find DealerWips screen end');
 
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
+
   const searchInputHandler = searchInput => {
     console.log(searchInput);
     setSearchInput(searchInput);

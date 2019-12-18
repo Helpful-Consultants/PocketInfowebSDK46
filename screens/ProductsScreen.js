@@ -78,6 +78,11 @@ export default ProductsScreen = props => {
     }
   };
 
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
+
   const searchInputHandler = searchInput => {
     console.log(searchInput);
     setSearchInput(searchInput);

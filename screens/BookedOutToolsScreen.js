@@ -74,6 +74,11 @@ export default BookedOutToolsScreen = props => {
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
 
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
+
   const deleteDealerWip = useCallback(
     payload => dispatch(deleteDealerWipRequest(payload)),
     [dealerWipsItems]

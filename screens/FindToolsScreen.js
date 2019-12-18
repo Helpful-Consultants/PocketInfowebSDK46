@@ -157,6 +157,11 @@ export default FindToolsScreen = ({ ...props }) => {
   //     console.log('in tools screen, no toolsItems');
   //   }
 
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
+
   const selectItemHandler = (tool, lastPerson) => {
     // console.log(tool, ' to be added to ');
     // console.log('last job details', lastPerson);

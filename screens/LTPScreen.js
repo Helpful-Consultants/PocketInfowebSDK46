@@ -41,16 +41,17 @@ export default LtpScreen = props => {
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  if (ltpItems && ltpItems.length > 0) {
-    console.log('in ltp screen,ltpItems', ltpItems.length);
-  } else {
-    console.log('in ltp screen, no ltpItems');
-  }
-  // Search function
   const [searchInput, setSearchInput] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // console.log(props);
+
+  //   if (ltpItems && ltpItems.length > 0) {
+  //     console.log('in ltp screen,ltpItems', ltpItems.length);
+  //   } else {
+  //     console.log('in ltp screen, no ltpItems');
+  //   }
+  // Search function
+
   //   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
@@ -59,23 +60,18 @@ export default LtpScreen = props => {
 
   useEffect(() => {
     // runs only once
+    // setSearchInput('test ');
+    console.log('in ltp use effect');
     const getItemsAsync = async () => {
-      console.log('in ltp use effect');
       getItems();
     };
     getItemsAsync();
-  }, [dispatch]);
+  }, []);
 
-  const pressOpenHandler = async url => {
-    // console.log('in pressOpenHandler', url);
-    let checkedUrl = checkUrl(url);
-
-    if (Platform.OS === 'ios') {
-      let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
-    } else {
-      let result = await WebBrowser.openBrowserAsync(checkedUrl);
-    }
-  };
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
 
   const searchInputHandler = searchInput => {
     console.log(searchInput);
@@ -103,6 +99,10 @@ export default LtpScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
+  //   setSearchInput('cheese');
+
+  console.log('RENDERING !!!!!!!!!!!!!!!!!!!', searchInput);
+
   return (
     <View>
       <SearchBarWithRefresh
@@ -120,11 +120,7 @@ export default LtpScreen = props => {
         </Text>
       </View>
       <ScrollView>
-        <LtpList
-          items={filteredItems}
-          pressOpenHandler={pressOpenHandler}
-          baseImageUrl={Urls.ltpHeadlineImage}
-        />
+        <LtpList items={filteredItems} baseImageUrl={Urls.ltpHeadlineImage} />
       </ScrollView>
     </View>
   );
