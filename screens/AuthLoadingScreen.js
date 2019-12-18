@@ -18,10 +18,10 @@ export default AuthLoadingScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
 
   if (userIsSignedIn) {
-    console.log('signed in , going to Main');
+    // console.log('signed in , going to Main');
     props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
   } else {
-    console.log('signed out , going to Main');
+    // console.log('signed out , going to Main');
     props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
   }
 
