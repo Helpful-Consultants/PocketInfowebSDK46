@@ -58,8 +58,8 @@ export const updateDealerWipSuccess = ({ code, message }) => ({
 //   }
 // });
 export const createDealerWipRequest = wipData => {
-  console.log('in delete action');
-  console.log(wipData);
+  //   console.log('in delete action');
+  //   console.log(wipData);
   return { type: Types.CREATE_DEALER_WIP_REQUEST, payload: wipData };
 };
 
@@ -78,8 +78,8 @@ export const updateDealerWipRequest = wipData => {
 };
 
 export const deleteDealerWipRequest = payload => {
-  console.log('in delete action');
-  console.log(payload);
+  //   console.log('in delete action');
+  //   console.log(payload);
   //   console.log(id, wipNumber, intId);
   return {
     type: Types.DELETE_DEALER_WIP_REQUEST,
