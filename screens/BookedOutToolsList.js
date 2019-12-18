@@ -71,8 +71,9 @@ export default function BookedOutToolsList(props) {
                 <Text
                   style={{
                     fontSize: RFPercentage(2.2),
-                    color: '#2089dc',
-                    textAlign: 'left'
+                    color: Colors.vwgIosLink,
+                    textAlign: 'left',
+                    fontWeight: '600'
                   }}
                 >{`${item.partNumber} (${item.toolNumber})`}</Text>
                 <View>

@@ -62,7 +62,8 @@ export default function LtpList(props) {
         title={`${item.loanToolNo} (${item.supplierPartNo})`}
         titleStyle={{
           color: Colors.vwgBlack,
-          fontSize: RFPercentage(1.9)
+          fontSize: RFPercentage(1.9),
+          fontWeight: '600'
         }}
         contentContainerStyle={styles.listItem}
         bottomDivider

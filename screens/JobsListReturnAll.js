@@ -39,7 +39,8 @@ export default function DealerToolsList(props) {
                     fontSize: RFPercentage(2.2),
                     color: Colors.vwgDeepBlue,
                     textAlign: 'left',
-                    marginRight: 10
+                    marginRight: 10,
+                    fontWeight: '600'
                   }}
                 >{`${item.partNumber} (${item.toolNumber})`}</Text>
               </View>
@@ -157,7 +158,7 @@ export default function DealerToolsList(props) {
                           fontWeight: '600',
                           textAlign: 'left',
                           marginBottom: 5,
-                          color: Colors.vwgDeepBlue
+                          color: Colors.vwgDarkSkyBlue
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()

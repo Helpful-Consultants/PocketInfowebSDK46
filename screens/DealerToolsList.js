@@ -96,7 +96,11 @@ export default function DealerToolsList(props) {
             ? `${item.partNumber} (${item.toolNumber})`
             : `${item.loanToolNo} (${item.supplierPartNo})`
         }
-        titleStyle={{ color: Colors.vwgIosLink, fontSize: RFPercentage(2.1) }}
+        titleStyle={{
+          color: Colors.vwgIosLink,
+          fontSize: RFPercentage(2.1),
+          fontWeight: '600'
+        }}
         subtitle={
           <View>
             <Text style={{ fontSize: RFPercentage(2.0) }}>
@@ -135,7 +139,11 @@ export default function DealerToolsList(props) {
 
       lastJobDetails = (
         <Text
-          style={{ fontSize: RFPercentage(2.0) }}
+          style={{
+            fontSize: RFPercentage(2.0),
+            color: Colors.vwgWarmOrange,
+            fontWeight: '500'
+          }}
         >{`Last booked out by ${person}, job ${item.lastWIP}`}</Text>
       );
     }
@@ -198,44 +206,8 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
   },
-  tipText: {
-    fontSize: 12,
-    marginLeft: 15,
-    marginTop: 3,
-    marginBottom: 20
-  },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12
-  },
-  optionIconContainer: {
-    marginRight: 9
-  },
-  option: {
-    backgroundColor: '#eee',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderBottomWidth: 3,
-    borderBottomColor: '#fff',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingRight: 20
-  },
-  optionText: {
-    fontSize: 15,
-    marginTop: 1,
-    color: '#000'
-  },
+
   toolItem: {
-    backgroundColor: '#888',
     margin: 0
-  },
-  summaryText: {
-    fontSize: 12,
-    marginTop: 5,
-    color: '#000',
-    marginRight: 20
   }
 });

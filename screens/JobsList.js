@@ -67,8 +67,9 @@ export default function DealerToolsList(props) {
                 }}
                 titleStyle={{
                   fontSize: RFPercentage(2.2),
-                  color: '#2089dc',
-                  textAlign: 'left'
+                  color: Colors.vwgDeepBlue,
+                  textAlign: 'left',
+                  fontWeight: '600'
                 }}
                 key={i}
                 title={`${item.partNumber} (${item.toolNumber})`}
