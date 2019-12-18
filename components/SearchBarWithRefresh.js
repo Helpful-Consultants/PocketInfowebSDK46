@@ -12,11 +12,21 @@ import Colors from '../constants/Colors';
 
 export default SearchBarWithRefresh = props => {
   //   console.log('SearchBarWithRefresh props', props);
-  let { dataName } = props;
-  dataName = dataName || 'data';
+  const {
+    dataName,
+    dataCount,
+    isLoading,
+    dataError,
+    refreshRequestHandler,
+    searchInput,
+    searchInputHandler
+  } = props;
+
+  const dataNameToUse = dataName || 'data';
+
   return (
     <View style={styles.searchBarRow}>
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.searchBarRowRefreshButton}>
           <ActivityIndicator size={'small'} />
         </View>
@@ -24,7 +34,7 @@ export default SearchBarWithRefresh = props => {
         <TouchableOpacity
           style={styles.searchBarRowRefreshButton}
           onPress={() => {
-            props.refreshRequestHandler();
+            refreshRequestHandler();
           }}
         >
           <Icon
@@ -35,23 +45,23 @@ export default SearchBarWithRefresh = props => {
           />
         </TouchableOpacity>
       )}
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
-            Updating {`${dataName}`}.
+            Updating {`${dataNameToUse}`}.
           </Text>
         </View>
-      ) : props.dataError ? (
+      ) : dataError ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowErrorText}>
-            {`There was a problem downloading the ${dataName}. Please refresh.`}
+            {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
           </Text>
         </View>
-      ) : props.dataCount && props.dataCount > 0 ? (
+      ) : dataCount && dataCount > 0 ? (
         <View style={styles.searchBarRowSearchInput}>
           <SearchBar
-            onChangeText={props.searchInputHandler}
-            value={props.searchInput}
+            onChangeText={searchInputHandler}
+            value={searchInput}
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={styles.searchBarContainer}
             inputContainerStyle={styles.searchBarInputContainer}
@@ -61,11 +71,11 @@ export default SearchBarWithRefresh = props => {
       ) : (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
-            {`No ${dataName} downloaded yet. Please refresh. Thanks.`}
+            {`No ${dataNameToUse} downloaded yet. Please refresh. Thanks.`}
           </Text>
         </View>
       )}
-      {props.searchInput.length > 0 && props.dataCount === 0 ? (
+      {searchInput.length > 0 && dataCount === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
@@ -83,13 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff'
   },
-  warningContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 70,
-    backgroundColor: '#fff'
-  },
+
   searchBarRow: {
     flexDirection: 'row',
     backgroundColor: Colors.vwgSearchBarContainer
@@ -152,17 +156,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.vwgWhite,
     fontSize: RFPercentage(1.9)
-  },
-  buttonContainer: {
-    flexDirection: 'column',
-    width: '60%'
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    width: '60%'
-  },
-  buttonView: {
-    // width: 200,
-    fontSize: 12
   }
 });
