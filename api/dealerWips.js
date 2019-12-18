@@ -7,80 +7,16 @@ const dummyPin = '808255';
 const dummyIntId = 850;
 const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
-const ztools = [
-  {
-    id: '5104'
-    // toolType: 'Equipment',
-    // location: '',
-    // lastWIP: '',
-    // partNumber: 'ASE44705101000',
-    // toolNumber: '6883 /1A',
-    // partDescription: 'Torque wrench 5 - 25Nm\r\n'
-  }
-];
-
-const tools = [
-  {
-    id: '5536',
-    toolType: 'Equipment',
-    location: '',
-    lastWIP: '',
-    toolNumber: '1687',
-    toolType: 'Equipment',
-    toolCondition: '',
-    partDescription: 'Charge air tester',
-    partNumber: 'ASE40110101000'
-  }
-];
-
-const dummyData = [
-  {
-    wipNumber: 5002,
-    createdBy: 'Alan',
-    createdDate: '2019-11-18T21:05:02.354Z',
-    userIntId: '850',
-    tools: [
-      {
-        id: '4472',
-        toolType: 'Tool',
-        partNumber: '10 - 222 A /2',
-        toolNumber: 'V03839141EH',
-        partDescription: 'Supplementary hook',
-        location: '',
-        toolCondition: '',
-        lastWIP: ''
-      },
-      {
-        id: '5893',
-        toolType: 'Tool',
-        partNumber: '10 - 222 A /3',
-        toolNumber: 'V03839111FT',
-        partDescription: 'Adapter',
-        location: '',
-        toolCondition: '',
-        lastWIP: ''
-      }
-    ]
-  }
-];
-
-const postUrl = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
-// console.log(postUrl);
-
-const deleteUrl =
-  '/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=' +
-  dummyDealerId;
-// console.log(deleteUrl);
 
 export const getDealerWips = wipObj => {
-  console.log('here in getDealerWips  ', wipObj);
+  //   console.log('here in getDealerWips  ', wipObj);
   const { dealerId, intId } = wipObj;
   const url =
     '/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=' +
     intId +
     '&dealerId=' +
     dealerId;
-  console.log(url);
+  //   console.log(url);
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
@@ -94,7 +30,7 @@ export const getDealerWips = wipObj => {
 };
 
 export const createDealerWip = wipObj => {
-  console.log('!!!!!!!!!!!! in create wip api', wipObj);
+  //   console.log('!!!!!!!!!!!! in create wip api', wipObj);
 
   const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
 
@@ -103,7 +39,7 @@ export const createDealerWip = wipObj => {
 
   const wipArr = [wipObj];
 
-  console.log('!!!!!!!!wipArr', wipArr);
+  //   console.log('!!!!!!!!wipArr', wipArr);
 
   //   const strung = queryString.stringify(stuff);
   //   const strung = stuff.toString();
@@ -121,32 +57,9 @@ export const createDealerWip = wipObj => {
   //     data: dummyData
   //   });
 
-  return axios.post(url, wipArr);
+  //   return axios.post(url, wipArr);
 
-  //   return axios.post(postUrl, dummyData, {
-  //     headers: {
-  //       data: dummyData,
-  //       Accept: '*/*',
-  //       'Content-Type': 'application/json'
-  //       //   //   'Content-Type': 'text/json'
-  //       //   'Content-Type': 'text/plain'
-  //       //   'Content-Type': 'text/json'
-  //     }
-  //   });
-  // return axios.post(postUrl, dummyData, {
-  //     headers: {
-  //         data: '',
-  //         Accept: '*/*',
-  //         'Content-Type': 'application/json'
-  //         //   //   'Content-Type': 'text/json'
-  //         //   'Content-Type': 'text/plain'
-  //         //   'Content-Type': 'text/json'
-  //     }
-  // });
-  //   return axios.post(postUrl, strungArray);
-  //   return axios.post(postUrl, dummyData);
-  //   return axios.post(postUrl, strungArray, {
-  return axios.post(postUrl, wipArr, {
+  return axios.post(url, strungArray, {
     headers: {
       //   'Content-Type': 'text/plain'
       Accept: '*/*',

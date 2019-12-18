@@ -26,6 +26,7 @@ function* getDealerWips({ payload }) {
     // console.log('end results in saga get dealerWips, success');
     if (result.data.length > 0) {
       //   console.log('in Wips saga - good 200');
+      //   console.log(result.data);
       yield put(
         actions.getDealerWipsSuccess({
           items: result.data
@@ -59,8 +60,8 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  console.log('in create wip saga', payload);
-  console.log('in create wip saga', payload.wipObj);
+  //   console.log('in create wip saga', payload);
+  //   console.log('in create wip saga', payload.wipObj);
 
   try {
     yield call(api.createDealerWip, payload.wipObj);
@@ -170,9 +171,9 @@ function* watchUpdateDealerWipRequest() {
 
 // Delete WIP
 function* deleteDealerWip(payload) {
-  console.log('in saga DELETE dealerWip called');
-  console.log('in saga DELETE dealerWip payload', payload);
-  console.log('in saga DELETE dealerWip wip', payload.wipNumber);
+  //   console.log('in saga DELETE dealerWip called');
+  //   console.log('in saga DELETE dealerWip payload', payload);
+  //   console.log('in saga DELETE dealerWip wip', payload.wipNumber);
 
   try {
     yield call(api.deleteDealerWip, payload);
@@ -214,7 +215,7 @@ function* deleteDealerWip(payload) {
 }
 
 function* watchDeleteDealerWipRequest() {
-  console.log('in saga watch for DELETE dealerWip');
+  //   console.log('in saga watch for DELETE dealerWip');
   while (true) {
     const { payload } = yield take(Types.DELETE_DEALER_WIP_REQUEST);
     yield call(deleteDealerWip, payload);

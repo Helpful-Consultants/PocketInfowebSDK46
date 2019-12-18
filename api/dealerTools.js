@@ -10,10 +10,10 @@ const dummyUrl =
 // console.log(dummyUrl);
 
 export const getDealerTools = ({ dealerId }) => {
-  console.log('here in getDealerTools dealerId is ', dealerId);
+  //   console.log('here in getDealerTools dealerId is ', dealerId);
   const url =
     '/mandatoryList/?controller=api&action=listAllTools&dealerId=' + dealerId;
-  console.log(url);
+  //   console.log(url);
   return axios.get(url, {
     params: {
       //   limit: 1000
