@@ -1,6 +1,13 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Platform, ScrollView, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Divider, Button, Icon } from 'react-native-elements';
@@ -28,25 +35,96 @@ export default function DealerToolsList(props) {
 
   console.log('dataCount ', dataCount);
 
-  const ToolList = ({ job }) => {
+  const ToolList = ({ job, listOrder }) => {
     // const { job } = props;
     // console.log(job);
     return (
       <View>
         {job.tools ? ( // crashes without this if no tools in job
           job.tools.map((item, i) => (
-            <View key={i} style={{ marginRight: 30 }}>
+            <TouchableOpacity
+              key={i}
+              onPress={() => {
+                {
+                  /* alert(`pressed finished ${item.wipNumber}`); */
+                }
+                console.log('job and tool', job, item);
+                returnToolHandler(job, item);
+              }}
+              style={{ marginRight: 30 }}
+            >
               <View>
-                <View>
-                  <Text
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    justifyContent: 'space-between',
+                    padding: 0,
+                    margin: 0
+                  }}
+                >
+                  <View
                     style={{
-                      fontSize: RFPercentage(2.2),
-                      color: Colors.vwgDeepBlue,
-                      textAlign: 'left',
-                      marginRight: 10,
-                      fontWeight: '600'
+                      width: listOrder === 0 && i === 0 ? '70%' : '90%'
                     }}
-                  >{`${item.partNumber} (${item.toolNumber})`}</Text>
+                  >
+                    <Text
+                      style={{
+                        fontSize: RFPercentage(2.2),
+                        color: Colors.vwgIosLink,
+                        textAlign: 'left',
+                        paddingTop: 10,
+                        fontWeight: '600'
+                      }}
+                    >{`${item.partNumber} (${item.toolNumber})`}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'flex-start',
+                      justifyContent: 'flex-end'
+                    }}
+                  >
+                    {listOrder === 0 && i === 0 ? (
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontSize: RFPercentage(2.2),
+                            color: Colors.vwgIosLink,
+                            textAlign: 'right',
+                            paddingTop: 9
+                          }}
+                        >
+                          Return
+                        </Text>
+                      </View>
+                    ) : null}
+
+                    <View
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}
+                    >
+                      <Icon
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'ios-return-left'
+                            : 'md-return-left'
+                        }
+                        iconStyle={{ margin: 0, padding: 0 }}
+                        type='ionicon'
+                        color={Colors.vwgIosLink}
+                        reverse
+                        size={10}
+                      />
+                    </View>
+                  </View>
                 </View>
                 <View style={{ marginRight: 10 }}>
                   <View
@@ -104,42 +182,7 @@ export default function DealerToolsList(props) {
                   </View>
                 </View>
               </View>
-              <View style={{ alignItems: 'flex-end' }}>
-                <Button
-                  title='Return tool'
-                  type='clear'
-                  iconRight
-                  onPress={() => {
-                    {
-                      /* alert(`pressed finished ${item.wipNumber}`); */
-                    }
-                    console.log('job and tool', job, item);
-                    returnToolHandler(job, item);
-                  }}
-                  buttonStyle={{
-                    backgroundColor: 'transparent'
-                  }}
-                  titleStyle={{
-                    fontSize: 14,
-                    color: Colors.vwgIosLink,
-                    backgroundColor: 'transparent'
-                  }}
-                  icon={
-                    <Icon
-                      name={
-                        Platform.OS === 'ios'
-                          ? 'ios-return-left'
-                          : 'md-return-left'
-                      }
-                      type='ionicon'
-                      color={Colors.vwgIosLink}
-                      reverse
-                      size={10}
-                    />
-                  }
-                />
-              </View>
-            </View>
+            </TouchableOpacity>
           ))
         ) : (
           <Text
@@ -211,7 +254,9 @@ export default function DealerToolsList(props) {
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()
-                          ? `Job ${item.wipNumber}`
+                          ? `Job ${item.wipNumber}, ${item.tools.length} ${
+                              item.tools.length > 1 ? 'tools' : 'tool'
+                            }`
                           : `${item.createdBy}'s job ${item.wipNumber}`}
                       </Text>
                     </View>
@@ -219,7 +264,7 @@ export default function DealerToolsList(props) {
                     <View>
                       <FriendlyDate date={item.createdDate} />
                     </View>
-                    <ToolList job={item} />
+                    <ToolList job={item} listOrder={i} />
                   </View>
                 </View>
               ))}
