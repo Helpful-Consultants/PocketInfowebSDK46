@@ -8,34 +8,31 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import Touchable from 'react-native-platform-touchable';
-import { Ionicons } from '@expo/vector-icons';
-import { Divider } from 'react-native-elements';
-import moment from 'moment';
+
+import { Divider, Icon } from 'react-native-elements';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import ScaledImageFinder from '../components/ScaledImageFinder';
-import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
 import Colors from '../constants/Colors';
-import FriendlyDate from '../components/FriendlyDate';
 
 export default function BookedOutToolsList(props) {
   //   console.log('BookedOutToolsList props');
   //   console.log(props);
   //   console.log('BookedOutToolsList props end');
   const {
+    isLoading,
+    dataCount,
     items,
     baseImageUrl,
-    returnToolHandler,
-    deleteDealerWipRequest
+    returnToolHandler
   } = props;
   let { userIntId } = props;
 
   userIntId = userIntId.toString() || '';
   //   console.log(props);
   //   console.log('props end');
-  const limit = 0;
+  //   const limit = 0;
   //   console.log('userIntId ', userIntId);
   //   const allItems = (props.items && props.items) || [];
 
@@ -51,15 +48,26 @@ export default function BookedOutToolsList(props) {
   return (
     <View>
       <ScrollView>
-        <View style={styles.searchPrompt}>
-          <Text style={styles.searchPromptText}>
-            {`You have ${items.length ? items.length : `no`} tools booked out.`}
-          </Text>
-        </View>
+        {!isLoading ? (
+          <View style={styles.searchPrompt}>
+            <Text style={styles.searchPromptText}>
+              {`You have ${dataCount > 0 ? dataCount : `no`} tools booked out.`}
+            </Text>
+          </View>
+        ) : null}
         {!items || items.length === 0 ? null : (
           <View style={{ marginHorizontal: 10 }}>
             {items.map((item, i) => (
-              <View key={i}>
+              <TouchableOpacity
+                key={i}
+                onPress={() => {
+                  {
+                    /* alert(`pressed finished ${item.wipNumber}`); */
+                  }
+                  console.log('job and tool', item);
+                  returnToolHandler(item);
+                }}
+              >
                 {i > 0 ? (
                   <Divider
                     style={{
@@ -68,14 +76,79 @@ export default function BookedOutToolsList(props) {
                     }}
                   />
                 ) : null}
-                <Text
-                  style={{
-                    fontSize: RFPercentage(2.2),
-                    color: Colors.vwgIosLink,
-                    textAlign: 'left',
-                    fontWeight: '600'
-                  }}
-                >{`${item.partNumber} (${item.toolNumber})`}</Text>
+                <View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'flex-start',
+                      justifyContent: 'space-between',
+                      padding: 0,
+                      margin: 0
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: i === 0 ? '70%' : '90%'
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: RFPercentage(2.2),
+                          color: Colors.vwgIosLink,
+                          textAlign: 'left',
+                          fontWeight: '600',
+                          paddingTop: 8
+                        }}
+                      >{`${item.partNumber} (${item.toolNumber})`}</Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'flex-start',
+                        justifyContent: 'flex-end'
+                      }}
+                    >
+                      {i === 0 ? (
+                        <View
+                          style={{
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: RFPercentage(2.2),
+                              color: Colors.vwgIosLink,
+                              textAlign: 'right',
+                              paddingTop: 9
+                            }}
+                          >
+                            Return
+                          </Text>
+                        </View>
+                      ) : null}
+                      <View
+                        style={{
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <Icon
+                          name={
+                            Platform.OS === 'ios'
+                              ? 'ios-return-left'
+                              : 'md-return-left'
+                          }
+                          iconStyle={{ margin: 0, padding: 0 }}
+                          type='ionicon'
+                          color={Colors.vwgIosLink}
+                          reverse
+                          size={10}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </View>
                 <View>
                   <View
                     style={{
@@ -117,7 +190,7 @@ export default function BookedOutToolsList(props) {
                     </View>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         )}

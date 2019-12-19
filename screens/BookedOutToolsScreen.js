@@ -1,17 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Alert,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableHighlight,
-  View
-} from 'react-native';
-import { Button, Card, Icon, SearchBar, Text } from 'react-native-elements';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
@@ -19,24 +11,24 @@ import HeaderButton from '../components/HeaderButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
 import {
-  createDealerWipRequest,
+  //   createDealerWipRequest,
   deleteDealerWipRequest,
-  updateDealerWipRequest,
+  deleteDealerWipToolRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
-// import JobsList from './JobsListReturnAll';
 import BookedOutToolsList from './BookedOutToolsList';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
+// import JobsList from './JobsList';
+
+// import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
 const KEYS_TO_FILTERS = [
-  'tools.partNumber',
-  'tools.toolNumber',
-  'tools.partDescription'
+  'partNumber',
+  'toolNumber',
+  'partDescription',
+  'wipNumber'
 ];
-
 export default BookedOutToolsScreen = props => {
   const dispatch = useDispatch();
   const dealerWipsItems = useSelector(
@@ -53,9 +45,7 @@ export default BookedOutToolsScreen = props => {
   const [selectedItem, setSelectedItem] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
-
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [bookedOutItems, setBookedOutItems] = useState([]);
   const [listView, setListView] = useState({});
   if (!userIsSignedIn) {
@@ -74,18 +64,13 @@ export default BookedOutToolsScreen = props => {
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
-    setSearchInput('');
-    didFocusSubscription.remove();
-  });
-
   const deleteDealerWip = useCallback(
     payload => dispatch(deleteDealerWipRequest(payload)),
     [dealerWipsItems]
   );
 
-  const updateDealerWip = useCallback(
-    payload => dispatch(updateDealerWipRequest(payload)),
+  const deleteDealerWipTool = useCallback(
+    payload => dispatch(deleteDealerWipToolRequest(payload)),
     [dealerWipsItems]
   );
   //   const createDealerWip = useCallback(
@@ -94,39 +79,6 @@ export default BookedOutToolsScreen = props => {
   //   );
 
   //   console.log('in jobs screen, wipsItems', JSON.parse(dealerWipsItems));
-
-  const buildBookedOutToolsArrForJob = wip => {
-    // console.log('$$$$$in buildBookedOutToolsArrForJob, wip is', wip && wip);
-    const thisWipsToolsArr = wip.tools.map(tool => ({
-      ...tool,
-      wipNumber: wip.wipNumber,
-      wipId: wip.id.toString(),
-      wipCreatedDate: wip.createdDate
-    }));
-
-    // console.log(
-    //   '$$$$$in buildBookedOutToolsArrForJob, thisWipsToolsArr is ',
-    //   thisWipsToolsArr
-    // );
-    return thisWipsToolsArr;
-  };
-
-  const buildBookedOutToolsArr = wips => {
-    // console.log(
-    //   '$$$$$in buildBookedOutToolsArr, wip count ',
-    //   wips && wips.length
-    // );
-
-    let allToolsArr = [];
-
-    wips.forEach(wip => {
-      let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-      allToolsArr.push(...wipToolsArr);
-      //   console.log('wipToolsArr', allToolsArr);
-    });
-    // console.log('$$$$$in buildBookedOutToolsArr newArr is', allToolsArr.length);
-    return allToolsArr;
-  };
 
   useEffect(() => {
     // runs only once
@@ -164,12 +116,63 @@ export default BookedOutToolsScreen = props => {
     setBookedOutItems(bookedOutToolItems);
   }, [dealerWipsItems, userDataObj]);
 
-  //   if (dealerWipsItems && dealerWipsItems.length > 0) {
-  //     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
-  //   } else {
-  //     console.log('in jobs screen, no wipsItems');
-  //   }
+  const buildBookedOutToolsArrForJob = wip => {
+    // console.log('$$$$$in buildBookedOutToolsArrForJob, wip is', wip && wip);
+    const thisWipsToolsArr = wip.tools.map(tool => ({
+      ...tool,
+      wipNumber: wip.wipNumber,
+      wipId: wip.id.toString(),
+      wipCreatedDate: wip.createdDate
+    }));
 
+    // console.log(
+    //   '$$$$$in buildBookedOutToolsArrForJob, thisWipsToolsArr is ',
+    //   thisWipsToolsArr
+    // );
+    return thisWipsToolsArr;
+  };
+
+  const buildBookedOutToolsArr = wips => {
+    // console.log(
+    //   '$$$$$in buildBookedOutToolsArr, wip count ',
+    //   wips && wips.length
+    // );
+
+    let allToolsArr = [];
+
+    wips.forEach(wip => {
+      let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+      allToolsArr.push(...wipToolsArr);
+      //   console.log('wipToolsArr', allToolsArr);
+    });
+    // console.log('$$$$$in buildBookedOutToolsArr newArr is', allToolsArr.length);
+    return allToolsArr;
+  };
+
+  const userWipsItems =
+    (userDataObj.intId &&
+      dealerWipsItems &&
+      dealerWipsItems.length > 0 &&
+      dealerWipsItems.filter(
+        item => item.userIntId.toString() == userDataObj.intId.toString()
+      )) ||
+    [];
+
+  const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
+  //   console.log('£££££unsortedUserWipsItems start');
+  //   console.log(unsortedUserWipsItems);
+  //   console.log('£££££unsortedUserWipsItems end');
+
+  //   const userWipsItems = [].concat(unsortedUserWipsItems);
+
+  //   userWipsItems.sort((a, b) =>
+  //     moment(a.createdDate, 'DD/MM/YYYY HH:MM:SS').isAfter(
+  //       moment(b.createdDate, 'DD/MM/YYYY HH:MM:SS')
+  //     )
+  //   );
+  //   console.log('£££££userWipsItems start');
+  //   console.log(userWipsItems);
+  //   console.log('£££££userWipsItems end');
   //   console.log('userWipsItems ', userWipsItems);
   // const { dealerWipsItems } = this.props;
   // console.log('in DealerWipsScreen, dealerWips ', this.props);
@@ -177,24 +180,35 @@ export default BookedOutToolsScreen = props => {
   // console.log('Find DealerWips screen');
   // console.log(dealerWipsItems);
   // console.log('Find DealerWips screen end');
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+
+  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    setSearchInput('');
+    didFocusSubscription.remove();
+  });
+
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
+    // console.log(searchInput);
     setSearchInput(searchInput);
   };
 
-  const returnToolHandler = ({ job, tool }) => {
-    // console.log('in returnToolHandler', job, tool);
-    setCurrentJob(job);
-    setCurrentTool(tool);
-
-    setIsModalVisible(true);
+  const returnToolHandler = item => {
+    // console.log('in returnToolHandler', item);
+    // console.log('userWipsItems', userWipsItems.length);
+    const jobId = item.wipId;
+    // console.log('in returnToolHandler jobId is ', jobId);
+    const jobObj = userWipsItems.find(item => item.id.toString() === jobId);
+    // const jobObj = jobArr[0];
+    // console.log('jobArr', jobArr);
+    // console.log('in returnToolHandler jobObj is ', jobObj);
+    setCurrentJob(jobObj);
+    setCurrentTool(item);
+    setIsAlertVisible(true);
   };
 
   const confirmReturnToolHandler = () => {
-    console.log('in confirmreturnToolHandler', currentTool);
-    console.log('in confirmreturnToolHandler', currentJob);
-    setIsModalVisible(false);
+    // console.log('in confirmreturnToolHandler', currentJob);
+    // console.log('in confirmreturnToolHandler', currentTool);
+    setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
         dealerId: dealerId,
@@ -202,70 +216,58 @@ export default BookedOutToolsScreen = props => {
         getWipsDataObj: getWipsDataObj
       };
 
-      console.log('delete wip ' + currentJob.id);
-      console.log('delete wip ', payload);
-      //   deleteDealerWip(payload);
+      //   console.log('delete wip ' + currentJob.id);
+      //   console.log('delete wip ', payload);
+      deleteDealerWip(payload);
     } else {
-      let newJobTools = currentJob.tools.filter(
-        tool => tool.id !== currentTool.id
-      );
-      console.log('newJobTools', newJobTools);
-      let newJob = {
-        wipNumber: currentJob.wipNumber.toString(),
-        createdBy: userDataObj.userName,
-        createdDate: new Date(),
-        userIntId: userDataObj.intId.toString(),
-        dealerId: dealerId,
-        tools: newJobTools
-      };
       let payload = {
         dealerId: dealerId,
-        wipObj: newJob,
+        wipObj: currentJob,
+        wipToolLineId: currentTool.id,
         getWipsDataObj: getWipsDataObj
       };
-      console.log(currentJob);
-      console.log(newJob);
-      console.log('remove ' + currentTool.id + 'from ' + currentJob.id);
-      console.log('update wip ' + currentJob.id);
-      console.log('update wip ', payload);
-      //   updateDealerWip(payload);
+      //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
+      //   console.log('for wip wip ', payload);
+      deleteDealerWipTool(payload);
     }
   };
 
   const returnAllToolsHandler = job => {
-    console.log('in returnToolHandler', job);
+    // console.log('in returnToolHandler', job);
     setCurrentJob(job);
-    setIsModalVisible(true);
+    setIsAlertVisible(true);
   };
 
-  const confirmReturnAllToolsHandler = () => {
-    console.log('in confirmreturnToolHandler', currentJob);
-    setIsModalVisible(false);
+  //   const confirmReturnAllToolsHandler = () => {
+  //     console.log('in confirmreturnToolHandler', currentJob);
+  //     setIsAlertVisible(false);
 
-    let payload = {
-      dealerId: dealerId,
-      wipObj: currentJob,
-      getWipsDataObj: getWipsDataObj
-    };
-    console.log('delete wip ' + currentJob.id);
-    console.log('delete wip ', payload);
-    deleteDealerWip(payload);
-  };
+  //     let payload = {
+  //       dealerId: dealerId,
+  //       wipObj: currentJob,
+  //       getWipsDataObj: getWipsDataObj
+  //     };
+  //     console.log('delete wip ' + currentJob.id);
+  //     console.log('delete wip ', payload);
+  //     deleteDealerWip(payload);
+  //   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler', getWipsDataObj);
+    // console.log('in refreshRequestHandler', getWipsDataObj);
     dealerId && userDataObj.intId && getItems(getWipsDataObj);
   };
 
   //   const items = (!isLoading && !dataError && userWipsItems) || [];
-
   //   console.log('items AREEEEEEEEEE', items);
+  console.log('isLoading ', isLoading, 'dataError ', dataError);
 
-  //   const filteredItems =
-  //     (!isLoading &&
-  //       items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
-  //     [];
-  const filteredItems = bookedOutItems;
+  console.log('bookedOutItems', bookedOutItems);
+
+  const filteredItems =
+    (!isLoading &&
+      bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+    [];
+
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
   // const { search } = this.state;
@@ -280,6 +282,7 @@ export default BookedOutToolsScreen = props => {
 
   return (
     <View>
+      {/* <NewJobButton setIsAlertVisible={setIsAlertVisible} /> */}
       <SearchBarWithRefresh
         dataName={'booked out tools'}
         refreshRequestHandler={refreshRequestHandler}
@@ -287,11 +290,13 @@ export default BookedOutToolsScreen = props => {
         searchInput={searchInput}
         isLoading={isLoading}
         dataError={dataError}
-        dataCount={dealerWipsItems.length}
+        dataCount={userWipsItems.length}
       />
       <ScrollView>
         <BookedOutToolsList
           items={filteredItems}
+          dataCount={dataCount}
+          isLoading={isLoading}
           deleteDealerWipRequest={deleteDealerWip}
           userIntId={userDataObj.intId}
           baseImageUrl={Urls.toolImage}
@@ -299,12 +304,12 @@ export default BookedOutToolsScreen = props => {
           returnAllToolsHandler={returnAllToolsHandler}
         />
       </ScrollView>
-      {isModalVisible ? (
+      {isAlertVisible ? (
         <AwesomeAlert
-          show={isModalVisible}
+          show={isAlertVisible}
           showProgress={false}
-          title='Return tools'
-          message={`Have you returned all tools in this job to their correct locations?`}
+          title='Return tool'
+          message={`Have you returned ${currentTool.partNumber} (${currentTool.toolNumber}) to its correct location?`}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={true}
@@ -314,26 +319,10 @@ export default BookedOutToolsScreen = props => {
           confirmButtonColor={Colors.vwgMintGreen}
           cancelButtonColor={Colors.vwgWarmRed}
           onCancelPressed={() => {
-            setIsModalVisible(false);
+            setIsAlertVisible(false);
           }}
           onConfirmPressed={() => {
-            confirmReturnAllToolsHandler();
-          }}
-        />
-      ) : null}
-      {isLyndonAlertVisible ? (
-        <AwesomeAlert
-          show={isLyndonAlertVisible}
-          showProgress={false}
-          title='Hello Lyndon'
-          message={`There's a problem with the data from the web server so we can't strip out duplicates just yet.`}
-          closeOnTouchOutside={true}
-          closeOnHardwareBackPress={false}
-          showCancelButton={true}
-          cancelText='Close'
-          cancelButtonColor={Colors.vwgDeepBlue}
-          onCancelPressed={() => {
-            setIsLyndonAlertVisible(false);
+            confirmReturnToolHandler();
           }}
         />
       ) : null}
@@ -342,7 +331,7 @@ export default BookedOutToolsScreen = props => {
 };
 
 BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Booked tools' />,
+  headerTitle: <TitleWithAppLogo title='Booked Tools' />,
   headerLeft: (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
@@ -372,6 +361,10 @@ BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
     </HeaderButtons>
   )
 });
+
+// LocatorScreen.navigationOptions = {
+//   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />
+// };
 
 const styles = StyleSheet.create({
   container: {

@@ -14,12 +14,12 @@ import HeaderButton from '../components/HeaderButton';
 import {
   //   createDealerWipRequest,
   deleteDealerWipRequest,
-  updateDealerWipRequest,
+  deleteDealerWipToolRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
-import JobsList from './JobsListReturnAll';
+import JobsList from './JobsList';
 // import JobsList from './JobsList';
 
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
@@ -27,7 +27,8 @@ import JobsList from './JobsListReturnAll';
 const KEYS_TO_FILTERS = [
   'tools.partNumber',
   'tools.toolNumber',
-  'tools.partDescription'
+  'tools.partDescription',
+  'wipNumber'
 ];
 
 export default JobsScreen = props => {
@@ -70,8 +71,8 @@ export default JobsScreen = props => {
     [dealerWipsItems]
   );
 
-  const updateDealerWip = useCallback(
-    payload => dispatch(updateDealerWipRequest(payload)),
+  const deleteDealerWipTool = useCallback(
+    payload => dispatch(deleteDealerWipToolRequest(payload)),
     [dealerWipsItems]
   );
   //   const createDealerWip = useCallback(
@@ -110,6 +111,8 @@ export default JobsScreen = props => {
         item => item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
     [];
+
+  const dataCount = (userWipsItems && userWipsItems.length) || 0;
   //   console.log('£££££unsortedUserWipsItems start');
   //   console.log(unsortedUserWipsItems);
   //   console.log('£££££unsortedUserWipsItems end');
@@ -138,11 +141,11 @@ export default JobsScreen = props => {
   });
 
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
+    // console.log(searchInput);
     setSearchInput(searchInput);
   };
 
-  const returnToolHandler = ({ job, tool }) => {
+  const returnToolHandler = (job, tool) => {
     // console.log('in returnToolHandler', job, tool);
     setCurrentJob(job);
     setCurrentTool(tool);
@@ -151,8 +154,8 @@ export default JobsScreen = props => {
   };
 
   const confirmReturnToolHandler = () => {
-    console.log('in confirmreturnToolHandler', currentTool);
-    console.log('in confirmreturnToolHandler', currentJob);
+    // console.log('in confirmreturnToolHandler', currentJob);
+    // console.log('in confirmreturnToolHandler', currentTool);
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
@@ -161,64 +164,50 @@ export default JobsScreen = props => {
         getWipsDataObj: getWipsDataObj
       };
 
-      console.log('delete wip ' + currentJob.id);
-      console.log('delete wip ', payload);
-      //   deleteDealerWip(payload);
+      //   console.log('delete wip ' + currentJob.id);
+      //   console.log('delete wip ', payload);
+      deleteDealerWip(payload);
     } else {
-      let newJobTools = currentJob.tools.filter(
-        tool => tool.id !== currentTool.id
-      );
-      console.log('newJobTools', newJobTools);
-      let newJob = {
-        wipNumber: currentJob.wipNumber.toString(),
-        createdBy: userDataObj.userName,
-        createdDate: new Date(),
-        userIntId: userDataObj.intId.toString(),
-        dealerId: dealerId,
-        tools: newJobTools
-      };
       let payload = {
         dealerId: dealerId,
-        wipObj: newJob,
+        wipObj: currentJob,
+        wipToolLineId: currentTool.id,
         getWipsDataObj: getWipsDataObj
       };
-      console.log(currentJob);
-      console.log(newJob);
-      console.log('remove ' + currentTool.id + 'from ' + currentJob.id);
-      console.log('update wip ' + currentJob.id);
-      console.log('update wip ', payload);
-      //   updateDealerWip(payload);
+      //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
+      //   console.log('for wip wip ', payload);
+      deleteDealerWipTool(payload);
     }
   };
 
   const returnAllToolsHandler = job => {
-    console.log('in returnToolHandler', job);
+    // console.log('in returnToolHandler', job);
     setCurrentJob(job);
     setIsAlertVisible(true);
   };
 
-  const confirmReturnAllToolsHandler = () => {
-    console.log('in confirmreturnToolHandler', currentJob);
-    setIsAlertVisible(false);
+  //   const confirmReturnAllToolsHandler = () => {
+  //     console.log('in confirmreturnToolHandler', currentJob);
+  //     setIsAlertVisible(false);
 
-    let payload = {
-      dealerId: dealerId,
-      wipObj: currentJob,
-      getWipsDataObj: getWipsDataObj
-    };
-    console.log('delete wip ' + currentJob.id);
-    console.log('delete wip ', payload);
-    deleteDealerWip(payload);
-  };
+  //     let payload = {
+  //       dealerId: dealerId,
+  //       wipObj: currentJob,
+  //       getWipsDataObj: getWipsDataObj
+  //     };
+  //     console.log('delete wip ' + currentJob.id);
+  //     console.log('delete wip ', payload);
+  //     deleteDealerWip(payload);
+  //   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler', getWipsDataObj);
+    // console.log('in refreshRequestHandler', getWipsDataObj);
     dealerId && userDataObj.intId && getItems(getWipsDataObj);
   };
 
   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
   const filteredItems =
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
@@ -238,11 +227,6 @@ export default JobsScreen = props => {
 
   return (
     <View>
-      {/* <SearchBar
-        onChangeText={searchInputHandler}
-        value={searchInput}
-        platform={Platform.OS === 'ios' ? 'ios' : 'android'}
-      /> */}
       {/* <NewJobButton setIsAlertVisible={setIsAlertVisible} /> */}
       <SearchBarWithRefresh
         dataName={'jobs'}
@@ -255,7 +239,9 @@ export default JobsScreen = props => {
       />
       <ScrollView>
         <JobsList
+          isLoading={isLoading}
           items={filteredItems}
+          dataCount={dataCount}
           deleteDealerWipRequest={deleteDealerWip}
           userIntId={userDataObj.intId}
           baseImageUrl={Urls.toolImage}
@@ -267,8 +253,8 @@ export default JobsScreen = props => {
         <AwesomeAlert
           show={isAlertVisible}
           showProgress={false}
-          title='Return tools'
-          message={`Have you returned all tools in this job to their correct locations?`}
+          title='Return tool'
+          message={`Have you returned this tool to its correct location?`}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={true}
@@ -281,7 +267,7 @@ export default JobsScreen = props => {
             setIsAlertVisible(false);
           }}
           onConfirmPressed={() => {
-            confirmReturnAllToolsHandler();
+            confirmReturnToolHandler();
           }}
         />
       ) : null}
