@@ -49,7 +49,7 @@ export default function StatsSummary(props) {
           <View>
             <Text style={styles.statsTitle}>Mandatory Tools</Text>
             <Text style={styles.statsText}>
-              {`${dealerToolsCount} mandatory; ${statsObj.loggedTools} logged`}
+              {`${dealerToolsCount} mandatory; ${effectiveness} logged`}
             </Text>
           </View>
           <View>
