@@ -149,11 +149,11 @@ tabNavigator.path = '';
 const styles = StyleSheet.create({
   focused: {
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.7)
   },
   notFocused: {
     color: Colors.vwgIosLink,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.7)
   }
 });
 
