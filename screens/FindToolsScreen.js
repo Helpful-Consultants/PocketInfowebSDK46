@@ -742,8 +742,9 @@ export default FindToolsScreen = ({ ...props }) => {
             <View style={styles.toolsList}>
               <DealerToolsList
                 items={filteredItems}
+                userIntId={userIntId}
                 dealerWipsItems={dealerWipsItems}
-                onSelectItem={selectItemHandler}
+                selectItemHandler={selectItemHandler}
                 mode={mode}
                 showPrompt={
                   mode === 'list' &&

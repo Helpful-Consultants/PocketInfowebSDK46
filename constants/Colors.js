@@ -33,6 +33,7 @@ export default {
   vwgWarmMidBlue: '#0b4a76',
   vwgCoolLightIosBlue: '#4a9ced',
   vwgNiceBlue: '#0096da',
+  vwgVeryLightGray: '#f6f6f6',
   vwgLightGray: '#ccc',
   vwgMidGray: '#999',
   vwgDarkGray: '#666',
