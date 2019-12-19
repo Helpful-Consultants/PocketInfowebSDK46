@@ -3,7 +3,6 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { useScreens } from 'react-native-screens';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignOutScreen from '../screens/SignOutScreen';
@@ -14,8 +13,6 @@ import HomeScreen from '../screens/HomeScreen';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
-
-useScreens();
 
 const SignedOutStack = createStackNavigator({
   SignIn: {
