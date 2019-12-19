@@ -107,8 +107,23 @@ export const updateDealerWip = updateWipObj => {
 
 // export const deleteDealerWip = ({ dealerId, wipObj }) => {
 
+export const deleteDealerWipTool = payload => {
+  //   console.log('in delete dealer wip tool api', payload);
+
+  const wipId = payload.wipObj.id;
+  const wipToolLineId = payload.wipToolLineId;
+
+  const url =
+    '/mandatoryList/?controller=api&action=appDeleteToolFromWIP&wipId=' +
+    wipId +
+    '&wipLineId=' +
+    wipToolLineId;
+  //   console.log(url);
+  return axios.post(url);
+};
+
 export const deleteDealerWip = payload => {
-  console.log('in delete dealer wip api', payload);
+  //   console.log('in delete dealer wip api', payload);
 
   const dealerId = payload.dealerId;
   const wipObj = payload.wipObj;
@@ -120,10 +135,10 @@ export const deleteDealerWip = payload => {
     '&contact_id=' +
     wipObj.userIntId +
     '';
-  console.log(sendData);
+  //   console.log(sendData);
   const url =
     '/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=' + dealerId;
-  console.log(url);
+  //   console.log(url);
   return axios.post(url, sendData, {
     headers: {
       //   'Content-Type': 'application/x-www-form-urlencoded'

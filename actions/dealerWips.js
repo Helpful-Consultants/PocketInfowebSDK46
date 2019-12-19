@@ -29,10 +29,6 @@ export const getDealerWipsSuccess = ({ items }) => ({
   }
 });
 
-export const emptyDealerWipsRequest = () => ({
-  type: Types.EMPTY_DEALER_WIPS_REQUEST
-});
-
 export const updateDealerWipSuccess = ({ code, message }) => ({
   type: Types.UPDATE_DEALER_WIP_SUCCESS,
   payload: {
@@ -89,6 +85,19 @@ export const deleteDealerWipRequest = payload => {
 
 export const deleteDealerWipSuccess = ({ code, message }) => ({
   type: Types.DELETE_DEALER_WIP_SUCCESS,
+  payload: {
+    code,
+    message
+  }
+});
+
+export const deleteDealerWipToolRequest = payload => ({
+  type: Types.DELETE_DEALER_WIP_TOOL_REQUEST,
+  payload: payload
+});
+
+export const deleteDealerWipToolSuccess = ({ code, message }) => ({
+  type: Types.DELETE_DEALER_WIP_TOOL_SUCCESS,
   payload: {
     code,
     message

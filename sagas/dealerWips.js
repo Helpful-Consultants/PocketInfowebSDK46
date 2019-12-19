@@ -73,8 +73,11 @@ function* createDealerWip({ payload }) {
         wipNumber: payload.getWipsDataObj.wipNumber || ''
       })
     );
+    console.log('createDealerWipSuccess');
     yield put(actions.getDealerWipsStart());
+    console.log('getDealerWipStarted');
     yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
+    console.log('getDealerWipSuccess');
 
     // yield put(
     //   toolsActions.getDealerToolsRequest(payload.getWipsDataObj.dealerId)
@@ -110,7 +113,7 @@ function* watchCreateDealerWipRequest() {
 }
 // Create WIP end
 
-// Update WIP start
+// DELETe WIP TOOL start
 function* updateDealerWip({ payload }) {
   console.log('in UPDATE wip saga', payload);
   console.log('in UPDATE wip saga', payload.wipObj);
@@ -168,6 +171,56 @@ function* watchUpdateDealerWipRequest() {
   yield takeEvery(Types.UPDATE_DEALER_WIP_REQUEST, updateDealerWip);
 }
 // Update WIP end
+
+// Remove tool from WIP start
+function* deleteDealerWipTool({ payload }) {
+  //   console.log('in DELETE wip TOOL saga', payload);
+  //   console.log('in DELETE wip TOOL saga', payload.wipObj);
+  try {
+    // delete the old one
+    yield call(api.deleteDealerWipTool, payload);
+    // yield put(actions.getDealerWipsRequest(payload.wipDataObj));
+    // yield call(getDealerWips);
+    yield put(
+      actions.deleteDealerWipToolSuccess({
+        code: '200',
+        message: 'Successful',
+        wipNumber: payload.wipNumber || ''
+      })
+    );
+    // refresh the list
+    yield put(actions.getDealerWipsStart());
+    yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
+  } catch (error) {
+    if (error.response) {
+      // console.error(error);if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      console.log(error.response.data);
+      // console.log(error.response.status);
+      // console.log(error.response.headers);
+    } else if (error.request) {
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      console.log(error.request);
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      console.log('Error in deleteDealerWipTool', error.message);
+    }
+    console.log(error.config);
+    yield put(
+      actions.dealerWipsError({
+        error: 'An error occurred when trying to delete the user WIP tool'
+      })
+    );
+  }
+}
+
+function* watchDeleteDealerWipToolRequest() {
+  yield takeEvery(Types.DELETE_DEALER_WIP_TOOL_REQUEST, deleteDealerWipTool);
+}
+// Remove tool from WIP end
 
 // Delete WIP
 function* deleteDealerWip(payload) {
@@ -227,7 +280,7 @@ const dealerWipsSagas = [
   fork(watchGetDealerWipsRequest),
   fork(watchDeleteDealerWipRequest),
   fork(watchCreateDealerWipRequest),
-  fork(watchUpdateDealerWipRequest)
+  fork(watchDeleteDealerWipToolRequest)
 ];
 
 export default dealerWipsSagas;

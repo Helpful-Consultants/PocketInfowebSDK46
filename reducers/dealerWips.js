@@ -40,19 +40,19 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         error: null
       };
     }
-    case Types.UPDATE_DEALER_WIP_SUCCESS: {
-      console.log(action.payload);
-      return {
-        ...state,
-        lastWipProcessed: {
-          code: action.payload.code,
-          message: action.payload.message,
-          wipNumber: action.payload.wipNumber || ''
-        },
-        isLoading: false,
-        error: null
-      };
-    }
+    // case Types.UPDATE_DEALER_WIP_SUCCESS: {
+    //   console.log(action.payload);
+    //   return {
+    //     ...state,
+    //     lastWipProcessed: {
+    //       code: action.payload.code,
+    //       message: action.payload.message,
+    //       wipNumber: action.payload.wipNumber || ''
+    //     },
+    //     isLoading: false,
+    //     error: null
+    //   };
+    // }
     case Types.DELETE_DEALER_WIP_SUCCESS: {
       console.log(action.payload);
       //   console.log('reducer end data');
@@ -67,12 +67,16 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         error: null
       };
     }
-    case Types.EMPTY_DEALER_WIPS_REQUEST: {
-      //   console.log(action.payload);
+    case Types.DELETE_DEALER_WIP_TOOL_SUCCESS: {
+      console.log(action.payload);
       //   console.log('reducer end data');
       return {
         ...state,
-        dealerWipsItems: [],
+        lastWipProcessed: {
+          code: action.payload.code,
+          message: action.payload.message,
+          wipNumber: action.payload.wipNumber || ''
+        },
         isLoading: false,
         error: null
       };
