@@ -51,7 +51,6 @@ export default function DealerToolsList(props) {
                 console.log('job and tool', job, item);
                 returnToolHandler(job, item);
               }}
-              style={{ marginRight: 30 }}
             >
               <View>
                 <View
@@ -220,8 +219,7 @@ export default function DealerToolsList(props) {
                     backgroundColor:
                       item.userIntId.toString() == userIntId.toString()
                         ? Colors.vwgWhite
-                        : '#ededed',
-
+                        : Colors.vwgveryLightGray,
                     marginHorizontal: 10,
                     paddingTop: 10,
                     paddingBottom: 10
