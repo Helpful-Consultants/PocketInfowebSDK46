@@ -117,10 +117,16 @@ export default function DealerToolsList(props) {
             ? `${item.partNumber} ${
                 item.toolNumber ? `(${item.toolNumber})` : ``
               }`
-            : `${item.loanToolNo} (${item.supplierPartNo})`
+            : `${item.loanToolNo} ${
+                item.supplierPartNo ? `(${item.supplierPartNo})` : ``
+              }`
         }
         titleStyle={{
-          color: bookedByUser ? Colors.vwgVeryDarkGray : Colors.vwgIosLink,
+          color: item.loanToolNo
+            ? Colors.vwgVeryDarkGray
+            : bookedByUser
+            ? Colors.vwgVeryDarkGray
+            : Colors.vwgIosLink,
           fontSize: RFPercentage(2.1),
           fontWeight: '600'
         }}
@@ -196,7 +202,15 @@ export default function DealerToolsList(props) {
       }
     }
 
-    return item.loanToolNo ? null : bookedByUser === true ? (
+    return item.loanToolNo ? (
+      <View style={styles.unavailableToolItem}>
+        <CustomListItem
+          item={item}
+          lastJobDetails={lastJobDetails}
+          bookedByUser={bookedByUser}
+        ></CustomListItem>
+      </View>
+    ) : bookedByUser === true ? (
       <View style={styles.unavailableToolItem}>
         <CustomListItem
           item={item}

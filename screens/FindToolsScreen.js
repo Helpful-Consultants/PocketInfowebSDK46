@@ -20,7 +20,7 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { getDealerWipsRequest } from '../actions/dealerWips';
-// import { getLtpRequest } from '../actions/ltp';
+import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
@@ -31,10 +31,10 @@ import DealerToolsList from './DealerToolsList';
 const KEYS_TO_FILTERS = [
   'toolNumber',
   'partNumber',
-  'partDescription'
-  //   'orderPartNo', // LTP
-  //   'toolDescription', // LTP
-  //   'loanToolNo' //LTP
+  'partDescription',
+  'orderPartNo', // LTP
+  'toolDescription', // LTP
+  'loanToolNo' //LTP
 ];
 
 const formReducer = (state, action) => {
@@ -68,7 +68,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
-  //   const ltpItems = useSelector(state => state.ltp.ltpItems);
+  const ltpItems = useSelector(state => state.ltp.ltpItems);
   //   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
@@ -76,6 +76,8 @@ export default FindToolsScreen = ({ ...props }) => {
   const dataErrorTools = useSelector(state => state.dealerTools.error);
   const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
   const dataErrorWips = useSelector(state => state.dealerWips.error);
+  const isLoadingLtp = useSelector(state => state.ltp.isLoading);
+  const dataErrorLtp = useSelector(state => state.ltp.error);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
   const userIntId = userDataObj && userDataObj.intId.toString();
@@ -112,7 +114,7 @@ export default FindToolsScreen = ({ ...props }) => {
     // console.log('in getItems', getDealerItemsDataObj);
     dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
     dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
-    // dispatch(getLtpRequest()), [ltpItems];
+    dispatch(getLtpRequest()), [ltpItems];
   });
 
   const saveToJob = useCallback(
@@ -135,22 +137,22 @@ export default FindToolsScreen = ({ ...props }) => {
   useEffect(() => {
     // runs only once
     // console.log('in tools use effect');
-    if (isLoadingTools || isLoadingWips) {
+    if (isLoadingTools || isLoadingWips || isLoadingLtp) {
       setIsLoadingAny(true);
     } else {
       setIsLoadingAny(false);
     }
-  }, [isLoadingTools, isLoadingWips]);
+  }, [isLoadingTools, isLoadingWips, isLoadingLtp]);
 
   useEffect(() => {
     // runs only once
     // console.log('in tools use effect');
-    if (dataErrorTools || dataErrorWips) {
+    if (dataErrorTools || dataErrorWips || dataErrorLtp) {
       setDataErrorAny(true);
     } else {
       setDataErrorAny(false);
     }
-  }, [dataErrorTools, dataErrorWips]);
+  }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
   //   if (dealerToolsItems && dealerToolsItems.length > 0) {
   //     console.log('in tools screen,toolsItems', dealerToolsItems.length);
   //   } else {
@@ -275,9 +277,9 @@ export default FindToolsScreen = ({ ...props }) => {
 
   // Search function
   const searchInputHandler = searchInput => {
-    console.log('searchInput ', searchInput);
+    // console.log('searchInput ', searchInput);
     // toggleShowBasketHandler(false);
-    console.log(searchInput);
+    // console.log(searchInput);
 
     let searchStringStart = searchInput.toLowerCase();
     let adjustedSearchInput = '';
@@ -291,10 +293,10 @@ export default FindToolsScreen = ({ ...props }) => {
       adjustedSearchInput = searchInput.substr(3);
       //   console.log('@@@@@cut' + adjustedSearchInput);
       setSearchInput(searchInput);
-      setAdjustedSearchString(adjustedSearchInput);
+      //   setAdjustedSearchString(adjustedSearchInput);
     } else {
       setSearchInput(searchInput);
-      setAdjustedSearchString(searchInput);
+      //   setAdjustedSearchString(searchInput);
     }
   };
   const refreshRequestHandler = () => {
@@ -357,9 +359,18 @@ export default FindToolsScreen = ({ ...props }) => {
 
   //   console.log('dealerToolsItems.length ', dealerToolsItems.length);
   //   console.log('ltpItems.length ', ltpItems.length);
+  const uniqueLtpItems =
+    (ltpItems &&
+      ltpItems.length > 0 &&
+      ltpItems.filter(
+        (item, index, self) =>
+          index ===
+          self.findIndex(t => t.supplierPartNo === item.supplierPartNo)
+      )) ||
+    [];
 
-  //   const concatItems = dealerToolsItems.concat(ltpItems);
-  const concatItems = dealerToolsItems;
+  const concatItems = dealerToolsItems.concat(uniqueLtpItems);
+  //   const concatItems = dealerToolsItems;
   //   console.log('concatItems.length ', concatItems.length);
 
   let allFilteredItems = concatItems.filter(
