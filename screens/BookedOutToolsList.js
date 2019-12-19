@@ -64,7 +64,9 @@ export default function BookedOutToolsList(props) {
                   {
                     /* alert(`pressed finished ${item.wipNumber}`); */
                   }
-                  console.log('job and tool', item);
+                  {
+                    /* console.log('job and tool', item); */
+                  }
                   returnToolHandler(item);
                 }}
               >
