@@ -85,7 +85,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [searchInput, setSearchInput] = useState('');
-  const [adjustedSearchString, setAdjustedSearchString] = useState();
+  //   const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
   const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
@@ -102,8 +102,8 @@ export default FindToolsScreen = ({ ...props }) => {
   //     [userIsSignedIn]
   //   );
   const input = React.createRef();
-  const userDataCount =
-    (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+  //   const userDataCount =
+  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
   const getDealerItemsDataObj = {
     dealerId: dealerId,
