@@ -62,7 +62,10 @@ export default LtpScreen = props => {
   }, []);
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
-    setSearchInput('');
+    console.log('did focus ltp');
+    if (searchInput && searchInput.length > 0) {
+      setSearchInput('');
+    }
     didFocusSubscription.remove();
   });
 
