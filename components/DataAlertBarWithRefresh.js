@@ -49,13 +49,13 @@ export default DataAlertBarWithRefresh = props => {
             {`There was a problem downloading the ${dataName}. Please refresh.`}
           </Text>
         </View>
-      ) : (
+      ) : someDataExpected && dataCount && dataCount === 0 ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
             {`No ${dataName} downloaded yet. Please refresh. Thanks.`}
           </Text>
         </View>
-      )}
+      ) : null}
     </View>
   );
 };

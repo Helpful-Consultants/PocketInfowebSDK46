@@ -730,6 +730,7 @@ export default FindToolsScreen = ({ ...props }) => {
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
             dataName={'tools'}
+            someDataExpected={true}
             refreshRequestHandler={refreshRequestHandler}
             searchInputHandler={searchInputHandler}
             searchInput={searchInput}

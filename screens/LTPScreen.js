@@ -100,6 +100,7 @@ export default LtpScreen = props => {
     <View>
       <SearchBarWithRefresh
         dataName={'LTP items'}
+        someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}

@@ -14,6 +14,7 @@ export default SearchBarWithRefresh = props => {
   //   console.log('SearchBarWithRefresh props', props);
   const {
     dataName,
+    someDataExpected,
     dataCount,
     isLoading,
     dataError,
@@ -57,7 +58,13 @@ export default SearchBarWithRefresh = props => {
             {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
           </Text>
         </View>
-      ) : dataCount && dataCount > 0 ? (
+      ) : someDataExpected && dataCount && dataCount === 0 ? (
+        <View style={styles.searchBarRowNoDataTextContainer}>
+          <Text style={styles.searchBarRowNoDataText}>
+            {`No ${dataNameToUse} downloaded yet. Please refresh. Thanks.`}
+          </Text>
+        </View>
+      ) : (
         <View style={styles.searchBarRowSearchInput}>
           <SearchBar
             onChangeText={searchInputHandler}
@@ -67,12 +74,6 @@ export default SearchBarWithRefresh = props => {
             inputContainerStyle={styles.searchBarInputContainer}
             autoCapitalize='none'
           />
-        </View>
-      ) : (
-        <View style={styles.searchBarRowNoDataTextContainer}>
-          <Text style={styles.searchBarRowNoDataText}>
-            {`No ${dataNameToUse} downloaded yet. Please refresh. Thanks.`}
-          </Text>
         </View>
       )}
       {searchInput.length > 0 && dataCount === 0 ? (

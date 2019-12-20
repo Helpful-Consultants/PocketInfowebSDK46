@@ -295,6 +295,7 @@ export default BookedOutToolsScreen = props => {
       <ScrollView>
         <BookedOutToolsList
           items={filteredItems}
+          someDataExpected={false}
           dataCount={dataCount}
           isLoading={isLoading}
           deleteDealerWipRequest={deleteDealerWip}

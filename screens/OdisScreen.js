@@ -53,6 +53,7 @@ export default OdisScreen = props => {
     <View>
       <DataAlertBarWithRefresh
         dataName={'odis versions'}
+        someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
@@ -71,7 +72,9 @@ OdisScreen.navigationOptions = ({ navigation }) => ({
         title='ODIS versions'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-         {/* console.log('pressed homescreen icon'); */}
+          {
+            /* console.log('pressed homescreen icon'); */
+          }
           navigation.navigate('HomeScreen');
         }}
       />
@@ -83,7 +86,9 @@ OdisScreen.navigationOptions = ({ navigation }) => ({
         title='menu'
         iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
         onPress={() => {
-          {/*  console.log('pressed menu icon'); */}
+          {
+            /*  console.log('pressed menu icon'); */
+          }
           navigation.openDrawer();
         }}
       />

@@ -114,6 +114,7 @@ export default ProductsScreen = props => {
       {/* <Text>{browserResult && JSON.stringify(browserResult)}</Text> */}
       <SearchBarWithRefresh
         dataName={'products'}
+        someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
