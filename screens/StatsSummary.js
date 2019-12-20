@@ -48,7 +48,10 @@ export default function StatsSummary(props) {
           <View>
             <Text style={styles.statsTitle}>Mandatory Tools</Text>
             <Text style={styles.statsText}>
-              {`${dealerToolsCount} mandatory; ${effectiveness} logged`}
+              {`${dealerToolsCount} mandatory; ${statsObj.loggedTools} logged;`}
+            </Text>
+            <Text style={styles.statsText}>
+              {`${effectiveness} effectiveness`}
             </Text>
           </View>
           <View>
@@ -65,9 +68,7 @@ export default function StatsSummary(props) {
           </View>
           <View>
             <Text style={styles.statsTitle}>Active Jobs</Text>
-            <Text style={styles.statsText}>
-              {`${activeJobsCount} active; ${effectiveness} effectiveness`}
-            </Text>
+            <Text style={styles.statsText}>{`${activeJobsCount} active;`}</Text>
           </View>
           <View>
             <Text style={styles.statsTitle}>Service Measures</Text>
