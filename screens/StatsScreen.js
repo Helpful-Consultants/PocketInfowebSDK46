@@ -33,7 +33,7 @@ export default StatsScreen = ({ ...props }) => {
     dealerId: dealerId,
     intId: userIntId
   };
-  console.log('getDealerItemsDataObj is ', getDealerItemsDataObj);
+  console.log('getDealerItemsDataObj is set to ', getDealerItemsDataObj);
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     getDealerItemsDataObj
@@ -44,8 +44,8 @@ export default StatsScreen = ({ ...props }) => {
   const getItems = useCallback(() => {
     console.log('in getItems', getDealerItemsDataObj);
     dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
-    dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
-    dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
+    // dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
+    // dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
     // dispatch(getLtpRequest()), [ltpItems];
   });
 
@@ -56,7 +56,7 @@ export default StatsScreen = ({ ...props }) => {
       getItems(getItems);
     };
     getItemsAsync();
-  }, [dispatch]);
+  }, []);
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getStatsData);
@@ -107,6 +107,7 @@ export default StatsScreen = ({ ...props }) => {
     <View style={styles.container}>
       <DataAlertBarWithRefresh
         dataName={'stats'}
+        someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
