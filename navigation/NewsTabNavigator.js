@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, Platform } from 'react-native';
+import { Platform, StyleSheet, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
@@ -135,12 +136,20 @@ StatsStack.path = '';
 // End Stats screen
 
 // Tab navigator
-const tabNavigator = createBottomTabNavigator({
-  NewsStack,
-  ProductsStack,
-  OdisStack,
-  StatsStack
-});
+const tabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator({
+        NewsStack,
+        ProductsStack,
+        OdisStack,
+        StatsStack
+      })
+    : createBottomTabNavigator({
+        NewsStack,
+        ProductsStack,
+        OdisStack,
+        StatsStack
+      });
 
 tabNavigator.path = '';
 // End Tab navigator

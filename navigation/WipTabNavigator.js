@@ -1,14 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, Platform } from 'react-native';
+import { Platform, StyleSheet, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 // import NewsScreen from '../screens/NewsScreen';
 // import ProductsScreen from '../screens/ProductsScreen';
-import LtpScreen from '../screens/LtpScreen';
+
 import FindToolsScreen from '../screens/FindToolsScreen';
+import LtpScreen from '../screens/LtpScreen';
 import JobsScreen from '../screens/JobsScreen';
 import BookedOutToolsScreen from '../screens/BookedOutToolsScreen';
 import Colors from '../constants/Colors';
@@ -135,13 +137,20 @@ LtpStack.path = '';
 // End LTP screen
 
 // Tab navigator
-const tabNavigator = createBottomTabNavigator({
-  //   Home: HomeScreen,
-  FindToolsStack,
-  BookedOutToolsStack,
-  JobsStack,
-  LtpStack
-});
+const tabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator({
+        FindToolsStack,
+        BookedOutToolsStack,
+        JobsStack,
+        LtpStack
+      })
+    : createBottomTabNavigator({
+        FindToolsStack,
+        BookedOutToolsStack,
+        JobsStack,
+        LtpStack
+      });
 
 tabNavigator.path = '';
 // End Tab navigator
