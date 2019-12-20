@@ -259,9 +259,9 @@ export default BookedOutToolsScreen = props => {
 
   //   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
-  console.log('bookedOutItems', bookedOutItems);
+  //   console.log('bookedOutItems', bookedOutItems);
 
   const filteredItems =
     (!isLoading &&

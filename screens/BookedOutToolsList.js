@@ -61,12 +61,6 @@ export default function BookedOutToolsList(props) {
               <TouchableOpacity
                 key={i}
                 onPress={() => {
-                  {
-                    /* alert(`pressed finished ${item.wipNumber}`); */
-                  }
-                  {
-                    /* console.log('job and tool', item); */
-                  }
                   returnToolHandler(item);
                 }}
               >
