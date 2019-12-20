@@ -254,7 +254,7 @@ export default JobsScreen = props => {
           show={isAlertVisible}
           showProgress={false}
           title='Return tool'
-          message={`Have you returned this tool to its correct location?`}
+          message={`Have you returned ${currentTool.partNumber} (${currentTool.toolNumber}) to its correct location?`}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={true}

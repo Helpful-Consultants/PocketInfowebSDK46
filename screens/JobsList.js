@@ -33,7 +33,7 @@ export default function DealerToolsList(props) {
 
   const limit = 0;
 
-  console.log('dataCount ', dataCount);
+  //   console.log('dataCount ', dataCount);
 
   const ToolList = ({ job, listOrder }) => {
     // const { job } = props;
@@ -45,10 +45,6 @@ export default function DealerToolsList(props) {
             <TouchableOpacity
               key={i}
               onPress={() => {
-                {
-                  /* alert(`pressed finished ${item.wipNumber}`); */
-                }
-                console.log('job and tool', job, item);
                 returnToolHandler(job, item);
               }}
             >
