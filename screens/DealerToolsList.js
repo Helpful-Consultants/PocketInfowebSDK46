@@ -187,7 +187,7 @@ export default function DealerToolsList(props) {
               color: Colors.vwgWarmRed,
               fontWeight: '500'
             }}
-          >{`Already booked out by you on job ${item.lastWIP}`}</Text>
+          >{`Booked out by you on job ${item.lastWIP}`}</Text>
         );
       } else {
         lastJobDetails = (
