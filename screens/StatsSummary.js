@@ -3,7 +3,6 @@ import React from 'react';
 import { Platform, StyleSheet, ScrollView, View } from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
-import Constants from 'expo-constants';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
@@ -74,26 +73,6 @@ export default function StatsSummary(props) {
             <Text style={styles.statsTitle}>Service Measures</Text>
             <Text style={styles.statsText}>
               {`${statsObj.activeServiceMeasures} active; ${statsObj.completedServiceMeasures} completed`}
-            </Text>
-          </View>
-
-          <View style={styles.appData}>
-            <Text style={styles.statsText}>
-              {`Using ${Constants.manifest.name} Version ${Constants.manifest.version}`}
-            </Text>
-            <Text style={styles.statsText}>
-              {`Builds ${Constants.nativeAppVersion} - ${Constants.nativeBuildVersion}`}
-            </Text>
-            <Text style={styles.statsText}>
-              {`${
-                Platform.OS === 'ios'
-                  ? Constants.platform.ios.buildNumber
-                    ? Constants.platform.ios.buildNumber
-                    : ''
-                  : Constants.platform.android.versionCode
-                  ? Constants.platform.android.versionCode
-                  : ''
-              }`}
             </Text>
           </View>
         </View>
