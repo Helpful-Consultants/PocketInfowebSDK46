@@ -14,18 +14,16 @@ import LtpScreen from '../screens/LtpScreen';
 import JobsScreen from '../screens/JobsScreen';
 import BookedOutToolsScreen from '../screens/BookedOutToolsScreen';
 import Colors from '../constants/Colors';
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {}
-});
+
+// const config = Platform.select({
+//   web: { headerMode: 'screen' },
+//   default: {}
+// });
 
 // Home screen
-const HomeStack = createStackNavigator(
-  {
-    Home: HomeScreen
-  },
-  config
-);
+const HomeStack = createStackNavigator({
+  Home: HomeScreen
+});
 
 HomeStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
@@ -38,17 +36,12 @@ HomeStack.navigationOptions = {
     />
   )
 };
-
-HomeStack.path = '';
 // End Home screen
 
 // Find Tools screen
-const FindToolsStack = createStackNavigator(
-  {
-    FindTools: FindToolsScreen
-  },
-  config
-);
+const FindToolsStack = createStackNavigator({
+  FindTools: FindToolsScreen
+});
 
 FindToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
@@ -61,17 +54,12 @@ FindToolsStack.navigationOptions = {
     />
   )
 };
-
-FindToolsStack.path = '';
 // End Find Tools screen
 
 // BookedOutTools screen
-const BookedOutToolsStack = createStackNavigator(
-  {
-    BookedOutTools: BookedOutToolsScreen
-  },
-  config
-);
+const BookedOutToolsStack = createStackNavigator({
+  BookedOutTools: BookedOutToolsScreen
+});
 
 BookedOutToolsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
@@ -86,17 +74,12 @@ BookedOutToolsStack.navigationOptions = {
     />
   )
 };
-
-BookedOutToolsStack.path = '';
 // End Return Tools screen
 
 // Jobs screen
-const JobsStack = createStackNavigator(
-  {
-    Jobs: JobsScreen
-  },
-  config
-);
+const JobsStack = createStackNavigator({
+  Jobs: JobsScreen
+});
 
 JobsStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
@@ -109,17 +92,12 @@ JobsStack.navigationOptions = {
     />
   )
 };
-
-JobsStack.path = '';
 // End Jobs screen
 
 // LTP screen
-const LtpStack = createStackNavigator(
-  {
-    Ltp: LtpScreen
-  },
-  config
-);
+const LtpStack = createStackNavigator({
+  Ltp: LtpScreen
+});
 
 LtpStack.navigationOptions = {
   tabBarLabel: ({ focused }) => (
@@ -132,8 +110,6 @@ LtpStack.navigationOptions = {
     />
   )
 };
-
-LtpStack.path = '';
 // End LTP screen
 
 // Tab navigator
@@ -151,8 +127,6 @@ const tabNavigator =
         JobsStack,
         LtpStack
       });
-
-tabNavigator.path = '';
 // End Tab navigator
 
 const styles = StyleSheet.create({

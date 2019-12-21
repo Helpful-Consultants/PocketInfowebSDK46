@@ -12,17 +12,17 @@ import StatsScreen from '../screens/StatsScreen';
 import OdisScreen from '../screens/OdisScreen';
 import Colors from '../constants/Colors';
 
-const config = Platform.select({
-  web: { headerMode: 'screen' },
-  default: {}
-});
+// const config = Platform.select({
+//   web: { headerMode: 'screen' },
+//   default: {}
+// });
 
 // Home screen
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen
-  },
-  config
+  }
+  //   config
 );
 
 HomeStack.navigationOptions = {
@@ -36,19 +36,18 @@ HomeStack.navigationOptions = {
     />
   )
 };
-
-HomeStack.path = '';
 // End Home screen
 
 // News screen
 const NewsStack = createStackNavigator(
   {
     News: NewsScreen
-  },
-  config
+  }
+  //   config
 );
 
 NewsStack.navigationOptions = {
+  initialRouteName: 'news',
   tabBarLabel: ({ focused }) => (
     <Text style={focused ? styles.focused : styles.notFocused}>News</Text>
   ),
@@ -63,19 +62,18 @@ NewsStack.navigationOptions = {
     />
   )
 };
-
-NewsStack.path = '';
 // End News screen
 
 // Products screen
 const ProductsStack = createStackNavigator(
   {
     Products: ProductsScreen
-  },
-  config
+  }
+  //   config
 );
 
 ProductsStack.navigationOptions = {
+  initialRouteName: 'Products',
   tabBarLabel: ({ focused }) => (
     <Text style={focused ? styles.focused : styles.notFocused}>Products</Text>
   ),
@@ -86,18 +84,18 @@ ProductsStack.navigationOptions = {
     />
   )
 };
-ProductsStack.path = '';
 // End Products screen
 
 // ODIS screen
 const OdisStack = createStackNavigator(
   {
     Odis: OdisScreen
-  },
-  config
+  }
+  //   config
 );
 
 OdisStack.navigationOptions = {
+  initialRouteName: 'Odis',
   tabBarLabel: ({ focused }) => (
     <Text style={focused ? styles.focused : styles.notFocused}>ODIS</Text>
   ),
@@ -108,19 +106,18 @@ OdisStack.navigationOptions = {
     />
   )
 };
-
-OdisStack.path = '';
 // End ODIS screen
 
 // Stats screen
 const StatsStack = createStackNavigator(
   {
     Stats: StatsScreen
-  },
-  config
+  }
+  //   config
 );
 
 StatsStack.navigationOptions = {
+  initialRouteName: 'Stats',
   tabBarLabel: ({ focused }) => (
     <Text style={focused ? styles.focused : styles.notFocused}>Stats</Text>
   ),
@@ -131,8 +128,6 @@ StatsStack.navigationOptions = {
     />
   )
 };
-
-StatsStack.path = '';
 // End Stats screen
 
 // Tab navigator
@@ -150,18 +145,16 @@ const tabNavigator =
         OdisStack,
         StatsStack
       });
-
-tabNavigator.path = '';
 // End Tab navigator
 
 const styles = StyleSheet.create({
   focused: {
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.7)
   },
   notFocused: {
     color: Colors.vwgIosLink,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.7)
   }
 });
 

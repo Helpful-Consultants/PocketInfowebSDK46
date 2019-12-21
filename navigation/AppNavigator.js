@@ -9,6 +9,7 @@ import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 //   DrawerNavigatorItems as DrawerItems
 // } from 'react-navigation-drawer';
 import Constants from 'expo-constants';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignOutScreen from '../screens/SignOutScreen';
@@ -185,12 +186,14 @@ const styles = StyleSheet.create({
   },
   appName: {
     paddingTop: 100,
-    paddingLeft: 18
+    paddingLeft: 18,
+    fontSize: RFPercentage(1.8)
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
-    paddingLeft: 18
+    paddingLeft: 18,
+    fontSize: RFPercentage(1.8)
     // fontStyle: 'italic'
   }
 });
