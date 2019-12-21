@@ -93,6 +93,7 @@ export default FindToolsScreen = ({ ...props }) => {
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
   const [toolBasketIds, setToolBasketIds] = useState([]);
+  const [combinedItems, setCombinedItems] = useState([]);
 
   const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
@@ -159,6 +160,23 @@ export default FindToolsScreen = ({ ...props }) => {
   //     console.log('in tools screen, no toolsItems');
   //   }
 
+  useEffect(() => {
+    let uniqueLtpItems =
+      (ltpItems &&
+        ltpItems.length > 0 &&
+        ltpItems.filter(
+          (item, index, self) =>
+            index ===
+            self.findIndex(t => t.supplierPartNo === item.supplierPartNo)
+        )) ||
+      [];
+
+    let concatItems = dealerToolsItems.concat(uniqueLtpItems);
+
+    // setUniqueLtpItems(uniqueLtpItems);
+    setCombinedItems(concatItems);
+  }, [dealerToolsItems, ltpItems]);
+
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     console.log('FTS in didFocusSubscription');
@@ -169,82 +187,49 @@ export default FindToolsScreen = ({ ...props }) => {
   });
 
   const selectItemHandler = (tool, lastPerson) => {
-    // console.log(tool, ' to be added to ');
-    // console.log('last job details', lastPerson);
-    // console.log(toolBasket);
-
     let dup =
       (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
-    // console.log('dup, ');
+
     if (dup.length === 0) {
-      // newItem.key = newItem.id
-
       const pickedTool = { ...tool, lastPerson };
-
-      //   console.log(pickedTool);
-
       setToolBasket([...toolBasket, pickedTool]);
       setToolBasketIds([...toolBasketIds, pickedTool.id]);
-
-      //   toggleExpandBasketHandler(true);
       setMode('basket');
       setIsBasketVisible(true);
-      //   console.log('newBasket', newBasket);
-      //   console.log(newItem.id, ' added to... ');
     } else {
-      //   console.log('dup');
       setMode('basket');
       setIsBasketVisible(false);
       setIsDupPickedAlertVisible(true);
     }
-    // console.log('toolBasket update', toolBasket);
-    // console.log(toolBasket.length);
   };
 
   const cancelDupPickedHandler = () => {
-    // console.log('basket', ' to be removed');
     setIsDupPickedAlertVisible(false);
     setIsBasketVisible(true);
-
-    // console.log(toolBasket.length);
-    // updateBasketView();
   };
 
   const removeBasketHandler = () => {
-    // console.log('basket', ' to be removed');
-
     setToolBasket([]);
     setMode('list');
     setIsBasketVisible(false);
-
-    // console.log(toolBasket.length);
-    // updateBasketView();
   };
 
   const bookToolsHandler = () => {
-    // console.log('in book Tools handler');
     setMode('book');
     setWipNumber('');
-    // input.current.clear();
-    // input.current.isFocused();
     setIsBasketVisible(true);
   };
 
   const backdropPressHandler = () => {
-    // console.log('background pressed');
-    setMode('list');
     setIsBasketVisible(false);
-    // updateBasketView();
   };
+
   const basketBackHandler = () => {
-    // console.log('background pressed');
     inputChangeHandler('wipNumber', '');
     setMode('basket');
-    // updateBasketView();
   };
 
   const removeBasketItemHandler = deadItemId => {
-    // console.log(deadItemId, ' to be removed');
     if (toolBasket && toolBasket.length > 1) {
       const newBasket = toolBasket.filter(item => item.id !== deadItemId);
       setToolBasket(newBasket);
@@ -252,13 +237,13 @@ export default FindToolsScreen = ({ ...props }) => {
       removeBasketHandler();
     }
   };
+
   const addBasketItemHandler = () => {
-    // console.log(deadItemId, ' to be removed');
     setMode('list');
     setIsBasketVisible(false);
   };
+
   const toggleBaskethandler = action => {
-    // console.log(deadItemId, ' to be removed');
     if (action) {
       setIsBasketVisible(action);
       setMode('basket');
@@ -269,22 +254,13 @@ export default FindToolsScreen = ({ ...props }) => {
   };
 
   const acceptMessageHandler = () => {
-    // console.log('basket all done and closed');
     removeBasketHandler();
     setMode('list');
     setIsBasketVisible(false);
     inputChangeHandler('wipNumber', '');
-
-    // console.log(toolBasket.length);
-    // updateBasketView();
   };
 
-  // Search function
   const searchInputHandler = searchInput => {
-    // console.log('searchInput ', searchInput);
-    // toggleShowBasketHandler(false);
-    // console.log(searchInput);
-
     let searchStringStart = searchInput.toLowerCase();
     let adjustedSearchInput = '';
 
@@ -304,11 +280,6 @@ export default FindToolsScreen = ({ ...props }) => {
     }
   };
   const refreshRequestHandler = () => {
-    // console.log('in tools refreshRequestHandler');
-    // const getItemsData = {
-    //   dealerId: dealerId
-    // };
-    // console.log('in refreshRequestHandler');
     dealerId && getItems(getDealerItemsDataObj);
   };
 
@@ -318,13 +289,8 @@ export default FindToolsScreen = ({ ...props }) => {
       delete newItem.lastWIP;
       return newItem;
     };
-    // console.log(userDataObj);
+
     if (formState.formIsValid) {
-      //   console.log(
-      //     'formState.inputValues.wipNumber ',
-      //     formState.inputValues.wipNumber
-      //   );
-      //   console.log('formIsValid', formState.inputValues.wipNumber);
       setWipNumber(formState.inputValues.wipNumber);
       setMode('confirm');
       setIsBasketVisible(true);
@@ -347,37 +313,20 @@ export default FindToolsScreen = ({ ...props }) => {
         getWipsDataObj,
         wipObj
       };
-      //   console.log('in saveToJobRequestHandler', payload);
+
       saveToJob(payload);
       inputChangeHandler('wipNumber', '');
     } else {
       setMode('book');
       setIsBasketVisible(true);
-      //   console.log('formIs NOT Valid', formState.inputValues.wipNumber);
     }
   };
-  // Search function - end
 
-  //   const { dealerToolsItems } = props;
-  // const { dealerToolsItems } = this.props;
-
-  //   console.log('dealerToolsItems.length ', dealerToolsItems.length);
-  //   console.log('ltpItems.length ', ltpItems.length);
-  const uniqueLtpItems =
-    (ltpItems &&
-      ltpItems.length > 0 &&
-      ltpItems.filter(
-        (item, index, self) =>
-          index ===
-          self.findIndex(t => t.supplierPartNo === item.supplierPartNo)
-      )) ||
-    [];
-
-  const concatItems = dealerToolsItems.concat(uniqueLtpItems);
+  //   const concatItems = dealerToolsItems.concat(uniqueLtpItems);
   //   const concatItems = dealerToolsItems;
   //   console.log('concatItems.length ', concatItems.length);
 
-  let allFilteredItems = concatItems.filter(
+  let allFilteredItems = combinedItems.filter(
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
   let filteredItems = allFilteredItems.slice(0, 100);
@@ -728,6 +677,8 @@ export default FindToolsScreen = ({ ...props }) => {
   //   };
 
   //   console.log('FTS about to render');
+
+  console.log('RENDERING FT screen !!!!!!!!!!!!!!!!!!!');
   return (
     <View>
       <View style={styles.arse}>
