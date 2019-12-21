@@ -9,7 +9,7 @@ import {
 
 import Types from '../constants/Types';
 import * as actions from '../actions/dealerWips';
-// import * as toolsActions from '../actions/dealerTools';
+import * as toolsActions from '../actions/dealerTools';
 import * as api from '../api/dealerWips';
 
 // Get WIPS
@@ -75,9 +75,10 @@ function* createDealerWip({ payload }) {
     );
     console.log('createDealerWipSuccess');
     yield put(actions.getDealerWipsStart());
-    console.log('getDealerWipStarted');
+    // console.log('getDealerWipStarted');
     yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
-    console.log('getDealerWipSuccess');
+    yield put(toolsActions.getDealerToolsStart());
+    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
 
     // yield put(
     //   toolsActions.getDealerToolsRequest(payload.getWipsDataObj.dealerId)
@@ -191,6 +192,8 @@ function* deleteDealerWipTool({ payload }) {
     // refresh the list
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
+    yield put(toolsActions.getDealerToolsStart());
+    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
   } catch (error) {
     if (error.response) {
       // console.error(error);if (error.response) {
@@ -241,6 +244,8 @@ function* deleteDealerWip(payload) {
     );
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload));
+    yield put(toolsActions.getDealerToolsStart());
+    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
   } catch (error) {
     if (error.response) {
       // console.error(error);if (error.response) {
