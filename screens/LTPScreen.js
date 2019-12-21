@@ -16,37 +16,12 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 const KEYS_TO_FILTERS = ['loanToolNo', 'orderPartNo', 'toolDescription'];
 
-const checkUrl = rawUrl => {
-  if (rawUrl.substring(0, 4) == 'http') {
-    return rawUrl;
-  } else {
-    return Urls.toolsInfoweb + '/' + rawUrl;
-  }
-};
-
 export default LtpScreen = props => {
   const dispatch = useDispatch();
   const ltpItems = useSelector(state => state.ltp.ltpItems);
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-  const userData = useSelector(state => state.user.userData[0]);
-  const dealerId = userData && userData.dealerId;
-  //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [searchInput, setSearchInput] = useState('');
-
-  // console.log(props);
-
-  //   if (ltpItems && ltpItems.length > 0) {
-  //     console.log('in ltp screen,ltpItems', ltpItems.length);
-  //   } else {
-  //     console.log('in ltp screen, no ltpItems');
-  //   }
-  // Search function
-
-  //   const [isLoading, setIsLoading] = useState(false);
-
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
     ltpItems
   ]);
@@ -78,10 +53,9 @@ export default LtpScreen = props => {
     console.log('in refreshRequestHandler');
     getItems();
   };
-  //   console.log('ltpItems AREEEEEEEEEE', ltpItems);
-  //   const items = ltpItems || [];
+
   const items = (!isLoading && !dataError && ltpItems) || [];
-  //   console.log('items AREEEEEEEEEE', items);
+
   console.log(
     'isLoading ',
     isLoading,
@@ -95,9 +69,7 @@ export default LtpScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  //   setSearchInput('cheese');
-
-  console.log('RENDERING !!!!!!!!!!!!!!!!!!!', searchInput);
+  console.log('RENDERING ltp screen !!!!!!!!!!!!!!!!!!!');
 
   return (
     <View>
@@ -112,9 +84,7 @@ export default LtpScreen = props => {
         dataCount={ltpItems.length}
       />
       <View style={styles.ltpPrompt}>
-        <Text style={styles.ltpPromptText}>
-          Please visit the LTP website to make your booking.
-        </Text>
+        <Text style={styles.ltpPromptText}>Book these on the LTP website.</Text>
       </View>
       <ScrollView>
         <LtpList items={filteredItems} baseImageUrl={Urls.ltpHeadlineImage} />
