@@ -182,10 +182,10 @@ export default BookedOutToolsScreen = props => {
   // console.log('Find DealerWips screen end');
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
-    didFocusSubscription.remove();
   });
 
   const searchInputHandler = searchInput => {

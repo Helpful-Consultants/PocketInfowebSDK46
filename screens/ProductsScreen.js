@@ -79,10 +79,10 @@ export default ProductsScreen = props => {
   };
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
-    didFocusSubscription.remove();
   });
 
   const searchInputHandler = searchInput => {

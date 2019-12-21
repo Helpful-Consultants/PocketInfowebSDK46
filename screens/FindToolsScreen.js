@@ -160,12 +160,12 @@ export default FindToolsScreen = ({ ...props }) => {
   //   }
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
     console.log('FTS in didFocusSubscription');
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
     // getItems(getDealerItemsDataObj);
-    didFocusSubscription.remove();
   });
 
   const selectItemHandler = (tool, lastPerson) => {
