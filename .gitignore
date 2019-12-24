@@ -12,3 +12,4 @@ web-report/
 .expo-shared
 .watchmanconfig
 yarn-error.log
+package-lock.json
