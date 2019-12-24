@@ -85,15 +85,15 @@ export default FindToolsScreen = ({ ...props }) => {
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
+  const [combinedItems, setCombinedItems] = useState([]);
   //   const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
   const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
-
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
   const [toolBasketIds, setToolBasketIds] = useState([]);
-  const [combinedItems, setCombinedItems] = useState([]);
 
   const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
@@ -106,16 +106,25 @@ export default FindToolsScreen = ({ ...props }) => {
   //   const userDataCount =
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
+  if (!userIsSignedIn) {
+    navigation.navigate('SignIn');
+  }
+
   const getDealerItemsDataObj = {
     dealerId: dealerId,
     userId: userIntId
   };
-
+  // const getItems = useCallback(getDealerItemsDataObj => {
+  //   // console.log('in getItems', getDealerItemsDataObj);
+  //   dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
+  //   dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
+  //   dispatch(getLtpRequest()), [ltpItems];
+  // });
   const getItems = useCallback(getDealerItemsDataObj => {
     // console.log('in getItems', getDealerItemsDataObj);
-    dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
-    dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
-    dispatch(getLtpRequest()), [ltpItems];
+    dispatch(getDealerToolsRequest(getDealerItemsDataObj));
+    dispatch(getDealerWipsRequest(getDealerItemsDataObj));
+    dispatch(getLtpRequest());
   });
 
   const saveToJob = useCallback(
@@ -130,11 +139,8 @@ export default FindToolsScreen = ({ ...props }) => {
       getItems(getDealerItemsDataObj);
     };
     getItemsAsync();
-  }, [dispatch]);
+  }, []);
 
-  if (!userIsSignedIn) {
-    navigation.navigate('SignIn');
-  }
   useEffect(() => {
     // runs only once
     // console.log('in tools use effect');
@@ -154,11 +160,6 @@ export default FindToolsScreen = ({ ...props }) => {
       setDataErrorAny(false);
     }
   }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
-  //   if (dealerToolsItems && dealerToolsItems.length > 0) {
-  //     console.log('in tools screen,toolsItems', dealerToolsItems.length);
-  //   } else {
-  //     console.log('in tools screen, no toolsItems');
-  //   }
 
   useEffect(() => {
     let uniqueLtpItems =
@@ -170,12 +171,13 @@ export default FindToolsScreen = ({ ...props }) => {
             self.findIndex(t => t.supplierPartNo === item.supplierPartNo)
         )) ||
       [];
+    setUniqueLtpItems(uniqueLtpItems);
+  }, [ltpItems]);
 
+  useEffect(() => {
     let concatItems = dealerToolsItems.concat(uniqueLtpItems);
-
-    // setUniqueLtpItems(uniqueLtpItems);
     setCombinedItems(concatItems);
-  }, [dealerToolsItems, ltpItems]);
+  }, [dealerToolsItems, uniqueLtpItems]);
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
@@ -183,10 +185,10 @@ export default FindToolsScreen = ({ ...props }) => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
-    // getItems(getDealerItemsDataObj);
   });
 
   const selectItemHandler = (tool, lastPerson) => {
+    console.log('in selectItemHandler');
     let dup =
       (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
 
@@ -356,14 +358,6 @@ export default FindToolsScreen = ({ ...props }) => {
     [dispatchFormState]
   );
   //   console.log('toolBasket is', toolBasket);
-
-  let showPrompt =
-    mode === 'list' &&
-    toolBasket.length === 0 &&
-    filteredItems.length > 0 &&
-    searchInput.length === 0
-      ? true
-      : false;
 
   let basketActionRows = null;
 
