@@ -104,6 +104,10 @@ export const deleteDealerWipToolSuccess = ({ code, message }) => ({
   }
 });
 
+export const emptyDealerWipsRequest = () => ({
+  type: Types.EMPTY_DEALER_WIPS_REQUEST
+});
+
 export const dealerWipsError = ({ error }) => ({
   type: Types.DEALER_WIPS_ERROR,
   payload: {

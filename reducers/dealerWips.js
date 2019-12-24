@@ -81,6 +81,16 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         error: null
       };
     }
+    case Types.EMPTY_DEALER_WIPS_REQUEST: {
+      //   console.log(action.payload);
+      //   console.log('reducer end data');
+      return {
+        ...state,
+        dealerWipsItems: [],
+        isLoading: false,
+        error: null
+      };
+    }
     case Types.DEALER_WIPS_ERROR: {
       return {
         ...state,
