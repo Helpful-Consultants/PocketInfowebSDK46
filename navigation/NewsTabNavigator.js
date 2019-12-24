@@ -149,10 +149,12 @@ const tabNavigator =
 
 const styles = StyleSheet.create({
   focused: {
+    fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(1.7)
   },
   notFocused: {
+    fontFamily: 'the-sans',
     color: Colors.vwgIosLink,
     fontSize: RFPercentage(1.7)
   }
