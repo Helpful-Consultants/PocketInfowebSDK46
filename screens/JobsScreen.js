@@ -91,6 +91,11 @@ export default JobsScreen = props => {
     getItemsAsync();
   }, [dispatch]);
 
+  const refreshRequestHandler = () => {
+    // console.log('in refreshRequestHandler', getWipsDataObj);
+    dealerId && userDataObj.intId && getItems(getWipsDataObj);
+  };
+
   //   useEffect(() => {
   //     // runs only once
   //     // console.log('in jobs use effect');
@@ -140,6 +145,7 @@ export default JobsScreen = props => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
+    // refreshRequestHandler();
   });
 
   const searchInputHandler = searchInput => {
@@ -201,11 +207,6 @@ export default JobsScreen = props => {
   //     console.log('delete wip ', payload);
   //     deleteDealerWip(payload);
   //   };
-
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userDataObj.intId && getItems(getWipsDataObj);
-  };
 
   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
