@@ -43,15 +43,6 @@ const formReducer = (state, action) => {
 };
 
 export default SignInScreen = props => {
-  //   const [enteredEmail, setEnteredEmail] = useState('name@business.co.uk');
-  //   const [enteredPin, setEnteredPin] = useState('123456');
-  //   const [emailIsValid] = useState(false);
-  //   const [pinIsValid] = useState(false);
-  //   const emailChangeHandler = text => {};
-
-  //   const { userIsSignedIn, userDataObj } = props;
-  //   console.log(props);
-
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -63,10 +54,6 @@ export default SignInScreen = props => {
   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
-
-  if (userIsSignedIn) {
-    props.navigation.navigate('Main');
-  }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { email: '', pin: '' },
@@ -80,46 +67,17 @@ export default SignInScreen = props => {
   });
 
   useEffect(() => {
-    console.log(
-      'in useEffect userIsSignedIn ',
-      userIsSignedIn,
-      'userError',
-      userError
-    );
+    // console.log(
+    //   'in useEffect userIsSignedIn ',
+    //   userIsSignedIn,
+    //   'userError',
+    //   userError
+    // );
     if (userIsSignedIn || userError) {
-      console.log('useEffect applied');
+      //   console.log('useEffect applied');
       setIsLoading(false);
     }
   }, [userIsSignedIn, userError]);
-
-  //   useEffect(() => {
-  //     if (userError) {
-  //       Alert.alert('Damn', userError, [{ text: 'ok' }]);
-  //     }
-  //   }, [userError]);
-
-  //   console.log('userIsSignedIn, userIsSignedInis ', userIsSignedIn);
-  //   console.log('userDataObj', userDataObj && userDataObj);
-
-  //   const signInToServer = useCallback(() => dispatch(getUserRequest()), [
-  //     userIsSignedIn
-  //   ]);
-
-  //   useEffect(userIsSignedIn => {
-  //     console.log('user is logged in!!!!!', userIsSignedIn);
-  //     if (userIsSignedIn) {
-  //       console.log('user is indeed logged in!!!!!');
-  //       props.navigation.navigate('Main');
-  //     }
-  //   }, []);
-  //   const dispatch = useDispatch();
-
-  //   const emailInputHandler = enteredEmail => {
-  //     setEnteredEmail(enteredEmail);
-  //   };
-  //   const pinInputHandler = enteredPin => {
-  //     setEnteredPin(enteredPin);
-  //   };
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, text) => {
@@ -142,24 +100,12 @@ export default SignInScreen = props => {
   );
 
   const submitHandler = async () => {
-    // console.log(formState);
-    // if (!formState.formIsValid) {
-    //   Alert.alert('Signing in problem', 'Please check the form', [
-    //     { text: 'OK' }
-    //   ]);
-    //   return;
-    // }
-    // if (formState.formIsValid) {
-    //   Alert.alert('Great', 'We can sign you in', [{ text: 'OK' }]);
-    //   return;
-    // }
-
     if (formState.formIsValid) {
-      console.log(
-        'dispatching get user',
-        formState.inputValues.email,
-        formState.inputValues.pin
-      );
+      //   console.log(
+      //     'dispatching get user',
+      //     formState.inputValues.email,
+      //     formState.inputValues.pin
+      //   );
       const signInData = {
         email: formState.inputValues.email,
         pin: formState.inputValues.pin
@@ -171,7 +117,7 @@ export default SignInScreen = props => {
       setError(null);
       setIsLoading(true);
 
-      console.log('calling dispatch');
+      //   console.log('calling dispatch');
 
       dispatch(getUserRequest(signInData));
 
@@ -181,138 +127,142 @@ export default SignInScreen = props => {
     }
   };
 
-  return (
-    <SafeAreaView>
-      <ScrollView>
-        <AppNameWithLogo />
-        <Text style={styles.instructions}>
-          {userIsSignedIn
-            ? `Signed in as ${userDataObj.userName}`
-            : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
-        </Text>
-        <KeyboardAvoidingView
-          style={baseStyles.container}
-          behavior='padding'
-          keyboardVerticalOffset={50}
-        >
-          <Input
-            autoFocus
-            value={formState.inputValues.email}
-            onChangeText={inputChangeHandler.bind(this, 'email')}
-            style={baseStyles.inputLabelText}
-            label='Your toolsinfoweb.co.uk email address'
-            containerStyle={baseStyles.inputContainer}
-            inputStyle={baseStyles.inputStyle}
-            labelStyle={baseStyles.inputLabelText}
-            required
-            email
-            autoCapitalize='none'
-            placeholder='e.g. janedoe@dtmg.co.uk'
-            leftIcon={{
-              type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'ios-mail' : 'md-mail',
-              color: Colors.vwgDarkSkyBlue,
-              paddingRight: 10,
+  if (userIsSignedIn) {
+    props.navigation.navigate('Main');
+  } else {
+    return (
+      <SafeAreaView>
+        <ScrollView>
+          <AppNameWithLogo />
+          <Text style={styles.instructions}>
+            {userIsSignedIn
+              ? `Signed in as ${userDataObj.userName}`
+              : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
+          </Text>
+          <KeyboardAvoidingView
+            style={baseStyles.container}
+            behavior='padding'
+            keyboardVerticalOffset={50}
+          >
+            <Input
+              autoFocus
+              value={formState.inputValues.email}
+              onChangeText={inputChangeHandler.bind(this, 'email')}
+              style={baseStyles.inputLabelText}
+              label='Your toolsinfoweb.co.uk email address'
+              containerStyle={baseStyles.inputContainer}
+              inputStyle={baseStyles.inputStyle}
+              labelStyle={baseStyles.inputLabelText}
+              required
+              email
+              autoCapitalize='none'
+              placeholder='e.g. janedoe@dtmg.co.uk'
+              leftIcon={{
+                type: 'ionicon',
+                name: Platform.OS === 'ios' ? 'ios-mail' : 'md-mail',
+                color: Colors.vwgDarkSkyBlue,
+                paddingRight: 10,
 
-              paddingTop: 4
-            }}
-            keyboardType='email-address'
-            autoCorrect={false}
-            returnKeyType='next'
-            onSubmitEditing={text => console.log(text)}
-            errorStyle={{ color: Colors.errorText }}
-            errorText='The email you sign in to toolsinfoweb.co.uk with'
-          />
-          <Input
-            value={formState.inputValues.pin}
-            onChangeText={inputChangeHandler.bind(this, 'pin')}
-            style={{
-              marginVertical: 20,
-              marginHorizontal: 40
-            }}
-            label='Your Pocket Infoweb access PIN'
-            labelStyle={baseStyles.inputLabelText}
-            containerStyle={baseStyles.inputContainer}
-            inputStyle={baseStyles.inputStyle}
-            required
-            maxLength={6}
-            placeholder='123456 (six digits)'
-            leftIcon={{
-              type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'ios-key' : 'md-key',
-              color: Colors.vwgDarkSkyBlue,
-              paddingRight: 10
-            }}
-            keyboardType='numeric'
-            secureTextEntry
-            returnKeyType='done'
-            onSubmitEditing={text => console.log(text)}
-            errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
-            errorStyle={{ color: 'red' }}
-          />
-          <View>
-            {userError ? (
-              <Text style={styles.errorText}>{userError}</Text>
-            ) : null}
-          </View>
-          <View>
-            {isLoading ? (
-              <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
-            ) : (
-              <Button
-                title='Sign in'
-                disabled={formState.formIsValid ? false : true}
-                onPress={submitHandler}
-                buttonStyle={styles.signInButton}
-                titleStyle={[
-                  { ...baseStyles.text },
-                  { fontSize: RFPercentage(2.4), color: Colors.vwgWhite }
-                ]}
-                icon={
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
-                    type='ionicon'
-                    color={Colors.vwgWhite}
-                    size={20}
-                    paddingTop={4}
-                    paddingRight={10}
-                  />
-                }
-              />
-            )}
-          </View>
-
-          <View>
-            <View
-              style={{
-                margin: 20,
-                textAlign: 'center'
+                paddingTop: 4
               }}
-            >
-              <Button
-                title='Trouble signing in?'
-                type='clear'
-                onPress={() => {
-                  props.navigation.navigate('ForgottenPassword');
-                }}
-                buttonStyle={{
-                  marginTop: 10
-                }}
-                titleStyle={[
-                  { ...baseStyles.linkText },
-                  { fontSize: RFPercentage(2.6) }
-                ]}
-              />
-              <Text style={styles.instructions}>
-                To activate Pocket Infoweb you will need to generate an access
-                PIN for your userId.
-              </Text>
+              keyboardType='email-address'
+              autoCorrect={false}
+              returnKeyType='next'
+              onSubmitEditing={text => console.log(text)}
+              errorStyle={{ color: Colors.errorText }}
+              errorText='The email you sign in to toolsinfoweb.co.uk with'
+            />
+            <Input
+              value={formState.inputValues.pin}
+              onChangeText={inputChangeHandler.bind(this, 'pin')}
+              style={{
+                marginVertical: 20,
+                marginHorizontal: 40
+              }}
+              label='Your Pocket Infoweb access PIN'
+              labelStyle={baseStyles.inputLabelText}
+              containerStyle={baseStyles.inputContainer}
+              inputStyle={baseStyles.inputStyle}
+              required
+              maxLength={6}
+              placeholder='123456 (six digits)'
+              leftIcon={{
+                type: 'ionicon',
+                name: Platform.OS === 'ios' ? 'ios-key' : 'md-key',
+                color: Colors.vwgDarkSkyBlue,
+                paddingRight: 10
+              }}
+              keyboardType='numeric'
+              secureTextEntry
+              returnKeyType='done'
+              onSubmitEditing={text => console.log(text)}
+              errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
+              errorStyle={{ color: 'red' }}
+            />
+            <View>
+              {userError ? (
+                <Text style={styles.errorText}>{userError}</Text>
+              ) : null}
             </View>
-          </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
-    </SafeAreaView>
-  );
+            <View>
+              {isLoading ? (
+                <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
+              ) : (
+                <Button
+                  title='Sign in'
+                  disabled={formState.formIsValid ? false : true}
+                  onPress={submitHandler}
+                  buttonStyle={styles.signInButton}
+                  titleStyle={[
+                    { ...baseStyles.text },
+                    { fontSize: RFPercentage(2.4), color: Colors.vwgWhite }
+                  ]}
+                  icon={
+                    <Icon
+                      name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
+                      type='ionicon'
+                      color={Colors.vwgWhite}
+                      size={20}
+                      paddingTop={4}
+                      paddingRight={10}
+                    />
+                  }
+                />
+              )}
+            </View>
+
+            <View>
+              <View
+                style={{
+                  margin: 20,
+                  textAlign: 'center'
+                }}
+              >
+                <Button
+                  title='Trouble signing in?'
+                  type='clear'
+                  onPress={() => {
+                    props.navigation.navigate('ForgottenPassword');
+                  }}
+                  buttonStyle={{
+                    marginTop: 10
+                  }}
+                  titleStyle={[
+                    { ...baseStyles.linkText },
+                    { fontSize: RFPercentage(2.6) }
+                  ]}
+                />
+                <Text style={styles.instructions}>
+                  To activate Pocket Infoweb you will need to generate an access
+                  PIN for your userId.
+                </Text>
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 };
 
 SignInScreen.navigationOptions = () => ({
