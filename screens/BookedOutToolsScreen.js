@@ -180,15 +180,15 @@ export default BookedOutToolsScreen = props => {
     // console.log('in refreshRequestHandler', getWipsDataObj);
     dealerId && userDataObj.intId && getItems(getWipsDataObj);
   };
-  console.log('bookedOutItems', bookedOutItems);
+  //   console.log('bookedOutItems', bookedOutItems);
   const filteredItems =
     (!isLoading &&
       bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
   console.log(
-    'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!',
-    userWipsItems
+    'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
+    // userWipsItems
   );
 
   return (
