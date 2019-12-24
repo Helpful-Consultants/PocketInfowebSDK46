@@ -1,5 +1,8 @@
+Tools can be reurned one at a time.
+Put (unique) LTP items back on find tools list
+____________________________________
+
 Finished info on stats screen, and fixed crash
 Reformatting jobs screen
-____________________________________
 Speeded up the revised tools basket
 Lightened text on news & Products
