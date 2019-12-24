@@ -60,19 +60,22 @@ export default BookedOutToolsScreen = props => {
   };
   //   console.log('before getWips', getWipsDataObj);
 
-  const getItems = useCallback(getWipsDataObj => {
-    // console.log('in getItems', getWipsDataObj);
-    dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
-  });
+  const getItems = useCallback(
+    getWipsDataObj => {
+      // console.log('in getItems', getWipsDataObj);
+      dispatch(getDealerWipsRequest(getWipsDataObj));
+    },
+    [getWipsDataObj]
+  );
 
   const deleteDealerWip = useCallback(
     payload => dispatch(deleteDealerWipRequest(payload)),
-    [dealerWipsItems]
+    [getWipsDataObj]
   );
 
   const deleteDealerWipTool = useCallback(
     payload => dispatch(deleteDealerWipToolRequest(payload)),
-    [dealerWipsItems]
+    [getWipsDataObj]
   );
 
   useEffect(() => {
@@ -82,7 +85,7 @@ export default BookedOutToolsScreen = props => {
       getItems(getWipsDataObj);
     };
     getItemsAsync();
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     let userWipsItems =
