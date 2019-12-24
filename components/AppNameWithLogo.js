@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
   },
   appName: {
     color: Colors.vwgBlack,
-    fontSize: RFPercentage(3.9)
+    fontSize: RFPercentage(3.9),
+    fontFamily: 'the-sans'
     // textTransform: 'uppercase'
   },
   logoContainer: {
