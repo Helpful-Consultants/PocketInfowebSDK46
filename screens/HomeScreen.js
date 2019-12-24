@@ -16,6 +16,7 @@ import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import AppLogoWithHeader from '../components/AppLogoWithHeader';
 import AppNameWithLogo from '../components/AppNameWithLogo';
+import VWGStyledText from '../components/VWGStyledText';
 import Colors from '../constants/Colors';
 
 import { signOutUserRequest } from '../actions/user';
@@ -77,7 +78,9 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>Find tools</Text>
+                  <VWGStyledText style={styles.gridCellText}>
+                    Find tools
+                  </VWGStyledText>
                 </View>
               </Touchable>
               <Touchable
@@ -92,7 +95,9 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>Jobs</Text>
+                  <VWGStyledText style={styles.gridCellText}>
+                    Jobs
+                  </VWGStyledText>
                 </View>
               </Touchable>
             </View>
@@ -113,10 +118,12 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>Booked tools</Text>
-                  {/* <Text style={styles.gridCellTextDisabledSmall}>
+                  <VWGStyledText style={styles.gridCellText}>
+                    Booked tools
+                  </VWGStyledText>
+                  {/* <VWGStyledText style={styles.gridCellTextDisabledSmall}>
                     Coming soon..
-                  </Text> */}
+                  </VWGStyledText> */}
                 </View>
               </Touchable>
               <Touchable
@@ -131,7 +138,7 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>LTP</Text>
+                  <VWGStyledText style={styles.gridCellText}>LTP</VWGStyledText>
                 </View>
               </Touchable>
             </View>
@@ -147,7 +154,9 @@ export default HomeScreen = props => {
                     color={buttonTextColor}
                     size={iconSize}
                   />
-                  <Text style={styles.gridCellText}>Products</Text>
+                  <VWGStyledText style={styles.gridCellText}>
+                    Products
+                  </VWGStyledText>
                 </View>
               </Touchable>
               <Touchable
@@ -166,7 +175,9 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <Text style={styles.gridCellText}>News</Text>
+                  <VWGStyledText style={styles.gridCellText}>
+                    News
+                  </VWGStyledText>
                 </View>
               </Touchable>
             </View>
@@ -180,7 +191,10 @@ export default HomeScreen = props => {
                 color={actionTextColor}
               />
 
-              <Text style={styles.odisCellText}> See latest ODIS versions</Text>
+              <VWGStyledText style={styles.odisCellText}>
+                {' '}
+                See latest ODIS versions
+              </VWGStyledText>
             </View>
           </Touchable>
           <View
@@ -188,14 +202,14 @@ export default HomeScreen = props => {
               marginTop: 15
             }}
           >
-            <Text style={styles.instructionsText}>
+            <VWGStyledText style={styles.instructionsText}>
               {userIsSignedIn
                 ? `Signed in as ${userDataObj.userName}`
                 : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
-            </Text>
-            <Text style={styles.instructionsTextSmall}>
+            </VWGStyledText>
+            <VWGStyledText style={styles.instructionsTextSmall}>
               {userIsSignedIn ? `${userDataObj.dealerName}` : null}
-            </Text>
+            </VWGStyledText>
           </View>
           <Touchable
             style={{ marginTop: 0 }}
@@ -208,7 +222,9 @@ export default HomeScreen = props => {
                 size={20}
                 color={Colors.vwgDeepBlue}
               />
-              <Text style={styles.signOutCellText}>Sign out</Text>
+              <VWGStyledText style={styles.signOutCellText}>
+                Sign out
+              </VWGStyledText>
             </View>
           </Touchable>
 
@@ -218,7 +234,7 @@ export default HomeScreen = props => {
               onPress={() => props.navigation.navigate('Odis')}
             >
               <View>
-                <Text style={styles.gridCellText}>Products</Text>
+                <VWGStyledText style={styles.gridCellText}>Products</VWGStyledText>
               </View>
             </Touchable>
           </View> */}
@@ -313,7 +329,7 @@ const styles = StyleSheet.create({
   },
 
   gridCellText: {
-    color: 'white',
+    color: Colors.vwgWhite,
     // fontSize: 14,
     fontSize: RFPercentage(2.5),
 
