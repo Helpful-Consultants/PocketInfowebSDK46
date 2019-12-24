@@ -2,17 +2,14 @@ import React from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
-  Platform,
   ScrollView,
   StyleSheet,
   View
 } from 'react-native';
-import { Image, Text } from 'react-native-elements';
-// import AppLogoWithHeader from '../components/AppLogoWithHeader';
+import { Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
-// import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
 export default Loading = () => {
   return (
@@ -31,17 +28,8 @@ export default Loading = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     marginTop: 30
   },
-  contentContainer: {
-    // backgroundColor: 'yellow'
-  },
-  appName: {
-    color: '#0096da',
-    fontSize: 18
-  },
-
   loadingMessage: {
     marginTop: 50,
     flexDirection: 'column',
@@ -50,6 +38,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   loadingText: {
+    fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(2.5),
 
@@ -58,15 +47,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     marginBottom: 50
-  },
-  announcementText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center'
-  },
-  contentContainer: {
-    paddingTop: 30
   }
 });
