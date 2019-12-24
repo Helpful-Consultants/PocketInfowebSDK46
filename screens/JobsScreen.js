@@ -215,6 +215,7 @@ export default JobsScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
+  //   console.log(filteredItems);
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
   // const { search } = this.state;
@@ -226,6 +227,8 @@ export default JobsScreen = props => {
   // console.log('in DealerWipsScreen, dealerWips', dealerWips && dealerWips);
   //   console.log('userIntId ', userIntId);
   //   console.log('userWipsItems sent to JobsList', userWipsItems);
+
+  console.log('RENDERING jobs screen !!!!!!!!!!!!!!!!!!!');
 
   return (
     <View>
