@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -9,10 +8,11 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
+import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { getUserRequest } from '../actions/user';
 // import validation from 'validate';
@@ -185,20 +185,13 @@ export default SignInScreen = props => {
     <SafeAreaView>
       <ScrollView>
         <AppNameWithLogo />
-        <Text
-          style={{
-            marginHorizontal: 30,
-            marginVertical: 10,
-            textAlign: 'center',
-            fontSize: RFPercentage(2)
-          }}
-        >
+        <Text style={styles.instructions}>
           {userIsSignedIn
             ? `Signed in as ${userDataObj.userName}`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
         </Text>
         <KeyboardAvoidingView
-          style={styles.container}
+          style={baseStyles.container}
           behavior='padding'
           keyboardVerticalOffset={50}
         >
@@ -206,11 +199,11 @@ export default SignInScreen = props => {
             autoFocus
             value={formState.inputValues.email}
             onChangeText={inputChangeHandler.bind(this, 'email')}
-            style={styles.inputLabeText}
+            style={baseStyles.inputLabelText}
             label='Your toolsinfoweb.co.uk email address'
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.inputStyle}
-            labelStyle={styles.inputLabelText}
+            containerStyle={baseStyles.inputContainer}
+            inputStyle={baseStyles.inputStyle}
+            labelStyle={baseStyles.inputLabelText}
             required
             email
             autoCapitalize='none'
@@ -238,9 +231,9 @@ export default SignInScreen = props => {
               marginHorizontal: 40
             }}
             label='Your Pocket Infoweb access PIN'
-            labelStyle={styles.inputLabelText}
-            containerStyle={styles.inputContainer}
-            inputStyle={styles.inputStyle}
+            labelStyle={baseStyles.inputLabelText}
+            containerStyle={baseStyles.inputContainer}
+            inputStyle={baseStyles.inputStyle}
             required
             maxLength={6}
             placeholder='123456 (six digits)'
@@ -271,6 +264,10 @@ export default SignInScreen = props => {
                 disabled={formState.formIsValid ? false : true}
                 onPress={submitHandler}
                 buttonStyle={styles.signInButton}
+                titleStyle={[
+                  { ...baseStyles.text },
+                  { fontSize: RFPercentage(2.4), color: Colors.vwgWhite }
+                ]}
                 icon={
                   <Icon
                     name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
@@ -301,17 +298,12 @@ export default SignInScreen = props => {
                 buttonStyle={{
                   marginTop: 10
                 }}
-                titleStyle={{
-                  color: Colors.vwgIosLink
-                }}
+                titleStyle={[
+                  { ...baseStyles.linkText },
+                  { fontSize: RFPercentage(2.6) }
+                ]}
               />
-              <Text
-                style={{
-                  margin: 5,
-                  textAlign: 'center',
-                  fontSize: 12
-                }}
-              >
+              <Text style={styles.instructions}>
                 To activate Pocket Infoweb you will need to generate an access
                 PIN for your userId.
               </Text>
@@ -328,27 +320,12 @@ SignInScreen.navigationOptions = () => ({
 });
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff'
-  },
-  container: {
-    backgroundColor: '#fff'
-  },
-  appName: {
-    color: '#0096da',
-    color: '#000',
-    fontSize: 18,
-    textTransform: 'uppercase'
-  },
-  announcementText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center'
+  instructions: {
+    ...baseStyles.text,
+    marginHorizontal: 30,
+    marginVertical: 10,
+    textAlign: 'center',
+    color: Colors.vwgVeryDarkGray
   },
   signInButton: {
     marginVertical: 20,
@@ -356,47 +333,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgIosLink
   },
   errorText: {
+    ...baseStyles.text,
     marginTop: 10,
     marginBottom: 3,
     color: Colors.vwgWarmRed,
     fontSize: RFPercentage(2.3),
     lineHeight: 19,
     textAlign: 'center'
-  },
-  inputLabelText: {
-    marginTop: 10,
-    marginBottom: 3,
-    color: Colors.vwgDarkSkyBlue,
-    fontSize: RFPercentage(2.3),
-    lineHeight: 19,
-    textAlign: 'center'
-  },
-  inputStyle: {
-    marginTop: 3,
-    marginBottom: 3,
-    color: Colors.vwgWarmMidBlue,
-    fontSize: RFPercentage(2.2),
-    lineHeight: 19,
-    textAlign: 'left'
-  },
-  inputContainer: {
-    margin: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  contentContainer: {
-    paddingTop: 30
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10
   }
 });
