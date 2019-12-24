@@ -13,7 +13,7 @@ export default function getLogoTitle(props) {
       />
       <Text
         style={{
-          fontWeight: 'bold',
+          fontFamily: 'the-sans-bold',
           fontSize: RFPercentage(2.2),
           paddingLeft: 5,
           color: Colors.vwgBlack
