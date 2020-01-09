@@ -1025,7 +1025,7 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: 'blue'
+    color: Colors.vwgWhite
   },
   inputLabelText: {
     marginBottom: 20,
