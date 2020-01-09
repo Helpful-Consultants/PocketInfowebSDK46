@@ -28,6 +28,20 @@ export default function StatsSummary(props) {
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
+  const dealerToolsCountFormatted =
+    (dealerToolsCount &&
+      new Intl.NumberFormat('en-GB', {
+        style: 'decimal'
+      }).format(dealerToolsCount)) ||
+    '';
+
+  const loggedToolsFormatted =
+    (statsObj.loggedTools &&
+      new Intl.NumberFormat('en-GB', {
+        style: 'decimal'
+      }).format(statsObj.loggedTools)) ||
+    '';
+
   // console.log('start statsDummyData');
   // console.log(statsDummyData);
   //   console.log('statsData', items);
@@ -40,15 +54,12 @@ export default function StatsSummary(props) {
           <View>
             <Text style={styles.statsTitle}>App User</Text>
             <Text style={styles.statsText}>{userDataObj.userName}</Text>
-          </View>
-          <View>
-            <Text style={styles.statsTitle}>Dealer</Text>
             <Text style={styles.statsText}>{statsObj.userName}</Text>
           </View>
           <View>
             <Text style={styles.statsTitle}>Mandatory Tools</Text>
             <Text style={styles.statsText}>
-              {`${dealerToolsCount} mandatory; ${statsObj.loggedTools} logged;`}
+              {`${dealerToolsCountFormatted} mandatory; ${loggedToolsFormatted} logged;`}
             </Text>
             <Text style={styles.statsText}>
               {`${effectiveness} effectiveness`}
