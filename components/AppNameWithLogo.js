@@ -13,7 +13,7 @@ export default AppNameWithLogo = () => {
           source={require('../assets/images/logos/tiw-app-logo-less-whitespace.png')}
           style={styles.appLogo}
         />
-        <Text style={styles.appName}>Pocket Infoweb</Text>
+        <Text style={styles.appName}>Pocket Infoweb Pro</Text>
       </View>
     </View>
   );
