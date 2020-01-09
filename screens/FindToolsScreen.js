@@ -390,12 +390,14 @@ export default FindToolsScreen = ({ ...props }) => {
         </View>
         <View style={styles.basketTipRow}>
           <View style={{ flexDirection: 'row' }}>
-            <View style={{ width: '100%' }}>
+            <View style={{ width: '100%', fontFamily: 'the-sans' }}>
               {formState.inputValues.wipNumber &&
               formState.inputValues.wipNumber.length > 0 ? (
                 <Text>{` `}</Text>
               ) : (
-                <Text>Please record a job number or job name</Text>
+                <Text style={{ fontFamily: 'the-sans' }}>
+                  Please record a job number or job name to book to.
+                </Text>
               )}
             </View>
           </View>
@@ -823,7 +825,6 @@ const styles = StyleSheet.create({
 
     backgroundColor: '#fff'
   },
-  confirmButton: { width: '10%' },
   drawerBottom: {
     justifyContent: 'flex-end',
     margin: 0
@@ -834,65 +835,41 @@ const styles = StyleSheet.create({
     // height: '80%'
   },
   inputStyle: {
+    fontFamily: 'the-sans',
     color: Colors.vwgDarkSkyBlue,
     fontSize: RFPercentage(2.4)
   },
-
   basket: {
     color: Colors.vwgDeepBlue,
-    borderColor: Colors.vwgMintGreen,
-    backgroundColor: Colors.vwgWhite,
-    borderColor: Colors.vwgDarkSkyBlue,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRadius: 5,
     margin: 5,
     padding: 5
   },
   basketText: {
-    color: Colors.vwgDeepBlue
+    fontFamily: 'the-sans',
+    color: Colors.vwgDeepBlue,
+    fontSize: RFPercentage(2)
   },
   basketTextLink: {
-    color: Colors.vwgIosLink
+    fontFamily: 'the-sans',
+    color: Colors.vwgIosLink,
+    fontSize: RFPercentage(2)
   },
   basketHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+
   basketItem: {
     color: Colors.vwgDarkSkyBlue,
     flexDirection: 'row'
   },
-  closedBasket: {
-    position: 'absolute',
-    width: '100%',
-    height: 40,
-    // bottom: TAB_BAR_HEIGHT,
-    bottom: 45,
-    left: 0,
-    backgroundColor: Colors.vwgIosLink,
-    paddingTop: 10,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center'
-  },
-  closedBasketPromptText: {
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
-    // textAlign: 'center'
-  },
-  closeButtonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-    backgroundColor: Colors.vwgWhite
-  },
   basketItemText: {
+    fontFamily: 'the-sans',
     color: Colors.vwgDarkGray,
     fontSize: RFPercentage(1.8)
   },
   basketItemTextEmph: {
+    fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(1.9)
   },
@@ -913,106 +890,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.vwgSearchBarContainer
   },
-  trashButton: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-    // paddingRight: 10
-  },
-  signInButton: {
-    marginVertical: 20,
-    marginHorizontal: 20,
-    backgroundColor: Colors.vwgIosLink
-  },
-  searchBarRowRefreshButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10
-  },
-  searchBarInputContainer: {
-    backgroundColor: Colors.vwgSearchBarInputContainer
-  },
-  searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
 
-  searchBarRowSearchInput: { width: '85%' },
-
-  searchFoundPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgMintGreen
-  },
-  searchFoundPromptText: {
-    textAlign: 'center',
-
-    color: Colors.vwgWhite
-  },
-  confirmedPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgWhite
-  },
-  confirmedPromptText: {
-    textAlign: 'center',
-    color: Colors.vwgMintGreen,
-    fontSize: RFPercentage(2.2)
-  },
-  noneFoundPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed
-  },
-  noneFoundPromptText: {
-    textAlign: 'center',
-    color: Colors.vwgWhite
-  },
-  inputLabelText: {
-    marginBottom: 20,
-    color: 'black',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center'
-  },
-  buttonContainer: {
-    flexDirection: 'column',
-    width: '60%'
-  },
-  buttonView: {
-    // width: 200,
-    fontSize: 12
-  },
-  confirmButton: { width: '10%' },
-  basket: {
-    color: Colors.vwgDeepBlue,
-    borderColor: Colors.vwgMintGreen,
-    backgroundColor: Colors.vwgWhite,
-    // borderColor: Colors.vwgDarkSkyBlue,
-    // borderStyle: 'solid',
-    // borderWidth: 1,
-    // borderRadius: 5,
-    margin: 5,
-    padding: 5
-  },
-  basketText: {
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2)
-  },
-  basketHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  basketActionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // paddingHorizontal: 20,
-    paddingVertical: 20
-  },
-  basketInputRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 5
-  },
   basketTipRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -1060,57 +938,50 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '50%'
   },
-  cancelButton: {
-    borderColor: Colors.vwgWarmRed
 
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
+  basketActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // paddingHorizontal: 20,
+    paddingVertical: 20
   },
-  cancelButtonTitle: {
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgWarmRed,
-    paddingLeft: 5
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
+  basketInputRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    // paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 5
   },
-  closeButtonTitle: {
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgIosLink
-  },
-  bookButton: {
-    backgroundColor: Colors.vwgIosLink
-    // color: Colors.vwgWhite,
 
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
+  closedBasket: {
+    position: 'absolute',
+    width: '100%',
+    height: 40,
+    // bottom: TAB_BAR_HEIGHT,
+    bottom: 45,
+    left: 0,
+    backgroundColor: Colors.vwgIosLink,
+    paddingTop: 10,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'center'
   },
-  bookButtonTitle: {
-    // color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9),
-    paddingLeft: 5
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
+  closedBasketPromptText: {
+    fontFamily: 'the-sans',
+    color: Colors.vwgWhite,
+    fontSize: RFPercentage(1.9)
+    // textAlign: 'center'
   },
-  confirmButton: {
-    backgroundColor: Colors.vwgIosLink
-    // color: Colors.vwgWhite,
+  closeButtonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 20,
+    backgroundColor: Colors.vwgWhite
+  },
 
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
-  },
-  confirmButtonTitle: {
-    // color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9),
-    paddingLeft: 5
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
-  },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1124,26 +995,42 @@ const styles = StyleSheet.create({
   searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
 
   searchBarRowSearchInput: { width: '85%' },
+
   searchFoundPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
   },
   searchFoundPromptText: {
+    fontFamily: 'the-sans',
     textAlign: 'center',
 
     color: Colors.vwgWhite
   },
+  confirmedPrompt: {
+    padding: 10,
+    backgroundColor: Colors.vwgWhite
+  },
+  confirmedPromptText: {
+    fontFamily: 'the-sans',
+    textAlign: 'center',
+    color: Colors.vwgMintGreen,
+    fontSize: RFPercentage(2.2)
+  },
   noneFoundPrompt: {
+    fontFamily: 'the-sans',
     padding: 10,
     backgroundColor: Colors.vwgWarmRed
   },
   noneFoundPromptText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: Colors.vwgWhite
+    color: 'blue'
   },
   inputLabelText: {
     marginBottom: 20,
-    color: 'black',
+    fontFamily: 'the-sans',
+    color: Colors.vwgBlack,
     fontSize: 14,
     lineHeight: 19,
     textAlign: 'center'
@@ -1155,5 +1042,62 @@ const styles = StyleSheet.create({
   buttonView: {
     // width: 200,
     fontSize: 12
+  },
+  trashButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+    // paddingRight: 10
+  },
+  signInButton: {
+    marginVertical: 20,
+    marginHorizontal: 20,
+    backgroundColor: Colors.vwgIosLink
+  },
+
+  cancelButton: {
+    borderColor: Colors.vwgWarmRed
+
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    // width: '10%'
+  },
+  cancelButtonTitle: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    color: Colors.vwgWarmRed,
+    paddingLeft: 5
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    // width: '10%'
+  },
+  closeButtonTitle: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    color: Colors.vwgIosLink
+  },
+  bookButton: {
+    backgroundColor: Colors.vwgIosLink
+    // color: Colors.vwgWhite,
+
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    // width: '10%'
+  },
+  bookButtonTitle: {
+    // color: Colors.vwgWhite,
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    paddingLeft: 5
+    // flexDirection: 'column',
+    // justifyContent: 'flex-start',
+    // width: '10%'
+  },
+  confirmButton: {
+    backgroundColor: Colors.vwgIosLink
+  },
+  confirmButtonTitle: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    paddingLeft: 5
   }
 });

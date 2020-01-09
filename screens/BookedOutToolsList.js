@@ -89,6 +89,7 @@ export default function BookedOutToolsList(props) {
                     >
                       <Text
                         style={{
+                          fontFamily: 'the-sans',
                           fontSize: RFPercentage(2.2),
                           color: Colors.vwgIosLink,
                           textAlign: 'left',
@@ -113,6 +114,7 @@ export default function BookedOutToolsList(props) {
                         >
                           <Text
                             style={{
+                              fontFamily: 'the-sans',
                               fontSize: RFPercentage(2.2),
                               color: Colors.vwgIosLink,
                               textAlign: 'right',
@@ -160,6 +162,7 @@ export default function BookedOutToolsList(props) {
                     <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
                       <Text
                         style={{
+                          fontFamily: 'the-sans',
                           color: Colors.vwgVeryDarkGray,
                           marginBottom: 3,
                           fontSize: RFPercentage(2.1)
@@ -168,6 +171,7 @@ export default function BookedOutToolsList(props) {
                       {item.location.length > 0 ? (
                         <Text
                           style={{
+                            fontFamily: 'the-sans',
                             color: Colors.vwgVeryDarkGray,
                             marginBottom: 3,
                             fontSize: RFPercentage(2.1)
@@ -177,6 +181,7 @@ export default function BookedOutToolsList(props) {
                       {item.wipNumber.length > 0 ? (
                         <Text
                           style={{
+                            fontFamily: 'the-sans',
                             color: Colors.vwgVeryDarkGray,
                             marginBottom: 3,
                             fontSize: RFPercentage(2.1)
@@ -207,6 +212,7 @@ const styles = StyleSheet.create({
   },
   searchPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
   }

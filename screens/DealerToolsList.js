@@ -127,6 +127,7 @@ export default function DealerToolsList(props) {
             : bookedByUser
             ? Colors.vwgVeryDarkGray
             : Colors.vwgIosLink,
+          fontFamily: 'the-sans',
           fontSize: RFPercentage(2.1),
           fontWeight: '600'
         }}
@@ -137,21 +138,25 @@ export default function DealerToolsList(props) {
         }}
         subtitle={
           <View>
-            <Text style={{ fontSize: RFPercentage(2.0) }}>
+            <Text
+              style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
+            >
               {item.partDescription
                 ? item.partDescription
                 : item.toolDescription}
             </Text>
             {item.loanToolNo ? (
               <Text
-                style={{ fontSize: RFPercentage(2.0) }}
+                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
               >{`Available through the Loan Tool Programme`}</Text>
             ) : item.location ? (
               <Text
-                style={{ fontSize: RFPercentage(2.0) }}
+                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
               >{`Storage location: ${item.location}`}</Text>
             ) : (
-              <Text style={{ fontSize: RFPercentage(2.0) }}>
+              <Text
+                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
+              >
                 Storage location not recorded
               </Text>
             )}
@@ -183,6 +188,7 @@ export default function DealerToolsList(props) {
         lastJobDetails = (
           <Text
             style={{
+              fontFamily: 'the-sans',
               fontSize: RFPercentage(2.0),
               color: Colors.vwgWarmRed,
               fontWeight: '500'
@@ -193,6 +199,7 @@ export default function DealerToolsList(props) {
         lastJobDetails = (
           <Text
             style={{
+              fontFamily: 'the-sans',
               fontSize: RFPercentage(2.0),
               color: Colors.vwgWarmOrange,
               fontWeight: '500'
@@ -277,6 +284,7 @@ const styles = StyleSheet.create({
   },
   searchPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
   },

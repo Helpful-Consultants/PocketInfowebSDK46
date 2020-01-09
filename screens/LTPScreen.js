@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   },
   ltpPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     color: Colors.vwgWhite
   },
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
   },
   lookupPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     color: Colors.vwgWhite,
     fontSize: RFPercentage(1.9)
   }

@@ -109,9 +109,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgSearchBarContainer
   },
   searchBarRowErrorText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgWarmRed
   },
   searchBarRowNoDataText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgDarkSkyBlue
   },
   searchBarRowRefreshButton: {
@@ -136,26 +140,15 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
   },
-  searchFoundPromptText: {
-    textAlign: 'center',
 
-    color: Colors.vwgWhite
-  },
   noneFoundPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgWarmRed
   },
   noneFoundPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgWhite
-  },
-  lookupPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgMintGreen
-  },
-  lookupPromptText: {
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
   }
 });

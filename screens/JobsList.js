@@ -51,6 +51,7 @@ export default function DealerToolsList(props) {
               <View>
                 <View
                   style={{
+                    fontFamily: 'the-sans',
                     flexDirection: 'row',
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
@@ -65,6 +66,7 @@ export default function DealerToolsList(props) {
                   >
                     <Text
                       style={{
+                        fontFamily: 'the-sans',
                         fontSize: RFPercentage(2.2),
                         color: Colors.vwgIosLink,
                         textAlign: 'left',
@@ -89,6 +91,7 @@ export default function DealerToolsList(props) {
                       >
                         <Text
                           style={{
+                            fontFamily: 'the-sans',
                             fontSize: RFPercentage(2.2),
                             color: Colors.vwgIosLink,
                             textAlign: 'right',
@@ -148,6 +151,7 @@ export default function DealerToolsList(props) {
                           marginBottom: 3,
                           paddingLeft: 0,
                           marginRight: 10,
+                          fontFamily: 'the-sans',
                           fontSize: RFPercentage(2.1)
                         }}
                       >{`${item.partDescription}`}</Text>
@@ -158,6 +162,7 @@ export default function DealerToolsList(props) {
                             marginBottom: 3,
                             paddingLeft: 0,
                             marginRight: 10,
+                            fontFamily: 'the-sans',
                             fontSize: RFPercentage(2.1)
                           }}
                         >{`Storage Location: ${item.location}`}</Text>
@@ -169,6 +174,7 @@ export default function DealerToolsList(props) {
                             marginBottom: 3,
                             paddingLeft: 0,
                             marginRight: 10,
+                            fontFamily: 'the-sans',
                             fontSize: RFPercentage(2.1)
                           }}
                         >{`Last booked out by: ${job.createdBy}, job ${item.lastWIP}`}</Text>
@@ -240,6 +246,7 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
+                          fontFamily: 'the-sans',
                           fontSize: RFPercentage(2.2),
                           fontWeight: '600',
                           textAlign: 'left',
@@ -280,6 +287,7 @@ const styles = StyleSheet.create({
   },
   searchPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgWhite
   }

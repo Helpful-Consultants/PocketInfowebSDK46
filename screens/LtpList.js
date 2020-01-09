@@ -62,6 +62,7 @@ export default function LtpList(props) {
         title={`${item.loanToolNo} (${item.supplierPartNo})`}
         titleStyle={{
           color: Colors.vwgBlack,
+          fontFamily: 'the-sans',
           fontSize: RFPercentage(1.9),
           fontWeight: '600'
         }}
@@ -72,6 +73,7 @@ export default function LtpList(props) {
             <Text
               style={{
                 color: Colors.vwgVeryDarkGray,
+                fontFamily: 'the-sans',
                 fontSize: RFPercentage(1.9)
               }}
             >{`${item.toolDescription}`}</Text>

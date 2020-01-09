@@ -88,7 +88,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgSearchBarContainer
   },
   searchBarRowNoDataText: {
-    color: Colors.vwgDarkSkyBlue
+    color: Colors.vwgDarkSkyBlue,
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9)
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
