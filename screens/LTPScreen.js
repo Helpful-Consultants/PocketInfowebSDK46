@@ -83,9 +83,20 @@ export default LtpScreen = props => {
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
-      <View style={styles.ltpPrompt}>
-        <Text style={styles.ltpPromptText}>Book these on the LTP website.</Text>
-      </View>
+      {searchInput.length > 0 && filteredItems.length === 0 ? (
+        <View style={styles.noneFoundPrompt}>
+          <Text style={styles.noneFoundPromptText}>
+            Your search found no results.
+          </Text>
+        </View>
+      ) : (
+        <View style={styles.ltpPrompt}>
+          <Text style={styles.ltpPromptText}>
+            Book these on the LTP website.
+          </Text>
+        </View>
+      )}
+
       <ScrollView>
         <LtpList items={filteredItems} baseImageUrl={Urls.ltpHeadlineImage} />
       </ScrollView>
@@ -132,9 +143,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fff'
   },
-  searchFoundPrompt: {
+  noneFoundPrompt: {
+    fontFamily: 'the-sans',
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgWarmRed
+  },
+  noneFoundPromptText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    textAlign: 'center',
+    color: Colors.vwgWhite
   },
   ltpPrompt: {
     padding: 10,

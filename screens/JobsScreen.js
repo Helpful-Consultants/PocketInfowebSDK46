@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
-
+import { Text } from 'react-native-elements';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 // import moment from 'moment';
@@ -244,6 +245,13 @@ export default JobsScreen = props => {
         dataError={dataError}
         dataCount={userWipsItems.length}
       />
+      {searchInput.length > 0 && filteredItems.length === 0 ? (
+        <View style={styles.noneFoundPrompt}>
+          <Text style={styles.noneFoundPromptText}>
+            Your search found no results.
+          </Text>
+        </View>
+      ) : null}
       <ScrollView>
         <JobsList
           isLoading={isLoading}
@@ -346,5 +354,16 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     color: '#3f2949',
     marginTop: 10
+  },
+  noneFoundPrompt: {
+    fontFamily: 'the-sans',
+    padding: 10,
+    backgroundColor: Colors.vwgWarmRed
+  },
+  noneFoundPromptText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    textAlign: 'center',
+    color: Colors.vwgWhite
   }
 });

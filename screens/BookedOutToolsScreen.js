@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -206,6 +208,13 @@ export default BookedOutToolsScreen = props => {
         dataError={dataError}
         dataCount={userWipsItems.length}
       />
+      {searchInput.length > 0 && filteredItems.length === 0 ? (
+        <View style={styles.noneFoundPrompt}>
+          <Text style={styles.noneFoundPromptText}>
+            Your search found no results.
+          </Text>
+        </View>
+      ) : null}
       <ScrollView>
         <BookedOutToolsList
           items={filteredItems}
@@ -307,5 +316,16 @@ const styles = StyleSheet.create({
   text: {
     color: '#3f2949',
     marginTop: 10
+  },
+  noneFoundPrompt: {
+    fontFamily: 'the-sans',
+    padding: 10,
+    backgroundColor: Colors.vwgWarmRed
+  },
+  noneFoundPromptText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    textAlign: 'center',
+    color: Colors.vwgWhite
   }
 });
