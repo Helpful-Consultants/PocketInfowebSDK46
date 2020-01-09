@@ -186,12 +186,14 @@ const styles = StyleSheet.create({
   appName: {
     paddingTop: 100,
     paddingLeft: 18,
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8)
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
     paddingLeft: 18,
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8)
     // fontStyle: 'italic'
   }
