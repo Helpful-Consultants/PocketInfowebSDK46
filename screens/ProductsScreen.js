@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   },
   lookupPromptText: {
     textAlign: 'center',
+    fontFamily: 'the-sans',
     color: Colors.vwgWhite,
     fontSize: RFPercentage(1.9)
   }

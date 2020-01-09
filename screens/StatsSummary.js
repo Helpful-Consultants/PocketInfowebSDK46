@@ -91,21 +91,19 @@ const styles = StyleSheet.create({
   },
   statsTitle: {
     color: Colors.vwgDeepBlue,
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(2.2),
     paddingVertical: 10,
     marginTop: 20,
     marginBottom: 0,
-    fontWeight: '600'
+    fontWeight: '600',
+    textAlign: 'center'
   },
   statsText: {
     color: Colors.vwgVeryDarkGray,
-    fontSize: RFPercentage(2)
-    // marginBottom: 5
-  },
-  appData: {
-    color: Colors.vwgDarkGray,
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(2),
-    marginTop: 25
-    // marginBottom: 15
+    textAlign: 'center'
+    // marginBottom: 5
   }
 });

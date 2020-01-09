@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   },
   itemTitle: {
     flexWrap: 'wrap',
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(2.2),
     fontWeight: '600',
     color: Colors.vwgIosLink
@@ -91,6 +92,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1
   },
   itemLastUpdated: {
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.6),
     color: Colors.vwgDarkGray,
     paddingTop: 5
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1
   },
   itemMainText: {
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'justify',
     color: Colors.vwgVeryDarkGray

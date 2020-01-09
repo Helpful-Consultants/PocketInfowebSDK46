@@ -76,23 +76,15 @@ const styles = StyleSheet.create({
   },
   odisRow: {
     flexDirection: 'row',
-    // padding: 5,
-    borderColor: '#000',
-    fontSize: RFPercentage(1.9)
-  },
-  odisImageContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    borderColor: '#000'
   },
   odisVersionRow: {
     flexDirection: 'column',
     padding: 5,
-    borderColor: '#000',
-    fontSize: RFPercentage(1.9)
+    borderColor: '#000'
   },
   odisVersionText: {
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(2.1),
     color: Colors.vwgVeryDarkGray
   },
@@ -109,50 +101,11 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   contentImage: {
-    // height: 50,
     width: 225,
     height: 70,
     resizeMode: 'contain',
     marginBottom: 15,
     marginLeft: 'auto',
     marginRight: 'auto'
-    // paddingLeft: 20,
-    // paddingRight: 20
-  },
-  tipText: {
-    fontSize: 12,
-    marginLeft: 15,
-    marginTop: 3,
-    marginBottom: 20
-  },
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 15,
-    marginTop: 9,
-    marginBottom: 12
-  },
-  optionIconContainer: {
-    marginRight: 9
-  },
-  option: {
-    backgroundColor: '#eee',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderBottomWidth: 3,
-    borderBottomColor: '#fff',
-    marginLeft: 10,
-    marginRight: 10,
-    paddingRight: 20
-  },
-  optionText: {
-    fontSize: 15,
-    marginTop: 1,
-    color: '#000'
-  },
-  summaryText: {
-    fontSize: 12,
-    marginTop: 5,
-    color: '#000',
-    marginRight: 20
   }
 });
