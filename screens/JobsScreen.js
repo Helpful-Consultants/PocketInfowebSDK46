@@ -278,22 +278,6 @@ export default JobsScreen = props => {
           }}
         />
       ) : null}
-      {isLyndonAlertVisible ? (
-        <AwesomeAlert
-          show={isLyndonAlertVisible}
-          showProgress={false}
-          title='Hello Lyndon'
-          message={`We are enhancing the feed to and from the web server to remove one tool at a time from a job. Till that's done, you can only return all the tools for a job in one go.`}
-          closeOnTouchOutside={true}
-          closeOnHardwareBackPress={false}
-          showCancelButton={true}
-          cancelText='Close'
-          cancelButtonColor={Colors.vwgDeepBlue}
-          onCancelPressed={() => {
-            setIsLyndonAlertVisible(false);
-          }}
-        />
-      ) : null}
     </View>
   );
 };
