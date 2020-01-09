@@ -276,6 +276,18 @@ export default JobsScreen = props => {
           onConfirmPressed={() => {
             confirmReturnToolHandler();
           }}
+          titleStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
+          messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
+          confirmButtonTextStyle={{
+            fontFamily: 'the-sans',
+            textAlign: 'center'
+          }}
+          cancelButtonTextStyle={{
+            fontFamily: 'the-sans',
+            textAlign: 'center'
+          }}
+          confirmButtonStyle={{ width: 100 }}
+          cancelButtonStyle={{ width: 100 }}
         />
       ) : null}
     </View>
