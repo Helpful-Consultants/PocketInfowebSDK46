@@ -243,27 +243,25 @@ export default function DealerToolsList(props) {
     // console.log('in use effect');
     // console.log(items[0]);
     let newList = (
-      <ScrollView>
-        <View>
-          {showPrompt === true ? (
-            <View style={styles.searchPrompt}>
-              <Text style={styles.searchPromptText}>
-                {`Search for a tool then press to book it out.`}
-              </Text>
-            </View>
-          ) : null}
-          <FlatList
-            data={items && items}
-            renderItem={itemData => (
-              <FlatListItem
-                item={itemData.item}
-                selectItemHandler={selectItemHandler}
-              />
-            )}
-            keyExtractor={item => item.loanToolNo || item.id}
-          />
-        </View>
-      </ScrollView>
+      <View>
+        {showPrompt === true ? (
+          <View style={styles.searchPrompt}>
+            <Text style={styles.searchPromptText}>
+              {`Search for a tool then press to book it out.`}
+            </Text>
+          </View>
+        ) : null}
+        <FlatList
+          data={items && items}
+          renderItem={itemData => (
+            <FlatListItem
+              item={itemData.item}
+              selectItemHandler={selectItemHandler}
+            />
+          )}
+          keyExtractor={item => item.loanToolNo || item.id}
+        />
+      </View>
     );
     // console.log(newList);
     setListView(newList);
