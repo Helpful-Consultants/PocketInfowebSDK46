@@ -16,10 +16,10 @@ import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 // } from 'react-navigation-drawer';
 import Constants from 'expo-constants';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import DrawerIcon from '../components/DrawerIcon';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignOutScreen from '../screens/SignOutScreen';
-import RegisterScreen from '../screens/RegisterScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
 // import StatsScreen from '../screens/StatsScreen';
@@ -40,12 +40,7 @@ const SignedOutStack = createStackNavigator({
       title: 'Forgotten Password'
     }
   },
-  Register: {
-    screen: RegisterScreen,
-    navigationOptions: {
-      title: 'Register'
-    }
-  },
+
   SignOut: {
     screen: SignOutScreen,
     navigationOptions: {

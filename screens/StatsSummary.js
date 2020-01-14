@@ -26,6 +26,7 @@ export default function StatsSummary(props) {
 
   const userDataCount =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
   const dealerToolsCountFormatted =
@@ -36,7 +37,8 @@ export default function StatsSummary(props) {
     '';
 
   const loggedToolsFormatted =
-    (statsObj.loggedTools &&
+    (statsObj &&
+      statsObj.loggedTools &&
       new Intl.NumberFormat('en-GB', {
         style: 'decimal'
       }).format(statsObj.loggedTools)) ||

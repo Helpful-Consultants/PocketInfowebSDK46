@@ -94,10 +94,13 @@ export default StatsScreen = ({ ...props }) => {
   //   console.log('dealerToolsItems count ', dealerToolsItems.length);
   //   console.log('userWipsItems count ', userWipsItems.length);
 
-  //   console.log('statsobj', statsObj);
+  //   console.log('statsobj', statsObj && statsObj);
 
   const effectiveness =
-    statsObj.loggedTools && dealerToolsItems && dealerToolsItems.length
+    statsObj &&
+    statsObj.loggedTools &&
+    dealerToolsItems &&
+    dealerToolsItems.length
       ? ((100 * statsObj.loggedTools) / dealerToolsItems.length)
           .toFixed(2)
           .toString() + '%'
