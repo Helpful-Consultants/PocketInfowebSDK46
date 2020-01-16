@@ -293,7 +293,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 5,
     // height: PixelRatio.getPixelSizeForLayoutSize(40),
-    width: RFPercentage(25)
+    width: RFPercentage(23.5)
     // padding: 5
   },
   gridCellDisabled: {
