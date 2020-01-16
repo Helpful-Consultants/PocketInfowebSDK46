@@ -310,10 +310,7 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
         title='home'
         iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
         onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('HomeScreen');
+          navigation.navigate('Home');
         }}
       />
     </HeaderButtons>

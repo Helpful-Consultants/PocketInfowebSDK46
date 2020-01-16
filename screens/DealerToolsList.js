@@ -42,6 +42,7 @@ export default function DealerToolsList(props) {
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = ltpDummyData.slice(0, limit);
   //   console.log('userIntId ', userIntId);
+  //   console.log('items', items);
 
   const [listView, setListView] = useState();
 
@@ -171,6 +172,7 @@ export default function DealerToolsList(props) {
 
   const FlatListItem = props => {
     const { item, selectItemHandler } = props;
+    // console.log(props);
 
     let personName = '';
     let personIntId = '';

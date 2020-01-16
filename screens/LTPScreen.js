@@ -115,7 +115,7 @@ LtpScreen.navigationOptions = ({ navigation }) => ({
           {
             /* console.log('pressed homescreen icon'); */
           }
-          navigation.navigate('HomeScreen');
+          navigation.navigate('Home');
         }}
       />
     </HeaderButtons>
