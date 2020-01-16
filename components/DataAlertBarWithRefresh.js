@@ -13,12 +13,19 @@ import Colors from '../constants/Colors';
 export default DataAlertBarWithRefresh = props => {
   //   console.log('DataAlertWithRefresh props', props);
 
-  let { dataName } = props;
+  let {
+    dataName,
+    isLoading,
+    someDataExpected,
+    dataCount,
+    dataError,
+    refreshRequestHandler
+  } = props;
   dataName = dataName || 'data';
 
-  return props.dataCount && props.dataCount > 0 ? null : (
+  return dataCount && dataCount > 0 ? null : (
     <View style={styles.searchBarRow}>
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.searchBarRowRefreshButton}>
           <ActivityIndicator size={'small'} />
         </View>
@@ -26,7 +33,7 @@ export default DataAlertBarWithRefresh = props => {
         <TouchableOpacity
           style={styles.searchBarRowRefreshButton}
           onPress={() => {
-            props.refreshRequestHandler();
+            refreshRequestHandler();
           }}
         >
           <Icon
@@ -37,13 +44,13 @@ export default DataAlertBarWithRefresh = props => {
           />
         </TouchableOpacity>
       )}
-      {props.isLoading ? (
+      {isLoading ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
             Updating {`${dataName}`}.
           </Text>
         </View>
-      ) : props.dataError ? (
+      ) : dataError ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowErrorText}>
             {`There was a problem downloading the ${dataName}. Please refresh.`}
