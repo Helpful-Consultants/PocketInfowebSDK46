@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Platform,
@@ -17,13 +17,18 @@ import { getUserRequest } from '../actions/user';
 export default AuthLoadingScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
 
-  if (userIsSignedIn) {
-    // console.log('signed in , going to Main');
-    props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
-  } else {
-    // console.log('signed out , going to Main');
-    props.navigation.navigate(userIsSignedIn ? 'Main' : 'Auth');
-  }
+  console.log('in AuthLoadingScreen');
+
+  useEffect(() => {
+    if (userIsSignedIn) {
+      console.log('in auth loading, signed in , going to Main');
+      props.navigation.navigate('Main');
+    } else {
+      console.log('in auth loading, signed out , going to Auth  route');
+      console.log(props.navigation);
+      props.navigation.navigate('Auth');
+    }
+  }, [userIsSignedIn]);
 
   return (
     <SafeAreaView style={styles.container}>
