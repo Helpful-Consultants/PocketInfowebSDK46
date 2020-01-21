@@ -16,10 +16,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "60",
+      "buildNumber": "61",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
