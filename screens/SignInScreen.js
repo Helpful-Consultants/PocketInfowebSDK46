@@ -67,12 +67,6 @@ export default SignInScreen = props => {
   });
 
   useEffect(() => {
-    // console.log(
-    //   'in useEffect userIsSignedIn ',
-    //   userIsSignedIn,
-    //   'userError',
-    //   userError
-    // );
     if (userIsSignedIn || userError) {
       //   console.log('useEffect applied');
       setIsLoading(false);
