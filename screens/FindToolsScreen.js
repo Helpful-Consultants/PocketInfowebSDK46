@@ -804,7 +804,7 @@ export default FindToolsScreen = ({ ...props }) => {
 
 FindToolsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Find tools' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='home'
@@ -818,7 +818,7 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'

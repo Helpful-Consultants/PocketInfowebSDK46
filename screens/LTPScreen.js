@@ -106,7 +106,7 @@ export default LtpScreen = props => {
 
 LtpScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='LTP' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='home'
@@ -120,7 +120,7 @@ LtpScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'

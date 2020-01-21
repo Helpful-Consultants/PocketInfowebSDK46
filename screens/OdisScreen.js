@@ -66,7 +66,7 @@ export default OdisScreen = props => {
 
 OdisScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='ODIS versions' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='ODIS versions'
@@ -80,7 +80,7 @@ OdisScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'

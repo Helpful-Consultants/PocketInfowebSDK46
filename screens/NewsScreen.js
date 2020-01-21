@@ -137,7 +137,7 @@ export default NewsScreen = props => {
 
 NewsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='News' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='home'
@@ -151,7 +151,7 @@ NewsScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'

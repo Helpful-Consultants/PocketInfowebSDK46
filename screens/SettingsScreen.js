@@ -56,7 +56,7 @@ export default function SettingsScreen() {
 
 SettingsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='SettingsScreen' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='home'
@@ -67,7 +67,7 @@ SettingsScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'

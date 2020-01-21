@@ -304,7 +304,7 @@ export default JobsScreen = props => {
 
 JobsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='My jobs' />,
-  headerLeft: (
+  headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='home'
@@ -315,7 +315,7 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
       />
     </HeaderButtons>
   ),
-  headerRight: (
+  headerRight: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
         title='menu'
