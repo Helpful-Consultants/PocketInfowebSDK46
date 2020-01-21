@@ -12,7 +12,7 @@ import axios from 'axios';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 
 // import AsyncStorage from '@react-native-community/async-storage'; //breaks
 import { AsyncStorage } from 'react-native'; // deprecated
@@ -22,7 +22,7 @@ import { Button, colors, ThemeProvider } from 'react-native-elements';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 
-useScreens();
+enableScreens();
 
 axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
