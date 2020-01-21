@@ -3,9 +3,11 @@
     "name": "Pocket Infoweb Pro",
     "slug": "PocketInfoweb-Dev",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
-    "platforms": ["ios"],
-    "version": "1.0.60 ",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios"
+    ],
+    "version": "1.0.61 ",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
