@@ -35,12 +35,13 @@ const disabledButtonColor = Colors.vwgMidGray;
 var { screenHeight, screenWidth } = Dimensions.get('window');
 var gridHeight = screenHeight * 0.18;
 var gridWidth = screenWidth * 0.3;
-console.log(screenHeight, screenWidth);
+// console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
 var iconSizeSmall = RFPercentage(3.5);
 
 export default HomeScreen = props => {
-  // console.log(props);
+  // console.log(props)
+  console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
 
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
@@ -227,17 +228,6 @@ export default HomeScreen = props => {
               </VWGStyledText>
             </View>
           </Touchable>
-
-          {/* <View style={styles.gridRow}>
-            <Touchable
-              style={styles.doubleGridCell}
-              onPress={() => props.navigation.navigate('Odis')}
-            >
-              <View>
-                <VWGStyledText style={styles.gridCellText}>Products</VWGStyledText>
-              </View>
-            </Touchable>
-          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
