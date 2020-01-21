@@ -235,7 +235,7 @@ export default HomeScreen = props => {
 };
 
 HomeScreen.navigationOptions = {
-  header: null,
+  showHeader: false,
   tabBarVisible: false
 };
 

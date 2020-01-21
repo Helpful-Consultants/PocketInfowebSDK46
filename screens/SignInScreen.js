@@ -260,7 +260,7 @@ export default SignInScreen = props => {
 };
 
 SignInScreen.navigationOptions = () => ({
-  header: null
+  showHeader: false
 });
 
 const styles = StyleSheet.create({
