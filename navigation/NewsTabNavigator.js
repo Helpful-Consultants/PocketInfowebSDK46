@@ -131,7 +131,7 @@ StatsStack.navigationOptions = {
 // End Stats screen
 
 // Tab navigator
-const tabNavigator =
+const NewsTabNavigator =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator({
         NewsStack,
@@ -160,4 +160,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default tabNavigator;
+export default NewsTabNavigator;

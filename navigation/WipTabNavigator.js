@@ -113,7 +113,7 @@ LtpStack.navigationOptions = {
 // End LTP screen
 
 // Tab navigator
-const tabNavigator =
+const WipTabNavigator =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator({
         FindToolsStack,
@@ -142,4 +142,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default tabNavigator;
+export default WipTabNavigator;

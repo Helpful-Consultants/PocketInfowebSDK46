@@ -106,35 +106,25 @@ const DrawerContent = props => (
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
-    HomeScreen: {
+    Home: {
       screen: HomeScreen,
       navigationOptions: { drawerLabel: 'Home' }
     },
     FindToolsStack: {
       screen: WipTabNavigator,
       navigationOptions: {
-        drawerLabel: 'Tools & jobs',
+        drawerLabel: 'Find tools, return tools, jobs & LTP',
         initialRouteName: 'FindTools'
       }
     },
     NewsStack: {
       screen: NewsTabNavigator,
       navigationOptions: {
-        drawerLabel: 'News & products',
+        drawerLabel: 'News, products, ODIS, stats',
         initialRouteName: 'News'
       }
     },
-    OdisStack: {
-      screen: NewsTabNavigator,
-      navigationOptions: {
-        drawerLabel: 'Odis versions',
-        initialRouteName: 'Odis'
-      }
-    },
-    StatsStack: {
-      screen: NewsTabNavigator,
-      navigationOptions: { drawerLabel: 'Stats', initialRouteName: 'Stats' }
-    },
+
     SignedOutStack: {
       screen: SignedOutStack,
       navigationOptions: {
