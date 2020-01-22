@@ -21,7 +21,7 @@ function* getDealerTools({ payload }) {
       dealerId: payload.dealerId
     });
     // console.log('in saga get dealerTools - 200');
-    console.log(result);
+    // console.log(result);
 
     if (
       result.data.length > 0 &&
@@ -82,17 +82,17 @@ function* getDealerTools({ payload }) {
     // console.log('end results in saga get dealerTools, success');
   } catch (error) {
     console.log('server error in saga get dealerTools !!!!!!!!!!!!!!');
-    console.log('whole Error', error);
-    console.log('whole Error ends');
-    console.log(error && error.config);
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    // console.log(error && error.config);
     let statusCode = null;
     let errorText =
       'An server error occurred when trying to get the dealer Tools';
     let dataErrorUrl = null;
     if (error.response) {
-      console.log('error response starts');
-      console.log('error response', error.response);
-      console.log('error response ends');
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
       if (error.response.status) {
         statusCode = error.response.status.toString();
       }
@@ -109,9 +109,9 @@ function* getDealerTools({ payload }) {
       // console.log(error.response.status);
       // console.log(error.response.headers);
     } else if (error.request) {
-      console.log('error request start');
-      console.log('error request', error.request);
-      console.log('error request ends');
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log('error request ends');
       if (error.request.status) {
         statusCode = error.request.status.toString();
       }
@@ -137,9 +137,9 @@ function* getDealerTools({ payload }) {
       //   console.log('error.request'), error.request;
     } else if (error.message) {
       // Something happened in setting up the request that triggered an Error
-      console.log('error message starts');
-      console.log('Error message', error.message);
-      console.log('error message ends');
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
       if (error.message.indexOf(' 500') !== -1) {
         statusCode = '500';
       }

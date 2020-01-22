@@ -22,7 +22,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_DEALER_WIPS_SUCCESS: {
-      console.log(action.payload);
+      //   console.log(action.payload);
       //   console.log('reducer end data');
       return {
         ...state,
@@ -35,7 +35,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
-      console.log(action.payload);
+      //   console.log(action.payload);
       return {
         ...state,
         lastWipProcessed: {
@@ -65,7 +65,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
     //   };
     // }
     case Types.DELETE_DEALER_WIP_SUCCESS: {
-      console.log(action.payload);
+      //   console.log(action.payload);
       //   console.log('reducer end data');
       return {
         ...state,
@@ -83,7 +83,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.DELETE_DEALER_WIP_TOOL_SUCCESS: {
-      console.log(action.payload);
+      //   console.log(action.payload);
       //   console.log('reducer end data');
       return {
         ...state,

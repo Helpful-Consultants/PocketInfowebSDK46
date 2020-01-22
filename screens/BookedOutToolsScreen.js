@@ -92,7 +92,7 @@ export default BookedOutToolsScreen = props => {
   }, []);
 
   useEffect(() => {
-    console.log('in jobs useEffect userDataObj is:  ', userDataObj);
+    // console.log('in booked out useEffect userDataObj is:  ', userDataObj);
     let userWipsItems =
       (userDataObj &&
         userDataObj.intId &&
