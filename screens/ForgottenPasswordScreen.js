@@ -32,7 +32,7 @@ export default ForgottenPasswordScreen = props => {
             for your user ID.
           </Text>
 
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', marginRight: 30 }}>
             <Text
               style={{
                 marginVertical: 3,
@@ -59,7 +59,9 @@ export default ForgottenPasswordScreen = props => {
             </Text>
           </View>
 
-          <View style={{ flexDirection: 'row' }}>
+          <View
+            style={{ flexDirection: 'row', marginRight: 30, marginRight: 30 }}
+          >
             <Text
               style={{
                 marginVertical: 3,
@@ -102,7 +104,7 @@ export default ForgottenPasswordScreen = props => {
               style={{
                 marginVertical: 3,
                 marginLeft: 3,
-                marginRight: 30,
+
                 textAlign: 'left',
                 fontSize: 14
               }}
@@ -128,7 +130,7 @@ export default ForgottenPasswordScreen = props => {
         <Text
           style={{
             marginVertical: 10,
-            marginHorizontal: 20,
+            marginHorizontal: 60,
             textAlign: 'center',
             fontSize: 14
           }}
