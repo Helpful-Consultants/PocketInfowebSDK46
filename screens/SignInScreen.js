@@ -144,7 +144,7 @@ export default SignInScreen = props => {
             value={formState.inputValues.email}
             onChangeText={inputChangeHandler.bind(this, 'email')}
             style={baseStyles.inputLabelText}
-            label='Your toolsinfoweb.co.uk email address'
+            label='User ID - your toolsinfoweb.co.uk email address'
             containerStyle={baseStyles.inputContainer}
             inputStyle={baseStyles.inputStyle}
             labelStyle={baseStyles.inputLabelText}
@@ -174,7 +174,7 @@ export default SignInScreen = props => {
               marginVertical: 20,
               marginHorizontal: 40
             }}
-            label='Your Pocket Infoweb access PIN'
+            label='Your Pocket Infoweb access PIN*'
             labelStyle={baseStyles.inputLabelText}
             containerStyle={baseStyles.inputContainer}
             inputStyle={baseStyles.inputStyle}
@@ -234,7 +234,7 @@ export default SignInScreen = props => {
               }}
             >
               <Button
-                title='Trouble signing in?'
+                title='Trouble signing in? Need a PIN?'
                 type='clear'
                 onPress={() => {
                   props.navigation.navigate('ForgottenPassword');
@@ -248,8 +248,8 @@ export default SignInScreen = props => {
                 ]}
               />
               <Text style={styles.instructions}>
-                To activate Pocket Infoweb you will need to generate an access
-                PIN for your userId.
+                * To activate Pocket Infoweb you will need to generate an access
+                PIN for your User ID.
               </Text>
             </View>
           </View>
@@ -260,7 +260,7 @@ export default SignInScreen = props => {
 };
 
 SignInScreen.navigationOptions = () => ({
-  showHeader: false
+  headerShown: false
 });
 
 const styles = StyleSheet.create({
