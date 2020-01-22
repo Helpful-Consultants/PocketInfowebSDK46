@@ -136,7 +136,7 @@ const AppDrawerNavigator = createDrawerNavigator(
     },
 
     SignedOutStack: {
-      screen: SignedOutStack,
+      screen: SignOutScreen,
       navigationOptions: {
         drawerLabel: 'Sign out'
       }

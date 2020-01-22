@@ -12,24 +12,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { signOutUserRequest } from '../actions/user';
+import { emptyDealerToolsRequest } from '../actions/dealerTools';
+import { emptyDealerWipsRequest } from '../actions/dealerWips';
+
 // import validation from 'validate';
 
 export default SignOutScreen = props => {
   const dispatch = useDispatch();
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
 
-  const signOutUser = useCallback(() => {
-    console.log('signingOut');
-    dispatch(signOutUserRequest()), [userIsSignedIn];
-  });
-
-  if (userIsSignedIn) {
-    console.log('signed in ');
-    signOutUser();
-  } else {
-    console.log('signed out');
-    signOutUser();
-  }
+  console.log('in signout screen, signingOut');
+  dispatch(emptyDealerWipsRequest());
+  dispatch(emptyDealerToolsRequest());
+  // dispatch(signOutUserRequest()), [userIsSignedIn];
+  dispatch(signOutUserRequest());
+  props.navigation.navigate('AuthLoading');
 
   return (
     <SafeAreaView style={styles.container}>

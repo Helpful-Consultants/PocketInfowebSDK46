@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Dimensions,
@@ -45,10 +45,11 @@ export default HomeScreen = props => {
   const dispatch = useDispatch();
 
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userError = useSelector(state => state.user.error);
   const userDataObj = useSelector(state => state.user.userData[0]);
 
   const requestSignOutHandler = useCallback(() => {
-    console.log('in requestSignOutHandler');
+    console.log('in homesscreen requestSignOutHandler');
     console.log('signingOut');
     dispatch(emptyDealerWipsRequest());
     dispatch(emptyDealerToolsRequest());
@@ -56,6 +57,13 @@ export default HomeScreen = props => {
     dispatch(signOutUserRequest());
     props.navigation.navigate('AuthLoading');
   });
+
+  useEffect(() => {
+    if (!userIsSignedIn || userError) {
+      console.log('home screen userIs not SignedIn so navigating to auth');
+      props.navigation.navigate('Auth');
+    }
+  }, [userIsSignedIn, userError]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -235,7 +243,7 @@ export default HomeScreen = props => {
 };
 
 HomeScreen.navigationOptions = {
-  showHeader: false,
+  headerShown: false,
   tabBarVisible: false
 };
 
