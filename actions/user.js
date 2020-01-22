@@ -24,10 +24,11 @@ export const signOutUserRequest = () => ({
   type: Types.SIGN_OUT_USER_REQUEST
 });
 
-export const getUserSuccess = ({ items }) => ({
+export const getUserSuccess = ({ statusCode, items }) => ({
   type: Types.GET_USER_SUCCESS,
   payload: {
-    items: items
+    items,
+    statusCode
   }
 });
 
@@ -38,9 +39,11 @@ export const getUserInvalidCredentials = ({ error }) => ({
   }
 });
 
-export const userError = ({ error }) => ({
+export const userError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.USER_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

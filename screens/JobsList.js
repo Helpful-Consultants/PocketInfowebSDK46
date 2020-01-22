@@ -219,6 +219,8 @@ export default function DealerToolsList(props) {
                   key={i}
                   style={{
                     backgroundColor:
+                      item.userIntId &&
+                      userIntId &&
                       item.userIntId.toString() == userIntId.toString()
                         ? Colors.vwgWhite
                         : Colors.vwgveryLightGray,

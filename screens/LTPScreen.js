@@ -4,9 +4,12 @@ import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import Modal from 'react-native-modal';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
+import MenuDrawer from '../components/MenuDrawer';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
@@ -21,10 +24,14 @@ export default LtpScreen = props => {
   const ltpItems = useSelector(state => state.ltp.ltpItems);
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
+  const dataStatusCode = useSelector(state => state.ltp.statusCode);
+  const dataErrorUrl = useSelector(state => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
     ltpItems
   ]);
+
+  const [isDrawerVisible, setIsDrawerVisible] = useState(true);
 
   useEffect(() => {
     // runs only once
@@ -54,6 +61,10 @@ export default LtpScreen = props => {
     getItems();
   };
 
+  const backdropPressHandler = () => {
+    setIsDrawerVisible(false);
+  };
+
   const items = (!isLoading && !dataError && ltpItems) || [];
 
   console.log(
@@ -61,6 +72,8 @@ export default LtpScreen = props => {
     isLoading,
     'dataError ',
     dataError,
+    'statusCode ',
+    dataStatusCode,
     ' items ',
     items.length
   );
@@ -80,10 +93,12 @@ export default LtpScreen = props => {
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
-      {searchInput.length > 0 && filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length > 0 &&
+        filteredItems.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
@@ -97,9 +112,20 @@ export default LtpScreen = props => {
         </View>
       )}
 
-      <ScrollView>
+      {/* <MenuDrawer
+        isVisible={isDrawerVisible}
+        backdropPressHandler={backdropPressHandler}
+      /> */}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting LTP'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
+        />
+      ) : (
         <LtpList items={filteredItems} baseImageUrl={Urls.ltpHeadlineImage} />
-      </ScrollView>
+      )}
     </View>
   );
 };
@@ -142,6 +168,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff'
+  },
+  errorMessage: {
+    padding: 10
+  },
+  errorMessageText: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    textAlign: 'left',
+    color: Colors.vwgDarkSkyBlue
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',

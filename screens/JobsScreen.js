@@ -9,6 +9,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
+import ErrorDetails from '../components/ErrorDetails';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
@@ -43,6 +44,8 @@ export default JobsScreen = props => {
 
   const isLoading = useSelector(state => state.dealerWips.isLoading);
   const dataError = useSelector(state => state.dealerWips.error);
+  const dataErrorUrl = useSelector(state => state.dealerWips.dataErrorUrl);
+  const dataStatusCode = useSelector(state => state.dealerWips.statusCode);
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -62,7 +65,12 @@ export default JobsScreen = props => {
   };
   //   console.log('before getWips', getWipsDataObj);
 
-  const getItems = useCallback(getWipsDataObj => {
+  //   const getItems = useCallback(getWipsDataObj => {
+  //     // console.log('in getItems', getWipsDataObj);
+  //     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
+  //   });
+
+  const getItems = useCallback(async getWipsDataObj => {
     // console.log('in getItems', getWipsDataObj);
     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
   });
@@ -94,7 +102,7 @@ export default JobsScreen = props => {
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userDataObj.intId && getItems(getWipsDataObj);
+    dealerId && userDataObj && userDataObj.intId && getItems(getWipsDataObj);
   };
 
   //   useEffect(() => {
@@ -114,7 +122,9 @@ export default JobsScreen = props => {
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
       dealerWipsItems.filter(
-        item => item.userIntId.toString() == userDataObj.intId.toString()
+        item =>
+          item.userIntId &&
+          item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
     [];
 
@@ -231,6 +241,16 @@ export default JobsScreen = props => {
   //   console.log('userWipsItems sent to JobsList', userWipsItems);
 
   console.log('RENDERING jobs screen !!!!!!!!!!!!!!!!!!!');
+  console.log(
+    'isLoading ',
+    isLoading,
+    'dataError ',
+    dataError,
+    'statusCode ',
+    dataStatusCode,
+    ' items ',
+    items.length
+  );
 
   return (
     <View>
@@ -243,27 +263,40 @@ export default JobsScreen = props => {
         searchInput={searchInput}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
+        dataErrorUrl={dataErrorUrl}
         dataCount={userWipsItems.length}
       />
-      {searchInput.length > 0 && filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length > 0 &&
+        filteredItems.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
           </Text>
         </View>
       ) : null}
-      <ScrollView>
-        <JobsList
-          isLoading={isLoading}
-          items={filteredItems}
-          dataCount={dataCount}
-          deleteDealerWipRequest={deleteDealerWip}
-          userIntId={userDataObj.intId}
-          baseImageUrl={Urls.toolImage}
-          returnToolHandler={returnToolHandler}
-          returnAllToolsHandler={returnAllToolsHandler}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting jobs'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
         />
-      </ScrollView>
+      ) : (
+        <ScrollView>
+          <JobsList
+            isLoading={isLoading}
+            items={filteredItems}
+            dataCount={dataCount}
+            deleteDealerWipRequest={deleteDealerWip}
+            userIntId={userDataObj.intId}
+            baseImageUrl={Urls.toolImage}
+            returnToolHandler={returnToolHandler}
+            returnAllToolsHandler={returnAllToolsHandler}
+          />
+        </ScrollView>
+      )}
+
       {isAlertVisible ? (
         <AwesomeAlert
           show={isAlertVisible}

@@ -20,9 +20,11 @@ export const getLtpSuccess = ({ items }) => ({
   }
 });
 
-export const ltpError = ({ error }) => ({
+export const ltpError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.LTP_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

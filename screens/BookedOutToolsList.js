@@ -29,7 +29,7 @@ export default function BookedOutToolsList(props) {
   } = props;
   let { userIntId } = props;
 
-  userIntId = userIntId.toString() || '';
+  userIntId = (userIntId && userIntId.toString()) || '';
   //   console.log(props);
   //   console.log('props end');
   //   const limit = 0;

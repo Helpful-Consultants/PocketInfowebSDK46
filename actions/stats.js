@@ -16,16 +16,19 @@ export const getStatsRequest = ({ dealerId }) => ({
   }
 });
 
-export const getStatsSuccess = ({ items }) => ({
+export const getStatsSuccess = ({ statusCode, items }) => ({
   type: Types.GET_STATS_SUCCESS,
   payload: {
-    items: items
+    items,
+    statusCode
   }
 });
 
-export const statsError = ({ error }) => ({
+export const statsError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.STATS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

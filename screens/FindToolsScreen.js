@@ -17,6 +17,7 @@ import { createFilter } from 'react-native-search-filter';
 
 // import { Base64 } from 'js-base64';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
 
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
@@ -90,10 +91,20 @@ export default FindToolsScreen = ({ ...props }) => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const isLoadingTools = useSelector(state => state.dealerTools.isLoading);
   const dataErrorTools = useSelector(state => state.dealerTools.error);
+  const dataErrorUrlTools = useSelector(
+    state => state.dealerTools.dataErrorUrl
+  );
+  const dataStatusCodeTools = useSelector(
+    state => state.dealerTools.statusCode
+  );
   const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
   const dataErrorWips = useSelector(state => state.dealerWips.error);
+  const dataErrorUrlWips = useSelector(state => state.dealerWips.dataErrorUrl);
+  const dataStatusCodeWips = useSelector(state => state.dealerWips.statusCode);
   const isLoadingLtp = useSelector(state => state.ltp.isLoading);
   const dataErrorLtp = useSelector(state => state.ltp.error);
+  const dataErrorUrlLtp = useSelector(state => state.ltp.dataErrorUrl);
+  const dataStatusCodeLtp = useSelector(state => state.ltp.statusCode);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
   const userIntId = userDataObj && userDataObj.intId.toString();
@@ -136,7 +147,7 @@ export default FindToolsScreen = ({ ...props }) => {
   //   dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
   //   dispatch(getLtpRequest()), [ltpItems];
   // });
-  const getItems = useCallback(getDealerItemsDataObj => {
+  const getItems = useCallback(async getDealerItemsDataObj => {
     // console.log('in getItems', getDealerItemsDataObj);
     dispatch(getDealerToolsRequest(getDealerItemsDataObj));
     dispatch(getDealerWipsRequest(getDealerItemsDataObj));
@@ -717,7 +728,7 @@ export default FindToolsScreen = ({ ...props }) => {
             </View>
           ) : null}
 
-          {isLoadingAny ? null : (
+          {isLoadingAny || dataErrorAny ? null : (
             <View style={styles.toolsList}>
               <DealerToolsList
                 items={filteredItems}
@@ -736,6 +747,28 @@ export default FindToolsScreen = ({ ...props }) => {
               />
             </View>
           )}
+          {dataErrorTools ? (
+            <ErrorDetails
+              errorSummary={'Error getting tools'}
+              dataStatusCode={dataStatusCodeTools}
+              errorHtml={dataErrorTools}
+              dataErrorUrl={dataErrorUrlTools}
+            />
+          ) : dataErrorWips ? (
+            <ErrorDetails
+              errorSummary={'Error getting jobs'}
+              dataStatusCode={dataStatusCodeWips}
+              errorHtml={dataErrorWips}
+              dataErrorUrl={dataErrorUrlWips}
+            />
+          ) : dataErrorLtp ? (
+            <ErrorDetails
+              errorSummary={'Error getting LTP'}
+              dataStatusCode={dataStatusCodeLtp}
+              errorHtml={dataErrorLtp}
+              dataErrorUrl={dataErrorUrlLtp}
+            />
+          ) : null}
           {isDupBookedAlertVisible ? (
             <AwesomeAlert
               show={isDupBookedAlertVisible}

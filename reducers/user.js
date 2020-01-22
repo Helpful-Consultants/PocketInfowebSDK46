@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   userData: [],
   userIsSignedIn: false,
   isLoading: false,
-  error: null
+  error: null,
+  statusCode: null
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -18,17 +19,20 @@ export default function user(state = INITIAL_STATE, action) {
         ...state,
         userData: [],
         isLoading: true,
-        error: null
+        error: null,
+        statusCode: null
       };
     }
     case Types.GET_USER_SUCCESS: {
-      console.log('action.payload is:', action.payload.items);
+      //   console.log('action.payload is:', action.payload.items);
       return {
         ...state,
         userIsSignedIn: true,
         userData: action.payload.items,
         isLoading: false,
-        error: null
+        error: null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
     case Types.GET_USER_INVALID_CREDS: {
@@ -37,27 +41,37 @@ export default function user(state = INITIAL_STATE, action) {
         ...state,
         userIsSignedIn: false,
         isLoading: false,
-
-        error: action.payload.error
+        error: (action.payload.error && action.payload.error) || null,
+        dataErrorUrl: null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
     case Types.SIGN_OUT_USER_REQUEST: {
-      console.log('action.is:', action.type);
+      //   console.log('action.is:', action.type);
       return {
         ...state,
         userIsSignedIn: false,
         userData: [],
         isLoading: false,
-        error: null
+        error: null,
+        dataErrorUrl: null,
+        statusCode: null
       };
     }
     case Types.USER_ERROR: {
-      console.log('action.is:', action);
+      console.log('action.payload starts');
+      console.log(action.payload);
+      console.log('action.payload ends');
       return {
         ...state,
         userIsSignedIn: false,
         isLoading: false,
-        error: action.payload.error
+        error: (action.payload.error && action.payload.error) || null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null,
+        dataErrorUrl:
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
       };
     }
     default: {

@@ -25,7 +25,7 @@ export default AuthLoadingScreen = props => {
       props.navigation.navigate('Main');
     } else {
       console.log('in auth loading, signed out , going to Auth  route');
-      console.log(props.navigation);
+      //   console.log(props.navigation);
       props.navigation.navigate('Auth');
     }
   }, [userIsSignedIn]);

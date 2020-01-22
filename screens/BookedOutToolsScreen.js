@@ -42,6 +42,8 @@ export default BookedOutToolsScreen = props => {
 
   const isLoading = useSelector(state => state.dealerWips.isLoading);
   const dataError = useSelector(state => state.dealerWips.error);
+  const dataErrorUrl = useSelector(state => state.dealerWips.dataErrorUrl);
+  const dataStatusCode = useSelector(state => state.dealerWips.statusCode);
   // Search function
   const [searchInput, setSearchInput] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
@@ -63,7 +65,7 @@ export default BookedOutToolsScreen = props => {
   //   console.log('before getWips', getWipsDataObj);
 
   const getItems = useCallback(
-    getWipsDataObj => {
+    async getWipsDataObj => {
       // console.log('in getItems', getWipsDataObj);
       dispatch(getDealerWipsRequest(getWipsDataObj));
     },
@@ -90,12 +92,16 @@ export default BookedOutToolsScreen = props => {
   }, []);
 
   useEffect(() => {
+    console.log('in jobs useEffect userDataObj is:  ', userDataObj);
     let userWipsItems =
-      (userDataObj.intId &&
+      (userDataObj &&
+        userDataObj.intId &&
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
-          item => item.userIntId.toString() == userDataObj.intId.toString()
+          item =>
+            item.userIntId &&
+            item.userIntId.toString() == userDataObj.intId.toString()
         )) ||
       [];
     setUserWipsItems(userWipsItems);
@@ -208,25 +214,35 @@ export default BookedOutToolsScreen = props => {
         dataError={dataError}
         dataCount={userWipsItems.length}
       />
-      {searchInput.length > 0 && filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length > 0 &&
+        filteredItems.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
           </Text>
         </View>
       ) : null}
-      <ScrollView>
-        <BookedOutToolsList
-          items={filteredItems}
-          someDataExpected={false}
-          dataCount={dataCount}
-          isLoading={isLoading}
-          deleteDealerWipRequest={deleteDealerWip}
-          userIntId={userDataObj.intId}
-          baseImageUrl={Urls.toolImage}
-          returnToolHandler={returnToolHandler}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting jobs'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
         />
-      </ScrollView>
+      ) : (
+        <ScrollView>
+          <BookedOutToolsList
+            items={filteredItems}
+            someDataExpected={false}
+            dataCount={dataCount}
+            isLoading={isLoading}
+            deleteDealerWipRequest={deleteDealerWip}
+            userIntId={(userDataObj && userDataObj.intId) || null}
+            baseImageUrl={Urls.toolImage}
+            returnToolHandler={returnToolHandler}
+          />
+        </ScrollView>
+      )}
       {isAlertVisible ? (
         <AwesomeAlert
           show={isAlertVisible}

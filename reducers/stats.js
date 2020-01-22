@@ -4,7 +4,9 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   statsItems: [],
   isLoading: false,
-  error: null
+  error: null,
+  statusCode: null,
+  dataErrorUrl: null
 };
 
 export default function stats(state = INITIAL_STATE, action) {
@@ -15,7 +17,9 @@ export default function stats(state = INITIAL_STATE, action) {
       return {
         ...state,
         isLoading: true,
-        error: null
+        error: null,
+        statusCode: null,
+        dataErrorUrl: null
       };
     }
     case Types.GET_STATS_SUCCESS: {
@@ -25,16 +29,25 @@ export default function stats(state = INITIAL_STATE, action) {
         ...state,
         statsItems: action.payload.items,
         isLoading: false,
-        error: null
+        error: null,
+        dataErrorUrl: null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
     case Types.STATS_ERROR: {
-      //   console.log(action);
+      console.log('action.payload starts');
+      console.log(action.payload);
+      console.log('action.payload ends');
       return {
         ...state,
         statsItems: [],
         isLoading: false,
-        error: action.payload.error
+        error: (action.payload.error && action.payload.error) || null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null,
+        dataErrorUrl:
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
       };
     }
     default: {

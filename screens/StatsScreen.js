@@ -41,7 +41,7 @@ export default StatsScreen = ({ ...props }) => {
 
   //   console.log('getStatsData', getStatsData);
 
-  const getItems = useCallback(() => {
+  const getItems = useCallback(async () => {
     console.log('in getItems', getDealerItemsDataObj);
     dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
     // dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
@@ -78,11 +78,14 @@ export default StatsScreen = ({ ...props }) => {
   }
 
   const userWipsItems =
-    (userIntId &&
+    (userDataObj &&
+      userDataObj.intId &&
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
       dealerWipsItems.filter(
-        item => item.userIntId.toString() == userIntId.toString()
+        item =>
+          item.userIntId &&
+          item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
     [];
 

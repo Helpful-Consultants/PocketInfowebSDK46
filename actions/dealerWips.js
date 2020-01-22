@@ -17,15 +17,17 @@ export const getDealerWipsStart = () => ({
 export const getDealerWipsRequest = ({ dealerId, intId }) => ({
   type: Types.GET_DEALER_WIPS_REQUEST,
   payload: {
-    dealerId: dealerId,
-    intId: intId
+    dealerId,
+    intId
   }
 });
 
-export const getDealerWipsSuccess = ({ items }) => ({
+export const getDealerWipsSuccess = ({ statusCode, items }) => ({
   type: Types.GET_DEALER_WIPS_SUCCESS,
+  statusCode,
   payload: {
-    items: items
+    items,
+    statusCode
   }
 });
 
@@ -95,7 +97,8 @@ export const deleteDealerWipToolRequest = payload => ({
   type: Types.DELETE_DEALER_WIP_TOOL_REQUEST,
   payload: payload
 });
-
+// spacer
+// spacer
 export const deleteDealerWipToolSuccess = ({ code, message }) => ({
   type: Types.DELETE_DEALER_WIP_TOOL_SUCCESS,
   payload: {
@@ -108,9 +111,11 @@ export const emptyDealerWipsRequest = () => ({
   type: Types.EMPTY_DEALER_WIPS_REQUEST
 });
 
-export const dealerWipsError = ({ error }) => ({
+export const dealerWipsError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.DEALER_WIPS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

@@ -13,14 +13,15 @@ export const getDealerToolsStart = () => ({
 export const getDealerToolsRequest = ({ dealerId }) => ({
   type: Types.GET_DEALER_TOOLS_REQUEST,
   payload: {
-    dealerId: dealerId
+    dealerId
   }
 });
 
-export const getDealerToolsSuccess = ({ items }) => ({
+export const getDealerToolsSuccess = ({ statusCode, items }) => ({
   type: Types.GET_DEALER_TOOLS_SUCCESS,
   payload: {
-    items: items
+    items,
+    statusCode
   }
 });
 
@@ -28,9 +29,11 @@ export const emptyDealerToolsRequest = () => ({
   type: Types.EMPTY_DEALER_TOOLS_REQUEST
 });
 
-export const dealerToolsError = ({ error }) => ({
+export const dealerToolsError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.DEALER_TOOLS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

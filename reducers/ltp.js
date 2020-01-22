@@ -3,7 +3,9 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   ltpItems: [],
   isLoading: false,
-  error: null
+  error: null,
+  statusCode: null,
+  dataErrorUrl: null
 };
 
 export default function ltp(state = INITIAL_STATE, action) {
@@ -14,7 +16,8 @@ export default function ltp(state = INITIAL_STATE, action) {
       return {
         ...state,
         isLoading: true,
-        error: null
+        error: null,
+        dataErrorUrl: null
       };
     }
     case Types.GET_LTP_SUCCESS: {
@@ -23,15 +26,19 @@ export default function ltp(state = INITIAL_STATE, action) {
         ...state,
         ltpItems: action.payload.items,
         isLoading: false,
-        error: null
+        error: null,
+        dataErrorUrl: null
       };
     }
     case Types.LTP_ERROR: {
+      console.log('action is', action);
       return {
         ...state,
         isLoading: false,
         ltpItems: [],
-        error: action.payload.error
+        error: action.payload.error,
+        statusCode: action.payload.statusCode || null,
+        dataErrorUrl: action.payload.dataErrorUrl
       };
     }
     default: {

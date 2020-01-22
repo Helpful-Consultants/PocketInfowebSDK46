@@ -18,13 +18,16 @@ export default SearchBarWithRefresh = props => {
     dataCount,
     isLoading,
     dataError,
+    dataStatusCode,
     refreshRequestHandler,
     searchInput,
     searchInputHandler
   } = props;
 
   const dataNameToUse = dataName || 'data';
-
+  if (dataError) {
+    // console.log('dataError: ', dataError);
+  }
   return (
     <View style={styles.searchBarRow}>
       {isLoading ? (
@@ -53,11 +56,20 @@ export default SearchBarWithRefresh = props => {
           </Text>
         </View>
       ) : dataError ? (
-        <View style={styles.searchBarRowNoDataTextContainer}>
-          <Text style={styles.searchBarRowErrorText}>
-            {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
-          </Text>
-        </View>
+        dataStatusCode && dataStatusCode === '999' ? (
+          <View style={styles.searchBarRowNoDataTextContainer}>
+            <Text style={styles.searchBarRowErrorText}>
+              {`You need an internet connection to download the ${dataNameToUse}.`}
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.searchBarRowNoDataTextContainer}>
+            <Text style={styles.searchBarRowErrorText}>
+              {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
+              {dataStatusCode && ` (Error code ${dataStatusCode})`}
+            </Text>
+          </View>
+        )
       ) : someDataExpected && dataCount && dataCount === 0 ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>

@@ -7,12 +7,17 @@ import {
   fork
 } from 'redux-saga/effects';
 import * as actions from '../actions/user';
+import * as wipsActions from '../actions/dealerWips';
+import * as toolsActions from '../actions/dealerTools';
 import * as api from '../api/user';
 
 import Types from '../constants/Types';
 
 function* getUser({ payload }) {
-  console.log('in user saga - getUser called', payload && payload);
+  //   console.log('in user saga - getUser called for', payload && payload);
+  let statusCode = null;
+  let errorText = 'An error occurred when trying to get the user';
+  let dataErrorUrl = null;
   yield put(actions.getUserStart());
   //   yield put(actions.getUserResetErrors());
   try {
@@ -21,49 +26,168 @@ function* getUser({ payload }) {
       pin: payload.pin
     });
     // console.log('in user saga - 200');
-    console.log(result && result.data[0]);
+    // console.log(result && result);
     // console.log('result is:', result.data[0]);
     // console.log('result userId is:', result.data[0].userId);
     // console.log('result intIdis:', result.data[0].intId);
 
     // const userId = result.data[0].userId && result.data[0].userId;
     // const userIntId = result.data[0].intId && result.data[0].intId;
-    if (
-      result.data[0].intId &&
-      result.data[0].intId.length > 0 &&
-      result.data[0].userId &&
-      result.data[0].userId.length > 0
-    ) {
-      console.log('in user saga - good 200');
-      yield put(
-        actions.getUserSuccess({
-          items: result.data
-        })
-      );
+    if (result.data && result.data[0]) {
+      if (
+        result.data[0].intId &&
+        result.data[0].intId.length > 0 &&
+        result.data[0].userId &&
+        result.data[0].userId.length > 0 &&
+        result.data[0].dealerId &&
+        result.data[0].dealerId.length > 0
+      ) {
+        // console.log('in user saga - good 200');
+        yield put(
+          actions.getUserSuccess({
+            items: result.data,
+            statusCode:
+              (result.status && result.status.toString()) ||
+              (result.request.status && result.request.status.toString()) ||
+              null
+          })
+        );
+        let getWipsDataObj = {
+          dealerId: result.data[0].dealerId && result.data[0].intId.dealerId,
+          intId: result.data[0].intId && result.data[0].intId.toString()
+        };
+        yield put(wipsActions.getDealerWipsStart());
+        yield put(wipsActions.getDealerWipsRequest(getWipsDataObj));
+        yield put(toolsActions.getDealerToolsStart());
+        yield put(toolsActions.getDealerToolsRequest(getWipsDataObj));
+      } else if (result.data[0].userId && result.data[0].userId.length > 0) {
+        // console.log('in user saga - bad 200');
+        // console.log(result.data && result.data[0]);
+
+        const message =
+          (result.data[0].userName && result.data[0].username) ||
+          'Email or PIN not correct';
+        // console.log('message is :', message);
+        //   yield put(
+        //     actions.getUserInvalidCredentials({
+        //       error: message
+        //     })
+        //   );
+        yield put(
+          actions.userError({
+            error: message,
+            statusCode:
+              (result.status && result.status.toString()) ||
+              (result.request.status && result.request.status.toString()) ||
+              null
+          })
+        );
+      } else {
+        console.log('$$$$$$$$$$$$$$$$$ user  weird result');
+        console.log(result && result);
+        yield put(
+          actions.userError({
+            error: 'Unable to check your User ID at Tools Infoweb',
+            statusCode:
+              (result.request.status && result.request.status.toString()) ||
+              null,
+            dataErrorUrl:
+              (result && result.responseURL && result.responseURL) ||
+              (result &&
+                result.request &&
+                result.request._url &&
+                result.request._url) ||
+              null
+          })
+        );
+      }
     } else {
-      console.log('in user saga - bad 200');
-      console.log(result.data && result.data[0]);
-      const message =
-        (result.data[0].userName && result.data[0].username) ||
-        'Email or PIN not correct';
-      console.log('message is :', message);
-      //   yield put(
-      //     actions.getUserInvalidCredentials({
-      //       error: message
-      //     })
-      //   );
+      //   console.log('$$$$$$$$$$$$$$$$$ user  very weird result');
+      //   console.log(result && result);
       yield put(
         actions.userError({
-          error: message
+          error: 'Unable to check your User ID at Tools Infoweb',
+          statusCode:
+            (result.request.status && result.request.status.toString()) || null,
+          dataErrorUrl:
+            (result && result.responseURL && result.responseURL) ||
+            (result &&
+              result.request &&
+              result.request._url &&
+              result.request._url) ||
+            null
         })
       );
     }
-  } catch (e) {
+  } catch (error) {
     console.log('in user saga - error time!!!!!!!!!!!!!!');
-    // console.log(result && result);
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    console.log(error && error.config);
+
+    if (error.response) {
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
+      if (error.response.status) {
+        statusCode = error.response.status.toString();
+      }
+      if (error.response.data) {
+        errorText = error.response.data;
+      }
+      if (error.response.config.url) {
+        dataErrorUrl = error.response.config.url;
+      }
+      // console.error(error);if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      //   console.log('error.response.data', error.response.data);
+      // console.log(error.response.status);
+      // console.log(error.response.headers);
+    } else if (error.request) {
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log(
+      //     'error request response ' + error.request._response &&
+      //       error.request._response
+      //   );
+      if (error.request.status) {
+        statusCode = error.request.status.toString();
+      }
+      if (error.request._response) {
+        errorText = error.request._response;
+        if (error.request._response.indexOf(' connect') !== -1) {
+          statusCode = '999';
+        } else {
+          if (error.request.status) {
+            statusCode = error.request.status.toString();
+          }
+        }
+      }
+      if (error.request.responseURL) {
+        dataErrorUrl = error.request.responseURL;
+      } else if (error.request._url) {
+        dataErrorUrl = error.request._url;
+      }
+      // The request was made but no response was received
+      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+      // http.ClientRequest in node.js
+      //   console.log('error.request'), error.request;
+    } else if (error.message) {
+      // Something happened in setting up the request that triggered an Error
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
+      if (error.message.indexOf(' 500') !== -1) {
+        statusCode = '500';
+      }
+      errorText = 'Unable to check your User ID: ' + error.message;
+    }
     yield put(
       actions.userError({
-        error: 'An error occurred when trying to get the user'
+        error: errorText,
+        statusCode: statusCode,
+        dataErrorUrl: dataErrorUrl
       })
     );
   }
