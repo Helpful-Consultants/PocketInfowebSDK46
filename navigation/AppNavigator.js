@@ -25,26 +25,38 @@ const SignedOutStack = createStackNavigator({
     screen: SignInScreen,
     navigationOptions: {
       title: 'Sign In'
-    }
+    },
+    navigationOptions: () => ({
+      headerShown: false
+    })
   },
   ForgottenPassword: {
     screen: ForgottenPasswordScreen,
     navigationOptions: {
       title: 'Forgotten Password'
-    }
+    },
+    navigationOptions: () => ({
+      headerShown: true
+    })
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
       title: 'Register'
-    }
+    },
+    navigationOptions: () => ({
+      headerShown: true
+    })
   },
   SignOut: {
     screen: SignOutScreen,
     navigationOptions: {
       title: 'Sign out'
     }
-  }
+  },
+  navigationOptions: () => ({
+    headerShown: false
+  })
 });
 
 // Stats stack
