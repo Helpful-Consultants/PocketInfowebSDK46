@@ -405,7 +405,6 @@ export default FindToolsScreen = ({ ...props }) => {
                 placeholder='Job number/job name'
                 required
                 autoCapitalize='none'
-                keyboardType='number-pad'
                 autoCorrect={false}
                 returnKeyType='done'
                 onSubmitEditing={text => console.log(text)}
