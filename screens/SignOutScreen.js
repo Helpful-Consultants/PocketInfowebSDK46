@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { useDispatch, useSelector } from 'react-redux';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { signOutUserRequest } from '../actions/user';

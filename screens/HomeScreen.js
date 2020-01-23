@@ -9,7 +9,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { Icon } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';

@@ -13,6 +13,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // import AsyncStorage from '@react-native-community/async-storage'; //breaks
 import { AsyncStorage } from 'react-native'; // deprecated
@@ -73,14 +74,16 @@ export default function App(props) {
   } else {
     // console.log('in App');
     return (
-      <Provider store={store}>
-        <PersistGate loading={<Loading />} persistor={persistor}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-            <AppNavigator userIsSignedIn={userIsSignedIn} />
-          </View>
-        </PersistGate>
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <PersistGate loading={<Loading />} persistor={persistor}>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
+              <AppNavigator userIsSignedIn={userIsSignedIn} />
+            </View>
+          </PersistGate>
+        </Provider>
+      </SafeAreaProvider>
     );
   }
 }

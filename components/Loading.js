@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';

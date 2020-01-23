@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';

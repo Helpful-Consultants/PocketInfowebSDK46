@@ -7,7 +7,7 @@ import {
   View,
   Alert
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view';
 import { useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
