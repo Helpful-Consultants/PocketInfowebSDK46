@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  Image,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View
-} from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements';

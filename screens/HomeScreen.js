@@ -2,15 +2,15 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Dimensions,
-  SafeAreaView,
+
   //   PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
   View
 } from 'react-native';
-import { connect } from 'react-redux';
-import { Button, Icon, Image, Text } from 'react-native-elements';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Icon } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';

@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Platform,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   View,
   Alert
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';

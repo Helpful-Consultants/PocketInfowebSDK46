@@ -1,15 +1,7 @@
-import React, { useCallback, useReducer } from 'react';
-import {
-  ActivityIndicator,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-  Alert
-} from 'react-native';
+import React from 'react';
+import { ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { signOutUserRequest } from '../actions/user';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
@@ -19,12 +11,9 @@ import { emptyDealerWipsRequest } from '../actions/dealerWips';
 
 export default SignOutScreen = props => {
   const dispatch = useDispatch();
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-
   console.log('in signout screen, signingOut');
   dispatch(emptyDealerWipsRequest());
   dispatch(emptyDealerToolsRequest());
-  // dispatch(signOutUserRequest()), [userIsSignedIn];
   dispatch(signOutUserRequest());
   props.navigation.navigate('AuthLoading');
 

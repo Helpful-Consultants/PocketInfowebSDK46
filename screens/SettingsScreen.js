@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   FlatList,
-  SafeAreaView,
   StyleSheet,
   Image,
   Platform,
@@ -9,6 +8,7 @@ import {
   Text,
   View
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Constants from 'expo-constants';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
