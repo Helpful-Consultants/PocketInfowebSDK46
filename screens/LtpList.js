@@ -53,7 +53,7 @@ export default function LtpList(props) {
   //     </View>
   //   );
 
-  const FlatListItem = ({ ...props }) => {
+  const FlatListItem = props => {
     const { item } = props;
     const { onSelectItem } = props;
 

@@ -14,7 +14,7 @@ import StatsSummary from './StatsSummary';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/content/stats.jpg';
 
-export default StatsScreen = ({ ...props }) => {
+export default StatsScreen = props => {
   const dispatch = useDispatch();
   const statsObj = useSelector(state => state.stats.statsItems[0]);
   const dealerWipsItems = useSelector(

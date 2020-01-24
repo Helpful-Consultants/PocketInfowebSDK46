@@ -77,7 +77,7 @@ const formReducer = (state, action) => {
   return state;
 };
 
-export default FindToolsScreen = ({ ...props }) => {
+export default FindToolsScreen = props => {
   const dispatch = useDispatch();
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
