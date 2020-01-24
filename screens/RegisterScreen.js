@@ -54,7 +54,7 @@ export default RegisterScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    
   },
   appName: {
     color: '#0096da',

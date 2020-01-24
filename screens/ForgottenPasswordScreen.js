@@ -145,7 +145,7 @@ export default ForgottenPasswordScreen = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    
   },
   appName: {
     color: '#0096da',

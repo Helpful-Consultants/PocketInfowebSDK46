@@ -28,8 +28,7 @@ export default SignOutScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff'
+    flex: 1
   },
   appName: {
     color: '#0096da',

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff'
+    
   },
   odisRow: {
     flexDirection: 'row',

@@ -321,8 +321,7 @@ BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#fff'
+    paddingTop: 15
   },
   modal: {
     flex: 1,

@@ -191,8 +191,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    justifyContent: 'center'
   },
   lookupPrompt: {
     padding: 10,

@@ -83,15 +83,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    justifyContent: 'center'
   },
   warningContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 70,
-    backgroundColor: '#fff'
+    padding: 70
   },
   searchBarRow: {
     flexDirection: 'row',
