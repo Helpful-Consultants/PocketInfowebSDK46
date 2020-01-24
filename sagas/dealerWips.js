@@ -227,65 +227,6 @@ function* watchCreateDealerWipRequest() {
 }
 // Create WIP end
 
-// DELETe WIP TOOL start
-function* updateDealerWip({ payload }) {
-  console.log('in UPDATE wip saga', payload);
-  console.log('in UPDATE wip saga', payload.wipObj);
-  try {
-    // delete the old one
-    yield call(api.deleteDealerWip, payload);
-    // yield put(actions.getDealerWipsRequest(payload.wipDataObj));
-    // yield call(getDealerWips);
-    yield put(
-      actions.deleteDealerWipSuccess({
-        code: '200',
-        message: 'Successful',
-        wipNumber: payload.wipNumber || ''
-      })
-    );
-    // create a new one
-    yield call(api.createDealerWip, payload.wipObj);
-    yield put(
-      actions.createDealerWipSuccess({
-        code: '200',
-        message: 'Successful',
-        wipNumber: payload.wipNumber || ''
-      })
-    );
-    // refresh the list
-    yield put(actions.getDealerWipsStart());
-    yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
-  } catch (error) {
-    if (error.response) {
-      // console.error(error);if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      // console.log(error.response.status);
-      // console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error in deleteDealerWip', error.message);
-    }
-    console.log(error.config);
-    yield put(
-      actions.dealerWipsError({
-        error: 'An error occurred when trying to delete the user WIP'
-      })
-    );
-  }
-}
-
-function* watchUpdateDealerWipRequest() {
-  yield takeEvery(Types.UPDATE_DEALER_WIP_REQUEST, updateDealerWip);
-}
-// Update WIP end
-
 // Remove tool from WIP start
 function* deleteDealerWipTool({ payload }) {
   //   console.log('in DELETE wip TOOL saga', payload);

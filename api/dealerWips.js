@@ -72,35 +72,6 @@ export const createDealerWip = wipObj => {
   //   return axios.post(postUrl, strungArray);
 };
 
-export const updateDealerWip = updateWipObj => {
-  //   console.log('in create wip api', wipObj);
-
-  const strung = JSON.stringify(updateWipObj);
-  //   console.log('in create wip api, strung is ', strung);
-
-  const wipArr = [updateWipObj];
-
-  //   console.log('wipArr', wipArr);
-
-  //   const strung = queryString.stringify(stuff);
-  //   const strung = stuff.toString();
-  //   const strungArray = '[' + strung + ']';
-  //   console.log(postUrl);
-  //   console.log(stuff);
-  //   console.log('in create wip api, strungArray is ', strungArray);
-  //   console.log(strungArray);
-  //   return fetch(postUrl, {
-  //     method: 'POST',
-  //     headers: {
-  //       //   Accept: 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     data: dummyData
-  //   });
-
-  return axios.post(postUrl, wipArr);
-};
-
 // export const deleteDealerWip = ({ dealerWipId, wipNumber, intId }) => {
 //   return axios.delete(`/dealerWips/${(dealerWipId, wipNumber, intId)}`);
 // };

@@ -55,7 +55,6 @@ export default {
   DELETE_DEALER_WIP_SUCCESS: 'dealerWips/delete_dealer_wip_success',
   CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
   CREATE_DEALER_WIP_SUCCESS: 'dealerWips/create_dealer_wip_success',
-  UPDATE_DEALER_WIP_REQUEST: 'dealerWips/update_dealer_wip_request',
   EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/empty_dealer_wips_request',
   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error',
 

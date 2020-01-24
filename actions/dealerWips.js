@@ -5,7 +5,6 @@
 //   DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',
 //   CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
 //   CREATE_DEALER_WIP_SUCCESS: 'dealerWips/create_dealer_wip_success',
-//   UPDATE_DEALER_WIP_REQUEST: 'dealerWips/update_dealer_wip_request',
 //   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error'
 // };
 import Types from '../constants/Types';
@@ -31,30 +30,6 @@ export const getDealerWipsSuccess = ({ statusCode, items }) => ({
   }
 });
 
-export const updateDealerWipSuccess = ({ code, message }) => ({
-  type: Types.UPDATE_DEALER_WIP_SUCCESS,
-  payload: {
-    code,
-    message
-  }
-});
-
-// export const createDealerWipRequest = ({
-//   wipNumber,
-//   createdBy,
-//   createdDate,
-//   intId,
-//   tools
-// }) => ({
-//   type: Types.CREATE_DEALER_WIP_REQUEST,
-//   payload: {
-//     wipNumber,
-//     createdBy,
-//     createdDate,
-//     intId,
-//     tools
-//   }
-// });
 export const createDealerWipRequest = wipData => {
   //   console.log('in delete action');
   //   console.log(wipData);
@@ -68,12 +43,6 @@ export const createDealerWipSuccess = ({ code, message }) => ({
     message
   }
 });
-
-export const updateDealerWipRequest = wipData => {
-  console.log('in update action');
-  console.log(wipData);
-  return { type: Types.UPDATE_DEALER_WIP_REQUEST, payload: wipData };
-};
 
 export const deleteDealerWipRequest = payload => {
   //   console.log('in delete action');

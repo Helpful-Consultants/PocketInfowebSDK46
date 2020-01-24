@@ -51,19 +51,6 @@ export default function dealerWips(state = INITIAL_STATE, action) {
           (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
-    // case Types.UPDATE_DEALER_WIP_SUCCESS: {
-    //   console.log(action.payload);
-    //   return {
-    //     ...state,
-    //     lastWipProcessed: {
-    //       code: action.payload.code,
-    //       message: action.payload.message,
-    //       wipNumber: action.payload.wipNumber || ''
-    //     },
-    //     isLoading: false,
-    //     error: null
-    //   };
-    // }
     case Types.DELETE_DEALER_WIP_SUCCESS: {
       //   console.log(action.payload);
       //   console.log('reducer end data');
