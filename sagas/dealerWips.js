@@ -42,7 +42,7 @@ function* getDealerWips({ payload }) {
     ) {
       //   console.log('in ltp saga - good 200');
 
-      console.log('in Wips saga - good 200');
+      //   console.log('in Wips saga - good 200');
       //   console.log(result.data);
       yield put(
         actions.getDealerWipsSuccess({
@@ -70,7 +70,7 @@ function* getDealerWips({ payload }) {
       );
     } else {
       console.log('dealer wips weird result');
-      console.log(result && result);
+      //   console.log(result && result);
       yield put(
         actions.dealerWipsError({
           error:
@@ -92,15 +92,15 @@ function* getDealerWips({ payload }) {
     // console.log(result);
     // console.log('end results in saga get dealerWips, success');
   } catch (error) {
-    console.log('server error in saga get dealerWips !!!!!!!!!!!!!!');
-    console.log('whole Error', error);
-    console.log('whole Error ends');
-    console.log(error && error.config);
+    // console.log('server error in saga get dealerWips !!!!!!!!!!!!!!');
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    // console.log(error && error.config);
 
     if (error.response) {
-      console.log('error response starts');
-      console.log('error response', error.response);
-      console.log('error response ends');
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
       if (error.response.status) {
         statusCode = error.response.status.toString();
       }
@@ -117,9 +117,9 @@ function* getDealerWips({ payload }) {
       // console.log(error.response.status);
       // console.log(error.response.headers);
     } else if (error.request) {
-      console.log('error request start');
-      console.log('error request', error.request);
-      console.log('error request ends');
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log('error request ends');
       if (error.request.status) {
         statusCode = error.request.status.toString();
       }
@@ -147,9 +147,9 @@ function* getDealerWips({ payload }) {
       //   console.log('error.request'), error.request;
     } else if (error.message) {
       // Something happened in setting up the request that triggered an Error
-      console.log('error message starts');
-      console.log('Error message', error.message);
-      console.log('error message ends');
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
       if (error.message.indexOf(' 500') !== -1) {
         statusCode = '500';
       }
@@ -175,9 +175,11 @@ function* watchGetDealerWipsRequest() {
 function* createDealerWip({ payload }) {
   //   console.log('in create wip saga', payload);
   //   console.log('in create wip saga', payload.wipObj);
-
+  let statusCode = null;
+  let errorText = 'A server error occurred when trying to save the job';
+  let dataErrorUrl = null;
   try {
-    yield call(api.createDealerWip, payload.wipObj);
+    const result = yield call(api.createDealerWip, payload.wipObj);
     // console.log('in wips saga - good 200', payload.getWipsDataObj);
     yield put(
       actions.createDealerWipSuccess({
@@ -186,7 +188,7 @@ function* createDealerWip({ payload }) {
         wipNumber: payload.getWipsDataObj.wipNumber || ''
       })
     );
-    console.log('createDealerWipSuccess');
+    // console.log('createDealerWipSuccess');
     yield put(actions.getDealerWipsStart());
     // console.log('getDealerWipStarted');
     yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
@@ -197,26 +199,74 @@ function* createDealerWip({ payload }) {
     //   toolsActions.getDealerToolsRequest(payload.getWipsDataObj.dealerId)
     // );
   } catch (error) {
-    if (error && error.response) {
+    // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    // console.log(error && error.config);
+
+    if (error.response) {
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
+      if (error.response.status) {
+        statusCode = error.response.status.toString();
+      }
+      if (error.response.data) {
+        errorText = error.response.data;
+      }
+      if (error.response.config.url) {
+        dataErrorUrl = error.response.config.url;
+      }
       // console.error(error);if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log(error && error.response.data);
+      //   console.log('error.response.data', error.response.data);
       // console.log(error.response.status);
       // console.log(error.response.headers);
-    } else if (error && error.request) {
+    } else if (error.request) {
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log('error request ends');
+      if (error.request.status) {
+        statusCode = error.request.status.toString();
+      }
+      if (error.request._response) {
+        errorText = error.request._response;
+        if (
+          error.request._response.indexOf('connect') !== -1 ||
+          error.request._response.indexOf('timed out') !== -1
+        ) {
+          statusCode = '999';
+        } else {
+          if (error.request.status) {
+            statusCode = error.request.status.toString();
+          }
+        }
+      }
+      if (error.request.responseURL) {
+        dataErrorUrl = error.request.responseURL;
+      } else if (error.request._url) {
+        dataErrorUrl = error.request._url;
+      }
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
+      //   console.log('error.request'), error.request;
+    } else if (error.message) {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
+      if (error.message.indexOf(' 500') !== -1) {
+        statusCode = '500';
+      }
+      errorText = error.message;
     }
-    console.log(error && error.config);
     yield put(
       actions.dealerWipsError({
-        error: 'An error occurred when trying to create the user wip'
+        error: errorText,
+        statusCode: statusCode,
+        dataErrorUrl: dataErrorUrl
       })
     );
   }
@@ -231,16 +281,23 @@ function* watchCreateDealerWipRequest() {
 function* deleteDealerWipTool({ payload }) {
   //   console.log('in DELETE wip TOOL saga', payload);
   //   console.log('in DELETE wip TOOL saga', payload.wipObj);
+  let statusCode = null;
+  let errorText = 'Anerror occurred when trying update the job';
+  let dataErrorUrl = null;
   try {
     // delete the old one
-    yield call(api.deleteDealerWipTool, payload);
+    const result = yield call(api.deleteDealerWipTool, payload);
     // yield put(actions.getDealerWipsRequest(payload.wipDataObj));
     // yield call(getDealerWips);
+    // console.log('delete wip tool result', result && result);
     yield put(
       actions.deleteDealerWipToolSuccess({
-        code: '200',
         message: 'Successful',
-        wipNumber: payload.wipNumber || ''
+        wipNumber: payload.wipNumber || '',
+        statusCode:
+          (result.status && result.status.toString()) ||
+          (result.request.status && result.request.status.toString()) ||
+          null
       })
     );
     // refresh the list
@@ -249,26 +306,74 @@ function* deleteDealerWipTool({ payload }) {
     yield put(toolsActions.getDealerToolsStart());
     yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
   } catch (error) {
+    // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    // console.log(error && error.config);
+
     if (error.response) {
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
+      if (error.response.status) {
+        statusCode = error.response.status.toString();
+      }
+      if (error.response.data) {
+        errorText = error.response.data;
+      }
+      if (error.response.config.url) {
+        dataErrorUrl = error.response.config.url;
+      }
       // console.error(error);if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log(error.response.data);
+      //   console.log('error.response.data', error.response.data);
       // console.log(error.response.status);
       // console.log(error.response.headers);
     } else if (error.request) {
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log('error request ends');
+      if (error.request.status) {
+        statusCode = error.request.status.toString();
+      }
+      if (error.request._response) {
+        errorText = error.request._response;
+        if (
+          error.request._response.indexOf('connect') !== -1 ||
+          error.request._response.indexOf('timed out') !== -1
+        ) {
+          statusCode = '999';
+        } else {
+          if (error.request.status) {
+            statusCode = error.request.status.toString();
+          }
+        }
+      }
+      if (error.request.responseURL) {
+        dataErrorUrl = error.request.responseURL;
+      } else if (error.request._url) {
+        dataErrorUrl = error.request._url;
+      }
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
+      //   console.log('error.request'), error.request;
+    } else if (error.message) {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error in deleteDealerWipTool', error.message);
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
+      if (error.message.indexOf(' 500') !== -1) {
+        statusCode = '500';
+      }
+      errorText = error.message;
     }
-    console.log(error.config);
     yield put(
       actions.dealerWipsError({
-        error: 'An error occurred when trying to delete the user WIP tool'
+        error: errorText,
+        statusCode: statusCode,
+        dataErrorUrl: dataErrorUrl
       })
     );
   }
@@ -284,9 +389,14 @@ function* deleteDealerWip(payload) {
   //   console.log('in saga DELETE dealerWip called');
   //   console.log('in saga DELETE dealerWip payload', payload);
   //   console.log('in saga DELETE dealerWip wip', payload.wipNumber);
+  let statusCode = null;
+  let errorText = 'Anerror occurred when trying to delete the job';
+  let dataErrorUrl = null;
+
+  //   console.log('delete wip called', payload);
 
   try {
-    yield call(api.deleteDealerWip, payload);
+    const result = yield call(api.deleteDealerWip, payload);
     // yield put(actions.getDealerWipsRequest(payload.wipDataObj));
     // yield call(getDealerWips);
     yield put(
@@ -296,31 +406,80 @@ function* deleteDealerWip(payload) {
         wipNumber: payload.wipNumber || ''
       })
     );
+    // console.log('delete wip good result', result && result);
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload));
     yield put(toolsActions.getDealerToolsStart());
     yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
   } catch (error) {
+    // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
+    // console.log('whole Error', error);
+    // console.log('whole Error ends');
+    // console.log(error && error.config);
+
     if (error.response) {
+      //   console.log('error response starts');
+      //   console.log('error response', error.response);
+      //   console.log('error response ends');
+      if (error.response.status) {
+        statusCode = error.response.status.toString();
+      }
+      if (error.response.data) {
+        errorText = error.response.data;
+      }
+      if (error.response.config.url) {
+        dataErrorUrl = error.response.config.url;
+      }
       // console.error(error);if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log(error.response.data);
+      //   console.log('error.response.data', error.response.data);
       // console.log(error.response.status);
       // console.log(error.response.headers);
     } else if (error.request) {
+      //   console.log('error request start');
+      //   console.log('error request', error.request);
+      //   console.log('error request ends');
+      if (error.request.status) {
+        statusCode = error.request.status.toString();
+      }
+      if (error.request._response) {
+        errorText = error.request._response;
+        if (
+          error.request._response.indexOf('connect') !== -1 ||
+          error.request._response.indexOf('timed out') !== -1
+        ) {
+          statusCode = '999';
+        } else {
+          if (error.request.status) {
+            statusCode = error.request.status.toString();
+          }
+        }
+      }
+      if (error.request.responseURL) {
+        dataErrorUrl = error.request.responseURL;
+      } else if (error.request._url) {
+        dataErrorUrl = error.request._url;
+      }
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
+      //   console.log('error.request'), error.request;
+    } else if (error.message) {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error in deleteDealerWip', error.message);
+      //   console.log('error message starts');
+      //   console.log('Error message', error.message);
+      //   console.log('error message ends');
+      if (error.message.indexOf(' 500') !== -1) {
+        statusCode = '500';
+      }
+      errorText = error.message;
     }
-    console.log(error.config);
     yield put(
       actions.dealerWipsError({
-        error: 'An error occurred when trying to delete the user WIP'
+        error: errorText,
+        statusCode: statusCode,
+        dataErrorUrl: dataErrorUrl
       })
     );
   }

@@ -54,10 +54,9 @@ export const deleteDealerWipRequest = payload => {
   };
 };
 
-export const deleteDealerWipSuccess = ({ code, message }) => ({
+export const deleteDealerWipSuccess = ({ statusCode, message }) => ({
   type: Types.DELETE_DEALER_WIP_SUCCESS,
   payload: {
-    code,
     message
   }
 });
@@ -68,10 +67,10 @@ export const deleteDealerWipToolRequest = payload => ({
 });
 // spacer
 // spacer
-export const deleteDealerWipToolSuccess = ({ code, message }) => ({
+export const deleteDealerWipToolSuccess = ({ statusCode, message }) => ({
   type: Types.DELETE_DEALER_WIP_TOOL_SUCCESS,
   payload: {
-    code,
+    statusCode,
     message
   }
 });
