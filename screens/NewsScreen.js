@@ -123,7 +123,7 @@ export default NewsScreen = props => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting news items'}
+          errorSummary={'Error syncing news items'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}

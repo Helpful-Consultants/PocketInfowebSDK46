@@ -130,7 +130,7 @@ export default ProductsScreen = props => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting product news items'}
+          errorSummary={'Error syncing product news items'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}

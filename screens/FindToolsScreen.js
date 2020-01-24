@@ -190,19 +190,19 @@ export default FindToolsScreen = props => {
       setDataErrorAny(dataErrorTools);
       setDataStatusCodeAny(dataStatusCodeTools);
       setDataErrorUrlAny(dataErrorUrlTools);
-      setDataErrorSummary('Error getting tools');
+      setDataErrorSummary('Error syncing tools');
       setDataNameInPlay('tools');
     } else if (dataErrorWips) {
       setDataErrorAny(dataErrorWips);
       setDataStatusCodeAny(dataStatusCodeWips);
       setDataErrorUrlAny(dataErrorUrlWips);
-      setDataErrorSummary('Error getting jobs');
+      setDataErrorSummary('Error syncing jobs');
       setDataNameInPlay('jobs');
     } else if (dataErrorLtp) {
       setDataErrorAny(dataErrorLtp);
       setDataStatusCodeAny(dataStatusCodeLtp);
       setDataErrorUrlAny(dataErrorUrlLtp);
-      setDataErrorSummary('Error getting LTP');
+      setDataErrorSummary('Error syncing LTP');
       setDataNameInPlay('LTP');
     } else if (dealerToolsItems && dealerToolsItems.length === 0) {
       console.log('empty tools items');

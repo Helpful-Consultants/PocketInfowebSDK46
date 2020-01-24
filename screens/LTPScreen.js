@@ -118,7 +118,7 @@ export default LtpScreen = props => {
       /> */}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting LTP'}
+          errorSummary={'Error syncing LTP'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -166,8 +166,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    
+    justifyContent: 'center'
   },
   errorMessage: {
     padding: 10

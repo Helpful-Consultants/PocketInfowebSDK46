@@ -279,7 +279,7 @@ export default JobsScreen = props => {
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting jobs'}
+          errorSummary={'Error syncing jobs'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -375,8 +375,7 @@ JobsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    
+    paddingTop: 15
   },
   modal: {
     flex: 1,

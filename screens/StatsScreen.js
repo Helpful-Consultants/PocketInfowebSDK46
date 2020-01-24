@@ -125,7 +125,7 @@ export default StatsScreen = props => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting the stats data'}
+          errorSummary={'Error syncing the stats data'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}

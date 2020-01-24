@@ -226,7 +226,7 @@ export default BookedOutToolsScreen = props => {
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error getting jobs'}
+          errorSummary={'Error syncing jobs'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
