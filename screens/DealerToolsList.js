@@ -3,13 +3,10 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements';
-
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
-import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';
-import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
-import ltpDummyData from '../dummyData/ltpDummyData.js';
+// import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
+// import ltpDummyData from '../dummyData/ltpDummyData.js';
 
 export default function DealerToolsList(props) {
   //   console.log('props');
