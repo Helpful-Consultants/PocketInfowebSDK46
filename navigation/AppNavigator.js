@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -109,6 +109,11 @@ const DrawerContent = props => (
           <Text
             style={styles.appVersion}
           >{`Build version ${Constants.manifest.version}`}</Text>
+          {Platform.OS ? (
+            <Text
+              style={styles.appVersion}
+            >{`OS Version ${Platform.OS} ${Platform.Version}`}</Text>
+          ) : null}
         </View>
       </View>
     </SafeAreaView>
