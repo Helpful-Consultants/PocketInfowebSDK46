@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   userIsSignedIn: false,
   isLoading: false,
   error: null,
+  dataErrorUrl: null,
   statusCode: null
 };
 
@@ -20,6 +21,7 @@ export default function user(state = INITIAL_STATE, action) {
         userData: [],
         isLoading: true,
         error: null,
+        dataErrorUrl: null,
         statusCode: null
       };
     }
@@ -31,6 +33,7 @@ export default function user(state = INITIAL_STATE, action) {
         userData: action.payload.items,
         isLoading: false,
         error: null,
+        dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null
       };

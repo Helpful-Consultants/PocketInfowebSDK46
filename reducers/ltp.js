@@ -17,6 +17,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         ...state,
         isLoading: true,
         error: null,
+        statusCode: null,
         dataErrorUrl: null
       };
     }
@@ -27,6 +28,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         ltpItems: action.payload.items,
         isLoading: false,
         error: null,
+        statusCode: null,
         dataErrorUrl: null
       };
     }
@@ -34,8 +36,8 @@ export default function ltp(state = INITIAL_STATE, action) {
       console.log('action is', action);
       return {
         ...state,
-        isLoading: false,
         ltpItems: [],
+        isLoading: false,
         error: action.payload.error,
         statusCode: action.payload.statusCode || null,
         dataErrorUrl: action.payload.dataErrorUrl
