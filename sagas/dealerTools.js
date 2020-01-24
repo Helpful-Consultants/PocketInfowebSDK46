@@ -44,10 +44,11 @@ function* getDealerTools({ payload }) {
         })
       );
     } else if (result && result.data && result.data.length > 0) {
-      console.log(
-        'in Tools saga - empty 200',
-        result.request.status && result.request.status
-      );
+      console.log('in Tools saga - empty 200');
+      // console.log(
+      //     'in Tools saga - empty 200',
+      //     result.request.status && result.request.status
+      // );
       //   console.log(result && result);
       yield put(
         actions.getDealerToolsSuccess({
@@ -60,7 +61,7 @@ function* getDealerTools({ payload }) {
       );
     } else {
       console.log('dealer Tools weird result');
-      console.log(result && result);
+      //   console.log(result && result);
       yield put(
         actions.dealerToolsError({
           error:

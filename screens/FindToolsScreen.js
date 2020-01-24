@@ -110,7 +110,11 @@ export default FindToolsScreen = ({ ...props }) => {
   const userIntId = userDataObj && userDataObj.intId.toString();
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
+  const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
+  const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
+  const [dataErrorSummary, setDataErrorSummary] = useState('');
   const [searchInput, setSearchInput] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [combinedItems, setCombinedItems] = useState([]);
@@ -181,10 +185,44 @@ export default FindToolsScreen = ({ ...props }) => {
   useEffect(() => {
     // runs only once
     // console.log('in tools use effect');
-    if (dataErrorTools || dataErrorWips || dataErrorLtp) {
-      setDataErrorAny(true);
+    if (dataErrorTools) {
+      setDataErrorAny(dataErrorTools);
+      setDataStatusCodeAny(dataStatusCodeTools);
+      setDataErrorUrlAny(dataErrorUrlTools);
+      setDataErrorSummary('Error getting tools');
+      setDataNameInPlay('tools');
+    } else if (dataErrorWips) {
+      setDataErrorAny(dataErrorWips);
+      setDataStatusCodeAny(dataStatusCodeWips);
+      setDataErrorUrlAny(dataErrorUrlWips);
+      setDataErrorSummary('Error getting jobs');
+      setDataNameInPlay('jobs');
+    } else if (dataErrorLtp) {
+      setDataErrorAny(dataErrorLtp);
+      setDataStatusCodeAny(dataStatusCodeLtp);
+      setDataErrorUrlAny(dataErrorUrlLtp);
+      setDataErrorSummary('Error getting LTP');
+      setDataNameInPlay('LTP');
+    } else if (dealerToolsItems && dealerToolsItems.length === 0) {
+      console.log('empty tools items');
+      setDataErrorAny('Does your site have a tools list?');
+      setDataStatusCodeAny(dataStatusCodeTools);
+      setDataErrorUrlAny('');
+      setDataErrorSummary('No tools fetched from web server');
+      setDataNameInPlay('tools');
+    } else if (ltpItems && ltpItems.length === 0) {
+      //   console.log('empty ltp items');
+      setDataErrorAny('The LTP list should not be empty');
+      setDataStatusCodeAny(dataStatusCodeLtp);
+      setDataErrorUrlAny('');
+      setDataErrorSummary('No LTP items fetched from web server');
+      setDataNameInPlay('LTP');
     } else {
-      setDataErrorAny(false);
+      setDataErrorAny('');
+      setDataStatusCodeAny('');
+      setDataErrorUrlAny('');
+      setDataErrorSummary('');
+      setDataNameInPlay('');
     }
   }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
 
@@ -706,13 +744,14 @@ export default FindToolsScreen = ({ ...props }) => {
       <View style={styles.arse}>
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
-            dataName={'tools'}
+            dataName={dataNameInPlay}
             someDataExpected={true}
             refreshRequestHandler={refreshRequestHandler}
             searchInputHandler={searchInputHandler}
             searchInput={searchInput}
             isLoading={isLoadingAny}
             dataError={dataErrorAny}
+            dataStatusCode={dataStatusCodeAny}
             dataCount={dealerToolsItems.length}
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
           />
@@ -746,26 +785,12 @@ export default FindToolsScreen = ({ ...props }) => {
               />
             </View>
           )}
-          {dataErrorTools ? (
+          {dataErrorAny ? (
             <ErrorDetails
-              errorSummary={'Error getting tools'}
-              dataStatusCode={dataStatusCodeTools}
-              errorHtml={dataErrorTools}
-              dataErrorUrl={dataErrorUrlTools}
-            />
-          ) : dataErrorWips ? (
-            <ErrorDetails
-              errorSummary={'Error getting jobs'}
-              dataStatusCode={dataStatusCodeWips}
-              errorHtml={dataErrorWips}
-              dataErrorUrl={dataErrorUrlWips}
-            />
-          ) : dataErrorLtp ? (
-            <ErrorDetails
-              errorSummary={'Error getting LTP'}
-              dataStatusCode={dataStatusCodeLtp}
-              errorHtml={dataErrorLtp}
-              dataErrorUrl={dataErrorUrlLtp}
+              errorSummary={dataErrorSummary}
+              dataStatusCode={dataStatusCodeAny}
+              errorHtml={dataErrorAny}
+              dataErrorUrl={dataErrorUrlAny}
             />
           ) : null}
           {isDupBookedAlertVisible ? (
