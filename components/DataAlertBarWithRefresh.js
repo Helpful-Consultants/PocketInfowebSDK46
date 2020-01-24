@@ -19,9 +19,12 @@ export default DataAlertBarWithRefresh = props => {
     someDataExpected,
     dataCount,
     dataError,
+    dataStatusCode,
     refreshRequestHandler
   } = props;
   dataName = dataName || 'data';
+
+  const dataNameToUse = dataName || 'data';
 
   return dataCount && dataCount > 0 ? null : (
     <View style={styles.searchBarRow}>
@@ -51,11 +54,20 @@ export default DataAlertBarWithRefresh = props => {
           </Text>
         </View>
       ) : dataError ? (
-        <View style={styles.searchBarRowNoDataTextContainer}>
-          <Text style={styles.searchBarRowErrorText}>
-            {`There was a problem downloading the ${dataName}. Please refresh.`}
-          </Text>
-        </View>
+        dataStatusCode && dataStatusCode === '999' ? (
+          <View style={styles.searchBarRowNoDataTextContainer}>
+            <Text style={styles.searchBarRowErrorText}>
+              {`You need an internet connection to download the ${dataNameToUse}.`}
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.searchBarRowNoDataTextContainer}>
+            <Text style={styles.searchBarRowErrorText}>
+              {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
+              {dataStatusCode && ` (Error code ${dataStatusCode})`}
+            </Text>
+          </View>
+        )
       ) : someDataExpected && dataCount && dataCount === 0 ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
