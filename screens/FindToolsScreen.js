@@ -142,8 +142,9 @@ export default FindToolsScreen = props => {
   }
 
   const getDealerItemsDataObj = {
-    dealerId: dealerId,
-    userId: userIntId
+    dealerId:
+      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
   };
   // const getItems = useCallback(getDealerItemsDataObj => {
   //   // console.log('in getItems', getDealerItemsDataObj);

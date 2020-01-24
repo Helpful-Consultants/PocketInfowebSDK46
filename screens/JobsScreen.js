@@ -59,9 +59,10 @@ export default JobsScreen = props => {
   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 
-  const getWipsDataObj = userDataObj && {
-    dealerId: userDataObj.dealerId,
-    intId: userDataObj.intId
+  const getWipsDataObj = {
+    dealerId:
+      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
   };
   //   console.log('before getWips', getWipsDataObj);
 
@@ -118,7 +119,8 @@ export default JobsScreen = props => {
   //   }
 
   const userWipsItems =
-    (userDataObj.intId &&
+    (userDataObj &&
+      userDataObj.intId &&
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
       dealerWipsItems.filter(
@@ -289,7 +291,9 @@ export default JobsScreen = props => {
             items={filteredItems}
             dataCount={dataCount}
             deleteDealerWipRequest={deleteDealerWip}
-            userIntId={userDataObj.intId}
+            userIntId={
+              (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+            }
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
             returnAllToolsHandler={returnAllToolsHandler}

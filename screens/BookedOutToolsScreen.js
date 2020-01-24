@@ -58,9 +58,10 @@ export default BookedOutToolsScreen = props => {
   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 
-  const getWipsDataObj = userDataObj && {
-    dealerId: userDataObj.dealerId,
-    intId: userDataObj.intId
+  const getWipsDataObj = {
+    dealerId:
+      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
   };
   //   console.log('before getWips', getWipsDataObj);
 
@@ -189,7 +190,7 @@ export default BookedOutToolsScreen = props => {
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userDataObj.intId && getItems(getWipsDataObj);
+    dealerId && userDataObj && userDataObj.intId && getItems(getWipsDataObj);
   };
   //   console.log('bookedOutItems', bookedOutItems);
   const filteredItems =
