@@ -113,7 +113,7 @@ export default function DealerToolsList(props) {
         titleStyle={{
           color: item.loanToolNo
             ? Colors.vwgVeryDarkGray
-            : bookedByUser
+            : item.lastWIP && item.lastWIP.length > 0
             ? Colors.vwgVeryDarkGray
             : Colors.vwgIosLink,
           fontFamily: 'the-sans',
@@ -121,9 +121,10 @@ export default function DealerToolsList(props) {
           fontWeight: '600'
         }}
         containerStyle={{
-          backgroundColor: bookedByUser
-            ? Colors.vwgVeryLightGray
-            : Colors.vwgWhite
+          backgroundColor:
+            item.lastWIP && item.lastWIP.length > 0
+              ? Colors.vwgVeryLightGray
+              : Colors.vwgWhite
         }}
         subtitle={
           <View>
@@ -183,7 +184,17 @@ export default function DealerToolsList(props) {
               color: Colors.vwgWarmRed,
               fontWeight: '500'
             }}
-          >{`Booked out by you on job ${item.lastWIP}`}</Text>
+          >
+            <Text
+              style={{
+                fontFamily: 'the-sans-bold',
+                fontSize: RFPercentage(2.0),
+                color: Colors.vwgWarmRed,
+                fontWeight: '600'
+              }}
+            >{`Already booked out to you`}</Text>
+            {`, on job '${item.lastWIP}'`}
+          </Text>
         );
       } else {
         lastJobDetails = (
@@ -191,30 +202,27 @@ export default function DealerToolsList(props) {
             style={{
               fontFamily: 'the-sans',
               fontSize: RFPercentage(2.0),
-              color: Colors.vwgWarmOrange,
+              color: Colors.vwgWarmRed,
               fontWeight: '500'
             }}
-          >{`Last booked out by ${personName}, job ${item.lastWIP}`}</Text>
+          >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
         );
       }
     }
 
     return item.loanToolNo ? (
-      <View style={styles.unavailableToolItem}>
-        <CustomListItem
-          item={item}
-          lastJobDetails={lastJobDetails}
-          bookedByUser={bookedByUser}
-        ></CustomListItem>
-      </View>
-    ) : bookedByUser === true ? (
-      <View style={styles.unavailableToolItem}>
-        <CustomListItem
-          item={item}
-          lastJobDetails={lastJobDetails}
-          bookedByUser={bookedByUser}
-        ></CustomListItem>
-      </View>
+      <CustomListItem
+        item={item}
+        lastJobDetails={lastJobDetails}
+        bookedByUser={bookedByUser}
+      ></CustomListItem>
+    ) : // ) : bookedByUser === true ? (
+    item.lastWIP && item.lastWIP.length > 0 ? (
+      <CustomListItem
+        item={item}
+        lastJobDetails={lastJobDetails}
+        bookedByUser={bookedByUser}
+      ></CustomListItem>
     ) : (
       <Touchable
         style={styles.toolItem}
@@ -279,9 +287,5 @@ const styles = StyleSheet.create({
 
   toolItem: {
     margin: 0
-  },
-  unavailableToolItem: {
-    margin: 0,
-    backgroundColor: Colors.vwgKhaki
   }
 });
