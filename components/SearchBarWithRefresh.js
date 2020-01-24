@@ -65,7 +65,7 @@ export default SearchBarWithRefresh = props => {
         ) : (
           <View style={styles.searchBarRowNoDataTextContainer}>
             <Text style={styles.searchBarRowErrorText}>
-              {`There was a problem downloading the ${dataNameToUse}. Please refresh.`}
+              {`There was a problem syncing the ${dataNameToUse}. Please refresh.`}
               {dataStatusCode && ` (Error code ${dataStatusCode})`}
             </Text>
           </View>
