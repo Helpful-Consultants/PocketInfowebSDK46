@@ -39,7 +39,6 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          code: action.payload.code,
           message: action.payload.message,
           wipNumber:
             (action.payload.wipNumber && action.payload.wipNumber) || ''
@@ -57,7 +56,6 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          code: action.payload.code,
           message: action.payload.message,
           wipNumber:
             (action.payload.wipNumber && action.payload.wipNumber) || ''
