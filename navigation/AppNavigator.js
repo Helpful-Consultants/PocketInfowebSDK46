@@ -108,7 +108,7 @@ const DrawerContent = props => (
           <Text style={styles.appName}>{Constants.manifest.name}</Text>
           <Text
             style={styles.appVersion}
-          >{`Version ${Constants.manifest.version}`}</Text>
+          >{`Build version ${Constants.manifest.version}`}</Text>
         </View>
       </View>
     </SafeAreaView>
