@@ -6,6 +6,7 @@ import { Image, Text } from 'react-native-elements';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import { getOdisRequest } from '../actions/odis';
 
@@ -18,6 +19,9 @@ export default OdisScreen = props => {
   const odisItems = useSelector(state => state.odis.odisItems);
   const isLoading = useSelector(state => state.odis.isLoading);
   const dataError = useSelector(state => state.odis.error);
+  const dataStatusCode = useSelector(state => state.odis.statusCode);
+  const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
+
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
     odisItems
   ]);
@@ -52,14 +56,24 @@ export default OdisScreen = props => {
   return (
     <View>
       <DataAlertBarWithRefresh
-        dataName={'odis versions'}
+        dataName={'ODIS version data'}
         someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         dataCount={items.length}
       />
-      <OdisVersions items={items} />
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting the ODIS data'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
+        />
+      ) : (
+        <OdisVersions items={items} />
+      )}
     </View>
   );
 };

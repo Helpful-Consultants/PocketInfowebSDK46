@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import { getStatsRequest } from '../actions/stats';
 import { getDealerWipsRequest } from '../actions/dealerWips';
@@ -28,6 +29,8 @@ export default StatsScreen = ({ ...props }) => {
   const userIntId = userDataObj && userDataObj.intId.toString();
   const isLoading = useSelector(state => state.stats.isLoading);
   const dataError = useSelector(state => state.stats.error);
+  const dataStatusCode = useSelector(state => state.odis.statusCode);
+  const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
 
   const getDealerItemsDataObj = {
     dealerId: dealerId,
@@ -117,17 +120,27 @@ export default StatsScreen = ({ ...props }) => {
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         dataCount={statsDataCount}
       />
-      <ScrollView>
-        <StatsSummary
-          statsObj={statsObj}
-          userDataObj={userDataObj}
-          activeJobsCount={activeJobsCount}
-          dealerToolsCount={dealerToolsCount}
-          effectiveness={effectiveness}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting the stats data'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
         />
-      </ScrollView>
+      ) : (
+        <View style={styles.statsContainer}>
+          <StatsSummary
+            statsObj={statsObj}
+            userDataObj={userDataObj}
+            activeJobsCount={activeJobsCount}
+            dealerToolsCount={dealerToolsCount}
+            effectiveness={effectiveness}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -166,9 +179,11 @@ StatsScreen.navigationOptions = ({ navigation }) => ({
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  statsContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    justifyContent: 'center'
   }
 });

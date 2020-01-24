@@ -7,6 +7,7 @@ import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import { getProductsRequest } from '../actions/products';
 import Urls from '../constants/Urls';
@@ -34,6 +35,8 @@ export default ProductsScreen = props => {
   //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector(state => state.products.isLoading);
   const dataError = useSelector(state => state.products.error);
+  const dataStatusCode = useSelector(state => state.products.statusCode);
+  const dataErrorUrl = useSelector(state => state.products.dataErrorUrl);
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
@@ -122,23 +125,32 @@ export default ProductsScreen = props => {
         searchInput={searchInput}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         dataCount={productsItems.length}
       />
-
-      <ScrollView>
-        {filteredItems && filteredItems.length > 0 ? (
-          <View style={styles.lookupPrompt}>
-            <Text style={styles.lookupPromptText}>
-              Touch a product to see more on Tools Infoweb.
-            </Text>
-          </View>
-        ) : null}
-        <ProductsLinks
-          items={filteredItems}
-          pressOpenHandler={pressOpenHandler}
-          baseImageUrl={Urls.productsHeadlineImage}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting product news items'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
         />
-      </ScrollView>
+      ) : (
+        <ScrollView>
+          {filteredItems && filteredItems.length > 0 ? (
+            <View style={styles.lookupPrompt}>
+              <Text style={styles.lookupPromptText}>
+                Touch a product to see more on Tools Infoweb.
+              </Text>
+            </View>
+          ) : null}
+          <ProductsLinks
+            items={filteredItems}
+            pressOpenHandler={pressOpenHandler}
+            baseImageUrl={Urls.productsHeadlineImage}
+          />
+        </ScrollView>
+      )}
     </View>
   );
 };

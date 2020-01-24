@@ -212,6 +212,7 @@ export default BookedOutToolsScreen = props => {
         searchInput={searchInput}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         dataCount={userWipsItems.length}
       />
       {dataError ? null : searchInput.length > 0 &&

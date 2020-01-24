@@ -85,6 +85,8 @@ function* getStats({ payload }) {
           error.request._response.indexOf('connect') !== -1 ||
           error.request._response.indexOf('timed out') !== -1
         ) {
+          statusCode = '999';
+        } else {
           if (error.request.status) {
             statusCode = error.request.status.toString();
           }

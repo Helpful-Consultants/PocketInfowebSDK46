@@ -20,9 +20,11 @@ export const getProductsSuccess = ({ items }) => ({
   }
 });
 
-export const productsError = ({ error }) => ({
+export const productsError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.PRODUCTS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

@@ -7,6 +7,7 @@ import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import { getNewsRequest } from '../actions/news';
 import Urls from '../constants/Urls';
@@ -34,6 +35,8 @@ export default NewsScreen = props => {
   //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector(state => state.news.isLoading);
   const dataError = useSelector(state => state.news.error);
+  const dataStatusCode = useSelector(state => state.news.statusCode);
+  const dataErrorUrl = useSelector(state => state.news.dataErrorUrl);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
@@ -115,22 +118,32 @@ export default NewsScreen = props => {
         searchInput={searchInput}
         isLoading={isLoading}
         dataError={dataError}
+        dataStatusCode={dataStatusCode}
         dataCount={newsItems.length}
       />
-      <ScrollView>
-        {filteredItems && filteredItems.length > 0 ? (
-          <View style={styles.lookupPrompt}>
-            <Text style={styles.lookupPromptText}>
-              Touch a news item to open up the story on Tools Infoweb.
-            </Text>
-          </View>
-        ) : null}
-        <NewsLinks
-          items={filteredItems}
-          pressOpenHandler={pressOpenHandler}
-          baseImageUrl={Urls.newsHeadlineImage}
+      {dataError ? (
+        <ErrorDetails
+          errorSummary={'Error getting news items'}
+          dataStatusCode={dataStatusCode}
+          errorHtml={dataError}
+          dataErrorUrl={dataErrorUrl}
         />
-      </ScrollView>
+      ) : (
+        <ScrollView>
+          {filteredItems && filteredItems.length > 0 ? (
+            <View style={styles.lookupPrompt}>
+              <Text style={styles.lookupPromptText}>
+                Touch a news item to open up the story on Tools Infoweb.
+              </Text>
+            </View>
+          ) : null}
+          <NewsLinks
+            items={filteredItems}
+            pressOpenHandler={pressOpenHandler}
+            baseImageUrl={Urls.newsHeadlineImage}
+          />
+        </ScrollView>
+      )}
     </View>
   );
 };

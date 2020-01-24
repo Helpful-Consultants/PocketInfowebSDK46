@@ -24,9 +24,11 @@ export const getNewsSuccess = ({ items }) => ({
   }
 });
 
-export const newsError = ({ error }) => ({
+export const newsError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.NEWS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });

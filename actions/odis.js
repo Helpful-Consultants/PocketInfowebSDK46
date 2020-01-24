@@ -20,9 +20,11 @@ export const getOdisSuccess = ({ items }) => ({
   }
 });
 
-export const odisError = ({ error }) => ({
+export const odisError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.ODIS_ERROR,
   payload: {
-    error
+    error,
+    statusCode,
+    dataErrorUrl
   }
 });
