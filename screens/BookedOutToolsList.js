@@ -186,7 +186,7 @@ export default function BookedOutToolsList(props) {
                             marginBottom: 3,
                             fontSize: RFPercentage(2.1)
                           }}
-                        >{`Booked out to job ${item.wipNumber}`}</Text>
+                        >{`Booked out to job '${item.wipNumber}'`}</Text>
                       ) : null}
                     </View>
                   </View>

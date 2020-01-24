@@ -257,7 +257,7 @@ export default function DealerToolsList(props) {
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()
-                          ? `Job ${item.wipNumber}, ${item.tools.length} ${
+                          ? `Job '${item.wipNumber}', ${item.tools.length} ${
                               item.tools.length > 1 ? 'tools' : 'tool'
                             }`
                           : `${item.createdBy}'s job ${item.wipNumber}`}
