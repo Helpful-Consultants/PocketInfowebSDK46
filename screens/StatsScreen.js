@@ -36,7 +36,7 @@ export default StatsScreen = props => {
     dealerId: dealerId,
     intId: userIntId
   };
-  console.log('getDealerItemsDataObj is set to ', getDealerItemsDataObj);
+  //   console.log('getDealerItemsDataObj is set to ', getDealerItemsDataObj);
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     getDealerItemsDataObj
