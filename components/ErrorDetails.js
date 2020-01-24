@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import HTML from 'react-native-render-html';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import Constants from 'expo-constants';
 import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
@@ -52,6 +53,21 @@ export default ErrorDetails = props => {
               style={styles.errorMessageText}
             >{`URL: ${dataErrorUrl}`}</Text>
           ) : null
+        ) : null}
+      </View>
+      <View style={styles.errorMessage}>
+        <Text style={styles.errorMessageText}>{Constants.manifest.name}</Text>
+        <Text
+          style={styles.errorMessageText}
+        >{`Build version ${Constants.manifest.version}`}</Text>
+        {Platform.constants && Platform.constants.systemName ? (
+          <Text
+            style={styles.errorMessageText}
+          >{`OS Version ${Platform.constants.systemName} ${Platform.Version}`}</Text>
+        ) : Platform.OS ? (
+          <Text
+            style={styles.errorMessageText}
+          >{`OS Version ${Platform.OS} ${Platform.Version}`}</Text>
         ) : null}
       </View>
       {!dataStatusCode || (dataStatusCode && dataStatusCode !== '999') ? (
