@@ -31,7 +31,7 @@ function* getDealerTools({ payload }) {
     ) {
       //   console.log('in ltp saga - good 200');
 
-      console.log('in Tools saga - good 200');
+      //   console.log('in Tools saga - good 200');
       //   console.log(result.data);
       //   console.log('in tools saga - good 200');
       yield put(
@@ -44,7 +44,7 @@ function* getDealerTools({ payload }) {
         })
       );
     } else if (result && result.data && result.data.length > 0) {
-      console.log('in Tools saga - empty 200');
+      //   console.log('in Tools saga - empty 200');
       // console.log(
       //     'in Tools saga - empty 200',
       //     result.request.status && result.request.status
