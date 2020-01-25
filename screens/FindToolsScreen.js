@@ -137,6 +137,8 @@ export default FindToolsScreen = props => {
   //   const userDataCount =
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
+  const { navigation } = props;
+
   if (!userIsSignedIn) {
     navigation && navigation.navigate && navigation.navigate('Auth');
   }
@@ -228,16 +230,18 @@ export default FindToolsScreen = props => {
   }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
 
   useEffect(() => {
-    let uniqueLtpItems =
+    let uniqueLtpItemsSorted =
       (ltpItems &&
         ltpItems.length > 0 &&
-        ltpItems.filter(
-          (item, index, self) =>
-            index ===
-            self.findIndex(t => t.supplierPartNo === item.supplierPartNo)
-        )) ||
+        ltpItems.sort((a, b) => a.loanToolNo > b.loanToolNo)) ||
       [];
-    setUniqueLtpItems(uniqueLtpItems);
+
+    let uniqueLtpItemsTemp =
+      uniqueLtpItemsSorted.filter(
+        (item, index, self) =>
+          index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
+      ) || [];
+    setUniqueLtpItems(uniqueLtpItemsTemp);
   }, [ltpItems]);
 
   useEffect(() => {

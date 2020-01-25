@@ -32,6 +32,7 @@ export default LtpScreen = props => {
   const dataStatusCode = useSelector(state => state.ltp.statusCode);
   const dataErrorUrl = useSelector(state => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
+  const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
     ltpItems
   ]);
@@ -47,6 +48,23 @@ export default LtpScreen = props => {
     };
     getItemsAsync();
   }, []);
+
+  useEffect(() => {
+    console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    let uniqueLtpItemsSorted =
+      (ltpItems &&
+        ltpItems.length > 0 &&
+        ltpItems.sort((a, b) => a.loanToolNo > b.loanToolNo)) ||
+      [];
+
+    let uniqueLtpItemsTemp =
+      uniqueLtpItemsSorted.filter(
+        (item, index, self) =>
+          index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
+      ) || [];
+    setUniqueLtpItems(uniqueLtpItemsTemp);
+    // console.log('filtered items', uniqueLtpItemsTemp);
+  }, [ltpItems]);
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
@@ -96,24 +114,26 @@ export default LtpScreen = props => {
     setIsDrawerVisible(false);
   };
 
-  const items = (!isLoading && !dataError && ltpItems) || [];
+  //   const items = (!isLoading && !dataError && ltpItems) || [];
 
-  console.log(
-    'isLoading ',
-    isLoading,
-    'dataError ',
-    dataError,
-    'statusCode ',
-    dataStatusCode,
-    ' items ',
-    items.length
-  );
+  //   console.log(
+  //     'LTP isLoading ',
+  //     isLoading,
+  //     'dataError ',
+  //     dataError,
+  //     'statusCode ',
+  //     dataStatusCode,
+  //     ' items ',
+  //     items.length,
+  //     ' unique items ',
+  //     uniqueLtpItems.length
+  //   );
 
   const filteredItems =
-    (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+    (!isLoading &&
+      uniqueLtpItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
-
-  console.log('RENDERING ltp screen !!!!!!!!!!!!!!!!!!!');
+  //   console.log('RENDERING ltp screen !!!!!!!!!!!!!!!!!!!');
 
   return (
     <View>
