@@ -41,10 +41,12 @@ export default ProductsScreen = props => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
+  const { navigation } = props;
+
   if (productsItems && productsItems.length > 0) {
-    console.log('in products screen,productsItems', productsItems.length);
+    // console.log('in products screen,productsItems', productsItems.length);
   } else {
-    console.log('in products screen, no productsItems');
+    // console.log('in products screen, no productsItems');
   }
   // Search function
   const [searchInput, setSearchInput] = useState('');
@@ -59,7 +61,7 @@ export default ProductsScreen = props => {
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
-      console.log('in products use effect');
+      //   console.log('in products use effect');
       getItems();
     };
     getItemsAsync();
@@ -81,7 +83,7 @@ export default ProductsScreen = props => {
     }
   };
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
@@ -89,26 +91,26 @@ export default ProductsScreen = props => {
   });
 
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
+    // console.log(searchInput);
     setSearchInput(searchInput);
   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItems();
   };
 
   //   console.log('productsItems AREEEEEEEEEE', productsItems);
   const items = (!isLoading && !dataError && productsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
-  console.log(
-    'isLoading ',
-    isLoading,
-    'dataError ',
-    dataError,
-    ' items ',
-    items.length
-  );
+  //   console.log(
+  //     'isLoading ',
+  //     isLoading,
+  //     'dataError ',
+  //     dataError,
+  //     ' items ',
+  //     items.length
+  //   );
 
   const filteredItems =
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||

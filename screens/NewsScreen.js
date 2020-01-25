@@ -55,6 +55,8 @@ export default NewsScreen = props => {
     newsItems
   ]);
 
+  const { navigation } = props;
+
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
@@ -82,7 +84,7 @@ export default NewsScreen = props => {
     }
   };
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');

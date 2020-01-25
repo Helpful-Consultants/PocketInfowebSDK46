@@ -55,6 +55,8 @@ export default JobsScreen = props => {
   const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
   const [listView, setListView] = useState({});
 
+  const { navigation } = props;
+
   if (!userIsSignedIn) {
     navigation && navigation.navigate && navigation.navigate('Auth');
   }
@@ -154,7 +156,7 @@ export default JobsScreen = props => {
   // console.log(dealerWipsItems);
   // console.log('Find DealerWips screen end');
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
