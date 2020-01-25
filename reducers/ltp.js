@@ -38,9 +38,11 @@ export default function ltp(state = INITIAL_STATE, action) {
         ...state,
         ltpItems: [],
         isLoading: false,
-        error: action.payload.error,
-        statusCode: action.payload.statusCode || null,
-        dataErrorUrl: action.payload.dataErrorUrl
+        error: (action.payload.error && action.payload.error) || null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null,
+        dataErrorUrl:
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
       };
     }
     default: {
