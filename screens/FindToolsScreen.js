@@ -247,14 +247,14 @@ export default FindToolsScreen = props => {
 
   const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
-    console.log('FTS in didFocusSubscription');
+    // console.log('FTS in didFocusSubscription');
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
   });
 
   const selectItemHandler = (tool, lastPerson) => {
-    console.log('in selectItemHandler');
+    // console.log('in selectItemHandler');
     let dup =
       (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
 
@@ -331,22 +331,34 @@ export default FindToolsScreen = props => {
   const searchInputHandler = searchInput => {
     let searchStringStart = searchInput.toLowerCase();
     let adjustedSearchInput = '';
-
+    // console.log('searchInput is "' + searchInput + '"');
     if (
+      searchStringStart.substring(0, 4) === 'ase ' ||
+      searchStringStart.substring(0, 4) === 'vas ' ||
+      searchStringStart.substring(0, 4) === 'vag '
+    ) {
+      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
+      adjustedSearchInput = searchInput.substr(4);
+      //   console.log('@@@@@4cut "' + adjustedSearchInput + '"');
+      setSearchInput(adjustedSearchInput);
+      //   setAdjustedSearchString(adjustedSearchInput);
+    } else if (
       searchStringStart.substring(0, 3) === 'ase' ||
       searchStringStart.substring(0, 3) === 'vas' ||
       searchStringStart.substring(0, 3) === 'vag'
     ) {
-      //   console.log('@@@@@ ', searchInput.substring(0, 3));
+      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
       adjustedSearchInput = searchInput.substr(3);
-      //   console.log('@@@@@cut' + adjustedSearchInput);
-      setSearchInput(searchInput);
+      //   console.log('@@@@@cut "' + adjustedSearchInput + '"');
+      setSearchInput(adjustedSearchInput);
       //   setAdjustedSearchString(adjustedSearchInput);
     } else {
+      //   console.log('searchInput no change applied');
       setSearchInput(searchInput);
       //   setAdjustedSearchString(searchInput);
     }
   };
+
   const refreshRequestHandler = () => {
     dealerId && getItems(getDealerItemsDataObj);
   };

@@ -17,7 +17,12 @@ import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 
-const KEYS_TO_FILTERS = ['loanToolNo', 'orderPartNo', 'toolDescription'];
+const KEYS_TO_FILTERS = [
+  'loanToolNo',
+  'orderPartNo',
+  'supplierPartNo',
+  'toolDescription'
+];
 
 export default LtpScreen = props => {
   const dispatch = useDispatch();
@@ -52,8 +57,34 @@ export default LtpScreen = props => {
   });
 
   const searchInputHandler = searchInput => {
-    console.log(searchInput);
-    setSearchInput(searchInput);
+    let searchStringStart = searchInput.toLowerCase();
+    let adjustedSearchInput = '';
+    // console.log('searchInput is "' + searchInput + '"');
+    if (
+      searchStringStart.substring(0, 4) === 'ase ' ||
+      searchStringStart.substring(0, 4) === 'vas ' ||
+      searchStringStart.substring(0, 4) === 'vag '
+    ) {
+      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
+      adjustedSearchInput = searchInput.substr(4);
+      //   console.log('@@@@@4cut "' + adjustedSearchInput + '"');
+      setSearchInput(adjustedSearchInput);
+      //   setAdjustedSearchString(adjustedSearchInput);
+    } else if (
+      searchStringStart.substring(0, 3) === 'ase' ||
+      searchStringStart.substring(0, 3) === 'vas' ||
+      searchStringStart.substring(0, 3) === 'vag'
+    ) {
+      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
+      adjustedSearchInput = searchInput.substr(3);
+      //   console.log('@@@@@cut "' + adjustedSearchInput + '"');
+      setSearchInput(adjustedSearchInput);
+      //   setAdjustedSearchString(adjustedSearchInput);
+    } else {
+      //   console.log('searchInput no change applied');
+      setSearchInput(searchInput);
+      //   setAdjustedSearchString(searchInput);
+    }
   };
 
   const refreshRequestHandler = () => {
