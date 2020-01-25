@@ -54,8 +54,9 @@ export default JobsScreen = props => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
   const [listView, setListView] = useState({});
+
   if (!userIsSignedIn) {
-    props.navigation.navigate('SignIn');
+    navigation && navigation.navigate && navigation.navigate('Auth');
   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 

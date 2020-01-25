@@ -138,7 +138,7 @@ export default FindToolsScreen = props => {
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
   if (!userIsSignedIn) {
-    navigation.navigate('SignIn');
+    navigation && navigation.navigate && navigation.navigate('Auth');
   }
 
   const getDealerItemsDataObj = {
@@ -205,7 +205,7 @@ export default FindToolsScreen = props => {
       setDataErrorSummary('Error syncing LTP');
       setDataNameInPlay('LTP');
     } else if (dealerToolsItems && dealerToolsItems.length === 0) {
-      console.log('empty tools items');
+      //   console.log('empty tools items');
       setDataErrorAny('Does your site have a tools list?');
       setDataStatusCodeAny(dataStatusCodeTools);
       setDataErrorUrlAny('');
@@ -245,7 +245,7 @@ export default FindToolsScreen = props => {
     setCombinedItems(concatItems);
   }, [dealerToolsItems, uniqueLtpItems]);
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     console.log('FTS in didFocusSubscription');
     if (searchInput && searchInput.length > 0) {

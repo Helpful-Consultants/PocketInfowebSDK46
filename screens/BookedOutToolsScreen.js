@@ -54,9 +54,11 @@ export default BookedOutToolsScreen = props => {
   const [userWipsItems, setUserWipsItems] = useState([]);
   const [listView, setListView] = useState({});
   if (!userIsSignedIn) {
-    props.navigation.navigate('SignIn');
+    navigation && navigation.navigate && navigation.navigate('Auth');
   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
+
+  const { navigation } = props;
 
   const getWipsDataObj = {
     dealerId:
@@ -135,7 +137,7 @@ export default BookedOutToolsScreen = props => {
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');

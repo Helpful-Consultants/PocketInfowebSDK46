@@ -44,6 +44,8 @@ export default StatsScreen = props => {
 
   //   console.log('getStatsData', getStatsData);
 
+  const { navigation } = props;
+
   const getItems = useCallback(async () => {
     console.log('in getItems', getDealerItemsDataObj);
     dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
@@ -67,7 +69,7 @@ export default StatsScreen = props => {
   };
 
   if (!userIsSignedIn) {
-    props.navigation.navigate('SignIn');
+    navigation && navigation.navigate && navigation.navigate('Auth');
   }
   const userDataPresent =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;

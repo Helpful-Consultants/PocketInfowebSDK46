@@ -55,6 +55,8 @@ export default SignInScreen = props => {
   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
 
+  const { navigation } = props;
+
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { email: '', pin: '' },
     inputValidities: {
@@ -73,7 +75,7 @@ export default SignInScreen = props => {
     }
     if (userIsSignedIn) {
       console.log('userIsSignedIn so navigating to main');
-      props.navigation.navigate('Main');
+      navigation.navigate('Main');
     }
   }, [userIsSignedIn, userError]);
 
@@ -99,29 +101,13 @@ export default SignInScreen = props => {
 
   const submitHandler = async () => {
     if (formState.formIsValid) {
-      //   console.log(
-      //     'dispatching get user',
-      //     formState.inputValues.email,
-      //     formState.inputValues.pin
-      //   );
       const signInData = {
         email: formState.inputValues.email,
         pin: formState.inputValues.pin
       };
-      //   const signInToServer = useCallback(
-      //     signInData => dispatch(getUserRequest(signInData)),
-      //     [userIsSignedIn]
-      //   )
       setError(null);
       setIsLoading(true);
-
-      //   console.log('calling dispatch');
-
       dispatch(getUserRequest(signInData));
-
-      //   setIsLoading(false);
-      //   signInToServer(signInData);
-      //   props.getUserRequest(signInData);
     }
   };
 

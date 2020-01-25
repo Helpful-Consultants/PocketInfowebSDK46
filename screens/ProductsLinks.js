@@ -12,7 +12,7 @@ export default function ProductsLinks(props) {
   //   const items = productsDummyData || [];
   // console.log('start productsDummyData');
   // console.log(productsDummyData);
-  console.log('in ProductsLinks ', props.baseImageUrl);
+  //   console.log('in ProductsLinks ', props.baseImageUrl);
 
   return (
     <View>

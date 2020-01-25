@@ -2,8 +2,6 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Dimensions,
-
-  //   PixelRatio,
   Platform,
   ScrollView,
   StyleSheet,
@@ -44,6 +42,8 @@ export default HomeScreen = props => {
   console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
 
+  const { navigation } = props;
+
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userError = useSelector(state => state.user.error);
   const userDataObj = useSelector(state => state.user.userData[0]);
@@ -55,13 +55,13 @@ export default HomeScreen = props => {
     dispatch(emptyDealerToolsRequest());
     // dispatch(signOutUserRequest()), [userIsSignedIn];
     dispatch(signOutUserRequest());
-    props.navigation.navigate('AuthLoading');
+    navigation.navigate('AuthLoading');
   });
 
   useEffect(() => {
     if (!userIsSignedIn || userError) {
       console.log('home screen userIs not SignedIn so navigating to auth');
-      props.navigation.navigate('Auth');
+      navigation && navigation.navigate && navigation.navigate('Auth');
     }
   }, [userIsSignedIn, userError]);
 
@@ -77,7 +77,7 @@ export default HomeScreen = props => {
             <View style={styles.gridRow}>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('FindTools')}
+                onPress={() => navigation.navigate('FindTools')}
               >
                 <View>
                   <Icon
@@ -94,7 +94,7 @@ export default HomeScreen = props => {
               </Touchable>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('Jobs')}
+                onPress={() => navigation.navigate('Jobs')}
               >
                 <View>
                   <Icon
@@ -113,7 +113,7 @@ export default HomeScreen = props => {
             <View style={styles.gridRow}>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('BookedOutTools')}
+                onPress={() => navigation.navigate('BookedOutTools')}
               >
                 <View>
                   <Icon
@@ -137,7 +137,7 @@ export default HomeScreen = props => {
               </Touchable>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('Ltp')}
+                onPress={() => navigation.navigate('Ltp')}
               >
                 <View>
                   <Icon
@@ -154,7 +154,7 @@ export default HomeScreen = props => {
             <View style={styles.gridRow}>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('Products')}
+                onPress={() => navigation.navigate('Products')}
               >
                 <View>
                   <Icon
@@ -170,7 +170,7 @@ export default HomeScreen = props => {
               </Touchable>
               <Touchable
                 style={styles.gridCell}
-                onPress={() => props.navigation.navigate('News')}
+                onPress={() => navigation.navigate('News')}
               >
                 <View>
                   <Icon
@@ -191,7 +191,7 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           </View>
-          <Touchable onPress={() => props.navigation.navigate('Odis')}>
+          <Touchable onPress={() => navigation.navigate('Odis')}>
             <View style={styles.odisRow}>
               <Icon
                 name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}

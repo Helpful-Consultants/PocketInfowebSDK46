@@ -41,7 +41,7 @@ export default OdisScreen = props => {
   };
 
   if (!userIsSignedIn) {
-    props.navigation.navigate('SignIn');
+    navigation && navigation.navigate && navigation.navigate('Auth');
   }
 
   if (odisItems && odisItems.length > 0) {
