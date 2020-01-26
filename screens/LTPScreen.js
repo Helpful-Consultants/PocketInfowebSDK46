@@ -29,6 +29,7 @@ const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
 export default LtpScreen = props => {
   const dispatch = useDispatch();
+  const userBrand = useSelector(state => state.user.userBrand);
   const ltpItems = useSelector(state => state.ltp.ltpItems);
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
@@ -45,7 +46,7 @@ export default LtpScreen = props => {
   useEffect(() => {
     // runs only once
     // setSearchInput('test ');
-    console.log('in ltp use effect');
+    // console.log('in ltp use effect');
     const getItemsAsync = async () => {
       getItems();
     };
@@ -53,12 +54,19 @@ export default LtpScreen = props => {
   }, []);
 
   useEffect(() => {
-    console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    // console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    // console.log('userBrand is ', userBrand);
+    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
+    let ltpItemsFiltered = [];
+    if (userBrand) {
+      //   console.log('userBrand is ', userBrand);
+      ltpItemsFiltered = ltpItemsAll.filter(item => item[userBrand] === 'Y');
+    } else {
+      //   console.log('userBrand isnt : ', userBrand);
+      ltpItemsFiltered = ltpItemsAll;
+    }
     let uniqueLtpItemsSorted =
-      (ltpItems &&
-        ltpItems.length > 0 &&
-        ltpItems.sort((a, b) => a.loanToolNo > b.loanToolNo)) ||
-      [];
+      ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
     let uniqueLtpItemsTemp =
       uniqueLtpItemsSorted.filter(
@@ -67,11 +75,11 @@ export default LtpScreen = props => {
       ) || [];
     setUniqueLtpItems(uniqueLtpItemsTemp);
     // console.log('filtered items', uniqueLtpItemsTemp);
-  }, [ltpItems]);
+  }, [ltpItems, userBrand]);
 
   const didFocusSubscription = props.navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
-    console.log('did focus ltp');
+    // console.log('did focus ltp');
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
@@ -109,7 +117,7 @@ export default LtpScreen = props => {
   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItems();
   };
 
@@ -136,7 +144,7 @@ export default LtpScreen = props => {
     (!isLoading &&
       uniqueLtpItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
-  console.log('RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!');
+  //   console.log('RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!');
 
   return (
     <View style={styles.container}>

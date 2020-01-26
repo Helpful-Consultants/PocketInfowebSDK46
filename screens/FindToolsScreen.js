@@ -84,6 +84,7 @@ const formReducer = (state, action) => {
 
 export default FindToolsScreen = props => {
   const dispatch = useDispatch();
+  const userBrand = useSelector(state => state.user.userBrand);
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
   );
@@ -235,11 +236,19 @@ export default FindToolsScreen = props => {
   }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
 
   useEffect(() => {
+    // console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    // console.log('userBrand is ', userBrand);
+    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
+    let ltpItemsFiltered = [];
+    if (userBrand) {
+      //   console.log('userBrand is ', userBrand);
+      ltpItemsFiltered = ltpItemsAll.filter(item => item[userBrand] === 'Y');
+    } else {
+      //   console.log('userBrand isnt : ', userBrand);
+      ltpItemsFiltered = ltpItemsAll;
+    }
     let uniqueLtpItemsSorted =
-      (ltpItems &&
-        ltpItems.length > 0 &&
-        ltpItems.sort((a, b) => a.loanToolNo > b.loanToolNo)) ||
-      [];
+      ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
     let uniqueLtpItemsTemp =
       uniqueLtpItemsSorted.filter(
@@ -247,7 +256,8 @@ export default FindToolsScreen = props => {
           index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
       ) || [];
     setUniqueLtpItems(uniqueLtpItemsTemp);
-  }, [ltpItems]);
+    // console.log('filtered items', uniqueLtpItemsTemp);
+  }, [ltpItems, userBrand]);
 
   useEffect(() => {
     let concatItems = dealerToolsItems.concat(uniqueLtpItems);
