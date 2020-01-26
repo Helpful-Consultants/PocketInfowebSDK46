@@ -121,12 +121,25 @@ const WipTabNavigator =
         JobsStack,
         LtpStack
       })
-    : createBottomTabNavigator({
-        FindToolsStack,
-        BookedOutToolsStack,
-        JobsStack,
-        LtpStack
-      });
+    : createBottomTabNavigator(
+        {
+          FindToolsStack,
+          BookedOutToolsStack,
+          JobsStack,
+          LtpStack
+        },
+        {
+          tabBarOptions: {
+            labelPosition: 'below-icon',
+            style: {
+              height: RFPercentage(6.4)
+            }
+          },
+          tabStyle: {
+            height: RFPercentage(2.2)
+          }
+        }
+      );
 // End Tab navigator
 
 const styles = StyleSheet.create({

@@ -17,6 +17,12 @@ import Colors from '../constants/Colors';
 //   default: {}
 // });
 
+// const screenWidth = Math.round(Dimensions.get('window').width);
+// const screenHeight = Math.round(Dimensions.get('window').height);
+
+// console.log('screenHeight', screenHeight);
+// console.log('screenWidth', screenWidth);
+
 // Home screen
 const HomeStack = createStackNavigator(
   {
@@ -139,12 +145,25 @@ const NewsTabNavigator =
         OdisStack,
         StatsStack
       })
-    : createBottomTabNavigator({
-        NewsStack,
-        ProductsStack,
-        OdisStack,
-        StatsStack
-      });
+    : createBottomTabNavigator(
+        {
+          NewsStack,
+          ProductsStack,
+          OdisStack,
+          StatsStack
+        },
+        {
+          tabBarOptions: {
+            labelPosition: 'below-icon',
+            style: {
+              height: RFPercentage(6.4)
+            }
+          },
+          tabStyle: {
+            height: RFPercentage(2.2)
+          }
+        }
+      );
 // End Tab navigator
 
 const styles = StyleSheet.create({
