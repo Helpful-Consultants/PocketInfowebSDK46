@@ -122,10 +122,11 @@ export default function DealerToolsList(props) {
           fontWeight: '600'
         }}
         containerStyle={{
-          backgroundColor:
-            item.lastWIP && item.lastWIP.length > 0
-              ? Colors.vwgVeryLightGray
-              : Colors.vwgWhite
+          backgroundColor: item.loanToolNo
+            ? Colors.vwgVeryVeryLightGray
+            : item.lastWIP && item.lastWIP.length > 0
+            ? Colors.vwgVeryLightGray
+            : Colors.vwgWhite
         }}
         subtitle={
           <View>
