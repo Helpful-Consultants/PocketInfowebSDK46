@@ -200,10 +200,10 @@ export default BookedOutToolsScreen = props => {
       bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  console.log(
-    'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
-    // userWipsItems
-  );
+  //   console.log(
+  //     'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
+  //     // userWipsItems
+  //   );
 
   return (
     <View style={styles.container}>

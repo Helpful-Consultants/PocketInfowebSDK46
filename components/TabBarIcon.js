@@ -8,8 +8,8 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 
 const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 
-console.log('screenHeight', screenHeight);
-console.log('screenWidth', screenWidth);
+// console.log('screenHeight', screenHeight);
+// console.log('screenWidth', screenWidth);
 export default function TabBarIcon(props) {
   return (
     <Ionicons

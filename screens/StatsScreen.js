@@ -47,7 +47,7 @@ export default StatsScreen = props => {
   const { navigation } = props;
 
   const getItems = useCallback(async () => {
-    console.log('in getItems', getDealerItemsDataObj);
+    // console.log('in getItems', getDealerItemsDataObj);
     dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
     // dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
     // dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
@@ -56,7 +56,7 @@ export default StatsScreen = props => {
 
   useEffect(() => {
     // runs only once
-    console.log('in stats use effect');
+    // console.log('in stats use effect');
     const getItemsAsync = async () => {
       getItems(getItems);
     };

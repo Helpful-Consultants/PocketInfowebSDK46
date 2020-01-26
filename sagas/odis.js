@@ -17,12 +17,12 @@ function* getOdis() {
 
   try {
     const result = yield call(api.getOdis);
-    console.log('in saga, getOdis success');
+    // console.log('in saga, getOdis success');
     // console.log(result.data && result.data);
     // console.log(result.data[0] && result.data[0].brandVersions);
 
     if (result.data[0].id && result.data[0].id.length > 0) {
-      console.log('in odis saga - good 200');
+      //   console.log('in odis saga - good 200');
 
       yield put(
         actions.getOdisSuccess({

@@ -245,17 +245,17 @@ export default JobsScreen = props => {
   //   console.log('userIntId ', userIntId);
   //   console.log('userWipsItems sent to JobsList', userWipsItems);
 
-  console.log('RENDERING jobs screen !!!!!!!!!!!!!!!!!!!');
-  console.log(
-    'isLoading ',
-    isLoading,
-    'dataError ',
-    dataError,
-    'statusCode ',
-    dataStatusCode,
-    ' items ',
-    items.length
-  );
+  //   console.log('RENDERING jobs screen !!!!!!!!!!!!!!!!!!!');
+  //   console.log(
+  //     'isLoading ',
+  //     isLoading,
+  //     'dataError ',
+  //     dataError,
+  //     'statusCode ',
+  //     dataStatusCode,
+  //     ' items ',
+  //     items.length
+  //   );
 
   return (
     <View style={styles.container}>
