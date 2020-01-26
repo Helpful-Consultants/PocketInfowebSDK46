@@ -55,11 +55,13 @@ export default function LtpList(props) {
 
   const FlatListItem = props => {
     const { item } = props;
-    const { onSelectItem } = props;
+    // const { onSelectItem } = props;
 
     return (
       <ListItem
-        title={`${item.loanToolNo} (${item.supplierPartNo})`}
+        title={`${item.loanToolNo} ${
+          item.supplierPartNo ? `(${item.supplierPartNo})` : ``
+        }`}
         titleStyle={{
           color: Colors.vwgBlack,
           fontFamily: 'the-sans',
