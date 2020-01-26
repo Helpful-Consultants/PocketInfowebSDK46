@@ -206,7 +206,7 @@ export default BookedOutToolsScreen = props => {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       {/* <NewJobButton setIsAlertVisible={setIsAlertVisible} /> */}
       <SearchBarWithRefresh
         dataName={'booked out tools'}
@@ -324,7 +324,8 @@ BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15
+    // paddingTop: 15,
+    marginBottom: 10
   },
   modal: {
     flex: 1,

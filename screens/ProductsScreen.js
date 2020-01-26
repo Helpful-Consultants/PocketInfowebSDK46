@@ -116,8 +116,10 @@ export default ProductsScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
+  //   console.log('rendering products');
+
   return (
-    <View>
+    <View style={styles.container}>
       {/* <Text>{browserResult && JSON.stringify(browserResult)}</Text> */}
       <SearchBarWithRefresh
         dataName={'products'}
@@ -192,8 +194,7 @@ ProductsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginBottom: -5
   },
   lookupPrompt: {
     padding: 10,

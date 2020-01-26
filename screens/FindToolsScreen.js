@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -39,6 +40,10 @@ const KEYS_TO_FILTERS = [
   'toolDescription', // LTP
   'loanToolNo' //LTP
 ];
+
+const screenHeight = Math.round(Dimensions.get('window').height);
+const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
+// console.log('bottomTabHeight', bottomTabHeight && bottomTabHeight);
 
 // const appCode = month => Base64.encode(month);
 // console.log('appCode for January is ', appCode('January'));
@@ -755,10 +760,10 @@ export default FindToolsScreen = props => {
 
   //   console.log('FTS about to render');
 
-  console.log('RENDERING FT screen !!!!!!!!!!!!!!!!!!!');
+  //   console.log('RENDERING FT screen !!!!!!!!!!!!!!!!!!!');
   return (
-    <View>
-      <View style={styles.arse}>
+    <View style={styles.container}>
+      <View>
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
             dataName={dataNameInPlay}
@@ -911,8 +916,10 @@ FindToolsScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15
+    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
+    // backgroundColor: 'red'
   },
+  toolsList: {},
   drawerBottom: {
     justifyContent: 'flex-end',
     margin: 0

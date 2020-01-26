@@ -99,9 +99,8 @@ export default function LtpList(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#222'
+    // flex: 1
+    // paddingTop: 15,
   },
   noItems: {
     fontSize: 16,

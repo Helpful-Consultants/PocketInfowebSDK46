@@ -26,6 +26,7 @@ export default function DealerToolsList(props) {
     showPrompt,
     userIntId
   } = props;
+
   //   const { selectItemHandler, showPrompt } = props;
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = ltpDummyData.slice(0, limit);
@@ -270,10 +271,6 @@ export default function DealerToolsList(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15
-  },
   searchPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgDarkSkyBlue

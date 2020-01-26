@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import Modal from 'react-native-modal';
+// import Modal from 'react-native-modal';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
-import MenuDrawer from '../components/MenuDrawer';
+// import MenuDrawer from '../components/MenuDrawer';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
@@ -23,6 +23,9 @@ const KEYS_TO_FILTERS = [
   'supplierPartNo',
   'toolDescription'
 ];
+
+const screenHeight = Math.round(Dimensions.get('window').height);
+const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
 export default LtpScreen = props => {
   const dispatch = useDispatch();
@@ -133,10 +136,10 @@ export default LtpScreen = props => {
     (!isLoading &&
       uniqueLtpItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
-  //   console.log('RENDERING ltp screen !!!!!!!!!!!!!!!!!!!');
+  console.log('RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!');
 
   return (
-    <View>
+    <View style={styles.container}>
       <SearchBarWithRefresh
         dataName={'LTP items'}
         someDataExpected={true}
@@ -216,8 +219,9 @@ LtpScreen.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    marginBottom: bottomTabHeight
   },
   errorMessage: {
     padding: 10
