@@ -3,6 +3,7 @@ import Types from '../constants/Types';
 
 const INITIAL_STATE = {
   userData: [],
+  userBrand: null,
   userIsSignedIn: false,
   isLoading: false,
   error: null,
@@ -27,10 +28,45 @@ export default function user(state = INITIAL_STATE, action) {
     }
     case Types.GET_USER_SUCCESS: {
       //   console.log('action.payload is:', action.payload.items);
+      let userBrand = null;
+      let userDataBrand =
+        (action.payload &&
+          action.payload.items &&
+          action.payload.items[0].brand &&
+          action.payload.items[0].brand) ||
+        null;
+
+      userDataBrand = userDataBrand && userDataBrand.toLowerCase();
+
+      console.log(action.payload && action.payload);
+      console.log('action.payload.items ', action.payload.items);
+      console.log('action.payload.items[0] ', action.payload.items[0]);
+      console.log('userDataBrand is ', userDataBrand);
+
+      switch (userDataBrand) {
+        case 'audi': {
+          userBrand = 'au';
+        }
+        case 'seat': {
+          userBrand = 'se';
+        }
+        case 'skoda': {
+          userBrand = 'sk';
+        }
+        case 'volkswagen': {
+          userBrand = 'vw';
+        }
+        case 'volkswagen commercial vehicles': {
+          userBrand = 'cv';
+        }
+      }
+      userBrand = 'se';
+      console.log('userBrand is ', userBrand);
       return {
         ...state,
         userIsSignedIn: true,
         userData: action.payload.items,
+        userBrand: userBrand,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
