@@ -34,20 +34,19 @@ function* getLtp() {
         actions.ltpError({
           error:
             (result.request.response && result.request.response.toString()) ||
-            'An error occurred when trying to update the ltp',
+            'An error occurred when trying to update the LTP',
           statusCode:
             (result.request.status && result.request.status.toString()) || null
         })
       );
     }
   } catch (error) {
-    console.log('server error in saga get dealerWips !!!!!!!!!!!!!!');
+    console.log('server error in saga get LTP !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
     // console.log('whole Error ends');
     // console.log(error && error.config);
     let statusCode = null;
-    let errorText =
-      'An server error occurred when trying to get the dealer wips';
+    let errorText = 'A server error occurred when trying to get the dealer LTP';
     let dataErrorUrl = null;
     if (error.response) {
       //   console.log('error response starts');

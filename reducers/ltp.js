@@ -33,7 +33,7 @@ export default function ltp(state = INITIAL_STATE, action) {
       };
     }
     case Types.LTP_ERROR: {
-      console.log('action is', action);
+      console.log('action is', action.type);
       return {
         ...state,
         ltpItems: [],

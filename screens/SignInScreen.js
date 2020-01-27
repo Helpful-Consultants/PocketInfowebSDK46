@@ -51,8 +51,8 @@ export default SignInScreen = props => {
   const userError = useSelector(state => state.user.error);
   const state = useSelector(state => state);
 
-  console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
-  console.log('in sign in, userError', userError ? 'Yes' : 'No');
+  //   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
+  //   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
 
   const { navigation } = props;

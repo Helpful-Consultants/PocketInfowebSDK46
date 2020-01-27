@@ -38,10 +38,10 @@ export default function user(state = INITIAL_STATE, action) {
 
       userDataBrand = userDataBrand && userDataBrand.toLowerCase();
 
-      console.log(action.payload && action.payload);
-      console.log('action.payload.items ', action.payload.items);
-      console.log('action.payload.items[0] ', action.payload.items[0]);
-      console.log('userDataBrand is ', userDataBrand);
+      //   console.log(action.payload && action.payload);
+      //   console.log('action.payload.items ', action.payload.items);
+      //   console.log('action.payload.items[0] ', action.payload.items[0]);
+      //   console.log('userDataBrand is ', userDataBrand);
 
       switch (userDataBrand) {
         case 'audi': {
@@ -60,8 +60,8 @@ export default function user(state = INITIAL_STATE, action) {
           userBrand = 'cv';
         }
       }
-      userBrand = 'se';
-      console.log('userBrand is ', userBrand);
+      //   userBrand = 'se';
+      //   console.log('userBrand in reducer is ', userBrand);
       return {
         ...state,
         userIsSignedIn: true,
