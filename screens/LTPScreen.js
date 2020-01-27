@@ -72,15 +72,15 @@ export default LtpScreen = props => {
           item.vw.toLowerCase() === 'y'
       );
     }
-    let uniqueLtpItemsSorted =
+    let ltpItemsSorted =
       ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
-    let uniqueLtpItemsTemp =
-      uniqueLtpItemsSorted.filter(
-        (item, index, self) =>
-          index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
-      ) || [];
-    setUniqueLtpItems(uniqueLtpItemsTemp);
+    // let uniqueLtpItems =
+    //   ltpItemsSorted.filter(
+    //     (item, index, self) =>
+    //       index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
+    //   ) || [];
+    setUniqueLtpItems(ltpItemsSorted);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
