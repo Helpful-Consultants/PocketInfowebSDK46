@@ -1,9 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View, Platform } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { useSelector } from 'react-redux';
 // import {
 //   createDrawerNavigator,
 //   DrawerNavigatorItems as DrawerItems
@@ -20,6 +21,9 @@ import HomeScreen from '../screens/HomeScreen';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
+
+console.log(Constants && Constants);
+console.log(Platform && Platform);
 
 const SignedOutStack = createStackNavigator({
   SignIn: {
@@ -99,26 +103,41 @@ const SignedOutStack = createStackNavigator({
 //   }
 // });
 
-const DrawerContent = props => (
-  <ScrollView style={styles.container}>
-    <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-      <View style={styles.stretched}>
-        <DrawerItems {...props} />
-        <View style={styles.footerContainer}>
-          <Text style={styles.appName}>{Constants.manifest.name}</Text>
-          <Text
-            style={styles.appVersion}
-          >{`Build version ${Constants.manifest.version}`}</Text>
-          {Platform.OS ? (
+const DrawerContent = props => {
+  const userDataObj = useSelector(state => state.user.userData[0]);
+  const brandText =
+    (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
+  //   console.log('userBrand', userDataObj && userDataObj);
+  //   console.log('userBrandText', brandText);
+  return (
+    <ScrollView style={styles.container}>
+      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+        <View style={styles.stretched}>
+          <DrawerItems {...props} />
+          <View style={styles.footerContainer}>
+            <Text style={styles.appName}>{Constants.manifest.name}</Text>
+            {userDataObj && userDataObj.userName ? (
+              <Text style={styles.brand}>{userDataObj.userName}</Text>
+            ) : null}
+            <Text style={styles.brand}>{brandText}</Text>
+            {Constants && Constants.deviceName ? (
+              <Text style={styles.deviceVersion}>
+                {Constants.deviceName}
+                {Platform && Platform.OS && Platform.Version ? (
+                  <Text>{`, ${Platform.constants.systemName} v${Platform.Version}`}</Text>
+                ) : null}
+              </Text>
+            ) : null}
+
             <Text
               style={styles.appVersion}
-            >{`OS Version ${Platform.OS} ${Platform.Version}`}</Text>
-          ) : null}
+            >{`Build version ${Constants.manifest.version}`}</Text>
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
-  </ScrollView>
-);
+      </SafeAreaView>
+    </ScrollView>
+  );
+};
 
 const AppDrawerNavigator = createDrawerNavigator(
   {
@@ -194,12 +213,26 @@ const styles = StyleSheet.create({
   appName: {
     paddingTop: 100,
     paddingLeft: 18,
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontFamily: 'the-sans-bold',
+    fontSize: RFPercentage(2.2)
+    // fontStyle: 'italic'
+  },
+  brand: {
+    paddingTop: 5,
+    paddingLeft: 18,
+    fontFamily: 'the-sans-bold',
+    fontSize: RFPercentage(1.9)
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
+    paddingLeft: 18,
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.8)
+    // fontStyle: 'italic'
+  },
+  deviceVersion: {
+    paddingTop: 15,
     paddingLeft: 18,
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8)
