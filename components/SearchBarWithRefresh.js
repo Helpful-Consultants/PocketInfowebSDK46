@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
+    paddingRight: 10,
     backgroundColor: Colors.vwgSearchBarContainer
   },
   searchBarRowErrorText: {
