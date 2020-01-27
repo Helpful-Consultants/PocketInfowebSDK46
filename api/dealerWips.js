@@ -9,7 +9,7 @@ const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
 
 export const getDealerWips = wipObj => {
-  //   console.log('here in getDealerWips  ', wipObj);
+  //   console.log('here in getDealerWips API ', wipObj);
   const { dealerId, intId } = wipObj;
   const url =
     '/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=' +

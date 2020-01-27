@@ -22,8 +22,8 @@ import HomeScreen from '../screens/HomeScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 
-console.log(Constants && Constants);
-console.log(Platform && Platform);
+// console.log(Constants && Constants);
+// console.log(Platform && Platform);
 
 const SignedOutStack = createStackNavigator({
   SignIn: {
