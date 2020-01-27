@@ -254,15 +254,15 @@ export default FindToolsScreen = props => {
           item.vw.toLowerCase() === 'y'
       );
     }
-    let uniqueLtpItemsSorted =
+    let ltpItemsSorted =
       ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
-    let uniqueLtpItemsTemp =
-      uniqueLtpItemsSorted.filter(
+    let uniqueLtpItems =
+      ltpItemsSorted.filter(
         (item, index, self) =>
           index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
       ) || [];
-    setUniqueLtpItems(uniqueLtpItemsTemp);
+    setUniqueLtpItems(uniqueLtpItems);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
