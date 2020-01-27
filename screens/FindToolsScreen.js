@@ -245,7 +245,14 @@ export default FindToolsScreen = props => {
       ltpItemsFiltered = ltpItemsAll.filter(item => item[userBrand] === 'Y');
     } else {
       //   console.log('userBrand isnt : ', userBrand);
-      ltpItemsFiltered = ltpItemsAll;
+      ltpItemsFiltered = ltpItemsAll.filter(
+        item =>
+          item.au.toLowerCase() === 'y' ||
+          item.cv.toLowerCase() === 'y' ||
+          item.se.toLowerCase() === 'y' ||
+          item.sk.toLowerCase() === 'y' ||
+          item.vw.toLowerCase() === 'y'
+      );
     }
     let uniqueLtpItemsSorted =
       ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
