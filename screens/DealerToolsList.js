@@ -22,6 +22,7 @@ export default function DealerToolsList(props) {
   const {
     items,
     dealerWipsItems,
+    bookedToolsList,
     selectItemHandler,
     showPrompt,
     userIntId
@@ -31,37 +32,27 @@ export default function DealerToolsList(props) {
   //   const items = dealerToolsDummyData.slice(0, limit);
   //   const items = ltpDummyData.slice(0, limit);
   //   console.log('userIntId ', userIntId);
-  //   console.log('items', items);
+  //   console.log('bookedToolsList', bookedToolsList);
 
   const [listView, setListView] = useState();
 
-  const findLastBookedOutBy = item => {
-    let lastWIP = (item.lastWIP && item.lastWIP.toString()) || '';
-    // console.log('lastWIP ', lastWIP);
-    // if (lastWIP === '6') {
-    //   console.log(item);
-    //   console.log(dealerWipsItems);
-    // }
+  const findLastBookedOutByFromTool = item => {
+    // console.log('findLastBookedOutByFromTool', item);
+    let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
 
-    // if (lastWIP === '6') {
-    //   console.log('findLastBookedOutBy, lastWIP is ', lastWIP);
-    // }
     if (lastWIP.length > 0) {
+      //   console.log('lastWIP ', lastWIP);
       const matchingJobs = dealerWipsItems.filter(
         item => item.wipNumber.toString() === lastWIP.toString()
       );
-      //   if (lastWIP === '6') {
-      //     console.log('matchingJobs', matchingJobs);
-      //   }
+
       if (matchingJobs.length > 0) {
         const personObj = {
           intId:
             matchingJobs[0].createdBy && matchingJobs[0].userIntId.toString(),
           name: matchingJobs[0].createdBy && matchingJobs[0].createdBy
         };
-        // if (lastWIP === '6') {
-        //   console.log('person ', person);
-        // }
+
         return personObj;
       } else {
         return {
@@ -77,10 +68,27 @@ export default function DealerToolsList(props) {
     }
   };
 
-  //   const items = dealerToolsDummyData;
-  // console.log('start dealerToolsDummyData');
-  //   console.log(items);
-  // console.log('dealerToolsDummyData');
+  const findWipforTool = toolId => {
+    // console.log('findWipforTool', toolId);
+    // let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
+    let matchingJobs = [];
+
+    toolId &&
+      dealerWipsItems &&
+      dealerWipsItems.forEach(wip => {
+        wip.tools.forEach(
+          tool => tool.tools_id === toolId && matchingJobs.push(wip)
+        );
+      });
+
+    // console.log('bookedToolsWipList', matchingJobs);
+
+    if (matchingJobs.length > 0) {
+      return matchingJobs[0];
+    } else {
+      return null;
+    }
+  };
 
   //   const selectItemHandler = item => {
   //     return alert(
@@ -89,12 +97,12 @@ export default function DealerToolsList(props) {
   //   };
 
   const CustomListItem = props => {
-    const { item, lastJobDetails, bookedByUser } = props;
+    const { item, lastJobDetails, booked } = props;
     let personObj = {};
     let personName = '';
     let personIntId = '';
     if (item.lastWIP && item.lastWIP.length > 0) {
-      personObj = findLastBookedOutBy(item);
+      personObj = findLastBookedOutByFromTool(item);
       personName = personObj.name;
       personIntId = personObj.intId;
       //   console.log('personIntId ', personIntId);
@@ -114,7 +122,7 @@ export default function DealerToolsList(props) {
         titleStyle={{
           color: item.loanToolNo
             ? Colors.vwgVeryDarkGray
-            : item.lastWIP && item.lastWIP.length > 0
+            : booked && booked === true
             ? Colors.vwgVeryDarkGray
             : Colors.vwgIosLink,
           fontFamily: 'the-sans',
@@ -124,7 +132,7 @@ export default function DealerToolsList(props) {
         containerStyle={{
           backgroundColor: item.loanToolNo
             ? Colors.vwgVeryVeryLightGray
-            : item.lastWIP && item.lastWIP.length > 0
+            : booked && booked === true
             ? Colors.vwgVeryLightGray
             : Colors.vwgWhite
         }}
@@ -168,12 +176,15 @@ export default function DealerToolsList(props) {
     let personName = '';
     let personIntId = '';
     let bookedByUser = false;
+    let booked = false;
     let lastJobDetails = null;
 
     if (item.lastWIP && item.lastWIP.length > 0) {
-      personObj = findLastBookedOutBy(item);
+      //   console.log('item with last wip', item);
+      personObj = findLastBookedOutByFromTool(item);
       personName = personObj.name;
       personIntId = personObj.intId;
+      booked = true;
 
       if (personIntId === userIntId) {
         bookedByUser = true;
@@ -210,18 +221,70 @@ export default function DealerToolsList(props) {
           >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
         );
       }
+    } else if (item.id && bookedToolsList && bookedToolsList.length > 0) {
+      if (bookedToolsList.includes(item.id)) {
+        // console.log('tool in the list', item);
+        const wipObj = findWipforTool(item.id);
+        // console.log('wipObj', wipObj);
+        personName = wipObj && wipObj.createdBy;
+        personIntId = wipObj && wipObj.userIntId.toString();
+        // console.log('userIntId', userIntId);
+        // console.log('personName', personName);
+        // console.log('personIntId', personIntId);
+
+        booked = true;
+
+        if (personIntId === userIntId) {
+          bookedByUser = true;
+          //   console.log('Matchhhhhhhhh', bookedByUser);
+          lastJobDetails = (
+            <Text
+              style={{
+                fontFamily: 'the-sans',
+                fontSize: RFPercentage(2.0),
+                color: Colors.vwgWarmRed,
+                fontWeight: '500'
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: 'the-sans-bold',
+                  fontSize: RFPercentage(2.0),
+                  color: Colors.vwgWarmRed,
+                  fontWeight: '600'
+                }}
+              >{`Already booked out to you`}</Text>
+              {`, on job '${wipObj.wipNumber}'`}
+            </Text>
+          );
+        } else {
+          //   console.log('Matchhhhhhhhh', bookedByUser);
+          lastJobDetails = (
+            <Text
+              style={{
+                fontFamily: 'the-sans',
+                fontSize: RFPercentage(2.0),
+                color: Colors.vwgWarmRed,
+                fontWeight: '500'
+              }}
+            >{`Booked out to ${personName}, on job '${wipObj.wipNumber}'`}</Text>
+          );
+        }
+      }
     }
 
     return item.loanToolNo ? (
       <CustomListItem
         item={item}
+        booked={booked}
         lastJobDetails={lastJobDetails}
         bookedByUser={bookedByUser}
       ></CustomListItem>
     ) : // ) : bookedByUser === true ? (
-    item.lastWIP && item.lastWIP.length > 0 ? (
+    booked && booked === true ? (
       <CustomListItem
         item={item}
+        booked={booked}
         lastJobDetails={lastJobDetails}
         bookedByUser={bookedByUser}
       ></CustomListItem>
@@ -232,6 +295,7 @@ export default function DealerToolsList(props) {
       >
         <CustomListItem
           item={item}
+          booked={booked}
           lastJobDetails={lastJobDetails}
           bookedByUser={bookedByUser}
         ></CustomListItem>

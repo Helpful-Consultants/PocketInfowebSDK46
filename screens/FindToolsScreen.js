@@ -124,6 +124,7 @@ export default FindToolsScreen = props => {
   const [searchInput, setSearchInput] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [combinedItems, setCombinedItems] = useState([]);
+  const [bookedToolsList, setBookedToolsList] = useState([]);
   //   const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
@@ -172,6 +173,17 @@ export default FindToolsScreen = props => {
     payload => dispatch(createDealerWipRequest(payload)),
     [dealerWipsItems]
   );
+  useEffect(() => {
+    let bookedToolsList = [];
+
+    dealerWipsItems &&
+      dealerWipsItems.forEach(wip => {
+        wip.tools.forEach(tool => bookedToolsList.push(tool.tools_id));
+      });
+
+    // console.log(bookedToolsList && bookedToolsList);
+    setBookedToolsList(bookedToolsList);
+  }, [dealerWipsItems]);
 
   useEffect(() => {
     // runs only once
@@ -818,6 +830,7 @@ export default FindToolsScreen = props => {
                 items={filteredItems}
                 userIntId={userIntId}
                 dealerWipsItems={dealerWipsItems}
+                bookedToolsList={bookedToolsList}
                 selectItemHandler={selectItemHandler}
                 mode={mode}
                 showPrompt={
