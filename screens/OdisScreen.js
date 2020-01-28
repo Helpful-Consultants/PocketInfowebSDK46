@@ -21,37 +21,46 @@ export default OdisScreen = props => {
   const dataError = useSelector(state => state.odis.error);
   const dataStatusCode = useSelector(state => state.odis.statusCode);
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
     odisItems
   ]);
 
+  const { navigation } = props;
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
-      console.log('in odis use effect');
+      //   console.log('in odis use effect');
+      setIsRefreshNeeded(false);
       getItems();
     };
-    getItemsAsync();
-  }, [dispatch]);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItems();
   };
 
   if (!userIsSignedIn) {
     navigation && navigation.navigate && navigation.navigate('Auth');
   }
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
+    setIsRefreshNeeded(true);
+  });
 
   if (odisItems && odisItems.length > 0) {
-    console.log('in odis screen,odisItems', odisItems.length);
+    // console.log('in odis screen,odisItems', odisItems.length);
   } else {
     console.log('in odis screen, no odisItems');
   }
   const items = (!isLoading && !dataError && odisItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
-  console.log('isLoading ', isLoading, 'dataError ', dataError);
+  //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
   return (
     <View>

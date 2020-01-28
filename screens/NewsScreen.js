@@ -37,6 +37,7 @@ export default NewsScreen = props => {
   const dataError = useSelector(state => state.news.error);
   const dataStatusCode = useSelector(state => state.news.statusCode);
   const dataErrorUrl = useSelector(state => state.news.dataErrorUrl);
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
@@ -60,11 +61,13 @@ export default NewsScreen = props => {
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
-      //   console.log('in news use effect');
+      setIsRefreshNeeded(false);
       getItems();
     };
-    getItemsAsync();
-  }, [dispatch]);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   const pressOpenHandler = async url => {
     // console.log('in pressOpenHandler', url);
@@ -89,6 +92,7 @@ export default NewsScreen = props => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
+    setIsRefreshNeeded(true);
   });
 
   const searchInputHandler = searchInput => {

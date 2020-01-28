@@ -37,7 +37,7 @@ export default ProductsScreen = props => {
   const dataError = useSelector(state => state.products.error);
   const dataStatusCode = useSelector(state => state.products.statusCode);
   const dataErrorUrl = useSelector(state => state.products.dataErrorUrl);
-
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
@@ -62,10 +62,13 @@ export default ProductsScreen = props => {
     // runs only once
     const getItemsAsync = async () => {
       //   console.log('in products use effect');
+      setIsRefreshNeeded(false);
       getItems();
     };
-    getItemsAsync();
-  }, [dispatch]);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   const pressOpenHandler = async url => {
     // console.log('in pressOpenHandler', url);
@@ -88,6 +91,7 @@ export default ProductsScreen = props => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
+    setIsRefreshNeeded(true);
   });
 
   const searchInputHandler = searchInput => {

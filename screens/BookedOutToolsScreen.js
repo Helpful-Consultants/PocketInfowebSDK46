@@ -89,10 +89,13 @@ export default BookedOutToolsScreen = props => {
     // runs only once
     // console.log('in jobs use effect');
     const getItemsAsync = async () => {
+      setIsRefreshNeeded(false);
       getItems(getWipsDataObj);
     };
-    getItemsAsync();
-  }, []);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   useEffect(() => {
     // console.log('in booked out useEffect userDataObj is:  ', userDataObj);
@@ -142,6 +145,7 @@ export default BookedOutToolsScreen = props => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
+    setIsRefreshNeeded(true);
   });
 
   const searchInputHandler = searchInput => {
@@ -202,7 +206,6 @@ export default BookedOutToolsScreen = props => {
 
   //   console.log(
   //     'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
-  //     // userWipsItems
   //   );
 
   return (

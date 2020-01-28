@@ -31,6 +31,7 @@ export default StatsScreen = props => {
   const dataError = useSelector(state => state.stats.error);
   const dataStatusCode = useSelector(state => state.odis.statusCode);
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getDealerItemsDataObj = {
     dealerId: dealerId,
@@ -47,7 +48,7 @@ export default StatsScreen = props => {
   const { navigation } = props;
 
   const getItems = useCallback(async () => {
-    // console.log('in getItems', getDealerItemsDataObj);
+    // console.log('in stats getItems');
     dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
     // dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
     // dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
@@ -58,10 +59,18 @@ export default StatsScreen = props => {
     // runs only once
     // console.log('in stats use effect');
     const getItemsAsync = async () => {
-      getItems(getItems);
+      setIsRefreshNeeded(false);
+      getItems();
     };
-    getItemsAsync();
-  }, []);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
+
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
+    setIsRefreshNeeded(true);
+  });
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getStatsData);
@@ -79,7 +88,7 @@ export default StatsScreen = props => {
     // console.log('in stats screen,userDataObj OK', userDataPresent);
   } else {
     // console.log('in stats screen, no userDataObj');
-    getUserData();
+    getItems();
   }
 
   const userWipsItems =

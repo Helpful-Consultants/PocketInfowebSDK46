@@ -51,6 +51,7 @@ export default JobsScreen = props => {
   const [selectedItem, setSelectedItem] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
   const [listView, setListView] = useState({});
@@ -97,12 +98,15 @@ export default JobsScreen = props => {
 
   useEffect(() => {
     // runs only once
-    // console.log('in jobs use effect');
+    // console.log('in jobs use effect', isRefreshNeeded);
+    setIsRefreshNeeded(false);
     const getItemsAsync = async () => {
       getItems(getWipsDataObj);
     };
-    getItemsAsync();
-  }, [dispatch]);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getWipsDataObj);
@@ -161,6 +165,7 @@ export default JobsScreen = props => {
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
+    setIsRefreshNeeded(true);
     // refreshRequestHandler();
   });
 

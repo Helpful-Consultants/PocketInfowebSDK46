@@ -128,6 +128,7 @@ export default FindToolsScreen = props => {
   const [isBasketVisible, setIsBasketVisible] = useState(true);
   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
   const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
   const [toolBasketIds, setToolBasketIds] = useState([]);
@@ -176,10 +177,13 @@ export default FindToolsScreen = props => {
     // runs only once
     // console.log('in tools use effect');
     const getItemsAsync = async () => {
+      setIsRefreshNeeded(false);
       getItems(getDealerItemsDataObj);
     };
-    getItemsAsync();
-  }, []);
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   useEffect(() => {
     // runs only once
@@ -272,8 +276,11 @@ export default FindToolsScreen = props => {
   }, [dealerToolsItems, uniqueLtpItems]);
 
   const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
     // console.log('FTS in didFocusSubscription');
+    // setIsRefreshNeeded(true);
+    didFocusSubscription.remove();
+    setIsRefreshNeeded(true);
+
     if (searchInput && searchInput.length > 0) {
       setSearchInput('');
     }
