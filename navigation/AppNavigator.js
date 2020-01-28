@@ -122,9 +122,8 @@ const DrawerContent = props => {
             <Text style={styles.brand}>{brandText}</Text>
             {Constants && Constants.deviceName ? (
               <Text style={styles.deviceVersion}>
-                {Constants.deviceName}
                 {Platform && Platform.OS && Platform.Version ? (
-                  <Text>{`, ${Platform.constants.systemName} v${Platform.Version}`}</Text>
+                  <Text>{`${Platform.constants.systemName} v${Platform.Version}`}</Text>
                 ) : null}
               </Text>
             ) : null}
