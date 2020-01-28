@@ -146,9 +146,9 @@ export default FindToolsScreen = props => {
 
   const { navigation } = props;
 
-  if (!userIsSignedIn) {
-    navigation && navigation.navigate && navigation.navigate('Auth');
-  }
+  //   if (!userIsSignedIn) {
+  //     navigation && navigation.navigate && navigation.navigate('Auth');
+  //   }
 
   const getDealerItemsDataObj = {
     dealerId:

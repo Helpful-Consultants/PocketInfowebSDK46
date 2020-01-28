@@ -58,9 +58,9 @@ export default JobsScreen = props => {
 
   const { navigation } = props;
 
-  if (!userIsSignedIn) {
-    navigation && navigation.navigate && navigation.navigate('Auth');
-  }
+  //   if (!userIsSignedIn) {
+  //     navigation && navigation.navigate && navigation.navigate('Auth');
+  //   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 
   const getWipsDataObj = {

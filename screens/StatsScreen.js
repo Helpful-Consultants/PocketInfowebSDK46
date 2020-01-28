@@ -77,9 +77,9 @@ export default StatsScreen = props => {
     getItems();
   };
 
-  if (!userIsSignedIn) {
-    navigation && navigation.navigate && navigation.navigate('Auth');
-  }
+  //   if (!userIsSignedIn) {
+  //     navigation && navigation.navigate && navigation.navigate('Auth');
+  //   }
   const userDataPresent =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;

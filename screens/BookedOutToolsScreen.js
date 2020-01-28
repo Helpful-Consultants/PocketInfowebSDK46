@@ -54,9 +54,9 @@ export default BookedOutToolsScreen = props => {
   const [userWipsItems, setUserWipsItems] = useState([]);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [listView, setListView] = useState({});
-  if (!userIsSignedIn) {
-    navigation && navigation.navigate && navigation.navigate('Auth');
-  }
+  //   if (!userIsSignedIn) {
+  //     navigation && navigation.navigate && navigation.navigate('Auth');
+  //   }
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 
   const { navigation } = props;

@@ -58,12 +58,12 @@ export default HomeScreen = props => {
     navigation.navigate('AuthLoading');
   });
 
-  useEffect(() => {
-    if (!userIsSignedIn || userError) {
-      console.log('home screen userIs not SignedIn so navigating to auth');
-      navigation && navigation.navigate && navigation.navigate('Auth');
-    }
-  }, [userIsSignedIn, userError]);
+  //   useEffect(() => {
+  //     if (!userIsSignedIn || userError) {
+  //       console.log('home screen userIs not SignedIn so navigating to auth');
+  //       navigation && navigation.navigate && navigation.navigate('Auth');
+  //     }
+  //   }, [userIsSignedIn, userError]);
 
   return (
     <SafeAreaView style={styles.container}>

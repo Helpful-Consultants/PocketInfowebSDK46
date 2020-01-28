@@ -45,9 +45,10 @@ export default OdisScreen = props => {
     getItems();
   };
 
-  if (!userIsSignedIn) {
-    navigation && navigation.navigate && navigation.navigate('Auth');
-  }
+  //   if (!userIsSignedIn) {
+  //     navigation && navigation.navigate && navigation.navigate('Auth');
+  //   }
+
   const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
     setIsRefreshNeeded(true);
