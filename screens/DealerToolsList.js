@@ -179,49 +179,7 @@ export default function DealerToolsList(props) {
     let booked = false;
     let lastJobDetails = null;
 
-    if (item.lastWIP && item.lastWIP.length > 0) {
-      //   console.log('item with last wip', item);
-      personObj = findLastBookedOutByFromTool(item);
-      personName = personObj.name;
-      personIntId = personObj.intId;
-      booked = true;
-
-      if (personIntId === userIntId) {
-        bookedByUser = true;
-        // console.log('Matchhhhhhhhh', bookedByUser);
-        lastJobDetails = (
-          <Text
-            style={{
-              fontFamily: 'the-sans',
-              fontSize: RFPercentage(2.0),
-              color: Colors.vwgWarmRed,
-              fontWeight: '500'
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: 'the-sans-bold',
-                fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed,
-                fontWeight: '600'
-              }}
-            >{`Already booked out to you`}</Text>
-            {`, on job '${item.lastWIP}'`}
-          </Text>
-        );
-      } else {
-        lastJobDetails = (
-          <Text
-            style={{
-              fontFamily: 'the-sans',
-              fontSize: RFPercentage(2.0),
-              color: Colors.vwgWarmRed,
-              fontWeight: '500'
-            }}
-          >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
-        );
-      }
-    } else if (item.id && bookedToolsList && bookedToolsList.length > 0) {
+    if (item.id && bookedToolsList && bookedToolsList.length > 0) {
       if (bookedToolsList.includes(item.id)) {
         // console.log('tool in the list', item);
         const wipObj = findWipforTool(item.id);
@@ -270,6 +228,48 @@ export default function DealerToolsList(props) {
             >{`Booked out to ${personName}, on job '${wipObj.wipNumber}'`}</Text>
           );
         }
+      }
+    } else if (item.lastWIP && item.lastWIP.length > 0) {
+      //   console.log('item with last wip', item);
+      personObj = findLastBookedOutByFromTool(item);
+      personName = personObj.name;
+      personIntId = personObj.intId;
+      booked = true;
+
+      if (personIntId === userIntId) {
+        bookedByUser = true;
+        // console.log('Matchhhhhhhhh', bookedByUser);
+        lastJobDetails = (
+          <Text
+            style={{
+              fontFamily: 'the-sans',
+              fontSize: RFPercentage(2.0),
+              color: Colors.vwgWarmRed,
+              fontWeight: '500'
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: 'the-sans-bold',
+                fontSize: RFPercentage(2.0),
+                color: Colors.vwgWarmRed,
+                fontWeight: '600'
+              }}
+            >{`Already booked out to you`}</Text>
+            {`, on job '${item.lastWIP}'`}
+          </Text>
+        );
+      } else {
+        lastJobDetails = (
+          <Text
+            style={{
+              fontFamily: 'the-sans',
+              fontSize: RFPercentage(2.0),
+              color: Colors.vwgWarmRed,
+              fontWeight: '500'
+            }}
+          >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
+        );
       }
     }
 
