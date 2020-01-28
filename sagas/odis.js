@@ -12,7 +12,7 @@ import * as api from '../api/odis';
 import Types from '../constants/Types';
 
 function* getOdis() {
-  console.log('in saga, getOdis');
+  //   console.log('in saga, getOdis');
   yield put(actions.getOdisStart());
 
   try {

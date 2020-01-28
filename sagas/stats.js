@@ -37,6 +37,7 @@ function* getStats({ payload }) {
       );
     } else {
       console.log('in stats saga - bad 200');
+      //   console.log(result && result);
       yield put(
         actions.statsError({
           error: 'An error occurred when trying to update the stats',

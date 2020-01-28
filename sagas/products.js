@@ -21,7 +21,7 @@ function* getProducts() {
       result.data[0].createdDate &&
       result.data[0].createdDate.length > 0
     ) {
-      console.log('in products saga - good 200');
+      //   console.log('in products saga - good 200');
       yield put(
         actions.getProductsSuccess({
           items: result.data
