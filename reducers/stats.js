@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 
 export default function stats(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  //   console.log('action.type is:', action.type);
+  //   console.log('stats action.type is:', action.type);
   switch (action.type) {
     case Types.GET_STATS_START: {
       return {
@@ -36,7 +36,7 @@ export default function stats(state = INITIAL_STATE, action) {
       };
     }
     case Types.STATS_ERROR: {
-      console.log('action.payload starts');
+      console.log('stats error action.payload starts');
       console.log(action.payload);
       console.log('action.payload ends');
       return {

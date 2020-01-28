@@ -23,7 +23,13 @@ function* getStats({ payload }) {
     // console.log('in saga get stats, success');
     // console.log(result);
     // console.log('end results in saga get stats, success')
-    if (result.data[0].userName && result.data[0].userName.length > 0) {
+    if (
+      result &&
+      result.data &&
+      result.data[0] &&
+      result.data[0].userName &&
+      result.data[0].userName.length > 0
+    ) {
       // if (1 === 1) {
       //   console.log('in stats saga - good 200');
       yield put(
@@ -49,7 +55,7 @@ function* getStats({ payload }) {
       );
     }
   } catch (error) {
-    console.log('server error in saga get dealerWips !!!!!!!!!!!!!!');
+    console.log('server error in saga get stats !!!!!!!!!!!!!!');
     console.log('whole Error', error);
     console.log('whole Error ends');
     console.log(error && error.config);
