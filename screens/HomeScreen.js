@@ -15,6 +15,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import AppLogoWithHeader from '../components/AppLogoWithHeader';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import VWGStyledText from '../components/VWGStyledText';
+import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import Colors from '../constants/Colors';
 
 import { signOutUserRequest } from '../actions/user';
@@ -191,21 +192,7 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           </View>
-          <Touchable onPress={() => navigation.navigate('Odis')}>
-            <View style={styles.odisRow}>
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
-                type='ionicon'
-                size={iconSizeSmall}
-                color={actionTextColor}
-              />
-
-              <VWGStyledText style={styles.odisCellText}>
-                {' '}
-                See latest ODIS versions
-              </VWGStyledText>
-            </View>
-          </Touchable>
+          <OdisLinkWithStatus navigation={navigation} />
           <View
             style={{
               marginTop: 15
