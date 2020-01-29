@@ -75,7 +75,7 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_USER_INVALID_CREDS: {
-      console.log('action.payload is:', action.payload.error);
+      //   console.log('action.payload is:', action.payload.error);
       return {
         ...state,
         userIsSignedIn: false,
@@ -99,9 +99,9 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.USER_ERROR: {
-      console.log('action.payload starts');
-      console.log(action.payload);
-      console.log('action.payload ends');
+      //   console.log('action.payload starts');
+      //   console.log(action.payload);
+      //   console.log('action.payload ends');
       return {
         ...state,
         userIsSignedIn: false,
