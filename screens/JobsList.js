@@ -155,19 +155,23 @@ export default function DealerToolsList(props) {
                           fontSize: RFPercentage(2.1)
                         }}
                       >{`${item.partDescription}`}</Text>
-                      {item.location.length > 0 ? (
-                        <Text
-                          style={{
-                            color: Colors.vwgVeryDarkGray,
-                            marginBottom: 3,
-                            paddingLeft: 0,
-                            marginRight: 10,
-                            fontFamily: 'the-sans',
-                            fontSize: RFPercentage(2.1)
-                          }}
-                        >{`Storage Location: ${item.location}`}</Text>
-                      ) : null}
-                      {item.lastWIP.length > 0 ? (
+
+                      <Text
+                        style={{
+                          color: Colors.vwgVeryDarkGray,
+                          marginBottom: 3,
+                          paddingLeft: 0,
+                          marginRight: 10,
+                          fontFamily: 'the-sans',
+                          fontSize: RFPercentage(2.1)
+                        }}
+                      >
+                        {item.location && item.location.length > 0
+                          ? `Storage location: ${item.location}`
+                          : `Storage location not recorded`}
+                      </Text>
+
+                      {/* {item.lastWIP.length > 0 ? (
                         <Text
                           style={{
                             color: Colors.vwgVeryDarkGray,
@@ -178,7 +182,7 @@ export default function DealerToolsList(props) {
                             fontSize: RFPercentage(2.1)
                           }}
                         >{`Last booked out by: ${job.createdBy}, job ${item.lastWIP}`}</Text>
-                      ) : null}
+                      ) : null} */}
                     </View>
                   </View>
                 </View>
