@@ -16,7 +16,8 @@ export default function OdisVersions(props) {
   //   console.log(props.items);
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
-  const items = (props.items && props.items) || [];
+  //   const items = (props.items && props.items) || [];
+  const { items, userBrand } = props;
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -29,6 +30,36 @@ export default function OdisVersions(props) {
   //   console.log('odisData', items);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
+  let odisDetails = null;
+
+  if (items && items.length > 0) {
+    odisDetails = items.map((item, i) =>
+      !userBrand || userBrand === item.brandCode.toLowerCase() ? (
+        <View key={i}>
+          <View style={styles.odisRow}>
+            <View style={styles.odisLogoContainer}>
+              <Image
+                source={logoChooser[item.brandCode.toLowerCase()]}
+                style={styles.logo}
+              />
+            </View>
+            <View style={styles.odisVersionRow}>
+              <Text style={styles.odisVersionText}>
+                Product: {item.productVersion}
+              </Text>
+              <Text style={styles.odisVersionText}>
+                Main feature: {item.mainFeatureVersion}
+              </Text>
+              <Text style={styles.odisVersionText}>
+                Data: {item.dataVersion}
+              </Text>
+            </View>
+          </View>
+        </View>
+      ) : null
+    );
+    // console.log(odisDetails);
+  }
 
   return (
     <View style={styles.container}>
@@ -39,31 +70,7 @@ export default function OdisVersions(props) {
         />
       </View>
 
-      <View>
-        {items.map((item, i) => (
-          <View key={i}>
-            <View style={styles.odisRow}>
-              <View style={styles.odisLogoContainer}>
-                <Image
-                  source={logoChooser[item.brandCode.toLowerCase()]}
-                  style={styles.logo}
-                />
-              </View>
-              <View style={styles.odisVersionRow}>
-                <Text style={styles.odisVersionText}>
-                  Product: {item.productVersion}
-                </Text>
-                <Text style={styles.odisVersionText}>
-                  Main feature: {item.mainFeatureVersion}
-                </Text>
-                <Text style={styles.odisVersionText}>
-                  Data: {item.dataVersion}
-                </Text>
-              </View>
-            </View>
-          </View>
-        ))}
-      </View>
+      <View>{items && items.length > 0 && odisDetails}</View>
     </View>
   );
 }
@@ -71,8 +78,7 @@ export default function OdisVersions(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
-    
+    justifyContent: 'center'
   },
   odisRow: {
     flexDirection: 'row',

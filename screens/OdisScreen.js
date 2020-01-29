@@ -16,6 +16,7 @@ import odisDummyData from '../dummyData/odisDummyData.js';
 export default OdisScreen = props => {
   const dispatch = useDispatch();
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userBrand = useSelector(state => state.user.userBrand);
   const odisItems = useSelector(state => state.odis.odisItems);
   const isLoading = useSelector(state => state.odis.isLoading);
   const dataError = useSelector(state => state.odis.error);
@@ -82,7 +83,7 @@ export default OdisScreen = props => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <OdisVersions items={items} />
+        <OdisVersions items={items} userBrand={userBrand} />
       )}
     </View>
   );
