@@ -56,6 +56,7 @@ export default HomeScreen = props => {
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
     odisObj
   ]);
+  console.log('IN HOME !!!!!', userBrand);
 
   useEffect(() => {
     // runs only once
@@ -217,13 +218,12 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           </View>
-          {odisObj && userBrand ? (
-            <OdisLinkWithStatus
-              navigation={navigation}
-              userBrand={userBrand}
-              itemsObj={odisObj}
-            />
-          ) : null}
+
+          <OdisLinkWithStatus
+            navigation={navigation}
+            userBrand={userBrand}
+            itemsObj={odisObj}
+          />
 
           <View
             style={{
