@@ -206,8 +206,8 @@ const styles = StyleSheet.create({
     color: Colors.vwgCoolOrange
   },
   logo: {
-    height: 70,
-    width: 70,
+    height: 50,
+    width: 50,
     marginRight: 10
   },
   rowWithImage: {
