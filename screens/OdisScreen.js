@@ -17,7 +17,7 @@ export default OdisScreen = props => {
   const dispatch = useDispatch();
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userBrand = useSelector(state => state.user.userBrand);
-  const odisItems = useSelector(state => state.odis.odisItems);
+  const odisObj = useSelector(state => state.odis.odisData);
   const isLoading = useSelector(state => state.odis.isLoading);
   const dataError = useSelector(state => state.odis.error);
   const dataStatusCode = useSelector(state => state.odis.statusCode);
@@ -25,7 +25,7 @@ export default OdisScreen = props => {
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
-    odisItems
+    odisObj
   ]);
 
   const { navigation } = props;
@@ -55,12 +55,12 @@ export default OdisScreen = props => {
     setIsRefreshNeeded(true);
   });
 
-  if (odisItems && odisItems.length > 0) {
-    // console.log('in odis screen,odisItems', odisItems.length);
+  if (odisObj) {
+    console.log('in odis screen,odisObj', odisObj);
   } else {
-    console.log('in odis screen, no odisItems');
+    console.log('in odis screen, no odisObj');
   }
-  const items = (!isLoading && !dataError && odisItems) || [];
+  const itemsObj = (!isLoading && !dataError && odisObj) || {};
   //   console.log('items AREEEEEEEEEE', items);
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
@@ -73,7 +73,7 @@ export default OdisScreen = props => {
         isLoading={isLoading}
         dataError={dataError}
         dataStatusCode={dataStatusCode}
-        dataCount={items.length}
+        dataCount={1}
       />
       {dataError ? (
         <ErrorDetails
@@ -82,9 +82,12 @@ export default OdisScreen = props => {
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
         />
-      ) : (
-        <OdisVersions items={items} userBrand={userBrand} />
-      )}
+      ) : !isLoading &&
+        !dataError &&
+        odisObj &&
+        Object.keys(odisObj).length > 0 ? (
+        <OdisVersions itemsObj={odisObj} userBrand={'cv'} />
+      ) : null}
     </View>
   );
 };

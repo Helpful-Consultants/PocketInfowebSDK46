@@ -1,5 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { StyleSheet, ScrollView, View } from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
@@ -17,7 +17,8 @@ export default function OdisVersions(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const { items, userBrand } = props;
+  const odisObj = useSelector(state => state.odis.odisData);
+  const { itemsObj, userBrand } = props;
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -27,39 +28,144 @@ export default function OdisVersions(props) {
   };
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
-  //   console.log('odisData', items);
+  //   console.log('in odiscdetails userBrand', userBrand && userBrand);
+  //   console.log('in odiscdetails odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
   let odisDetails = null;
 
-  if (items && items.length > 0) {
-    odisDetails = items.map((item, i) =>
-      !userBrand || userBrand === item.brandCode.toLowerCase() ? (
-        <View key={i}>
-          <View style={styles.odisRow}>
-            <View style={styles.odisLogoContainer}>
-              <Image
-                source={logoChooser[item.brandCode.toLowerCase()]}
-                style={styles.logo}
-              />
-            </View>
-            <View style={styles.odisVersionRow}>
-              <Text style={styles.odisVersionText}>
-                Product: {item.productVersion}
-              </Text>
-              <Text style={styles.odisVersionText}>
-                Main feature: {item.mainFeatureVersion}
-              </Text>
-              <Text style={styles.odisVersionText}>
-                Data: {item.dataVersion}
-              </Text>
-            </View>
-          </View>
+  const getOdisForBrand = item => {
+    // if (brand === 'sk') {
+    // console.log('getOdisForBrand', item);
+    // console.log('getOdisForBrand brand is ', item.brandCode);
+    return (
+      <View style={styles.odisRow}>
+        <View style={styles.odisLogoContainer}>
+          <Image
+            source={logoChooser[item.brandCode.toLowerCase()]}
+            style={styles.logo}
+          />
         </View>
-      ) : null
+        <View style={styles.odisVersionRow}>
+          <Text style={styles.odisVersionText}>
+            {item.previousProductVersion &&
+            item.previousProductVersion !== item.productVersion ? (
+              <Text style={styles.odisVersionTextHiglighted}>
+                {`Product: ${item.productVersion}`}
+                <Text style={styles.odisVersionText}>
+                  {` (from ${item.previousProductVersion})`}
+                </Text>
+              </Text>
+            ) : (
+              <Text style={styles.odisVersionText}>
+                {`Product: ${item.productVersion}`}
+              </Text>
+            )}
+          </Text>
+
+          <Text style={styles.odisVersionText}>
+            {item.previousMainFeatureVersion &&
+            item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
+              <Text style={styles.odisVersionTextHiglighted}>
+                {`Main feature: ${item.mainFeatureVersion}`}
+                <Text style={styles.odisVersionText}>
+                  {` (from ${item.previousMainFeatureVersion})`}
+                </Text>
+              </Text>
+            ) : (
+              <Text style={styles.odisVersionText}>
+                {`Main Feature: ${item.mainFeatureVersion}`}
+              </Text>
+            )}
+          </Text>
+          <Text style={styles.odisVersionText}>
+            {item.previousDataVersion &&
+            item.previousDataVersion !== item.dataVersion ? (
+              <Text style={styles.odisVersionTextHiglighted}>
+                {`Data: ${item.dataVersion}`}
+                <Text style={styles.odisVersionText}>
+                  {` (from ${item.previousDataVersion})`}
+                </Text>
+              </Text>
+            ) : (
+              <Text style={styles.odisVersionText}>
+                {`Data: ${item.dataVersion}`}
+              </Text>
+            )}
+          </Text>
+        </View>
+      </View>
     );
-    // console.log(odisDetails);
-  }
+    // }
+  };
+
+  const getOdisForBrands = itemsObj => {
+    if (userBrand) {
+      if (userBrand === 'au') {
+        // console.log('au');
+        odisDetails = getOdisForBrand(itemsObj.au);
+      } else if (userBrand === 'cv') {
+        // console.log('cv');
+        odisDetails = getOdisForBrand(itemsObj.cv);
+      } else if (userBrand === 'se') {
+        // console.log('se');
+        odisDetails = getOdisForBrand(itemsObj.se);
+      } else if (userBrand === 'sk') {
+        // console.log('sk');
+        odisDetails = getOdisForBrand(itemsObj.sk);
+      } else if (userBrand === 'vw') {
+        // console.log('vw');
+        odisDetails = getOdisForBrand(itemsObj.vw);
+      }
+    } else {
+      odisDetails = (
+        <View>
+          {getOdisForBrand(itemsObj.vw)}
+          {getOdisForBrand(itemsObj.au)}
+          {getOdisForBrand(itemsObj.se)}
+          {getOdisForBrand(itemsObj.sk)}
+          {getOdisForBrand(itemsObj.cv)}
+        </View>
+      );
+    }
+  };
+  itemsObj && getOdisForBrands(itemsObj);
+  //   if (items && items.length > 0) {
+  //     odisDetails = items.map((item, i) =>
+  //       !userBrand || userBrand === item.brandCode.toLowerCase() ? (
+  //         <View>{getOdisForBrands()}</View>
+  //       ) : null
+  //     );
+  //     // console.log(odisDetails);
+  //   }
+  //   if (items && items.length > 0) {
+  //     odisDetails = items.map((item, i) =>
+  //       !userBrand || userBrand === item.brandCode.toLowerCase() ? (
+  //         <View key={i}>
+  //           <View style={styles.odisRow}>
+  //             <View style={styles.odisLogoContainer}>
+  //               <Image
+  //                 source={logoChooser[item.brandCode.toLowerCase()]}
+  //                 style={styles.logo}
+  //               />
+  //             </View>
+  //             <View style={styles.odisVersionRow}>
+  //               <Text style={styles.odisVersionText}>
+  //                 Product: {item.productVersion}
+  //               </Text>
+  //               <Text style={styles.odisVersionText}>
+  //                 Main feature: {item.mainFeatureVersion}
+  //               </Text>
+  //               <Text style={styles.odisVersionText}>
+  //                 Data: {item.dataVersion}
+  //               </Text>
+  //             </View>
+  //           </View>
+  //         </View>
+  //       ) : null
+  //     );
+  //     // console.log(odisDetails);
+  //   }
 
   return (
     <View style={styles.container}>
@@ -70,7 +176,7 @@ export default function OdisVersions(props) {
         />
       </View>
 
-      <View>{items && items.length > 0 && odisDetails}</View>
+      <View>{itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}</View>
     </View>
   );
 }
@@ -93,6 +199,11 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.1),
     color: Colors.vwgVeryDarkGray
+  },
+  odisVersionTextHiglighted: {
+    fontFamily: 'the-sans-bold',
+    fontSize: RFPercentage(2.1),
+    color: Colors.vwgCoolOrange
   },
   logo: {
     height: 70,

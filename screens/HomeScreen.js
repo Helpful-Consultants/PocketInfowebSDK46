@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Dimensions,
@@ -19,6 +19,7 @@ import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import Colors from '../constants/Colors';
 
 import { signOutUserRequest } from '../actions/user';
+import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import { emptyDealerWipsRequest } from '../actions/dealerWips';
 
@@ -48,6 +49,25 @@ export default HomeScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userError = useSelector(state => state.user.error);
   const userDataObj = useSelector(state => state.user.userData[0]);
+  const userBrand = useSelector(state => state.user.userBrand);
+  const odisObj = useSelector(state => state.odis.odisData);
+  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+
+  const getItems = useCallback(async () => dispatch(getOdisRequest()), [
+    odisObj
+  ]);
+
+  useEffect(() => {
+    // runs only once
+    const getItemsAsync = async () => {
+      //   console.log('in odis use effect');
+      setIsRefreshNeeded(false);
+      getItems();
+    };
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, [isRefreshNeeded]);
 
   const requestSignOutHandler = useCallback(() => {
     console.log('in homesscreen requestSignOutHandler');
@@ -57,6 +77,11 @@ export default HomeScreen = props => {
     // dispatch(signOutUserRequest()), [userIsSignedIn];
     dispatch(signOutUserRequest());
     navigation.navigate('AuthLoading');
+  });
+
+  const didFocusSubscription = navigation.addListener('didFocus', () => {
+    didFocusSubscription.remove();
+    setIsRefreshNeeded(true);
   });
 
   //   useEffect(() => {
@@ -192,7 +217,13 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           </View>
-          <OdisLinkWithStatus navigation={navigation} />
+
+          <OdisLinkWithStatus
+            navigation={navigation}
+            userBrand={'cv'}
+            itemsObj={odisObj}
+          />
+
           <View
             style={{
               marginTop: 15
