@@ -85,8 +85,9 @@ export default OdisScreen = props => {
       ) : !isLoading &&
         !dataError &&
         odisObj &&
+        userBrand &&
         Object.keys(odisObj).length > 0 ? (
-        <OdisVersions itemsObj={odisObj} userBrand={'cv'} />
+        <OdisVersions itemsObj={odisObj} userBrand={userBrand} />
       ) : null}
     </View>
   );

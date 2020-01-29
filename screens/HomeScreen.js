@@ -217,12 +217,13 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           </View>
-
-          <OdisLinkWithStatus
-            navigation={navigation}
-            userBrand={'cv'}
-            itemsObj={odisObj}
-          />
+          {odisObj && userBrand ? (
+            <OdisLinkWithStatus
+              navigation={navigation}
+              userBrand={userBrand}
+              itemsObj={odisObj}
+            />
+          ) : null}
 
           <View
             style={{
