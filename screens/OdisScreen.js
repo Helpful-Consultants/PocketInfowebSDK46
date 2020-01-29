@@ -56,7 +56,7 @@ export default OdisScreen = props => {
   });
 
   if (odisObj) {
-    console.log('in odis screen,odisObj', odisObj);
+    console.log('in odis screen,odisObj');
   } else {
     console.log('in odis screen, no odisObj');
   }
@@ -85,7 +85,6 @@ export default OdisScreen = props => {
       ) : !isLoading &&
         !dataError &&
         odisObj &&
-        userBrand &&
         Object.keys(odisObj).length > 0 ? (
         <OdisVersions itemsObj={odisObj} userBrand={userBrand} />
       ) : null}
