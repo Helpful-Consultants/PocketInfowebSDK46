@@ -22,61 +22,106 @@ const iconColor = Colors.vwgDeepBlue;
 const iconColorHighlighted = Colors.vwgWarmOrange;
 const disabledButtonColor = Colors.vwgMidGray;
 
-export default function OdisStatus(props) {
-  //   console.log(props.items);
+export default function OdisLinkWithStatus(props) {
+  //   console.log('%%%%%% in OdisLinkWithStatus ');
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
   const { itemsObj, navigation, userBrand } = props;
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
-  console.log('in odisstatus userBrand', userBrand && userBrand);
+  //   console.log('in odisstatus userBrand', userBrand && userBrand);
   //   console.log('in odisstatus odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
   const notificationLimit = 120;
   let odisChanged = false;
-  let ageOfChange = 0;
 
   const now = moment();
   //   console.log(now);
 
   const getOdisStatusForBrand = itemObj => {
-    console.log('itemObj date ', itemObj.dateChanged && itemObj.dateChanged);
-    if (1 === 2) {
-      return true;
-    } else if (itemObj.dateChanged) {
-      let fromNow = moment(itemObj.dateChanged).fromNow();
-      console.log('!!!!! fromNow', fromNow);
+    // console.log(
+    //   'brand itemObj date ',
+    //   itemObj.dateChanged && itemObj.dateChanged
+    // );
+    let alertNeeded = false;
 
-      ageOfChange = now.diff(moment(itemObj.dateChanged), 'minutes');
-      console.log('!!!!! diff', ageOfChange);
-      return true;
-    } else {
-      return false;
+    if (itemObj.dateChanged) {
+      let fromNow = moment(itemObj.dateChanged).fromNow();
+      //   console.log('!!!!! fromNow', fromNow);
+      let ageOfChange = now.diff(moment(itemObj.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! diff', ageOfChange);
+      if (ageOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
     }
+    console.log('alertNeeded', itemObj.brand, alertNeeded);
+    return alertNeeded;
   };
 
   const getOdisStatusForAllBrands = itemsObj => {
     // console.log('itemsObj', itemsObj);
-    if (1 === 2) {
-      return true;
-    } else if (
-      itemsObj.au.dateChanged ||
-      itemsObj.cv.dateChanged ||
-      itemsObj.se.dateChanged ||
-      itemsObj.sk.dateChanged ||
-      itemsObj.vw.dateChanged
-    ) {
-      let fromNow = moment(itemObj.dateChanged).fromNow();
-      console.log('!!!!! fromNow', fromNow);
+    let auFromNow = 0;
+    let cvFromNow = 0;
+    let seFromNow = 0;
+    let skFromNow = 0;
+    let vwFromNow = 0;
+    let auAgeOfChange = 0;
+    let cvAgeOfChange = 0;
+    let seAgeOfChange = 0;
+    let skAgeOfChange = 0;
+    let vwAgeOfChange = 0;
+    let alertNeeded = false;
 
-      ageOfChange = now.diff(moment(itemObj.dateChanged), 'minutes');
-      console.log('!!!!! diff', ageOfChange);
-      return true;
-    } else {
-      return false;
+    if (itemsObj.au && itemsObj.au.dateChanged) {
+      auFromNow = moment(itemsObj.au.dateChanged).fromNow();
+      //   console.log('!!!!! au fromNow', auFromNow);
+      auAgeOfChange = now.diff(moment(itemsObj.au.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! au diff', auAgeOfChange);
+      if (auAgeOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
     }
+    if (itemsObj.cv && itemsObj.cv.dateChanged) {
+      cvFromNow = moment(itemsObj.cv.dateChanged).fromNow();
+      //   console.log('!!!!! cv fromNow', cvFromNow);
+      cvAgeOfChange = now.diff(moment(itemsObj.cv.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! cv diff', cvAgeOfChange);
+      if (cvAgeOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
+    }
+    if (itemsObj.se && itemsObj.se.dateChanged) {
+      seFromNow = moment(itemsObj.se.dateChanged).fromNow();
+      //   console.log('!!!!! se fromNow', seFromNow);
+      seAgeOfChange = now.diff(moment(itemsObj.se.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! se diff', seAgeOfChange);
+      if (seAgeOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
+    }
+    if (itemsObj.sk && itemsObj.sk.dateChanged) {
+      skFromNow = moment(itemsObj.sk.dateChanged).fromNow();
+      //   console.log('!!!!! sk fromNow', skFromNow);
+      skAgeOfChange = now.diff(moment(itemsObj.sk.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! sk diff', skAgeOfChange);
+      if (skAgeOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
+    }
+    if (itemsObj.vw && itemsObj.vw.dateChanged) {
+      vwFromNow = moment(itemsObj.vw.dateChanged).fromNow();
+      //   console.log('!!!!! vw fromNow', vwFromNow);
+      vwAgeOfChange = now.diff(moment(itemsObj.vw.dateChanged), 'minutes') || 0;
+      //   console.log('!!!!! vw diff', vwAgeOfChange);
+      if (vwAgeOfChange > notificationLimit) {
+        alertNeeded = true;
+      }
+    }
+    // console.log('alertNeeded', alertNeeded);
+
+    return alertNeeded;
   };
 
   const getOdisStatusForBrands = itemsObj => {
@@ -103,6 +148,8 @@ export default function OdisStatus(props) {
   };
   itemsObj && getOdisStatusForBrands(itemsObj);
 
+  console.log('odisChanged', odisChanged);
+
   return (
     <Touchable onPress={() => navigation.navigate('Odis')}>
       <BlinkingView
@@ -112,7 +159,7 @@ export default function OdisStatus(props) {
         text={'See latest ODIS versions'}
         colorOne={Colors.vwgDeepBlue}
         colorTwo={Colors.vwgSkyBlue}
-        blink={odisChanged && ageOfChange && ageOfChange < notificationLimit}
+        blink={odisChanged}
       />
     </Touchable>
   );
