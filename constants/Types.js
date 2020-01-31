@@ -13,16 +13,22 @@ export default {
   GET_NEWS_START: 'news/get_news_start',
   GET_NEWS_REQUEST: 'news/get_news_request',
   GET_NEWS_SUCCESS: 'news/get_news_success',
+  INCREMENT_NEWS_VIEW_COUNT: 'odis/incrementNewsViewCount',
+  RESET_NEWS_VIEW_COUNT: 'odis/resetNewsViewCount',
   NEWS_ERROR: 'news/news_error',
 
   GET_ODIS_START: 'odis/get_odis_start',
   GET_ODIS_REQUEST: 'odis/get_odis_request',
   GET_ODIS_SUCCESS: 'odis/get_odis_success',
+  INCREMENT_ODIS_VIEW_COUNT: 'odis/incrementOdisViewCount',
+  RESET_ODIS_VIEW_COUNT: 'odis/resetOdisViewCount',
   ODIS_ERROR: 'odis/odis_error',
 
   GET_PRODUCTS_START: 'products/get_products_start',
   GET_PRODUCTS_REQUEST: 'products/get_products_request',
   GET_PRODUCTS_SUCCESS: 'products/get_products_success',
+  INCREMENT_PRODUCTS_VIEW_COUNT: 'odis/incrementProductsViewCount',
+  RESET_PRODUCTS_VIEW_COUNT: 'odis/resetProductsViewCount',
   PRODUCTS_ERROR: 'products/products_error',
 
   GET_STATS_START: 'stats/get_stats_start',

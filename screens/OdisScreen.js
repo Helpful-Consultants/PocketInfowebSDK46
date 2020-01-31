@@ -8,7 +8,7 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
-import { getOdisRequest } from '../actions/odis';
+import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
 
 import OdisVersions from './OdisVersions';
 import odisDummyData from '../dummyData/odisDummyData.js';
@@ -20,6 +20,8 @@ export default OdisScreen = props => {
   const odisObj = useSelector(state => state.odis.odisData);
   const isLoading = useSelector(state => state.odis.isLoading);
   const dataError = useSelector(state => state.odis.error);
+  const viewCount = useSelector(state => state.odis.viewCount);
+  const allOdis = useSelector(state => state.odis);
   const dataStatusCode = useSelector(state => state.odis.statusCode);
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
@@ -28,13 +30,17 @@ export default OdisScreen = props => {
     odisObj
   ]);
 
+  const incrementViewCount = async () => dispatch(incrementOdisViewCount());
+
   const { navigation } = props;
+
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
       //   console.log('in odis use effect');
       setIsRefreshNeeded(false);
       getItems();
+      incrementViewCount();
     };
     if (isRefreshNeeded === true) {
       getItemsAsync();
@@ -52,17 +58,20 @@ export default OdisScreen = props => {
 
   const didFocusSubscription = navigation.addListener('didFocus', () => {
     didFocusSubscription.remove();
+    // incrementViewCount();
     setIsRefreshNeeded(true);
   });
 
-  if (odisObj) {
-    console.log('in odis screen,odisObj');
-  } else {
-    console.log('in odis screen, no odisObj');
-  }
+  //   if (odisObj) {
+  //     console.log('in odis screen,odisObj');
+  //   } else {
+  //     console.log('in odis screen, no odisObj');
+  //   }
   const itemsObj = (!isLoading && !dataError && odisObj) || {};
   //   console.log('items AREEEEEEEEEE', items);
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
+
+  //   console.log(allOdis && allOdis);
 
   return (
     <View>
@@ -86,7 +95,11 @@ export default OdisScreen = props => {
         !dataError &&
         odisObj &&
         Object.keys(odisObj).length > 0 ? (
-        <OdisVersions itemsObj={odisObj} userBrand={userBrand} />
+        <OdisVersions
+          itemsObj={odisObj}
+          userBrand={userBrand}
+          viewCount={viewCount}
+        />
       ) : null}
     </View>
   );

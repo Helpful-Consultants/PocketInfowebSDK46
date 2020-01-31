@@ -21,7 +21,13 @@ function* getOdis() {
     // console.log(result.data && result.data);
     // console.log(result.data[0] && result.data[0].brandVersions);
 
-    if (result.data[0].id && result.data[0].id.length > 0) {
+    if (
+      result &&
+      result.data &&
+      result.data[0] &&
+      result.data[0].id &&
+      result.data[0].id.length > 0
+    ) {
       console.log('in odis saga - good 200');
       //   console.log('result.data', result.data && result.data);
 

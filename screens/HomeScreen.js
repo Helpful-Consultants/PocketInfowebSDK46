@@ -41,7 +41,7 @@ var iconSizeSmall = RFPercentage(3.5);
 
 export default HomeScreen = props => {
   // console.log(props)
-  console.log('IN HOME !!!!!');
+  //   console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
 
   const { navigation } = props;
@@ -51,12 +51,13 @@ export default HomeScreen = props => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const userBrand = useSelector(state => state.user.userBrand);
   const odisObj = useSelector(state => state.odis.odisData);
+  const odisViewCount = useSelector(state => state.odis.viewCount);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
     odisObj
   ]);
-  console.log('IN HOME !!!!!', userBrand);
+  //   console.log('IN HOME !!!!! brand', userBrand);
 
   useEffect(() => {
     // runs only once
@@ -223,6 +224,8 @@ export default HomeScreen = props => {
             navigation={navigation}
             userBrand={userBrand}
             itemsObj={odisObj}
+            viewCount={odisViewCount}
+            viewMax={5}
           />
 
           <View

@@ -25,6 +25,7 @@ export default class BlinkingView extends Component {
   render() {
     // let display = this.state.showItem ? this.props.text : ' ';
     // let color = this.state.showItem ? this.props.colorOne : this.props.colorTwo;
+
     return (
       <View style={{ flexDirection: 'row' }}>
         <Icon

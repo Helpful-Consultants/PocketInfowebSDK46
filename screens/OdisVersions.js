@@ -17,8 +17,8 @@ export default function OdisVersions(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const odisObj = useSelector(state => state.odis.odisData);
-  const { itemsObj, userBrand } = props;
+
+  const { itemsObj, userBrand, viewCount } = props;
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -32,6 +32,9 @@ export default function OdisVersions(props) {
   //   console.log('in odiscdetails odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
+
+  //   console.log('viewCount', viewCount && viewCount);
+
   let odisDetails = null;
 
   const getOdisForBrand = item => {
@@ -175,6 +178,12 @@ export default function OdisVersions(props) {
           style={styles.contentImage}
         />
       </View>
+
+      {/* {viewCount && viewCount > 0 ? (
+        <View>
+          <Text>{`Viewed ${viewCount}`}</Text>
+        </View>
+      ) : null} */}
 
       <View>{itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}</View>
     </View>

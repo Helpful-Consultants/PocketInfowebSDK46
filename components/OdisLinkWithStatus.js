@@ -27,14 +27,14 @@ export default function OdisLinkWithStatus(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const { itemsObj, navigation, userBrand } = props;
+  const { itemsObj, navigation, userBrand, viewCount, viewMax } = props;
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
   //   console.log('in odisstatus userBrand', userBrand && userBrand);
   //   console.log('in odisstatus odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
-  const notificationLimit = 120;
+  const notificationLimit = 1;
   let odisChanged = false;
 
   const now = moment();
@@ -50,7 +50,7 @@ export default function OdisLinkWithStatus(props) {
     if (itemObj.dateChanged) {
       let fromNow = moment(itemObj.dateChanged).fromNow();
       //   console.log('!!!!! fromNow', fromNow);
-      let ageOfChange = now.diff(moment(itemObj.dateChanged), 'minutes') || 0;
+      let ageOfChange = now.diff(moment(itemObj.dateChanged), 'days') || 0;
       //   console.log('!!!!! diff', ageOfChange);
       if (ageOfChange > notificationLimit) {
         alertNeeded = true;
@@ -148,7 +148,14 @@ export default function OdisLinkWithStatus(props) {
   };
   itemsObj && getOdisStatusForBrands(itemsObj);
 
-  console.log('odisChanged', odisChanged);
+  //   console.log('odisChanged', odisChanged);
+
+  console.log('count', viewCount && viewCount, 'max', viewMax && viewMax);
+
+  //   const blink =
+  //     (odisChanged && viewCount && viewMax && viewCount <= viewMax && true) ||
+  //     false;
+  const blink = odisChanged || false;
 
   return (
     <Touchable onPress={() => navigation.navigate('Odis')}>
@@ -159,7 +166,7 @@ export default function OdisLinkWithStatus(props) {
         text={'See latest ODIS versions'}
         colorOne={Colors.vwgDeepBlue}
         colorTwo={Colors.vwgSkyBlue}
-        blink={odisChanged}
+        blink={blink}
       />
     </Touchable>
   );

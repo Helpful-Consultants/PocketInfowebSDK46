@@ -13,6 +13,14 @@ export const getOdisRequest = () => ({
   type: Types.GET_ODIS_REQUEST
 });
 
+export const incrementOdisViewCount = () => ({
+  type: Types.INCREMENT_ODIS_VIEW_COUNT
+});
+
+export const resetOdisViewCount = () => ({
+  type: Types.RESET_ODIS_VIEW_COUNT
+});
+
 export const getOdisSuccess = ({ items }) => ({
   type: Types.GET_ODIS_SUCCESS,
   payload: {
