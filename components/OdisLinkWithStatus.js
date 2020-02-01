@@ -78,7 +78,7 @@ export default function OdisLinkWithStatus(props) {
       auFromNow = moment(itemsObj.au.dateChanged).fromNow();
       //   console.log('!!!!! au fromNow', auFromNow);
       auAgeOfChange = now.diff(moment(itemsObj.au.dateChanged), 'minutes') || 0;
-      //   console.log('!!!!! au diff', auAgeOfChange);
+      console.log('!!!!! au diff', auAgeOfChange);
       if (auAgeOfChange > notificationLimit) {
         alertNeeded = true;
       }
@@ -150,7 +150,7 @@ export default function OdisLinkWithStatus(props) {
 
   //   console.log('odisChanged', odisChanged);
 
-  console.log('count', viewCount && viewCount, 'max', viewMax && viewMax);
+  //   console.log('count', viewCount && viewCount, 'max', viewMax && viewMax);
 
   //   const blink =
   //     (odisChanged && viewCount && viewMax && viewCount <= viewMax && true) ||
@@ -163,7 +163,11 @@ export default function OdisLinkWithStatus(props) {
         iconName={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
         iconType='ionicon'
         iconSize={iconSizeSmall}
-        text={'See latest ODIS versions'}
+        text={
+          blink === true
+            ? 'See current ODIS versions'
+            : 'See changed ODIS versions'
+        }
         colorOne={Colors.vwgDeepBlue}
         colorTwo={Colors.vwgSkyBlue}
         blink={blink}

@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import TabBarIcon from '../components/TabBarIcon';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import HomeScreen from '../screens/HomeScreen';
 import NewsScreen from '../screens/NewsScreen';
 import ProductsScreen from '../screens/ProductsScreen';
@@ -55,7 +56,12 @@ const NewsStack = createStackNavigator(
 NewsStack.navigationOptions = {
   initialRouteName: 'news',
   tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>News</Text>
+    <BadgedTabBarText
+      showBadge={true}
+      focused={focused}
+      text={'News'}
+      value={3}
+    />
   ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -81,7 +87,12 @@ const ProductsStack = createStackNavigator(
 ProductsStack.navigationOptions = {
   initialRouteName: 'Products',
   tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Products</Text>
+    <BadgedTabBarText
+      showBadge={false}
+      focused={focused}
+      text={'Products'}
+      value={3}
+    />
   ),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon

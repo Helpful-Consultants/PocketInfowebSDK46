@@ -8,20 +8,26 @@ import {
   View
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { Icon } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import moment from 'moment';
 // import AppLogoWithHeader from '../components/AppLogoWithHeader';
 import AppNameWithLogo from '../components/AppNameWithLogo';
-import VWGStyledText from '../components/VWGStyledText';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
+import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
 
 import { signOutUserRequest } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
-import { emptyDealerWipsRequest } from '../actions/dealerWips';
+import {
+  getDealerWipsRequest,
+  emptyDealerWipsRequest
+} from '../actions/dealerWips';
+import { getNewsRequest } from '../actions/news';
+import { getProductsRequest } from '../actions/products';
 
 const buttonColor = Colors.vwgDeepBlue;
 const buttonTextColor = Colors.vwgWhite;
@@ -51,22 +57,58 @@ export default HomeScreen = props => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const userBrand = useSelector(state => state.user.userBrand);
   const odisObj = useSelector(state => state.odis.odisData);
+  const lastUpdateNews = useSelector(state => state.news.lastUpdate);
+  const lastUpdateProducts = useSelector(state => state.products.lastUpdate);
+  const newsObj = useSelector(state => state.news);
+  const previousUpdateNews = useSelector(state => state.news.previousUpdate);
+  const dealerWipsItems = useSelector(
+    state => state.dealerWips.dealerWipsItems
+  );
   const odisViewCount = useSelector(state => state.odis.viewCount);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  const [wipsCount, setWipsCount] = useState(0);
+  const [bookedOutToolsCount, setBookedOutToolsCount] = useState(0);
+  const [ageOfNews, setAgeOfNews] = useState(0);
+  const [ageOfProducts, setAgeOfProducts] = useState(0);
 
-  const getItems = useCallback(async () => dispatch(getOdisRequest()), [
-    odisObj
-  ]);
+  //   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
+  //     odisObj
+  //   ]);
+  //   console.log('userDataObj', userDataObj && userDataObj);
+  //   const getWipsDataObj = {
+  //     dealerId:
+  //       (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+  //     intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+  //   };
+  //   console.log('getWipsDataObj', getWipsDataObj && getWipsDataObj);
+
+  const getAllItems = useCallback(async getWipsDataObj => {
+    // dispatch(getDealerWipsRequest(getWipsDataObj));
+    dispatch(getOdisRequest());
+    dispatch(getNewsRequest());
+    dispatch(getProductsRequest());
+  });
+
   //   console.log('IN HOME !!!!! brand', userBrand);
+  const notificationLimit = 168;
+  //   const notificationLimit = 5000000;
+  //   const notificationLimit = 8;
+
+  const now = moment();
+  //   console.log('date for now', now);
 
   useEffect(() => {
     // runs only once
     const getItemsAsync = async () => {
       //   console.log('in odis use effect');
       setIsRefreshNeeded(false);
-      getItems();
+      getAllItems();
     };
     if (isRefreshNeeded === true) {
+      //   console.log('getWipsDataObj', getWipsDataObj);
+      //   userDataObj &&
+      //     userDataObj.dealerId &&
+      //     userDataObj.intId &&
       getItemsAsync();
     }
   }, [isRefreshNeeded]);
@@ -93,6 +135,97 @@ export default HomeScreen = props => {
   //     }
   //   }, [userIsSignedIn, userError]);
 
+  useEffect(() => {
+    // console.log('news useEffect', lastUpdateNews);
+    if (lastUpdateNews && lastUpdateNews !== null) {
+      const lastUpdateString = lastUpdateNews.toString();
+      //   console.log('lastUpdateNews', lastUpdateString);
+      const last = moment(lastUpdateString, 'DD/MM/YYYY HH:mm:ss');
+      // const last = moment(lastUpdateNews.toString(), 'DD/MM/YYYY HH:mm:ss');
+      // const last = moment('31/01/2020 12:31:19', 'DD/MM/YYYY HH:mm:ss');
+      //   console.log('now', now);
+      //   console.log('last', last);
+
+      let newAgeOfNews = now.diff(moment(last), 'hours');
+      //   let fromNow = moment(last).fromNow();
+      //   console.log('news fromNow', fromNow);
+
+      // setAgeOfNews(newAgeOfNews);
+      //   console.log('news useEffect', last, now, newAgeOfNews);
+      setAgeOfNews(newAgeOfNews);
+    }
+  }, [lastUpdateNews]);
+
+  useEffect(() => {
+    // console.log('news useEffect', lastUpdateNews);
+    if (lastUpdateProducts && lastUpdateProducts !== null) {
+      const lastUpdateString = lastUpdateProducts.toString();
+      //   console.log('lastUpdateProducts', lastUpdateString);
+      const last = moment(lastUpdateString, 'DD/MM/YYYY HH:mm:ss');
+      // const last = moment(lastUpdateProducts.toString(), 'DD/MM/YYYY HH:mm:ss');
+      // const last = moment('31/01/2020 12:31:19', 'DD/MM/YYYY HH:mm:ss');
+      //   console.log('now', now);
+      //   console.log('last', last);
+
+      let newAgeOfProducts = now.diff(moment(last), 'hours');
+      //   let fromNow = moment(last).fromNow();
+      //   console.log('news fromNow', fromNow);
+
+      // setAgeOfNews(newAgeOfNews);
+      //   console.log('Products useEffect', last, now, newAgeOfProducts);
+      setAgeOfProducts(newAgeOfProducts);
+    }
+  }, [lastUpdateProducts]);
+
+  //   console.log('news', newsObj);
+
+  //   console.log('ageOfProducts', ageOfProducts);
+
+  useEffect(() => {
+    const userWipsItems =
+      (userDataObj &&
+        userDataObj.intId &&
+        dealerWipsItems &&
+        dealerWipsItems.length > 0 &&
+        dealerWipsItems.filter(
+          item =>
+            item.userIntId &&
+            item.userIntId.toString() == userDataObj.intId.toString()
+        )) ||
+      [];
+
+    setWipsCount((userWipsItems && userWipsItems.length) || 0);
+
+    const buildBookedOutToolsArrForJob = wip => {
+      const thisWipsToolsArr = wip.tools.map(tool => ({
+        ...tool,
+        wipNumber: wip.wipNumber,
+        wipId: wip.id.toString(),
+        wipCreatedDate: wip.createdDate
+      }));
+      return thisWipsToolsArr;
+    };
+    const buildBookedOutToolsArr = wips => {
+      let allToolsArr = [];
+
+      wips.forEach(wip => {
+        let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+        allToolsArr.push(...wipToolsArr);
+      });
+      allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+
+      return allToolsArr;
+    };
+
+    const bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
+    const bookedOutToolsCount =
+      (bookedOutToolItems && bookedOutToolItems.length) || 0;
+
+    setBookedOutToolsCount(
+      (bookedOutToolItems && bookedOutToolItems.length) || 0
+    );
+  }, [dealerWipsItems]);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -115,9 +248,7 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <VWGStyledText style={styles.gridCellText}>
-                    Find tools
-                  </VWGStyledText>
+                  <Text style={styles.gridCellText}>Find tools</Text>
                 </View>
               </Touchable>
               <Touchable
@@ -132,9 +263,16 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <VWGStyledText style={styles.gridCellText}>
-                    Jobs
-                  </VWGStyledText>
+                  <BadgedText
+                    showBadge={
+                      wipsCount &&
+                      typeof wipsCount === 'number' &&
+                      wipsCount > 0
+                    }
+                    focused={false}
+                    text={'Jobs'}
+                    value={wipsCount}
+                  />
                 </View>
               </Touchable>
             </View>
@@ -155,12 +293,20 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <VWGStyledText style={styles.gridCellText}>
-                    Booked tools
-                  </VWGStyledText>
-                  {/* <VWGStyledText style={styles.gridCellTextDisabledSmall}>
+                  <BadgedText
+                    showBadge={
+                      bookedOutToolsCount &&
+                      typeof bookedOutToolsCount === 'number' &&
+                      bookedOutToolsCount > 0
+                    }
+                    focused={false}
+                    text={'Booked tools'}
+                    value={bookedOutToolsCount}
+                  />
+
+                  {/* <Text style={styles.gridCellTextDisabledSmall}>
                     Coming soon..
-                  </VWGStyledText> */}
+                  </Text> */}
                 </View>
               </Touchable>
               <Touchable
@@ -175,7 +321,7 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <VWGStyledText style={styles.gridCellText}>LTP</VWGStyledText>
+                  <Text style={styles.gridCellText}>LTP</Text>
                 </View>
               </Touchable>
             </View>
@@ -191,9 +337,14 @@ export default HomeScreen = props => {
                     color={buttonTextColor}
                     size={iconSize}
                   />
-                  <VWGStyledText style={styles.gridCellText}>
-                    Products
-                  </VWGStyledText>
+                  <BadgedText
+                    showBadge={
+                      ageOfProducts && ageOfProducts < notificationLimit
+                    }
+                    focused={false}
+                    text={'Products'}
+                    value={'+'}
+                  />
                 </View>
               </Touchable>
               <Touchable
@@ -212,9 +363,12 @@ export default HomeScreen = props => {
                     size={iconSize}
                   />
 
-                  <VWGStyledText style={styles.gridCellText}>
-                    News
-                  </VWGStyledText>
+                  <BadgedText
+                    showBadge={ageOfNews && ageOfNews < notificationLimit}
+                    focused={false}
+                    text={'News'}
+                    value={'+'}
+                  />
                 </View>
               </Touchable>
             </View>
@@ -230,17 +384,18 @@ export default HomeScreen = props => {
 
           <View
             style={{
-              marginTop: 15
+              marginTop: 15,
+              marginHorizontal: 30
             }}
           >
-            <VWGStyledText style={styles.instructionsText}>
+            <Text style={styles.instructionsText}>
               {userIsSignedIn
                 ? `Signed in as ${userDataObj.userName}`
                 : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
-            </VWGStyledText>
-            <VWGStyledText style={styles.instructionsTextSmall}>
+            </Text>
+            <Text style={styles.instructionsTextSmall}>
               {userIsSignedIn ? `${userDataObj.dealerName}` : null}
-            </VWGStyledText>
+            </Text>
           </View>
           <Touchable
             style={{ marginTop: 0 }}
@@ -253,9 +408,7 @@ export default HomeScreen = props => {
                 size={20}
                 color={Colors.vwgDeepBlue}
               />
-              <VWGStyledText style={styles.signOutCellText}>
-                Sign out
-              </VWGStyledText>
+              <Text style={styles.signOutCellText}>Sign out</Text>
             </View>
           </Touchable>
         </View>
@@ -351,11 +504,13 @@ const styles = StyleSheet.create({
   gridCellText: {
     color: Colors.vwgWhite,
     // fontSize: 14,
+    fontFamily: 'the-sans',
     fontSize: RFPercentage(2.5),
 
     textAlign: 'center'
   },
   gridCellTextDisabledSmall: {
+    fontFamily: 'the-sans',
     color: Colors.vwgWhite,
     fontSize: 10,
 
