@@ -11,7 +11,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -89,18 +96,41 @@ export default function App(props) {
 }
 
 async function loadResourcesAsync() {
-  await Promise.all([
-    Asset.loadAsync([
-      require('./assets/images/tiw-app-logo-less-whitespace.png')
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Ionicons.font,
-      'the-sans': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Regular.ttf'),
-      'the-sans-bold': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf')
-    })
+  const imageAssets = cacheImages([
+    require('./assets/images/icon.png'),
+    require('./assets/images/splash.png'),
+    require('./assets/images/tiw-app-logo-less-whitespace.png'),
+    require('./assets/images/tiw-app-logo-trans.png'),
+    require('./assets/images/tiw-app-logo.png'),
+    require('./assets/images/audi-logo.png'),
+    require('./assets/images/cv-logo.png'),
+    require('./assets/images/seat-logo.png'),
+    require('./assets/images/skoda-logo.png'),
+    require('./assets/images/vw-logo.png'),
+    require('./assets/images/odis.jpg')
   ]);
+
+  const fontAssets = cacheFonts([
+    require('./assets/fonts/VWAGTheSans/VWAGTheSans-Regular.ttf'),
+    require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf')
+  ]);
+  //             'the-sans-bold': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf')]);
+  await Promise.all([...imageAssets, ...fontAssets]);
 }
+
+// async function loadResourcesAsync() {
+//     await Promise.all([
+//         Asset.loadAsync([
+//             require('./assets/images/tiw-app-logo-less-whitespace.png')
+//         ]),
+//         Font.loadAsync({
+//             // This is the font that we are using for our tab bar
+//             //   ...Ionicons.font,
+//             'the-sans': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Regular.ttf'),
+//             'the-sans-bold': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf')
+//         })
+//     ]);
+// }
 
 function handleLoadingError(error) {
   // In this case, you might want to report the error to your error reporting
