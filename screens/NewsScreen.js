@@ -147,6 +147,7 @@ export default NewsScreen = props => {
             items={filteredItems}
             pressOpenHandler={pressOpenHandler}
             baseImageUrl={Urls.newsHeadlineImage}
+            userIntId={userData && userData.intId}
           />
         </ScrollView>
       )}

@@ -156,6 +156,7 @@ export default ProductsScreen = props => {
             items={filteredItems}
             pressOpenHandler={pressOpenHandler}
             baseImageUrl={Urls.productsHeadlineImage}
+            userIntId={userData && userData.intId}
           />
         </ScrollView>
       )}
