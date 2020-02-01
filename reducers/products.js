@@ -3,6 +3,9 @@ import Types from '../constants/Types';
 
 const INITIAL_STATE = {
   productsItems: [],
+  viewCount: 0,
+  lastUpdate: null,
+  previousUpdate: null,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -23,14 +26,45 @@ export default function products(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_PRODUCTS_SUCCESS: {
+      //   console.log('action: ', action);
+      const newlastUpdate =
+        (action.payload.items &&
+          action.payload.items[0] &&
+          action.payload.items[0].lastUpdated &&
+          action.payload.items[0].lastUpdated) ||
+        null;
+      //   const newPreviousUpdated =
+      //     (state.previousUpdated &&
+      //       state.lastUpdated &&
+      //       state.previousUpdated !== newlastUpdated &&
+      //       state.lastUpdated) ||
+      //     null;
       return {
         ...state,
-        productsItems: action.payload.items,
+        productsItems: (action.payload.items && action.payload.items) || [],
+        previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
+        lastUpdate: newlastUpdate,
+        // lastUpdate: '31/01/2020 12:31:19',
         isLoading: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null
+      };
+    }
+    case Types.INCREMENT_PRODUCTS_VIEW_COUNT: {
+      //   console.log('in odis reducer increment view couunt ');
+      let oldViewCount = (state && state.viewCount) || 0;
+
+      return {
+        ...state,
+        viewCount: oldViewCount + 1
+      };
+    }
+    case Types.RESET_PRODUCTS_VIEW_COUNT: {
+      return {
+        ...state,
+        viewCount: 0
       };
     }
     case Types.PRODUCTS_ERROR: {
