@@ -11,6 +11,11 @@ import { useSelector } from 'react-redux';
 // } from 'react-navigation-drawer';
 import Constants from 'expo-constants';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import {
+//   getBrand,
+//   getVersion,
+//   getManufacturer
+// } from 'react-native-device-info';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignOutScreen from '../screens/SignOutScreen';
@@ -107,7 +112,12 @@ const DrawerContent = props => {
   const userDataObj = useSelector(state => state.user.userData[0]);
   const brandText =
     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
-  //   console.log('userBrand', userDataObj && userDataObj);
+  //   const deviceBrand = getBrand();
+  //   const appStoreVersion = getVersion();
+  //   const manufacturer = getManufacturer();
+  //   console.log('deviceBrand', deviceBrand && deviceBrand);
+  //   console.log('appStoreVersion', appStoreVersion && appStoreVersion);
+  //   console.log('dmanufacturer', manufacturer && manufacturer);
   //   console.log('userBrandText', brandText);
   return (
     <ScrollView style={styles.container}>
