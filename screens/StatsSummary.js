@@ -8,7 +8,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import Colors from '../constants/Colors';
 
-// import statsGrab from '../assets/images/content/stats.jpg';
+// import statsGrab from '../assets/images/stats.jpg';
 
 export default function StatsSummary(props) {
   //   console.log('props.statsItems');

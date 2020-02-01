@@ -6,7 +6,6 @@ import HTML from 'react-native-render-html';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Constants from 'expo-constants';
 import Colors from '../constants/Colors';
-// import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
 
 export default ErrorDetails = props => {
   const {

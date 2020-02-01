@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { StyleSheet, ScrollView, View } from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
-import vwLogo from '../assets/images/logos/vw-logo.png';
-import audiLogo from '../assets/images/logos/audi-logo.png';
-import skodaLogo from '../assets/images/logos/skoda-logo.png';
-import seatLogo from '../assets/images/logos/seat-logo.png';
-import cvLogo from '../assets/images/logos/cv-logo.png';
+import vwLogo from '../assets/images/vw-logo.png';
+import audiLogo from '../assets/images/audi-logo.png';
+import skodaLogo from '../assets/images/skoda-logo.png';
+import seatLogo from '../assets/images/seat-logo.png';
+import cvLogo from '../assets/images/cv-logo.png';
 
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
@@ -174,7 +174,7 @@ export default function OdisVersions(props) {
     <View style={styles.container}>
       <View style={styles.rowWithImage}>
         <Image
-          source={require('../assets/images/content/odis.jpg')}
+          source={require('../assets/images/odis.jpg')}
           style={styles.contentImage}
         />
       </View>

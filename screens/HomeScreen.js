@@ -13,7 +13,6 @@ import { Icon, Text } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import moment from 'moment';
-// import AppLogoWithHeader from '../components/AppLogoWithHeader';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
@@ -23,7 +22,7 @@ import { signOutUserRequest } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import {
-  getDealerWipsRequest,
+  //   getDealerWipsRequest,
   emptyDealerWipsRequest
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';

@@ -29,14 +29,14 @@ axios.defaults.withCredentials = true;
 // axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
 axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 
-const theme = {
-  colors: {
-    ...Platform.select({
-      default: colors.platform.android,
-      ios: colors.platform.ios
-    })
-  }
-};
+// const theme = {
+//   colors: {
+//     ...Platform.select({
+//       default: colors.platform.android,
+//       ios: colors.platform.ios
+//     })
+//   }
+// };
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -91,7 +91,7 @@ export default function App(props) {
 async function loadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
-      require('./assets/images/logos/tiw-app-logo-less-whitespace.png')
+      require('./assets/images/tiw-app-logo-less-whitespace.png')
     ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar

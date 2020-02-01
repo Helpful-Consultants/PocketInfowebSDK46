@@ -3,14 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
-// import appLogo from '../assets/images/logos/tiw-app-logo-trans.png';
+// import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
 export default AppNameWithLogo = () => {
   return (
     <View>
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/images/logos/tiw-app-logo-less-whitespace.png')}
+          source={require('../assets/images/tiw-app-logo-less-whitespace.png')}
           style={styles.appLogo}
         />
         <Text style={styles.appName}>Pocket Infoweb</Text>

@@ -5,21 +5,21 @@
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios"],
-    "version": "1.0.77",
+    "version": "1.0.84",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
-      "image": "./assets/images/splashNoText.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": ["assets/images/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "77",
+      "buildNumber": "84",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false

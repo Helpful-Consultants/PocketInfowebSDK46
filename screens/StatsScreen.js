@@ -12,7 +12,7 @@ import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
-// import statsGrab from '../assets/images/content/stats.jpg';
+// import statsGrab from '../assets/images/stats.jpg';
 
 export default StatsScreen = props => {
   const dispatch = useDispatch();

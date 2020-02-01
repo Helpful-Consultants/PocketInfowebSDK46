@@ -8,7 +8,7 @@ export default function getLogoTitle(props) {
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Image
-        source={require('../assets/images/logos/tiw-app-logo-trans.png')}
+        source={require('../assets/images/tiw-app-logo-trans.png')}
         style={{ width: 26, height: 26 }}
       />
       <Text
