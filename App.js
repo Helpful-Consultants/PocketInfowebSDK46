@@ -97,8 +97,7 @@ async function loadResourcesAsync() {
       // This is the font that we are using for our tab bar
       ...Ionicons.font,
       'the-sans': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Regular.ttf'),
-      'the-sans-bold': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf'),
-      'the-sans-light': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Light.ttf')
+      'the-sans-bold': require('./assets/fonts/VWAGTheSans/VWAGTheSans-Bold.ttf')
     })
   ]);
 }
