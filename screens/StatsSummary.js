@@ -53,7 +53,7 @@ export default function StatsSummary(props) {
     <View style={styles.container}>
       {userDataCount > 0 && statsDataCount > 0 ? (
         <View>
-          <View>
+          <View style={{ marginHorizontal: 30 }}>
             <Text style={styles.statsTitle}>App User</Text>
             <Text style={styles.statsText}>{userDataObj.userName}</Text>
             <Text style={styles.statsText}>{statsObj.userName}</Text>
