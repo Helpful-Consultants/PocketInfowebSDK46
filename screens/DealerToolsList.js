@@ -229,48 +229,48 @@ export default function DealerToolsList(props) {
           );
         }
       }
-    } else if (item.lastWIP && item.lastWIP.length > 0) {
-      //   console.log('item with last wip', item);
-      personObj = findLastBookedOutByFromTool(item);
-      personName = personObj.name;
-      personIntId = personObj.intId;
-      booked = true;
+      // } else if (item.lastWIP && item.lastWIP.length > 0) {
+      //   //   console.log('item with last wip', item);
+      //   personObj = findLastBookedOutByFromTool(item);
+      //   personName = personObj.name;
+      //   personIntId = personObj.intId;
+      //   booked = true;
 
-      if (personIntId === userIntId) {
-        bookedByUser = true;
-        // console.log('Matchhhhhhhhh', bookedByUser);
-        lastJobDetails = (
-          <Text
-            style={{
-              fontFamily: 'the-sans',
-              fontSize: RFPercentage(2.0),
-              color: Colors.vwgWarmRed,
-              fontWeight: '500'
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: 'the-sans-bold',
-                fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed,
-                fontWeight: '600'
-              }}
-            >{`Already booked out to you`}</Text>
-            {`, on job '${item.lastWIP}'`}
-          </Text>
-        );
-      } else {
-        lastJobDetails = (
-          <Text
-            style={{
-              fontFamily: 'the-sans',
-              fontSize: RFPercentage(2.0),
-              color: Colors.vwgWarmRed,
-              fontWeight: '500'
-            }}
-          >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
-        );
-      }
+      //   if (personIntId === userIntId) {
+      //     bookedByUser = true;
+      //     // console.log('Matchhhhhhhhh', bookedByUser);
+      //     lastJobDetails = (
+      //       <Text
+      //         style={{
+      //           fontFamily: 'the-sans',
+      //           fontSize: RFPercentage(2.0),
+      //           color: Colors.vwgWarmRed,
+      //           fontWeight: '500'
+      //         }}
+      //       >
+      //         <Text
+      //           style={{
+      //             fontFamily: 'the-sans-bold',
+      //             fontSize: RFPercentage(2.0),
+      //             color: Colors.vwgWarmRed,
+      //             fontWeight: '600'
+      //           }}
+      //         >{`Already booked out to you`}</Text>
+      //         {`, on job '${item.lastWIP}'`}
+      //       </Text>
+      //     );
+      //   } else {
+      //     lastJobDetails = (
+      //       <Text
+      //         style={{
+      //           fontFamily: 'the-sans',
+      //           fontSize: RFPercentage(2.0),
+      //           color: Colors.vwgWarmRed,
+      //           fontWeight: '500'
+      //         }}
+      //       >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
+      //     );
+      //   }
     }
 
     return item.loanToolNo ? (

@@ -156,17 +156,21 @@ export default FindToolsScreen = props => {
       (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
     intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
   };
-  // const getItems = useCallback(getDealerItemsDataObj => {
-  //   // console.log('in getItems', getDealerItemsDataObj);
-  //   dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
-  //   dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
-  //   dispatch(getLtpRequest()), [ltpItems];
-  // });
-  const getItems = useCallback(async getDealerItemsDataObj => {
-    // console.log('in getItems', getDealerItemsDataObj);
+  const getWipsItems = useCallback(getDealerItemsDataObj => {
+    // console.log('in getWipsItems', getDealerItemsDataObj);
+
+    dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
+  });
+  const getAllItems = useCallback(async getDealerItemsDataObj => {
+    console.log('in getAllItems');
     dispatch(getDealerToolsRequest(getDealerItemsDataObj));
     dispatch(getDealerWipsRequest(getDealerItemsDataObj));
     dispatch(getLtpRequest());
+  });
+
+  const getWipsDataObj = useCallback(async getDealerItemsDataObj => {
+    // console
+    dispatch(getDealerWipsRequest(getDealerItemsDataObj));
   });
 
   const saveToJob = useCallback(
@@ -187,10 +191,25 @@ export default FindToolsScreen = props => {
 
   useEffect(() => {
     // runs only once
-    // console.log('in tools use effect');
+    // console.log('in tools use effect for getAllItems');
     const getItemsAsync = async () => {
       setIsRefreshNeeded(false);
-      getItems(getDealerItemsDataObj);
+      //   console.log('in tools use effect, calling getAllItems');
+      getAllItems(getDealerItemsDataObj);
+    };
+    if (isRefreshNeeded === true) {
+      getItemsAsync();
+    }
+  }, []);
+
+  useEffect(() => {
+    // runs only once
+    // console.log('in tools use effect');
+    // console.log('in tools use effect for getWipsItems');
+    const getItemsAsync = async () => {
+      setIsRefreshNeeded(false);
+      //   console.log('in tools use effect, calling getWipsItems');
+      getWipsItems(getDealerItemsDataObj);
     };
     if (isRefreshNeeded === true) {
       getItemsAsync();
@@ -405,7 +424,8 @@ export default FindToolsScreen = props => {
   };
 
   const refreshRequestHandler = () => {
-    dealerId && getItems(getDealerItemsDataObj);
+    console.log('in refreshRequestHandler', dealerId && dealerId);
+    dealerId && getAllItems(getDealerItemsDataObj);
   };
 
   const saveToJobRequestHandler = () => {
@@ -456,6 +476,17 @@ export default FindToolsScreen = props => {
   );
   let filteredItems = allFilteredItems.slice(0, 100);
   //   console.log('filteredItems.length ', filteredItems.length);
+  if (filteredItems.length && filteredItems.length < 5) {
+    // console.log('filteredItems', filteredItems);
+  }
+
+  let specificTool =
+    combinedItems &&
+    combinedItems.filter(item => item.partNumber === '30 - 100');
+
+  if (specificTool && specificTool.length && specificTool.length < 5) {
+    // console.log('specificTools', specificTool);
+  }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },
