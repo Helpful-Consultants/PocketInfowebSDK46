@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.vwgDeepBlue
   },
   badgeNumber: {
-    fontSize: 8,
+    fontSize: RFPercentage(1.4),
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
     // paddingRight: 2
@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     color: Colors.vwgDeepBlue
   },
   badgeText: {
-    fontSize: 14,
+    fontSize: RFPercentage(1.7),
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0,
-    marginTop: -3.75,
+    marginTop: -1,
     marginRight: 0,
     color: Colors.vwgDeepBlue
   },
