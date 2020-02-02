@@ -141,6 +141,11 @@ const DrawerContent = props => {
             <Text
               style={styles.appVersion}
             >{`Build version ${Constants.manifest.version}`}</Text>
+            {Constants.manifest.releaseChannel ? (
+              <Text style={styles.appVersion}>
+                {Constants.manifest.releaseChannel}
+              </Text>
+            ) : null}
           </View>
         </View>
       </SafeAreaView>
