@@ -4,8 +4,10 @@
     "slug": "PocketInfoweb-Dev",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": ["ios"],
-    "version": "1.0.84",
+    "platforms": [
+      "ios"
+    ],
+    "version": "1.0.88",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -16,15 +18,19 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["assets/images/*"],
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "84",
+      "buildNumber": "88",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
       }
     },
-    "description": "Find your tools inventory."
+    "description": "Find your tools inventory.",
+    "githubUrl": "https://github.com/Helpful-Consultants/PocketInfowebReactNativeDev"
   }
 }
