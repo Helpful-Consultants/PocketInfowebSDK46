@@ -34,7 +34,7 @@ export default function OdisLinkWithStatus(props) {
   //   console.log('in odisstatus odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
-  const notificationLimit = 1;
+  const notificationLimit = 7;
   let odisChanged = false;
 
   const now = moment();
@@ -47,78 +47,184 @@ export default function OdisLinkWithStatus(props) {
     // );
     let alertNeeded = false;
 
-    if (itemObj.dateChanged) {
-      let fromNow = moment(itemObj.dateChanged).fromNow();
-      //   console.log('!!!!! fromNow', fromNow);
-      let ageOfChange = now.diff(moment(itemObj.dateChanged), 'days') || 0;
-      //   console.log('!!!!! diff', ageOfChange);
-      if (ageOfChange > notificationLimit) {
-        alertNeeded = true;
+    // console.log('in getOdisStatusForBrand', itemObj);
+
+    // console.log('alertNeeded', itemObj.brandCode, alertNeeded);
+
+    if (itemObj && itemObj.lastUpdated) {
+      //   auFromNow = moment(itemObj.dateChanged).fromNow();
+      //   console.log('in getOdisStatusForBrand', itemObj.lastUpdated);
+
+      if (
+        (itemObj.previousProductVersion &&
+          itemObj.previousProductVersion !== itemObj.productVersion) ||
+        (itemObj.previousMainFeatureVersion &&
+          itemObj.previousMainFeatureVersion !== itemObj.mainFeatureVersion) ||
+        (itemObj.previousDataVersion &&
+          itemObj.previousDataVersion !== itemObj.dataVersion)
+      ) {
+        // console.log(
+        //   'in getOdisStatusForBrand comparing dates',
+        //   itemObj.lastUpdated
+        // );
+        let dateOfChange = moment(itemObj.lastUpdated, 'DD/MM/YYYY HH:mm:ss');
+        // console.log('!!!!! dateOfChange', dateOfChange);
+        let ageOfChange = now.diff(moment(dateOfChange), 'days') || 0;
+        // console.log('!!!!! diff', ageOfChange);
+        if (ageOfChange <= notificationLimit) {
+          alertNeeded = true;
+          //   console.log('!!!!! alertNeeded', alertNeeded);
+        }
       }
     }
-    console.log('alertNeeded', itemObj.brand, alertNeeded);
     return alertNeeded;
   };
 
   const getOdisStatusForAllBrands = itemsObj => {
     // console.log('itemsObj', itemsObj);
-    let auFromNow = 0;
-    let cvFromNow = 0;
-    let seFromNow = 0;
-    let skFromNow = 0;
-    let vwFromNow = 0;
-    let auAgeOfChange = 0;
-    let cvAgeOfChange = 0;
-    let seAgeOfChange = 0;
-    let skAgeOfChange = 0;
-    let vwAgeOfChange = 0;
+    // let auFromNow = 0;
+    // let cvFromNow = 0;
+    // let seFromNow = 0;
+    // let skFromNow = 0;
+    // let vwFromNow = 0;
+
     let alertNeeded = false;
 
-    if (itemsObj.au && itemsObj.au.dateChanged) {
-      auFromNow = moment(itemsObj.au.dateChanged).fromNow();
-      //   console.log('!!!!! au fromNow', auFromNow);
-      auAgeOfChange = now.diff(moment(itemsObj.au.dateChanged), 'minutes') || 0;
-      console.log('!!!!! au diff', auAgeOfChange);
-      if (auAgeOfChange > notificationLimit) {
-        alertNeeded = true;
+    // console.log('in getOdisStatusForAllBrands itemsObj', itemsObj);
+
+    if (itemsObj.au && itemsObj.au.lastUpdated) {
+      //   auFromNow = moment(itemsObj.au.dateChanged).fromNow();
+
+      if (
+        (itemsObj.au.previousProductVersion &&
+          itemsObj.au.previousProductVersion !== itemsObj.au.productVersion) ||
+        (itemsObj.au.previousMainFeatureVersion &&
+          itemsObj.au.previousMainFeatureVersion !==
+            itemsObj.au.mainFeatureVersion) ||
+        (itemsObj.au.previousDataVersion &&
+          itemsObj.au.previousDataVersion !== itemsObj.au.dataVersion)
+      ) {
+        let auDateOfChange = moment(
+          itemsObj.au.lastUpdated,
+          'DD/MM/YYYY HH:mm:ss'
+        );
+        //   console.log('!!!!! auDateOfChange', auDateOfChange);
+        let auAgeOfChange = now.diff(moment(auDateOfChange), 'days') || 0;
+        //   console.log('!!!!! au diff', auAgeOfChange);
+        if (auAgeOfChange <= notificationLimit) {
+          alertNeeded = true;
+        }
       }
     }
-    if (itemsObj.cv && itemsObj.cv.dateChanged) {
-      cvFromNow = moment(itemsObj.cv.dateChanged).fromNow();
-      //   console.log('!!!!! cv fromNow', cvFromNow);
-      cvAgeOfChange = now.diff(moment(itemsObj.cv.dateChanged), 'minutes') || 0;
-      //   console.log('!!!!! cv diff', cvAgeOfChange);
-      if (cvAgeOfChange > notificationLimit) {
-        alertNeeded = true;
+    if (itemsObj.cv && itemsObj.cv.lastUpdated) {
+      //   cvFromNow = moment(itemsObj.cv.dateChanged).fromNow();
+
+      if (
+        (itemsObj.cv.previousProductVersion &&
+          itemsObj.cv.previousProductVersion !== itemsObj.cv.productVersion) ||
+        (itemsObj.cv.previousMainFeatureVersion &&
+          itemsObj.cv.previousMainFeatureVersion !==
+            itemsObj.cv.mainFeatureVersion) ||
+        (itemsObj.cv.previousDataVersion &&
+          itemsObj.cv.previousDataVersion !== itemsObj.cv.dataVersion)
+      ) {
+        let cvDateOfChange = moment(
+          itemsObj.cv.lastUpdated,
+          'DD/MM/YYYY HH:mm:ss'
+        );
+        //   console.log('!!!!! cvDateOfChange', cvDateOfChange);
+        let cvAgeOfChange = now.diff(moment(cvDateOfChange), 'days') || 0;
+        //   console.log('!!!!! cv diff', cvAgeOfChange);
+        if (cvAgeOfChange <= notificationLimit) {
+          alertNeeded = true;
+        }
       }
     }
-    if (itemsObj.se && itemsObj.se.dateChanged) {
-      seFromNow = moment(itemsObj.se.dateChanged).fromNow();
-      //   console.log('!!!!! se fromNow', seFromNow);
-      seAgeOfChange = now.diff(moment(itemsObj.se.dateChanged), 'minutes') || 0;
-      //   console.log('!!!!! se diff', seAgeOfChange);
-      if (seAgeOfChange > notificationLimit) {
-        alertNeeded = true;
+    if (itemsObj.se && itemsObj.se.lastUpdated) {
+      //   seFromNow = moment(itemsObj.se.dateChanged).fromNow();
+
+      if (
+        (itemsObj.se.previousProductVersion &&
+          itemsObj.se.previousProductVersion !== itemsObj.se.productVersion) ||
+        (itemsObj.se.previousMainFeatureVersion &&
+          itemsObj.se.previousMainFeatureVersion !==
+            itemsObj.se.mainFeatureVersion) ||
+        (itemsObj.se.previousDataVersion &&
+          itemsObj.se.previousDataVersion !== itemsObj.se.dataVersion)
+      ) {
+        let seDateOfChange = moment(
+          itemsObj.se.lastUpdated,
+          'DD/MM/YYYY HH:mm:ss'
+        );
+        //   console.log('!!!!! seDateOfChange', seDateOfChange);
+        let seAgeOfChange = now.diff(moment(seDateOfChange), 'days') || 0;
+        //   console.log('!!!!! se diff', seAgeOfChange);
+        if (seAgeOfChange <= notificationLimit) {
+          alertNeeded = true;
+        }
       }
     }
-    if (itemsObj.sk && itemsObj.sk.dateChanged) {
-      skFromNow = moment(itemsObj.sk.dateChanged).fromNow();
-      //   console.log('!!!!! sk fromNow', skFromNow);
-      skAgeOfChange = now.diff(moment(itemsObj.sk.dateChanged), 'minutes') || 0;
-      //   console.log('!!!!! sk diff', skAgeOfChange);
-      if (skAgeOfChange > notificationLimit) {
-        alertNeeded = true;
+    if (itemsObj.sk && itemsObj.sk.lastUpdated) {
+      //   skFromNow = moment(itemsObj.sk.dateChanged).fromNow();
+
+      if (
+        (itemsObj.sk.previousProductVersion &&
+          itemsObj.sk.previousProductVersion !== itemsObj.sk.productVersion) ||
+        (itemsObj.sk.previousMainFeatureVersion &&
+          itemsObj.sk.previousMainFeatureVersion !== sk.mainFeatureVersion) ||
+        (itemsObj.sk.previousDataVersion &&
+          itemsObj.sk.previousDataVersion !== sk.dataVersion)
+      ) {
+        let skDateOfChange = moment(
+          itemsObj.sk.lastUpdated,
+          'DD/MM/YYYY HH:mm:ss'
+        );
+        //   console.log('!!!!! skDateOfChange', skDateOfChange);
+        let skAgeOfChange = now.diff(moment(skDateOfChange), 'days') || 0;
+        //   console.log('!!!!! sk diff', skAgeOfChange);
+        if (skAgeOfChange <= notificationLimit) {
+          alertNeeded = true;
+        }
       }
     }
-    if (itemsObj.vw && itemsObj.vw.dateChanged) {
-      vwFromNow = moment(itemsObj.vw.dateChanged).fromNow();
-      //   console.log('!!!!! vw fromNow', vwFromNow);
-      vwAgeOfChange = now.diff(moment(itemsObj.vw.dateChanged), 'minutes') || 0;
-      //   console.log('!!!!! vw diff', vwAgeOfChange);
-      if (vwAgeOfChange > notificationLimit) {
-        alertNeeded = true;
+    if (itemsObj.vw && itemsObj.vw.lastUpdated) {
+      //   vwFromNow = moment(itemsObj.vw.dateChanged).fromNow();
+
+      if (
+        (itemsObj.vw.previousProductVersion &&
+          itemsObj.vw.previousProductVersion !== itemsObj.vw.productVersion) ||
+        (itemsObj.vw.previousMainFeatureVersion &&
+          itemsObj.vw.previousMainFeatureVersion !==
+            itemsObj.vw.mainFeatureVersion) ||
+        (itemsObj.vw.previousDataVersion &&
+          itemsObj.vw.previousDataVersion !== vw.dataVersion)
+      ) {
+        let vwDateOfChange = moment(
+          itemsObj.vw.lastUpdated,
+          'DD/MM/YYYY HH:mm:ss'
+        );
+        //   console.log('!!!!! vwDateOfChange', vwDateOfChange);
+        let vwAgeOfChange = now.diff(moment(vwDateOfChange), 'days') || 0;
+        //   console.log('!!!!! vw diff', vwAgeOfChange);
+        if (vwAgeOfChange <= notificationLimit) {
+          alertNeeded = true;
+        }
       }
     }
+    // if (itemsObj.vw && itemsObj.vw.lastUpdated) {
+    //   //   vwFromNow = moment(itemsObj.vw.dateChanged).fromNow();
+    //   let vwDateOfChange = moment(
+    //     itemsObj.vw.lastUpdated,
+    //     'DD/MM/YYYY HH:mm:ss'
+    //   );
+    //   //   console.log('!!!!! vwDateOfChange', vwDateOfChange);
+    //   let vwAgeOfChange = now.diff(moment(vwDateOfChange), 'days') || 0;
+    //   //   console.log('!!!!! vw diff', vwAgeOfChange);
+    //   if (vwAgeOfChange <= notificationLimit) {
+    //     alertNeeded = true;
+    //   }
+    // }
+
     // console.log('alertNeeded', alertNeeded);
 
     return alertNeeded;
@@ -155,7 +261,9 @@ export default function OdisLinkWithStatus(props) {
   //   const blink =
   //     (odisChanged && viewCount && viewMax && viewCount <= viewMax && true) ||
   //     false;
-  const blink = odisChanged || false;
+  let blink = odisChanged || false;
+  //   console.log('ODIS alert needed: ', blink);
+  //   blink = true;
 
   return (
     <Touchable onPress={() => navigation.navigate('Odis')}>
@@ -165,11 +273,12 @@ export default function OdisLinkWithStatus(props) {
         iconSize={iconSizeSmall}
         text={
           blink === true
-            ? 'See current ODIS versions'
-            : 'See changed ODIS versions'
+            ? 'See changed ODIS versions'
+            : 'See current ODIS versions'
         }
         colorOne={Colors.vwgDeepBlue}
         colorTwo={Colors.vwgSkyBlue}
+        fallbackColor={Colors.vwgCoolOrange}
         blink={blink}
       />
     </Touchable>

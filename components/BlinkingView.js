@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 //import react in our project
 import { View } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 //import all the components we needed
 
 export default class BlinkingView extends Component {
@@ -33,17 +34,14 @@ export default class BlinkingView extends Component {
           type={this.props.iconType}
           size={this.props.iconSize}
           color={
-            this.props.blink
-              ? this.state.showItem
-                ? this.props.colorOne
-                : this.props.colorTwo
-              : this.props.colorOne
+            this.props.blink ? this.props.fallbackColor : this.props.colorOne
           }
         />
         <Text> </Text>
         <Text
           style={{
-            paddingTop: 1,
+            paddingTop: RFPercentage(0.05),
+            fontSize: RFPercentage(2.5),
             color: this.props.blink
               ? this.state.showItem
                 ? this.props.colorOne

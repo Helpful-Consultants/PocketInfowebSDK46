@@ -13,6 +13,21 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
+const tempNumberBadgeTopMargin = RFPercentage(0.8);
+const numberBadgeTopMargin =
+  tempNumberBadgeTopMargin && 5 - tempNumberBadgeTopMargin;
+const tempNumberBadgeRightMargin = RFPercentage(4);
+const numberBadgeRightMargin =
+  tempNumberBadgeRightMargin && 0 - tempNumberBadgeRightMargin;
+const tempLargeNumberBadgeRightMargin = RFPercentage(4.5);
+const largeNumberBadgeRightMargin =
+  tempNumberBadgeRightMargin && 0 - tempLargeNumberBadgeRightMargin;
+
+const tempTextBadgeTopMargin = RFPercentage(0.7);
+const textBadgeTopMargin = tempTextBadgeTopMargin && 1 + tempTextBadgeTopMargin;
+const tempTextBadgeRightMargin = RFPercentage(2);
+const textBadgeRightMargin =
+  tempTextBadgeRightMargin && 0 - tempTextBadgeRightMargin;
 
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth);
@@ -36,18 +51,43 @@ export default function BadgedText(props) {
   const valueIsNumeric = value && typeof value === 'number';
   //   console.log('&&&&&& isNumeric', valueIsNumeric);
 
+  //   console.log('tempTextBadgeTopMargin', tempTextBadgeTopMargin);
+  //   console.log('textBadgeTopMargin', textBadgeTopMargin);
+  //   console.log('tempTextBadgeRightMargin', tempTextBadgeRightMargin);
+  //   console.log('textBadgeRightMargin', textBadgeRightMargin);
+
   return (
     <View
-      style={showBadge && showBadge === true ? styles.paddedView : styles.view}
+      style={
+        showBadge && showBadge === true
+          ? valueIsNumeric
+            ? styles.viewWithNumberBadge
+            : styles.viewWithTextBadge
+          : styles.view
+      }
     >
       <Text style={styles.text}>{text}</Text>
       {showBadge ? (
         <Badge
           value={value}
-          containerStyle={styles.badgeContainer}
+          containerStyle={
+            valueIsNumeric
+              ? value > 9
+                ? styles.largeNumberBadgeContainer
+                : styles.numberBadgeContainer
+              : styles.textBadgeContainer
+          }
           status={statusB}
-          badgeStyle={styles.badge}
-          textStyle={valueIsNumeric ? styles.badgeNumber : styles.badgeText}
+          badgeStyle={
+            valueIsNumeric
+              ? value > 9
+                ? styles.largeNumberBadge
+                : styles.numberBadge
+              : styles.textBadge
+          }
+          textStyle={
+            valueIsNumeric ? styles.numberBadgeText : styles.textBadgeText
+          }
         />
       ) : null}
     </View>
@@ -56,52 +96,97 @@ export default function BadgedText(props) {
 
 const styles = StyleSheet.create({
   view: {},
-  paddedView: {
-    marginRight: 13
+  viewWithNumberBadge: {
+    // marginRight: 13
+    marginRight: RFPercentage(4.5)
   },
-  badge: {
-    // borderRadius: 12,
-    height: 12,
+  viewWithTextBadge: {
+    // marginRight: 13
+    marginRight: RFPercentage(2.5)
+  },
+  numberBadge: {
+    borderRadius: RFPercentage(1),
+    borderWidth: 1,
+    height: RFPercentage(3.5),
     minWidth: 0,
-    width: 12,
+    width: RFPercentage(3.5),
+    backgroundColor: Colors.vwgDeepBlue,
+    borderColor: Colors.vwgWhite
+  },
+  largeNumberBadge: {
+    borderRadius: RFPercentage(1),
+    borderWidth: 1,
+    height: RFPercentage(3.5),
+    minWidth: 0,
+    width: RFPercentage(4.0),
+    backgroundColor: Colors.vwgDeepBlue,
+    borderColor: Colors.vwgWhite
+  },
+  textBadge: {
+    // borderRadius: 0,
+    height: RFPercentage(1.6),
+    minWidth: 0,
+    width: RFPercentage(1.6),
     // backgroundColor: Colors.vwgDeepBlue
-    backgroundColor: Colors.vwgWhite
+    backgroundColor: Colors.vwgCoolOrange,
+    borderColor: Colors.vwgCoolOrange
   },
   text: {
     color: Colors.vwgWhite,
     // fontSize: 14,
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.5),
-
+    zIndex: +10,
     textAlign: 'center'
   },
-  badgeContainer: {
+  numberBadgeContainer: {
     position: 'absolute',
-    top: -1,
-    right: -15,
+    top: numberBadgeTopMargin,
+    right: numberBadgeRightMargin,
+    // right: -26,
     alignItems: 'center',
     justifyContent: 'center'
     // backgroundColor: Colors.vwgDeepBlue
   },
-  badgeNumber: {
-    fontSize: RFPercentage(1.4),
-    fontFamily: 'the-sans-bold',
-    textAlign: 'center',
-    // paddingRight: 2
-    paddingHorizontal: 0,
-    marginTop: 0,
-    marginRight: 0,
-    color: Colors.vwgDeepBlue
+  largeNumberBadgeContainer: {
+    position: 'absolute',
+    top: numberBadgeTopMargin,
+    right: largeNumberBadgeRightMargin,
+    // right: -26,
+    alignItems: 'center',
+    justifyContent: 'center'
+    // backgroundColor: Colors.vwgDeepBlue
   },
-  badgeText: {
-    fontSize: RFPercentage(1.7),
+  textBadgeContainer: {
+    position: 'absolute',
+    // top: 1,
+    // right: -8,
+    // zIndex: -10,
+    top: textBadgeTopMargin,
+    right: textBadgeRightMargin,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.vwgDeepBlue
+  },
+  numberBadgeText: {
+    fontSize: RFPercentage(2.4),
+    fontFamily: 'the-sans',
+    textAlign: 'center',
+    // paddingRight: 2
+    paddingHorizontal: 0,
+    marginTop: RFPercentage(0.05),
+    marginRight: 0,
+    color: Colors.vwgWhite
+  },
+  textBadgeText: {
+    fontSize: 1,
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0,
-    marginTop: -1,
+    marginTop: -5,
     marginRight: 0,
-    color: Colors.vwgDeepBlue
+    color: Colors.vwgCoolOrange
   },
   focused: {
     fontFamily: 'the-sans',
