@@ -149,7 +149,9 @@ export default FindToolsScreen = props => {
     // console.log('in getAllItems');
     dispatch(getDealerToolsRequest(getDealerItemsDataObj));
     dispatch(getDealerWipsRequest(getDealerItemsDataObj));
-    dispatch(getLtpRequest());
+    if (!ltpItems || ltpItems.length === 0) {
+      dispatch(getLtpRequest());
+    }
   });
 
   const getWipsDataObj = useCallback(async getDealerItemsDataObj => {
@@ -161,6 +163,7 @@ export default FindToolsScreen = props => {
     payload => dispatch(createDealerWipRequest(payload)),
     [dealerWipsItems]
   );
+
   useEffect(() => {
     let bookedToolsList = [];
 
