@@ -39,7 +39,6 @@ export default function ltp(state = INITIAL_STATE, action) {
     case Types.LTP_ERROR: {
       return {
         ...state,
-        ltpItems: [],
         isLoading: false,
         error: (action.payload.error && action.payload.error) || null,
         statusCode:
