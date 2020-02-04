@@ -146,7 +146,7 @@ export default FindToolsScreen = props => {
     dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
   });
   const getAllItems = useCallback(async getDealerItemsDataObj => {
-    console.log('in getAllItems');
+    // console.log('in getAllItems');
     dispatch(getDealerToolsRequest(getDealerItemsDataObj));
     dispatch(getDealerWipsRequest(getDealerItemsDataObj));
     dispatch(getLtpRequest());
@@ -212,7 +212,6 @@ export default FindToolsScreen = props => {
 
   useEffect(() => {
     // runs only once
-    // console.log('in tools use effect');
     if (dataErrorTools) {
       setDataErrorAny(dataErrorTools);
       setDataStatusCodeAny(dataStatusCodeTools);
@@ -239,7 +238,7 @@ export default FindToolsScreen = props => {
       setDataErrorSummary('No tools fetched from web server');
       setDataNameInPlay('tools');
     } else if (ltpItems && ltpItems.length === 0) {
-      //   console.log('empty ltp items');
+      //   console.log('empty ltp items', ltpItems);
       setDataErrorAny('The LTP list should not be empty');
       setDataStatusCodeAny(dataStatusCodeLtp);
       setDataErrorUrlAny('');
