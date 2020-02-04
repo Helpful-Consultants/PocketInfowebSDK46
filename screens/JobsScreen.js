@@ -99,8 +99,9 @@ export default JobsScreen = props => {
   useEffect(() => {
     // runs only once
     // console.log('in jobs use effect', isRefreshNeeded);
-    setIsRefreshNeeded(false);
+
     const getItemsAsync = async () => {
+      setIsRefreshNeeded(false);
       getItems(getWipsDataObj);
     };
     if (isRefreshNeeded === true) {
