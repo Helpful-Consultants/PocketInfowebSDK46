@@ -254,7 +254,7 @@ export default FindToolsScreen = props => {
       setDataErrorSummary('');
       setDataNameInPlay('');
     }
-  }, [dataErrorTools, dataErrorWips, dataErrorLtp]);
+  }, [dataErrorTools, dataErrorWips, dataErrorLtp, dealerToolsItems, ltpItems]);
 
   useEffect(() => {
     // console.log('getting unique LTP items', ltpItems && ltpItems.length);
