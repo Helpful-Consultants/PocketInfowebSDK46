@@ -15,8 +15,6 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { createFilter } from 'react-native-search-filter';
-
-// import { Base64 } from 'js-base64';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 
@@ -44,20 +42,6 @@ const KEYS_TO_FILTERS = [
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 // console.log('bottomTabHeight', bottomTabHeight && bottomTabHeight);
-
-// const appCode = month => Base64.encode(month);
-// console.log('appCode for January is ', appCode('January'));
-// console.log('appCode for February is ', appCode('February'));
-// console.log('appCode for March is ', appCode('March'));
-// console.log('appCode for April is ', appCode('April'));
-// console.log('appCode for May is ', appCode('May'));
-// console.log('appCode for June is ', appCode('June'));
-// console.log('appCode for July is ', appCode('July'));
-// console.log('appCode for August is ', appCode('August'));
-// console.log('appCode for September is ', appCode('September'));
-// console.log('appCode for October is ', appCode('October'));
-// console.log('appCode for November is ', appCode('November'));
-// console.log('appCode for December is ', appCode('December'));
 
 const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
