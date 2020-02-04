@@ -41,7 +41,7 @@ export default function stats(state = INITIAL_STATE, action) {
       console.log('action.payload ends');
       return {
         ...state,
-        statsItems: [],
+        // statsItems: [],
         isLoading: false,
         error: (action.payload.error && action.payload.error) || null,
         statusCode:
