@@ -99,9 +99,9 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.DEALER_WIPS_ERROR: {
-      console.log('action.payload starts');
-      console.log(action.payload);
-      console.log('action.payload ends');
+      //   console.log('action.payload starts');
+      //   console.log(action.payload);
+      //   console.log('action.payload ends');
       return {
         ...state,
         lastWipProcessed: {},

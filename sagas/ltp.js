@@ -26,7 +26,7 @@ function* getLtp() {
       );
     } else {
       console.log(
-        'in ltp saga - bad 200',
+        'in ltp saga - bad 200 - empty',
         result.request.status && result.request.status
       );
       //   console.log(result);
