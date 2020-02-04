@@ -22,6 +22,7 @@ import SignOutScreen from '../screens/SignOutScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
+import AppInfo from '../components/AppInfo';
 // import StatsScreen from '../screens/StatsScreen';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
@@ -109,44 +110,12 @@ const SignedOutStack = createStackNavigator({
 // });
 
 const DrawerContent = props => {
-  const userDataObj = useSelector(state => state.user.userData[0]);
-  const brandText =
-    (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
-  //   const deviceBrand = getBrand();
-  //   const appStoreVersion = getVersion();
-  //   const manufacturer = getManufacturer();
-  //   console.log('deviceBrand', deviceBrand && deviceBrand);
-  //   console.log('appStoreVersion', appStoreVersion && appStoreVersion);
-  //   console.log('dmanufacturer', manufacturer && manufacturer);
-  //   console.log('userBrandText', brandText);
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
         <View style={styles.stretched}>
           <DrawerItems {...props} />
-          <View style={styles.footerContainer}>
-            <Text style={styles.appName}>{Constants.manifest.name}</Text>
-            {userDataObj && userDataObj.userName ? (
-              <Text style={styles.brand}>{userDataObj.userName}</Text>
-            ) : null}
-            <Text style={styles.brand}>{brandText}</Text>
-            {Constants && Constants.deviceName ? (
-              <Text style={styles.deviceVersion}>
-                {Platform && Platform.OS && Platform.Version ? (
-                  <Text>{`${Platform.constants.systemName} v${Platform.Version}`}</Text>
-                ) : null}
-              </Text>
-            ) : null}
-
-            <Text
-              style={styles.appVersion}
-            >{`Build version ${Constants.manifest.version}`}</Text>
-            {Constants.manifest.releaseChannel ? (
-              <Text style={styles.appVersion}>
-                {Constants.manifest.releaseChannel}
-              </Text>
-            ) : null}
-          </View>
+          <AppInfo />
         </View>
       </SafeAreaView>
     </ScrollView>
