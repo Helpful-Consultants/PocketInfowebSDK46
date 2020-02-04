@@ -53,7 +53,7 @@ export default function OdisVersions(props) {
           <Text style={styles.odisVersionText}>
             {item.previousProductVersion &&
             item.previousProductVersion !== item.productVersion ? (
-              <Text style={styles.odisVersionTextHiglighted}>
+              <Text style={styles.odisVersionTextHighlighted}>
                 {`Product: ${item.productVersion}`}
                 <Text style={styles.odisVersionText}>
                   {` (from ${item.previousProductVersion})`}
@@ -69,7 +69,7 @@ export default function OdisVersions(props) {
           <Text style={styles.odisVersionText}>
             {item.previousMainFeatureVersion &&
             item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
-              <Text style={styles.odisVersionTextHiglighted}>
+              <Text style={styles.odisVersionTextHighlighted}>
                 {`Main feature: ${item.mainFeatureVersion}`}
                 <Text style={styles.odisVersionText}>
                   {` (from ${item.previousMainFeatureVersion})`}
@@ -84,7 +84,7 @@ export default function OdisVersions(props) {
           <Text style={styles.odisVersionText}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
-              <Text style={styles.odisVersionTextHiglighted}>
+              <Text style={styles.odisVersionTextHighlighted}>
                 {`Data: ${item.dataVersion}`}
                 <Text style={styles.odisVersionText}>
                   {` (from ${item.previousDataVersion})`}
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.1),
     color: Colors.vwgVeryDarkGray
   },
-  odisVersionTextHiglighted: {
+  odisVersionTextHighlighted: {
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(2.1),
     color: Colors.vwgCoolOrange
