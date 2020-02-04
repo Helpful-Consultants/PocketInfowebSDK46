@@ -1,3 +1,4 @@
+// import React, { useEffect } from 'react';
 import React from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
@@ -17,6 +18,13 @@ export default function NewsLinks(props) {
   // console.log('start newsDummyData');
   // console.log(newsDummyData);
   //   console.log('in NewsLinks ', props.baseImageUrl);
+  //   const notificationLimit = 0;
+  //   const now = moment();
+  //   useEffect(() => {
+  //     // runs only once
+  //     const notificationLimit = 168;
+
+  //   }, []);
 
   const amendLink = rawLink => {
     //   console.log('rawLink', rawLink);
@@ -53,7 +61,8 @@ export default function NewsLinks(props) {
       return rawLink;
     }
   };
-
+  //   console.log('notificationLimit', notificationLimit);
+  //   console.log('now', now);
   return (
     <View>
       {items && items.length > 0 ? (
