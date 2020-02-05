@@ -25,7 +25,7 @@ export default AppInfo = props => {
             <Text>
               {`${Platform.constants.systemName} v${Platform.Version}`}
               {Constants.nativeBuildVersion
-                ? ` ${Constants.nativeBuildVersion} (Store)`
+                ? ` Store v${Constants.nativeBuildVersion}`
                 : null}
             </Text>
           ) : null}
@@ -33,12 +33,10 @@ export default AppInfo = props => {
       ) : null}
 
       <Text style={styles.appVersion}>
-        Build
-        {Constants.manifest.nativeAppVersion
-          ? ` ${Constants.manifest.nativeAppVersion} (Native) `
-          : null}
+        {`Build `}
+        {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
-          ? ` ${Constants.manifest.version} (OTA)`
+          ? `${Constants.manifest.version} OTA`
           : null}
         {Constants.manifest.releaseChannel
           ? Constants.manifest.releaseChannel
@@ -48,7 +46,7 @@ export default AppInfo = props => {
             : null
           : null}
       </Text>
-      <Text style={styles.appVersion}>Test A.23</Text>
+      <Text style={styles.appVersion}>Test B.7</Text>
     </View>
   );
 };
