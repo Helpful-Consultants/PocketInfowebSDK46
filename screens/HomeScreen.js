@@ -329,11 +329,6 @@ export default HomeScreen = props => {
 
               <Text style={styles.loadingText}>Updating...</Text>
             </View>
-          ) : isLoadingAny ? (
-            <View style={styles.loadingMessage}>
-              <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
-              <Text style={styles.loadingText}>Syncing your data...</Text>
-            </View>
           ) : (
             <View>
               <View>
@@ -463,6 +458,31 @@ export default HomeScreen = props => {
                   viewMax={5}
                 />
               </View>
+              <View style={styles.loadingMessage}>
+                {shouldCheckAppVersion ? ( //prod mode isCheckingAppVersion =
+                  true ? (
+                    <Text style={styles.checkingText}>
+                      Checking you have the latest app version...
+                    </Text>
+                  ) : isLoadingAny ? (
+                    <Text style={styles.checkingText}>
+                      Syncing your data...
+                    </Text>
+                  ) : (
+                    // dummy to keep layout
+                    <Text style={styles.dummyCheckingText}>
+                      This should be white (i.e. invisible)...
+                    </Text>
+                  )
+                ) : isLoadingAny ? ( //dev mode - no OTA app refressh
+                  <Text style={styles.checkingText}>Syncing your data...</Text>
+                ) : (
+                  // dummy to keep layout
+                  <Text style={styles.dummyCheckingText}>
+                    This should be white (i.e. invisible)...
+                  </Text>
+                )}
+              </View>
               <View
                 style={{
                   marginTop: 15,
@@ -494,23 +514,7 @@ export default HomeScreen = props => {
               </Touchable>
             </View>
           )}
-          {shouldCheckAppVersion ? (
-            isUpdatingAppVersion === true ? (
-              <View>
-                <Text style={styles.checkingText}>App version checked.</Text>
-              </View>
-            ) : isCheckingAppVersion === true ? (
-              <View>
-                <Text style={styles.checkingText}>Checking app version...</Text>
-              </View>
-            ) : (
-              <View>
-                <Text style={styles.dummyCheckingText}>
-                  Not checking app version...
-                </Text>
-              </View>
-            )
-          ) : null}
+
           {/* <View>
             <Text style={styles.checkingText}>
               Time:{' '}
@@ -546,7 +550,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   loadingMessage: {
-    marginTop: 50,
+    marginTop: 5,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
