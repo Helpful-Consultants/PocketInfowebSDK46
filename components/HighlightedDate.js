@@ -5,60 +5,59 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
 import Colors from '../constants/Colors';
 
-export default function HighlightedText(props) {
-  const { item, now } = props;
+export default HighlightedText = props => {
+  const { item, now, notificationLimit } = props;
+  const notificationLimitToUse = notificationLimit || 7;
 
-  //   console.log(item);
+  let itemDate = null;
+  let highlight = false;
 
-  let dateCreated =
-    item &&
-    item.createdDate &&
-    item.createdDate.length > 0 &&
-    moment(item.createdDate, 'DD/MM/YYYY HH:mm:ss');
+  if (item && item.lastUpdated && item.lastUpdated.length > 0) {
+    itemDate = moment(item.lastUpdated, 'DD/MM/YYYY HH:mm:ss');
+  } else if (item && item.createdDate && item.createdDate.length > 0) {
+    itemDate = moment(item.createdDate, 'DD/MM/YYYY HH:mm:ss');
+  }
 
-  let dateUpdated =
-    item &&
-    item.lastUpdated &&
-    item.lastUpdated.length > 0 &&
-    moment(item.lastUpdated, 'DD/MM/YYYY HH:mm:ss');
+  let ageOfChange = (now && now.diff(moment(itemDate), 'days')) || 0;
+  if (ageOfChange <= notificationLimitToUse) {
+    highlight = true;
+    //   console.log('!!!!! alertNeeded', alertNeeded);
+  }
 
-  console.log(dateCreated);
-  console.log(dateUpdated);
+  //   console.log('ageOfChange ', ageOfChange, highlight);
+  //   console.log(
+  //     itemDate &&
+  //       'itemDate ' +
+  //         moment(itemDate, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')
+  //   );
+  //   console.log(
+  //     now && 'now ' + moment(now, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')
+  //   );
+  //   console.log('ageOfChange ', ageOfChange);
+  //   console.log(dateUpdated);
+  const displayDate =
+    (itemDate &&
+      moment(itemDate, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')) ||
+    null;
 
-  return (
-    <HighlightedText>
-      <Text style={styles.itemLastUpdated}>
-        {item && item.createdDate && item.createdDate.length > 0
-          ? item && item.lastUpdated && item.lastUpdated.length > 0
-            ? `${moment(item.lastUpdated, 'DD/MM/YYYY hh:mm:ss').format(
-                'Do MMM YYYY'
-              )}`
-            : `${moment(item.createdDate, 'DD/MM/YYYY hh:mm:ss').format(
-                'Do MMM YYYY'
-              ) || null}`
-          : null}
-      </Text>
-    </HighlightedText>
+  return ageOfChange && ageOfChange <= 7 ? (
+    <Text style={styles.dateHighlighted}>{displayDate}</Text>
+  ) : (
+    <Text style={styles.date}>{displayDate}</Text>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  itemLastUpdated: {
+  date: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.6),
+    fontSize: RFPercentage(1.8),
     color: Colors.vwgDarkGray,
     paddingTop: 5
-    // marginRight: 20,
-    // borderColor: 'orange',
-    // borderWidth: 1
   },
-  itemLastUpdatedHighlighted: {
+  dateHighlighted: {
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.6),
+    fontSize: RFPercentage(1.8),
     color: Colors.vwgCoolOrange,
     paddingTop: 5
-    // marginRight: 20,
-    // borderColor: 'orange',
-    // borderWidth: 1
   }
 });

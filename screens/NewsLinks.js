@@ -5,26 +5,18 @@ import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import { Base64 } from 'js-base64';
 import ScaledImage from '../components/ScaledImage';
+import HighlightedDate from '../components/HighlightedDate';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 
 const appCode = Base64.encode(moment().format('MMMM'));
 // console.log('appCode is ', appCode);
+const notificationLimit = 7;
 
 export default function NewsLinks(props) {
   // console.log(props.items);
   const { items, userIntId } = props;
-  //   const items = newsDummyData || [];
-  // console.log('start newsDummyData');
-  // console.log(newsDummyData);
-  //   console.log('in NewsLinks ', props.baseImageUrl);
-  //   const notificationLimit = 0;
-  //   const now = moment();
-  //   useEffect(() => {
-  //     // runs only once
-  //     const notificationLimit = 168;
-
-  //   }, []);
+  let now = moment();
 
   const amendLink = rawLink => {
     //   console.log('rawLink', rawLink);
@@ -61,8 +53,7 @@ export default function NewsLinks(props) {
       return rawLink;
     }
   };
-  //   console.log('notificationLimit', notificationLimit);
-  //   console.log('now', now);
+
   return (
     <View>
       {items && items.length > 0 ? (
@@ -80,17 +71,11 @@ export default function NewsLinks(props) {
                   />
                   <View style={styles.itemTitleContainer}>
                     <Text style={styles.itemTitle}>{item.headline}</Text>
-                    <Text style={styles.itemLastUpdated}>
-                      {item.lastUpdated && item.lastUpdated.length > 0
-                        ? `${moment(
-                            item.lastUpdated,
-                            'DD/MM/YYYY hh:mm:ss'
-                          ).format('Do MMM YYYY')}`
-                        : `${moment(
-                            item.createdDate,
-                            'DD/MM/YYYY hh:mm:ss'
-                          ).format('Do MMM YYYY') || null}`}
-                    </Text>
+                    <HighlightedDate
+                      item={item}
+                      now={now}
+                      notificationLimit={notificationLimit}
+                    />
                   </View>
                 </View>
                 <View style={styles.itemMainRow}>
@@ -119,11 +104,8 @@ const styles = StyleSheet.create({
   },
   itemTopRow: {
     flexDirection: 'row',
-    // minHeight: 200,
     marginHorizontal: 0,
     marginBottom: 10
-    // borderColor: 'teal',
-    // borderWidth: 1
   },
   itemTitleContainer: {
     width: '70%',
@@ -136,29 +118,14 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.2),
     fontWeight: '600',
     color: Colors.vwgIosLink
-
-    // borderColor: 'orange',
-    // borderWidth: 1
-  },
-  itemLastUpdated: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.6),
-    color: Colors.vwgDarkGray,
-    paddingTop: 5
-    // marginRight: 20,
-    // borderColor: 'orange',
-    // borderWidth: 1
   },
   itemMainRow: {
     fontSize: RFPercentage(1.8)
-    // borderColor: 'yellow',
-    // borderWidth: 1
   },
   itemMainText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'justify',
     color: Colors.vwgVeryDarkGray
-    // borderWidth: 1
   }
 });
