@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { Updates } from 'expo';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  ActivityIndicator,
   Dimensions,
   Platform,
   ScrollView,
@@ -22,7 +24,7 @@ import { signOutUserRequest } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import {
-  //   getDealerWipsRequest,
+  getDealerWipsRequest,
   emptyDealerWipsRequest
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
@@ -64,25 +66,38 @@ export default HomeScreen = props => {
     state => state.dealerWips.dealerWipsItems
   );
   const odisViewCount = useSelector(state => state.odis.viewCount);
+
+  const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
+  const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
+  const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
+  const [timeCheckedAppVersion, setTimeCheckedAppVersion] = useState(null);
+  const [isAppUpdated, setIsAppUpdated] = useState(false);
+  const [showReloadDialogue, setShowReloadDialogue] = useState(false);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [wipsCount, setWipsCount] = useState(0);
   const [bookedOutToolsCount, setBookedOutToolsCount] = useState(0);
   const [ageOfNews, setAgeOfNews] = useState(0);
   const [ageOfProducts, setAgeOfProducts] = useState(0);
 
+  const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
+  const isLoadingOdis = useSelector(state => state.odis.isLoading);
+  const isLoadingNews = useSelector(state => state.news.isLoading);
+  const isLoadingProducts = useSelector(state => state.products.isLoading);
+
   //   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
   //     odisObj
   //   ]);
   //   console.log('userDataObj', userDataObj && userDataObj);
-  //   const getWipsDataObj = {
-  //     dealerId:
-  //       (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-  //     intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-  //   };
+  const getWipsDataObj = {
+    dealerId:
+      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+  };
   //   console.log('getWipsDataObj', getWipsDataObj && getWipsDataObj);
 
   const getAllItems = useCallback(async getWipsDataObj => {
-    // dispatch(getDealerWipsRequest(getWipsDataObj));
+    dispatch(getDealerWipsRequest(getWipsDataObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
     dispatch(getProductsRequest());
@@ -94,21 +109,92 @@ export default HomeScreen = props => {
   //   const notificationLimit = 8;
 
   const now = moment();
-  //   console.log('date for now', now);
 
   useEffect(() => {
     // runs only once
+    // console.log('in tools use effect');
+    if (isLoadingOdis || isLoadingNews || isLoadingWips || isLoadingProducts) {
+      setIsLoadingAny(true);
+    } else {
+      setIsLoadingAny(false);
+    }
+  }, [isLoadingOdis, isLoadingNews, isLoadingWips, isLoadingProducts]);
+
+  useEffect(() => {
     const getItemsAsync = async () => {
-      //   console.log('in odis use effect');
+      console.log('in home screen getItemsAsync,', __DEV__);
+
+      getAllItems(getWipsDataObj);
+      console.log('in home screen getItemsAsync called getAllItems');
       setIsRefreshNeeded(false);
-      getAllItems();
     };
+    // const listener = event => {
+    //   if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
+    //     setShowReloadDialogue(true);
+
+    //     Updates.reloadFromCache();
+    //   }
+    // };
+    const getUpdatesAsync = async () => {
+      console.log('in home screen getUpdatesAsync');
+      try {
+        // const update = await Updates.checkForUpdateAsync(listener(event));
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          console.log('updateAvailable', update && update);
+          setIsCheckingAppVersion(false);
+          setIsUpdatingAppVersion(true);
+          setShowReloadDialogue(true);
+          await Updates.fetchUpdateAsync();
+          Updates.reloadFromCache();
+        } else {
+          getItemsAsync();
+          setIsCheckingAppVersion(false);
+          setShowReloadDialogue(false);
+        }
+      } catch (e) {
+        setIsCheckingAppVersion(false);
+        setIsUpdatingAppVersion(false);
+        console.log('updateAvailable error');
+      }
+    };
+
     if (isRefreshNeeded === true) {
-      //   console.log('getWipsDataObj', getWipsDataObj);
-      //   userDataObj &&
-      //     userDataObj.dealerId &&
-      //     userDataObj.intId &&
-      getItemsAsync();
+      if (__DEV__) {
+        console.log('no update check because DEV');
+        setShouldCheckAppVersion(false);
+        getItemsAsync();
+      } else {
+        setShouldCheckAppVersion(true);
+        console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+        console.log('timeCheckedAppVersion now', now);
+        if (timeCheckedAppVersion) {
+          setShouldCheckAppVersion(true);
+          console.log(
+            'timeCheckedAppVersion diff',
+            now.diff(moment(timeCheckedAppVersion))
+          );
+
+          if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
+            setTimeCheckedAppVersion(now);
+            setIsCheckingAppVersion(true);
+            getUpdatesAsync();
+          } else {
+            setIsCheckingAppVersion(false);
+            getItemsAsync();
+          }
+        } else {
+          console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
+          console.log('timeCheckedAppVersion now', now);
+          setTimeCheckedAppVersion(now);
+          console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+          setIsCheckingAppVersion(true);
+
+          console.log('isCheckingAppVersion', isCheckingAppVersion);
+          console.log('calling getUpdatesAsync');
+          getUpdatesAsync();
+        }
+      }
     }
   }, [isRefreshNeeded]);
 
@@ -232,184 +318,207 @@ export default HomeScreen = props => {
         contentContainerStyle={styles.contentContainer}
       >
         <AppNameWithLogo />
+
         <View style={styles.contentContainer}>
-          <View>
-            <View style={styles.gridRow}>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('FindTools')}
-              >
-                <View>
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
+          {showReloadDialogue === true ? (
+            <View>
+              <Text style={styles.loadingText}>
+                There is a new version of this app.
+              </Text>
+              <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
 
-                  <Text style={styles.gridCellText}>Find tools</Text>
+              <Text style={styles.loadingText}>Updating...</Text>
+            </View>
+          ) : isLoadingAny ? (
+            <View style={styles.loadingMessage}>
+              <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
+              <Text style={styles.loadingText}>Syncing your data...</Text>
+            </View>
+          ) : (
+            <View>
+              <View>
+                <View style={styles.gridRow}>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('FindTools')}
+                  >
+                    <View>
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+
+                      <Text style={styles.gridCellText}>Find tools</Text>
+                    </View>
+                  </Touchable>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('Jobs')}
+                  >
+                    <View>
+                      <Icon
+                        name={
+                          Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'
+                        }
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+
+                      <Text style={styles.gridCellText}>Jobs</Text>
+                    </View>
+                  </Touchable>
                 </View>
-              </Touchable>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('Jobs')}
-              >
-                <View>
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
+                <View style={styles.gridRow}>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('BookedOutTools')}
+                  >
+                    <View>
+                      <Icon
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'ios-return-left'
+                            : 'md-return-left'
+                        }
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <Text style={styles.gridCellText}>Booked tools</Text>
+                    </View>
+                  </Touchable>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('Ltp')}
+                  >
+                    <View>
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
 
-                  <BadgedText
-                    showBadge={
-                      wipsCount &&
-                      typeof wipsCount === 'number' &&
-                      wipsCount > 0
-                    }
-                    focused={false}
-                    text={'Jobs'}
-                    value={wipsCount}
+                      <Text style={styles.gridCellText}>LTP</Text>
+                    </View>
+                  </Touchable>
+                </View>
+                <View style={styles.gridRow}>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('Products')}
+                  >
+                    <View>
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={
+                          ageOfProducts && ageOfProducts < notificationLimit
+                        }
+                        focused={false}
+                        text={'Products'}
+                        value={'+'}
+                      />
+                    </View>
+                  </Touchable>
+                  <Touchable
+                    style={styles.gridCell}
+                    onPress={() => navigation.navigate('News')}
+                  >
+                    <View>
+                      <Icon
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'ios-information-circle-outline'
+                            : 'md-information-circle'
+                        }
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+
+                      <BadgedText
+                        showBadge={ageOfNews && ageOfNews < notificationLimit}
+                        focused={false}
+                        text={'News'}
+                        value={'+'}
+                      />
+                    </View>
+                  </Touchable>
+                </View>
+              </View>
+              <View style={styles.gridRow}>
+                <OdisLinkWithStatus
+                  navigation={navigation}
+                  userBrand={userBrand}
+                  itemsObj={odisObj}
+                  viewCount={odisViewCount}
+                  viewMax={5}
+                />
+              </View>
+              <View
+                style={{
+                  marginTop: 15,
+                  marginHorizontal: 30
+                }}
+              >
+                <Text style={styles.instructionsText}>
+                  {userIsSignedIn
+                    ? `Signed in as ${userDataObj.userName}`
+                    : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
+                </Text>
+                <Text style={styles.instructionsTextSmall}>
+                  {userIsSignedIn ? `${userDataObj.dealerName}` : null}
+                </Text>
+              </View>
+              <Touchable
+                style={{ marginTop: 0 }}
+                onPress={() => requestSignOutHandler()}
+              >
+                <View style={styles.signOutRow}>
+                  <Icon
+                    name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
+                    type='ionicon'
+                    size={20}
+                    color={Colors.vwgDeepBlue}
                   />
+                  <Text style={styles.signOutCellText}>Sign out</Text>
                 </View>
               </Touchable>
             </View>
-            <View style={styles.gridRow}>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('BookedOutTools')}
-              >
-                <View>
-                  <Icon
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'ios-return-left'
-                        : 'md-return-left'
-                    }
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
-
-                  <BadgedText
-                    showBadge={
-                      bookedOutToolsCount &&
-                      typeof bookedOutToolsCount === 'number' &&
-                      bookedOutToolsCount > 0
-                    }
-                    focused={false}
-                    text={'Booked tools'}
-                    value={bookedOutToolsCount}
-                  />
-
-                  {/* <Text style={styles.gridCellTextDisabledSmall}>
-                    Coming soon..
-                  </Text> */}
-                </View>
-              </Touchable>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('Ltp')}
-              >
-                <View>
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
-
-                  <Text style={styles.gridCellText}>LTP</Text>
-                </View>
-              </Touchable>
-            </View>
-            <View style={styles.gridRow}>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('Products')}
-              >
-                <View>
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
-                  <BadgedText
-                    showBadge={
-                      ageOfProducts && ageOfProducts < notificationLimit
-                    }
-                    focused={false}
-                    text={'Products'}
-                    value={'+'}
-                  />
-                </View>
-              </Touchable>
-              <Touchable
-                style={styles.gridCell}
-                onPress={() => navigation.navigate('News')}
-              >
-                <View>
-                  <Icon
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'ios-information-circle-outline'
-                        : 'md-information-circle'
-                    }
-                    type='ionicon'
-                    color={buttonTextColor}
-                    size={iconSize}
-                  />
-
-                  <BadgedText
-                    showBadge={ageOfNews && ageOfNews < notificationLimit}
-                    focused={false}
-                    text={'News'}
-                    value={'+'}
-                  />
-                </View>
-              </Touchable>
-            </View>
-          </View>
-
-          <OdisLinkWithStatus
-            navigation={navigation}
-            userBrand={userBrand}
-            itemsObj={odisObj}
-            viewCount={odisViewCount}
-            viewMax={5}
-          />
-
-          <View
-            style={{
-              marginTop: 15,
-              marginHorizontal: 30
-            }}
-          >
-            <Text style={styles.instructionsText}>
-              {userIsSignedIn
-                ? `Signed in as ${userDataObj.userName}`
-                : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
+          )}
+          {shouldCheckAppVersion ? (
+            isUpdatingAppVersion === true ? (
+              <View>
+                <Text style={styles.checkingText}>App version checked.</Text>
+              </View>
+            ) : isCheckingAppVersion === true ? (
+              <View>
+                <Text style={styles.checkingText}>Checking app version...</Text>
+              </View>
+            ) : (
+              <View>
+                <Text style={styles.dummyCheckingText}>
+                  Not checking app version...
+                </Text>
+              </View>
+            )
+          ) : null}
+          {/* <View>
+            <Text style={styles.checkingText}>
+              Time:{' '}
+              {timeCheckedAppVersion
+                ? moment(timeCheckedAppVersion).format('MMMM Do, h:mm:ss')
+                : null}
             </Text>
-            <Text style={styles.instructionsTextSmall}>
-              {userIsSignedIn ? `${userDataObj.dealerName}` : null}
-            </Text>
-          </View>
-          <Touchable
-            style={{ marginTop: 0 }}
-            onPress={() => requestSignOutHandler()}
-          >
-            <View style={styles.signOutRow}>
-              <Icon
-                name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
-                type='ionicon'
-                size={20}
-                color={Colors.vwgDeepBlue}
-              />
-              <Text style={styles.signOutCellText}>Sign out</Text>
-            </View>
-          </Touchable>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -435,6 +544,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     backgroundColor: 'white'
+  },
+  loadingMessage: {
+    marginTop: 50,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  checkingText: {
+    fontFamily: 'the-sans',
+    color: Colors.vwgDeepBlue,
+    fontSize: RFPercentage(1.6),
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  dummyCheckingText: {
+    fontFamily: 'the-sans',
+    color: Colors.vwgWhite,
+    fontSize: RFPercentage(1.6),
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
+  },
+  loadingText: {
+    fontFamily: 'the-sans',
+    color: Colors.vwgDeepBlue,
+    fontSize: RFPercentage(2.5),
+
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginBottom: 50
   },
   gridRow: {
     flexDirection: 'row',
