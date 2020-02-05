@@ -454,7 +454,7 @@ export default HomeScreen = props => {
                   </Touchable>
                 </View>
               </View>
-              <View style={styles.gridRow}>
+              <View style={styles.odisRow}>
                 <OdisLinkWithStatus
                   navigation={navigation}
                   userBrand={userBrand}
