@@ -28,7 +28,7 @@ function* getOdis() {
       result.data[0].id &&
       result.data[0].id.length > 0
     ) {
-      console.log('in odis saga - good 200');
+      //   console.log('in odis saga - good 200');
       //   console.log('result.data', result.data && result.data);
 
       yield put(

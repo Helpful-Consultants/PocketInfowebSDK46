@@ -122,10 +122,10 @@ export default HomeScreen = props => {
 
   useEffect(() => {
     const getItemsAsync = async () => {
-      console.log('in home screen getItemsAsync,', __DEV__);
+      //   console.log('in home screen getItemsAsync,', __DEV__);
 
       getAllItems(getWipsDataObj);
-      console.log('in home screen getItemsAsync called getAllItems');
+      //   console.log('in home screen getItemsAsync called getAllItems');
       setIsRefreshNeeded(false);
     };
     // const listener = event => {
@@ -161,7 +161,7 @@ export default HomeScreen = props => {
 
     if (isRefreshNeeded === true) {
       if (__DEV__) {
-        console.log('no update check because DEV');
+        // console.log('no update check because DEV');
         setShouldCheckAppVersion(false);
         getItemsAsync();
       } else {
