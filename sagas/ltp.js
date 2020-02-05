@@ -68,9 +68,9 @@ function* getLtp() {
       // console.log(error.response.status);
       // console.log(error.response.headers);
     } else if (error.request) {
-      //   console.log('error request start');
-      //   console.log('error request', error.request);
-      //   console.log('error request ends');
+      console.log('error request start');
+      console.log('error request', error.request);
+      console.log('error request ends');
       //   console.log(
       //     'error request response ' + error.request._response &&
       //       error.request._response
