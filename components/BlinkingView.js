@@ -40,8 +40,8 @@ export default class BlinkingView extends Component {
         <Text> </Text>
         <Text
           style={{
-            paddingTop: RFPercentage(0.05),
-            fontSize: RFPercentage(2.5),
+            paddingTop: RFPercentage(0.09),
+            fontSize: RFPercentage(2.3),
             color: this.props.blink
               ? this.state.showItem
                 ? this.props.colorOne
