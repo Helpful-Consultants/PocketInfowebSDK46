@@ -459,8 +459,9 @@ export default HomeScreen = props => {
                 />
               </View>
               <View style={styles.loadingMessage}>
-                {shouldCheckAppVersion ? ( //prod mode isCheckingAppVersion =
-                  true ? (
+                {shouldCheckAppVersion ? (
+                  //prod mode
+                  isCheckingAppVersion ? (
                     <Text style={styles.checkingText}>
                       Checking you have the latest app version...
                     </Text>
@@ -474,7 +475,8 @@ export default HomeScreen = props => {
                       This should be white (i.e. invisible)...
                     </Text>
                   )
-                ) : isLoadingAny ? ( //dev mode - no OTA app refressh
+                ) : isLoadingAny ? (
+                  //dev mode - no OTA app refressh
                   <Text style={styles.checkingText}>Syncing your data...</Text>
                 ) : (
                   // dummy to keep layout
