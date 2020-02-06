@@ -7,7 +7,8 @@ import {
   View,
   Alert
 } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+// import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
@@ -16,6 +17,7 @@ import { getUserRequest } from '../actions/user';
 
 export default AuthLoadingScreen = props => {
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const insets = useSafeArea();
 
   console.log('in AuthLoadingScreen');
 
@@ -31,18 +33,17 @@ export default AuthLoadingScreen = props => {
   }, [userIsSignedIn]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={{ paddingTop: insets.top, flex: 1 }}>
       <AppNameWithLogo />
       <ActivityIndicator />
       <StatusBar barStyle='default' />
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    
+    flex: 1
   },
   appName: {
     color: '#0096da',
