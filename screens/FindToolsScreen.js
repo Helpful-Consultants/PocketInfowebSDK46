@@ -10,6 +10,8 @@ import {
   View
 } from 'react-native';
 import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
+// import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
@@ -130,6 +132,7 @@ export default FindToolsScreen = props => {
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
   const { navigation } = props;
+  const insets = useSafeArea();
 
   //   if (!userIsSignedIn) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
@@ -815,7 +818,13 @@ export default FindToolsScreen = props => {
 
   //   console.log('RENDERING FT screen !!!!!!!!!!!!!!!!!!!');
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        paddingTop: insets.top,
+        flex: 1,
+        marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
+      }}
+    >
       <View>
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
