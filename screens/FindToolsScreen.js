@@ -820,7 +820,6 @@ export default FindToolsScreen = props => {
   return (
     <View
       style={{
-        paddingTop: insets.top,
         flex: 1,
         marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
       }}

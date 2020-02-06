@@ -214,7 +214,7 @@ export default BookedOutToolsScreen = props => {
   //   );
 
   return (
-    <View style={{ paddingTop: insets.top, flex: 1, marginBottom: 10 }}>
+    <View style={{ flex: 1, marginBottom: 10 }}>
       <SearchBarWithRefresh
         dataName={'booked out tools'}
         refreshRequestHandler={refreshRequestHandler}
