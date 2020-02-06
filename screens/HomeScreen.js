@@ -9,7 +9,8 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+// import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { Icon, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
@@ -52,6 +53,7 @@ export default HomeScreen = props => {
   const dispatch = useDispatch();
 
   const { navigation } = props;
+  const insets = useSafeArea();
 
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userError = useSelector(state => state.user.error);
@@ -312,7 +314,12 @@ export default HomeScreen = props => {
   }, [dealerWipsItems]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View
+      style={{
+        paddingTop: insets.top,
+        flex: 1
+      }}
+    >
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -527,7 +534,7 @@ export default HomeScreen = props => {
           </View> */}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -538,12 +545,10 @@ HomeScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
     // alignItems: 'center',
     // justifyContent: 'space-evenly',
-
-    backgroundColor: 'white',
-    marginTop: 10
+    // marginTop: 10
   },
   contentContainer: {
     flex: 1,
