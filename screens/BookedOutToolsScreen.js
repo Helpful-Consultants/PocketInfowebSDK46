@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
+// import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
@@ -31,6 +33,7 @@ const KEYS_TO_FILTERS = [
   'partDescription',
   'wipNumber'
 ];
+
 export default BookedOutToolsScreen = props => {
   const dispatch = useDispatch();
   const dealerWipsItems = useSelector(
@@ -60,6 +63,7 @@ export default BookedOutToolsScreen = props => {
   //   console.log('@@@@@@@@@@@@@', userDataObj);
 
   const { navigation } = props;
+  const insets = useSafeArea();
 
   const getWipsDataObj = {
     dealerId:
@@ -210,8 +214,7 @@ export default BookedOutToolsScreen = props => {
   //   );
 
   return (
-    <View style={styles.container}>
-      {/* <NewJobButton setIsAlertVisible={setIsAlertVisible} /> */}
+    <View style={{ paddingTop: insets.top, flex: 1, marginBottom: 10 }}>
       <SearchBarWithRefresh
         dataName={'booked out tools'}
         refreshRequestHandler={refreshRequestHandler}
