@@ -7,7 +7,8 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import SafeAreaView from 'react-native-safe-area-view';
+// import SafeAreaView from 'react-native-safe-area-view';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
@@ -56,6 +57,7 @@ export default SignInScreen = props => {
   //   console.log('in sign in, state', state);
 
   const { navigation } = props;
+  const insets = useSafeArea();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { email: '', pin: '' },
@@ -112,13 +114,13 @@ export default SignInScreen = props => {
   };
 
   return (
-    <SafeAreaView>
+    <View style={{ paddingTop: insets.top }}>
       <ScrollView>
         <AppNameWithLogo />
         <Text style={styles.instructions}>
           {userIsSignedIn
             ? `Signed in as ${userDataObj.userName}`
-            : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
+            : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
         <KeyboardAvoidingView
           style={baseStyles.container}
@@ -241,7 +243,7 @@ export default SignInScreen = props => {
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
