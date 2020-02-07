@@ -55,14 +55,17 @@ const NewsStack = createStackNavigator(
 
 NewsStack.navigationOptions = {
   initialRouteName: 'news',
-  tabBarLabel: ({ focused }) => (
-    <BadgedTabBarText
-      showBadge={true}
-      focused={focused}
-      text={'News'}
-      value={3}
-    />
-  ),
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <BadgedTabBarText
+            showBadge={false}
+            focused={focused}
+            text={'News'}
+            value={3}
+          />
+        )
+      : 'News',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -86,6 +89,7 @@ const ProductsStack = createStackNavigator(
 
 ProductsStack.navigationOptions = {
   initialRouteName: 'Products',
+  tabBarColor: Colors.vwgWhite,
   tabBarLabel: ({ focused }) => (
     <BadgedTabBarText
       showBadge={false}
@@ -94,6 +98,17 @@ ProductsStack.navigationOptions = {
       value={3}
     />
   ),
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <BadgedTabBarText
+            showBadge={false}
+            focused={focused}
+            text={'Products'}
+            value={3}
+          />
+        )
+      : 'Products',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -113,9 +128,13 @@ const OdisStack = createStackNavigator(
 
 OdisStack.navigationOptions = {
   initialRouteName: 'Odis',
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>ODIS</Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>ODIS</Text>
+        )
+      : 'ODIS',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -135,9 +154,15 @@ const StatsStack = createStackNavigator(
 
 StatsStack.navigationOptions = {
   initialRouteName: 'Stats',
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Stats</Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>
+            Stats
+          </Text>
+        )
+      : 'Stats',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -150,12 +175,37 @@ StatsStack.navigationOptions = {
 // Tab navigator
 const NewsTabNavigator =
   Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator({
-        NewsStack,
-        ProductsStack,
-        OdisStack,
-        StatsStack
-      })
+    ? createMaterialBottomTabNavigator(
+        {
+          NewsStack,
+          ProductsStack,
+          OdisStack,
+          StatsStack
+        },
+        {
+          labeled: true,
+          shifting: false,
+          backBehavior: 'history',
+          activeColor: Colors.vwgDeepBlue,
+          inactiveColor: Colors.vwgIosLink,
+          tabBarColor: Colors.vwgWhite,
+          barStyle: {
+            labelPosition: 'below-icon',
+
+            // height: RFPercentage(6.4),
+            backgroundColor: Colors.vwgWhite
+          }
+          //   tabBarOptions: {
+          //     labelPosition: 'below-icon',
+          //     style: {
+          //       height: RFPercentage(6.4)
+          //     }
+          //   },
+          //   tabStyle: {
+          //     height: RFPercentage(2.2)
+          //   }
+        }
+      )
     : createBottomTabNavigator(
         {
           NewsStack,

@@ -44,9 +44,16 @@ const FindToolsStack = createStackNavigator({
 });
 
 FindToolsStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Find Tools</Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>
+            Find tools
+          </Text>
+        )
+      : 'Find tools',
+
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -62,11 +69,16 @@ const BookedOutToolsStack = createStackNavigator({
 });
 
 BookedOutToolsStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>
-      Booked tools
-    </Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>
+            Booked tools
+          </Text>
+        )
+      : 'Booked tools',
+
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -82,9 +94,14 @@ const JobsStack = createStackNavigator({
 });
 
 JobsStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Jobs</Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>Jobs</Text>
+        )
+      : 'Jobs',
+
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -100,9 +117,14 @@ const LtpStack = createStackNavigator({
 });
 
 LtpStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>LTP</Text>
-  ),
+  tabBarColor: Colors.vwgWhite,
+  tabBarLabel:
+    Platform.OS === 'ios'
+      ? ({ focused }) => (
+          <Text style={focused ? styles.focused : styles.notFocused}>LTP</Text>
+        )
+      : 'LTP',
+
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -115,12 +137,37 @@ LtpStack.navigationOptions = {
 // Tab navigator
 const WipTabNavigator =
   Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator({
-        FindToolsStack,
-        BookedOutToolsStack,
-        JobsStack,
-        LtpStack
-      })
+    ? createMaterialBottomTabNavigator(
+        {
+          FindToolsStack,
+          BookedOutToolsStack,
+          JobsStack,
+          LtpStack
+        },
+        {
+          labeled: true,
+          shifting: false,
+          backBehavior: 'history',
+          activeColor: Colors.vwgDeepBlue,
+          inactiveColor: Colors.vwgIosLink,
+          tabBarColor: Colors.vwgWhite,
+          barStyle: {
+            labelPosition: 'below-icon',
+
+            // height: RFPercentage(6.4),
+            backgroundColor: Colors.vwgWhite
+          }
+          //   tabBarOptions: {
+          //     labelPosition: 'below-icon',
+          //     style: {
+          //       height: RFPercentage(6.4)
+          //     }
+          //   },
+          //   tabStyle: {
+          //     height: RFPercentage(2.2)
+          //   }
+        }
+      )
     : createBottomTabNavigator(
         {
           FindToolsStack,
