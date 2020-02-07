@@ -330,6 +330,9 @@ export default JobsScreen = props => {
           onConfirmPressed={() => {
             confirmReturnToolHandler();
           }}
+          contentContainerStyle={{
+            borderRadius: Platform.OS === 'ios' ? 6 : 0
+          }}
           titleStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
@@ -340,8 +343,14 @@ export default JobsScreen = props => {
             fontFamily: 'the-sans',
             textAlign: 'center'
           }}
-          confirmButtonStyle={{ width: 100 }}
-          cancelButtonStyle={{ width: 100 }}
+          confirmButtonStyle={{
+            width: 100,
+            borderRadius: Platform.OS === 'ios' ? 3 : 0
+          }}
+          cancelButtonStyle={{
+            width: 100,
+            borderRadius: Platform.OS === 'ios' ? 3 : 0
+          }}
         />
       ) : null}
     </View>

@@ -1212,7 +1212,8 @@ const styles = StyleSheet.create({
   },
 
   cancelButton: {
-    borderColor: Colors.vwgWarmRed
+    borderColor: Colors.vwgWarmRed,
+    borderRadius: Platform.OS === 'ios' ? 3 : 0
 
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
@@ -1233,7 +1234,8 @@ const styles = StyleSheet.create({
     color: Colors.vwgIosLink
   },
   bookButton: {
-    backgroundColor: Colors.vwgIosLink
+    backgroundColor: Colors.vwgIosLink,
+    borderRadius: Platform.OS === 'ios' ? 3 : 0
     // color: Colors.vwgWhite,
 
     // flexDirection: 'column',
@@ -1250,7 +1252,8 @@ const styles = StyleSheet.create({
     // width: '10%'
   },
   confirmButton: {
-    backgroundColor: Colors.vwgIosLink
+    backgroundColor: Colors.vwgIosLink,
+    borderRadius: Platform.OS === 'ios' ? 3 : 0
   },
   confirmButtonTitle: {
     fontFamily: 'the-sans',
