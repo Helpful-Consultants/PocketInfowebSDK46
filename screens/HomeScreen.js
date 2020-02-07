@@ -619,7 +619,16 @@ const styles = StyleSheet.create({
     color: Colors.vwgDeepBlue,
     backgroundColor: Colors.vwgDeepBlue,
     margin: 5,
-    borderRadius: 5,
+    shadowColor: 'black',
+    // shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    // shadowRadius: 10,
+    // elevation: 5,
+    shadowOpacity: Platform.OS === 'ios' ? 0 : 0.26,
+    //   shadowOffset: { width: 0, height: 2 },
+    shadowRadius: Platform.OS === 'ios' ? 0 : 10,
+    elevation: Platform.OS === 'ios' ? 0 : 5,
+    borderRadius: Platform.OS === 'ios' ? 5 : 2,
     // height: PixelRatio.getPixelSizeForLayoutSize(40),
     width: RFPercentage(23.5)
     // padding: 5
