@@ -81,7 +81,7 @@ export default NewsScreen = props => {
       //   console.log(result);
       setBrowserResult(result);
     } else {
-      WebBrowser.dismissBrowser();
+      //   WebBrowser.dismissBrowser();
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
       setBrowserResult(result);
     }

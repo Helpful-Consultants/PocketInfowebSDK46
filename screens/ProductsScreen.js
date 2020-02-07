@@ -80,7 +80,7 @@ export default ProductsScreen = props => {
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
       setBrowserResult(result);
     } else {
-      WebBrowser.dismissBrowser();
+      //   WebBrowser.dismissBrowser();
       let result = await WebBrowser.openBrowserAsync(checkedUrl);
       setBrowserResult(result);
     }
