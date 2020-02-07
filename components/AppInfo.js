@@ -12,6 +12,8 @@ export default AppInfo = props => {
   const brandText =
     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
   //   console.log(props);
+  //   console.log('Platform', Platform);
+  //   console.log('Constants', Constants);
   return (
     <View style={styles.container}>
       <Text style={styles.appName}>{Constants.manifest.name}</Text>
@@ -19,11 +21,28 @@ export default AppInfo = props => {
         <Text style={styles.brand}>{userDataObj.userName}</Text>
       ) : null}
       <Text style={styles.brand}>{brandText}</Text>
-      {Constants && Constants.deviceName ? (
+
+      {Platform && Platform.OS === 'ios' ? (
+        Constants && Constants.deviceName ? (
+          <Text style={styles.deviceVersion}>
+            {Platform.Version ? (
+              <Text>
+                {`${Platform.constants.systemName} v${Platform.Version}`}
+                {Constants.nativeBuildVersion
+                  ? ` Store v${Constants.nativeBuildVersion}`
+                  : null}
+              </Text>
+            ) : null}
+          </Text>
+        ) : null
+      ) : Constants && Constants.deviceName ? (
         <Text style={styles.deviceVersion}>
-          {Platform && Platform.OS && Platform.Version ? (
+          {Platform && Platform.Version ? (
             <Text>
-              {`${Platform.constants.systemName} v${Platform.Version}`}
+              {Platform && Platform.OS === 'android'
+                ? `Android`
+                : `${Platform.OS}`}
+              {` v${Platform.Version}`}
               {Constants.nativeBuildVersion
                 ? ` Store v${Constants.nativeBuildVersion}`
                 : null}
@@ -46,7 +65,12 @@ export default AppInfo = props => {
             : null
           : null}
       </Text>
-      <Text style={styles.appVersion}>Test B.7</Text>
+      {Platform && Platform.constants && Platform.constants.Model ? (
+        <Text
+          style={styles.appVersion}
+        >{`Model ${Platform.constants.Model}`}</Text>
+      ) : null}
+      <Text style={styles.appVersion}>Test B.14 </Text>
     </View>
   );
 };

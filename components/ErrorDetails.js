@@ -59,14 +59,53 @@ export default ErrorDetails = props => {
       </View>
       <View style={styles.errorMessage}>
         <Text style={styles.errorMessageText}>{Constants.manifest.name}</Text>
-        <Text
-          style={styles.errorMessageText}
-        >{`Build version ${Constants.manifest.version}`}</Text>
-        {Constants && Constants.deviceName ? (
+        <Text style={styles.errorMessageText}>
+          {`Build `}
+          {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
+          {Constants.manifest.version
+            ? `${Constants.manifest.version} OTA`
+            : null}
+          {Constants.manifest.releaseChannel
+            ? Constants.manifest.releaseChannel
+              ? Constants.manifest.releaseChannel === 'default'
+                ? ' (Prod)'
+                : ' (Staging)'
+              : null
+            : null}
+        </Text>
+
+        {Platform && Platform.OS === 'ios' ? (
+          Constants && Constants.deviceName ? (
+            <Text style={styles.errorMessageText}>
+              {Platform.Version ? (
+                <Text>
+                  {`${Platform.constants.systemName} v${Platform.Version}`}
+                  {Constants.nativeBuildVersion
+                    ? ` Store v${Constants.nativeBuildVersion}`
+                    : null}
+                </Text>
+              ) : null}
+            </Text>
+          ) : null
+        ) : (
           <Text style={styles.errorMessageText}>
-            {Platform && Platform.OS && Platform.Version ? (
-              <Text>{`${Platform.constants.systemName} v${Platform.Version}`}</Text>
+            {Platform && Platform.Version ? (
+              <Text>
+                {Platform && Platform.OS === 'android'
+                  ? `Android`
+                  : `${Platform.OS}`}
+                {` v${Platform.Version}`}
+                {Constants.nativeBuildVersion
+                  ? ` Store v${Constants.nativeBuildVersion}`
+                  : null}
+              </Text>
             ) : null}
+          </Text>
+        )}
+
+        {Platform && Platform.constants && Platform.constants.Model ? (
+          <Text style={styles.errorMessageText}>
+            {`Model ${Platform.constants.Model}`}
           </Text>
         ) : null}
       </View>
