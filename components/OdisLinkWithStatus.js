@@ -266,7 +266,10 @@ export default function OdisLinkWithStatus(props) {
   //   blink = true;
 
   return (
-    <Touchable onPress={() => navigation.navigate('Odis')}>
+    <Touchable
+      onPress={() => navigation.navigate('Odis')}
+      style={{ padding: 5 }}
+    >
       <BlinkingView
         iconName={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
         iconType='ionicon'
