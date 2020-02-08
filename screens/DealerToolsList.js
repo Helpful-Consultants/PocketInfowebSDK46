@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { ListItem } from 'react-native-elements';
@@ -332,7 +332,7 @@ export default function DealerToolsList(props) {
   }, [items]);
 
   //   console.log('about to render tools list');
-  return listView || null;
+  return <ScrollView>{listView || null}</ScrollView>;
 }
 
 const styles = StyleSheet.create({
