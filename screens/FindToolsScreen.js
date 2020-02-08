@@ -817,6 +817,27 @@ export default FindToolsScreen = props => {
     </Modal>
   );
 
+  let backToBasket = (
+    <View style={styles.closedBasket}>
+      <TouchableOpacity
+        onPress={() => {
+          toggleBaskethandler(true);
+        }}
+        style={{ flexDirection: 'row' }}
+      >
+        <Text
+          style={styles.closedBasketPromptText}
+        >{`Open tools basket   `}</Text>
+        <Icon
+          name={Platform.OS === 'ios' ? 'ios-arrow-up' : 'md-arrow-up'}
+          type='ionicon'
+          size={15}
+          color={Colors.vwgWhite}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
   //   const toggleExpandBasketHandler = action => {
   //     console.log('toggling ', isBasketExpanded);
   //     if (action) {
@@ -933,26 +954,9 @@ export default FindToolsScreen = props => {
           {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
         </KeyboardAvoidingView>
       </View>
-      {mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0 ? (
-        <View style={styles.closedBasket}>
-          <TouchableOpacity
-            onPress={() => {
-              toggleBaskethandler(true);
-            }}
-            style={{ flexDirection: 'row' }}
-          >
-            <Text
-              style={styles.closedBasketPromptText}
-            >{`Open tools basket   `}</Text>
-            <Icon
-              name={Platform.OS === 'ios' ? 'ios-arrow-up' : 'md-arrow-up'}
-              type='ionicon'
-              size={15}
-              color={Colors.vwgWhite}
-            />
-          </TouchableOpacity>
-        </View>
-      ) : null}
+      {mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0
+        ? backToBasket
+        : null}
     </View>
   );
 };
