@@ -236,19 +236,25 @@ export default FindToolsScreen = props => {
       setDataErrorUrlAny(dataErrorUrlLtp);
       setDataErrorSummary('Error syncing LTP');
       setDataNameInPlay('LTP');
-    } else if (dealerToolsItems && dealerToolsItems.length === 0) {
+    } else if (
+      !isLoadingTools &&
+      dealerToolsItems &&
+      dealerToolsItems.length === 0
+    ) {
       //   console.log('empty tools items');
       setDataErrorAny('Does your site have a tools list?');
       setDataStatusCodeAny(dataStatusCodeTools);
       setDataErrorUrlAny('');
       setDataErrorSummary('No tools fetched from web server');
       setDataNameInPlay('tools');
-    } else if (ltpItems && ltpItems.length === 0) {
+    } else if (!isLoadingLtp && ltpItems && ltpItems.length === 0) {
       //   console.log('empty ltp items', ltpItems);
-      setDataErrorAny('The LTP list should not be empty');
+      setDataErrorAny('The LTP list should not be empty. Please refresh.');
       setDataStatusCodeAny(dataStatusCodeLtp);
       setDataErrorUrlAny('');
-      setDataErrorSummary('No LTP items fetched from web server');
+      setDataErrorSummary(
+        'No LTP items fetched from web server. Please try again.'
+      );
       setDataNameInPlay('LTP');
     } else {
       setDataErrorAny('');
@@ -257,7 +263,15 @@ export default FindToolsScreen = props => {
       setDataErrorSummary('');
       setDataNameInPlay('');
     }
-  }, [dataErrorTools, dataErrorWips, dataErrorLtp, dealerToolsItems, ltpItems]);
+  }, [
+    dataErrorTools,
+    dataErrorWips,
+    dataErrorLtp,
+    dealerToolsItems,
+    ltpItems,
+    isLoadingTools,
+    isLoadingLtp
+  ]);
 
   useEffect(() => {
     // console.log('getting unique LTP items', ltpItems && ltpItems.length);
