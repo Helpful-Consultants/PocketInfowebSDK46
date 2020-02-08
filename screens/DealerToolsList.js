@@ -302,37 +302,38 @@ export default function DealerToolsList(props) {
       </Touchable>
     );
   };
+  const getHeader = () => {
+    return showPrompt === true ? (
+      <View style={styles.searchPrompt}>
+        <Text style={styles.searchPromptText}>
+          {`Search for a tool then press to book it out.`}
+        </Text>
+      </View>
+    ) : null;
+  };
 
   useEffect(() => {
     // console.log('in use effect');
     // console.log(items[0]);
     let newList = (
-      <View>
-        {showPrompt === true ? (
-          <View style={styles.searchPrompt}>
-            <Text style={styles.searchPromptText}>
-              {`Search for a tool then press to book it out.`}
-            </Text>
-          </View>
-        ) : null}
-        <FlatList
-          data={items && items}
-          renderItem={itemData => (
-            <FlatListItem
-              item={itemData.item}
-              selectItemHandler={selectItemHandler}
-            />
-          )}
-          keyExtractor={item => item.loanToolNo || item.id}
-        />
-      </View>
+      <FlatList
+        data={items && items}
+        renderItem={itemData => (
+          <FlatListItem
+            item={itemData.item}
+            selectItemHandler={selectItemHandler}
+          />
+        )}
+        keyExtractor={item => item.loanToolNo || item.id}
+        ListHeaderComponent={getHeader}
+      />
     );
     // console.log(newList);
     setListView(newList);
   }, [items]);
 
   //   console.log('about to render tools list');
-  return <ScrollView>{listView || null}</ScrollView>;
+  return listView || null;
 }
 
 const styles = StyleSheet.create({
