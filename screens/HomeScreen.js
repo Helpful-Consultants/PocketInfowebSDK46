@@ -628,7 +628,7 @@ const styles = StyleSheet.create({
     //   shadowOffset: { width: 0, height: 2 },
     shadowRadius: Platform.OS === 'ios' ? 0 : 10,
     elevation: Platform.OS === 'ios' ? 0 : 5,
-    borderRadius: Platform.OS === 'ios' ? 5 : 2,
+    borderRadius: Platform.OS === 'ios' ? 5 : 4,
     // height: PixelRatio.getPixelSizeForLayoutSize(40),
     width: RFPercentage(23.5)
     // padding: 5

@@ -912,28 +912,6 @@ export default FindToolsScreen = props => {
               dataErrorUrl={dataErrorUrlAny}
             />
           ) : null}
-          {isDupBookedAlertVisible ? (
-            <AwesomeAlert
-              show={isDupBookedAlertVisible}
-              showProgress={false}
-              title='Tool already out'
-              message={`You already have that tool booked out`}
-              closeOnTouchOutside={true}
-              closeOnHardwareBackPress={false}
-              showCancelButton={true}
-              showConfirmButton={true}
-              cancelText='Cancel'
-              confirmText='OK'
-              confirmButtonColor={Colors.vwgMintGreen}
-              cancelButtonColor={Colors.vwgWarmRed}
-              onCancelPressed={() => {
-                cancelDupPickedHandler();
-              }}
-              onConfirmPressed={() => {
-                cancelDupPickedHandler();
-              }}
-            />
-          ) : null}
           {isDupPickedAlertVisible ? (
             <AwesomeAlert
               show={isDupPickedAlertVisible}

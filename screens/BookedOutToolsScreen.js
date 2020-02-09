@@ -275,25 +275,35 @@ export default BookedOutToolsScreen = props => {
             confirmReturnToolHandler();
           }}
           contentContainerStyle={{
-            borderRadius: Platform.OS === 'ios' ? 6 : 0
+            borderRadius: Platform.OS === 'ios' ? 6 : 3,
+            elevation: Platform.OS === 'ios' ? 0 : 5
           }}
-          titleStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
+          titleStyle={{
+            fontFamily: 'the-sans',
+            textAlign: 'center',
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+          }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
             fontFamily: 'the-sans',
-            textAlign: 'center'
+            textAlign: 'center',
+            elevation: Platform.OS === 'ios' ? 0 : 5,
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
           }}
           cancelButtonTextStyle={{
             fontFamily: 'the-sans',
-            textAlign: 'center'
+            textAlign: 'center',
+            elevation: Platform.OS === 'ios' ? 0 : 5,
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
           }}
           confirmButtonStyle={{
             width: 100,
-            borderRadius: Platform.OS === 'ios' ? 3 : 0
+            borderRadius: Platform.OS === 'ios' ? 3 : 2,
+            elevation: Platform.OS === 'ios' ? 0 : 5
           }}
           cancelButtonStyle={{
             width: 100,
-            borderRadius: Platform.OS === 'ios' ? 3 : 0
+            borderRadius: Platform.OS === 'ios' ? 3 : 2
           }}
         />
       ) : null}
