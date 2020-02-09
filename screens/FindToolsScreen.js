@@ -1261,6 +1261,17 @@ const styles = StyleSheet.create({
     // justifyContent: 'flex-start',
     // width: '10%'
   },
+  closeConfirmationButton: {
+    backgroundColor: Colors.vwgDeepBlue,
+    borderRadius: Platform.OS === 'ios' ? 3 : 2,
+    elevation: Platform.OS === 'ios' ? 0 : 5
+  },
+  closeConfirmationButtonTitle: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9),
+    color: Colors.vwgWhite,
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+  },
   closeButton: {
     backgroundColor: Colors.vwgLinkColor,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
