@@ -18,9 +18,7 @@ export default {
   noticeText: '#fff',
   transparentBackground: 'rgba(0, 0, 0, 0)',
   iosBlue: 'rgba(0, 122, 125, 1)',
-  //   vwgLinkColor: '#00A1D0',
   vwgLinkColor: vwgLink,
-
   vwgWarmOrange: '#e2a933',
   vwgCoolOrange: '#eaad00',
   vwgWarmRed: '#a9043f',
