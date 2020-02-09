@@ -84,6 +84,7 @@ export default SearchBarWithRefresh = props => {
             placeholder='Type here...'
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={styles.searchBarContainer}
+            inputStyle={styles.searchBarInput}
             inputContainerStyle={styles.searchBarInputContainer}
             autoCapitalize='none'
           />
@@ -130,6 +131,10 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     color: Colors.vwgDarkSkyBlue
+  },
+  searchBarInput: {
+    fontFamily: 'the-sans',
+    fontSize: RFPercentage(1.9)
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
