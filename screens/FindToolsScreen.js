@@ -644,6 +644,7 @@ export default FindToolsScreen = props => {
               type='ionicon'
               size={20}
               color={Colors.vwgIosLink}
+              iconStyle={styles.addToolButton}
             />
             <Text style={styles.basketTextLink}>
               {toolBasket.length === 1
@@ -926,6 +927,22 @@ export default FindToolsScreen = props => {
               onConfirmPressed={() => {
                 cancelDupPickedHandler();
               }}
+              titleStyle={{
+                fontFamily: 'the-sans',
+                textAlign: 'center',
+                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+              }}
+              confirmButtonTextStyle={{
+                fontFamily: 'the-sans',
+                textAlign: 'center',
+                elevation: Platform.OS === 'ios' ? 0 : 5,
+                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+              }}
+              confirmButtonStyle={{
+                width: 100,
+                borderRadius: Platform.OS === 'ios' ? 3 : 2,
+                elevation: Platform.OS === 'ios' ? 0 : 5
+              }}
             />
           ) : null}
 
@@ -1005,7 +1022,8 @@ const styles = StyleSheet.create({
   basketTextLink: {
     fontFamily: 'the-sans',
     color: Colors.vwgIosLink,
-    fontSize: RFPercentage(2)
+    fontSize: RFPercentage(2),
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
   basketHeader: {
     flexDirection: 'row',
@@ -1219,19 +1237,28 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     color: Colors.vwgWarmRed,
-    paddingLeft: 5
+    paddingLeft: 5,
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
     // width: '10%'
   },
+  closeButton: {
+    backgroundColor: Colors.vwgIosLink,
+    borderRadius: Platform.OS === 'ios' ? 3 : 2,
+    elevation: Platform.OS === 'ios' ? 0 : 5
+  },
   closeButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgIosLink
+    color: Colors.vwgIosLink,
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
+
   bookButton: {
     backgroundColor: Colors.vwgIosLink,
-    borderRadius: Platform.OS === 'ios' ? 3 : 0
+    borderRadius: Platform.OS === 'ios' ? 3 : 2,
+    elevation: Platform.OS === 'ios' ? 0 : 5
     // color: Colors.vwgWhite,
 
     // flexDirection: 'column',
@@ -1242,18 +1269,21 @@ const styles = StyleSheet.create({
     // color: Colors.vwgWhite,
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    paddingLeft: 5
+    paddingLeft: 5,
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
     // width: '10%'
   },
   confirmButton: {
     backgroundColor: Colors.vwgIosLink,
-    borderRadius: Platform.OS === 'ios' ? 3 : 0
+    borderRadius: Platform.OS === 'ios' ? 3 : 2,
+    elevation: Platform.OS === 'ios' ? 0 : 5
   },
   confirmButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    paddingLeft: 5
+    paddingLeft: 5,
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   }
 });
