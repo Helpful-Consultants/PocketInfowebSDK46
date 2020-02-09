@@ -23,7 +23,7 @@ const UserListItem = ({ user, onDeleteClick }) => {
           lineHeight: '40px',
           borderRadius: '50%',
           color: 'white',
-          fontWeight: 'bold',
+          fontFamily: 'the-sans-bold',
           background: stringToHslColor(user.firstName + user.lastName)
         }}
       >

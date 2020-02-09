@@ -134,12 +134,12 @@ const styles = StyleSheet.create({
   },
   statsTitle: {
     color: Colors.vwgDeepBlue,
-    fontFamily: 'the-sans',
+    fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(2.2),
     paddingVertical: 10,
     marginTop: 20,
     marginBottom: 0,
-    fontWeight: '600',
+
     textAlign: 'center'
   },
   statsText: {

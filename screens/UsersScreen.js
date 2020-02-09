@@ -46,15 +46,14 @@ UsersScreen.navigationOptions = {
   },
   headerTintColor: '#333',
   headerTitleStyle: {
-    fontWeight: 'bold'
+    fontFamily: 'the-sans-bold'
   }
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
-    
+    paddingTop: 15
   }
 });
 

@@ -89,11 +89,10 @@ export default function BookedOutToolsList(props) {
                     >
                       <Text
                         style={{
-                          fontFamily: 'the-sans',
+                          fontFamily: 'the-sans-bold',
                           fontSize: RFPercentage(2.2),
                           color: Colors.vwgLinkColor,
                           textAlign: 'left',
-                          fontWeight: '600',
                           paddingTop: 8
                         }}
                       >{`${item.partNumber} (${item.toolNumber})`}</Text>

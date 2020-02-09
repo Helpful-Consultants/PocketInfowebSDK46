@@ -66,12 +66,11 @@ export default function DealerToolsList(props) {
                   >
                     <Text
                       style={{
-                        fontFamily: 'the-sans',
+                        fontFamily: 'the-sans-bold',
                         fontSize: RFPercentage(2.2),
                         color: Colors.vwgLinkColor,
                         textAlign: 'left',
-                        paddingTop: 10,
-                        fontWeight: '600'
+                        paddingTop: 10
                       }}
                     >{`${item.partNumber} (${item.toolNumber})`}</Text>
                   </View>
@@ -252,9 +251,8 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
-                          fontFamily: 'the-sans',
+                          fontFamily: 'the-sans-bold',
                           fontSize: RFPercentage(2.2),
-                          fontWeight: '600',
                           textAlign: 'left',
                           marginBottom: 5,
                           color: Colors.vwgDarkSkyBlue

@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     fontSize: 6,
-    fontWeight: 'bold',
+    fontFamily: 'the-sans-bold',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0

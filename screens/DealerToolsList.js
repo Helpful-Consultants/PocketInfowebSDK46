@@ -138,9 +138,8 @@ export default function DealerToolsList(props) {
               (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryDarkGray
             : Colors.vwgLinkColor,
-          fontFamily: 'the-sans',
-          fontSize: RFPercentage(2.1),
-          fontWeight: '600'
+          fontFamily: 'the-sans-bold',
+          fontSize: RFPercentage(2.1)
         }}
         containerStyle={{
           backgroundColor: item.loanToolNo
@@ -215,16 +214,14 @@ export default function DealerToolsList(props) {
               style={{
                 fontFamily: 'the-sans',
                 fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed,
-                fontWeight: '500'
+                color: Colors.vwgWarmRed
               }}
             >
               <Text
                 style={{
                   fontFamily: 'the-sans-bold',
                   fontSize: RFPercentage(2.0),
-                  color: Colors.vwgWarmRed,
-                  fontWeight: '600'
+                  color: Colors.vwgWarmRed
                 }}
               >{`Already booked out to you`}</Text>
               {`, on job '${wipObj.wipNumber}'`}
@@ -237,8 +234,7 @@ export default function DealerToolsList(props) {
               style={{
                 fontFamily: 'the-sans',
                 fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed,
-                fontWeight: '500'
+                color: Colors.vwgWarmRed
               }}
             >{`Booked out to ${personName}, on job '${wipObj.wipNumber}'`}</Text>
           );
@@ -255,9 +251,7 @@ export default function DealerToolsList(props) {
                 <Text
                   style={{
                     fontFamily: 'the-sans',
-                    fontSize: RFPercentage(2.0),
-
-                    fontWeight: '500'
+                    fontSize: RFPercentage(2.0)
                   }}
                 >
                   {`Already in your `}
@@ -273,8 +267,7 @@ export default function DealerToolsList(props) {
                   style={{
                     fontFamily: 'the-sans-bold',
                     fontSize: RFPercentage(2.0),
-                    color: Colors.vwgLinkColor,
-                    fontWeight: '600'
+                    color: Colors.vwgLinkColor
                   }}
                 >
                   {` tool basket.`}
@@ -300,16 +293,14 @@ export default function DealerToolsList(props) {
       //         style={{
       //           fontFamily: 'the-sans',
       //           fontSize: RFPercentage(2.0),
-      //           color: Colors.vwgWarmRed,
-      //           fontWeight: '500'
+      //           color: Colors.vwgWarmRed
       //         }}
       //       >
       //         <Text
       //           style={{
       //             fontFamily: 'the-sans-bold',
       //             fontSize: RFPercentage(2.0),
-      //             color: Colors.vwgWarmRed,
-      //             fontWeight: '600'
+      //             color: Colors.vwgWarmRed
       //           }}
       //         >{`Already booked out to you`}</Text>
       //         {`, on job '${item.lastWIP}'`}
@@ -321,8 +312,7 @@ export default function DealerToolsList(props) {
       //         style={{
       //           fontFamily: 'the-sans',
       //           fontSize: RFPercentage(2.0),
-      //           color: Colors.vwgWarmRed,
-      //           fontWeight: '500'
+      //           color: Colors.vwgWarmRed
       //         }}
       //       >{`Booked out to ${personName}, on job '${item.lastWIP}'`}</Text>
       //     );

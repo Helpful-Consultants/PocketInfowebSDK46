@@ -64,9 +64,8 @@ export default function LtpList(props) {
         }`}
         titleStyle={{
           color: Colors.vwgBlack,
-          fontFamily: 'the-sans',
-          fontSize: RFPercentage(1.9),
-          fontWeight: '600'
+          fontFamily: 'the-sans-bold',
+          fontSize: RFPercentage(1.9)
         }}
         contentContainerStyle={styles.listItem}
         bottomDivider
@@ -106,7 +105,7 @@ const styles = StyleSheet.create({
   },
   noItems: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'the-sans-bold',
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 5

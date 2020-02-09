@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'yellow'
   },
   badgeText: {
+    fontFamily: 'the-sans-bold',
     fontSize: 6,
-    fontWeight: 'bold',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0
