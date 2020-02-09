@@ -81,6 +81,7 @@ export default SearchBarWithRefresh = props => {
           <SearchBar
             onChangeText={searchInputHandler}
             value={searchInput}
+            placeholder='Type here...'
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={styles.searchBarContainer}
             inputContainerStyle={styles.searchBarInputContainer}
@@ -138,8 +139,9 @@ const styles = StyleSheet.create({
     padding: 10
   },
   searchBarInputContainer: {
-    // backgroundColor: Colors.vwgSearchBarInputContainer,
+    backgroundColor: Colors.vwgVeryLightGray,
     borderColor: Colors.vwgSearchBarInputContainer,
+    borderRadius: Platform.OS === 'ios' ? 10 : 20,
     height: 30
   },
   searchBarContainer: {
