@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
-import { ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
@@ -251,15 +251,24 @@ export default function DealerToolsList(props) {
               style={styles.toolItem}
               onPress={() => toggleBaskethandler(true)}
             >
-              <Text
-                style={{
-                  fontFamily: 'the-sans',
-                  fontSize: RFPercentage(2.0),
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text
+                  style={{
+                    fontFamily: 'the-sans',
+                    fontSize: RFPercentage(2.0),
 
-                  fontWeight: '500'
-                }}
-              >
-                {`Already in your `}
+                    fontWeight: '500'
+                  }}
+                >
+                  {`Already in your `}
+                </Text>
+                <Icon
+                  name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+                  type='ionicon'
+                  size={13}
+                  color={Colors.vwgLinkColor}
+                  iconStyle={{ marginTop: 2 }}
+                />
                 <Text
                   style={{
                     fontFamily: 'the-sans-bold',
@@ -268,9 +277,9 @@ export default function DealerToolsList(props) {
                     fontWeight: '600'
                   }}
                 >
-                  tool basket
+                  {` tool basket.`}
                 </Text>
-              </Text>
+              </View>
             </Touchable>
           );
         }

@@ -823,17 +823,25 @@ export default FindToolsScreen = props => {
         onPress={() => {
           toggleBaskethandler(true);
         }}
-        style={{ flexDirection: 'row' }}
+        style={{ flexDirection: 'row', alignItems: 'center' }}
       >
-        <Text
-          style={styles.closedBasketPromptText}
-        >{`Open tools basket   `}</Text>
         <Icon
-          name={Platform.OS === 'ios' ? 'ios-arrow-up' : 'md-arrow-up'}
+          name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
           type='ionicon'
-          size={15}
+          size={20}
           color={Colors.vwgWhite}
+          iconStyle={{
+            marginTop: Platform.OS === 'ios' ? -2 : -4
+          }}
         />
+        <Text style={styles.closedBasketPromptText}>
+          {` Back to tools basket`}
+          {toolBasket && toolBasket.length > 1
+            ? ` (${toolBasket.length} items)`
+            : toolBasket && toolBasket.length > 0
+            ? ` (${toolBasket.length} item)`
+            : null}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -852,14 +860,22 @@ export default FindToolsScreen = props => {
   //   console.log('FTS about to render');
 
   //   console.log('RENDERING FT screen !!!!!!!!!!!!!!!!!!!');
+
+  //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
   return (
     <View
       style={{
-        flex: 1,
-        marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
+        flex: 1
       }}
     >
-      <View>
+      <View
+        style={{
+          marginBottom:
+            mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0
+              ? 180
+              : 140
+        }}
+      >
         <KeyboardAvoidingView>
           <SearchBarWithRefresh
             dataName={dataNameInPlay}
@@ -1132,18 +1148,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 40,
     // bottom: TAB_BAR_HEIGHT,
-    bottom: 45,
-    left: 0,
+    bottom: 0,
+    // left: 0,
     backgroundColor: Colors.vwgLinkColor,
-    paddingTop: 10,
+    // paddingTop: 10,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center'
   },
   closedBasketPromptText: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(2.2)
     // textAlign: 'center'
   },
   closeButtonRow: {
