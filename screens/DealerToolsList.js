@@ -9,10 +9,6 @@ import Colors from '../constants/Colors';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 
 export default function DealerToolsList(props) {
-  //   console.log('props');
-  //   console.log(props);
-  //   console.log('props end');
-
   //   const limit = 10;
   //   const allItems = props.items || [];
   //   //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
