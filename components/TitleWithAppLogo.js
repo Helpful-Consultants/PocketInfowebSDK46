@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
@@ -16,7 +16,8 @@ export default function getLogoTitle(props) {
           fontFamily: 'the-sans-bold',
           fontSize: RFPercentage(2.2),
           paddingLeft: 5,
-          color: Colors.vwgBlack
+          color: Colors.vwgBlack,
+          textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
         }}
       >
         {props.title}
