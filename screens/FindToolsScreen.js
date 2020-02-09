@@ -892,6 +892,8 @@ export default FindToolsScreen = props => {
                 dealerWipsItems={dealerWipsItems}
                 bookedToolsList={bookedToolsList}
                 selectItemHandler={selectItemHandler}
+                toolBasket={toolBasket}
+                toggleBaskethandler={toggleBaskethandler}
                 mode={mode}
                 showPrompt={
                   mode === 'list' &&
