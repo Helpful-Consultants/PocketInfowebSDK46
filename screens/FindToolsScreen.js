@@ -622,7 +622,8 @@ export default FindToolsScreen = props => {
             onPress={() => {
               acceptMessageHandler();
             }}
-            buttonStyle={styles.closeButton}
+            titleStyle={styles.closeConfirmationButtonTitle}
+            buttonStyle={styles.closeConfirmationButton}
           />
         </View>
       </View>
@@ -828,10 +829,10 @@ export default FindToolsScreen = props => {
         <Icon
           name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
           type='ionicon'
-          size={20}
+          size={18}
           color={Colors.vwgWhite}
           iconStyle={{
-            marginTop: Platform.OS === 'ios' ? -2 : -4
+            marginTop: Platform.OS === 'ios' ? 0 : -4
           }}
         />
         <Text style={styles.closedBasketPromptText}>
@@ -872,7 +873,7 @@ export default FindToolsScreen = props => {
         style={{
           marginBottom:
             mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0
-              ? 180
+              ? 170
               : 140
         }}
       >
@@ -1146,7 +1147,7 @@ const styles = StyleSheet.create({
   closedBasket: {
     position: 'absolute',
     width: '100%',
-    height: 40,
+    height: 30,
     // bottom: TAB_BAR_HEIGHT,
     bottom: 0,
     // left: 0,

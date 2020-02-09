@@ -261,7 +261,7 @@ export default function DealerToolsList(props) {
                   type='ionicon'
                   size={13}
                   color={Colors.vwgLinkColor}
-                  iconStyle={{ marginTop: 2 }}
+                  iconStyle={{ marginTop: Platform.OS === 'ios' ? 2 : -1 }}
                 />
                 <Text
                   style={{
