@@ -1,8 +1,7 @@
-import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { Platform, StyleSheet, ScrollView, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import { Card, Image, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
@@ -29,20 +28,48 @@ export default function StatsSummary(props) {
 
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
+  //   const dealerToolsCountFormatted =
+  //     (dealerToolsCount &&
+  //       Intl &&
+  //       new Intl.NumberFormat('en-GB', {
+  //         style: 'decimal'
+  //       }).format(dealerToolsCount)) ||
+  //     '';
+  //   console.log('dealerToolsCount', dealerToolsCount);
+
+  //   const dealerToolsCountNumber =
+  //     (dealerToolsCount && parseInt(dealerToolsCount, 10)) || 0;
+  //   console.log('dealerToolsCountNumber', dealerToolsCountNumber);
+  //   const dealerToolsCountFormatted =
+  //     (dealerToolsCountNumber &&
+  //       parseFloat(dealerToolsCountNumber).toLocaleString('en')) ||
+  //     '';
+  //   console.log('dealerToolsCountFormatted', dealerToolsCountFormatted);
+
   const dealerToolsCountFormatted =
     (dealerToolsCount &&
-      new Intl.NumberFormat('en-GB', {
-        style: 'decimal'
-      }).format(dealerToolsCount)) ||
+      dealerToolsCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) ||
     '';
+  //   console.log('dealerToolsCountFormatted', dealerToolsCountFormatted);
+
+  //   const loggedToolsFormatted =
+  //     (statsObj &&
+  //       statsObj.loggedTools &&
+  //       Intl &&
+  //       new Intl.NumberFormat('en-GB', {
+  //         style: 'decimal'
+  //       }).format(statsObj.loggedTools)) ||
+  //     '';
+  //   console.log('statsObj.loggedTools', statsObj.loggedTools);
+  //   const loggedToolsNumber =
+  //     (statsObj && statsObj.loggedTools && parseInt(statsObj.loggedTools, 10)) ||
+  //     0;
 
   const loggedToolsFormatted =
-    (statsObj &&
-      statsObj.loggedTools &&
-      new Intl.NumberFormat('en-GB', {
-        style: 'decimal'
-      }).format(statsObj.loggedTools)) ||
+    (statsObj.loggedTools &&
+      statsObj.loggedTools.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) ||
     '';
+  //   console.log('loggedToolsFormatted', loggedToolsFormatted);
 
   // console.log('start statsDummyData');
   // console.log(statsDummyData);
