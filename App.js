@@ -21,6 +21,7 @@ import {
 } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Colors from './constants/Colors';
 
 // import AsyncStorage from '@react-native-community/async-storage'; //breaks
 import { AsyncStorage } from 'react-native'; // deprecated
@@ -85,7 +86,14 @@ export default function App(props) {
         <Provider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
             <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle='dark-content' />}
+              {Platform.OS === 'ios' ? (
+                <StatusBar barStyle='dark-content' />
+              ) : (
+                <StatusBar
+                  backgroundColor={Colors.vwgDeepBlue}
+                  barStyle='light-content'
+                />
+              )}
               <AppNavigator userIsSignedIn={userIsSignedIn} />
             </View>
           </PersistGate>
