@@ -113,13 +113,11 @@ export default FindToolsScreen = props => {
   const [bookedToolsList, setBookedToolsList] = useState([]);
   //   const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
-  const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
+  //   const [isDupBookedAlertVisible, setIsDupBookedAlertVisible] = useState(false);
   const [isDupPickedAlertVisible, setIsDupPickedAlertVisible] = useState(false);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [mode, setMode] = useState('list');
   const [toolBasket, setToolBasket] = useState([]);
-  const [toolBasketIds, setToolBasketIds] = useState([]);
-
   const [wipNumber, setWipNumber] = useState('');
   //   console.log('toolbasket from useState is ', toolBasket.length);
 
@@ -322,13 +320,13 @@ export default FindToolsScreen = props => {
 
   const selectItemHandler = (tool, lastPerson) => {
     // console.log('in selectItemHandler');
+
     let dup =
       (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
 
     if (dup.length === 0) {
       const pickedTool = { ...tool, lastPerson };
       setToolBasket([...toolBasket, pickedTool]);
-      setToolBasketIds([...toolBasketIds, pickedTool.id]);
       setMode('basket');
       setIsBasketVisible(true);
     } else {
@@ -336,6 +334,7 @@ export default FindToolsScreen = props => {
       setIsBasketVisible(false);
       setIsDupPickedAlertVisible(true);
     }
+    // console.log(toolBasket && toolBasket);
   };
 
   const cancelDupPickedHandler = () => {
