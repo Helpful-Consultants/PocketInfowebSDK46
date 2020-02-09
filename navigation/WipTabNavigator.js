@@ -149,7 +149,7 @@ const WipTabNavigator =
           shifting: false,
           backBehavior: 'history',
           activeColor: Colors.vwgDeepBlue,
-          inactiveColor: Colors.vwgIosLink,
+          inactiveColor: Colors.vwgLinkColor,
           tabBarColor: Colors.vwgWhite,
           barStyle: {
             labelPosition: 'below-icon',
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   notFocused: {
     fontFamily: 'the-sans',
-    color: Colors.vwgIosLink,
+    color: Colors.vwgLinkColor,
     fontSize: RFPercentage(1.7)
   }
 });

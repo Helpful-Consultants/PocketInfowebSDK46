@@ -91,7 +91,7 @@ export default function BookedOutToolsList(props) {
                         style={{
                           fontFamily: 'the-sans',
                           fontSize: RFPercentage(2.2),
-                          color: Colors.vwgIosLink,
+                          color: Colors.vwgLinkColor,
                           textAlign: 'left',
                           fontWeight: '600',
                           paddingTop: 8
@@ -116,7 +116,7 @@ export default function BookedOutToolsList(props) {
                             style={{
                               fontFamily: 'the-sans',
                               fontSize: RFPercentage(2.2),
-                              color: Colors.vwgIosLink,
+                              color: Colors.vwgLinkColor,
                               textAlign: 'right',
                               paddingTop: 9
                             }}
@@ -139,7 +139,7 @@ export default function BookedOutToolsList(props) {
                           }
                           iconStyle={{ margin: 0, padding: 0 }}
                           type='ionicon'
-                          color={Colors.vwgIosLink}
+                          color={Colors.vwgLinkColor}
                           reverse
                           size={10}
                         />

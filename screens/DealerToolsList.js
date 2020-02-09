@@ -124,7 +124,7 @@ export default function DealerToolsList(props) {
             ? Colors.vwgVeryDarkGray
             : booked && booked === true
             ? Colors.vwgVeryDarkGray
-            : Colors.vwgIosLink,
+            : Colors.vwgLinkColor,
           fontFamily: 'the-sans',
           fontSize: RFPercentage(2.1),
           fontWeight: '600'

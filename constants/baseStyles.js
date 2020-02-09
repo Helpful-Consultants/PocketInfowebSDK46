@@ -41,12 +41,12 @@ export default baseStyles = StyleSheet.create({
   },
   linkText: {
     fontFamily: 'the-sans',
-    color: Colors.vwgIosLink,
+    color: Colors.vwgLinkColor,
     fontSize: RFPercentage(2)
   },
   linkTextBold: {
     fontFamily: 'the-sans-bold',
-    color: Colors.vwgIosLink,
+    color: Colors.vwgLinkColor,
     fontSize: RFPercentage(2)
   },
   screen: {

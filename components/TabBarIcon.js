@@ -15,7 +15,7 @@ export default function TabBarIcon(props) {
     <Ionicons
       name={props.name}
       size={iconSize}
-      color={props.focused ? Colors.vwgDeepBlue : Colors.vwgIosLink}
+      color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLinkColor}
     />
   );
 }

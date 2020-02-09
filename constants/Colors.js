@@ -1,5 +1,8 @@
+import { Platform } from 'react-native';
+
 const tintColor = '#2f95dc';
 const errorText = '#a9043f';
+const vwgLink = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
 
 export default {
   tintColor,
@@ -15,7 +18,9 @@ export default {
   noticeText: '#fff',
   transparentBackground: 'rgba(0, 0, 0, 0)',
   iosBlue: 'rgba(0, 122, 125, 1)',
-  vwgIosLink: '#00A1D0',
+  //   vwgLinkColor: '#00A1D0',
+  vwgLinkColor: vwgLink,
+
   vwgWarmOrange: '#e2a933',
   vwgCoolOrange: '#eaad00',
   vwgWarmRed: '#a9043f',

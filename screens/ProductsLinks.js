@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.2),
     fontWeight: '600',
-    color: Colors.vwgIosLink
+    color: Colors.vwgLinkColor
   },
 
   itemMainRow: {
