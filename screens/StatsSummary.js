@@ -81,37 +81,40 @@ export default function StatsSummary(props) {
       {userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <View style={{ marginHorizontal: 30 }}>
-            <Text style={styles.statsTitle}>App User</Text>
+            <Text style={styles.statsTitle}>App user</Text>
             <Text style={styles.statsText}>{userDataObj.userName}</Text>
-            <Text style={styles.statsText}>{statsObj.userName}</Text>
+            <Text style={styles.statsText}>{userDataObj.dealerName}</Text>
+            <Text style={styles.statsText}>{userDataObj.dealerId}</Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Mandatory Tools</Text>
+            <Text style={styles.statsTitle}>Mandatory tools</Text>
             <Text style={styles.statsText}>
               {`${dealerToolsCountFormatted} mandatory; ${loggedToolsFormatted} logged;`}
             </Text>
             <Text style={styles.statsText}>
-              {`${effectiveness} effectiveness`}
+              {`Effectiveness: ${effectiveness} of tool locations recorded`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Loan Tool Usage</Text>
+            <Text style={styles.statsTitle}>Loan tool usage</Text>
             <Text style={styles.statsText}>
               {`${statsObj.ltpUse} used; ${statsObj.ltpCurrent} current`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Support Tickets</Text>
+            <Text style={styles.statsTitle}>Support tickets</Text>
             <Text style={styles.statsText}>
               {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Active Jobs</Text>
-            <Text style={styles.statsText}>{`${activeJobsCount} active;`}</Text>
+            <Text style={styles.statsTitle}>
+              Active jobs with tools booked out
+            </Text>
+            <Text style={styles.statsText}>{`${activeJobsCount} jobs`}</Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Service Measures</Text>
+            <Text style={styles.statsTitle}>Service measures</Text>
             <Text style={styles.statsText}>
               {`${statsObj.activeServiceMeasures} active; ${statsObj.completedServiceMeasures} completed`}
             </Text>
