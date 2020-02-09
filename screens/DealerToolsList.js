@@ -19,9 +19,11 @@ export default function DealerToolsList(props) {
     items,
     dealerWipsItems,
     bookedToolsList,
+    toolBasket,
     selectItemHandler,
     showPrompt,
-    userIntId
+    userIntId,
+    toggleBaskethandler
   } = props;
 
   //   const { selectItemHandler, showPrompt } = props;
@@ -31,6 +33,20 @@ export default function DealerToolsList(props) {
   //   console.log('bookedToolsList', bookedToolsList);
 
   const [listView, setListView] = useState();
+  //   const [toolBasketList, setToolBasketList] = useState();
+
+  //   console.log('toolBasket', toolBasket && toolBasket);
+
+  let toolBasketList = [];
+  toolBasket && toolBasket.forEach(tool => toolBasketList.push(tool.id));
+  //   useEffect(() => {
+  //     let list = [];
+
+  //     toolBasket && toolBasket.forEach(tool => list.push(tool.id));
+
+  //     // console.log(bookedToolsList && bookedToolsList);
+  //     setToolBasketList(list);
+  //   }, [toolBasket]);
 
   const findLastBookedOutByFromTool = item => {
     // console.log('findLastBookedOutByFromTool', item);
@@ -93,10 +109,10 @@ export default function DealerToolsList(props) {
   //   };
 
   const CustomListItem = props => {
-    const { item, lastJobDetails, booked } = props;
+    const { item, lastJobDetails, booked, inToolBasket } = props;
     let personObj = {};
-    let personName = '';
-    let personIntId = '';
+    // let personName = '';
+    // let personIntId = '';
     if (item.lastWIP && item.lastWIP.length > 0) {
       personObj = findLastBookedOutByFromTool(item);
       personName = personObj.name;
@@ -118,7 +134,8 @@ export default function DealerToolsList(props) {
         titleStyle={{
           color: item.loanToolNo
             ? Colors.vwgVeryDarkGray
-            : booked && booked === true
+            : (booked && booked === true) ||
+              (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryDarkGray
             : Colors.vwgLinkColor,
           fontFamily: 'the-sans',
@@ -128,7 +145,8 @@ export default function DealerToolsList(props) {
         containerStyle={{
           backgroundColor: item.loanToolNo
             ? Colors.vwgVeryVeryLightGray
-            : booked && booked === true
+            : (booked && booked === true) ||
+              (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryLightGray
             : Colors.vwgWhite
         }}
@@ -172,6 +190,7 @@ export default function DealerToolsList(props) {
     let personName = '';
     let personIntId = '';
     let bookedByUser = false;
+    let inToolBasket = false;
     let booked = false;
     let lastJobDetails = null;
 
@@ -224,7 +243,39 @@ export default function DealerToolsList(props) {
             >{`Booked out to ${personName}, on job '${wipObj.wipNumber}'`}</Text>
           );
         }
+      } else if (toolBasketList && toolBasketList.length > 0) {
+        if (toolBasketList.includes(item.id)) {
+          inToolBasket = true;
+          lastJobDetails = (
+            <Touchable
+              style={styles.toolItem}
+              onPress={() => toggleBaskethandler(true)}
+            >
+              <Text
+                style={{
+                  fontFamily: 'the-sans',
+                  fontSize: RFPercentage(2.0),
+
+                  fontWeight: '500'
+                }}
+              >
+                {`Already in your `}
+                <Text
+                  style={{
+                    fontFamily: 'the-sans-bold',
+                    fontSize: RFPercentage(2.0),
+                    color: Colors.vwgLinkColor,
+                    fontWeight: '600'
+                  }}
+                >
+                  tool basket
+                </Text>
+              </Text>
+            </Touchable>
+          );
+        }
       }
+
       // } else if (item.lastWIP && item.lastWIP.length > 0) {
       //   //   console.log('item with last wip', item);
       //   personObj = findLastBookedOutByFromTool(item);
@@ -283,6 +334,15 @@ export default function DealerToolsList(props) {
         booked={booked}
         lastJobDetails={lastJobDetails}
         bookedByUser={bookedByUser}
+        inToolBasket={inToolBasket}
+      ></CustomListItem>
+    ) : inToolBasket && inToolBasket === true ? (
+      <CustomListItem
+        item={item}
+        booked={booked}
+        lastJobDetails={lastJobDetails}
+        bookedByUser={bookedByUser}
+        inToolBasket={inToolBasket}
       ></CustomListItem>
     ) : (
       <Touchable
@@ -294,6 +354,7 @@ export default function DealerToolsList(props) {
           booked={booked}
           lastJobDetails={lastJobDetails}
           bookedByUser={bookedByUser}
+          inToolBasket={inToolBasket}
         ></CustomListItem>
       </Touchable>
     );
@@ -326,7 +387,7 @@ export default function DealerToolsList(props) {
     );
     // console.log(newList);
     setListView(newList);
-  }, [items]);
+  }, [items, toolBasket]);
 
   //   console.log('about to render tools list');
   return listView || null;
