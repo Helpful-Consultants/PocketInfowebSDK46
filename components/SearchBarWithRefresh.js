@@ -45,7 +45,7 @@ export default SearchBarWithRefresh = props => {
             name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
             type='ionicon'
             size={25}
-            color={Colors.vwgLinkColor}
+            color={Colors.vwgLink}
           />
         </TouchableOpacity>
       )}

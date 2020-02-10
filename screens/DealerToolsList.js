@@ -137,7 +137,7 @@ export default function DealerToolsList(props) {
             : (booked && booked === true) ||
               (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryDarkGray
-            : Colors.vwgLinkColor,
+            : Colors.vwgLink,
           fontFamily: 'the-sans-bold',
           fontSize: RFPercentage(2.1)
         }}
@@ -260,14 +260,14 @@ export default function DealerToolsList(props) {
                   name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
                   type='ionicon'
                   size={13}
-                  color={Colors.vwgLinkColor}
+                  color={Colors.vwgLink}
                   iconStyle={{ marginTop: Platform.OS === 'ios' ? 2 : -1 }}
                 />
                 <Text
                   style={{
                     fontFamily: 'the-sans-bold',
                     fontSize: RFPercentage(2.0),
-                    color: Colors.vwgLinkColor
+                    color: Colors.vwgLink
                   }}
                 >
                   {` tool basket.`}

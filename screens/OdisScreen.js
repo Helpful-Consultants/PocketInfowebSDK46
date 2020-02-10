@@ -107,6 +107,9 @@ export default OdisScreen = props => {
 
 OdisScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='ODIS versions' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item

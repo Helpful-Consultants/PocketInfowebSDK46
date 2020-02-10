@@ -10,7 +10,7 @@ const CustomHeaderButton = props => {
       {...props}
       IconComponent={Ionicons}
       iconSize={23}
-      color={Colors.vwgLinkColor}
+      color={Platform.OS === 'ios' ? Colors.vwgLink : 'white'}
     />
   );
 };

@@ -166,6 +166,9 @@ export default ProductsScreen = props => {
 
 ProductsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Products' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item

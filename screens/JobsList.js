@@ -68,7 +68,7 @@ export default function DealerToolsList(props) {
                       style={{
                         fontFamily: 'the-sans-bold',
                         fontSize: RFPercentage(2.2),
-                        color: Colors.vwgLinkColor,
+                        color: Colors.vwgLink,
                         textAlign: 'left',
                         paddingTop: 10
                       }}
@@ -92,7 +92,7 @@ export default function DealerToolsList(props) {
                           style={{
                             fontFamily: 'the-sans',
                             fontSize: RFPercentage(2.2),
-                            color: Colors.vwgLinkColor,
+                            color: Colors.vwgLink,
                             textAlign: 'right',
                             paddingTop: 9
                           }}
@@ -116,7 +116,7 @@ export default function DealerToolsList(props) {
                         }
                         iconStyle={{ margin: 0, padding: 0 }}
                         type='ionicon'
-                        color={Colors.vwgLinkColor}
+                        color={Colors.vwgLink}
                         reverse
                         size={10}
                       />

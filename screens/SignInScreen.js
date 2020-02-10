@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   signInButton: {
     marginVertical: 20,
     marginHorizontal: 20,
-    backgroundColor: Colors.vwgLinkColor
+    backgroundColor: Colors.vwgLink
   },
   errorText: {
     ...baseStyles.text,

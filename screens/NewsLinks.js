@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(2.2),
-    color: Colors.vwgLinkColor
+    color: Colors.vwgLink
   },
   itemMainRow: {
     fontSize: RFPercentage(1.8)

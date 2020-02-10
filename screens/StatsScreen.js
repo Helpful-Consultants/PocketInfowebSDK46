@@ -158,6 +158,9 @@ export default StatsScreen = props => {
 
 StatsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Stats' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item

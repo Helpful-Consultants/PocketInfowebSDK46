@@ -157,6 +157,9 @@ export default NewsScreen = props => {
 
 NewsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='News' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item

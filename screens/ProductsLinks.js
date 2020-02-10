@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   itemTitle: {
     flexWrap: 'wrap',
     fontFamily: 'the-sans-bold',
-    color: Colors.vwgLinkColor
+    color: Colors.vwgLink
   },
 
   itemMainRow: {

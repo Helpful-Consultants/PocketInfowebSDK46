@@ -369,6 +369,9 @@ export default JobsScreen = props => {
 
 JobsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='My jobs' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item

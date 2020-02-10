@@ -10,7 +10,7 @@ export default function DrawerIcon(props) {
       name={props.name}
       size={iconSize}
       style={{ marginBottom: 0, marginLeft: 0, paddingLeft: 0 }}
-      color={Colors.vwgLinkColor}
+      color={Colors.vwgLink}
     />
   );
 }

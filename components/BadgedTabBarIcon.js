@@ -17,7 +17,7 @@ const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 //   <Ionicons
 //       name={props.name}
 //       size={iconSize}
-//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLinkColor}
+//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLink}
 //     />
 
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
@@ -37,7 +37,7 @@ export default function TabBarIcon(props) {
         type='ionicon'
         name={props.name}
         size={iconSize}
-        color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLinkColor}
+        color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLink}
       />
       {showBadge ? (
         <Badge

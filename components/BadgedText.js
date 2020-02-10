@@ -35,7 +35,7 @@ const textBadgeRightMargin =
 //   <Ionicons
 //       name={props.name}
 //       size={iconSize}
-//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLinkColor}
+//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLink}
 //     />
 
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   notFocused: {
     fontFamily: 'the-sans',
-    color: Colors.vwgLinkColor,
+    color: Colors.vwgLink,
     fontSize: RFPercentage(1.7)
   }
 });

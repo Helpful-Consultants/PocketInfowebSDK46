@@ -643,7 +643,7 @@ export default FindToolsScreen = props => {
               name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'}
               type='ionicon'
               size={20}
-              color={Colors.vwgLinkColor}
+              color={Colors.vwgLink}
               iconStyle={styles.addToolButton}
             />
             <Text style={styles.basketTextLink}>
@@ -976,6 +976,9 @@ export default FindToolsScreen = props => {
 
 FindToolsScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='Find tools' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
@@ -1039,7 +1042,7 @@ const styles = StyleSheet.create({
   },
   basketTextLink: {
     fontFamily: 'the-sans',
-    color: Colors.vwgLinkColor,
+    color: Colors.vwgLink,
     fontSize: RFPercentage(2),
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
@@ -1151,7 +1154,7 @@ const styles = StyleSheet.create({
     // bottom: TAB_BAR_HEIGHT,
     bottom: 0,
     // left: 0,
-    backgroundColor: Colors.vwgLinkColor,
+    backgroundColor: Colors.vwgLink,
     // paddingTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -1240,7 +1243,7 @@ const styles = StyleSheet.create({
   signInButton: {
     marginVertical: 20,
     marginHorizontal: 20,
-    backgroundColor: Colors.vwgLinkColor
+    backgroundColor: Colors.vwgLink
   },
 
   cancelButton: {
@@ -1273,19 +1276,19 @@ const styles = StyleSheet.create({
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
   closeButton: {
-    backgroundColor: Colors.vwgLinkColor,
+    backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5
   },
   closeButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgLinkColor,
+    color: Colors.vwgLink,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
 
   bookButton: {
-    backgroundColor: Colors.vwgLinkColor,
+    backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5
     // color: Colors.vwgWhite,
@@ -1305,7 +1308,7 @@ const styles = StyleSheet.create({
     // width: '10%'
   },
   confirmButton: {
-    backgroundColor: Colors.vwgLinkColor,
+    backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5
   },

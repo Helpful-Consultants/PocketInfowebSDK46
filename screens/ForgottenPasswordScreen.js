@@ -124,7 +124,7 @@ export default ForgottenPasswordScreen = props => {
             marginTop: 20
           }}
           titleStyle={{
-            color: Colors.vwgLinkColor
+            color: Colors.vwgLink
           }}
         />
         <Text

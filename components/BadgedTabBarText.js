@@ -20,7 +20,7 @@ const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 //   <Ionicons
 //       name={props.name}
 //       size={iconSize}
-//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLinkColor}
+//       color={props.focused ? Colors.vwgDeepBlue : Colors.vwgLink}
 //     />
 
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
     height: 10,
     minWidth: 0,
     width: 10,
-    backgroundColor: Colors.vwgLinkColor
+    backgroundColor: Colors.vwgInactiveLink
   },
   badgeFocused: {
     // borderRadius: 12,
     height: 10,
     minWidth: 0,
     width: 10,
-    backgroundColor: Colors.vwgDeepBlue
+    backgroundColor: Colors.vwgActiveLink
   },
   badgeContainer: {
     position: 'absolute',
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
   },
   focused: {
     fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
+    color: Colors.vwgActiveLink,
     fontSize: RFPercentage(1.7)
   },
   notFocused: {
     fontFamily: 'the-sans',
-    color: Colors.vwgLinkColor,
+    color: Colors.vwgInactiveLink,
     fontSize: RFPercentage(1.7)
   }
 });

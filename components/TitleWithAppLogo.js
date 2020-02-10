@@ -16,7 +16,7 @@ export default function getLogoTitle(props) {
           fontFamily: 'the-sans-bold',
           fontSize: RFPercentage(2.2),
           paddingLeft: 5,
-          color: Colors.vwgBlack,
+          color: Colors.vwgHeaderTitle,
           textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
         }}
       >

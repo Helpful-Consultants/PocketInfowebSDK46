@@ -201,6 +201,9 @@ export default LtpScreen = props => {
 
 LtpScreen.navigationOptions = ({ navigation }) => ({
   headerTitle: <TitleWithAppLogo title='LTP' />,
+  headerStyle: {
+    backgroundColor: Colors.vwgHeader
+  },
   headerLeft: () => (
     <HeaderButtons HeaderButtonComponent={HeaderButton}>
       <Item
