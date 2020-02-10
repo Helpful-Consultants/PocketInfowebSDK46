@@ -89,10 +89,7 @@ export default function App(props) {
               {Platform.OS === 'ios' ? (
                 <StatusBar barStyle='dark-content' />
               ) : (
-                <StatusBar
-                  backgroundColor={Colors.vwgDeepBlue}
-                  barStyle='light-content'
-                />
+                <StatusBar backgroundColor='#004466' barStyle='light-content' />
               )}
               <AppNavigator userIsSignedIn={userIsSignedIn} />
             </View>
@@ -134,6 +131,7 @@ async function loadResourcesAsync() {
       require('./assets/images/splash.png'),
       require('./assets/images/tiw-app-logo-less-whitespace.png'),
       require('./assets/images/tiw-app-logo-trans.png'),
+      require('./assets/images/tiw-app-logo-trans-white.png'),
       require('./assets/images/tiw-app-logo.png'),
       require('./assets/images/audi-logo.png'),
       require('./assets/images/cv-logo.png'),
