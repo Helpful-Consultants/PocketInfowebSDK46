@@ -2,13 +2,25 @@ import { Platform } from 'react-native';
 
 const tintColor = '#2f95dc';
 const errorText = '#a9043f';
-const vwgLink = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
+const vwgLinkColor = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
+const vwgHeaderColor = Platform.OS === 'ios' ? '#FFFFFF' : '#004466';
+const vwgTitleColor = Platform.OS === 'ios' ? '#000000' : '#FFFFFF';
+const vwgAndroidNavColor = Platform.OS === 'ios' ? '#FFFFFF' : '#004466';
+const vwgActiveLinkColor = Platform.OS === 'ios' ? '#004466' : '#004466';
+const vwgInactiveLinkColor = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
 
 export default {
   tintColor,
   errorText,
-  tabIconDefault: '#ccc',
+  iosBlue: 'rgba(0, 122, 125, 1)',
+  vwgLink: vwgLinkColor,
+  vwgHeader: vwgHeaderColor,
+  vwgAndroidNav: vwgAndroidNavColor,
+  vwgHeaderTitle: vwgTitleColor,
+  vwgActiveLink: vwgActiveLinkColor,
+  vwgInactiveLink: vwgInactiveLinkColor,
   tabIconSelected: tintColor,
+  tabIconDefault: '#ccc',
   tabBar: '#fefefe',
   errorBackground: 'red',
   errorText: '#fff',
@@ -17,8 +29,6 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   transparentBackground: 'rgba(0, 0, 0, 0)',
-  iosBlue: 'rgba(0, 122, 125, 1)',
-  vwgLinkColor: vwgLink,
   vwgWarmOrange: '#e2a933',
   vwgCoolOrange: '#eaad00',
   vwgWarmRed: '#a9043f',
@@ -44,7 +54,6 @@ export default {
   vwgVeryDarkGray: '#333',
   vwgBlack: '#000',
   vwgWhite: '#fff',
-  //   vwgSearchBarContainer: '#80b0c8',
   vwgSearchBarContainer: '#fff',
   vwgSearchBarInputContainer: '#c6dfe7'
 };
