@@ -1,15 +1,14 @@
 import React from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
-import { useSelector } from 'react-redux';
+
 // import {
 //   createDrawerNavigator,
 //   DrawerNavigatorItems as DrawerItems
 // } from 'react-navigation-drawer';
-import Constants from 'expo-constants';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import {
 //   getBrand,
