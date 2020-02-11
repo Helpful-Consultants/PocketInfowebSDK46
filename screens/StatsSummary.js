@@ -66,7 +66,8 @@ export default function StatsSummary(props) {
   //     0;
 
   const loggedToolsFormatted =
-    (statsObj.loggedTools &&
+    (statsObj &&
+      statsObj.loggedTools &&
       statsObj.loggedTools.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) ||
     '';
   //   console.log('loggedToolsFormatted', loggedToolsFormatted);
@@ -78,7 +79,7 @@ export default function StatsSummary(props) {
   //   console.log('statsDummyData', statsDummyData);
   return (
     <View style={styles.container}>
-      {userDataCount > 0 && statsDataCount > 0 ? (
+      {userDataObj && statsObj && userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <View style={{ marginHorizontal: 30 }}>
             <Text style={styles.statsTitle}>App user</Text>
