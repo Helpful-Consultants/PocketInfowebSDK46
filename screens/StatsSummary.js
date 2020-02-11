@@ -128,10 +128,13 @@ export default function StatsSummary(props) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 40
+    paddingBottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center'
+    // backgroundColor: 'teal'
 
     // backgroundColor: '#00889d'
   },
@@ -141,9 +144,8 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(2.2),
     paddingVertical: 10,
-    marginTop: 20,
+    // marginTop: 10,
     marginBottom: 0,
-
     textAlign: 'center'
   },
   statsText: {
