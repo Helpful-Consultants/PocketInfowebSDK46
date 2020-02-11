@@ -370,8 +370,12 @@ export default HomeScreen = props => {
                       />
 
                       <Text style={styles.gridCellText}>
-                        Jobs
-                        {wipsCount && wipsCount > 0 ? ` (${wipsCount})` : ''}
+                        {`Jobs`}
+                        {wipsCount && wipsCount > 0 ? (
+                          <Text style={styles.gridCellCountText}>
+                            {` (${wipsCount})`}
+                          </Text>
+                        ) : null}
                       </Text>
                     </View>
                   </Touchable>
@@ -393,10 +397,12 @@ export default HomeScreen = props => {
                         size={iconSize}
                       />
                       <Text style={styles.gridCellText}>
-                        Booked tools
-                        {bookedOutToolsCount && bookedOutToolsCount > 0
-                          ? ` (${bookedOutToolsCount})`
-                          : ''}
+                        {`Booked tools`}
+                        {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
+                          <Text style={styles.gridCellCountText}>
+                            {` (${bookedOutToolsCount})`}
+                          </Text>
+                        ) : null}
                       </Text>
                     </View>
                   </Touchable>
@@ -681,6 +687,7 @@ const styles = StyleSheet.create({
 
     textAlign: 'center'
   },
+  gridCellCountText: { fontSize: RFPercentage(2.2) },
   gridCellTextDisabledSmall: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
