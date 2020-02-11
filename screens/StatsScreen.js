@@ -10,6 +10,7 @@ import { getStatsRequest } from '../actions/stats';
 import { getDealerWipsRequest } from '../actions/dealerWips';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
+import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';

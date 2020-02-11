@@ -9,9 +9,9 @@ import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
-
+import Colors from '../constants/Colors';
 import OdisVersions from './OdisVersions';
-import odisDummyData from '../dummyData/odisDummyData.js';
+// import odisDummyData from '../dummyData/odisDummyData.js';
 
 export default OdisScreen = props => {
   const dispatch = useDispatch();
