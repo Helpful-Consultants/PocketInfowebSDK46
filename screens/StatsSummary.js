@@ -127,11 +127,14 @@ export default function StatsSummary(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     paddingLeft: 10,
-    paddingRight: 10
+    paddingRight: 10,
+    paddingBottom: 40
+
     // backgroundColor: '#00889d'
   },
+
   statsTitle: {
     color: Colors.vwgDeepBlue,
     fontFamily: 'the-sans-bold',
