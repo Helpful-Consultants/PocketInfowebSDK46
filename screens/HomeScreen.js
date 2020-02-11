@@ -369,7 +369,10 @@ export default HomeScreen = props => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Jobs</Text>
+                      <Text style={styles.gridCellText}>
+                        Jobs
+                        {wipsCount && wipsCount > 0 ? ` (${wipsCount})` : ''}
+                      </Text>
                     </View>
                   </Touchable>
                 </View>
@@ -389,7 +392,12 @@ export default HomeScreen = props => {
                         color={buttonTextColor}
                         size={iconSize}
                       />
-                      <Text style={styles.gridCellText}>Booked tools</Text>
+                      <Text style={styles.gridCellText}>
+                        Booked tools
+                        {bookedOutToolsCount && bookedOutToolsCount > 0
+                          ? ` (${bookedOutToolsCount})`
+                          : ''}
+                      </Text>
                     </View>
                   </Touchable>
                   <Touchable
