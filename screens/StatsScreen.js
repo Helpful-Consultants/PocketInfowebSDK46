@@ -120,7 +120,7 @@ export default StatsScreen = props => {
     dealerToolsItems &&
     dealerToolsItems.length
       ? ((100 * statsObj.loggedTools) / dealerToolsItems.length)
-          .toFixed(2)
+          .toFixed(0)
           .toString() + '%'
       : 'N/A';
 
