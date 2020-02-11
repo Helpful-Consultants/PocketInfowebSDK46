@@ -526,7 +526,7 @@ export default HomeScreen = props => {
                     size={20}
                     color={Colors.vwgDeepBlue}
                   />
-                  <Text style={styles.signOutCellText}>Sign out</Text>
+                  <Text style={styles.signOutCellText}>{` Sign out`}</Text>
                 </View>
               </Touchable>
             </View>
