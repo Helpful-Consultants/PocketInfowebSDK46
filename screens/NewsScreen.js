@@ -139,7 +139,7 @@ export default NewsScreen = props => {
           {filteredItems && filteredItems.length > 0 ? (
             <View style={styles.lookupPrompt}>
               <Text style={styles.lookupPromptText}>
-                Touch a news item to open up the story on Tools Infoweb.
+                Touch a news item to see more on Tools Infoweb.
               </Text>
             </View>
           ) : null}
