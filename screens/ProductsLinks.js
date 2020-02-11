@@ -27,7 +27,7 @@ export default function ProductsLinks(props) {
         '?appCode=' +
         appCode +
         '&controller=api&action=showToUser&userId=' +
-        '850' +
+        intId +
         '&shadowController=desktopBulletins&shadowAction=list';
 
       return newLink;
