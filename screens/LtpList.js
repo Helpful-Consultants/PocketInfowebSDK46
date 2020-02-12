@@ -59,12 +59,12 @@ export default function LtpList(props) {
 
     return (
       <ListItem
-        title={`${item.loanToolNo} - ${
-          item.orderPartNo ? `${item.orderPartNo}` : ``
-        } ${
+        title={`${item.loanToolNo}${
           (item.supplierPartNo && !item.orderPartNo) ||
-          (item.supplierPartNo && item.supplierPartNo !== item.orderPartNo)
-            ? `(${item.supplierPartNo})`
+          (item.supplierPartNo &&
+            item.supplierPartNo.toLowerCase() !==
+              item.orderPartNo.toLowerCase())
+            ? ` (${item.supplierPartNo})`
             : ``
         }`}
         titleStyle={{
@@ -83,6 +83,19 @@ export default function LtpList(props) {
                 fontSize: RFPercentage(1.9)
               }}
             >{`${item.toolDescription}`}</Text>
+            {item.orderPartNo &&
+            item.orderPartNo.toLowerCase() !==
+              item.toolDescription.toLowerCase() ? (
+              <Text
+                style={{
+                  color: Colors.vwgVeryDarkGray,
+                  fontFamily: 'the-sans',
+                  fontSize: RFPercentage(1.9)
+                }}
+              >
+                {item.orderPartNo}
+              </Text>
+            ) : null}
           </View>
         }
       ></ListItem>
