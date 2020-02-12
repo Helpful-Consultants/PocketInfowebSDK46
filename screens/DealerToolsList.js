@@ -125,10 +125,19 @@ export default function DealerToolsList(props) {
         title={
           item.partNumber
             ? `${item.partNumber} ${
-                item.toolNumber ? `(${item.toolNumber})` : ``
+                (item.toolNumber && !item.partNumber) ||
+                (item.toolNumber && item.toolNumber !== item.partNumber)
+                  ? `(${item.toolNumber})`
+                  : ``
               }`
-            : `${item.loanToolNo} ${
-                item.supplierPartNo ? `(${item.supplierPartNo})` : ``
+            : `${
+                item.orderPartNo ? `${item.orderPartNo}` : `${item.loanToolNo}`
+              } ${
+                (item.supplierPartNo && !item.orderPartNo) ||
+                (item.supplierPartNo &&
+                  item.supplierPartNo !== item.orderPartNo)
+                  ? `(${item.supplierPartNo})`
+                  : ``
               }`
         }
         titleStyle={{
@@ -161,7 +170,14 @@ export default function DealerToolsList(props) {
             {item.loanToolNo ? (
               <Text
                 style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
-              >{`Available through the Loan Tool Programme`}</Text>
+              >
+                {`Available through the Loan Tool Programme as `}
+                <Text
+                  style={{
+                    fontFamily: 'the-sans-bold'
+                  }}
+                >{`${item.loanToolNo}`}</Text>
+              </Text>
             ) : item.location ? (
               <Text
                 style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
