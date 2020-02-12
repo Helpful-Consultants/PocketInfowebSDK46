@@ -6,6 +6,7 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import { signOutUserRequest } from '../actions/user';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import { emptyDealerWipsRequest } from '../actions/dealerWips';
+import { emptyLtpRequest } from '../actions/ltp';
 
 // import validation from 'validate';
 
@@ -14,6 +15,7 @@ export default SignOutScreen = props => {
   console.log('in signout screen, signingOut');
   dispatch(emptyDealerWipsRequest());
   dispatch(emptyDealerToolsRequest());
+  dispatch(emptyLtpRequest());
   dispatch(signOutUserRequest());
   props.navigation.navigate('AuthLoading');
 

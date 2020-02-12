@@ -36,6 +36,18 @@ export default function ltp(state = INITIAL_STATE, action) {
         dataErrorUrl: null
       };
     }
+    case Types.EMPTY_LTP_REQUEST: {
+      //   console.log(action.payload);
+      //   console.log('reducer end data');
+      return {
+        ...state,
+        ltpItems: [],
+        isLoading: false,
+        error: null,
+        dataErrorUrl: null,
+        statusCode: null
+      };
+    }
     case Types.LTP_ERROR: {
       return {
         ...state,

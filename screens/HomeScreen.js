@@ -30,6 +30,7 @@ import {
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
+import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 
 const buttonColor = Colors.vwgDeepBlue;
 const buttonTextColor = Colors.vwgWhite;
@@ -206,6 +207,7 @@ export default HomeScreen = props => {
     dispatch(emptyDealerWipsRequest());
     dispatch(emptyDealerToolsRequest());
     // dispatch(signOutUserRequest()), [userIsSignedIn];
+    dispatch(emptyLtpRequest());
     dispatch(signOutUserRequest());
     navigation.navigate('AuthLoading');
   });

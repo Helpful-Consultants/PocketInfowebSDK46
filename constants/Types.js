@@ -8,6 +8,7 @@ export default {
   GET_LTP_START: 'ltp/get_ltp_start',
   GET_LTP_REQUEST: 'ltp/get_ltp_request',
   GET_LTP_SUCCESS: 'ltp/get_ltp_success',
+  EMPTY_LTP_REQUEST: 'ltp/empty_ltp_request',
   LTP_ERROR: 'ltp/ltp_error',
 
   GET_NEWS_START: 'news/get_news_start',
