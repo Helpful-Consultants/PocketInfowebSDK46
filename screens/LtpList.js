@@ -59,8 +59,13 @@ export default function LtpList(props) {
 
     return (
       <ListItem
-        title={`${item.loanToolNo} ${
-          item.supplierPartNo ? `(${item.supplierPartNo})` : ``
+        title={`${item.loanToolNo} - ${
+          item.orderPartNo ? `${item.orderPartNo}` : ``
+        } ${
+          (item.supplierPartNo && !item.orderPartNo) ||
+          (item.supplierPartNo && item.supplierPartNo !== item.orderPartNo)
+            ? `(${item.supplierPartNo})`
+            : ``
         }`}
         titleStyle={{
           color: Colors.vwgBlack,

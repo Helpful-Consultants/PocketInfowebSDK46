@@ -477,18 +477,21 @@ export default FindToolsScreen = props => {
     createFilter(searchInput, KEYS_TO_FILTERS)
   );
   let filteredItems = allFilteredItems.slice(0, 100);
+  let itemsToShow = searchInput
+    ? filteredItems.slice(0, 100)
+    : combinedItems.slice(0, 100);
   //   console.log('filteredItems.length ', filteredItems.length);
-  if (filteredItems.length && filteredItems.length < 5) {
-    // console.log('filteredItems', filteredItems);
-  }
+  //   if (filteredItems.length && filteredItems.length < 5) {
+  //     // console.log('filteredItems', filteredItems);
+  //   }
 
-  let specificTool =
-    combinedItems &&
-    combinedItems.filter(item => item.partNumber === '30 - 100');
+  //   let specificTool =
+  //     combinedItems &&
+  //     combinedItems.filter(item => item.partNumber === '30 - 100');
 
-  if (specificTool && specificTool.length && specificTool.length < 5) {
-    // console.log('specificTools', specificTool);
-  }
+  //   if (specificTool && specificTool.length && specificTool.length < 5) {
+  //     // console.log('specificTools', specificTool);
+  //   }
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },
@@ -872,7 +875,7 @@ export default FindToolsScreen = props => {
       <View
         style={{
           marginBottom:
-            mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0
+            mode === 'list' && itemsToShow.length > 0 && toolBasket.length > 0
               ? 170
               : 140
         }}
@@ -893,7 +896,7 @@ export default FindToolsScreen = props => {
 
           {mode === 'list' &&
           searchInput.length > 0 &&
-          filteredItems.length === 0 ? (
+          itemsToShow.length === 0 ? (
             <View style={styles.noneFoundPrompt}>
               <Text style={styles.noneFoundPromptText}>
                 Your search found no results.
@@ -904,7 +907,7 @@ export default FindToolsScreen = props => {
           {isLoadingAny || dataErrorAny ? null : (
             <View style={styles.toolsList}>
               <DealerToolsList
-                items={filteredItems}
+                items={itemsToShow}
                 userIntId={userIntId}
                 dealerWipsItems={dealerWipsItems}
                 bookedToolsList={bookedToolsList}
@@ -915,7 +918,7 @@ export default FindToolsScreen = props => {
                 showPrompt={
                   mode === 'list' &&
                   toolBasket.length === 0 &&
-                  filteredItems.length > 0 &&
+                  itemsToShow.length > 0 &&
                   searchInput.length === 0
                     ? true
                     : false
@@ -967,7 +970,7 @@ export default FindToolsScreen = props => {
           {mode !== 'list' && toolBasket.length > 0 ? drawer : null}
         </KeyboardAvoidingView>
       </View>
-      {mode === 'list' && filteredItems.length > 0 && toolBasket.length > 0
+      {mode === 'list' && itemsToShow.length > 0 && toolBasket.length > 0
         ? backToBasket
         : null}
     </View>
