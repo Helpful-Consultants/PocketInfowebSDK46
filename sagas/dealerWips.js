@@ -35,6 +35,7 @@ function* getDealerWips({ payload }) {
     if (
       result.data.length > 0 &&
       result.data &&
+      result.data[0] &&
       result.data[0].id &&
       result.data[0].tools &&
       result.data[0].tools[0] &&

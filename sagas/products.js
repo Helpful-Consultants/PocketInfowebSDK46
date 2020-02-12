@@ -16,6 +16,8 @@ function* getProducts() {
   try {
     const result = yield call(api.getProducts);
     if (
+      result.data &&
+      result.data[0] &&
       result.data[0].id &&
       result.data[0].id.length > 0 &&
       result.data[0].createdDate &&

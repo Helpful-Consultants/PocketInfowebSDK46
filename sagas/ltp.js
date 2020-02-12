@@ -17,7 +17,12 @@ function* getLtp() {
     // console.log('in saga get ltp, success');
     // console.log(result);
     // console.log('end results in saga get ltp, success');
-    if (result.data[0].id && result.data[0].id.length > 0) {
+    if (
+      result.data &&
+      result.data[0] &&
+      result.data[0].id &&
+      result.data[0].id.length > 0
+    ) {
       //   console.log('in ltp saga - good 200');
       yield put(
         actions.getLtpSuccess({

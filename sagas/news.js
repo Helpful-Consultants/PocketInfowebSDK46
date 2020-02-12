@@ -34,6 +34,8 @@ function* getNews() {
     // const newsId = result.data[0].newsId && result.data[0].userId;
     // const userIntId = result.data[0].intId && result.data[0].intId;
     if (
+      result.data &&
+      result.data[0] &&
       result.data[0].id &&
       result.data[0].id.length > 0 &&
       result.data[0].createdDate &&

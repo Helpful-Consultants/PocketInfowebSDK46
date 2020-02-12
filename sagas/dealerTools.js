@@ -24,6 +24,7 @@ function* getDealerTools({ payload }) {
     // console.log(result);
 
     if (
+      result.data &&
       result.data.length > 0 &&
       result.data &&
       result.data[0].id &&
