@@ -21,6 +21,7 @@ export default function DealerToolsList(props) {
     bookedToolsList,
     toolBasket,
     selectItemHandler,
+    searchInput,
     showPrompt,
     userIntId,
     toggleBaskethandler
@@ -111,8 +112,8 @@ export default function DealerToolsList(props) {
   const CustomListItem = props => {
     const { item, lastJobDetails, booked, inToolBasket } = props;
     let personObj = {};
-    // let personName = '';
-    // let personIntId = '';
+    let personName = '';
+    let personIntId = '';
     if (item.lastWIP && item.lastWIP.length > 0) {
       personObj = findLastBookedOutByFromTool(item);
       personName = personObj.name;
@@ -130,13 +131,11 @@ export default function DealerToolsList(props) {
                   ? `(${item.toolNumber})`
                   : ``
               }`
-            : `${
-                item.orderPartNo ? `${item.orderPartNo}` : `${item.loanToolNo}`
-              } ${
+            : `${item.loanToolNo}${
                 (item.supplierPartNo && !item.orderPartNo) ||
                 (item.supplierPartNo &&
                   item.supplierPartNo !== item.orderPartNo)
-                  ? `(${item.supplierPartNo})`
+                  ? ` - ${item.supplierPartNo}`
                   : ``
               }`
         }
@@ -168,16 +167,26 @@ export default function DealerToolsList(props) {
                 : item.toolDescription}
             </Text>
             {item.loanToolNo ? (
-              <Text
-                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
-              >
-                {`Available through the Loan Tool Programme as `}
+              <View>
+                {item.orderPartNo ? (
+                  <Text
+                    style={{
+                      fontFamily: 'the-sans',
+                      fontSize: RFPercentage(2.0)
+                    }}
+                  >
+                    {item.orderPartNo}
+                  </Text>
+                ) : null}
                 <Text
                   style={{
-                    fontFamily: 'the-sans-bold'
+                    fontFamily: 'the-sans-bold',
+                    fontSize: RFPercentage(2.0)
                   }}
-                >{`${item.loanToolNo}`}</Text>
-              </Text>
+                >
+                  Available through the Loan Tool Programme
+                </Text>
+              </View>
             ) : item.location ? (
               <Text
                 style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
@@ -378,7 +387,9 @@ export default function DealerToolsList(props) {
     return showPrompt === true ? (
       <View style={styles.searchPrompt}>
         <Text style={styles.searchPromptText}>
-          {`Search for a tool then press to book it out.`}
+          {searchInput && searchInput.length > 1
+            ? `Press a tool to book it out.`
+            : `Search for a tool then press to book it out.`}
         </Text>
       </View>
     ) : null;

@@ -19,7 +19,6 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
@@ -30,6 +29,8 @@ import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
+
+import searchTools from '../components/searchTools';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const KEYS_TO_FILTERS = [
@@ -40,6 +41,7 @@ const KEYS_TO_FILTERS = [
   'toolDescription', // LTP
   'loanToolNo' //LTP
 ];
+const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
@@ -108,8 +110,17 @@ export default FindToolsScreen = props => {
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
   const [searchInput, setSearchInput] = useState('');
+  //   const [searchString, setSearchString] = useState('');
+  //   const [adjustedSearchString, setAdjustedSearchString] = useState('');
+  //   const [
+  //     strippedAdjustedSearchString,
+  //     setStrippedAdjustedSearchString
+  //   ] = useState('');
+
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [combinedItems, setCombinedItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+
   const [bookedToolsList, setBookedToolsList] = useState([]);
   //   const [adjustedSearchString, setAdjustedSearchString] = useState();
   const [isBasketVisible, setIsBasketVisible] = useState(true);
@@ -396,39 +407,127 @@ export default FindToolsScreen = props => {
     inputChangeHandler('wipNumber', '');
   };
 
-  const searchInputHandler = searchInput => {
-    let searchStringStart = searchInput.toLowerCase();
-    let adjustedSearchInput = '';
+  const zzzsearchInputHandler = searchInput => {
+    let searchStringLowercase = searchInput.toLowerCase();
+    let adjustedSearchString = '';
+    setSearchInput(searchInput);
     // console.log('searchInput is "' + searchInput + '"');
     if (
-      searchStringStart.substring(0, 4) === 'ase ' ||
-      searchStringStart.substring(0, 4) === 'vas ' ||
-      searchStringStart.substring(0, 4) === 'vag '
+      searchStringLowercase.substring(0, 4) === 'ase ' ||
+      searchStringLowercase.substring(0, 4) === 'vas ' ||
+      searchStringLowercase.substring(0, 4) === 'vag '
     ) {
       //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
-      adjustedSearchInput = searchInput.substr(4);
-      //   console.log('@@@@@4cut "' + adjustedSearchInput + '"');
-      setSearchInput(adjustedSearchInput);
-      //   setAdjustedSearchString(adjustedSearchInput);
+      adjustedSearchString = searchInput.substr(4);
+      //   console.log('@@@@@4cut "' + adjustedSearchString + '"');
+      setSearchString(adjustedSearchString);
+      //   setAdjustedSearchString(adjustedSearchString);
     } else if (
-      searchStringStart.substring(0, 3) === 'ase' ||
-      searchStringStart.substring(0, 3) === 'vas' ||
-      searchStringStart.substring(0, 3) === 'vag'
+      searchStringLowercase.substring(0, 3) === 'ase' ||
+      searchStringLowercase.substring(0, 3) === 'vas' ||
+      searchStringLowercase.substring(0, 3) === 'vag'
     ) {
       //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
-      adjustedSearchInput = searchInput.substr(3);
-      //   console.log('@@@@@cut "' + adjustedSearchInput + '"');
-      setSearchInput(adjustedSearchInput);
-      //   setAdjustedSearchString(adjustedSearchInput);
+      adjustedSearchString = searchInput.substr(3);
+      //   console.log('@@@@@cut "' + adjustedSearchString + '"');
+      setSearchString(adjustedSearchString);
+      //   setAdjustedSearchString(adjustedSearchString);
     } else {
       //   console.log('searchInput no change applied');
-      setSearchInput(searchInput);
+
+      setSearchString(searchInput);
       //   setAdjustedSearchString(searchInput);
     }
   };
 
+  //   if (this.timeout) {
+  //     clearTimeout(this.timeout);
+  //   }
+  //   this.timeout = setTimeout(() => {
+  //     console.log('timeout');
+  //   }, 2000);
+
+  //   partNumber: '10 - 101',
+  //     toolNumber: 'V03839111DG',
+  //     partDescription: 'Fitting tool',
+
+  //   loanToolNo: 'LT0183',
+  //     // orderPartNo: 'V03839141JM',
+  //     toolDescription: 'Counter hold device ',
+  //     supplierPartNo: 'VAS 5161A/40',
+
+  const searchInputHandler = searchInput => {
+    // let searchStringLowercase = searchInput.toLowerCase();
+
+    // let adjustedSearchString = '';
+    // let strippedAdjustedSearchString = '';
+    // console.log('searchInputHandler ' + searchInput);
+    setSearchInput(searchInput);
+
+    if (searchInput && searchInput.length > minSearchLength) {
+      //   let searchStringLowercase = searchInput.toLowerCase();
+      //   let adjustedSearchString = stringCleaner(searchStringLowercase);
+
+      let newFilteredItems = searchTools(
+        combinedItems,
+        searchInput
+        // adjustedSearchString
+      );
+      setFilteredItems(newFilteredItems);
+    }
+  };
+
+  const zzzzzzsearchInputHandler = searchInput => {
+    // let searchStringLowercase = searchInput.toLowerCase();
+
+    // let adjustedSearchString = '';
+    // let strippedAdjustedSearchString = '';
+    console.log('searchInput is "' + searchInput + '"');
+
+    let searchStringLowercase = searchInput.toLowerCase();
+    let adjustedSearchString = '';
+    let spaceStrippedAdjustedSearchString = '';
+
+    if (
+      searchStringLowercase.substring(0, 4) === 'ase ' ||
+      searchStringLowercase.substring(0, 4) === 'vas ' ||
+      searchStringLowercase.substring(0, 4) === 'vag '
+    ) {
+      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
+      adjustedSearchString = searchInput.substr(4);
+      //   console.log('@@@@@4cut "' + adjustedSearchString + '"');
+      //   setAdjustedSearchString(adjustedSearchString);
+    } else if (
+      searchStringLowercase.substring(0, 3) === 'ase' ||
+      searchStringLowercase.substring(0, 3) === 'vas' ||
+      searchStringLowercase.substring(0, 3) === 'vag'
+    ) {
+      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
+      adjustedSearchString = searchInput.substr(3);
+      //   console.log('@@@@@cut "' + adjustedSearchString + '"');
+    } else {
+      //   console.log('searchInput no change applied');
+      adjustedSearchString = searchInput;
+    }
+
+    spaceStrippedAdjustedSearchString = searchStringLowercase.replace(
+      /\s+/g,
+      ''
+    );
+    setSearchInput(searchInput);
+
+    searchTools(
+      searchStringLowercase,
+      adjustedSearchString,
+      spaceStrippedAdjustedSearchString
+    );
+
+    // setAdjustedSearchString(adjustedSearchString);
+    // setStrippedAdjustedSearchString(strippedAdjustedSearchString);
+  };
+
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler', dealerId && dealerId);
+    // console.log('in refreshRequestHandler', dealerId && dealerId);
     dealerId && getAllItems(getDealerItemsDataObj);
   };
 
@@ -475,13 +574,22 @@ export default FindToolsScreen = props => {
   //   const concatItems = dealerToolsItems;
   //   console.log('concatItems.length ', concatItems.length);
 
-  let allFilteredItems = combinedItems.filter(
-    createFilter(searchInput, KEYS_TO_FILTERS)
-  );
-  let filteredItems = allFilteredItems.slice(0, 100);
-  let itemsToShow = searchInput
-    ? filteredItems.slice(0, 100)
-    : combinedItems.slice(0, 100);
+  //   let allFilteredItems = combinedItems.filter(
+  //     createFilter(searchInput, KEYS_TO_FILTERS)
+  //   );
+  //   let allFilteredItems = combinedItems;
+  //   console.log(
+  //     'filteredItems before slice',
+  //     filteredItems && filteredItems.length
+  //   );
+  //   console.log(
+  //     'combinedItems before slice',
+  //     combinedItems && combinedItems.length
+  //   );
+  let itemsToShow =
+    searchInput && searchInput.length > minSearchLength
+      ? filteredItems.slice(0, 100)
+      : combinedItems.slice(0, 100);
   //   console.log('filteredItems.length ', filteredItems.length);
   //   if (filteredItems.length && filteredItems.length < 5) {
   //     // console.log('filteredItems', filteredItems);
@@ -505,6 +613,7 @@ export default FindToolsScreen = props => {
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, text) => {
+      //   console.log('inputChangeHandler', text && text);
       let isValid = false;
       if (text.trim().length > 0) {
         isValid = true;
@@ -897,7 +1006,7 @@ export default FindToolsScreen = props => {
           />
 
           {mode === 'list' &&
-          searchInput.length > 0 &&
+          searchInput.length > minSearchLength &&
           itemsToShow.length === 0 ? (
             <View style={styles.noneFoundPrompt}>
               <Text style={styles.noneFoundPromptText}>
@@ -917,11 +1026,11 @@ export default FindToolsScreen = props => {
                 toolBasket={toolBasket}
                 toggleBaskethandler={toggleBaskethandler}
                 mode={mode}
+                searchInput={searchInput}
                 showPrompt={
                   mode === 'list' &&
                   toolBasket.length === 0 &&
-                  itemsToShow.length > 0 &&
-                  searchInput.length === 0
+                  itemsToShow.length > 0
                     ? true
                     : false
                 }
