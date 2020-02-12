@@ -15,14 +15,11 @@ import Urls from '../constants/Urls';
 import LtpList from './LtpList';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-// import ltpDummyData from '../dummyData/ltpDummyData.js';
 
-const KEYS_TO_FILTERS = [
-  'loanToolNo',
-  'orderPartNo',
-  'supplierPartNo',
-  'toolDescription'
-];
+import searchTools from '../components/searchTools';
+import stringCleaner from '../components/stringCleaner';
+// import ltpDummyData from '../dummyData/ltpDummyData.js';
+const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
@@ -36,7 +33,9 @@ export default LtpScreen = props => {
   const dataStatusCode = useSelector(state => state.ltp.statusCode);
   const dataErrorUrl = useSelector(state => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
+  const [searchString, setSearchString] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
     ltpItems
   ]);
@@ -94,9 +93,10 @@ export default LtpScreen = props => {
     }
   });
 
-  const searchInputHandler = searchInput => {
+  const zzzzsearchInputHandler = searchInput => {
     let searchStringStart = searchInput.toLowerCase();
     let adjustedSearchInput = '';
+    setSearchInput(searchInput);
     // console.log('searchInput is "' + searchInput + '"');
     if (
       searchStringStart.substring(0, 4) === 'ase ' ||
@@ -106,7 +106,7 @@ export default LtpScreen = props => {
       //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
       adjustedSearchInput = searchInput.substr(4);
       //   console.log('@@@@@4cut "' + adjustedSearchInput + '"');
-      setSearchInput(adjustedSearchInput);
+      setSearchString(adjustedSearchInput);
       //   setAdjustedSearchString(adjustedSearchInput);
     } else if (
       searchStringStart.substring(0, 3) === 'ase' ||
@@ -116,12 +116,34 @@ export default LtpScreen = props => {
       //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
       adjustedSearchInput = searchInput.substr(3);
       //   console.log('@@@@@cut "' + adjustedSearchInput + '"');
-      setSearchInput(adjustedSearchInput);
+      setSearchString(adjustedSearchInput);
       //   setAdjustedSearchString(adjustedSearchInput);
     } else {
       //   console.log('searchInput no change applied');
-      setSearchInput(searchInput);
+
+      setSearchString(searchInput);
       //   setAdjustedSearchString(searchInput);
+    }
+  };
+
+  const searchInputHandler = searchInput => {
+    // let searchStringLowercase = searchInput.toLowerCase();
+
+    // let adjustedSearchString = '';
+    // let strippedAdjustedSearchString = '';
+    // console.log('searchInputHandler ' + searchInput);
+    setSearchInput(searchInput);
+
+    if (searchInput && searchInput.length > minSearchLength) {
+      let searchStringLowercase = searchInput.toLowerCase();
+      let adjustedSearchString = stringCleaner(searchStringLowercase);
+
+      let newFilteredItems = searchTools(
+        uniqueLtpItems,
+        searchStringLowercase,
+        adjustedSearchString
+      );
+      setFilteredItems(newFilteredItems);
     }
   };
 
@@ -149,10 +171,16 @@ export default LtpScreen = props => {
   //     uniqueLtpItems.length
   //   );
 
-  const filteredItems =
-    (!isLoading &&
-      uniqueLtpItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
-    [];
+  //   const filteredItems =
+  //     (!isLoading &&
+  //       uniqueLtpItems.filter(createFilter(searchString, KEYS_TO_FILTERS))) ||
+  //     [];
+
+  let itemsToShow = !isLoading
+    ? searchInput && searchInput.length > minSearchLength
+      ? filteredItems
+      : uniqueLtpItems
+    : [];
   //   console.log('RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!');
 
   return (
@@ -168,7 +196,7 @@ export default LtpScreen = props => {
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
-      {dataError ? null : searchInput.length > 0 &&
+      {dataError ? null : searchInput.length > minSearchLength &&
         filteredItems.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
@@ -195,7 +223,9 @@ export default LtpScreen = props => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <LtpList items={filteredItems} baseImageUrl={Urls.ltpHeadlineImage} />
+        <View>
+          <LtpList items={itemsToShow} baseImageUrl={Urls.ltpHeadlineImage} />
+        </View>
       )}
     </View>
   );
