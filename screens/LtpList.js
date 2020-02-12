@@ -1,9 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, Platform, Text, View } from 'react-native';
-import { ListItem, Icon } from 'react-native-elements';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { ListItem } from 'react-native-elements';
 // import Touchable from 'react-native-platform-touchable';
-import moment from 'moment';
-import ltpDummyData from '../dummyData/ltpDummyData';
+// import moment from 'moment';
+// import ltpDummyData from '../dummyData/ltpDummyData';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 export default function LtpList(props) {
