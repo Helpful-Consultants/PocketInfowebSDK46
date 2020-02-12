@@ -278,16 +278,18 @@ export default FindToolsScreen = props => {
     let ltpItemsFiltered = [];
     if (userBrand) {
       //   console.log('userBrand is ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(item => item[userBrand] === 'Y');
+      ltpItemsFiltered = ltpItemsAll.filter(
+        item => item[userBrand] === 'Y' || 'y'
+      );
     } else {
       //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
         item =>
-          item.au.toLowerCase() === 'y' ||
-          item.cv.toLowerCase() === 'y' ||
-          item.se.toLowerCase() === 'y' ||
-          item.sk.toLowerCase() === 'y' ||
-          item.vw.toLowerCase() === 'y'
+          item.au === ('Y' || 'y') ||
+          item.cv === ('Y' || 'y') ||
+          item.se === ('Y' || 'y') ||
+          item.sk === ('Y' || 'y') ||
+          item.vw === ('Y' || 'y')
       );
     }
     let ltpItemsSorted =
