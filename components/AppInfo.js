@@ -70,7 +70,7 @@ export default AppInfo = props => {
           style={styles.appVersion}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={styles.appVersion}>Test B.14 </Text>
+      <Text style={styles.appVersion}>Improved search</Text>
     </View>
   );
 };
