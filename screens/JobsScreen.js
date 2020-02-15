@@ -22,16 +22,20 @@ import {
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import JobsList from './JobsList';
+
+import searchItems from '../components/searchItems';
 // import JobsList from './JobsList';
 
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
-const KEYS_TO_FILTERS = [
-  'tools.partNumber',
-  'tools.toolNumber',
-  'tools.partDescription',
-  'wipNumber'
-];
+// const KEYS_TO_FILTERS = [
+//   'tools.partNumber',
+//   'tools.toolNumber',
+//   'tools.partDescription',
+//   'wipNumber'
+// ];
+
+const minSearchLength = 1;
 
 export default JobsScreen = props => {
   const dispatch = useDispatch();
@@ -53,8 +57,10 @@ export default JobsScreen = props => {
   const [currentTool, setCurrentTool] = useState({});
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
-  const [listView, setListView] = useState({});
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  //   const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
+  //   const [listView, setListView] = useState({});
 
   const { navigation } = props;
 
@@ -173,6 +179,10 @@ export default JobsScreen = props => {
   const searchInputHandler = searchInput => {
     // console.log(searchInput);
     setSearchInput(searchInput);
+    if (searchInput && searchInput.length > minSearchLength) {
+      let newFilteredItems = searchItems(userWipsItems, searchInput);
+      setFilteredItems(newFilteredItems);
+    }
   };
 
   const returnToolHandler = (job, tool) => {
@@ -234,11 +244,12 @@ export default JobsScreen = props => {
   //   console.log('items AREEEEEEEEEE', items);
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
 
-  const filteredItems =
-    (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
-    [];
+  //   const filteredItems =
+  //     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+  //     [];
 
-  //   console.log(filteredItems);
+  let itemsToShow =
+    searchInput && searchInput.length > minSearchLength ? filteredItems : items;
   //   const items = dealerWipsItems;
   // const items = dealerWipsDummyData;
   // const { search } = this.state;
@@ -297,7 +308,7 @@ export default JobsScreen = props => {
         <ScrollView>
           <JobsList
             isLoading={isLoading}
-            items={filteredItems}
+            items={itemsToShow}
             dataCount={dataCount}
             deleteDealerWipRequest={deleteDealerWip}
             userIntId={
@@ -306,6 +317,7 @@ export default JobsScreen = props => {
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
             returnAllToolsHandler={returnAllToolsHandler}
+            searchInput={searchInput}
           />
         </ScrollView>
       )}

@@ -27,12 +27,13 @@ import BookedOutToolsList from './BookedOutToolsList';
 
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 
-const KEYS_TO_FILTERS = [
-  'partNumber',
-  'toolNumber',
-  'partDescription',
-  'wipNumber'
-];
+// const KEYS_TO_FILTERS = [
+//   'partNumber',
+//   'toolNumber',
+//   'partDescription',
+//   'wipNumber'
+// ];
+const minSearchLength = 1;
 
 export default BookedOutToolsScreen = props => {
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default BookedOutToolsScreen = props => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [bookedOutItems, setBookedOutItems] = useState([]);
   const [userWipsItems, setUserWipsItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [listView, setListView] = useState({});
   //   if (!userIsSignedIn) {
@@ -154,8 +156,12 @@ export default BookedOutToolsScreen = props => {
   });
 
   const searchInputHandler = searchInput => {
-    // console.log(searchInput);
+    console.log(searchInput, bookedOutItems);
     setSearchInput(searchInput);
+    if (searchInput && searchInput.length > minSearchLength) {
+      let newFilteredItems = searchItems(bookedOutItems, searchInput);
+      setFilteredItems(newFilteredItems);
+    }
   };
 
   const returnToolHandler = item => {
@@ -204,10 +210,15 @@ export default BookedOutToolsScreen = props => {
     dealerId && userDataObj && userDataObj.intId && getItems(getWipsDataObj);
   };
   //   console.log('bookedOutItems', bookedOutItems);
-  const filteredItems =
-    (!isLoading &&
-      bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
-    [];
+  //   const filteredItems =
+  //     (!isLoading &&
+  //       bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
+  //     [];
+
+  let itemsToShow =
+    searchInput && searchInput.length > minSearchLength
+      ? filteredItems
+      : bookedOutItems;
 
   //   console.log(
   //     'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
@@ -243,7 +254,7 @@ export default BookedOutToolsScreen = props => {
       ) : (
         <ScrollView>
           <BookedOutToolsList
-            items={filteredItems}
+            items={itemsToShow}
             someDataExpected={false}
             dataCount={dataCount}
             isLoading={isLoading}
@@ -251,6 +262,7 @@ export default BookedOutToolsScreen = props => {
             userIntId={(userDataObj && userDataObj.intId) || null}
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
+            searchInput={searchInput}
           />
         </ScrollView>
       )}

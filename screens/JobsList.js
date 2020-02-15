@@ -19,6 +19,8 @@ import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 import Colors from '../constants/Colors';
 import FriendlyDate from '../components/FriendlyDate';
 
+const minSearchLength = 1;
+
 export default function DealerToolsList(props) {
   //   console.log('props');
   const {
@@ -26,7 +28,8 @@ export default function DealerToolsList(props) {
     dataCount,
     items,
     baseImageUrl,
-    returnToolHandler
+    returnToolHandler,
+    searchInput
   } = props;
   let { userIntId } = props;
   userIntId = userIntId.toString() || '';
@@ -206,7 +209,8 @@ export default function DealerToolsList(props) {
     return (
       <View>
         <ScrollView>
-          {!isLoading ? (
+          {!isLoading &&
+          (!searchInput || searchInput.length <= minSearchLength) ? (
             <View style={styles.searchPrompt}>
               <Text style={styles.searchPromptText}>
                 {`You have ${

@@ -30,17 +30,17 @@ import Colors from '../constants/Colors';
 import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
 
-import searchTools from '../components/searchTools';
+import searchItems from '../components/searchItems';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-const KEYS_TO_FILTERS = [
-  'toolNumber',
-  'partNumber',
-  'partDescription',
-  'orderPartNo', // LTP
-  'toolDescription', // LTP
-  'loanToolNo' //LTP
-];
+// const KEYS_TO_FILTERS = [
+//   'toolNumber',
+//   'partNumber',
+//   'partDescription',
+//   'orderPartNo', // LTP
+//   'toolDescription', // LTP
+//   'loanToolNo' //LTP
+// ];
 const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
@@ -468,7 +468,7 @@ export default FindToolsScreen = props => {
       //   let searchStringLowercase = searchInput.toLowerCase();
       //   let adjustedSearchString = stringCleaner(searchStringLowercase);
 
-      let newFilteredItems = searchTools(
+      let newFilteredItems = searchItems(
         combinedItems,
         searchInput
         // adjustedSearchString
@@ -516,7 +516,7 @@ export default FindToolsScreen = props => {
     );
     setSearchInput(searchInput);
 
-    searchTools(
+    searchItems(
       searchStringLowercase,
       adjustedSearchString,
       spaceStrippedAdjustedSearchString
@@ -848,30 +848,32 @@ export default FindToolsScreen = props => {
                   </View>
                   <View style={styles.basketItemDescCol}>
                     {item.partNumber ? (
+                      <Text style={styles.basketItemTextEmph}>{`${
+                        item.partNumber
+                      }${
+                        item.partNumber &&
+                        item.partDescription &&
+                        item.partDescription !== item.partNumber
+                          ? ` - ${item.partDescription}`
+                          : ``
+                      }`}</Text>
+                    ) : null}
+                    {item.toolNumber &&
+                    (item.toolType === 'Equipment' ||
+                      item.toolType === 'equipment' ||
+                      item.toolType === 'Tool' ||
+                      item.toolType === 'tool') ? (
                       <Text
                         style={styles.basketItemTextEmph}
-                      >{`Part: ${item.partNumber} - ${item.partDescription}`}</Text>
+                      >{`Order no: ${item.toolNumber}`}</Text>
                     ) : null}
-                    {item.loanToolNo ? (
-                      <Text
-                        style={styles.basketItemTextEmph}
-                      >{`Part: ${item.loanToolNo} - ${item.toolDescription}`}</Text>
-                    ) : null}
-                    {item.loanToolNo ? (
-                      <Text style={styles.basketItemText}>Loan tool</Text>
-                    ) : null}
-                    {item.toolNumber ? (
-                      <Text
-                        style={styles.basketItemTextEmph}
-                      >{`Tool: ${item.toolNumber}`}</Text>
-                    ) : null}
-                    {item.toolNumber ? (
+                    {
                       <Text style={styles.basketItemText}>
                         {item.location
                           ? `Location: ${item.location}`
                           : `Location not recorded`}
                       </Text>
-                    ) : null}
+                    }
                     {item.lastWIP ? (
                       <Text
                         style={styles.basketItemText}

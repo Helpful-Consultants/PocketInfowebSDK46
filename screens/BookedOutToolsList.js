@@ -16,6 +16,8 @@ import ScaledImageFinder from '../components/ScaledImageFinder';
 
 import Colors from '../constants/Colors';
 
+const minSearchLength = 1;
+
 export default function BookedOutToolsList(props) {
   //   console.log('BookedOutToolsList props');
   //   console.log(props);
@@ -25,7 +27,8 @@ export default function BookedOutToolsList(props) {
     dataCount,
     items,
     baseImageUrl,
-    returnToolHandler
+    returnToolHandler,
+    searchInput
   } = props;
   let { userIntId } = props;
 
@@ -48,7 +51,8 @@ export default function BookedOutToolsList(props) {
   return (
     <View>
       <ScrollView>
-        {!isLoading ? (
+        {!isLoading &&
+        (!searchInput || searchInput.length <= minSearchLength) ? (
           <View style={styles.searchPrompt}>
             <Text style={styles.searchPromptText}>
               {`You have ${dataCount > 0 ? dataCount : `no`} tools booked out.`}

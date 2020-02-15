@@ -16,7 +16,7 @@ import LtpList from './LtpList';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
-import searchTools from '../components/searchTools';
+import searchItems from '../components/searchItems';
 import stringCleaner from '../components/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 const minSearchLength = 1;
@@ -135,14 +135,7 @@ export default LtpScreen = props => {
     setSearchInput(searchInput);
 
     if (searchInput && searchInput.length > minSearchLength) {
-      let searchStringLowercase = searchInput.toLowerCase();
-      let adjustedSearchString = stringCleaner(searchStringLowercase);
-
-      let newFilteredItems = searchTools(
-        uniqueLtpItems,
-        searchStringLowercase,
-        adjustedSearchString
-      );
+      let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
       setFilteredItems(newFilteredItems);
     }
   };
