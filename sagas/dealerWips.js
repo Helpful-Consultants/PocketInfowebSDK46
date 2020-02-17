@@ -9,7 +9,7 @@ import {
 
 import Types from '../constants/Types';
 import * as actions from '../actions/dealerWips';
-import * as toolsActions from '../actions/dealerTools';
+// import * as toolsActions from '../actions/dealerTools';
 import * as api from '../api/dealerWips';
 
 // Get WIPS
@@ -41,7 +41,7 @@ function* getDealerWips({ payload }) {
       result.data[0].tools[0] &&
       result.data[0].tools[0].id
     ) {
-      //   console.log('in ltp saga - good 200');
+      console.log('in wips saga - good 200');
 
       //   console.log('in Wips saga - good 200');
       //   console.log(result.data);
@@ -181,23 +181,23 @@ function* createDealerWip({ payload }) {
   let dataErrorUrl = null;
   try {
     const result = yield call(api.createDealerWip, payload.wipObj);
-    // console.log('in wips saga - good 200', payload.getWipsDataObj);
+    // console.log('in wips saga - good 200', payload.apiFetchParamsObj);
     yield put(
       actions.createDealerWipSuccess({
         code: '200',
         message: 'Successful',
-        wipNumber: payload.getWipsDataObj.wipNumber || ''
+        wipNumber: payload.apiFetchParamsObj.wipNumber || ''
       })
     );
     // console.log('createDealerWipSuccess');
     yield put(actions.getDealerWipsStart());
     // console.log('getDealerWipStarted');
-    yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
-    yield put(toolsActions.getDealerToolsStart());
-    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
+    yield put(actions.getDealerWipsRequest(payload.apiFetchParamsObj));
+    // yield put(toolsActions.getDealerToolsStart());
+    // yield put(toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj));
 
     // yield put(
-    //   toolsActions.getDealerToolsRequest(payload.getWipsDataObj.dealerId)
+    //   toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj.dealerId)
     // );
   } catch (error) {
     // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
@@ -303,9 +303,9 @@ function* deleteDealerWipTool({ payload }) {
     );
     // refresh the list
     yield put(actions.getDealerWipsStart());
-    yield put(actions.getDealerWipsRequest(payload.getWipsDataObj));
-    yield put(toolsActions.getDealerToolsStart());
-    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
+    yield put(actions.getDealerWipsRequest(payload.apiFetchParamsObj));
+    // yield put(toolsActions.getDealerToolsStart());
+    // yield put(toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj));
   } catch (error) {
     // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
@@ -410,8 +410,8 @@ function* deleteDealerWip(payload) {
     // console.log('delete wip good result', result && result);
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload));
-    yield put(toolsActions.getDealerToolsStart());
-    yield put(toolsActions.getDealerToolsRequest(payload.getWipsDataObj));
+    // yield put(toolsActions.getDealerToolsStart());
+    // yield put(toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj));
   } catch (error) {
     // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
