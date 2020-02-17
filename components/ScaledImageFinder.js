@@ -5,7 +5,7 @@ export default ScaledImageFinder = props => {
   //   console.log('in scaledImageFinder');
   //   console.log(props && props);
 
-  const { baseImageUrl, item, width } = props;
+  const { baseImageUrl, item, uri, width } = props;
   const stripForImage = toolNumber => {
     // console.log(toolNumber);
     let retValue = toolNumber.replace(/[^a-z0-9+]+/gi, '');
@@ -34,8 +34,8 @@ export default ScaledImageFinder = props => {
     return retValue;
   };
 
-  const imageUrl = baseImageUrl + getImageUrl(item) + '.png';
-  if (item.loanToolNo) {
+  const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
+  if (item && item.loanToolNo) {
     return null;
   } else {
     return <ScaledImage width={width} uri={imageUrl} />;

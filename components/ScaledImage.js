@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Image } from 'react-native';
-
 import ScalableImage from 'react-native-scalable-image';
 
 export default ScaledImage = props => {
-  //   let imageFound = false;
-
-  const [imageFound, setImageFound] = useState(false);
+  const [isImageFound, setIsImageFound] = useState(false);
+  //   let isImageFound = false;
 
   const checkImage = async uri => {
     // console.log(props.uri, 'checking ');
@@ -15,19 +13,21 @@ export default ScaledImage = props => {
       () => {
         // console.log(props.uri, 'image found');
         // imageFound = true;
-        setImageFound(true);
+        setIsImageFound(true);
+        // isImageFound = true;
       },
       () => {
         // console.log(props.uri, 'image not found');
         // imageFound = false;
-        setImageFound(false);
+        setIsImageFound(false);
+        // isImageFound = false;
       }
     );
   };
 
   checkImage(props.uri);
 
-  return imageFound === true ? (
+  return isImageFound === true ? (
     <ScalableImage source={{ uri: props.uri }} width={props.width} />
   ) : (
     <Image
