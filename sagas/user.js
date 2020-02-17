@@ -52,14 +52,14 @@ function* getUser({ payload }) {
               null
           })
         );
-        let getWipsDataObj = {
+        let apiFetchParamsObj = {
           dealerId: result.data[0].dealerId && result.data[0].intId.dealerId,
           intId: result.data[0].intId && result.data[0].intId.toString()
         };
         yield put(wipsActions.getDealerWipsStart());
-        yield put(wipsActions.getDealerWipsRequest(getWipsDataObj));
+        yield put(wipsActions.getDealerWipsRequest(apiFetchParamsObj));
         yield put(toolsActions.getDealerToolsStart());
-        yield put(toolsActions.getDealerToolsRequest(getWipsDataObj));
+        yield put(toolsActions.getDealerToolsRequest(apiFetchParamsObj));
       } else if (result.data[0].userId && result.data[0].userId.length > 0) {
         // console.log('in user saga - bad 200');
         // console.log(result.data && result.data[0]);
