@@ -138,7 +138,8 @@ async function loadResourcesAsync() {
       require('./assets/images/seat-logo.png'),
       require('./assets/images/skoda-logo.png'),
       require('./assets/images/vw-logo.png'),
-      require('./assets/images/odis.jpg')
+      require('./assets/images/odis.jpg'),
+      require('./assets/images/no-image-placeholder.png')
     ]),
     Font.loadAsync({
       'the-sans': require('./assets/fonts/VWAGTheSans-Regular.ttf'),
