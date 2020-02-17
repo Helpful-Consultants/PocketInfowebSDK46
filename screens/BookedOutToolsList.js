@@ -49,7 +49,7 @@ export default function BookedOutToolsList(props) {
   //   console.log('in dealer list - items', items.length);
 
   return (
-    <View>
+    <View style={styles.container}>
       <ScrollView>
         {!isLoading &&
         (!searchInput || searchInput.length <= minSearchLength) ? (
@@ -206,7 +206,6 @@ export default function BookedOutToolsList(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15
   },
   searchPrompt: {
     padding: 10,

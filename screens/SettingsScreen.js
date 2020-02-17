@@ -53,32 +53,33 @@ export default function SettingsScreen() {
     </SafeAreaView>
   );
 }
-
-SettingsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='SettingsScreen' />,
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          navigation.navigate('Home');
-        }}
-      />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          navigation.toggleDrawer();
-        }}
-      />
-    </HeaderButtons>
-  )
-});
+export const screenOptions = navData => {
+  return {
+    headerTitle: <TitleWithAppLogo title='SettingsScreen' />,
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='home'
+          iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+          onPress={() => {
+            navigation.navigate('Home');
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='menu'
+          iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

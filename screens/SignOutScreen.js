@@ -17,7 +17,7 @@ export default SignOutScreen = props => {
   dispatch(emptyDealerToolsRequest());
   dispatch(emptyLtpRequest());
   dispatch(signOutUserRequest());
-  props.navigation.navigate('AuthLoading');
+  //   props.navigation.navigate('AuthLoading');
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,6 +26,12 @@ export default SignOutScreen = props => {
       <StatusBar barStyle='default' />
     </SafeAreaView>
   );
+};
+
+export const screenOptions = navData => {
+  return {
+    title: 'Sign out'
+  };
 };
 
 const styles = StyleSheet.create({

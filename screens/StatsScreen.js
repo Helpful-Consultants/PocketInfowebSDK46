@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import { getStatsRequest } from '../actions/stats';
 import { getDealerWipsRequest } from '../actions/dealerWips';
 import { getDealerToolsRequest } from '../actions/dealerTools';
@@ -34,14 +37,14 @@ export default StatsScreen = props => {
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
-  const getDealerItemsDataObj = {
+  const apiFetchParamsObj = {
     dealerId: dealerId,
     intId: userIntId
   };
-  //   console.log('getDealerItemsDataObj is set to ', getDealerItemsDataObj);
+  //   console.log('apiFetchParamsObj is set to ', apiFetchParamsObj);
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     getDealerItemsDataObj
+  //     apiFetchParamsObj
   //   ]);
 
   //   console.log('getStatsData', getStatsData);
@@ -50,28 +53,38 @@ export default StatsScreen = props => {
 
   const getItems = useCallback(async () => {
     // console.log('in stats getItems');
-    dispatch(getStatsRequest(getDealerItemsDataObj)), [statsObj];
-    // dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
-    // dispatch(getDealerToolsRequest(getDealerItemsDataObj)), [dealerToolsItems];
+    dispatch(getStatsRequest(apiFetchParamsObj)), [statsObj];
+    // dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
+    // dispatch(getDealerToolsRequest(apiFetchParamsObj)), [dealerToolsItems];
     // dispatch(getLtpRequest()), [ltpItems];
   });
 
-  useEffect(() => {
-    // runs only once
-    // console.log('in stats use effect');
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      getItems();
-    };
-    if (isRefreshNeeded === true) {
-      getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
+  //   useEffect(() => {
+  //     // runs only once
+  //     // console.log('in stats use effect');
+  //     const getItemsAsync = async () => {
+  //       setIsRefreshNeeded(false);
+  //       getItems();
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    setIsRefreshNeeded(true);
-  });
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     setIsRefreshNeeded(true);
+  //   });
+
+  useFocusEffect(
+    useCallback(() => {
+      const getItemsAsync = async () => {
+        getItems();
+      };
+
+      getItemsAsync();
+    }, [])
+  );
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', getStatsData);
@@ -156,41 +169,29 @@ export default StatsScreen = props => {
     </View>
   );
 };
-
-StatsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Stats' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='Stats' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'Stats'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

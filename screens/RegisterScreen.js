@@ -51,10 +51,16 @@ export default RegisterScreen = props => {
   );
 };
 
+export const screenOptions = navData => {
+  return {
+    title: 'Register',
+    headerShown: true
+  };
+};
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    
+    flex: 1
   },
   appName: {
     color: '#0096da',

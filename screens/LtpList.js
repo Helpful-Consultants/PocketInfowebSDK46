@@ -104,7 +104,7 @@ export default function LtpList(props) {
   //   console.log(items && items);
 
   return (
-    <View>
+    <View style={styles.container}>
       {items && items.length > 0 ? (
         <FlatList
           data={items && items}

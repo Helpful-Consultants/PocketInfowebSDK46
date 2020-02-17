@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
@@ -27,6 +32,7 @@ const checkUrl = rawUrl => {
 };
 
 export default NewsScreen = props => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const newsItems = useSelector(state => state.news.newsItems);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
@@ -56,18 +62,36 @@ export default NewsScreen = props => {
     newsItems
   ]);
 
-  const { navigation } = props;
+  //   const { navigation } = props;
 
-  useEffect(() => {
-    // runs only once
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      getItems();
-    };
-    if (isRefreshNeeded === true) {
+  //   useEffect(() => {
+  //     // runs only once
+  //     const getItemsAsync = async () => {
+  //       setIsRefreshNeeded(false);
+  //       getItems();
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
+
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     if (searchInput && searchInput.length > 0) {
+  //       setSearchInput('');
+  //     }
+  //     setIsRefreshNeeded(true);
+  //   });
+
+  useFocusEffect(
+    useCallback(() => {
+      const getItemsAsync = async () => {
+        getItems();
+      };
+      setSearchInput('');
       getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
+    }, [])
+  );
 
   const pressOpenHandler = async url => {
     // console.log('in pressOpenHandler', url);
@@ -86,14 +110,6 @@ export default NewsScreen = props => {
       setBrowserResult(result);
     }
   };
-
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-    setIsRefreshNeeded(true);
-  });
 
   const searchInputHandler = searchInput => {
     // console.log(searchInput);
@@ -155,37 +171,44 @@ export default NewsScreen = props => {
   );
 };
 
-NewsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='News' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='News' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    // tabBarLabel: () =>
+    //   Platform.OS === 'ios'
+    //     ? ({ focused }) => (
+    //         <BadgedTabBarText
+    //           showBadge={false}
+    //           focused={focused}
+    //           text={'News'}
+    //           value={3}
+    //         />
+    //       )
+    //     : 'News',
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'News'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={
+          Platform.OS === 'ios'
+            ? `ios-information-circle${focused ? '' : '-outline'}`
+            : 'md-information-circle'
+        }
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

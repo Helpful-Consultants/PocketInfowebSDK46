@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
@@ -6,6 +7,8 @@ import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
@@ -14,7 +17,7 @@ import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import productsDummyData from '../dummyData/productsDummyData.js';
+// import productsDummyData from '../dummyData/productsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
 
@@ -37,8 +40,7 @@ export default ProductsScreen = props => {
   const dataError = useSelector(state => state.products.error);
   const dataStatusCode = useSelector(state => state.products.statusCode);
   const dataErrorUrl = useSelector(state => state.products.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
   const { navigation } = props;
@@ -58,17 +60,30 @@ export default ProductsScreen = props => {
     productsItems
   ]);
 
-  useEffect(() => {
-    // runs only once
-    const getItemsAsync = async () => {
-      //   console.log('in products use effect');
-      setIsRefreshNeeded(false);
-      getItems();
-    };
-    if (isRefreshNeeded === true) {
+  //   useEffect(() => {
+  //     // runs only once
+  //     const getItemsAsync = async () => {
+  //       //   console.log('in products use effect');
+  //       setIsRefreshNeeded(false);
+  //       getItems();
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const getItemsAsync = async () => {
+        getItems();
+      };
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      setSearchInput('');
       getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
+    }, [])
+  );
 
   const pressOpenHandler = async url => {
     // console.log('in pressOpenHandler', url);
@@ -86,13 +101,13 @@ export default ProductsScreen = props => {
     }
   };
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-    setIsRefreshNeeded(true);
-  });
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     if (searchInput && searchInput.length > 0) {
+  //       setSearchInput('');
+  //     }
+  //     setIsRefreshNeeded(true);
+  //   });
 
   const searchInputHandler = searchInput => {
     // console.log(searchInput);
@@ -163,41 +178,29 @@ export default ProductsScreen = props => {
     </View>
   );
 };
-
-ProductsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Products' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='Products' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'Products'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

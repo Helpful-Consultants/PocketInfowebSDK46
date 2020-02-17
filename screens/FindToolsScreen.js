@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Dimensions,
@@ -20,6 +21,8 @@ import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import BadgedTabBarText from '../components/BadgedTabBarText';
+import TabBarIcon from '../components/TabBarIcon';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import { getDealerWipsRequest } from '../actions/dealerWips';
@@ -143,37 +146,62 @@ export default FindToolsScreen = props => {
   const { navigation } = props;
   const insets = useSafeArea();
 
-  //   if (!userIsSignedIn) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
+  let apiFetchParamsObj = {};
 
-  const getDealerItemsDataObj = {
-    dealerId:
-      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-  };
-  const getWipsItems = useCallback(getDealerItemsDataObj => {
-    // console.log('in getWipsItems', getDealerItemsDataObj);
-
-    dispatch(getDealerWipsRequest(getDealerItemsDataObj)), [dealerWipsItems];
+  const getWipsItems = useCallback(apiFetchParamsObj => {
+    // console.log('in getWipsItems', apiFetchParamsObj);
+    dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
   });
-  const getAllItems = useCallback(async getDealerItemsDataObj => {
-    // console.log('in getAllItems');
-    dispatch(getDealerToolsRequest(getDealerItemsDataObj));
-    dispatch(getDealerWipsRequest(getDealerItemsDataObj));
+
+  const getWipsItemsAsync = async () => {
+    getWipsItems(apiFetchParamsObj);
+  };
+
+  const getOtherItems = useCallback(async apiFetchParamsObj => {
+    // console.log('in getOtherData');
+    dispatch(getDealerToolsRequest(apiFetchParamsObj));
+    // dispatch(getDealerWipsRequest(apiFetchParamsObj));
     if (!ltpItems || ltpItems.length === 0) {
       dispatch(getLtpRequest());
     }
   });
 
-  const getWipsDataObj = useCallback(async getDealerItemsDataObj => {
-    // console
-    dispatch(getDealerWipsRequest(getDealerItemsDataObj));
-  });
+  const getOtherItemsAsync = async () => {
+    getOtherItems(apiFetchParamsObj);
+  };
 
   const saveToJob = useCallback(
     payload => dispatch(createDealerWipRequest(payload)),
     [dealerWipsItems]
+  );
+
+  useEffect(() => {
+    // runs only once
+    console.log('in findtools  useEffect', userDataObj && userDataObj.dealerId);
+    if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
+      apiFetchParamsObj = {
+        dealerId:
+          (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+        intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+      };
+      //   setgetDealerItemsDataObj(apiFetchParamsObj);
+      //   getWipsItemsAsync();
+      getOtherItemsAsync();
+    }
+  }, [userDataObj]);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('find tools - useFocusEffect');
+      setSearchInput('');
+      if (
+        apiFetchParamsObj &&
+        apiFetchParamsObj.intId &&
+        apiFetchParamsObj.dealerId
+      ) {
+        getWipsItemsAsync();
+      }
+    }, [])
   );
 
   useEffect(() => {
@@ -187,33 +215,6 @@ export default FindToolsScreen = props => {
     // console.log(bookedToolsList && bookedToolsList);
     setBookedToolsList(bookedToolsList);
   }, [dealerWipsItems]);
-
-  useEffect(() => {
-    // runs only once
-    // console.log('in tools use effect for getAllItems');
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      //   console.log('in tools use effect, calling getAllItems');
-      getAllItems(getDealerItemsDataObj);
-    };
-    if (isRefreshNeeded === true) {
-      getItemsAsync();
-    }
-  }, []);
-
-  useEffect(() => {
-    // runs only once
-    // console.log('in tools use effect');
-    // console.log('in tools use effect for getWipsItems');
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      //   console.log('in tools use effect, calling getWipsItems');
-      getWipsItems(getDealerItemsDataObj);
-    };
-    if (isRefreshNeeded === true) {
-      getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
 
   useEffect(() => {
     // runs only once
@@ -319,17 +320,6 @@ export default FindToolsScreen = props => {
     let concatItems = dealerToolsItems.concat(uniqueLtpItems);
     setCombinedItems(concatItems);
   }, [dealerToolsItems, uniqueLtpItems]);
-
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    // console.log('FTS in didFocusSubscription');
-    // setIsRefreshNeeded(true);
-    didFocusSubscription.remove();
-    setIsRefreshNeeded(true);
-
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-  });
 
   const selectItemHandler = (tool, lastPerson) => {
     // console.log('in selectItemHandler');
@@ -528,7 +518,7 @@ export default FindToolsScreen = props => {
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', dealerId && dealerId);
-    dealerId && getAllItems(getDealerItemsDataObj);
+    dealerId && getOtherData(apiFetchParamsObj);
   };
 
   const saveToJobRequestHandler = () => {
@@ -553,12 +543,12 @@ export default FindToolsScreen = props => {
         dealerId: dealerId.toString(),
         tools: newToolBasket
       };
-      const getWipsDataObj = {
+      const apiFetchParamsObj = {
         dealerId: dealerId.toString(),
         intId: userIntId.toString()
       };
       const payload = {
-        getWipsDataObj,
+        apiFetchParamsObj,
         wipObj
       };
 
@@ -1090,40 +1080,29 @@ export default FindToolsScreen = props => {
   );
 };
 
-FindToolsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Find tools' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='Find tools' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'Find tools'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

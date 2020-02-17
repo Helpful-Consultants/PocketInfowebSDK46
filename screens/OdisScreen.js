@@ -1,13 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
 import Colors from '../constants/Colors';
 import OdisVersions from './OdisVersions';
@@ -24,7 +27,7 @@ export default OdisScreen = props => {
   const allOdis = useSelector(state => state.odis);
   const dataStatusCode = useSelector(state => state.odis.statusCode);
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
     odisObj
@@ -34,18 +37,18 @@ export default OdisScreen = props => {
 
   const { navigation } = props;
 
-  useEffect(() => {
-    // runs only once
-    const getItemsAsync = async () => {
-      //   console.log('in odis use effect');
-      setIsRefreshNeeded(false);
-      getItems();
-      incrementViewCount();
-    };
-    if (isRefreshNeeded === true) {
-      getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
+  //   useEffect(() => {
+  //     // runs only once
+  //     const getItemsAsync = async () => {
+  //       //   console.log('in odis use effect');
+  //       setIsRefreshNeeded(false);
+  //       getItems();
+  //       incrementViewCount();
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler');
@@ -56,11 +59,21 @@ export default OdisScreen = props => {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    // incrementViewCount();
-    setIsRefreshNeeded(true);
-  });
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     // incrementViewCount();
+  //     setIsRefreshNeeded(true);
+  //   });
+
+  useFocusEffect(
+    useCallback(() => {
+      const getItemsAsync = async () => {
+        getItems();
+      };
+
+      getItemsAsync();
+    }, [])
+  );
 
   //   if (odisObj) {
   //     console.log('in odis screen,odisObj');
@@ -74,7 +87,7 @@ export default OdisScreen = props => {
   //   console.log(allOdis && allOdis);
 
   return (
-    <View>
+    <View style={styles.container}>
       <DataAlertBarWithRefresh
         dataName={'ODIS version data'}
         someDataExpected={true}
@@ -105,37 +118,35 @@ export default OdisScreen = props => {
   );
 };
 
-OdisScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='ODIS versions' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='ODIS versions'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='ODIS versions' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'Odis'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.openDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
       />
-    </HeaderButtons>
-  )
+    )
+  };
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    // backgroundColor: 'white',
+    alignItems: 'center'
+  }
 });

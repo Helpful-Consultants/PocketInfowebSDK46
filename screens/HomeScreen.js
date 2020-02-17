@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Updates } from 'expo';
 import { useDispatch, useSelector } from 'react-redux';
+// import { NavigationContainer, CommonActions } from '@react-navigation/native';
+
 import {
   ActivityIndicator,
   Dimensions,
@@ -9,6 +12,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { Icon, Text } from 'react-native-elements';
@@ -52,6 +56,7 @@ export default HomeScreen = props => {
   // console.log(props)
   //   console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
+  //   const navigation = useNavigation();
 
   const { navigation } = props;
   const insets = useSafeArea();
@@ -94,24 +99,33 @@ export default HomeScreen = props => {
   //     odisObj
   //   ]);
   //   console.log('userDataObj', userDataObj && userDataObj);
-  const getWipsDataObj = {
+  const apiFetchParamsObj = {
     dealerId:
       (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
     intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
   };
-  //   console.log('getWipsDataObj', getWipsDataObj && getWipsDataObj);
+  //   console.log('apiFetchParamsObj', apiFetchParamsObj && apiFetchParamsObj);
 
-  const getLtpItems = useCallback(async getWipsDataObj => {
-    dispatch(getLtpRequest(getWipsDataObj));
+  const getLtpItems = useCallback(async apiFetchParamsObj => {
+    dispatch(getLtpRequest(apiFetchParamsObj));
   });
 
-  const getAllItems = useCallback(async getWipsDataObj => {
-    dispatch(getDealerWipsRequest(getWipsDataObj));
+  const getAllItems = useCallback(async apiFetchParamsObj => {
+    dispatch(getDealerWipsRequest(apiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
     dispatch(getProductsRequest());
   });
 
+  const updateItemsAsync = async () => {
+    console.log('home - updateItemsAsync');
+    getAllItems(apiFetchParamsObj);
+  };
+
+  const getLtpItemsAsync = async () => {
+    console.log('home - updateItemsAsync');
+    getLtpItems(apiFetchParamsObj);
+  };
   //   console.log('IN HOME !!!!! brand', userBrand);
   const notificationLimit = 168;
   //   const notificationLimit = 5000000;
@@ -120,8 +134,23 @@ export default HomeScreen = props => {
   const now = moment();
 
   useEffect(() => {
+    // runs only once as LTP doesnt change too often
+    // will run again, though, if teh user userDataObj wasn't ready before
+    console.log(
+      'home - ltp useEffect',
+      apiFetchParamsObj && apiFetchParamsObj.intId
+    );
+    if (
+      apiFetchParamsObj &&
+      apiFetchParamsObj.intId &&
+      apiFetchParamsObj.dealerId
+    )
+      getLtpItemsAsync();
+  }, [userDataObj]);
+
+  useEffect(() => {
     // runs only once
-    // console.log('in tools use effect');
+
     if (
       isLoadingOdis ||
       isLoadingNews ||
@@ -141,92 +170,167 @@ export default HomeScreen = props => {
     isLoadingLtp
   ]);
 
-  useEffect(() => {
-    // console.log('in this one useEffect isRefreshNeeded ', isRefreshNeeded);
-    const getItemsAsync = async () => {
-      //   console.log('in home screen getItemsAsync,', __DEV__);
-      //   console.log('in this one useEffect - getting all');
-      getAllItems(getWipsDataObj);
-      //   console.log(
-      //     'in this one useEffect - ltp needed? ',
-      //     ltpItems && ltpItems.length
-      //   );
-      if (!ltpItems || ltpItems.length === 0) {
-        // console.log('in this one useEffect - getting ltp');
-        getLtpItems(getWipsDataObj);
-      }
-      //   console.log('in home screen getItemsAsync called getAllItems');
-      setIsRefreshNeeded(false);
-    };
-    // const listener = event => {
-    //   if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
-    //     setShowReloadDialogue(true);
+  //   useEffect(() => {
+  //     // console.log('in this one useEffect isRefreshNeeded ', isRefreshNeeded);
 
-    //     Updates.reloadFromCache();
-    //   }
-    // };
-    const getUpdatesAsync = async () => {
-      //   console.log('in home screen getUpdatesAsync');
-      try {
-        // const update = await Updates.checkForUpdateAsync(listener(event));
-        const update = await Updates.checkForUpdateAsync();
-        if (update.isAvailable) {
-          //   console.log('updateAvailable', update && update);
-          setIsCheckingAppVersion(false);
-          setIsUpdatingAppVersion(true);
-          setShowReloadDialogue(true);
-          await Updates.fetchUpdateAsync();
-          Updates.reloadFromCache();
-        } else {
-          getItemsAsync();
-          setIsCheckingAppVersion(false);
-          setShowReloadDialogue(false);
-        }
-      } catch (e) {
+  //     if (!ltpItems || ltpItems.length === 0) {
+  //       // console.log('in this one useEffect - getting ltp');
+  //       getLtpItemsAsync(apiFetchParamsObj);
+  //     }
+
+  //     if (__DEV__) {
+  //       // console.log('no update check because DEV');
+  //       setShouldCheckAppVersion(false);
+  //     } else {
+  //       setShouldCheckAppVersion(true);
+  //     }
+  //   if (searchInput && searchInput.length > 0) {
+  //     setSearchInput('');
+  //   }
+
+  // updateItemsAsync();
+  // const listener = event => {
+  //   if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
+  //     setShowReloadDialogue(true);
+
+  //     Updates.reloadFromCache();
+  //   }
+  // };
+  // const getUpdatesAsync = async () => {
+  //   //   console.log('in home screen getUpdatesAsync');
+  //   try {
+  //     // const update = await Updates.checkForUpdateAsync(listener(event));
+  //     const update = await Updates.checkForUpdateAsync();
+  //     if (update.isAvailable) {
+  //       //   console.log('updateAvailable', update && update);
+  //       setIsCheckingAppVersion(false);
+  //       setIsUpdatingAppVersion(true);
+  //       setShowReloadDialogue(true);
+  //       await Updates.fetchUpdateAsync();
+  //       Updates.reloadFromCache();
+  //     } else {
+  //       updateItemsAsync();
+  //       setIsCheckingAppVersion(false);
+  //       setShowReloadDialogue(false);
+  //     }
+  //   } catch (e) {
+  //     setIsCheckingAppVersion(false);
+  //     setIsUpdatingAppVersion(false);
+  //     console.log('updateAvailable error');
+  //   }
+  // };
+
+  // if (isRefreshNeeded === true) {
+  //   if (__DEV__) {
+  //     // console.log('no update check because DEV');
+  //     setShouldCheckAppVersion(false);
+  //     updateItemsAsync();
+  //   } else {
+  //     setShouldCheckAppVersion(true);
+  //     console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+  //     console.log('timeCheckedAppVersion now', now);
+  //     if (timeCheckedAppVersion) {
+  //       setShouldCheckAppVersion(true);
+  //       console.log(
+  //         'timeCheckedAppVersion diff',
+  //         now.diff(moment(timeCheckedAppVersion))
+  //       );
+
+  //       if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
+  //         setTimeCheckedAppVersion(now);
+  //         setIsCheckingAppVersion(true);
+  //         getUpdatesAsync();
+  //       } else {
+  //         setIsCheckingAppVersion(false);
+  //         updateItemsAsync();
+  //       }
+  //     } else {
+  //       //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
+  //       //   console.log('timeCheckedAppVersion now', now);
+  //       setTimeCheckedAppVersion(now);
+  //       //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+  //       setIsCheckingAppVersion(true);
+
+  //       //   console.log('isCheckingAppVersion', isCheckingAppVersion);
+  //       //   console.log('calling getUpdatesAsync');
+  //       getUpdatesAsync();
+  //     }
+  //   }
+  // }
+  //   }, [isRefreshNeeded]);
+
+  const getUpdatesAsync = async () => {
+    //   console.log('in home screen getUpdatesAsync');
+    try {
+      // const update = await Updates.checkForUpdateAsync(listener(event));
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        //   console.log('updateAvailable', update && update);
         setIsCheckingAppVersion(false);
-        setIsUpdatingAppVersion(false);
-        console.log('updateAvailable error');
+        setIsUpdatingAppVersion(true);
+        setShowReloadDialogue(true);
+        await Updates.fetchUpdateAsync();
+        Updates.reloadFromCache();
+      } else {
+        updateItemsAsync();
+        setIsCheckingAppVersion(false);
+        setShowReloadDialogue(false);
       }
-    };
+    } catch (e) {
+      setIsCheckingAppVersion(false);
+      setIsUpdatingAppVersion(false);
+      console.log('updateAvailable error');
+    }
+  };
 
-    if (isRefreshNeeded === true) {
+  const checkAppUpdates = () => {
+    console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+    console.log('timeCheckedAppVersion now', now);
+    if (timeCheckedAppVersion) {
+      setShouldCheckAppVersion(true);
+      console.log(
+        'timeCheckedAppVersion diff',
+        now.diff(moment(timeCheckedAppVersion))
+      );
+
+      if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
+        setTimeCheckedAppVersion(now);
+        setIsCheckingAppVersion(true);
+        getUpdatesAsync();
+      } else {
+        setIsCheckingAppVersion(false);
+        updateItemsAsync();
+      }
+    } else {
+      //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
+      //   console.log('timeCheckedAppVersion now', now);
+      setTimeCheckedAppVersion(now);
+      //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+      setIsCheckingAppVersion(true);
+
+      //   console.log('isCheckingAppVersion', isCheckingAppVersion);
+      //   console.log('calling getUpdatesAsync');
+      getUpdatesAsync();
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      updateItemsAsync();
+      checkAppUpdates();
       if (__DEV__) {
         // console.log('no update check because DEV');
         setShouldCheckAppVersion(false);
-        getItemsAsync();
+        updateItemsAsync();
       } else {
         setShouldCheckAppVersion(true);
-        console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-        console.log('timeCheckedAppVersion now', now);
-        if (timeCheckedAppVersion) {
-          setShouldCheckAppVersion(true);
-          console.log(
-            'timeCheckedAppVersion diff',
-            now.diff(moment(timeCheckedAppVersion))
-          );
-
-          if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
-            setTimeCheckedAppVersion(now);
-            setIsCheckingAppVersion(true);
-            getUpdatesAsync();
-          } else {
-            setIsCheckingAppVersion(false);
-            getItemsAsync();
-          }
-        } else {
-          //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
-          //   console.log('timeCheckedAppVersion now', now);
-          setTimeCheckedAppVersion(now);
-          //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-          setIsCheckingAppVersion(true);
-
-          //   console.log('isCheckingAppVersion', isCheckingAppVersion);
-          //   console.log('calling getUpdatesAsync');
-          getUpdatesAsync();
-        }
+        checkAppUpdates();
       }
-    }
-  }, [isRefreshNeeded]);
+    }, [])
+  );
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
@@ -236,14 +340,14 @@ export default HomeScreen = props => {
     // dispatch(signOutUserRequest()), [userIsSignedIn];
     dispatch(emptyLtpRequest());
     dispatch(signOutUserRequest());
-    navigation.navigate('AuthLoading');
+    // navigation.navigate('AuthLoading');
   });
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    // console.log('in homescreen didFocusSubscription');
-    didFocusSubscription.remove();
-    setIsRefreshNeeded(true);
-  });
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     // console.log('in homescreen didFocusSubscription');
+  //     didFocusSubscription.remove();
+  //     setIsRefreshNeeded(true);
+  //   });
 
   //   useEffect(() => {
   //     if (!userIsSignedIn || userError) {
@@ -372,7 +476,9 @@ export default HomeScreen = props => {
                 <View style={styles.gridRow}>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('FindTools')}
+                    onPress={() =>
+                      navigation.navigate('WipsTabs', { screen: 'FindTools' })
+                    }
                   >
                     <View>
                       <Icon
@@ -387,7 +493,9 @@ export default HomeScreen = props => {
                   </Touchable>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('Jobs')}
+                    onPress={() =>
+                      navigation.navigate('WipsTabs', { screen: 'Jobs' })
+                    }
                   >
                     <View>
                       <Icon
@@ -413,7 +521,9 @@ export default HomeScreen = props => {
                 <View style={styles.gridRow}>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('BookedOutTools')}
+                    onPress={() =>
+                      navigation.navigate('WipsTabs', { screen: 'BookedTools' })
+                    }
                   >
                     <View>
                       <Icon
@@ -438,7 +548,9 @@ export default HomeScreen = props => {
                   </Touchable>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('Ltp')}
+                    onPress={() =>
+                      navigation.navigate('WipsTabs', { screen: 'Ltp' })
+                    }
                   >
                     <View>
                       <Icon
@@ -455,7 +567,9 @@ export default HomeScreen = props => {
                 <View style={styles.gridRow}>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('Products')}
+                    onPress={() =>
+                      navigation.navigate('NewsTabs', { screen: 'Products' })
+                    }
                   >
                     <View>
                       <Icon
@@ -476,7 +590,9 @@ export default HomeScreen = props => {
                   </Touchable>
                   <Touchable
                     style={styles.gridCell}
-                    onPress={() => navigation.navigate('News')}
+                    onPress={() =>
+                      navigation.navigate('NewsTabs', { screen: 'News' })
+                    }
                   >
                     <View>
                       <Icon
@@ -582,9 +698,20 @@ export default HomeScreen = props => {
   );
 };
 
-HomeScreen.navigationOptions = {
-  headerShown: false,
-  tabBarVisible: false
+export const screenOptions = navData => {
+  return {
+    headerShown: false,
+    tabBarVisible: false,
+    tabBarLabel: ({ focused }) => (
+      <Text style={focused ? styles.focused : styles.notFocused}>Home</Text>
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+      />
+    )
+  };
 };
 
 const styles = StyleSheet.create({

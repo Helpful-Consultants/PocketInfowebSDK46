@@ -1,16 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { createFilter } from 'react-native-search-filter';
+
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
+import TabBarIcon from '../components/TabBarIcon';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
@@ -67,42 +71,95 @@ export default BookedOutToolsScreen = props => {
   const { navigation } = props;
   const insets = useSafeArea();
 
-  const getWipsDataObj = {
-    dealerId:
-      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-  };
-  //   console.log('before getWips', getWipsDataObj);
+  let apiFetchParamsObj = {};
+  //   console.log('before getWips', apiFetchParamsObj);
 
-  const getItems = useCallback(
-    async getWipsDataObj => {
-      // console.log('in getItems', getWipsDataObj);
-      dispatch(getDealerWipsRequest(getWipsDataObj));
-    },
-    [getWipsDataObj]
-  );
+  const getItems = useCallback(async apiFetchParamsObj => {
+    // console.log('in getItems', apiFetchParamsObj);
+    console.log(
+      'in booked tools getItems',
+      apiFetchParamsObj && apiFetchParamsObj
+    );
+    dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
+  });
+
+  const getItemsAsync = async () => {
+    getItems(apiFetchParamsObj);
+  };
 
   const deleteDealerWip = useCallback(
     payload => dispatch(deleteDealerWipRequest(payload)),
-    [getWipsDataObj]
+    [apiFetchParamsObj]
   );
 
   const deleteDealerWipTool = useCallback(
     payload => dispatch(deleteDealerWipToolRequest(payload)),
-    [getWipsDataObj]
+    [apiFetchParamsObj]
   );
+
+  //   useEffect(() => {
+  //     // runs only once
+  //     // console.log('in jobs use effect');
+  //     const getItemsAsync = async () => {
+  //       setIsRefreshNeeded(false);
+  //       getItems(apiFetchParamsObj);
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
+
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     if (searchInput && searchInput.length > 0) {
+  //       setSearchInput('');
+  //     }
+  //     setIsRefreshNeeded(true);
+  //   });
+
+  //   useFocusEffect(
+  //     useCallback(() => {
+  //       const getItemsAsync = async () => {
+  //         getItems(apiFetchParamsObj);
+  //       };
+  //       //   if (searchInput && searchInput.length > 0) {
+  //       //     setSearchInput('');
+  //       //   }
+  //       setSearchInput('');
+  //       getItemsAsync();
+  //     }, [])
+  //   );
 
   useEffect(() => {
     // runs only once
-    // console.log('in jobs use effect');
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      getItems(getWipsDataObj);
-    };
-    if (isRefreshNeeded === true) {
+    // console.log('in booked useEffect', userDataObj && userDataObj.dealerId);
+    if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
+      apiFetchParamsObj = {
+        dealerId:
+          (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+        intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+      };
+
       getItemsAsync();
     }
-  }, [isRefreshNeeded]);
+  }, [userDataObj]);
+
+  useFocusEffect(
+    useCallback(() => {
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      //   console.log('booked tools - useFocusEffect');
+      setSearchInput('');
+      if (
+        apiFetchParamsObj &&
+        apiFetchParamsObj.intId &&
+        apiFetchParamsObj.dealerId
+      ) {
+        getItemsAsync();
+      }
+    }, [])
+  );
 
   useEffect(() => {
     // console.log('in booked out useEffect userDataObj is:  ', userDataObj);
@@ -147,16 +204,8 @@ export default BookedOutToolsScreen = props => {
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-    setIsRefreshNeeded(true);
-  });
-
   const searchInputHandler = searchInput => {
-    console.log(searchInput, bookedOutItems);
+    // console.log(searchInput, bookedOutItems);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(bookedOutItems, searchInput);
@@ -186,7 +235,7 @@ export default BookedOutToolsScreen = props => {
       let payload = {
         dealerId: dealerId,
         wipObj: currentJob,
-        getWipsDataObj: getWipsDataObj
+        apiFetchParamsObj: apiFetchParamsObj
       };
 
       //   console.log('delete wip ' + currentJob.id);
@@ -197,7 +246,7 @@ export default BookedOutToolsScreen = props => {
         dealerId: dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        getWipsDataObj: getWipsDataObj
+        apiFetchParamsObj: apiFetchParamsObj
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -206,8 +255,8 @@ export default BookedOutToolsScreen = props => {
   };
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userDataObj && userDataObj.intId && getItems(getWipsDataObj);
+    // console.log('in refreshRequestHandler', apiFetchParamsObj);
+    dealerId && userDataObj && userDataObj.intId && getItems(apiFetchParamsObj);
   };
   //   console.log('bookedOutItems', bookedOutItems);
   //   const filteredItems =
@@ -225,7 +274,7 @@ export default BookedOutToolsScreen = props => {
   //   );
 
   return (
-    <View style={{ flex: 1, marginBottom: 10 }}>
+    <View style={{ flex: 1, paddingBottom: 3, backgroundColor: 'white' }}>
       <SearchBarWithRefresh
         dataName={'booked out tools'}
         refreshRequestHandler={refreshRequestHandler}
@@ -236,8 +285,8 @@ export default BookedOutToolsScreen = props => {
         dataStatusCode={dataStatusCode}
         dataCount={userWipsItems.length}
       />
-      {dataError ? null : searchInput.length > 0 &&
-        filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length >= minSearchLength &&
+        itemsToShow.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
@@ -323,40 +372,30 @@ export default BookedOutToolsScreen = props => {
   );
 };
 
-BookedOutToolsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='Booked Tools' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='Booked Tools' />,
+
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'Booked tools'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 // LocatorScreen.navigationOptions = {
 //   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />

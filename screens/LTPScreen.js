@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, Platform, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { createFilter } from 'react-native-search-filter';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import { createFilter } from 'react-native-search-filter';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 // import Modal from 'react-native-modal';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import HeaderButton from '../components/HeaderButton';
+import TabBarIcon from '../components/TabBarIcon';
+import BadgedTabBarText from '../components/BadgedTabBarText';
+// import HeaderButton from '../components/HeaderButton';
 // import MenuDrawer from '../components/MenuDrawer';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
@@ -17,14 +20,14 @@ import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import searchItems from '../components/searchItems';
-import stringCleaner from '../components/stringCleaner';
+// import stringCleaner from '../components/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
-export default LtpScreen = props => {
+export default LtpSzzzzcreen = props => {
   const dispatch = useDispatch();
   const userBrand = useSelector(state => state.user.userBrand);
   const ltpItems = useSelector(state => state.ltp.ltpItems);
@@ -40,17 +43,27 @@ export default LtpScreen = props => {
     ltpItems
   ]);
 
-  const [isDrawerVisible, setIsDrawerVisible] = useState(true);
+  //   const [isDrawerVisible, setIsDrawerVisible] = useState(true);
+  //   console.log('in ltp screen');
+
+  const getItemsAsync = async () => {
+    // console.log('ltp - getItemsAsync');
+    getItems();
+  };
 
   useEffect(() => {
     // runs only once
-    // setSearchInput('test ');
-    // console.log('in ltp use effect');
-    const getItemsAsync = async () => {
-      getItems();
-    };
+    // console.log('in ltp useEffect');
     getItemsAsync();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      //   console.log('ltp - useFocusEffect');
+      // don't refresh the every time user visits the page LTP - they don't change too much
+      setSearchInput('');
+    }, [])
+  );
 
   useEffect(() => {
     // console.log('getting unique LTP items', ltpItems && ltpItems.length);
@@ -84,14 +97,6 @@ export default LtpScreen = props => {
     setUniqueLtpItems(ltpItemsSorted);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
-
-  const didFocusSubscription = props.navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    // console.log('did focus ltp');
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-  });
 
   const zzzzsearchInputHandler = searchInput => {
     let searchStringStart = searchInput.toLowerCase();
@@ -141,13 +146,13 @@ export default LtpScreen = props => {
   };
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler');
-    getItems();
+    // console.log('ltp - in refreshRequestHandler');
+    getItemsAsync();
   };
 
-  const backdropPressHandler = () => {
-    setIsDrawerVisible(false);
-  };
+  //   const backdropPressHandler = () => {
+  //     setIsDrawerVisible(false);
+  //   };
 
   //   const items = (!isLoading && !dataError && ltpItems) || [];
 
@@ -189,8 +194,8 @@ export default LtpScreen = props => {
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
-      {dataError ? null : searchInput.length > minSearchLength &&
-        filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length >= minSearchLength &&
+        itemsToShow.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
@@ -224,40 +229,30 @@ export default LtpScreen = props => {
   );
 };
 
-LtpScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='LTP' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          {
-            /* console.log('pressed homescreen icon'); */
-          }
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='LTP' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'LTP'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 const styles = StyleSheet.create({
   container: {

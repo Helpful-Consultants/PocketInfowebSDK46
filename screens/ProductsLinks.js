@@ -3,8 +3,9 @@ import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import { Base64 } from 'js-base64';
-import ScaledImage from '../components/ScaledImage';
+import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
+import TabBarIcon from '../components/TabBarIcon';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 
@@ -64,8 +65,8 @@ export default function ProductsLinks(props) {
             >
               <View style={styles.item}>
                 <View style={styles.itemTopRow}>
-                  <ScaledImage
-                    width={120}
+                  <ScaledImageFinder
+                    width={70}
                     uri={`${props.baseImageUrl}${item.imageName}`}
                   />
                   <View style={styles.itemTitleContainer}>

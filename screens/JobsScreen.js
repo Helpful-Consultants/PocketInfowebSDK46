@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import { createFilter } from 'react-native-search-filter';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import { createFilter } from 'react-native-search-filter';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 // import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import HeaderButton from '../components/HeaderButton';
+import TabBarIcon from '../components/TabBarIcon';
+// import HeaderButton from '../components/HeaderButton';
 import ErrorDetails from '../components/ErrorDetails';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
@@ -59,32 +62,17 @@ export default JobsScreen = props => {
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  //   const [isLyndonAlertVisible, setIsLyndonAlertVisible] = useState(false);
-  //   const [listView, setListView] = useState({});
+  let apiFetchParamsObj = {};
 
-  const { navigation } = props;
-
-  //   if (!userIsSignedIn) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   console.log('@@@@@@@@@@@@@', userDataObj);
-
-  const getWipsDataObj = {
-    dealerId:
-      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-  };
-  //   console.log('before getWips', getWipsDataObj);
-
-  //   const getItems = useCallback(getWipsDataObj => {
-  //     // console.log('in getItems', getWipsDataObj);
-  //     dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
-  //   });
-
-  const getItems = useCallback(async getWipsDataObj => {
-    // console.log('in getItems', getWipsDataObj);
-    dispatch(getDealerWipsRequest(getWipsDataObj)), [dealerWipsItems];
+  const getItems = useCallback(async apiFetchParamsObj => {
+    // console.log('in getItems', apiFetchParamsObj);
+    // console.log('in jobs getItems', apiFetchParamsObj && apiFetchParamsObj);
+    dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
   });
+
+  const getItemsAsync = async () => {
+    getItems(apiFetchParamsObj);
+  };
 
   const deleteDealerWip = useCallback(
     payload => dispatch(deleteDealerWipRequest(payload)),
@@ -102,29 +90,75 @@ export default JobsScreen = props => {
 
   //   console.log('in jobs screen, wipsItems', JSON.parse(dealerWipsItems));
 
-  useEffect(() => {
-    // runs only once
-    // console.log('in jobs use effect', isRefreshNeeded);
+  //   useEffect(() => {
+  //     // runs only once
+  //     // console.log('in jobs use effect', isRefreshNeeded);
 
-    const getItemsAsync = async () => {
-      setIsRefreshNeeded(false);
-      getItems(getWipsDataObj);
-    };
-    if (isRefreshNeeded === true) {
-      getItemsAsync();
-    }
-  }, [isRefreshNeeded]);
+  //     const getItemsAsync = async () => {
+  //       setIsRefreshNeeded(false);
+  //       getItems(apiFetchParamsObj);
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
 
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getWipsDataObj);
-    dealerId && userDataObj && userDataObj.intId && getItems(getWipsDataObj);
-  };
+  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
+  //     didFocusSubscription.remove();
+  //     if (searchInput && searchInput.length > 0) {
+  //       setSearchInput('');
+  //     }
+  //     setIsRefreshNeeded(true);
+  //     // refreshRequestHandler();
+  //   });
 
   //   useEffect(() => {
   //     // runs only once
-  //     // console.log('in jobs use effect');
-  //     setIsLyndonAlertVisible(true);
-  //   }, [items]);
+  //     // console.log('in stats use effect');
+  //     const getItemsAsync = async () => {
+  //       setIsRefreshNeeded(false);
+  //       getItems();
+  //     };
+  //     if (isRefreshNeeded === true) {
+  //       getItemsAsync();
+  //     }
+  //   }, [isRefreshNeeded]);
+
+  useEffect(() => {
+    // runs only once
+    // console.log('in jobs useEffect', userDataObj && userDataObj.dealerId);
+    if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
+      apiFetchParamsObj = {
+        dealerId:
+          (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
+        intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+      };
+      //   setGetWipsDataObj(apiFetchParamsObj);
+      getItemsAsync();
+    }
+  }, [userDataObj]);
+
+  useFocusEffect(
+    useCallback(() => {
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      //   console.log('job - useFocusEffect');
+      setSearchInput('');
+      if (
+        apiFetchParamsObj &&
+        apiFetchParamsObj.intId &&
+        apiFetchParamsObj.dealerId
+      ) {
+        getItemsAsync();
+      }
+    }, [])
+  );
+
+  const refreshRequestHandler = () => {
+    // console.log('in refreshRequestHandler', apiFetchParamsObj);
+    dealerId && userDataObj && userDataObj.intId && getItems(apiFetchParamsObj);
+  };
 
   //   if (dealerWipsItems && dealerWipsItems.length > 0) {
   //     console.log('in jobs screen, wipsItems', dealerWipsItems.length, userIntId);
@@ -167,15 +201,6 @@ export default JobsScreen = props => {
   // console.log(dealerWipsItems);
   // console.log('Find DealerWips screen end');
 
-  const didFocusSubscription = navigation.addListener('didFocus', () => {
-    didFocusSubscription.remove();
-    if (searchInput && searchInput.length > 0) {
-      setSearchInput('');
-    }
-    setIsRefreshNeeded(true);
-    // refreshRequestHandler();
-  });
-
   const searchInputHandler = searchInput => {
     // console.log(searchInput);
     setSearchInput(searchInput);
@@ -201,7 +226,7 @@ export default JobsScreen = props => {
       let payload = {
         dealerId: dealerId,
         wipObj: currentJob,
-        getWipsDataObj: getWipsDataObj
+        apiFetchParamsObj: apiFetchParamsObj
       };
 
       //   console.log('delete wip ' + currentJob.id);
@@ -212,7 +237,7 @@ export default JobsScreen = props => {
         dealerId: dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        getWipsDataObj: getWipsDataObj
+        apiFetchParamsObj: apiFetchParamsObj
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -233,7 +258,7 @@ export default JobsScreen = props => {
   //     let payload = {
   //       dealerId: dealerId,
   //       wipObj: currentJob,
-  //       getWipsDataObj: getWipsDataObj
+  //       apiFetchParamsObj: apiFetchParamsObj
   //     };
   //     console.log('delete wip ' + currentJob.id);
   //     console.log('delete wip ', payload);
@@ -289,8 +314,8 @@ export default JobsScreen = props => {
         dataErrorUrl={dataErrorUrl}
         dataCount={userWipsItems.length}
       />
-      {dataError ? null : searchInput.length > 0 &&
-        filteredItems.length === 0 ? (
+      {dataError ? null : searchInput.length >= minSearchLength &&
+        itemsToShow.length === 0 ? (
         <View style={styles.noneFoundPrompt}>
           <Text style={styles.noneFoundPromptText}>
             Your search found no results.
@@ -379,37 +404,29 @@ export default JobsScreen = props => {
   );
 };
 
-JobsScreen.navigationOptions = ({ navigation }) => ({
-  headerTitle: <TitleWithAppLogo title='My jobs' />,
-  headerStyle: {
-    backgroundColor: Colors.vwgHeader
-  },
-  headerLeft: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='home'
-        iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-        onPress={() => {
-          navigation.navigate('Home');
-        }}
+export const screenOptions = navData => {
+  return {
+    headerTitle: () => <TitleWithAppLogo title='My jobs' />,
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader
+    },
+    tabBarColor: Colors.vwgWhite,
+    tabBarLabel: ({ focused }) => (
+      <BadgedTabBarText
+        showBadge={false}
+        focused={focused}
+        text={'My jobs'}
+        value={3}
       />
-    </HeaderButtons>
-  ),
-  headerRight: () => (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item
-        title='menu'
-        iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        onPress={() => {
-          {
-            /*  console.log('pressed menu icon'); */
-          }
-          navigation.toggleDrawer();
-        }}
+    ),
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-clipboard'}
       />
-    </HeaderButtons>
-  )
-});
+    )
+  };
+};
 
 // LocatorScreen.navigationOptions = {
 //   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />
@@ -419,7 +436,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: 15,
-    marginBottom: 10
+    paddingBottom: 10
   },
   modal: {
     flex: 1,

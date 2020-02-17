@@ -39,15 +39,17 @@ class UsersScreen extends Component {
   }
 }
 
-UsersScreen.navigationOptions = {
-  title: 'News',
-  headerStyle: {
-    backgroundColor: '#efefef'
-  },
-  headerTintColor: '#333',
-  headerTitleStyle: {
-    fontFamily: 'the-sans-bold'
-  }
+export const screenOptions = navData => {
+  return {
+    title: 'News',
+    headerStyle: {
+      backgroundColor: '#efefef'
+    },
+    headerTintColor: '#333',
+    headerTitleStyle: {
+      fontFamily: 'the-sans-bold'
+    }
+  };
 };
 
 const styles = StyleSheet.create({

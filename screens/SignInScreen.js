@@ -247,9 +247,12 @@ export default SignInScreen = props => {
   );
 };
 
-SignInScreen.navigationOptions = () => ({
-  headerShown: false
-});
+export const screenOptions = navData => {
+  return {
+    title: 'Sign In',
+    headerShown: false
+  };
+};
 
 const styles = StyleSheet.create({
   instructions: {
