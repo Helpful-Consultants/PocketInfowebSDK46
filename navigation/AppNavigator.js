@@ -1,9 +1,16 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
+import { StyleSheet, View } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
+import { useSelector, useDispatch } from 'react-redux';
+// import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+// import { createStackNavigator } from 'react-navigation-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem
+} from '@react-navigation/drawer';
 
 // import {
 //   createDrawerNavigator,
@@ -16,165 +23,79 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 //   getManufacturer
 // } from 'react-native-device-info';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import SignInScreen from '../screens/SignInScreen';
-import SignOutScreen from '../screens/SignOutScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
+
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
+import AppNameWithLogo from '../components/AppNameWithLogo';
 // import StatsScreen from '../screens/StatsScreen';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
+import SignedOutStack from './SignedOutStack';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
 
-const SignedOutStack = createStackNavigator({
-  SignIn: {
-    screen: SignInScreen,
-    navigationOptions: {
-      title: 'Sign In'
-    },
-    navigationOptions: () => ({
-      headerShown: false
-    })
-  },
-  ForgottenPassword: {
-    screen: ForgottenPasswordScreen,
-    navigationOptions: {
-      title: 'Forgotten Password'
-    },
-    navigationOptions: () => ({
-      headerShown: true
-    })
-  },
-  Register: {
-    screen: RegisterScreen,
-    navigationOptions: {
-      title: 'Register'
-    },
-    navigationOptions: () => ({
-      headerShown: true
-    })
-  },
-  SignOut: {
-    screen: SignOutScreen,
-    navigationOptions: {
-      title: 'Sign out'
-    }
-  },
-  navigationOptions: () => ({
-    headerShown: false
-  })
-});
+const CustomDrawerContent = props => {
+  //   const insets = useSafeArea();
+  /* <DrawerContentScrollView {...props} style={{ paddingTop: insets.top }}> */
 
-// Stats stack
-// const StatsStack = createStackNavigator({
-//   Stats: StatsScreen
-// });
-
-// // OdisStack.navigationOptions = {
-// //   tabBarLabel: 'ODIS',
-// //   tabBarIcon: ({ focused }) => (
-// //     <TabBarIcon
-// //       focused={focused}
-// //       name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
-// //     />
-// //   )
-// // };
-
-// OdisStack.path = '';
-// End ODIS screen
-
-// const AppDrawerNavigator = createDrawerNavigator({
-//   'Quick Start': {
-//     screen: HomeScreen
-//   },
-//   'Main menu': {
-//     screen: WipTabNavigator
-//   },
-//   'News menu': {
-//     screen: NewsTabNavigator
-//   },
-//   'Odis versions': {
-//     screen: OdisScreen
-//   },
-//   Stats: {
-//     screen: StatsScreen
-//   },
-//   'Sign out': {
-//     screen: SignInScreen
-//   }
-// });
-
-const DrawerContent = props => {
   return (
-    <ScrollView style={styles.container}>
-      <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-        <View style={styles.stretched}>
-          <DrawerItems {...props} />
-          <AppInfo />
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <AppInfo />
+    </DrawerContentScrollView>
   );
 };
 
-const AppDrawerNavigator = createDrawerNavigator(
-  {
-    Home: {
-      screen: HomeScreen,
-      navigationOptions: { drawerLabel: 'Home' }
-    },
-    FindToolsStack: {
-      screen: WipTabNavigator,
-      navigationOptions: {
-        drawerLabel: 'Find tools, return tools, jobs & LTP',
-        initialRouteName: 'FindTools'
-      }
-    },
-    NewsStack: {
-      screen: NewsTabNavigator,
-      navigationOptions: {
-        drawerLabel: 'News, products, ODIS, stats',
-        initialRouteName: 'News'
-      }
-    },
+const Drawer = createDrawerNavigator();
 
-    SignedOutStack: {
-      screen: SignOutScreen,
-      navigationOptions: {
-        drawerLabel: 'Sign out'
-      }
-    }
-  },
-  {
-    contentComponent: DrawerContent
-  }
-);
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => CustomDrawerContent(props)}>
+      <Drawer.Screen
+        name='Home'
+        component={HomeScreen}
+        options={{
+          drawerLabel: 'Home'
+        }}
+      />
+      <Drawer.Screen
+        name='WipsTabs'
+        component={WipTabNavigator}
+        options={{
+          drawerLabel: 'Find tools, return tools, jobs & LTP',
+          initialRouteName: 'FindTools'
+        }}
+      />
+      <Drawer.Screen
+        name='NewsTabs'
+        component={NewsTabNavigator}
+        options={{
+          drawerLabel: 'News, products, ODIS, stats',
+          initialRouteName: 'News'
+        }}
+      />
+      <Drawer.Screen
+        name='SignedOutStack'
+        component={SignOutScreen}
+        options={{
+          drawerLabel: 'Sign out'
+        }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
-// Tab navigator
-// const MainTabNavigator = createBottomTabNavigator({
-//   Home: HomeScreen,
-//   Wip: WipTabNavigator,
-//   News: NewsTabNavigator
-// });
+export default AppNavigator = props => {
+  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  return (
+    <NavigationContainer>
+      {userIsSignedIn ? <DrawerNavigator /> : <SignedOutStack />}
+    </NavigationContainer>
+  );
+};
 
-// MainTabNavigator.path = '';
-
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      AuthLoading: AuthLoadingScreen,
-      Auth: SignedOutStack,
-      Main: AppDrawerNavigator
-      //   Main: CustomDrawerContentComponent
-    },
-    // { initialRouteName: userIsSignedIn ? 'Main' : 'Auth' }
-    { initialRouteName: 'AuthLoading' }
-  )
-);
 const styles = StyleSheet.create({
   container: {
     flex: 1

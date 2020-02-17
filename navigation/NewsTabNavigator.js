@@ -1,22 +1,35 @@
 import React from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import TabBarIcon from '../components/TabBarIcon';
-import BadgedTabBarText from '../components/BadgedTabBarText';
-import HomeScreen from '../screens/HomeScreen';
-import NewsScreen from '../screens/NewsScreen';
-import ProductsScreen from '../screens/ProductsScreen';
-import StatsScreen from '../screens/StatsScreen';
-import OdisScreen from '../screens/OdisScreen';
-import Colors from '../constants/Colors';
+// import { createStackNavigator } from 'react-navigation-stack';
+// import { createBottomTabNavigator } from 'react-navigation-tabs';
+// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-// const config = Platform.select({
-//   web: { headerMode: 'screen' },
-//   default: {}
-// });
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import HeaderButton from '../components/HeaderButton';
+
+// import BadgedTabBarText from '../components/BadgedTabBarText';
+// import HomeScreen, {
+//   screenOptions as HomeScreenOptions
+// } from '../screens/HomeScreen';
+import NewsScreen, {
+  screenOptions as NewsScreenOptions
+} from '../screens/NewsScreen';
+import ProductsScreen, {
+  screenOptions as ProductsScreenOptions
+} from '../screens/ProductsScreen';
+import OdisScreen, {
+  screenOptions as OdisScreenOptions
+} from '../screens/OdisScreen';
+import StatsScreen, {
+  screenOptions as StatsScreenOptions
+} from '../screens/StatsScreen';
+
+import Colors from '../constants/Colors';
 
 // const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
@@ -24,207 +37,172 @@ import Colors from '../constants/Colors';
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth);
 
-// Home screen
-const HomeStack = createStackNavigator(
-  {
-    Home: HomeScreen
-  }
-  //   config
-);
-
-HomeStack.navigationOptions = {
-  tabBarLabel: ({ focused }) => (
-    <Text style={focused ? styles.focused : styles.notFocused}>Home</Text>
-  ),
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
-    />
-  )
+const defaultStackNavOptions = () => {
+  const navigation = useNavigation();
+  return {
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader,
+      height: 80
+    },
+    cardStyle: { backgroundColor: 'white' },
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='home'
+          iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+          onPress={() => {
+            {
+              /* console.log('pressed homescreen icon'); */
+            }
+            navigation.navigate('Home');
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='menu'
+          iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
-// End Home screen
 
-// News screen
-const NewsStack = createStackNavigator(
-  {
-    News: NewsScreen
-  }
-  //   config
-);
+// const HomeStack = createStackNavigator();
+// <HomeStack.Navigator screenOptions={defaultStackNavOptions}>
+//   <HomeStack.Screen
+//     name={Home}
+//     component={HomeScreen}
+//     options={HomeScreenOptions}
+//   />
+// </HomeStack.Navigator>;
 
-NewsStack.navigationOptions = {
-  initialRouteName: 'news',
-  tabBarLabel:
-    Platform.OS === 'ios'
-      ? ({ focused }) => (
-          <BadgedTabBarText
-            showBadge={false}
-            focused={focused}
-            text={'News'}
-            value={3}
-          />
-        )
-      : 'News',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  )
+const News = createStackNavigator();
+
+const NewsStack = () => {
+  return (
+    <News.Navigator screenOptions={defaultStackNavOptions}>
+      <News.Screen
+        name={'NewsScreen'}
+        component={NewsScreen}
+        options={NewsScreenOptions}
+      />
+    </News.Navigator>
+  );
 };
-// End News screen
 
-// Products screen
-const ProductsStack = createStackNavigator(
-  {
-    Products: ProductsScreen
-  }
-  //   config
-);
-
-ProductsStack.navigationOptions = {
-  initialRouteName: 'Products',
-  tabBarColor: Colors.vwgWhite,
-  tabBarLabel: ({ focused }) => (
-    <BadgedTabBarText
-      showBadge={false}
-      focused={focused}
-      text={'Products'}
-      value={3}
-    />
-  ),
-  tabBarLabel:
-    Platform.OS === 'ios'
-      ? ({ focused }) => (
-          <BadgedTabBarText
-            showBadge={false}
-            focused={focused}
-            text={'Products'}
-            value={3}
-          />
-        )
-      : 'Products',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
-    />
-  )
+const Products = createStackNavigator();
+const ProductsStack = () => {
+  return (
+    <Products.Navigator screenOptions={defaultStackNavOptions}>
+      <Products.Screen
+        name={'ProductsScreen'}
+        component={ProductsScreen}
+        options={ProductsScreenOptions}
+      />
+    </Products.Navigator>
+  );
 };
-// End Products screen
 
-// ODIS screen
-const OdisStack = createStackNavigator(
-  {
-    Odis: OdisScreen
-  }
-  //   config
-);
-
-OdisStack.navigationOptions = {
-  initialRouteName: 'Odis',
-  tabBarColor: Colors.vwgWhite,
-  tabBarLabel:
-    Platform.OS === 'ios'
-      ? ({ focused }) => (
-          <Text style={focused ? styles.focused : styles.notFocused}>ODIS</Text>
-        )
-      : 'ODIS',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
-    />
-  )
+const Odis = createStackNavigator();
+const OdisStack = () => {
+  return (
+    <Odis.Navigator screenOptions={defaultStackNavOptions}>
+      <Odis.Screen name={'OdisScreen'} component={OdisScreen} />
+    </Odis.Navigator>
+  );
 };
-// End ODIS screen
 
-// Stats screen
-const StatsStack = createStackNavigator(
-  {
-    Stats: StatsScreen
-  }
-  //   config
-);
-
-StatsStack.navigationOptions = {
-  initialRouteName: 'Stats',
-  tabBarColor: Colors.vwgWhite,
-  tabBarLabel:
-    Platform.OS === 'ios'
-      ? ({ focused }) => (
-          <Text style={focused ? styles.focused : styles.notFocused}>
-            Stats
-          </Text>
-        )
-      : 'Stats',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
-    />
-  )
+const Stats = createStackNavigator();
+const StatsStack = () => {
+  return (
+    <Stats.Navigator screenOptions={defaultStackNavOptions}>
+      <Stats.Screen
+        name={'StatsScreen'}
+        component={StatsScreen}
+        options={StatsScreenOptions}
+      />
+    </Stats.Navigator>
+  );
 };
-// End Stats screen
 
 // Tab navigator
-const NewsTabNavigator =
-  Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator(
-        {
-          NewsStack,
-          ProductsStack,
-          OdisStack,
-          StatsStack
-        },
-        {
-          labeled: true,
-          shifting: false,
-          backBehavior: 'history',
-          activeColor: Colors.vwgDeepBlue,
-          inactiveColor: Colors.vwgLink,
-          tabBarColor: Colors.vwgWhite,
-          barStyle: {
-            labelPosition: 'below-icon',
 
-            // height: RFPercentage(6.4),
-            backgroundColor: Colors.vwgWhite
-          }
-          //   tabBarOptions: {
-          //     labelPosition: 'below-icon',
-          //     style: {
-          //       height: RFPercentage(6.4)
-          //     }
-          //   },
-          //   tabStyle: {
-          //     height: RFPercentage(2.2)
-          //   }
+const defaultTabNavOptions =
+  Platform.OS === 'android'
+    ? {
+        labeled: true,
+        shifting: false,
+        backBehavior: 'history',
+        activeColor: Colors.vwgDeepBlue,
+        inactiveColor: Colors.vwgLink,
+        tabBarColor: Colors.vwgWhite,
+        barStyle: {
+          labelPosition: 'below-icon',
+
+          // height: RFPercentage(6.4),
+          backgroundColor: Colors.vwgWhite
         }
-      )
-    : createBottomTabNavigator(
-        {
-          NewsStack,
-          ProductsStack,
-          OdisStack,
-          StatsStack
-        },
-        {
-          tabBarOptions: {
-            labelPosition: 'below-icon',
-            style: {
-              height: RFPercentage(6.4)
-            }
+        //   tabBarOptions: {
+        //     labelPosition: 'below-icon',
+        //     style: {
+        //       height: RFPercentage(6.4)
+        //     }
+        //   },
+        //   tabStyle: {
+        //     height: RFPercentage(2.2)
+        //   }
+      }
+    : {
+        tabBarOptions: {
+          labelPosition: 'below-icon',
+          style: {
+            // height: RFPercentage(6.4)
           },
-          tabStyle: {
-            height: RFPercentage(2.2)
-          }
+          activeTintColor: Colors.vwgActiveLink
+        },
+        tabStyle: {
+          //   height: RFPercentage(2.2)
         }
-      );
+      };
+
+const NewsTabs =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator()
+    : createBottomTabNavigator();
+
+export default NewsTabNavigator = () => {
+  return (
+    <NewsTabs.Navigator screenOptions={defaultTabNavOptions}>
+      <NewsTabs.Screen
+        name='News'
+        component={NewsStack}
+        options={NewsScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Products'
+        component={ProductsStack}
+        options={ProductsScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
+      />
+    </NewsTabs.Navigator>
+  );
+};
+
 // End Tab navigator
 
 const styles = StyleSheet.create({
@@ -239,5 +217,3 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(1.7)
   }
 });
-
-export default NewsTabNavigator;
