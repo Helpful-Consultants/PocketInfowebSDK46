@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native';
 import ScaledImage from '../components/ScaledImage';
 
 export default ScaledImageFinder = props => {
@@ -12,6 +13,13 @@ export default ScaledImageFinder = props => {
     // console.log('strip retValue is ', retValue);
     return retValue;
   };
+
+  const defaultImage = (
+    <Image
+      source={require('../assets/images/no-image-placeholder.png')}
+      width={props.width}
+    />
+  );
 
   const getImageUrl = item => {
     // console.log('in ScaledImageFinder', item);
@@ -37,6 +45,8 @@ export default ScaledImageFinder = props => {
   const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
   if (item && item.loanToolNo) {
     return null;
+  } else if (item && item.toolType === ('Local' || 'local')) {
+    return defaultImage;
   } else {
     return <ScaledImage width={width} uri={imageUrl} />;
   }
