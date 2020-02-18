@@ -26,7 +26,8 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
-import AppNameWithLogo from '../components/AppNameWithLogo';
+import Colors from '../constants/Colors';
+// import AppNameWithLogo from '../components/AppNameWithLogo';
 // import StatsScreen from '../screens/StatsScreen';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
@@ -48,11 +49,20 @@ const CustomDrawerContent = props => {
   );
 };
 
+const drawerContentOptions = {
+  activeTintColor: Colors.vwgActiveLink,
+  inactiveTintColor: Colors.vwgInactiveLink,
+  activeBackgroundColor: 'white'
+};
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator drawerContent={props => CustomDrawerContent(props)}>
+    <Drawer.Navigator
+      drawerContentOptions={drawerContentOptions}
+      drawerContent={props => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen
         name='Home'
         component={HomeScreen}
