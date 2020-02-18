@@ -76,10 +76,10 @@ export default BookedOutToolsScreen = props => {
 
   const getItems = useCallback(async apiFetchParamsObj => {
     // console.log('in getItems', apiFetchParamsObj);
-    console.log(
-      'in booked tools getItems',
-      apiFetchParamsObj && apiFetchParamsObj
-    );
+    // console.log(
+    //   'in booked tools getItems',
+    //   apiFetchParamsObj && apiFetchParamsObj
+    // );
     dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
   });
 

@@ -178,17 +178,6 @@ export const screenOptions = navData => {
       backgroundColor: Colors.vwgHeader
     },
     tabBarColor: Colors.vwgWhite,
-    // tabBarLabel: () =>
-    //   Platform.OS === 'ios'
-    //     ? ({ focused }) => (
-    //         <BadgedTabBarText
-    //           showBadge={false}
-    //           focused={focused}
-    //           text={'News'}
-    //           value={3}
-    //         />
-    //       )
-    //     : 'News',
     tabBarLabel: ({ focused }) => (
       <BadgedTabBarText
         showBadge={false}
