@@ -4,7 +4,7 @@ import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import { Base64 } from 'js-base64';
-import ScaledImage from '../components/ScaledImage';
+import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
