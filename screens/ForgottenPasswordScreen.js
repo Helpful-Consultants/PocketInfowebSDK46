@@ -12,139 +12,157 @@ export default ForgottenPasswordScreen = props => {
       style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}
     >
       <AppNameWithLogo />
-      <View>
+      <View
+        style={{
+          marginHorizontal: 10
+        }}
+      >
+        <Text
+          style={{
+            marginTop: 30,
+            marginBottom: 10,
+            marginHorizontal: 20,
+            textAlign: 'left',
+            fontSize: 14
+          }}
+        >
+          To sign in you need to generate your own PIN (personal identification
+          number).
+        </Text>
+
         <View
           style={{
-            margin: 20,
-            textAlign: 'center'
+            flexDirection: 'row',
+            marginRight: 35
           }}
         >
           <Text
             style={{
-              marginTop: 10,
-              marginBottom: 20,
-              marginHorizontal: 20,
-              textAlign: 'center',
+              marginVertical: 3,
+              marginLeft: 20,
+              marginRight: 6,
+              textAlign: 'left',
               fontSize: 14
             }}
           >
-            To activate Pocket Infoweb you will need to generate an access PIN
-            for your user ID.
+            1.
           </Text>
 
-          <View style={{ flexDirection: 'row', marginRight: 30 }}>
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 30,
-                marginRight: 3,
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              1.
-            </Text>
-
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 3,
-                marginRight: 30,
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              Log in to the Tools Infoweb website on a PC or on this phone with
-              with link below.
-            </Text>
-          </View>
-
-          <View
-            style={{ flexDirection: 'row', marginRight: 30, marginRight: 30 }}
+          <Text
+            style={{
+              marginVertical: 3,
+              marginLeft: 3,
+              marginRight: 30,
+              textAlign: 'left',
+              fontSize: 14
+            }}
           >
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 30,
-                marginRight: 3,
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              2.
-            </Text>
-
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 3,
-                marginRight: 30,
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              Go to FAQ | About.
-            </Text>
-          </View>
-
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 30,
-                marginRight: 3,
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              3.
-            </Text>
-
-            <Text
-              style={{
-                marginVertical: 3,
-                marginLeft: 3,
-
-                textAlign: 'left',
-                fontSize: 14
-              }}
-            >
-              Click on the 'Generate App PIN' button.
-            </Text>
-          </View>
+            {`Sign in to the Tools Infoweb website on a PC or on this phone.`}
+          </Text>
         </View>
 
-        <Button
-          title='Check registration on toolsinfoweb.co.uk'
-          type='clear'
-          onPress={() => {
-            Linking.openURL(Urls.toolsInfoweb);
+        <View
+          style={{
+            flexDirection: 'row',
+            marginRight: 35
           }}
-          buttonStyle={{
-            marginTop: 20
-          }}
-          titleStyle={{
-            color: Colors.vwgLink
-          }}
-        />
+        >
+          <Text
+            style={{
+              marginVertical: 3,
+              marginLeft: 20,
+              marginRight: 3,
+              textAlign: 'left',
+              fontSize: 14
+            }}
+          >
+            {'2.'}
+          </Text>
+
+          <Text
+            style={{
+              marginVertical: 3,
+              marginLeft: 3,
+              marginRight: 30,
+              textAlign: 'left',
+              fontSize: 14
+            }}
+          >
+            {`Go to FAQ | About.`}
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', marginRight: 35 }}>
+          <Text
+            style={{
+              marginVertical: 3,
+              marginLeft: 20,
+              marginRight: 3,
+              textAlign: 'left',
+              fontSize: 14
+            }}
+          >
+            3.
+          </Text>
+
+          <Text
+            style={{
+              marginVertical: 3,
+              marginLeft: 3,
+              marginRight: 30,
+              textAlign: 'left',
+              fontSize: 14
+            }}
+          >
+            Click on the 'Generate App PIN' button.
+          </Text>
+        </View>
+      </View>
+
+      <View style={{ flexDirection: 'row', marginRight: 35 }}>
         <Text
           style={{
-            marginVertical: 10,
-            marginHorizontal: 60,
-            textAlign: 'center',
+            marginVertical: 3,
+            marginLeft: 3,
+            marginRight: 30,
+            textAlign: 'left',
             fontSize: 14
           }}
         >
-          (This opens toolsinfoweb.co.uk in your usual web browser)
+          You can also reset your PIN there if you've forgotten it.
         </Text>
       </View>
+
+      <Button
+        title='Check registration on toolsinfoweb.co.uk'
+        type='clear'
+        onPress={() => {
+          Linking.openURL(Urls.toolsInfoweb);
+        }}
+        buttonStyle={{
+          marginTop: 20
+        }}
+        titleStyle={{
+          color: Colors.vwgLink
+        }}
+      />
+      <Text
+        style={{
+          marginVertical: 10,
+          marginHorizontal: 20,
+          textAlign: 'center',
+          fontSize: 14
+        }}
+      >
+        (This opens toolsinfoweb.co.uk in your usual web browser)
+      </Text>
     </View>
   );
 };
 
 export const screenOptions = navData => {
   return {
-    title: 'Forgotten password',
+    title: 'Need your PIN?',
     headerShown: true
   };
 };

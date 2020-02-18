@@ -139,7 +139,7 @@ export default SignInScreen = props => {
             required
             email
             autoCapitalize='none'
-            placeholder='e.g. janedoe@dtmg.co.uk'
+            placeholder='e.g. janedoe@dtauto.co.uk'
             leftIcon={{
               type: 'ionicon',
               name: Platform.OS === 'ios' ? 'ios-mail' : 'md-mail',
@@ -168,7 +168,7 @@ export default SignInScreen = props => {
             inputStyle={baseStyles.inputStyle}
             required
             maxLength={6}
-            placeholder='123456 (six digits)'
+            placeholder='Six digits, e.g. 123456'
             leftIcon={{
               type: 'ionicon',
               name: Platform.OS === 'ios' ? 'ios-key' : 'md-key',
@@ -217,10 +217,14 @@ export default SignInScreen = props => {
           <View>
             <View
               style={{
-                margin: 20,
+                marginHorizontal: 20,
                 textAlign: 'center'
               }}
             >
+              <Text style={styles.instructions}>
+                * To activate Pocket Infoweb you will need to generate an access
+                PIN for your User ID.
+              </Text>
               <Button
                 title='Trouble signing in? Need a PIN?'
                 type='clear'
@@ -235,10 +239,6 @@ export default SignInScreen = props => {
                   { fontSize: RFPercentage(2.6) }
                 ]}
               />
-              <Text style={styles.instructions}>
-                * To activate Pocket Infoweb you will need to generate an access
-                PIN for your User ID.
-              </Text>
             </View>
           </View>
         </KeyboardAvoidingView>
