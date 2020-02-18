@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
+import amendLink from '../components/amendLink';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 
@@ -17,42 +18,7 @@ export default function NewsLinks(props) {
   // console.log(props.items);
   const { items, userIntId } = props;
   let now = moment();
-
-  const amendLink = rawLink => {
-    //   console.log('rawLink', rawLink);
-    let newLink = '';
-    let intId = (userIntId && userIntId) || '';
-
-    if (rawLink.indexOf('controller=desktopBulletins&action=list') > 0) {
-      newLink =
-        '?appCode=' +
-        appCode +
-        '&controller=api&action=showToUser&userId=' +
-        intId +
-        '&shadowController=desktopBulletins&shadowAction=list';
-
-      return newLink;
-    } else if (
-      rawLink.indexOf('controller=') &&
-      rawLink.indexOf('action=') > 0
-    ) {
-      let newLink = rawLink;
-
-      newLink = newLink
-        .replace('?controller=stories', 'controller=api')
-        .replace(
-          '&id=',
-          '&shadowController=stories&shadowAction=view&shadowId='
-        )
-        .replace('&action=view', '&action=showToUser');
-
-      newLink = '?appCode=' + appCode + '&userId=' + intId + '&' + newLink;
-
-      return newLink;
-    } else {
-      return rawLink;
-    }
-  };
+  let intId = (userIntId && userIntId) || '';
 
   return (
     <View>
@@ -60,7 +26,9 @@ export default function NewsLinks(props) {
         <ScrollView>
           {items.map((item, i) => (
             <Touchable
-              onPress={() => props.pressOpenHandler(amendLink(item.linkTo))}
+              onPress={() =>
+                props.pressOpenHandler(amendLink(item.linkTo, appCode, intId))
+              }
               key={i}
             >
               <View style={styles.item}>
