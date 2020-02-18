@@ -34,11 +34,6 @@ export default SignedOutStack = () => {
         options={ForgottenPasswordScreenOptions}
       />
       <Stack.Screen
-        name={'Register'}
-        component={RegisterScreen}
-        options={RegisterScreenOptions}
-      />
-      <Stack.Screen
         name={'SignOut'}
         component={SignOutScreen}
         options={SignOutScreenOptions}
