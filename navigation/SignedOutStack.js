@@ -6,9 +6,6 @@ import SignInScreen, {
 import SignOutScreen, {
   screenOptions as SignOutScreenOptions
 } from '../screens/SignOutScreen';
-import RegisterScreen, {
-  screenOptions as RegisterScreenOptions
-} from '../screens/RegisterScreen';
 import ForgottenPasswordScreen, {
   screenOptions as ForgottenPasswordScreenOptions
 } from '../screens/ForgottenPasswordScreen';
