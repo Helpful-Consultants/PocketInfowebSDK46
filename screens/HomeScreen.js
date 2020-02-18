@@ -522,7 +522,9 @@ export default HomeScreen = props => {
                   <Touchable
                     style={styles.gridCell}
                     onPress={() =>
-                      navigation.navigate('WipsTabs', { screen: 'BookedTools' })
+                      navigation.navigate('WipsTabs', {
+                        screen: 'BookedOutTools'
+                      })
                     }
                   >
                     <View>
