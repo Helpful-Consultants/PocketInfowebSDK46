@@ -41,7 +41,7 @@ function* getDealerWips({ payload }) {
       result.data[0].tools[0] &&
       result.data[0].tools[0].id
     ) {
-      console.log('in wips saga - good 200');
+      //   console.log('in wips saga - good 200');
 
       //   console.log('in Wips saga - good 200');
       //   console.log(result.data);
@@ -57,7 +57,8 @@ function* getDealerWips({ payload }) {
     } else if (result && result.data && result.data.length > 0) {
       console.log(
         'in Wips saga - empty 200',
-        result.request.status && result.request.status
+        result.request.status && result.request.status,
+        payload && payload
       );
       //   console.log(result && result);
       yield put(
