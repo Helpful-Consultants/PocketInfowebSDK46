@@ -113,7 +113,11 @@ const Odis = createStackNavigator();
 const OdisStack = () => {
   return (
     <Odis.Navigator screenOptions={defaultStackNavOptions}>
-      <Odis.Screen name={'OdisScreen'} component={OdisScreen} />
+      <Odis.Screen
+        name={'OdisScreen'}
+        component={OdisScreen}
+        options={OdisScreenOptions}
+      />
     </Odis.Navigator>
   );
 };
