@@ -52,7 +52,7 @@ export default BlinkingView = props => {
       <Text
         style={{
           paddingTop: RFPercentage(0.09),
-          fontSize: RFPercentage(2.3),
+          fontSize: RFPercentage(2.5),
           color: blink ? (showItem ? colorOne : colorTwo) : colorOne
         }}
       >
