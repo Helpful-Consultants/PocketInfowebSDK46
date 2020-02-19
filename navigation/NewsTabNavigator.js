@@ -190,8 +190,8 @@ export default NewsTabNavigator = () => {
         style: {
           height: RFPercentage(6.4)
         },
-        activeTintColor: Colors.vwgDeepBlue,
-        inactiveTintColor: Colors.vwgLink
+        activeTintColor: Colors.vwgActiveLink,
+        inactiveTintColor: Colors.vwgInactiveLink
       }}
     >
       <NewsTabs.Screen
@@ -222,8 +222,8 @@ export default NewsTabNavigator = () => {
       title='Default Title'
       shifting={false}
       backBehavior={'history'}
-      activeColor={Colors.vwgDeepBlue}
-      inactiveColor={Colors.vwgLink}
+      activeColor={Colors.vwgActiveLink}
+      inactiveColor={Colors.vwgInactiveLink}
       tabBarColor={Colors.vwgWhite}
       barStyle={{
         labelPosition: 'below-icon',

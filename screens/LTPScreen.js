@@ -230,8 +230,13 @@ export default LtpSzzzzcreen = props => {
 };
 
 const titleString = 'LTP';
-const tabBarLabelFunction = () => (
-  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+const tabBarLabelFunction = ({ focused }) => (
+  <BadgedTabBarText
+    showBadge={false}
+    text={titleString}
+    focused={focused}
+    value={0}
+  />
 );
 export const screenOptions = navData => {
   return {

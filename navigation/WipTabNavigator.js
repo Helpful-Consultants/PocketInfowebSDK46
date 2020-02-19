@@ -188,8 +188,8 @@ export default WipTabNavigator = () => {
         style: {
           height: RFPercentage(6.4)
         },
-        activeTintColor: Colors.vwgDeepBlue,
-        inactiveTintColor: Colors.vwgLink
+        activeTintColor: Colors.vwgActiveLink,
+        inactiveTintColor: Colors.vwgInactiveLink
       }}
     >
       <WipTabs.Screen
@@ -220,8 +220,8 @@ export default WipTabNavigator = () => {
       title='Default Title'
       shifting={false}
       backBehavior={'history'}
-      activeColor={Colors.vwgDeepBlue}
-      inactiveColor={Colors.vwgLink}
+      activeColor={Colors.vwgActiveLink}
+      inactiveColor={Colors.vwgInactiveLink}
       tabBarColor={Colors.vwgWhite}
       barStyle={{
         labelPosition: 'below-icon',
