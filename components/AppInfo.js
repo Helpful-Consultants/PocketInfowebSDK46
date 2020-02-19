@@ -58,11 +58,13 @@ export default AppInfo = props => {
           ? `${Constants.manifest.version} OTA`
           : null}
         {Constants.manifest.releaseChannel
-          ? Constants.manifest.releaseChannel
-            ? Constants.manifest.releaseChannel === 'default'
-              ? ' (Prod)'
-              : ' (Staging)'
-            : null
+          ? Constants.manifest.releaseChannel ===
+            ('default' || 'ios' || 'android')
+            ? ' (Prod)'
+            : Constants.manifest.releaseChannel ===
+              ('ios-staging' || 'android-staging')
+            ? ' (Staging)'
+            : ` (${Constants.manifest.releaseChannel})`
           : null}
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
@@ -70,7 +72,7 @@ export default AppInfo = props => {
           style={styles.appVersion}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={styles.appVersion}>Improved search</Text>
+      <Text style={styles.appVersion}>Improved searches</Text>
     </View>
   );
 };
