@@ -52,7 +52,9 @@ const CustomDrawerContent = props => {
 const drawerContentOptions = {
   activeTintColor: Colors.vwgActiveLink,
   inactiveTintColor: Colors.vwgInactiveLink,
-  activeBackgroundColor: 'white'
+  activeBackgroundColor: 'white',
+  labelStyle: { fontFamily: 'the-sans-bold' },
+  itemStyle: { marginVertical: 0 }
 };
 
 const Drawer = createDrawerNavigator();
