@@ -33,8 +33,8 @@ function* getDealerWips({ payload }) {
     // console.log(result.data[0] && result.data[0]);
     // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
     if (
-      result.data.length > 0 &&
       result.data &&
+      result.data.length > 0 &&
       result.data[0] &&
       result.data[0].id &&
       result.data[0].tools &&
