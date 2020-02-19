@@ -118,22 +118,19 @@ export default OdisScreen = props => {
   );
 };
 
+const titleString = 'ODIS';
+const tabBarLabelFunction = () => (
+  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+);
 export const screenOptions = navData => {
   return {
-    headerTitle: () => <TitleWithAppLogo title='ODIS versions' />,
+    headerTitle: () => <TitleWithAppLogo title={titleString} />,
+
     headerStyle: {
       backgroundColor: Colors.vwgHeader
     },
-
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: ({ focused }) => (
-      <BadgedTabBarText
-        showBadge={false}
-        focused={focused}
-        text={'Odis'}
-        value={3}
-      />
-    ),
+    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}

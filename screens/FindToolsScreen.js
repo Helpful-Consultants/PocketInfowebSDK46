@@ -1080,21 +1080,19 @@ export default FindToolsScreen = props => {
   );
 };
 
+const titleString = 'Find Tools';
+const tabBarLabelFunction = () => (
+  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+);
 export const screenOptions = navData => {
   return {
-    headerTitle: () => <TitleWithAppLogo title='Find tools' />,
+    headerTitle: () => <TitleWithAppLogo title={titleString} />,
+
     headerStyle: {
       backgroundColor: Colors.vwgHeader
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: ({ focused }) => (
-      <BadgedTabBarText
-        showBadge={false}
-        focused={focused}
-        text={'Find tools'}
-        value={3}
-      />
-    ),
+    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}

@@ -372,22 +372,19 @@ export default BookedOutToolsScreen = props => {
   );
 };
 
+const titleString = 'Booked Tools';
+const tabBarLabelFunction = () => (
+  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+);
 export const screenOptions = navData => {
   return {
-    headerTitle: () => <TitleWithAppLogo title='Booked Tools' />,
+    headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
       backgroundColor: Colors.vwgHeader
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: ({ focused }) => (
-      <BadgedTabBarText
-        showBadge={false}
-        focused={focused}
-        text={'Booked tools'}
-        value={3}
-      />
-    ),
+    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}

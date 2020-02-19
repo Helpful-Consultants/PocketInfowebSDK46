@@ -229,22 +229,19 @@ export default LtpSzzzzcreen = props => {
   );
 };
 
+const titleString = 'LTP';
+const tabBarLabelFunction = () => (
+  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+);
 export const screenOptions = navData => {
   return {
-    headerTitle: () => <TitleWithAppLogo title='LTP' />,
+    headerTitle: () => <TitleWithAppLogo title={titleString} />,
+
     headerStyle: {
       backgroundColor: Colors.vwgHeader
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: ({ focused }) => (
-      <BadgedTabBarText
-        showBadge={false}
-        focused={focused}
-        text={'LTP'}
-        value={3}
-      />
-    ),
-
+    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}

@@ -178,21 +178,19 @@ export default ProductsScreen = props => {
     </View>
   );
 };
+const titleString = 'Products';
+const tabBarLabelFunction = () => (
+  <BadgedTabBarText showBadge={false} text={titleString} value={0} />
+);
 export const screenOptions = navData => {
   return {
-    headerTitle: () => <TitleWithAppLogo title='Products' />,
+    headerTitle: () => <TitleWithAppLogo title={titleString} />,
+
     headerStyle: {
       backgroundColor: Colors.vwgHeader
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: ({ focused }) => (
-      <BadgedTabBarText
-        showBadge={false}
-        focused={focused}
-        text={'Products'}
-        value={3}
-      />
-    ),
+    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}
@@ -209,7 +207,7 @@ const styles = StyleSheet.create({
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue
+    backgroundColor: Colors.vwgInfoBar
   },
   lookupPromptText: {
     textAlign: 'center',

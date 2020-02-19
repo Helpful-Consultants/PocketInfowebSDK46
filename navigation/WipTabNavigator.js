@@ -136,9 +136,20 @@ const LtpStack = () => {
 
 // Tab navigator
 
-const defaultTabNavOptions =
-  Platform.OS === 'android'
+const defaultTabNavScreenOptions =
+  Platform.OS === 'ios'
     ? {
+        tabBarOptions: {
+          labelPosition: 'below-icon',
+          style: {
+            height: RFPercentage(6.4)
+          }
+        },
+        tabStyle: {
+          height: RFPercentage(2.2)
+        }
+      }
+    : {
         labeled: true,
         shifting: false,
         backBehavior: 'history',
@@ -160,27 +171,65 @@ const defaultTabNavOptions =
         //   tabStyle: {
         //     height: RFPercentage(2.2)
         //   }
-      }
-    : {
-        tabBarOptions: {
-          labelPosition: 'below-icon',
-          style: {
-            height: RFPercentage(6.4)
-          }
-        },
-        tabStyle: {
-          height: RFPercentage(2.2)
-        }
       };
 
 const WipTabs =
-  Platform.OS === 'android'
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+  Platform.OS === 'ios'
+    ? createBottomTabNavigator()
+    : createMaterialBottomTabNavigator();
 
 export default WipTabNavigator = () => {
-  return (
-    <WipTabs.Navigator screenOptions={defaultTabNavOptions}>
+  return Platform.OS === 'ios' ? (
+    <WipTabs.Navigator
+      screenOptions={defaultTabNavScreenOptions}
+      tabBarOptions={{
+        showLabel: true,
+        labelPosition: 'below-icon',
+        style: {
+          height: RFPercentage(6.4)
+        },
+        activeTintColor: Colors.vwgDeepBlue,
+        inactiveTintColor: Colors.vwgLink
+      }}
+    >
+      <WipTabs.Screen
+        name='FindTools'
+        component={FindToolsStack}
+        options={FindToolsScreenOptions}
+      />
+      <WipTabs.Screen
+        name='BookedOutTools'
+        component={BookedOutToolsStack}
+        options={BookedOutToolsScreenOptions}
+      />
+      <WipTabs.Screen
+        name='Jobs'
+        component={JobsStack}
+        options={JobsScreenOptions}
+      />
+      <WipTabs.Screen
+        name='Ltp'
+        component={LtpStack}
+        options={LtpScreenOptions}
+      />
+    </WipTabs.Navigator>
+  ) : (
+    <WipTabs.Navigator
+      screenOptions={defaultTabNavScreenOptions}
+      labeled={true}
+      title='Default Title'
+      shifting={false}
+      backBehavior={'history'}
+      activeColor={Colors.vwgDeepBlue}
+      inactiveColor={Colors.vwgLink}
+      tabBarColor={Colors.vwgWhite}
+      barStyle={{
+        labelPosition: 'below-icon',
+
+        // height: RFPercentage(6.4),
+        backgroundColor: Colors.vwgWhite
+      }}
+    >
       <WipTabs.Screen
         name='FindTools'
         component={FindToolsStack}

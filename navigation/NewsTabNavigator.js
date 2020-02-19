@@ -137,7 +137,7 @@ const StatsStack = () => {
 
 // Tab navigator
 
-const defaultTabNavOptions =
+const defaultTabNavScreenOptions =
   Platform.OS === 'android'
     ? {
         labeled: true,
@@ -181,8 +181,57 @@ const NewsTabs =
     : createBottomTabNavigator();
 
 export default NewsTabNavigator = () => {
-  return (
-    <NewsTabs.Navigator screenOptions={defaultTabNavOptions}>
+  return Platform.OS === 'ios' ? (
+    <NewsTabs.Navigator
+      screenOptions={defaultTabNavScreenOptions}
+      tabBarOptions={{
+        showLabel: true,
+        labelPosition: 'below-icon',
+        style: {
+          height: RFPercentage(6.4)
+        },
+        activeTintColor: Colors.vwgDeepBlue,
+        inactiveTintColor: Colors.vwgLink
+      }}
+    >
+      <NewsTabs.Screen
+        name='News'
+        component={NewsStack}
+        options={NewsScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Products'
+        component={ProductsStack}
+        options={ProductsScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
+      />
+    </NewsTabs.Navigator>
+  ) : (
+    <NewsTabs.Navigator
+      screenOptions={defaultTabNavScreenOptions}
+      labeled={true}
+      title='Default Title'
+      shifting={false}
+      backBehavior={'history'}
+      activeColor={Colors.vwgDeepBlue}
+      inactiveColor={Colors.vwgLink}
+      tabBarColor={Colors.vwgWhite}
+      barStyle={{
+        labelPosition: 'below-icon',
+
+        // height: RFPercentage(6.4),
+        backgroundColor: Colors.vwgWhite
+      }}
+    >
       <NewsTabs.Screen
         name='News'
         component={NewsStack}

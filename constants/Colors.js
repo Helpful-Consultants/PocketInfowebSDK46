@@ -3,11 +3,13 @@ import { Platform } from 'react-native';
 const tintColor = '#2f95dc';
 const errorText = '#a9043f';
 const vwgLinkColor = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
-const vwgHeaderColor = Platform.OS === 'ios' ? '#FFFFFF' : '#004466';
+const vwgHeaderColor = Platform.OS === 'ios' ? '#FFFFFF' : '#196F99';
 const vwgTitleColor = Platform.OS === 'ios' ? '#000000' : '#FFFFFF';
-const vwgAndroidNavColor = Platform.OS === 'ios' ? '#FFFFFF' : '#004466';
 const vwgActiveLinkColor = Platform.OS === 'ios' ? '#004466' : '#004466';
 const vwgInactiveLinkColor = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
+const vwgAndroidNavColor = '#3689b1';
+const vwgAndroidStatusColor = '#196F99';
+const vwgInfoBarColor = '#196F99';
 
 export default {
   tintColor,
@@ -19,6 +21,8 @@ export default {
   vwgHeaderTitle: vwgTitleColor,
   vwgActiveLink: vwgActiveLinkColor,
   vwgInactiveLink: vwgInactiveLinkColor,
+  vwgAndroidStatus: vwgAndroidStatusColor,
+  vwgInfoBar: vwgInfoBarColor,
   tabIconSelected: tintColor,
   tabIconDefault: '#ccc',
   tabBar: '#fefefe',
