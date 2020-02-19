@@ -177,7 +177,10 @@ export default FindToolsScreen = props => {
 
   useEffect(() => {
     // runs only once
-    console.log('in findtools  useEffect', userDataObj && userDataObj.dealerId);
+    console.log(
+      'in findtools  useEffect, userDataObj is ',
+      userDataObj && userDataObj.dealerId
+    );
     if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
       apiFetchParamsObj = {
         dealerId:
@@ -187,12 +190,17 @@ export default FindToolsScreen = props => {
       //   setgetDealerItemsDataObj(apiFetchParamsObj);
       //   getWipsItemsAsync();
       getOtherItemsAsync();
+    } else {
+      console.log('in findtools  useEffect, user Data Obej not ready');
     }
   }, [userDataObj]);
 
   useFocusEffect(
     useCallback(() => {
-      console.log('find tools - useFocusEffect');
+      console.log(
+        'find tools - useFocusEffect, apiFetchParamsObj is',
+        apiFetchParamsObj
+      );
       setSearchInput('');
       if (
         apiFetchParamsObj &&
