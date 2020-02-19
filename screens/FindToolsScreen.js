@@ -158,7 +158,7 @@ export default FindToolsScreen = props => {
   };
 
   const getOtherItems = useCallback(async apiFetchParamsObj => {
-    // console.log('in getOtherData');
+    // console.log('in getOtherItems');
     dispatch(getDealerToolsRequest(apiFetchParamsObj));
     // dispatch(getDealerWipsRequest(apiFetchParamsObj));
     if (!ltpItems || ltpItems.length === 0) {
@@ -518,7 +518,7 @@ export default FindToolsScreen = props => {
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler', dealerId && dealerId);
-    dealerId && getOtherData(apiFetchParamsObj);
+    dealerId && getOtherItems(apiFetchParamsObj);
   };
 
   const saveToJobRequestHandler = () => {
