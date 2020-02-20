@@ -32,9 +32,7 @@ export const getDealerWips = wipObj => {
 export const createDealerWip = wipObj => {
   //   console.log('!!!!!!!!!!!! in create wip api', wipObj);
 
-  //   const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON'; // old
-  const url =
-    '/mandatoryList/?controller=api&action=acceptWIPpostAvailableJSON';
+  const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
 
   const strung = JSON.stringify(wipObj);
   //   console.log('in create wip api, strung is ', strung);
