@@ -405,39 +405,6 @@ export default FindToolsScreen = props => {
     inputChangeHandler('wipNumber', '');
   };
 
-  const zzzsearchInputHandler = searchInput => {
-    let searchStringLowercase = searchInput.toLowerCase();
-    let adjustedSearchString = '';
-    setSearchInput(searchInput);
-    // console.log('searchInput is "' + searchInput + '"');
-    if (
-      searchStringLowercase.substring(0, 4) === 'ase ' ||
-      searchStringLowercase.substring(0, 4) === 'vas ' ||
-      searchStringLowercase.substring(0, 4) === 'vag '
-    ) {
-      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
-      adjustedSearchString = searchInput.substr(4);
-      //   console.log('@@@@@4cut "' + adjustedSearchString + '"');
-      setSearchString(adjustedSearchString);
-      //   setAdjustedSearchString(adjustedSearchString);
-    } else if (
-      searchStringLowercase.substring(0, 3) === 'ase' ||
-      searchStringLowercase.substring(0, 3) === 'vas' ||
-      searchStringLowercase.substring(0, 3) === 'vag'
-    ) {
-      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
-      adjustedSearchString = searchInput.substr(3);
-      //   console.log('@@@@@cut "' + adjustedSearchString + '"');
-      setSearchString(adjustedSearchString);
-      //   setAdjustedSearchString(adjustedSearchString);
-    } else {
-      //   console.log('searchInput no change applied');
-
-      setSearchString(searchInput);
-      //   setAdjustedSearchString(searchInput);
-    }
-  };
-
   //   if (this.timeout) {
   //     clearTimeout(this.timeout);
   //   }
@@ -445,83 +412,14 @@ export default FindToolsScreen = props => {
   //     console.log('timeout');
   //   }, 2000);
 
-  //   partNumber: '10 - 101',
-  //     toolNumber: 'V03839111DG',
-  //     partDescription: 'Fitting tool',
-
-  //   loanToolNo: 'LT0183',
-  //     // orderPartNo: 'V03839141JM',
-  //     toolDescription: 'Counter hold device ',
-  //     supplierPartNo: 'VAS 5161A/40',
-
   const searchInputHandler = searchInput => {
-    // let searchStringLowercase = searchInput.toLowerCase();
-
-    // let adjustedSearchString = '';
-    // let strippedAdjustedSearchString = '';
     // console.log('searchInputHandler ' + searchInput);
     setSearchInput(searchInput);
 
     if (searchInput && searchInput.length > minSearchLength) {
-      //   let searchStringLowercase = searchInput.toLowerCase();
-      //   let adjustedSearchString = stringCleaner(searchStringLowercase);
-
-      let newFilteredItems = searchItems(
-        combinedItems,
-        searchInput
-        // adjustedSearchString
-      );
+      let newFilteredItems = searchItems(combinedItems, searchInput);
       setFilteredItems(newFilteredItems);
     }
-  };
-
-  const zzzzzzsearchInputHandler = searchInput => {
-    // let searchStringLowercase = searchInput.toLowerCase();
-
-    // let adjustedSearchString = '';
-    // let strippedAdjustedSearchString = '';
-    console.log('searchInput is "' + searchInput + '"');
-
-    let searchStringLowercase = searchInput.toLowerCase();
-    let adjustedSearchString = '';
-    let spaceStrippedAdjustedSearchString = '';
-
-    if (
-      searchStringLowercase.substring(0, 4) === 'ase ' ||
-      searchStringLowercase.substring(0, 4) === 'vas ' ||
-      searchStringLowercase.substring(0, 4) === 'vag '
-    ) {
-      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
-      adjustedSearchString = searchInput.substr(4);
-      //   console.log('@@@@@4cut "' + adjustedSearchString + '"');
-      //   setAdjustedSearchString(adjustedSearchString);
-    } else if (
-      searchStringLowercase.substring(0, 3) === 'ase' ||
-      searchStringLowercase.substring(0, 3) === 'vas' ||
-      searchStringLowercase.substring(0, 3) === 'vag'
-    ) {
-      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
-      adjustedSearchString = searchInput.substr(3);
-      //   console.log('@@@@@cut "' + adjustedSearchString + '"');
-    } else {
-      //   console.log('searchInput no change applied');
-      adjustedSearchString = searchInput;
-    }
-
-    spaceStrippedAdjustedSearchString = searchStringLowercase.replace(
-      /\s+/g,
-      ''
-    );
-    setSearchInput(searchInput);
-
-    searchItems(
-      searchStringLowercase,
-      adjustedSearchString,
-      spaceStrippedAdjustedSearchString
-    );
-
-    // setAdjustedSearchString(adjustedSearchString);
-    // setStrippedAdjustedSearchString(strippedAdjustedSearchString);
   };
 
   const refreshRequestHandler = () => {
