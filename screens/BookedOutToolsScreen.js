@@ -59,6 +59,7 @@ export default BookedOutToolsScreen = props => {
   const [currentTool, setCurrentTool] = useState({});
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [bookedOutItems, setBookedOutItems] = useState([]);
+  const [bookedOutToolsCount, setBookedOutToolsCount] = useState(0);
   const [userWipsItems, setUserWipsItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
@@ -176,31 +177,33 @@ export default BookedOutToolsScreen = props => {
       [];
     setUserWipsItems(userWipsItems);
 
+    const buildBookedOutToolsArrForJob = wip => {
+      const thisWipsToolsArr = wip.tools.map(tool => ({
+        ...tool,
+        wipNumber: wip.wipNumber,
+        wipId: wip.id.toString(),
+        wipCreatedDate: wip.createdDate
+      }));
+      return thisWipsToolsArr;
+    };
+
+    const buildBookedOutToolsArr = wips => {
+      let allToolsArr = [];
+
+      wips.forEach(wip => {
+        if (wip.tools && wip.tools.length > 0) {
+          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+          allToolsArr.push(...wipToolsArr);
+        }
+      });
+      allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+
+      return allToolsArr;
+    };
+
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
     setBookedOutItems(bookedOutToolItems);
   }, [userDataObj, dealerWipsItems]);
-
-  const buildBookedOutToolsArrForJob = wip => {
-    const thisWipsToolsArr = wip.tools.map(tool => ({
-      ...tool,
-      wipNumber: wip.wipNumber,
-      wipId: wip.id.toString(),
-      wipCreatedDate: wip.createdDate
-    }));
-    return thisWipsToolsArr;
-  };
-
-  const buildBookedOutToolsArr = wips => {
-    let allToolsArr = [];
-
-    wips.forEach(wip => {
-      let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-      allToolsArr.push(...wipToolsArr);
-    });
-    allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
-
-    return allToolsArr;
-  };
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 

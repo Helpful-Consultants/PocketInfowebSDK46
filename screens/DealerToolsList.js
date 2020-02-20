@@ -89,9 +89,11 @@ export default function DealerToolsList(props) {
     toolId &&
       dealerWipsItems &&
       dealerWipsItems.forEach(wip => {
-        wip.tools.forEach(
-          tool => tool.tools_id === toolId && matchingJobs.push(wip)
-        );
+        if (wip.tools && wip.tools.length > 0) {
+          wip.tools.forEach(
+            tool => tool.tools_id === toolId && matchingJobs.push(wip)
+          );
+        }
       });
 
     // console.log('bookedToolsWipList', matchingJobs);

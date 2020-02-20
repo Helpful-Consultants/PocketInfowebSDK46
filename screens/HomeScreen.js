@@ -430,18 +430,17 @@ export default HomeScreen = props => {
       let allToolsArr = [];
 
       wips.forEach(wip => {
-        let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-        allToolsArr.push(...wipToolsArr);
+        if (wip.tools && wip.tools.length > 0) {
+          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+          allToolsArr.push(...wipToolsArr);
+        }
       });
       allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
 
       return allToolsArr;
     };
 
-    const bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
-    const bookedOutToolsCount =
-      (bookedOutToolItems && bookedOutToolItems.length) || 0;
-
+    let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
     setBookedOutToolsCount(
       (bookedOutToolItems && bookedOutToolItems.length) || 0
     );

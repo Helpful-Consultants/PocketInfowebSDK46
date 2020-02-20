@@ -217,7 +217,9 @@ export default FindToolsScreen = props => {
 
     dealerWipsItems &&
       dealerWipsItems.forEach(wip => {
-        wip.tools.forEach(tool => bookedToolsList.push(tool.tools_id));
+        if (wip.tools && wip.tools.length > 0) {
+          wip.tools.forEach(tool => bookedToolsList.push(tool.tools_id));
+        }
       });
 
     // console.log(bookedToolsList && bookedToolsList);
