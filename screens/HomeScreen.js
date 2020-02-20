@@ -472,6 +472,33 @@ export default HomeScreen = props => {
             </View>
           ) : (
             <View>
+              <View style={styles.loadingMessage}>
+                {shouldCheckAppVersion ? (
+                  //prod mode
+                  isCheckingAppVersion ? (
+                    <Text style={styles.checkingText}>
+                      Checking you have the latest app version...
+                    </Text>
+                  ) : isLoadingAny ? (
+                    <Text style={styles.checkingText}>
+                      Syncing your data...
+                    </Text>
+                  ) : (
+                    // dummy to keep layout
+                    <Text style={styles.dummyCheckingText}>
+                      This should be white (i.e. invisible)...
+                    </Text>
+                  )
+                ) : isLoadingAny ? (
+                  //dev mode - no OTA app refressh
+                  <Text style={styles.checkingText}>Syncing your data...</Text>
+                ) : (
+                  // dummy to keep layout
+                  <Text style={styles.dummyCheckingText}>
+                    This should be white (i.e. invisible)...
+                  </Text>
+                )}
+              </View>
               <View>
                 <View style={styles.gridRow}>
                   <Touchable
@@ -488,7 +515,7 @@ export default HomeScreen = props => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Find tools</Text>
+                      <Text style={styles.gridCellText}>Find Tools</Text>
                     </View>
                   </Touchable>
                   <Touchable
@@ -508,7 +535,7 @@ export default HomeScreen = props => {
                       />
 
                       <Text style={styles.gridCellText}>
-                        {`Jobs`}
+                        {`My Jobs`}
                         {wipsCount && wipsCount > 0 ? (
                           <Text style={styles.gridCellCountText}>
                             {` (${wipsCount})`}
@@ -538,14 +565,21 @@ export default HomeScreen = props => {
                         color={buttonTextColor}
                         size={iconSize}
                       />
-                      <Text style={styles.gridCellText}>
-                        {`Booked tools`}
-                        {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
-                          <Text style={styles.gridCellCountText}>
-                            {` (${bookedOutToolsCount})`}
+                      {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
+                        <View>
+                          <Text
+                            style={{ ...styles.gridCellText, marginTop: -8 }}
+                          >{`Booked`}</Text>
+                          <Text style={styles.gridCellText}>
+                            {`Tools`}
+                            <Text style={styles.gridCellCountText}>
+                              {` (${bookedOutToolsCount})`}
+                            </Text>{' '}
                           </Text>
-                        ) : null}
-                      </Text>
+                        </View>
+                      ) : (
+                        <Text style={styles.gridCellText}>{`Booked Tols`}</Text>
+                      )}
                     </View>
                   </Touchable>
                   <Touchable
@@ -562,7 +596,7 @@ export default HomeScreen = props => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>LTP</Text>
+                      <Text style={styles.gridCellText}>Loan Tools</Text>
                     </View>
                   </Touchable>
                 </View>
@@ -627,37 +661,11 @@ export default HomeScreen = props => {
                   viewMax={5}
                 />
               </View>
-              <View style={styles.loadingMessage}>
-                {shouldCheckAppVersion ? (
-                  //prod mode
-                  isCheckingAppVersion ? (
-                    <Text style={styles.checkingText}>
-                      Checking you have the latest app version...
-                    </Text>
-                  ) : isLoadingAny ? (
-                    <Text style={styles.checkingText}>
-                      Syncing your data...
-                    </Text>
-                  ) : (
-                    // dummy to keep layout
-                    <Text style={styles.dummyCheckingText}>
-                      This should be white (i.e. invisible)...
-                    </Text>
-                  )
-                ) : isLoadingAny ? (
-                  //dev mode - no OTA app refressh
-                  <Text style={styles.checkingText}>Syncing your data...</Text>
-                ) : (
-                  // dummy to keep layout
-                  <Text style={styles.dummyCheckingText}>
-                    This should be white (i.e. invisible)...
-                  </Text>
-                )}
-              </View>
+
               <View
                 style={{
-                  marginTop: 15,
-                  marginHorizontal: 30
+                  marginTop: 8,
+                  marginHorizontal: 20
                 }}
               >
                 <Text style={styles.instructionsText}>
@@ -730,7 +738,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   loadingMessage: {
-    marginTop: 5,
+    marginVertical: 5,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -739,7 +747,7 @@ const styles = StyleSheet.create({
   checkingText: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.6),
+    fontSize: RFPercentage(1.8),
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -748,7 +756,7 @@ const styles = StyleSheet.create({
   dummyCheckingText: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.6),
+    fontSize: RFPercentage(1.8),
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -843,10 +851,10 @@ const styles = StyleSheet.create({
     // fontSize: 14,
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.5),
-
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: RFPercentage(3.0)
   },
-  gridCellCountText: { fontSize: RFPercentage(2.2) },
+  gridCellCountText: { fontSize: RFPercentage(2.4) },
   gridCellTextDisabledSmall: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
