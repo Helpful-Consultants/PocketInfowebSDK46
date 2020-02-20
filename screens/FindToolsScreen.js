@@ -433,7 +433,7 @@ export default FindToolsScreen = props => {
 
     if (formState.formIsValid) {
       setWipNumber(formState.inputValues.wipNumber);
-      setMode('confirm');
+      setMode('check');
       setIsBasketVisible(true);
 
       let newToolBasket = toolBasket.map(item => removeLastWip(item));
@@ -590,7 +590,7 @@ export default FindToolsScreen = props => {
             type='solid'
             onPress={() => {
               saveToJobRequestHandler();
-              setMode('confirm');
+              setMode('check');
               setIsBasketVisible(true);
             }}
             titleStyle={styles.confirmButtonTitle}
@@ -607,6 +607,30 @@ export default FindToolsScreen = props => {
                 color={Colors.vwgWhite}
               />
             }
+          />
+        </View>
+      </View>
+    ) : mode === 'check' ? (
+      <View>
+        <View style={styles.basketActionRow}>
+          <View style={styles.confirmedPrompt}>
+            <Text style={styles.confirmedPromptText}>
+              {`${toolBasket.length} ${
+                toolBasket.length === 1 ? `tool` : `tools`
+              } being booked to job ${wipNumber}.`}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.basketActionRow}>
+          <Button
+            title='Close'
+            type='clear'
+            titleStyle={styles.closeButtonTitle}
+            onPress={() => {
+              acceptMessageHandler();
+            }}
+            titleStyle={styles.closeConfirmationButtonTitle}
+            buttonStyle={styles.closeConfirmationButton}
           />
         </View>
       </View>
@@ -773,7 +797,10 @@ export default FindToolsScreen = props => {
                       >{`Last booked out to ${item.lastPerson}, job ${item.lastWIP}`}</Text>
                     ) : null}
                   </View>
-                  {mode !== 'confirm' && toolBasket.length > 1 ? (
+
+                  {mode !== 'check' &&
+                  mode !== 'confirm' &&
+                  toolBasket.length > 1 ? (
                     <TouchableOpacity
                       style={styles.trashButton}
                       onPress={() => removeBasketItemHandler(item.id)}
