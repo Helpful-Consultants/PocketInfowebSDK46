@@ -164,7 +164,7 @@ export default FindToolsScreen = props => {
 
   const saveToJob = useCallback(
     payload => dispatch(createDealerWipRequest(payload)),
-    [dealerWipsItems]
+    [dispatch] // something that doesn't change
   );
 
   useEffect(() => {
