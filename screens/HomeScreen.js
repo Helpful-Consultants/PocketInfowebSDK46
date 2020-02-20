@@ -577,7 +577,9 @@ export default HomeScreen = props => {
                           </Text>
                         </View>
                       ) : (
-                        <Text style={styles.gridCellText}>{`Booked Tols`}</Text>
+                        <Text
+                          style={styles.gridCellText}
+                        >{`Booked Tools`}</Text>
                       )}
                     </View>
                   </Touchable>
