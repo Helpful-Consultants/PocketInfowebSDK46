@@ -25,7 +25,10 @@ import BadgedTabBarText from '../components/BadgedTabBarText';
 import TabBarIcon from '../components/TabBarIcon';
 import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
-import { getDealerWipsRequest } from '../actions/dealerWips';
+import {
+  getDealerWipsRequest,
+  createDealerWipSuccess
+} from '../actions/dealerWips';
 import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
@@ -248,26 +251,26 @@ export default FindToolsScreen = props => {
       setDataErrorUrlAny(dataErrorUrlLtp);
       setDataErrorSummary('Error syncing LTP');
       setDataNameInPlay('LTP');
-    } else if (
-      !isLoadingTools &&
-      dealerToolsItems &&
-      dealerToolsItems.length === 0
-    ) {
-      //   console.log('empty tools items');
-      setDataErrorAny('Does your site have a tools list?');
-      setDataStatusCodeAny(dataStatusCodeTools);
-      setDataErrorUrlAny('');
-      setDataErrorSummary('No tools fetched from web server');
-      setDataNameInPlay('tools');
-    } else if (!isLoadingLtp && ltpItems && ltpItems.length === 0) {
-      //   console.log('empty ltp items', ltpItems);
-      setDataErrorAny('The LTP list should not be empty. Please refresh.');
-      setDataStatusCodeAny(dataStatusCodeLtp);
-      setDataErrorUrlAny('');
-      setDataErrorSummary(
-        'No LTP items fetched from web server. Please try again.'
-      );
-      setDataNameInPlay('LTP');
+      // } else if (
+      //   !isLoadingTools &&
+      //   dealerToolsItems &&
+      //   dealerToolsItems.length === 0
+      // ) {
+      //   //   console.log('empty tools items');
+      //   setDataErrorAny('Does your site have a tools list?');
+      //   setDataStatusCodeAny(dataStatusCodeTools);
+      //   setDataErrorUrlAny('');
+      //   setDataErrorSummary('No tools fetched from web server');
+      //   setDataNameInPlay('tools');
+      // } else if (!isLoadingLtp && ltpItems && ltpItems.length === 0) {
+      //   //   console.log('empty ltp items', ltpItems);
+      //   setDataErrorAny('The LTP list should not be empty. Please refresh.');
+      //   setDataStatusCodeAny(dataStatusCodeLtp);
+      //   setDataErrorUrlAny('');
+      //   setDataErrorSummary(
+      //     'No LTP items fetched from web server. Please try again.'
+      //   );
+      //   setDataNameInPlay('LTP');
     } else {
       setDataErrorAny('');
       setDataStatusCodeAny('');
