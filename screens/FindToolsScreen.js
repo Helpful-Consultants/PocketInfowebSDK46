@@ -36,14 +36,6 @@ import DealerToolsList from './DealerToolsList';
 import searchItems from '../components/searchItems';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
-// const KEYS_TO_FILTERS = [
-//   'toolNumber',
-//   'partNumber',
-//   'partDescription',
-//   'orderPartNo', // LTP
-//   'toolDescription', // LTP
-//   'loanToolNo' //LTP
-// ];
 const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
