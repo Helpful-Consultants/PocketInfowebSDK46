@@ -183,30 +183,14 @@ function* createDealerWip({ payload }) {
   try {
     const result = yield call(api.createDealerWip, payload.wipObj);
     // console.log('in wips saga - good 200', payload.apiFetchParamsObj);
-    if (
-      result &&
-      result.data &&
-      result.data.unavailableTools &&
-      result.data.unavailableTools.length > 0
-    ) {
-      console.log('!!!!!!!unavailableTools', result.data.unavailableTools);
-      yield put(
-        actions.createDealerWipSuccess({
-          code: '409',
-          message: 'Some of these tools are unavaliable',
-          wipNumber: payload.apiFetchParamsObj.wipNumber || ''
-        })
-      );
-    } else {
-      yield put(
-        actions.createDealerWipSuccess({
-          code: '201',
-          message: 'Successful',
-          wipNumber: payload.apiFetchParamsObj.wipNumber || ''
-        })
-      );
-    }
-    console.log('createDealerWipSuccess', result);
+    yield put(
+      actions.createDealerWipSuccess({
+        code: '200',
+        message: 'Successful',
+        wipNumber: payload.apiFetchParamsObj.wipNumber || ''
+      })
+    );
+    // console.log('createDealerWipSuccess');
     yield put(actions.getDealerWipsStart());
     // console.log('getDealerWipStarted');
     yield put(actions.getDealerWipsRequest(payload.apiFetchParamsObj));
