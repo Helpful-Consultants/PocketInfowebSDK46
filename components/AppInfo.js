@@ -58,11 +58,13 @@ export default AppInfo = props => {
           ? `${Constants.manifest.version} OTA`
           : null}
         {Constants.manifest.releaseChannel
-          ? Constants.manifest.releaseChannel ===
-            ('default' || 'ios' || 'android')
+          ? Constants.manifest.releaseChannel === 'default' ||
+            Constants.manifest.releaseChannel === 'ios' ||
+            Constants.manifest.releaseChannel === 'android'
             ? ' (Prod)'
-            : Constants.manifest.releaseChannel ===
-              ('ios-staging' || 'android-staging')
+            : Constants.manifest.releaseChannel === 'ios-staging' ||
+              Constants.manifest.releaseChannel === 'android-staging' ||
+              Constants.manifest.releaseChannel === 'staging'
             ? ' (Staging)'
             : ` (${Constants.manifest.releaseChannel})`
           : null}

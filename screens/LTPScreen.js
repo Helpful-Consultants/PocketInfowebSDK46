@@ -229,7 +229,7 @@ export default LtpSzzzzcreen = props => {
   );
 };
 
-const titleString = 'LTP';
+const titleString = 'Loan Tools';
 const tabBarLabelFunction = ({ focused }) => (
   <BadgedTabBarText
     showBadge={false}
