@@ -27,7 +27,7 @@ const minSearchLength = 1;
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
-export default LtpSzzzzcreen = props => {
+export default LtpScreen = props => {
   const dispatch = useDispatch();
   const userBrand = useSelector(state => state.user.userBrand);
   const ltpItems = useSelector(state => state.ltp.ltpItems);
