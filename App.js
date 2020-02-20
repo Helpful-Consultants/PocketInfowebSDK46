@@ -89,7 +89,7 @@ export default function App(props) {
               {Platform.OS === 'ios' ? (
                 <StatusBar barStyle='dark-content' />
               ) : (
-                <StatusBar backgroundColor='#004466' barStyle='light-content' />
+                <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
               )}
               <AppNavigator userIsSignedIn={userIsSignedIn} />
             </View>
