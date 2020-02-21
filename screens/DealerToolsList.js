@@ -216,6 +216,7 @@ export default function DealerToolsList(props) {
     let personName = '';
     let personIntId = '';
     let bookedByUser = false;
+    let bookedByWip = '';
     let inToolBasket = false;
     let booked = false;
     let lastJobDetails = null;
@@ -227,6 +228,7 @@ export default function DealerToolsList(props) {
         // console.log('wipObj', wipObj);
         personName = wipObj && wipObj.createdBy;
         personIntId = wipObj && wipObj.userIntId.toString();
+        bookedByWip = (wipObj && wipObj.wipNumber) || '';
         // console.log('userIntId', userIntId);
         // console.log('personName', personName);
         // console.log('personIntId', personIntId);
@@ -251,7 +253,7 @@ export default function DealerToolsList(props) {
                   color: Colors.vwgWarmRed
                 }}
               >{`Already booked out to you`}</Text>
-              {`, on job '${wipObj.wipNumber}'`}
+              {`, on job '${bookedByWip}'`}
             </Text>
           );
         } else {
@@ -263,7 +265,7 @@ export default function DealerToolsList(props) {
                 fontSize: RFPercentage(2.0),
                 color: Colors.vwgWarmRed
               }}
-            >{`Booked out to ${personName}, on job '${wipObj.wipNumber}'`}</Text>
+            >{`Booked out to ${personName}, on job '${bookedByWip}'`}</Text>
           );
         }
       } else if (toolBasketList && toolBasketList.length > 0) {
