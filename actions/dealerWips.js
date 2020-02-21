@@ -40,20 +40,17 @@ export const createDealerWipRequest = wipData => {
   return { type: Types.CREATE_DEALER_WIP_REQUEST, payload: wipData };
 };
 
-export const createDealerWipSuccess = ({ code, message }) => ({
+export const createDealerWipSuccess = payload => ({
   type: Types.CREATE_DEALER_WIP_SUCCESS,
-  payload: {
-    code,
-    message
-  }
+  payload: payload
 });
 
-export const deleteDealerWipUnavailableTools = payload => {
+export const dealerWipUnavailableTools = payload => {
   console.log('in unavail action');
   console.log(payload);
   //   console.log(id, wipNumber, intId);
   return {
-    type: Types.CREATE_DEALER_WIP_UNAVAILABLE_TOOLS,
+    type: Types.DEALER_WIP_UNAVAILABLE_TOOLS,
     payload: payload
   };
 };
