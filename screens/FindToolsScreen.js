@@ -90,6 +90,7 @@ export default FindToolsScreen = props => {
     state => state.dealerTools.statusCode
   );
   const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
+  const isSendingWip = useSelector(state => state.dealerWips.isSending);
   const dataErrorWips = useSelector(state => state.dealerWips.error);
   const dataErrorUrlWips = useSelector(state => state.dealerWips.dataErrorUrl);
   const dataStatusCodeWips = useSelector(state => state.dealerWips.statusCode);
@@ -100,6 +101,8 @@ export default FindToolsScreen = props => {
   const dealerId = userDataObj && userDataObj.dealerId;
   const userName = userDataObj && userDataObj.userName;
   const userIntId = userDataObj && userDataObj.intId.toString();
+
+  const [apiFetchParamsObj, setApiFetchParamsObj] = useState(null);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
@@ -141,7 +144,7 @@ export default FindToolsScreen = props => {
   const { navigation } = props;
   const insets = useSafeArea();
 
-  let apiFetchParamsObj = {};
+  //   let apiFetchParamsObj = {};
 
   const getWipsItems = useCallback(apiFetchParamsObj => {
     // console.log('in getWipsItems', apiFetchParamsObj);
@@ -168,10 +171,14 @@ export default FindToolsScreen = props => {
     }
   };
 
-  const saveToJob = useCallback(
-    payload => dispatch(createDealerWipRequest(payload)),
-    [dispatch] // something that doesn't change
+  const dispatchNewWip = useCallback(
+    wipObj => dispatch(createDealerWipRequest({ wipObj, apiFetchParamsObj })),
+    [apiFetchParamsObj] // something that doesn't change
   );
+
+  const saveToJob = wipObj => {
+    dispatchNewWip(wipObj);
+  };
 
   useEffect(() => {
     // runs only once
@@ -179,17 +186,20 @@ export default FindToolsScreen = props => {
       'in findtools  useEffect, userDataObj is ',
       userDataObj && userDataObj.dealerId
     );
+
     if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
-      apiFetchParamsObj = {
+      let tempApiFetchParamsObj = {
         dealerId:
           (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
         intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
       };
       //   setgetDealerItemsDataObj(apiFetchParamsObj);
+      setApiFetchParamsObj(tempApiFetchParamsObj);
+
       //   getWipsItemsAsync();
       getOtherItemsAsync();
     } else {
-      console.log('in findtools  useEffect, user Data Obej not ready');
+      console.log('in findtools  useEffect, user Data Obj not ready');
     }
   }, [userDataObj]);
 
@@ -207,7 +217,7 @@ export default FindToolsScreen = props => {
       ) {
         getWipsItemsAsync();
       }
-    }, [])
+    }, [apiFetchParamsObj])
   );
 
   useEffect(() => {
@@ -223,6 +233,10 @@ export default FindToolsScreen = props => {
     // console.log(bookedToolsList && bookedToolsList);
     setBookedToolsList(bookedToolsList);
   }, [dealerWipsItems]);
+
+  useEffect(() => {
+    console.log('in FTS  use effect, isSendingWip ', isSendingWip);
+  }, [isSendingWip]);
 
   useEffect(() => {
     // runs only once
@@ -434,6 +448,8 @@ export default FindToolsScreen = props => {
       return newItem;
     };
 
+    console.log('saveToJobRequestHandler apiFetchParamsObj', apiFetchParamsObj);
+
     if (formState.formIsValid) {
       setWipNumber(formState.inputValues.wipNumber);
       setMode('check');
@@ -449,16 +465,16 @@ export default FindToolsScreen = props => {
         dealerId: dealerId.toString(),
         tools: newToolBasket
       };
-      const apiFetchParamsObj = {
-        dealerId: dealerId.toString(),
-        intId: userIntId.toString()
-      };
-      const payload = {
-        apiFetchParamsObj,
-        wipObj
-      };
+      //   const apiFetchParamsObj = {
+      //     dealerId: dealerId.toString(),
+      //     intId: userIntId.toString()
+      //   };
+      //   const payload = {
+      //     apiFetchParamsObj,
+      //     wipObj
+      //   };
 
-      saveToJob(payload);
+      saveToJob(wipObj);
       inputChangeHandler('wipNumber', '');
     } else {
       setMode('book');
