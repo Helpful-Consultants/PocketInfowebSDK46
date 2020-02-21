@@ -149,7 +149,8 @@ export default FindToolsScreen = props => {
   });
 
   const getWipsItemsAsync = async () => {
-    getWipsItems(apiFetchParamsObj);
+    if (apiFetchParamsObj && apiFetchParamsObj.dealerId)
+      getWipsItems(apiFetchParamsObj);
   };
 
   const getOtherItems = useCallback(async apiFetchParamsObj => {
@@ -162,7 +163,9 @@ export default FindToolsScreen = props => {
   });
 
   const getOtherItemsAsync = async () => {
-    getOtherItems(apiFetchParamsObj);
+    if (apiFetchParamsObj && apiFetchParamsObj.dealerId) {
+      getOtherItems(apiFetchParamsObj);
+    }
   };
 
   const saveToJob = useCallback(
@@ -420,8 +423,8 @@ export default FindToolsScreen = props => {
   };
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', dealerId && dealerId);
-    dealerId && getOtherItems(apiFetchParamsObj);
+    console.log('in refreshRequestHandler');
+    getOtherItemsAsync();
   };
 
   const saveToJobRequestHandler = () => {
