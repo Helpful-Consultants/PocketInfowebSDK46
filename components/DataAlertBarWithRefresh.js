@@ -54,7 +54,7 @@ export default DataAlertBarWithRefresh = props => {
           </Text>
         </View>
       ) : dataError ? (
-        dataStatusCode && dataStatusCode === '999' ? (
+        dataStatusCode && dataStatusCode === 408 ? (
           <View style={styles.searchBarRowNoDataTextContainer}>
             <Text style={styles.searchBarRowErrorText}>
               {`You need an internet connection to download the ${dataNameToUse}.`}

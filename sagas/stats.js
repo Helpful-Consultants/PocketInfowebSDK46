@@ -36,8 +36,8 @@ function* getStats({ payload }) {
         actions.getStatsSuccess({
           items: result.data,
           statusCode:
-            (result.status && result.status.toString()) ||
-            (result.request.status && result.request.status.toString()) ||
+            (result.status && result.status) ||
+            (result.request.status && result.request.status) ||
             null
         })
       );
@@ -48,8 +48,8 @@ function* getStats({ payload }) {
         actions.statsError({
           error: 'An error occurred when trying to update the stats',
           statusCode:
-            (result.status && result.status.toString()) ||
-            (result.request.status && result.request.status.toString()) ||
+            (result.status && result.status) ||
+            (result.request.status && result.request.status) ||
             null
         })
       );
@@ -65,7 +65,7 @@ function* getStats({ payload }) {
       console.log('error response', error.response);
       console.log('error response ends');
       if (error.response.status) {
-        statusCode = error.response.status.toString();
+        statusCode = error.response.status;
       }
       if (error.response.data) {
         errorText = error.response.data;
@@ -84,7 +84,7 @@ function* getStats({ payload }) {
       console.log('error request', error.request);
       console.log('error request ends');
       if (error.request.status) {
-        statusCode = error.request.status.toString();
+        statusCode = error.request.status;
       }
       if (error.request._response) {
         errorText = error.request._response;
@@ -92,10 +92,10 @@ function* getStats({ payload }) {
           error.request._response.indexOf('connect') !== -1 ||
           error.request._response.indexOf('timed out') !== -1
         ) {
-          statusCode = '999';
+          statusCode = 408;
         } else {
           if (error.request.status) {
-            statusCode = error.request.status.toString();
+            statusCode = error.request.status;
           }
         }
       }
@@ -114,7 +114,7 @@ function* getStats({ payload }) {
       console.log('Error message', error.message);
       console.log('error message ends');
       if (error.message.indexOf(' 500') !== -1) {
-        statusCode = '500';
+        statusCode = 500;
       }
       errorText = error.message;
     }

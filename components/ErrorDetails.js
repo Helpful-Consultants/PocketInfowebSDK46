@@ -39,7 +39,7 @@ export default ErrorDetails = props => {
           <Text style={styles.errorMessageText}>{errorDetails}</Text>
         ) : null}
         {dataStatusCode ? (
-          dataStatusCode === '999' ? (
+          dataStatusCode === 408 ? (
             <Text style={styles.errorMessageText}>
               You are not connected to the internet.
             </Text>

@@ -39,8 +39,8 @@ function* getDealerTools({ payload }) {
         actions.getDealerToolsSuccess({
           items: result.data,
           statusCode:
-            (result.status && result.status.toString()) ||
-            (result.request.status && result.request.status.toString()) ||
+            (result.status && result.status) ||
+            (result.request.status && result.request.status) ||
             null
         })
       );
@@ -55,8 +55,8 @@ function* getDealerTools({ payload }) {
         actions.getDealerToolsSuccess({
           items: [],
           statusCode:
-            (result.status && result.status.toString()) ||
-            (result.request.status && result.request.status.toString()) ||
+            (result.status && result.status) ||
+            (result.request.status && result.request.status) ||
             null
         })
       );
@@ -68,8 +68,7 @@ function* getDealerTools({ payload }) {
           error:
             (result.request.response && result.request.response.toString()) ||
             'An error occurred when trying to update the jobs',
-          statusCode:
-            (result.request.status && result.request.status.toString()) || null,
+          statusCode: (result.request.status && result.request.status) || null,
           dataErrorUrl:
             (result && result.responseURL && result.responseURL) ||
             (result &&
@@ -96,7 +95,7 @@ function* getDealerTools({ payload }) {
       //   console.log('error response', error.response);
       //   console.log('error response ends');
       if (error.response.status) {
-        statusCode = error.response.status.toString();
+        statusCode = error.response.status;
       }
       if (error.response.data) {
         errorText = error.response.data;
@@ -115,7 +114,7 @@ function* getDealerTools({ payload }) {
       //   console.log('error request', error.request);
       //   console.log('error request ends');
       if (error.request.status) {
-        statusCode = error.request.status.toString();
+        statusCode = error.request.status;
       }
       if (error.request._response) {
         errorText = error.request._response;
@@ -123,10 +122,10 @@ function* getDealerTools({ payload }) {
           error.request._response.indexOf('connect') !== -1 ||
           error.request._response.indexOf('timed out') !== -1
         ) {
-          statusCode = '999';
+          statusCode = 408;
         } else {
           if (error.request.status) {
-            statusCode = error.request.status.toString();
+            statusCode = error.request.status;
           }
         }
       }
@@ -145,7 +144,7 @@ function* getDealerTools({ payload }) {
       //   console.log('Error message', error.message);
       //   console.log('error message ends');
       if (error.message.indexOf(' 500') !== -1) {
-        statusCode = '500';
+        statusCode = 500;
       }
       errorText = error.message;
     }

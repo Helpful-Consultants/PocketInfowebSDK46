@@ -40,8 +40,7 @@ function* getLtp() {
           error:
             (result.request.response && result.request.response.toString()) ||
             'An error occurred when trying to update the LTP',
-          statusCode:
-            (result.request.status && result.request.status.toString()) || null
+          statusCode: (result.request.status && result.request.status) || null
         })
       );
     }
@@ -58,7 +57,7 @@ function* getLtp() {
       //   console.log('error response', error.response);
       //   console.log('error response ends');
       if (error.response.status) {
-        statusCode = error.response.status.toString();
+        statusCode = error.response.status;
       }
       if (error.response.data) {
         errorText = error.response.data;
@@ -81,7 +80,7 @@ function* getLtp() {
       //       error.request._response
       //   );
       if (error.request.status) {
-        statusCode = error.request.status.toString();
+        statusCode = error.request.status;
       }
       if (error.request._response) {
         errorText = error.request._response;
@@ -89,10 +88,10 @@ function* getLtp() {
           error.request._response.indexOf('connect') !== -1 ||
           error.request._response.indexOf('timed out') !== -1
         ) {
-          statusCode = '999';
+          statusCode = 408;
         } else {
           if (error.request.status) {
-            statusCode = error.request.status.toString();
+            statusCode = error.request.status;
           }
         }
       }
@@ -111,7 +110,7 @@ function* getLtp() {
       //   console.log('Error message', error.message);
       //   console.log('error message ends');
       if (error.message.indexOf(' 500') !== -1) {
-        statusCode = '500';
+        statusCode = 500;
       }
       errorText = error.message;
     }
