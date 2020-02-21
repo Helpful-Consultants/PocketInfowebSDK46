@@ -174,7 +174,9 @@ export default JobsScreen = props => {
       dealerWipsItems.filter(
         item =>
           item.userIntId &&
-          item.userIntId.toString() == userDataObj.intId.toString()
+          item.userIntId.toString() == userDataObj.intId.toString() &&
+          item.tools &&
+          item.tools.length > 0
       )) ||
     [];
 
