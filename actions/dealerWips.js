@@ -30,6 +30,10 @@ export const getDealerWipsSuccess = ({ statusCode, items }) => ({
   }
 });
 
+export const createDealerWipStart = () => ({
+  type: Types.CREATE_DEALER_WIP_START
+});
+
 export const createDealerWipRequest = wipData => {
   //   console.log('in delete action');
   //   console.log(wipData);
@@ -43,6 +47,16 @@ export const createDealerWipSuccess = ({ code, message }) => ({
     message
   }
 });
+
+export const deleteDealerWipUnavailableTools = payload => {
+  console.log('in unavail action');
+  console.log(payload);
+  //   console.log(id, wipNumber, intId);
+  return {
+    type: Types.CREATE_DEALER_WIP_UNAVAILABLE_TOOLS,
+    payload: payload
+  };
+};
 
 export const deleteDealerWipRequest = payload => {
   //   console.log('in delete action');

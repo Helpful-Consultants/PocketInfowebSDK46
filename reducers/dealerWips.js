@@ -3,6 +3,7 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   dealerWipsItems: [],
   isLoading: false,
+  isSending: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null
@@ -10,7 +11,7 @@ const INITIAL_STATE = {
 
 export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  //   console.log('action.type is:', action.type);
+  console.log('action.type is:', action.type);
   switch (action.type) {
     case Types.GET_DEALER_WIPS_START: {
       return {
@@ -34,6 +35,15 @@ export default function dealerWips(state = INITIAL_STATE, action) {
           (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
+    case Types.CREATE_DEALER_WIP_START: {
+      return {
+        ...state,
+        isSending: true,
+        error: null,
+        dataErrorUrl: null,
+        statusCode: null
+      };
+    }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
       //   console.log(action.payload);
       return {
@@ -44,6 +54,25 @@ export default function dealerWips(state = INITIAL_STATE, action) {
             (action.payload.wipNumber && action.payload.wipNumber) || ''
         },
         isLoading: false,
+        error: null,
+        dataErrorUrl: null,
+        statusCode:
+          (action.payload.statusCode && action.payload.statusCode) || null
+      };
+    }
+    case Types.CREATE_DEALER_WIP_UNAVAILABLE_TOOLS: {
+      //   console.log(action.payload);
+      return {
+        ...state,
+        lastWipProcessed: {
+          message: action.payload.message || '',
+          wipNumber:
+            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          unavailableToolsArr: action.payload.unavailableTools || ''
+        },
+        isLoading: false,
+        isSending: false,
+        unavailableTools: true,
         error: null,
         dataErrorUrl: null,
         statusCode:
@@ -106,6 +135,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         ...state,
         lastWipProcessed: {},
         isLoading: false,
+        isSending: false,
         error: (action.payload.error && action.payload.error) || null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,

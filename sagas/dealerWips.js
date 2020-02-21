@@ -30,16 +30,19 @@ function* getDealerWips({ payload }) {
     // console.log('@@@@@@@@@@@result starts');
     // console.log(result);
     // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-    // console.log(result.data[0] && result.data[0]);
+    // console.log(
+    //   'the wips data starts here',
+    //   result.data && result.data,
+    //   'wips data ends here'
+    // );
     // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
     if (
       result.data &&
       result.data.length > 0 &&
       result.data[0] &&
       result.data[0].id &&
-      result.data[0].tools &&
-      result.data[0].tools[0] &&
-      result.data[0].tools[0].id
+      //   result.data[0].tools &&
+      result.data[0].wipNumber
     ) {
       //   console.log('in wips saga - good 200');
 
@@ -56,7 +59,7 @@ function* getDealerWips({ payload }) {
       );
     } else if (result && result.data && result.data.length > 0) {
       console.log(
-        'in Wips saga - empty 200',
+        'in Wips saga - an empty 200',
         result.request.status && result.request.status,
         payload && payload
       );
@@ -175,26 +178,29 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  //   console.log('in create wip saga', payload);
+  console.log('in create wip saga', payload);
   //   console.log('in create wip saga', payload.wipObj);
   let statusCode = null;
   let errorText = 'A server error occurred when trying to save the job';
   let dataErrorUrl = null;
+  yield put(actions.createDealerWipStart());
   try {
     const result = yield call(api.createDealerWip, payload.wipObj);
     // console.log('in wips saga - good 200', payload.apiFetchParamsObj);
     if (
       result &&
       result.data &&
-      result.data.unavailableTools &&
-      result.data.unavailableTools.length > 0
+      result.data[0] &&
+      result.data[0].unavailableTools &&
+      result.data[0].unavailableTools.length > 0
     ) {
-      console.log('!!!!!!!unavailableTools', result.data.unavailableTools);
+      console.log('!!!!!!!unavailableTools', result.data[0].unavailableTools);
       yield put(
-        actions.createDealerWipSuccess({
+        actions.createDealerWipUnavailableTools({
           code: '409',
           message: 'Some of these tools are unavaliable',
-          wipNumber: payload.apiFetchParamsObj.wipNumber || ''
+          wipNumber: payload.apiFetchParamsObj.wipNumber || '',
+          unavailableToolsArr: result.data[0].unavailableTools
         })
       );
     } else {
@@ -205,11 +211,12 @@ function* createDealerWip({ payload }) {
           wipNumber: payload.apiFetchParamsObj.wipNumber || ''
         })
       );
+      //   console.log('createDealerWipSuccess', result);
+      yield put(actions.getDealerWipsStart());
+      // console.log('getDealerWipStarted');
+      yield put(actions.getDealerWipsRequest(payload.apiFetchParamsObj));
     }
-    console.log('createDealerWipSuccess', result);
-    yield put(actions.getDealerWipsStart());
-    // console.log('getDealerWipStarted');
-    yield put(actions.getDealerWipsRequest(payload.apiFetchParamsObj));
+
     // yield put(toolsActions.getDealerToolsStart());
     // yield put(toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj));
 
