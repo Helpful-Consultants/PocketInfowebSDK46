@@ -186,6 +186,7 @@ function* createDealerWip({ payload }) {
   try {
     const result = yield call(api.createDealerWip, payload.wipObj);
     // console.log('in wips saga - good 200', payload.apiFetchParamsObj);
+    // console.log('!!!!!!!createDealerWip result', result);
     if (
       result &&
       result.data &&
@@ -193,12 +194,14 @@ function* createDealerWip({ payload }) {
       result.data[0].unavailableTools &&
       result.data[0].unavailableTools.length > 0
     ) {
-      console.log('!!!!!!!unavailableTools', result.data[0].unavailableTools);
+      //   console.log('!!!!!!!unavailableTools', result.data[0].unavailableTools);
+      console.log('!!!!!!!unavailableTools');
       yield put(
         actions.dealerWipUnavailableTools({
           statusCode: 409,
           message: 'Some of these tools are unavailable',
           wipNumber: (payload.wipObj && payload.wipObj.wipNumber) || '',
+          id: 'get from API',
           unavailableToolsArr: result.data[0].unavailableTools
         })
       );
@@ -411,10 +414,10 @@ function* watchDeleteDealerWipToolRequest() {
 // Delete WIP
 function* deleteDealerWip(payload) {
   //   console.log('in saga DELETE dealerWip called');
-  //   console.log('in saga DELETE dealerWip payload', payload);
+  console.log('in saga DELETE dealerWip payload', payload);
   //   console.log('in saga DELETE dealerWip wip', payload.wipNumber);
   let statusCode = null;
-  let errorText = 'Anerror occurred when trying to delete the job';
+  let errorText = 'An error occurred when trying to delete the job';
   let dataErrorUrl = null;
 
   //   console.log('delete wip called', payload);
@@ -430,15 +433,15 @@ function* deleteDealerWip(payload) {
         wipNumber: payload.wipNumber || ''
       })
     );
-    // console.log('delete wip good result', result && result);
+    console.log('delete wip good result', result && result);
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload));
     // yield put(toolsActions.getDealerToolsStart());
     // yield put(toolsActions.getDealerToolsRequest(payload.apiFetchParamsObj));
   } catch (error) {
-    // console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
-    // console.log('whole Error', error);
-    // console.log('whole Error ends');
+    console.log('server error in saga delete dealerWip !!!!!!!!!!!!!!');
+    console.log('whole Error', error);
+    console.log('whole Error ends');
     // console.log(error && error.config);
 
     if (error.response) {

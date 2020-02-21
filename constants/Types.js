@@ -62,8 +62,7 @@ export default {
   DELETE_DEALER_WIP_SUCCESS: 'dealerWips/delete_dealer_wip_success',
   CREATE_DEALER_WIP_START: 'dealerWips/create_dealer_wip_start',
   CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
-  CREATE_DEALER_WIP_UNAVAILABLE_TOOLS:
-    'dealerWips/create_dealer_wip_unavailable_tools',
+  DEALER_WIP_UNAVAILABLE_TOOLS: 'dealerWips/DEALER_WIP_UNAVAILABLE_TOOLS',
   CREATE_DEALER_WIP_SUCCESS: 'dealerWips/create_dealer_wip_success',
   EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/empty_dealer_wips_request',
   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error',

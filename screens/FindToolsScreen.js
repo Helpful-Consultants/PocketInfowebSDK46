@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+  ActivityIndicator,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
@@ -27,7 +28,7 @@ import HeaderButton from '../components/HeaderButton';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import {
   getDealerWipsRequest,
-  createDealerWipSuccess
+  deleteDealerWipRequest
 } from '../actions/dealerWips';
 import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
@@ -68,6 +69,97 @@ const formReducer = (state, action) => {
   return state;
 };
 
+const identifyUnavailableTool = (toolId, unavailableToolsArr) => {
+  let retValue = null;
+  //   console.log(
+  //     'in identifyUnavailableTool',
+  //     toolId,
+  //     unavailableToolsArr,
+  //     'retvalue',
+  //     retValue
+  //   );
+  unavailableToolsArr.forEach((item, index) => {
+    // console.log(item.tools_id);
+    if (item.tools_id && item.tools_id === toolId) {
+      //   console.log('match on', item.tools_id);
+      retValue = index;
+    }
+  });
+  //   console.log(
+  //     'in identifyUnavailableTool',
+  //     toolId,
+  //     unavailableToolsArr,
+  //     'retvalue',
+  //     retValue
+  //   );
+  return retValue;
+};
+
+const identifyUnavailableToolDetails = (toolId, unavailableToolsArr) => {
+  let retValue = null;
+  //   console.log(
+  //     'in identifyUnavailableTool',
+  //     toolId,
+  //     unavailableToolsArr,
+  //     'retvalue',
+  //     retValue
+  //   );
+  unavailableToolsArr.forEach((item, index) => {
+    // console.log(item.tools_id);
+    if (item.tools_id && item.tools_id === toolId) {
+      //   console.log('match on', item.tools_id);
+      retValue = `Unavailable. Now booked out to ${item.updatedBy &&
+        item.updatedBy}, job ${item.wipNumber && item.wipNumber}`;
+    }
+  });
+  //   console.log(
+  //     'in identifyUnavailableTool',
+  //     toolId,
+  //     unavailableToolsArr,
+  //     'retvalue',
+  //     retValue
+  //   );
+  return retValue;
+};
+
+const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
+  let retValue = null;
+
+  if (dealerWips && dealerWips.length) {
+    console.log('dealerWips[0]', dealerWips[0]);
+  }
+
+  dealerWips.forEach(item => {
+    console.log(
+      'in loop',
+      item.wipNumber && item.wipNumber,
+      item.id && item.id
+    );
+    if (
+      item.wipNumber &&
+      item.wipNumber === wipNumber &&
+      item.userIntId &&
+      item.userIntId.toString() === userIntId
+    ) {
+      //   console.log('match on', item.tools_id);
+      retValue = item.id.toString();
+    }
+  });
+
+  console.log(
+    'in getWipIdByWipNumber',
+    'wipNumber',
+    wipNumber,
+    'userIntId',
+    userIntId,
+    'dealerWips',
+    dealerWips.length,
+    'retvalue',
+    retValue
+  );
+  return retValue;
+};
+
 export default FindToolsScreen = props => {
   const dispatch = useDispatch();
   const userBrand = useSelector(state => state.user.userBrand);
@@ -94,6 +186,10 @@ export default FindToolsScreen = props => {
   const dataErrorWips = useSelector(state => state.dealerWips.error);
   const dataErrorUrlWips = useSelector(state => state.dealerWips.dataErrorUrl);
   const dataStatusCodeWips = useSelector(state => state.dealerWips.statusCode);
+
+  const lastWipProcessed = useSelector(
+    state => state.dealerWips.lastWipProcessed
+  );
   const isLoadingLtp = useSelector(state => state.ltp.isLoading);
   const dataErrorLtp = useSelector(state => state.ltp.error);
   const dataErrorUrlLtp = useSelector(state => state.ltp.dataErrorUrl);
@@ -176,6 +272,11 @@ export default FindToolsScreen = props => {
     [apiFetchParamsObj] // something that doesn't change
   );
 
+  const deleteDealerWip = useCallback(
+    payload => dispatch(deleteDealerWipRequest(payload)),
+    [dealerWipsItems]
+  );
+
   const saveToJob = wipObj => {
     dispatchNewWip(wipObj);
   };
@@ -183,9 +284,53 @@ export default FindToolsScreen = props => {
   useEffect(() => {
     // runs only once
     console.log(
-      'in findtools  useEffect, userDataObj is ',
-      userDataObj && userDataObj.dealerId
+      'in findtools, isSendingWip is ',
+      isSendingWip,
+      'code is ',
+      dataStatusCodeWips
     );
+    if (isSendingWip === false) {
+      if (dataStatusCodeWips === 201) {
+        console.log(
+          'isSendingWip is ',
+          isSendingWip,
+          'code is 201',
+          lastWipProcessed && lastWipProcessed,
+          dataStatusCodeWips,
+          'mode is ',
+          mode
+        );
+        setMode('confirm');
+      } else if (dataStatusCodeWips === 409) {
+        console.log(
+          'isSendingWip is ',
+          isSendingWip,
+          'code is 409',
+          dataStatusCodeWips,
+          lastWipProcessed && lastWipProcessed,
+          'mode is ',
+          mode
+        );
+        if (mode === 'sending') {
+          console.log(
+            'changing mode to unavailable, apiFetchParamsObj is ',
+            apiFetchParamsObj
+          );
+
+          getWipsItemsAsync();
+
+          setMode('unavailable');
+        }
+      }
+    }
+  }, [isSendingWip]);
+
+  useEffect(() => {
+    // runs only once
+    // console.log(
+    //   'in findtools  useEffect, userDataObj is ',
+    //   userDataObj && userDataObj.dealerId
+    // );
 
     if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
       let tempApiFetchParamsObj = {
@@ -205,10 +350,10 @@ export default FindToolsScreen = props => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log(
-        'find tools - useFocusEffect, apiFetchParamsObj is',
-        apiFetchParamsObj
-      );
+      //   console.log(
+      //     'find tools - useFocusEffect, apiFetchParamsObj is',
+      //     apiFetchParamsObj
+      //   );
       setSearchInput('');
       if (
         apiFetchParamsObj &&
@@ -235,8 +380,18 @@ export default FindToolsScreen = props => {
   }, [dealerWipsItems]);
 
   useEffect(() => {
-    console.log('in FTS  use effect, isSendingWip ', isSendingWip);
-  }, [isSendingWip]);
+    let bookedToolsList = [];
+
+    dealerWipsItems &&
+      dealerWipsItems.forEach(wip => {
+        if (wip.tools && wip.tools.length > 0) {
+          wip.tools.forEach(tool => bookedToolsList.push(tool.tools_id));
+        }
+      });
+
+    // console.log(bookedToolsList && bookedToolsList);
+    setBookedToolsList(bookedToolsList);
+  }, [dealerWipsItems]);
 
   useEffect(() => {
     // runs only once
@@ -367,6 +522,36 @@ export default FindToolsScreen = props => {
     setIsBasketVisible(true);
   };
 
+  const deleteWipRequestHandler = () => {
+    const wipNumber = (lastWipProcessed && lastWipProcessed.wipNumber) || '';
+    const dealerId = apiFetchParamsObj.dealerId;
+
+    const wipId = getWipIdByWipNumber(
+      wipNumber,
+      apiFetchParamsObj.intId,
+      dealerWipsItems
+    );
+
+    const wipObj = {
+      wipNumber: wipNumber,
+      id: wipId,
+      userIntId: apiFetchParamsObj.intId,
+      dealerId: apiFetchParamsObj.dealerId
+    };
+
+    let payload = {
+      dealerId: apiFetchParamsObj.dealerId,
+      wipObj: wipObj,
+      apiFetchParamsObj: apiFetchParamsObj
+    };
+
+    console.log('in deleteWipRequestHandler', payload);
+    setToolBasket([]);
+    setMode('list');
+    setIsBasketVisible(false);
+    inputChangeHandler('wipNumber', '');
+    deleteDealerWip(payload);
+  };
   const removeBasketHandler = () => {
     setToolBasket([]);
     setMode('list');
@@ -452,7 +637,7 @@ export default FindToolsScreen = props => {
 
     if (formState.formIsValid) {
       setWipNumber(formState.inputValues.wipNumber);
-      setMode('check');
+      setMode('sending');
       setIsBasketVisible(true);
 
       let newToolBasket = toolBasket.map(item => removeLastWip(item));
@@ -609,7 +794,7 @@ export default FindToolsScreen = props => {
             type='solid'
             onPress={() => {
               saveToJobRequestHandler();
-              setMode('check');
+              setMode('sending');
               setIsBasketVisible(true);
             }}
             titleStyle={styles.confirmButtonTitle}
@@ -629,28 +814,22 @@ export default FindToolsScreen = props => {
           />
         </View>
       </View>
-    ) : mode === 'check' ? (
+    ) : mode === 'sending' && isSendingWip ? (
       <View>
         <View style={styles.basketActionRow}>
-          <View style={styles.confirmedPrompt}>
-            <Text style={styles.confirmedPromptText}>
-              {`${toolBasket.length} ${
-                toolBasket.length === 1 ? `tool` : `tools`
-              } being booked to job ${wipNumber}.`}
-            </Text>
+          <View style={styles.checkingNotice}>
+            <ActivityIndicator size='small' color={Colors.vwgDeepBlue} />
+            <View>
+              <Text style={styles.checkingNoticeText}>
+                {`  ${toolBasket.length} ${
+                  toolBasket.length === 1 ? `tool` : `tools`
+                } being booked to `}
+              </Text>
+              <Text style={styles.checkingNoticeText}>
+                {`  job ${wipNumber}...`}
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.basketActionRow}>
-          <Button
-            title='Close'
-            type='clear'
-            titleStyle={styles.closeButtonTitle}
-            onPress={() => {
-              acceptMessageHandler();
-            }}
-            titleStyle={styles.closeConfirmationButtonTitle}
-            buttonStyle={styles.closeConfirmationButton}
-          />
         </View>
       </View>
     ) : mode === 'confirm' ? (
@@ -660,7 +839,7 @@ export default FindToolsScreen = props => {
             <Text style={styles.confirmedPromptText}>
               {`${toolBasket.length} ${
                 toolBasket.length === 1 ? `tool` : `tools`
-              } booked to job ${wipNumber}.`}
+              } succesfully booked out to you on job '${wipNumber}'.`}
             </Text>
           </View>
         </View>
@@ -748,6 +927,73 @@ export default FindToolsScreen = props => {
           />
         </View>
       </View>
+    ) : mode === 'unavailable' ? (
+      <View>
+        <View style={styles.basketActionRow}>
+          <View style={styles.confirmedPrompt}>
+            <Text style={styles.unavailableNoticeText}>
+              {`Someone else has recently booked the item${
+                lastWipProcessed.unavailableToolsArr &&
+                lastWipProcessed.unavailableToolsArr.length > 1
+                  ? `s`
+                  : ``
+              } marked above. Do you want to keep the other item${
+                lastWipProcessed.unavailableToolsArr &&
+                lastWipProcessed.unavailableToolsArr.length > 1
+                  ? `s`
+                  : ``
+              } booked out or cancel the whole booking?`}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.basketActionRow}>
+          <Button
+            title='Cancel whole booking'
+            type='outline'
+            onPress={() => deleteWipRequestHandler()}
+            titleStyle={styles.cancelButtonTitle}
+            buttonStyle={styles.cancelButton}
+            icon={
+              <Icon
+                name={
+                  Platform.OS === 'ios'
+                    ? 'ios-close-circle-outline'
+                    : 'md-close-circle-outline'
+                }
+                type='ionicon'
+                size={20}
+                color={Colors.vwgWarmRed}
+              />
+            }
+          />
+          <Button
+            title={
+              lastWipProcessed.unavailableToolsArr &&
+              toolBasket.length > 0 &&
+              toolBasket.length - lastWipProcessed.unavailableToolsArr.length >
+                1
+                ? `Keep the other tools`
+                : `Keep the booked tool`
+            }
+            type='solid'
+            onPress={() => acceptMessageHandler()}
+            titleStyle={styles.bookButtonTitle}
+            buttonStyle={styles.bookButton}
+            icon={
+              <Icon
+                name={
+                  Platform.OS === 'ios'
+                    ? 'ios-checkmark-circle-outline'
+                    : 'md-checkmark-circle-outline'
+                }
+                type='ionicon'
+                size={20}
+                color={Colors.vwgWhite}
+              />
+            }
+          />
+        </View>
+      </View>
     ) : null;
 
   let basketContents = null;
@@ -810,14 +1056,25 @@ export default FindToolsScreen = props => {
                           : `Location not recorded`}
                       </Text>
                     }
-                    {item.lastWIP ? (
+                    {mode === 'unavailable' &&
+                    item.id &&
+                    lastWipProcessed &&
+                    lastWipProcessed.unavailableToolsArr &&
+                    identifyUnavailableTool(
+                      item.id,
+                      lastWipProcessed.unavailableToolsArr
+                    ) !== null ? (
                       <Text
-                        style={styles.basketItemText}
-                      >{`Last booked out to ${item.lastPerson}, job ${item.lastWIP}`}</Text>
+                        style={styles.basketItemUnavailableText}
+                      >{`${identifyUnavailableToolDetails(
+                        item.id,
+                        lastWipProcessed.unavailableToolsArr
+                      )}`}</Text>
                     ) : null}
                   </View>
 
-                  {mode !== 'check' &&
+                  {mode !== 'sending' &&
+                  mode !== 'unavailable' &&
                   mode !== 'confirm' &&
                   toolBasket.length > 1 ? (
                     <TouchableOpacity
@@ -865,7 +1122,9 @@ export default FindToolsScreen = props => {
         ) : null}
         <View style={styles.basket}>
           <View style={{ backgroundColor: Colors.vwgWhite }}>
-            {mode === 'basket' ? basketContents : null}
+            {mode === 'basket' || mode === 'unavailable'
+              ? basketContents
+              : null}
             {basketActionRows}
           </View>
         </View>
@@ -1107,6 +1366,11 @@ const styles = StyleSheet.create({
     color: Colors.vwgDarkGray,
     fontSize: RFPercentage(1.8)
   },
+  basketItemUnavailableText: {
+    fontFamily: 'the-sans',
+    color: Colors.vwgWarmRed,
+    fontSize: RFPercentage(1.8)
+  },
   basketItemTextEmph: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
@@ -1245,15 +1509,32 @@ const styles = StyleSheet.create({
 
     color: Colors.vwgWhite
   },
-  confirmedPrompt: {
+  checkingNotice: {
+    flexDirection: 'row',
     padding: 10,
     backgroundColor: Colors.vwgWhite
   },
-  confirmedPromptText: {
+  confirmedNoticeText: {
     fontFamily: 'the-sans',
     textAlign: 'center',
-    color: Colors.vwgMintGreen,
+    color: Colors.vwgDeepBlue,
+    fontSize: RFPercentage(2.4)
+  },
+  unavailableNoticeText: {
+    fontFamily: 'the-sans-bold',
+    textAlign: 'left',
+    color: Colors.vwgBlack,
     fontSize: RFPercentage(2.2)
+  },
+  confirmedPrompt: {
+    padding: 0,
+    backgroundColor: Colors.vwgWhite
+  },
+  confirmedPromptText: {
+    fontFamily: 'the-sans-bold',
+    textAlign: 'left',
+    color: Colors.vwgMintGreen,
+    fontSize: RFPercentage(2.4)
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',

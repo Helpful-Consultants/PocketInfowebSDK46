@@ -6,12 +6,14 @@ const INITIAL_STATE = {
   isSending: false,
   error: null,
   statusCode: null,
-  dataErrorUrl: null
+  dataErrorUrl: null,
+  lastWipProcessed: null,
+  unavailableTools: false
 };
 
 export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  console.log('action.type is:', action.type);
+  //   console.log('action.type is:', action.type);
   switch (action.type) {
     case Types.GET_DEALER_WIPS_START: {
       return {
@@ -45,30 +47,38 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
-      //   console.log(action.payload);
+      console.log('action.type is:', action.type);
+      console.log('CREATE_DEALER_WIP_SUCCESS', action);
       return {
         ...state,
         lastWipProcessed: {
-          message: action.payload.message,
           wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || ''
+            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          statusCode:
+            (action.payload.statusCode && action.payload.statusCode) || null,
+          message: (action.payload.message && action.payload.message) || null
         },
         isLoading: false,
+        isSending: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
-    case Types.CREATE_DEALER_WIP_UNAVAILABLE_TOOLS: {
-      //   console.log(action.payload);
+    case Types.DEALER_WIP_UNAVAILABLE_TOOLS: {
+      console.log('action.type is:', action.type);
+      console.log(action.payload);
       return {
         ...state,
         lastWipProcessed: {
-          message: action.payload.message || '',
+          id: (action.payload.id && action.payload.id) || '',
           wipNumber:
             (action.payload.wipNumber && action.payload.wipNumber) || '',
-          unavailableToolsArr: action.payload.unavailableTools || ''
+          statusCode:
+            (action.payload.statusCode && action.payload.statusCode) || null,
+          message: (action.payload.message && action.payload.message) || null,
+          unavailableToolsArr: action.payload.unavailableToolsArr || ''
         },
         isLoading: false,
         isSending: false,
@@ -85,7 +95,9 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          message: action.payload.message,
+          statusCode:
+            (action.payload.statusCode && action.payload.statusCode) || null,
+          message: (action.payload.message && action.payload.message) || null,
           wipNumber:
             (action.payload.wipNumber && action.payload.wipNumber) || ''
         },
@@ -102,8 +114,9 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          code: action.payload.code,
-          message: action.payload.message,
+          statusCode:
+            (action.payload.statusCode && action.payload.statusCode) || null,
+          message: (action.payload.message && action.payload.message) || null,
           wipNumber:
             (action.payload.wipNumber && action.payload.wipNumber) || ''
         },
@@ -128,9 +141,10 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.DEALER_WIPS_ERROR: {
-      //   console.log('action.payload starts');
-      //   console.log(action.payload);
-      //   console.log('action.payload ends');
+      console.log('action.type is:', action.type);
+      console.log('action.payload starts');
+      console.log(action.payload);
+      console.log('action.payload ends');
       return {
         ...state,
         lastWipProcessed: {},
