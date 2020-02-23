@@ -435,7 +435,7 @@ export default HomeScreen = props => {
           allToolsArr.push(...wipToolsArr);
         }
       });
-      allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
 
       return allToolsArr;
     };
