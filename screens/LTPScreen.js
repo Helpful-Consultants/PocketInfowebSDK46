@@ -11,6 +11,7 @@ import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import BadgedTabBarText from '../components/BadgedTabBarText';
+import sortObjectList from '../components/sortObjectList';
 // import HeaderButton from '../components/HeaderButton';
 // import MenuDrawer from '../components/MenuDrawer';
 import { getLtpRequest } from '../actions/ltp';
@@ -86,14 +87,10 @@ export default LtpScreen = props => {
           item.vw === ('Y' || 'y')
       );
     }
-    let ltpItemsSorted =
-      ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
-    // let uniqueLtpItems =
-    //   ltpItemsSorted.filter(
-    //     (item, index, self) =>
-    //       index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
-    //   ) || [];
+    let ltpItemsSorted = sortObjectList(ltpItems, 'loanToolNo', 'asc');
+    // console.log(ltpItemsSorted);
+
     setUniqueLtpItems(ltpItemsSorted);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
