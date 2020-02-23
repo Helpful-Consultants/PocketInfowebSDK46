@@ -481,15 +481,20 @@ export default FindToolsScreen = props => {
           item.vw === ('Y' || 'y')
       );
     }
-    let ltpItemsSorted =
-      ltpItemsFiltered.sort((a, b) => a.loanToolNo > b.loanToolNo) || [];
 
-    let uniqueLtpItems =
-      ltpItemsSorted.filter(
+    let unsortedUniqueLtpItems =
+      ltpItemsFiltered.filter(
         (item, index, self) =>
           index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
       ) || [];
-    setUniqueLtpItems(uniqueLtpItems);
+
+    let uniqueLtpItemsSorted = sortObjectList(
+      unsortedUniqueLtpItems,
+      'loanToolNo',
+      'asc'
+    );
+
+    setUniqueLtpItems(uniqueLtpItemsSorted);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
