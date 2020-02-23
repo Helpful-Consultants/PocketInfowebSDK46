@@ -32,6 +32,7 @@ export default LtpScreen = props => {
   const dispatch = useDispatch();
   const userBrand = useSelector(state => state.user.userBrand);
   const ltpItems = useSelector(state => state.ltp.ltpItems);
+  //   const ltpItems = [];
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
   const dataStatusCode = useSelector(state => state.ltp.statusCode);
@@ -40,6 +41,7 @@ export default LtpScreen = props => {
   const [searchString, setSearchString] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
     ltpItems
   ]);
@@ -54,7 +56,7 @@ export default LtpScreen = props => {
 
   useEffect(() => {
     // runs only once
-    // console.log('in ltp useEffect');
+    // console.log('in ltp useEffect getItemsAsync');
     getItemsAsync();
   }, []);
 
@@ -88,10 +90,11 @@ export default LtpScreen = props => {
       );
     }
 
-    let ltpItemsSorted = sortObjectList(ltpItems, 'loanToolNo', 'asc');
+    let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
     // console.log(ltpItemsSorted);
 
     setUniqueLtpItems(ltpItemsSorted);
+    // setUniqueLtpItems([]);
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
@@ -108,36 +111,15 @@ export default LtpScreen = props => {
     getItemsAsync();
   };
 
-  //   const backdropPressHandler = () => {
-  //     setIsDrawerVisible(false);
-  //   };
-
-  //   const items = (!isLoading && !dataError && ltpItems) || [];
-
-  //   console.log(
-  //     'LTP isLoading ',
-  //     isLoading,
-  //     'dataError ',
-  //     dataError,
-  //     'statusCode ',
-  //     dataStatusCode,
-  //     ' items ',
-  //     items.length,
-  //     ' unique items ',
-  //     uniqueLtpItems.length
-  //   );
-
-  //   const filteredItems =
-  //     (!isLoading &&
-  //       uniqueLtpItems.filter(createFilter(searchString, KEYS_TO_FILTERS))) ||
-  //     [];
-
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
       : uniqueLtpItems
     : [];
-  //   console.log('RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!');
+  //   console.log(
+  //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
+  //     dataError
+  //   );
 
   return (
     <View style={styles.container}>
@@ -152,13 +134,20 @@ export default LtpScreen = props => {
         isLoading={isLoading}
         dataCount={ltpItems.length}
       />
-      {dataError ? null : searchInput.length >= minSearchLength &&
-        itemsToShow.length === 0 ? (
-        <View style={styles.noneFoundPrompt}>
-          <Text style={styles.noneFoundPromptText}>
-            Your search found no results.
-          </Text>
-        </View>
+      {dataError ? null : itemsToShow.length === 0 ? (
+        searchInput.length >= minSearchLength ? (
+          <View style={styles.noneFoundPrompt}>
+            <Text style={styles.noneFoundPromptText}>
+              Your search found no results.
+            </Text>
+          </View>
+        ) : isLoading ? null : (
+          <View style={styles.ltpPrompt}>
+            <Text style={styles.ltpPromptText}>
+              No LTP items to show. Try the refresh button.
+            </Text>
+          </View>
+        )
       ) : (
         <View style={styles.ltpPrompt}>
           <Text style={styles.ltpPromptText}>
@@ -166,11 +155,6 @@ export default LtpScreen = props => {
           </Text>
         </View>
       )}
-
-      {/* <MenuDrawer
-        isVisible={isDrawerVisible}
-        backdropPressHandler={backdropPressHandler}
-      /> */}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing LTP'}
