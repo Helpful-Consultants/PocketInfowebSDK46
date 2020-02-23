@@ -95,47 +95,8 @@ export default LtpScreen = props => {
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
-  const zzzzsearchInputHandler = searchInput => {
-    let searchStringStart = searchInput.toLowerCase();
-    let adjustedSearchInput = '';
-    setSearchInput(searchInput);
-    // console.log('searchInput is "' + searchInput + '"');
-    if (
-      searchStringStart.substring(0, 4) === 'ase ' ||
-      searchStringStart.substring(0, 4) === 'vas ' ||
-      searchStringStart.substring(0, 4) === 'vag '
-    ) {
-      //   console.log('@@@@@4 "' + searchInput.substring(0, 4) + '"');
-      adjustedSearchInput = searchInput.substr(4);
-      //   console.log('@@@@@4cut "' + adjustedSearchInput + '"');
-      setSearchString(adjustedSearchInput);
-      //   setAdjustedSearchString(adjustedSearchInput);
-    } else if (
-      searchStringStart.substring(0, 3) === 'ase' ||
-      searchStringStart.substring(0, 3) === 'vas' ||
-      searchStringStart.substring(0, 3) === 'vag'
-    ) {
-      //   console.log('@@@@@ "' + searchInput.substring(0, 3) + '"');
-      adjustedSearchInput = searchInput.substr(3);
-      //   console.log('@@@@@cut "' + adjustedSearchInput + '"');
-      setSearchString(adjustedSearchInput);
-      //   setAdjustedSearchString(adjustedSearchInput);
-    } else {
-      //   console.log('searchInput no change applied');
-
-      setSearchString(searchInput);
-      //   setAdjustedSearchString(searchInput);
-    }
-  };
-
   const searchInputHandler = searchInput => {
-    // let searchStringLowercase = searchInput.toLowerCase();
-
-    // let adjustedSearchString = '';
-    // let strippedAdjustedSearchString = '';
-    // console.log('searchInputHandler ' + searchInput);
     setSearchInput(searchInput);
-
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
       setFilteredItems(newFilteredItems);
