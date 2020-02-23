@@ -15,6 +15,7 @@ import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import HeaderButton from '../components/HeaderButton';
 import TabBarIcon from '../components/TabBarIcon';
+import sortObjectList from '../components/sortObjectList';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
@@ -196,9 +197,8 @@ export default BookedOutToolsScreen = props => {
           allToolsArr.push(...wipToolsArr);
         }
       });
-      allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
-
-      return allToolsArr;
+      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+      return sortObjectList(allToolsArr, 'partNumber', 'asc');
     };
 
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
