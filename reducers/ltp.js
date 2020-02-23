@@ -26,7 +26,6 @@ export default function ltp(state = INITIAL_STATE, action) {
       //     'ltp action items length ',
       //     action.payload && action.payload.items && action.payload.items.length
       //   );
-      action.payload.items.sort((a, b) => a.loanToolNo > b.loanToolNo);
       return {
         ...state,
         ltpItems: action.payload.items,
