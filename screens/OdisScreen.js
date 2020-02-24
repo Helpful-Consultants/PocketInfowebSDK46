@@ -11,6 +11,7 @@ import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
+import { revalidateUserCredentials } from '../actions/user';
 import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
 import Colors from '../constants/Colors';
 import OdisVersions from './OdisVersions';
@@ -18,7 +19,7 @@ import OdisVersions from './OdisVersions';
 
 export default OdisScreen = props => {
   const dispatch = useDispatch();
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userBrand = useSelector(state => state.user.userBrand);
   const odisObj = useSelector(state => state.odis.odisData);
   const isLoading = useSelector(state => state.odis.isLoading);
@@ -55,7 +56,7 @@ export default OdisScreen = props => {
     getItems();
   };
 
-  //   if (!userIsSignedIn) {
+  //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
 
@@ -70,7 +71,7 @@ export default OdisScreen = props => {
       const getItemsAsync = async () => {
         getItems();
       };
-
+      dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
     }, [])
   );

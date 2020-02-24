@@ -19,6 +19,7 @@ import sortObjectList from '../components/sortObjectList';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';
+import { revalidateUserCredentials } from '../actions/user';
 import {
   //   createDealerWipRequest,
   deleteDealerWipRequest,
@@ -45,7 +46,6 @@ export default BookedOutToolsScreen = props => {
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
 
@@ -152,6 +152,7 @@ export default BookedOutToolsScreen = props => {
       //     setSearchInput('');
       //   }
       //   console.log('booked tools - useFocusEffect');
+      dispatch(revalidateUserCredentials({ calledBy: 'BookedOutToolScreen' }));
       setSearchInput('');
       if (
         apiFetchParamsObj &&

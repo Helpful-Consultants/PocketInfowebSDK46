@@ -42,7 +42,6 @@ export default JobsScreen = props => {
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
 
@@ -100,6 +99,7 @@ export default JobsScreen = props => {
   useFocusEffect(
     useCallback(() => {
       console.log('job - useFocusEffect');
+      dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
       setSearchInput('');
       if (
         apiFetchParamsObj &&

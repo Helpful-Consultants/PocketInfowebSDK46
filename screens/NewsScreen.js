@@ -14,6 +14,7 @@ import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
+import { revalidateUserCredentials } from '../actions/user';
 import { getNewsRequest } from '../actions/news';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
@@ -35,7 +36,7 @@ export default NewsScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const newsItems = useSelector(state => state.news.newsItems);
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
@@ -88,6 +89,7 @@ export default NewsScreen = props => {
       const getItemsAsync = async () => {
         getItems();
       };
+      dispatch(revalidateUserCredentials({ calledBy: 'NewsScreen' }));
       setSearchInput('');
       getItemsAsync();
     }, [])

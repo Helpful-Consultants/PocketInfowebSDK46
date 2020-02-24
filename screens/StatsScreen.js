@@ -9,6 +9,7 @@ import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
+import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
 import { getDealerWipsRequest } from '../actions/dealerWips';
 import { getDealerToolsRequest } from '../actions/dealerTools';
@@ -27,7 +28,7 @@ export default StatsScreen = props => {
   const dealerToolsItems = useSelector(
     state => state.dealerTools.dealerToolsItems
   );
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
@@ -37,14 +38,14 @@ export default StatsScreen = props => {
   const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
-  const apiFetchParamsObj = {
+  const userApiFetchParamsObj = {
     dealerId: dealerId,
     intId: userIntId
   };
-  //   console.log('apiFetchParamsObj is set to ', apiFetchParamsObj);
+  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     apiFetchParamsObj
+  //     userApiFetchParamsObj
   //   ]);
 
   //   console.log('getStatsData', getStatsData);
@@ -53,9 +54,9 @@ export default StatsScreen = props => {
 
   const getItems = useCallback(async () => {
     // console.log('in stats getItems');
-    dispatch(getStatsRequest(apiFetchParamsObj)), [statsObj];
-    // dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
-    // dispatch(getDealerToolsRequest(apiFetchParamsObj)), [dealerToolsItems];
+    dispatch(getStatsRequest(userApiFetchParamsObj)), [statsObj];
+    // dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
+    // dispatch(getDealerToolsRequest(userApiFetchParamsObj)), [dealerToolsItems];
     // dispatch(getLtpRequest()), [ltpItems];
   });
 
@@ -81,7 +82,7 @@ export default StatsScreen = props => {
       const getItemsAsync = async () => {
         getItems();
       };
-
+      dispatch(revalidateUserCredentials({ calledBy: 'StatsScreen' }));
       getItemsAsync();
     }, [])
   );
@@ -91,7 +92,7 @@ export default StatsScreen = props => {
     getItems();
   };
 
-  //   if (!userIsSignedIn) {
+  //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
   const userDataPresent =

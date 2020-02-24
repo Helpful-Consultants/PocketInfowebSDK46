@@ -6,6 +6,7 @@ import { Text } from 'react-native-elements';
 // import { createFilter } from 'react-native-search-filter';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 // import Modal from 'react-native-modal';
+import { revalidateUserCredentials } from '../actions/user';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -32,13 +33,11 @@ export default LtpScreen = props => {
   const dispatch = useDispatch();
   const userBrand = useSelector(state => state.user.userBrand);
   const ltpItems = useSelector(state => state.ltp.ltpItems);
-  //   const ltpItems = [];
   const isLoading = useSelector(state => state.ltp.isLoading);
   const dataError = useSelector(state => state.ltp.error);
   const dataStatusCode = useSelector(state => state.ltp.statusCode);
   const dataErrorUrl = useSelector(state => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
-  const [searchString, setSearchString] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
@@ -62,8 +61,9 @@ export default LtpScreen = props => {
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('ltp - useFocusEffect');
+      console.log('ltp - useFocusEffect');
       // don't refresh the every time user visits the page LTP - they don't change too much
+      dispatch(revalidateUserCredentials({ calledBy: 'LtpScreen' }));
       setSearchInput('');
     }, [])
   );

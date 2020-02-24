@@ -12,6 +12,7 @@ import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
+import { revalidateUserCredentials } from '../actions/user';
 import { getProductsRequest } from '../actions/products';
 import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
@@ -32,7 +33,7 @@ const checkUrl = rawUrl => {
 export default ProductsScreen = props => {
   const dispatch = useDispatch();
   const productsItems = useSelector(state => state.products.productsItems);
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userData = useSelector(state => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +81,7 @@ export default ProductsScreen = props => {
       //   if (searchInput && searchInput.length > 0) {
       //     setSearchInput('');
       //   }
+      dispatch(revalidateUserCredentials({ calledBy: 'ProductsScreen' }));
       setSearchInput('');
       getItemsAsync();
     }, [])
