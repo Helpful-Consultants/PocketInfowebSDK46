@@ -10,11 +10,13 @@ import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import ErrorDetails from '../components/ErrorDetails';
+import { revalidateUserCredentials } from '../actions/user';
 import {
   deleteDealerWipRequest,
   deleteDealerWipToolRequest,
   getDealerWipsRequest
 } from '../actions/dealerWips';
+
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import JobsList from './JobsList';
@@ -23,15 +25,15 @@ import searchItems from '../components/searchItems';
 
 const minSearchLength = 1;
 
-const identifyUserWipsItems = (userDataObj, dealerWipsItems) =>
-  (userDataObj &&
-    userDataObj.intId &&
+const identifyUserWipsItems = (userApiFetchParamsObj, dealerWipsItems) =>
+  (userApiFetchParamsObj &&
+    userApiFetchParamsObj.intId &&
     dealerWipsItems &&
     dealerWipsItems.length > 0 &&
     dealerWipsItems.filter(
       item =>
         item.userIntId &&
-        item.userIntId.toString() == userDataObj.intId.toString() &&
+        item.userIntId.toString() == userApiFetchParamsObj.intId.toString() &&
         item.tools &&
         item.tools.length > 0
     )) ||
@@ -39,35 +41,34 @@ const identifyUserWipsItems = (userDataObj, dealerWipsItems) =>
 
 export default JobsScreen = props => {
   const dispatch = useDispatch();
+  const userApiFetchParamsObj = useSelector(
+    state => state.user.userApiFetchParamsObj
+  );
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
-  const userDataObj = useSelector(state => state.user.userData[0]);
-  const dealerId = userDataObj && userDataObj.dealerId;
-
   const isLoading = useSelector(state => state.dealerWips.isLoading);
   const dataError = useSelector(state => state.dealerWips.error);
   const dataErrorUrl = useSelector(state => state.dealerWips.dataErrorUrl);
   const dataStatusCode = useSelector(state => state.dealerWips.statusCode);
-  // Search function
   const [searchInput, setSearchInput] = useState('');
-  const [selectedItem, setSelectedItem] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  let apiFetchParamsObj = {};
-
-  const getItems = useCallback(async apiFetchParamsObj => {
-    // console.log('in getItems', apiFetchParamsObj);
-    // console.log('in jobs getItems', apiFetchParamsObj && apiFetchParamsObj);
-    dispatch(getDealerWipsRequest(apiFetchParamsObj)), [dealerWipsItems];
+  const getItems = useCallback(async userApiFetchParamsObj => {
+    dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
   });
 
   const getItemsAsync = async () => {
-    getItems(apiFetchParamsObj);
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      getItems(userApiFetchParamsObj);
+    }
   };
 
   const deleteDealerWip = useCallback(
@@ -80,43 +81,31 @@ export default JobsScreen = props => {
     [dealerWipsItems]
   );
 
-  //   console.log('in jobs screen, wipsItems', JSON.parse(dealerWipsItems));
-
   useEffect(() => {
     // runs only once
-    console.log('in jobs useEffect', userDataObj && userDataObj.dealerId);
-    if (userDataObj && userDataObj.dealerId && userDataObj.intId) {
-      apiFetchParamsObj = {
-        dealerId:
-          (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-        intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-      };
-      //   setGetWipsDataObj(apiFetchParamsObj);
-      getItemsAsync();
-    }
-  }, [userDataObj]);
+    console.log('in jobs useEffect', userApiFetchParamsObj);
+    //   setGetWipsDataObj(userApiFetchParamsObj);
+    getItemsAsync();
+  }, [userApiFetchParamsObj]);
 
   useFocusEffect(
     useCallback(() => {
       console.log('job - useFocusEffect');
       dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
       setSearchInput('');
-      if (
-        apiFetchParamsObj &&
-        apiFetchParamsObj.intId &&
-        apiFetchParamsObj.dealerId
-      ) {
-        getItemsAsync();
-      }
-    }, [])
+      getItemsAsync();
+    }, [userApiFetchParamsObj])
   );
 
-  const userWipsItems = identifyUserWipsItems(userDataObj, dealerWipsItems);
+  const userWipsItems = identifyUserWipsItems(
+    userApiFetchParamsObj,
+    dealerWipsItems
+  );
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', apiFetchParamsObj);
-    dealerId && userDataObj && userDataObj.intId && getItems(apiFetchParamsObj);
+    console.log('in refreshRequestHandler', userApiFetchParamsObj);
+    getItemsAsync();
   };
 
   const searchInputHandler = searchInput => {
@@ -141,20 +130,19 @@ export default JobsScreen = props => {
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
-        dealerId: dealerId,
+        dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
-        apiFetchParamsObj: apiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj
       };
-
       //   console.log('delete wip ' + currentJob.id);
       //   console.log('delete wip ', payload);
       deleteDealerWip(payload);
     } else {
       let payload = {
-        dealerId: dealerId,
+        dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        apiFetchParamsObj: apiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -173,7 +161,11 @@ export default JobsScreen = props => {
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
-  //   console.log('RENDERING jobs screen !!!!!!!!!!!!!!!!!!!');
+  console.log(
+    'RENDERING jobs screen !!!!!!!!!!!!!!!!!!!  items ',
+    userApiFetchParamsObj,
+    items.length
+  );
   //   console.log(
   //     'isLoading ',
   //     isLoading,
@@ -222,7 +214,10 @@ export default JobsScreen = props => {
             dataCount={dataCount}
             deleteDealerWipRequest={deleteDealerWip}
             userIntId={
-              (userDataObj && userDataObj.intId && userDataObj.intId) || ''
+              (userApiFetchParamsObj &&
+                userApiFetchParamsObj.intId &&
+                userApiFetchParamsObj.intId) ||
+              ''
             }
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
