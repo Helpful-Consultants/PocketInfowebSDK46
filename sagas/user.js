@@ -46,6 +46,7 @@ function* getUser({ payload }) {
         yield put(
           actions.getUserSuccess({
             items: result.data,
+            userPin: payload.pin,
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||

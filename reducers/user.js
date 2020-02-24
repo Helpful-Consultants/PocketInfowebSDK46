@@ -57,6 +57,15 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].dealerName &&
           action.payload.items[0].dealerName) ||
         null;
+      let userPin =
+        (action.payload && action.payload.userPin && action.payload.userPin) ||
+        null;
+      let userId =
+        (action.payload &&
+          action.payload.items &&
+          action.payload.items[0].userId &&
+          action.payload.items[0].userId) ||
+        null;
 
       userDataBrand = userDataBrand && userDataBrand.toLowerCase();
 
@@ -102,6 +111,8 @@ export default function user(state = INITIAL_STATE, action) {
         userIsValidated: true,
         userData: action.payload.items,
         userName: userName,
+        userPin: userPin,
+        userId: userId,
         dealerName: dealerName,
         userBrand: userBrand,
         userApiFetchParamsObj: userApiFetchParamsObj,

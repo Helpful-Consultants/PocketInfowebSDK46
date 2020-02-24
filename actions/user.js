@@ -16,10 +16,11 @@ export const signOutUserRequest = () => ({
   type: Types.SIGN_OUT_USER_REQUEST
 });
 
-export const getUserSuccess = ({ statusCode, items }) => ({
+export const getUserSuccess = ({ statusCode, items, userPin }) => ({
   type: Types.GET_USER_SUCCESS,
   payload: {
     items,
+    userPin,
     statusCode
   }
 });
