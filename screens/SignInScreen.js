@@ -47,12 +47,14 @@ export default SignInScreen = props => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
   const userDataObj = useSelector(state => state.user.userData[0]);
   const userError = useSelector(state => state.user.error);
   const state = useSelector(state => state);
 
-  //   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
+  console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
+  console.log('in sign in, userIsValidated', userIsValidated ? 'Yes' : 'No');
   //   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
 
@@ -71,15 +73,15 @@ export default SignInScreen = props => {
   });
 
   useEffect(() => {
-    if (userIsSignedIn || userError) {
+    if (userIsValidated || userError) {
       //   console.log('useEffect applied');
       setIsLoading(false);
     }
-    if (userIsSignedIn) {
-      console.log('userIsSignedIn so navigating to main');
-      navigation.navigate('Main');
+    if (userIsValidated) {
+      console.log('userIsValidated so navigating to main');
+      //   navigation.navigate('Main');
     }
-  }, [userIsSignedIn, userError]);
+  }, [userIsValidated, userError]);
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, text) => {
@@ -118,7 +120,7 @@ export default SignInScreen = props => {
       <ScrollView>
         <AppNameWithLogo />
         <Text style={styles.instructions}>
-          {userIsSignedIn
+          {userIsValidated
             ? `Signed in as ${userDataObj.userName}`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
@@ -185,6 +187,10 @@ export default SignInScreen = props => {
           <View>
             {userError ? (
               <Text style={styles.errorText}>{userError}</Text>
+            ) : userIsSignedIn ? (
+              <Text style={styles.securityCheckText}>
+                Please sign in again to renew your access
+              </Text>
             ) : null}
           </View>
           <View>
@@ -269,9 +275,20 @@ const styles = StyleSheet.create({
   },
   errorText: {
     ...baseStyles.text,
+    fontFamily: 'the-sans-bold',
     marginTop: 10,
     marginBottom: 3,
     color: Colors.vwgWarmRed,
+    fontSize: RFPercentage(2.3),
+    lineHeight: 19,
+    textAlign: 'center'
+  },
+  securityCheckText: {
+    ...baseStyles.text,
+    fontFamily: 'the-sans-bold',
+    marginTop: 10,
+    marginBottom: 3,
+    color: Colors.vwgMintGreen,
     fontSize: RFPercentage(2.3),
     lineHeight: 19,
     textAlign: 'center'

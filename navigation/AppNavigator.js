@@ -4,6 +4,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 // import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 // import { createStackNavigator } from 'react-navigation-stack';
+// import moment from 'moment';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createDrawerNavigator,
@@ -11,6 +12,9 @@ import {
   DrawerItemList,
   DrawerItem
 } from '@react-navigation/drawer';
+// import { setUserOutdatedCredentials } from '../actions/user';
+// import { setUserValidated } from '../actions/user';
+import { revalidateUserCredentials } from '../actions/user';
 
 // import {
 //   createDrawerNavigator,
@@ -100,10 +104,46 @@ const DrawerNavigator = () => {
 };
 
 export default AppNavigator = props => {
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector(state => state.user.lastUpdate);
+  console.log('AppNavigator, userIsValidated', userIsValidated);
+  console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
+  console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
+  const dispatch = useDispatch();
+  //   return <AuthLoadingScreen />;
+
+  //   let now = moment();
+  //   const ageOfCredentialsLimit = 3;
+
+  //   if (userIsSignedIn && userIsSignedIn === true) {
+  //     if (userCredsLastChecked) {
+  //       console.log('now:', now);
+  //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
+  //       console.log('ageOfCredentials:', ageOfCredentials);
+  //       if (ageOfCredentials <= ageOfCredentialsLimit) {
+  //         dispatch(setUserValidated());
+  //         console.log('ageOfCredentials good', ageOfCredentials);
+  //       } else {
+  //         console.log('ageOfCredentials bad', ageOfCredentials);
+  //         dispatch(setUserOutdatedCredentials());
+  //       }
+  //     }
+  //   }
+
+  //   revalidateUser();
+  dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+
   return (
     <NavigationContainer>
-      {userIsSignedIn ? <DrawerNavigator /> : <SignedOutStack />}
+      {userIsValidated &&
+      userIsValidated === true &&
+      userIsSignedIn &&
+      userIsSignedIn === true ? (
+        <DrawerNavigator />
+      ) : (
+        <SignedOutStack />
+      )}
     </NavigationContainer>
   );
 };
