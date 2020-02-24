@@ -132,6 +132,8 @@ export default NewsScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
+  console.log('rendering News screen');
+
   return (
     <View style={styles.container}>
       <SearchBarWithRefresh

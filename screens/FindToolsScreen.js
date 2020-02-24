@@ -1127,6 +1127,9 @@ export default FindToolsScreen = props => {
   //     itemsToShow.length
   //   );
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
+
+  console.log('rendering Find Tools screen');
+
   return (
     <View
       style={{

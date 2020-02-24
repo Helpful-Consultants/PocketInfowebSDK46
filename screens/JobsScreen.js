@@ -162,9 +162,10 @@ export default JobsScreen = props => {
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
   console.log(
-    'RENDERING jobs screen !!!!!!!!!!!!!!!!!!!  items ',
-    userApiFetchParamsObj,
-    items.length
+    'Rendering Jobs screen ',
+    items.length,
+    'items ',
+    userApiFetchParamsObj
   );
   //   console.log(
   //     'isLoading ',

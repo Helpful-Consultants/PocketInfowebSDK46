@@ -87,6 +87,8 @@ export default OdisScreen = props => {
 
   //   console.log(allOdis && allOdis);
 
+  console.log('rendering Odis screen');
+
   return (
     <View style={styles.container}>
       <DataAlertBarWithRefresh

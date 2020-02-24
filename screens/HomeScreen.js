@@ -415,6 +415,8 @@ export default HomeScreen = props => {
     );
   }, [dealerWipsItems]);
 
+  console.log('Rendering Home screen');
+
   return (
     <View
       style={{

@@ -120,6 +120,7 @@ export default LtpScreen = props => {
   //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
   //     dataError
   //   );
+  console.log('rendering LTP Screen');
 
   return (
     <View style={styles.container}>

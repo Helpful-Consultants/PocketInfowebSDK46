@@ -137,7 +137,7 @@ export default ProductsScreen = props => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  //   console.log('rendering products');
+  console.log('rendering Products screen');
 
   return (
     <View style={styles.container}>

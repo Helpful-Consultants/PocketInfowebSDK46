@@ -243,6 +243,8 @@ export default BookedOutToolsScreen = props => {
   //     'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
   //   );
 
+  console.log('rendering Booked Tools screen');
+
   return (
     <View style={{ flex: 1, paddingBottom: 3, backgroundColor: 'white' }}>
       <SearchBarWithRefresh

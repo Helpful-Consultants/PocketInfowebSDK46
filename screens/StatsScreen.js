@@ -138,6 +138,8 @@ export default StatsScreen = props => {
           .toString() + '%'
       : 'N/A';
 
+  console.log('rendering Stats screen');
+
   return (
     <View style={styles.container}>
       <DataAlertBarWithRefresh
