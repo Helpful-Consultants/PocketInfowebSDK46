@@ -52,8 +52,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null
@@ -72,13 +71,10 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         lastWipProcessed: {
-          id: (action.payload.id && action.payload.id) || '',
-          wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
-          message: (action.payload.message && action.payload.message) || null,
-          unavailableToolsArr: action.payload.unavailableToolsArr || ''
+          message: (action.payload.message && action.payload.message) || null
         },
         isLoading: false,
         isSending: false,
