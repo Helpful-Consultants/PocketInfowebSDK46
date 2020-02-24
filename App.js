@@ -68,7 +68,7 @@ export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   //   persistStore(store).purge();
 
-  const userIsSignedIn = true;
+  //   const userIsValidated = true;
 
   const persistor = persistStore(store);
   if (!isLoadingComplete && !props.skipLoadingScreen) {
@@ -91,7 +91,7 @@ export default function App(props) {
               ) : (
                 <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
               )}
-              <AppNavigator userIsSignedIn={userIsSignedIn} />
+              <AppNavigator />
             </View>
           </PersistGate>
         </Provider>
