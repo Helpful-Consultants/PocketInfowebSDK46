@@ -124,6 +124,15 @@ export default SignInScreen = props => {
             ? `Signed in as ${userDataObj.userName}`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
+        <View>
+          {userError ? (
+            <Text style={styles.errorText}>{userError}</Text>
+          ) : userIsSignedIn ? (
+            <Text style={styles.securityCheckText}>
+              Please sign in again to renew your access
+            </Text>
+          ) : null}
+        </View>
         <KeyboardAvoidingView
           style={baseStyles.container}
           behavior='padding'
@@ -184,15 +193,6 @@ export default SignInScreen = props => {
             errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
             errorStyle={{ color: 'red' }}
           />
-          <View>
-            {userError ? (
-              <Text style={styles.errorText}>{userError}</Text>
-            ) : userIsSignedIn ? (
-              <Text style={styles.securityCheckText}>
-                Please sign in again to renew your access
-              </Text>
-            ) : null}
-          </View>
           <View>
             {isLoading ? (
               <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
@@ -276,21 +276,21 @@ const styles = StyleSheet.create({
   errorText: {
     ...baseStyles.text,
     fontFamily: 'the-sans-bold',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 3,
     color: Colors.vwgWarmRed,
     fontSize: RFPercentage(2.3),
-    lineHeight: 19,
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingHorizontal: 15
   },
   securityCheckText: {
     ...baseStyles.text,
     fontFamily: 'the-sans-bold',
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 3,
     color: Colors.vwgMintGreen,
     fontSize: RFPercentage(2.3),
-    lineHeight: 19,
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingHorizontal: 15
   }
 });
