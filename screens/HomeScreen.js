@@ -24,8 +24,7 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
-
-import { signOutUserRequest } from '../actions/user';
+import { revalidateUserCredentials, signOutUserRequest } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import {
@@ -61,9 +60,13 @@ export default HomeScreen = props => {
   const { navigation } = props;
   const insets = useSafeArea();
 
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userError = useSelector(state => state.user.error);
   const userDataObj = useSelector(state => state.user.userData[0]);
+  const userApiFetchParamsObj = useSelector(
+    state => state.user.userApiFetchParamsObj
+  );
+  const userName = useSelector(state => state.user.userName);
   const userBrand = useSelector(state => state.user.userBrand);
   const odisObj = useSelector(state => state.odis.odisData);
   const lastUpdateNews = useSelector(state => state.news.lastUpdate);
@@ -95,23 +98,12 @@ export default HomeScreen = props => {
   const isLoadingProducts = useSelector(state => state.products.isLoading);
   const isLoadingLtp = useSelector(state => state.ltp.isLoading);
 
-  //   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
-  //     odisObj
-  //   ]);
-  //   console.log('userDataObj', userDataObj && userDataObj);
-  const apiFetchParamsObj = {
-    dealerId:
-      (userDataObj && userDataObj.dealerId && userDataObj.dealerId) || '',
-    intId: (userDataObj && userDataObj.intId && userDataObj.intId) || ''
-  };
-  //   console.log('apiFetchParamsObj', apiFetchParamsObj && apiFetchParamsObj);
-
-  const getLtpItems = useCallback(async apiFetchParamsObj => {
-    dispatch(getLtpRequest(apiFetchParamsObj));
+  const getLtpItems = useCallback(async () => {
+    dispatch(getLtpRequest());
   });
 
-  const getAllItems = useCallback(async apiFetchParamsObj => {
-    dispatch(getDealerWipsRequest(apiFetchParamsObj));
+  const getAllItems = useCallback(async userApiFetchParamsObj => {
+    dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
     dispatch(getProductsRequest());
@@ -119,12 +111,18 @@ export default HomeScreen = props => {
 
   const updateItemsAsync = async () => {
     console.log('home - updateItemsAsync');
-    getAllItems(apiFetchParamsObj);
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      getAllItems(userApiFetchParamsObj);
+    }
   };
 
   const getLtpItemsAsync = async () => {
     console.log('home - updateItemsAsync');
-    getLtpItems(apiFetchParamsObj);
+    getLtpItems();
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
   const notificationLimit = 168;
@@ -138,14 +136,9 @@ export default HomeScreen = props => {
     // will run again, though, if teh user userDataObj wasn't ready before
     console.log(
       'home - ltp useEffect',
-      apiFetchParamsObj && apiFetchParamsObj.intId
+      userApiFetchParamsObj && userApiFetchParamsObj.intId
     );
-    if (
-      apiFetchParamsObj &&
-      apiFetchParamsObj.intId &&
-      apiFetchParamsObj.dealerId
-    )
-      getLtpItemsAsync();
+    getLtpItemsAsync();
   }, [userDataObj]);
 
   useEffect(() => {
@@ -175,7 +168,7 @@ export default HomeScreen = props => {
 
   //     if (!ltpItems || ltpItems.length === 0) {
   //       // console.log('in this one useEffect - getting ltp');
-  //       getLtpItemsAsync(apiFetchParamsObj);
+  //       getLtpItemsAsync(userApiFetchParamsObj);
   //     }
 
   //     if (__DEV__) {
@@ -299,6 +292,7 @@ export default HomeScreen = props => {
         getUpdatesAsync();
       } else {
         setIsCheckingAppVersion(false);
+        dispatch(revalidateUserCredentials('HomeScreen'));
         updateItemsAsync();
       }
     } else {
@@ -324,6 +318,7 @@ export default HomeScreen = props => {
       if (__DEV__) {
         // console.log('no update check because DEV');
         setShouldCheckAppVersion(false);
+        dispatch(revalidateUserCredentials({ calledBy: 'HomeScreen' }));
         updateItemsAsync();
       } else {
         setShouldCheckAppVersion(true);
@@ -337,7 +332,7 @@ export default HomeScreen = props => {
     // console.log('signingOut');
     dispatch(emptyDealerWipsRequest());
     dispatch(emptyDealerToolsRequest());
-    // dispatch(signOutUserRequest()), [userIsSignedIn];
+    // dispatch(signOutUserRequest()), [userIsValidated];
     dispatch(emptyLtpRequest());
     dispatch(signOutUserRequest());
     // navigation.navigate('AuthLoading');
@@ -350,11 +345,11 @@ export default HomeScreen = props => {
   //   });
 
   //   useEffect(() => {
-  //     if (!userIsSignedIn || userError) {
+  //     if (!userIsValidated || userError) {
   //       console.log('home screen userIs not SignedIn so navigating to auth');
   //       navigation && navigation.navigate && navigation.navigate('Auth');
   //     }
-  //   }, [userIsSignedIn, userError]);
+  //   }, [userIsValidated, userError]);
 
   useEffect(() => {
     // console.log('news useEffect', lastUpdateNews);
@@ -670,12 +665,12 @@ export default HomeScreen = props => {
                 }}
               >
                 <Text style={styles.instructionsText}>
-                  {userIsSignedIn
+                  {userIsValidated
                     ? `Signed in as ${userDataObj.userName}`
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
                 <Text style={styles.instructionsTextSmall}>
-                  {userIsSignedIn ? `${userDataObj.dealerName}` : null}
+                  {userIsValidated ? `${userDataObj.dealerName}` : null}
                 </Text>
               </View>
               <Touchable
