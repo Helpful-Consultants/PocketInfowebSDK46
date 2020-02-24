@@ -1,10 +1,18 @@
 // import { Types } from '../actions/user';
 import Types from '../constants/Types';
+import moment from 'moment';
 
 const INITIAL_STATE = {
   userData: [],
   userBrand: null,
+  userApiFetchParamsObj: null,
   userIsSignedIn: false,
+  userIsValidated: false,
+  userEmail: null,
+  userPin: null,
+  userName: null,
+  userIsValidated: false,
+  lastUpdate: null,
   isLoading: false,
   error: null,
   dataErrorUrl: null,
@@ -23,7 +31,8 @@ export default function user(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
+        userApiFetchParamsObj: null
       };
     }
     case Types.GET_USER_SUCCESS: {
@@ -36,7 +45,32 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].brand) ||
         null;
 
+      let userName =
+        (action.payload &&
+          action.payload.items &&
+          action.payload.items[0].userName &&
+          action.payload.items[0].userName) ||
+        null;
+      let dealerName =
+        (action.payload &&
+          action.payload.items &&
+          action.payload.items[0].dealerName &&
+          action.payload.items[0].dealerName) ||
+        null;
+
       userDataBrand = userDataBrand && userDataBrand.toLowerCase();
+
+      let userApiFetchParamsObj =
+        action.payload &&
+        action.payload.items &&
+        action.payload.items[0] &&
+        action.payload.items[0].dealerId &&
+        action.payload.items[0].intId
+          ? {
+              dealerId: action.payload.items[0].dealerId.toString(),
+              intId: action.payload.items[0].intId.toString()
+            }
+          : null;
 
       //   console.log(action.payload && action.payload);
       //   console.log('action.payload.items ', action.payload.items);
@@ -65,8 +99,13 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: true,
+        userIsValidated: true,
         userData: action.payload.items,
+        userName: userName,
+        dealerName: dealerName,
         userBrand: userBrand,
+        userApiFetchParamsObj: userApiFetchParamsObj,
+        lastUpdate: moment(),
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -74,23 +113,71 @@ export default function user(state = INITIAL_STATE, action) {
           (action.payload.statusCode && action.payload.statusCode) || null
       };
     }
-    case Types.GET_USER_INVALID_CREDS: {
+    // case Types.GET_USER_INVALID_CREDENTIALS: {
+    //   //   console.log('action.payload is:', action.payload.error);
+    //   return {
+    //     ...state,
+    //     userIsValidated: false,
+    //     userIsValidated: false,
+    //     isLoading: false,
+    //     error: (action.payload.error && action.payload.error) || null,
+    //     dataErrorUrl: null,
+    //     statusCode:
+    //       (action.payload.statusCode && action.payload.statusCode) || null
+    //   };
+    // }
+    case Types.SET_USER_OUTDATED_CREDENTIALS: {
       //   console.log('action.payload is:', action.payload.error);
       return {
         ...state,
-        userIsSignedIn: false,
-        isLoading: false,
-        error: (action.payload.error && action.payload.error) || null,
-        dataErrorUrl: null,
-        statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+        userIsValidated: false
       };
     }
+    case Types.SET_USER_VALIDATED: {
+      //   console.log('action.payload is:', action.payload.error);
+      return {
+        ...state,
+        userIsSignedIn: true,
+        userIsValidated: true
+      };
+    }
+
+    case Types.REVALIDATE_USER_CREDENTIALS: {
+      //   console.log('actionis:', action.payload && action.payload);
+      const ageOfCredentialsLimit = 20;
+      let now = moment();
+      let revalidatedUser = false;
+      console.log(
+        'in revalidateUserCredentials',
+        action.payload && action.payload.calledBy && action.payload.calledBy
+      );
+      if (state.userIsSignedIn && state.userIsSignedIn === true) {
+        if (state.lastUpdate) {
+          console.log('now:', now);
+          let ageOfCredentials = now.diff(state.lastUpdate, 'minutes');
+          console.log('ageOfCredentials:', ageOfCredentials);
+          if (ageOfCredentials <= ageOfCredentialsLimit) {
+            revalidatedUser = true;
+            console.log('ageOfCredentials good', ageOfCredentials);
+          }
+        }
+      }
+      console.log(
+        'in revalidateUserCredentials, userIsValidated',
+        revalidatedUser
+      );
+      return {
+        ...state,
+        userIsValidated: revalidatedUser
+      };
+    }
+
     case Types.SIGN_OUT_USER_REQUEST: {
       //   console.log('action.is:', action.type);
       return {
         ...state,
         userIsSignedIn: false,
+        userIsValidated: false,
         userData: [],
         isLoading: false,
         error: null,
@@ -105,6 +192,7 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: false,
+        userIsValidated: false,
         isLoading: false,
         error: (action.payload.error && action.payload.error) || null,
         statusCode:

@@ -1,4 +1,14 @@
 export default {
+  GET_USER_START: 'user/get_user_start',
+  GET_USER_REQUEST: 'user/get_user_request',
+  GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
+  GET_USER_SUCCESS: 'user/get_user_success',
+  SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
+  SET_USER_OUTDATED_CREDENTIALS: 'user/set_user_outdated_credentials',
+  SET_USER_VALIDATED: 'user/set_user_validated',
+  REVALIDATE_USER_CREDENTIALS: 'user/revalidate_user_credentials',
+  USER_ERROR: 'user/user_error',
+
   GET_DEALER_TOOLS_START: 'dealerTools/get_dealer_tools_start',
   GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealer_tools_request',
   GET_DEALER_TOOLS_SUCCESS: 'dealerTools/get_dealer_tools_success',
@@ -36,14 +46,6 @@ export default {
   GET_STATS_REQUEST: 'stats/get_stats_request',
   GET_STATS_SUCCESS: 'stats/get_stats_success',
   STATS_ERROR: 'stats/stats_error',
-
-  GET_USER_START: 'user/get_user_start',
-  GET_USER_REQUEST: 'user/get_user_request',
-  GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
-  GET_USER_SUCCESS: 'user/get_user_success',
-  SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
-  GET_USER_INVALID_CREDS: 'user/get_user_invalid_credentials',
-  USER_ERROR: 'user/user_error',
 
   GET_USERS_START: 'users/get_users_start',
   GET_USERS_REQUEST: 'users/get_users_request',

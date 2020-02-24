@@ -1,11 +1,3 @@
-// export const Types = {
-//   GET_USER_REQUEST: 'user/get_user_request',
-//   GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
-//   GET_USER_SUCCESS: 'user/get_user_success',
-//   SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
-//   GET_USER_INVALID_CREDS: 'user/get_user_invalid_credentials',
-//   USER_ERROR: 'user/user_error'
-// };
 import Types from '../constants/Types';
 
 export const getUserStart = () => ({
@@ -32,10 +24,18 @@ export const getUserSuccess = ({ statusCode, items }) => ({
   }
 });
 
-export const getUserInvalidCredentials = ({ error }) => ({
-  type: Types.GET_USER_INVALID_CREDS,
+export const setUserValidated = () => ({
+  type: Types.SET_USER_VALIDATED
+});
+
+export const setUserOutdatedCredentials = () => ({
+  type: Types.SET_USER_OUTDATED_CREDENTIALS
+});
+
+export const revalidateUserCredentials = ({ calledBy }) => ({
+  type: Types.REVALIDATE_USER_CREDENTIALS,
   payload: {
-    error
+    calledBy: calledBy || null
   }
 });
 
