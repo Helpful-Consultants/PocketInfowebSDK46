@@ -155,7 +155,7 @@ export default function user(state = INITIAL_STATE, action) {
 
     case Types.REVALIDATE_USER_CREDENTIALS: {
       //   console.log('actionis:', action.payload && action.payload);
-      const ageOfCredentialsLimit = 20;
+      const ageOfCredentialsLimit = 10;
       let now = moment();
       let revalidatedUser = false;
       console.log(
@@ -165,7 +165,7 @@ export default function user(state = INITIAL_STATE, action) {
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
         if (state.lastUpdate) {
           console.log('now:', now);
-          let ageOfCredentials = now.diff(state.lastUpdate, 'minutes');
+          let ageOfCredentials = now.diff(state.lastUpdate, 'days');
           console.log('ageOfCredentials:', ageOfCredentials);
           if (ageOfCredentials <= ageOfCredentialsLimit) {
             revalidatedUser = true;
