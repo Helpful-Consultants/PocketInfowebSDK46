@@ -405,6 +405,8 @@ export default HomeScreen = props => {
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
           item =>
+            item.tools &&
+            item.tools.length > 0 &&
             item.userIntId &&
             item.userIntId.toString() == userDataObj.intId.toString()
         )) ||
