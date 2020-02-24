@@ -1309,7 +1309,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-
   basketItem: {
     color: Colors.vwgDarkSkyBlue,
     flexDirection: 'row'
@@ -1346,7 +1345,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: Colors.vwgSearchBarContainer
   },
-
   basketTipRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -1360,7 +1358,6 @@ const styles = StyleSheet.create({
     color: Colors.vwgDeepBlue,
     flexDirection: 'row'
   },
-
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
   basketItemImg: {
@@ -1394,13 +1391,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     width: '50%'
   },
-
   basketActionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     // paddingHorizontal: 20,
-    paddingVertical: 20
+    paddingVertical: 5
   },
   basketInputRow: {
     flexDirection: 'row',
@@ -1410,7 +1406,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 5
   },
-
   closedBasket: {
     position: 'absolute',
     width: '100%',
