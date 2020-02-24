@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { Updates } from 'expo';
 import { useDispatch, useSelector } from 'react-redux';
-// import { NavigationContainer, CommonActions } from '@react-navigation/native';
 
 import {
   ActivityIndicator,
@@ -12,11 +11,9 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-// import { useNavigation } from '@react-navigation/native';
-// import SafeAreaView from 'react-native-safe-area-view';
+
 import { useSafeArea } from 'react-native-safe-area-context';
 import { Icon, Text } from 'react-native-elements';
-// import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import moment from 'moment';
@@ -35,12 +32,7 @@ import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 
-const buttonColor = Colors.vwgDeepBlue;
 const buttonTextColor = Colors.vwgWhite;
-const disabledButtonTextColor = Colors.vwgDarkGay;
-const actionTextColor = Colors.vwgDeepBlue;
-const disabledButtonColor = Colors.vwgMidGray;
-
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 
@@ -49,7 +41,6 @@ var gridHeight = screenHeight * 0.18;
 var gridWidth = screenWidth * 0.3;
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
-var iconSizeSmall = RFPercentage(3.5);
 
 export default HomeScreen = props => {
   // console.log(props)
@@ -62,22 +53,32 @@ export default HomeScreen = props => {
 
   const userIsValidated = useSelector(state => state.user.userIsValidated);
   const userError = useSelector(state => state.user.error);
-  const userDataObj = useSelector(state => state.user.userData[0]);
+  const userName = useSelector(state => state.user.userName);
+  const userAll = useSelector(state => state.user);
+  const userBrand = useSelector(state => state.user.userBrand);
+  const dealerName = useSelector(state => state.user.dealerName);
   const userApiFetchParamsObj = useSelector(
     state => state.user.userApiFetchParamsObj
   );
-  const userName = useSelector(state => state.user.userName);
-  const userBrand = useSelector(state => state.user.userBrand);
+
   const odisObj = useSelector(state => state.odis.odisData);
+  const odisViewCount = useSelector(state => state.odis.viewCount);
+
   const lastUpdateNews = useSelector(state => state.news.lastUpdate);
   const lastUpdateProducts = useSelector(state => state.products.lastUpdate);
   const newsObj = useSelector(state => state.news);
   const previousUpdateNews = useSelector(state => state.news.previousUpdate);
+
   const dealerWipsItems = useSelector(
     state => state.dealerWips.dealerWipsItems
   );
   const ltpItems = useSelector(state => state.ltp.ltpItems);
-  const odisViewCount = useSelector(state => state.odis.viewCount);
+
+  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
+  const isLoadingOdis = useSelector(state => state.odis.isLoading);
+  const isLoadingNews = useSelector(state => state.news.isLoading);
+  const isLoadingProducts = useSelector(state => state.products.isLoading);
+  const isLoadingLtp = useSelector(state => state.ltp.isLoading);
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
@@ -92,11 +93,6 @@ export default HomeScreen = props => {
   const [ageOfProducts, setAgeOfProducts] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
-  const isLoadingOdis = useSelector(state => state.odis.isLoading);
-  const isLoadingNews = useSelector(state => state.news.isLoading);
-  const isLoadingProducts = useSelector(state => state.products.isLoading);
-  const isLoadingLtp = useSelector(state => state.ltp.isLoading);
 
   const getLtpItems = useCallback(async () => {
     dispatch(getLtpRequest());
@@ -126,24 +122,19 @@ export default HomeScreen = props => {
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
   const notificationLimit = 168;
-  //   const notificationLimit = 5000000;
-  //   const notificationLimit = 8;
-
   const now = moment();
 
   useEffect(() => {
     // runs only once as LTP doesnt change too often
-    // will run again, though, if teh user userDataObj wasn't ready before
+    // will run again, though, if the user userApiFetchParamsObj wasn't ready before
     console.log(
       'home - ltp useEffect',
       userApiFetchParamsObj && userApiFetchParamsObj.intId
     );
     getLtpItemsAsync();
-  }, [userDataObj]);
+  }, [userApiFetchParamsObj]);
 
   useEffect(() => {
-    // runs only once
-
     if (
       isLoadingOdis ||
       isLoadingNews ||
@@ -338,19 +329,6 @@ export default HomeScreen = props => {
     // navigation.navigate('AuthLoading');
   });
 
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     // console.log('in homescreen didFocusSubscription');
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  //   useEffect(() => {
-  //     if (!userIsValidated || userError) {
-  //       console.log('home screen userIs not SignedIn so navigating to auth');
-  //       navigation && navigation.navigate && navigation.navigate('Auth');
-  //     }
-  //   }, [userIsValidated, userError]);
-
   useEffect(() => {
     // console.log('news useEffect', lastUpdateNews);
     if (lastUpdateNews && lastUpdateNews !== null) {
@@ -393,14 +371,10 @@ export default HomeScreen = props => {
     }
   }, [lastUpdateProducts]);
 
-  //   console.log('news', newsObj);
-
-  //   console.log('ageOfProducts', ageOfProducts);
-
   useEffect(() => {
     const userWipsItems =
-      (userDataObj &&
-        userDataObj.intId &&
+      (userApiFetchParamsObj &&
+        userApiFetchParamsObj.intId &&
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
@@ -408,7 +382,7 @@ export default HomeScreen = props => {
             item.tools &&
             item.tools.length > 0 &&
             item.userIntId &&
-            item.userIntId.toString() == userDataObj.intId.toString()
+            item.userIntId.toString() == userApiFetchParamsObj.intId.toString()
         )) ||
       [];
 
@@ -432,8 +406,6 @@ export default HomeScreen = props => {
           allToolsArr.push(...wipToolsArr);
         }
       });
-      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
-
       return allToolsArr;
     };
 
@@ -668,11 +640,11 @@ export default HomeScreen = props => {
               >
                 <Text style={styles.instructionsText}>
                   {userIsValidated
-                    ? `Signed in as ${userDataObj.userName}`
+                    ? `Signed in as ${userName}`
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
                 <Text style={styles.instructionsTextSmall}>
-                  {userIsValidated ? `${userDataObj.dealerName}` : null}
+                  {userIsValidated ? `${dealerName}` : null}
                 </Text>
               </View>
               <Touchable
