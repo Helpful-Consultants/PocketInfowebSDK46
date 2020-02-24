@@ -183,6 +183,7 @@ const NewsTabs =
 export default NewsTabNavigator = () => {
   return Platform.OS === 'ios' ? (
     <NewsTabs.Navigator
+      lazy={true}
       screenOptions={defaultTabNavScreenOptions}
       tabBarOptions={{
         showLabel: true,
@@ -217,6 +218,7 @@ export default NewsTabNavigator = () => {
     </NewsTabs.Navigator>
   ) : (
     <NewsTabs.Navigator
+      lazy={true}
       screenOptions={defaultTabNavScreenOptions}
       labeled={true}
       title='Default Title'

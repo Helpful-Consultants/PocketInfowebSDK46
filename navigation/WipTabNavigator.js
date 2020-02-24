@@ -181,6 +181,7 @@ const WipTabs =
 export default WipTabNavigator = () => {
   return Platform.OS === 'ios' ? (
     <WipTabs.Navigator
+      lazy={true}
       screenOptions={defaultTabNavScreenOptions}
       tabBarOptions={{
         showLabel: true,
@@ -215,6 +216,7 @@ export default WipTabNavigator = () => {
     </WipTabs.Navigator>
   ) : (
     <WipTabs.Navigator
+      lazy={true}
       screenOptions={defaultTabNavScreenOptions}
       labeled={true}
       title='Default Title'
