@@ -1432,7 +1432,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     backgroundColor: Colors.vwgWhite
   },
-
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1521,7 +1520,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: Colors.vwgLink
   },
-
   cancelButton: {
     borderColor: Colors.vwgWarmRed,
     borderRadius: Platform.OS === 'ios' ? 3 : 0
@@ -1562,7 +1560,6 @@ const styles = StyleSheet.create({
     color: Colors.vwgLink,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
-
   bookButton: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
