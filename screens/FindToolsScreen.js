@@ -45,8 +45,6 @@ import searchItems from '../components/searchItems';
 const minSearchLength = 1;
 
 const screenHeight = Math.round(Dimensions.get('window').height);
-const maxModalHeight = screenHeight - 150;
-const screenWidth = Math.round(Dimensions.get('window').width);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 // console.log('bottomTabHeight', bottomTabHeight && bottomTabHeight);
 
@@ -527,8 +525,8 @@ export default FindToolsScreen = props => {
         'inbackdropPressHandler, calling acceptNotBookedMessageHandler'
       );
       acceptNotBookedMessageHandler();
-      setIsBasketVisible(false);
     }
+    setIsBasketVisible(false);
   };
 
   const basketBackHandler = () => {
@@ -546,13 +544,11 @@ export default FindToolsScreen = props => {
   };
 
   const addBasketItemHandler = () => {
-    console.log('in addBasketItemHandler');
     setMode('list');
     setIsBasketVisible(false);
   };
 
   const toggleBaskethandler = action => {
-    console.log('in toggleBaskethandler');
     if (action) {
       setIsBasketVisible(action);
       setMode('basket');
@@ -795,7 +791,7 @@ export default FindToolsScreen = props => {
         <View
           style={
             ({ ...styles.basketActionRow },
-            { alignItems: 'flex-end', marginTop: 10, paddingBottom: 10 })
+            { alignItems: 'flex-end', marginTop: 10 })
           }
         >
           <TouchableOpacity
@@ -965,14 +961,6 @@ export default FindToolsScreen = props => {
           style={styles.basketContents}
           showsVerticalScrollIndicator={true}
         >
-          <View style={styles.basketSizeRow}>
-            <Text style={styles.basketText}>
-              {`${toolBasket.length} ${
-                toolBasket.length === 1 ? `tool` : `tools`
-              } selected:`}
-            </Text>
-          </View>
-
           {toolBasket.map((item, i) => (
             <View key={i}>
               {i > 0 ? (
@@ -1072,24 +1060,33 @@ export default FindToolsScreen = props => {
     <Modal
       isVisible={isBasketVisible}
       onBackdropPress={() => backdropPressHandler()}
-      onSwipeComplete={() => backdropPressHandler()}
-      propagateSwipe={true}
-      deviceHeight={screenHeight}
-      deviceWidth={screenWidth}
-      avoidKeyboard={true}
+      onSwipeComplete={() => setIsBasketVisible(false)}
+      propagateSwipe
+      avoidKeyboard
       style={styles.drawerBottom}
       backdropOpacity={0.6}
-      animationIn='slideInUp'
-      animationOut='slideOutDown'
+      animationIn='zoomInDown'
+      animationOut='zoomOutUp'
     >
-      <View>
-        <View>
-          {mode === 'basket' ||
-          mode === 'some-unavailable' ||
-          mode === 'all-unavailable'
-            ? basketContents
-            : null}
-          {basketActionRows}
+      <View style={{ backgroundColor: Colors.vwgWhite }}>
+        {mode === 'basket' ? (
+          <View style={styles.closeButtonRow}>
+            <Text style={styles.basketText}>
+              {`${toolBasket.length} ${
+                toolBasket.length === 1 ? `tool` : `tools`
+              } selected:`}
+            </Text>
+          </View>
+        ) : null}
+        <View style={styles.basket}>
+          <View style={{ backgroundColor: Colors.vwgWhite }}>
+            {mode === 'basket' ||
+            mode === 'some-unavailable' ||
+            mode === 'all-unavailable'
+              ? basketContents
+              : null}
+            {basketActionRows}
+          </View>
         </View>
       </View>
     </Modal>
@@ -1280,22 +1277,11 @@ const styles = StyleSheet.create({
   toolsList: {},
   drawerBottom: {
     justifyContent: 'flex-end',
-    margin: 0,
-    // marginTop: 140,
-    // backgroundColor: 'red',
-    backgroundColor: 'white',
-    paddingHorizontal: 10,
-    position: 'absolute',
-    paddingBottom: 5,
-    bottom: 0,
-    left: 0,
-    right: 0
-    // maxHeight: maxModalHeight
+    margin: 0
   },
   toolsList: {
     // marginBottom: 50,
     backgroundColor: 'transparent'
-    // backgroundColor: 'red'
     // height: '80%'
   },
   inputStyle: {
@@ -1303,15 +1289,10 @@ const styles = StyleSheet.create({
     color: Colors.vwgDarkSkyBlue,
     fontSize: RFPercentage(2.4)
   },
-  basketContents: {
+  basket: {
     color: Colors.vwgDeepBlue,
-    // backgroundColor: 'blue',
-    // margin: 5,
-    maxHeight: maxModalHeight,
-    paddingTop: 0,
-    marginBottom: 10,
-    paddingHorizontal: 0
-    // padding: 5
+    margin: 5,
+    padding: 5
   },
   basketText: {
     fontFamily: 'the-sans',
@@ -1321,7 +1302,7 @@ const styles = StyleSheet.create({
   basketTextLink: {
     fontFamily: 'the-sans',
     color: Colors.vwgLink,
-    fontSize: RFPercentage(2.4),
+    fontSize: RFPercentage(2),
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
   basketHeader: {
@@ -1375,10 +1356,7 @@ const styles = StyleSheet.create({
   },
   basketItemRow: {
     color: Colors.vwgDeepBlue,
-
-    flexDirection: 'row',
-    marginBottom: -5
-    // paddingBottom: -5
+    flexDirection: 'row'
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
@@ -1451,13 +1429,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    paddingVertical: 20
-  },
-  basketSizeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 10,
-    paddingBottom: 5
+    paddingVertical: 20,
+    backgroundColor: Colors.vwgWhite
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
@@ -1480,11 +1453,13 @@ const styles = StyleSheet.create({
   searchFoundPromptText: {
     fontFamily: 'the-sans',
     textAlign: 'center',
+
     color: Colors.vwgWhite
   },
   checkingNotice: {
     flexDirection: 'row',
-    padding: 10
+    padding: 10,
+    backgroundColor: Colors.vwgWhite
   },
   confirmedNoticeText: {
     fontFamily: 'the-sans',
@@ -1499,7 +1474,8 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.2)
   },
   confirmedPrompt: {
-    padding: 0
+    padding: 0,
+    backgroundColor: Colors.vwgWhite
   },
   confirmedPromptText: {
     fontFamily: 'the-sans-bold',
@@ -1554,7 +1530,7 @@ const styles = StyleSheet.create({
   },
   cancelButtonTitle: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgWarmRed,
     paddingLeft: 5,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
@@ -1580,7 +1556,7 @@ const styles = StyleSheet.create({
   },
   closeButtonTitle: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
+    fontSize: RFPercentage(1.9),
     color: Colors.vwgLink,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   },
@@ -1597,7 +1573,7 @@ const styles = StyleSheet.create({
   bookButtonTitle: {
     // color: Colors.vwgWhite,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
+    fontSize: RFPercentage(1.9),
     paddingLeft: 5,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
     // flexDirection: 'column',
@@ -1611,7 +1587,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonTitle: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
+    fontSize: RFPercentage(1.9),
     paddingLeft: 5,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
   }
