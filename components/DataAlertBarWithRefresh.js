@@ -50,7 +50,7 @@ export default DataAlertBarWithRefresh = props => {
       {isLoading ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
-            Updating {`${dataName}`}.
+            Updating {`${dataName}`}...
           </Text>
         </View>
       ) : dataError ? (

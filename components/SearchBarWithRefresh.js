@@ -52,7 +52,7 @@ export default SearchBarWithRefresh = props => {
       {isLoading ? (
         <View style={styles.searchBarRowNoDataTextContainer}>
           <Text style={styles.searchBarRowNoDataText}>
-            Updating {`${dataNameToUse}`}.
+            Updating {`${dataNameToUse}`}...
           </Text>
         </View>
       ) : dataError ? (
