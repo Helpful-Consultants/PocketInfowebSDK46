@@ -201,7 +201,6 @@ function* createDealerWip({ payload }) {
           statusCode: 409,
           message: 'Some of these tools are unavailable',
           wipNumber: (payload.wipObj && payload.wipObj.wipNumber) || '',
-          id: 'get from API',
           wipProcessed: result.data[0]
         })
       );
