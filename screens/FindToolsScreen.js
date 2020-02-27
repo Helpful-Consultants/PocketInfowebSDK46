@@ -73,17 +73,17 @@ const formReducer = (state, action) => {
   return state;
 };
 
-const identifyUnavailableTool = (toolId, unavailableToolsArr) => {
-  let retValue = null;
-  unavailableToolsArr.forEach((item, index) => {
-    // console.log(item.tools_id);
-    if (item.tools_id && item.tools_id === toolId) {
-      //   console.log('match on', item.tools_id);
-      retValue = index;
-    }
-  });
-  return retValue;
-};
+// const identifyUnavailableTool = (toolId, unavailableToolsArr) => {
+//   let retValue = null;
+//   unavailableToolsArr.forEach((item, index) => {
+//     // console.log(item.tools_id);
+//     if (item.tools_id && item.tools_id === toolId) {
+//       //   console.log('match on', item.tools_id);
+//       retValue = index;
+//     }
+//   });
+//   return retValue;
+// };
 
 const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
   let retValue = null;
@@ -111,11 +111,11 @@ const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
   //     console.log('dealerWips[0]', dealerWips[0]);
   //   }
   dealerWips.forEach(item => {
-    console.log(
-      'in loop',
-      item.wipNumber && item.wipNumber,
-      item.id && item.id
-    );
+    // console.log(
+    //   'in loop',
+    //   item.wipNumber && item.wipNumber,
+    //   item.id && item.id
+    // );
     if (
       item.wipNumber &&
       item.wipNumber === wipNumber &&
@@ -300,6 +300,7 @@ export default FindToolsScreen = props => {
           ) {
             // console.log('some unavailable');
             setMode('some-unavailable');
+            markUnavailableBasketItems();
             getWipsItemsAsync();
           } else {
             // console.log('all unavailable');
@@ -545,14 +546,33 @@ export default FindToolsScreen = props => {
     }
   };
 
+  const markUnavailableBasketItems = () => {
+    let unavailableToolIdsArr = [];
+    lastWipProcessed.unavailableTools.forEach(item => {
+      // console.log(item.tools_id);
+      unavailableToolIdsArr.push(item.tools_id);
+    });
+    // console.log('lastWipProcessed', lastWipProcessed);
+    // console.log('unavailableToolIdsArr', unavailableToolIdsArr);
+    // console.log('old toolBasket', toolBasket);
+    let newToolBasket = toolBasket.map(item => {
+      return {
+        ...item,
+        unavailable: unavailableToolIdsArr.includes(item.id) ? true : false
+      };
+    });
+    // console.log('newToolBasket', newToolBasket);
+    setToolBasket(newToolBasket);
+  };
+
   const addBasketItemHandler = () => {
-    console.log('in addBasketItemHandler');
+    // console.log('in addBasketItemHandler');
     setMode('list');
     setIsBasketVisible(false);
   };
 
   const toggleBaskethandler = action => {
-    console.log('in toggleBaskethandler');
+    // console.log('in toggleBaskethandler');
     if (action) {
       setIsBasketVisible(action);
       setMode('basket');
@@ -567,6 +587,17 @@ export default FindToolsScreen = props => {
     setMode('list');
     setIsBasketVisible(false);
     inputChangeHandler('wipNumber', '');
+  };
+
+  const dropUnavailableHandler = () => {
+    // console.log('in dropUnavailableHandler');
+    // console.log('old toolBasket before drop', toolBasket);
+    let newToolBasket = toolBasket.filter(
+      item => !item.unavailable || item.unavailable === false
+    );
+    // console.log('newToolBasket after drop', newToolBasket);
+    setToolBasket(newToolBasket);
+    setMode('confirm-revised-list');
   };
 
   const acceptNotBookedMessageHandler = () => {
@@ -861,6 +892,33 @@ export default FindToolsScreen = props => {
           />
         </View>
       </View>
+    ) : mode === 'confirm-revised-list' ? (
+      <View>
+        <View style={styles.basketActionRow}>
+          <View style={styles.confirmedPrompt}>
+            <Text style={styles.confirmedPromptText}>
+              {`${
+                lastWipProcessed.unavailableTools &&
+                lastWipProcessed.unavailableTools.length > 1
+                  ? `These items have been booked to job`
+                  : `This item has been booked to job`
+              } '${lastWipProcessed.wipNumber}'.`}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.basketActionRow}>
+          <Button
+            title='Close'
+            type='clear'
+            titleStyle={styles.closeButtonTitle}
+            onPress={() => {
+              acceptMessageHandler();
+            }}
+            titleStyle={styles.closeConfirmationButtonTitle}
+            buttonStyle={styles.closeConfirmationButton}
+          />
+        </View>
+      </View>
     ) : mode === 'some-unavailable' ? (
       <View>
         <View style={styles.basketActionRow}>
@@ -882,7 +940,7 @@ export default FindToolsScreen = props => {
         </View>
         <View style={styles.basketActionRow}>
           <Button
-            title='Cancel whole booking'
+            title='Cancel booking'
             type='outline'
             onPress={() => deleteWipRequestHandler()}
             titleStyle={styles.cancelButtonTitle}
@@ -905,11 +963,11 @@ export default FindToolsScreen = props => {
               lastWipProcessed.unavailableTools &&
               toolBasket.length > 0 &&
               toolBasket.length - lastWipProcessed.unavailableTools.length > 1
-                ? `Keep the other tools`
-                : `Keep the booked tool`
+                ? `Keep available`
+                : `Keep available`
             }
             type='solid'
-            onPress={() => acceptMessageHandler()}
+            onPress={() => dropUnavailableHandler()}
             titleStyle={styles.bookButtonTitle}
             buttonStyle={styles.bookButton}
             icon={
@@ -1027,12 +1085,8 @@ export default FindToolsScreen = props => {
                     {(mode === 'some-unavailable' ||
                       mode === 'all-unavailable') &&
                     item.id &&
-                    lastWipProcessed &&
-                    lastWipProcessed.unavailableTools &&
-                    identifyUnavailableTool(
-                      item.id,
-                      lastWipProcessed.unavailableTools
-                    ) !== null ? (
+                    item.unavailable &&
+                    item.unavailable === true ? (
                       <Text
                         style={styles.basketItemUnavailableText}
                       >{`${getUnavailableToolDetails(
@@ -1043,9 +1097,9 @@ export default FindToolsScreen = props => {
                   </View>
 
                   {mode !== 'sending' &&
+                  mode !== 'confirm-revised-list' &&
                   mode !== 'some-unavailable' &&
                   mode !== 'all-unavailable' &&
-                  mode !== 'confirm' &&
                   toolBasket.length > 1 ? (
                     <TouchableOpacity
                       style={styles.trashButton}
@@ -1077,14 +1131,15 @@ export default FindToolsScreen = props => {
       deviceHeight={screenHeight}
       deviceWidth={screenWidth}
       avoidKeyboard={true}
-      style={styles.drawerBottom}
+      style={styles.drawerContainer}
       backdropOpacity={0.6}
       animationIn='slideInUp'
       animationOut='slideOutDown'
     >
-      <View>
+      <View style={styles.drawerContent}>
         <View>
           {mode === 'basket' ||
+          mode === 'confirm-revised-list' ||
           mode === 'some-unavailable' ||
           mode === 'all-unavailable'
             ? basketContents
@@ -1113,7 +1168,7 @@ export default FindToolsScreen = props => {
           }}
         />
         <Text style={styles.closedBasketPromptText}>
-          {` Back to tools basket`}
+          {` Back to tool basket`}
           {toolBasket && toolBasket.length > 1
             ? ` (${toolBasket.length} items)`
             : toolBasket && toolBasket.length > 0
@@ -1131,7 +1186,7 @@ export default FindToolsScreen = props => {
   //   );
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
 
-  console.log('rendering Find Tools screen');
+  console.log('rendering Find Tools screen', mode);
 
   return (
     <View
@@ -1277,19 +1332,33 @@ const styles = StyleSheet.create({
     marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
     // backgroundColor: 'red'
   },
-  toolsList: {},
-  drawerBottom: {
+  drawerContainer: {
     justifyContent: 'flex-end',
     margin: 0,
     // marginTop: 140,
     // backgroundColor: 'red',
+    // backgroundColor: 'white',
+    // paddingHorizontal: 10,
+    // position: 'absolute',
+    // paddingBottom: 5,
+    padding: 0,
+    bottom: 0
+    // left: 0,
+    // right: 0
+    // maxHeight: maxModalHeight
+  },
+  drawerContent: {
+    justifyContent: 'flex-end',
+    // margin: 0,
+    // marginTop: 140,
+    // backgroundColor: 'red',
     backgroundColor: 'white',
-    paddingHorizontal: 10,
-    position: 'absolute',
-    paddingBottom: 5,
-    bottom: 0,
-    left: 0,
-    right: 0
+    marginHorizontal: 0,
+    // position: 'absolute',
+    padding: 10
+    // bottom: 0
+    // left: 0,
+    // right: 0
     // maxHeight: maxModalHeight
   },
   toolsList: {
@@ -1305,11 +1374,11 @@ const styles = StyleSheet.create({
   },
   basketContents: {
     color: Colors.vwgDeepBlue,
-    // backgroundColor: 'blue',
+    // backgroundColor: 'teal',
     // margin: 5,
     maxHeight: maxModalHeight,
     paddingTop: 0,
-    marginBottom: 10,
+    marginBottom: 0,
     paddingHorizontal: 0
     // padding: 5
   },
@@ -1377,8 +1446,8 @@ const styles = StyleSheet.create({
     color: Colors.vwgDeepBlue,
 
     flexDirection: 'row',
-    marginBottom: -5
-    // paddingBottom: -5
+    marginBottom: 0,
+    paddingBottom: 5
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
