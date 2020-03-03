@@ -25,6 +25,8 @@ import Colors from './constants/Colors';
 
 // import AsyncStorage from '@react-native-community/async-storage'; //breaks
 import { AsyncStorage } from 'react-native'; // deprecated
+import * as Sentry from 'sentry-expo';
+import Constants from 'expo-constants';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Button, colors, ThemeProvider } from 'react-native-elements';
@@ -45,6 +47,14 @@ axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 //     })
 //   }
 // };
+
+Sentry.init({
+  dsn: 'https://753764f4208a4f429c2c21d20a45adf0@sentry.io/3578989',
+  enableInExpoDevelopment: true,
+  debug: true
+});
+
+Sentry.setRelease(Constants.manifest.revisionId);
 
 const sagaMiddleware = createSagaMiddleware();
 
