@@ -74,7 +74,7 @@ export default AppInfo = props => {
           style={styles.appVersion}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={styles.appVersion}>Improved double booking check</Text>
+      <Text style={styles.appVersion}>Bug fix for news</Text>
     </View>
   );
 };

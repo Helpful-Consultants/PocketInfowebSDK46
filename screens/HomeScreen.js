@@ -588,7 +588,7 @@ export default HomeScreen = props => {
                       />
                       <BadgedText
                         showBadge={
-                          ageOfProducts && ageOfProducts < notificationLimit
+                          ageOfProducts < notificationLimit ? true : false
                         }
                         focused={false}
                         text={'Products'}
@@ -615,7 +615,7 @@ export default HomeScreen = props => {
                       />
 
                       <BadgedText
-                        showBadge={ageOfNews && ageOfNews < notificationLimit}
+                        showBadge={ageOfNews < notificationLimit ? true : false}
                         focused={false}
                         text={'News'}
                         value={'+'}
