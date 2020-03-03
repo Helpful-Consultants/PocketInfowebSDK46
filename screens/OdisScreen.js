@@ -36,7 +36,7 @@ export default OdisScreen = props => {
 
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
-  const { navigation } = props;
+  //   const { navigation } = props;
 
   //   useEffect(() => {
   //     // runs only once

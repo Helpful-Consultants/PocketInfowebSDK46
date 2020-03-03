@@ -44,7 +44,7 @@ export default ProductsScreen = props => {
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
-  const { navigation } = props;
+  //   const { navigation } = props;
 
   if (productsItems && productsItems.length > 0) {
     // console.log('in products screen,productsItems', productsItems.length);

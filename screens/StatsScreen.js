@@ -50,7 +50,7 @@ export default StatsScreen = props => {
 
   //   console.log('getStatsData', getStatsData);
 
-  const { navigation } = props;
+  //   const { navigation } = props;
 
   const getItems = useCallback(async () => {
     // console.log('in stats getItems');

@@ -58,7 +58,7 @@ export default SignInScreen = props => {
   //   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
 
-  const { navigation } = props;
+  //   const { navigation } = props;
   const insets = useSafeArea();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
