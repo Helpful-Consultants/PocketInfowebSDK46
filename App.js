@@ -26,8 +26,8 @@ import Colors from './constants/Colors';
 // import AsyncStorage from '@react-native-community/async-storage'; //breaks
 import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
+import '@expo/match-media';
 import Constants from 'expo-constants';
-
 import { Ionicons } from '@expo/vector-icons';
 import { Button, colors, ThemeProvider } from 'react-native-elements';
 import AppNavigator from './navigation/AppNavigator';
