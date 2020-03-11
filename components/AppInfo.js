@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import HTML from 'react-native-render-html';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Constants from 'expo-constants';
+import { useMediaQuery } from 'react-responsive';
 import Colors from '../constants/Colors';
 
 export default AppInfo = props => {
@@ -14,6 +15,17 @@ export default AppInfo = props => {
   //   console.log(props);
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
+
+  const isTabletOrMobileDevice = useMediaQuery({
+    maxDeviceWidth: 1224
+    // alternatively...
+    //   query: '(max-device-width: 1224px)'
+  });
+
+  console.log(
+    '!!!!!!!!!!!! isTabletOrMobileDevice',
+    isTabletOrMobileDevice && isTabletOrMobileDevice
+  );
   return (
     <View style={styles.container}>
       <Text style={styles.appName}>{Constants.manifest.name}</Text>
