@@ -141,9 +141,9 @@ export default AppNavigator = props => {
       userIsSignedIn &&
       userIsSignedIn === true ? (
         <DrawerNavigator />
-      ) : (
+      ) : userIsValidated === false || userIsSignedIn === false ? (
         <SignedOutStack />
-      )}
+      ) : null}
     </NavigationContainer>
   );
 };
