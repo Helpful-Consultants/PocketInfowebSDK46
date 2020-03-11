@@ -26,7 +26,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 //   getVersion,
 //   getManufacturer
 // } from 'react-native-device-info';
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+// import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
