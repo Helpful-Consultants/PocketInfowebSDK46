@@ -63,10 +63,10 @@ function* getUser({ payload }) {
         //   userApiFetchParamsObj,
         //   result.data[0]
         // );
-        yield put(wipsActions.getDealerWipsStart());
-        yield put(wipsActions.getDealerWipsRequest(userApiFetchParamsObj));
-        yield put(toolsActions.getDealerToolsStart());
-        yield put(toolsActions.getDealerToolsRequest(userApiFetchParamsObj));
+        // yield put(wipsActions.getDealerWipsStart());
+        // yield put(wipsActions.getDealerWipsRequest(userApiFetchParamsObj));
+        // yield put(toolsActions.getDealerToolsStart());
+        // yield put(toolsActions.getDealerToolsRequest(userApiFetchParamsObj));
       } else if (result.data[0].userId && result.data[0].userId.length > 0) {
         // console.log('in user saga - bad 200');
         // console.log(result.data && result.data[0]);
