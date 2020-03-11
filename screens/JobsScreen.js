@@ -90,7 +90,7 @@ export default JobsScreen = props => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('job - useFocusEffect');
+      //   console.log('job - useFocusEffect');
       dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
       setSearchInput('');
       getItemsAsync();
@@ -104,7 +104,7 @@ export default JobsScreen = props => {
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler', userApiFetchParamsObj);
+    // console.log('in refreshRequestHandler', userApiFetchParamsObj);
     getItemsAsync();
   };
 
@@ -161,12 +161,12 @@ export default JobsScreen = props => {
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
-  console.log(
-    'Rendering Jobs screen ',
-    items.length,
-    'items ',
-    userApiFetchParamsObj
-  );
+  //   console.log(
+  //     'Rendering Jobs screen ',
+  //     items.length,
+  //     'items ',
+  //     userApiFetchParamsObj
+  //   );
   //   console.log(
   //     'isLoading ',
   //     isLoading,

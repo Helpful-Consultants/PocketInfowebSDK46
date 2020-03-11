@@ -106,7 +106,7 @@ export default HomeScreen = props => {
   });
 
   const updateItemsAsync = async () => {
-    console.log('home - updateItemsAsync');
+    // console.log('home - updateItemsAsync');
     if (
       userApiFetchParamsObj &&
       userApiFetchParamsObj.intId &&
@@ -117,7 +117,7 @@ export default HomeScreen = props => {
   };
 
   const getLtpItemsAsync = async () => {
-    console.log('home - updateItemsAsync');
+    // console.log('home - updateItemsAsync');
     getLtpItems();
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
@@ -127,10 +127,10 @@ export default HomeScreen = props => {
   useEffect(() => {
     // runs only once as LTP doesnt change too often
     // will run again, though, if the user userApiFetchParamsObj wasn't ready before
-    console.log(
-      'home - ltp useEffect',
-      userApiFetchParamsObj && userApiFetchParamsObj.intId
-    );
+    // console.log(
+    //   'home - ltp useEffect',
+    //   userApiFetchParamsObj && userApiFetchParamsObj.intId
+    // );
     getLtpItemsAsync();
   }, [userApiFetchParamsObj]);
 

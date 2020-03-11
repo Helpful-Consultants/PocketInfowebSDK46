@@ -158,10 +158,10 @@ export default function user(state = INITIAL_STATE, action) {
       const ageOfCredentialsLimit = 10;
       let now = moment();
       let revalidatedUser = false;
-      console.log(
-        'in revalidateUserCredentials',
-        action.payload && action.payload.calledBy && action.payload.calledBy
-      );
+      //   console.log(
+      //     'in revalidateUserCredentials',
+      //     action.payload && action.payload.calledBy && action.payload.calledBy
+      //   );
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
         if (state.lastUpdate) {
           console.log('now:', now);
@@ -169,7 +169,7 @@ export default function user(state = INITIAL_STATE, action) {
           console.log('ageOfCredentials:', ageOfCredentials);
           if (ageOfCredentials <= ageOfCredentialsLimit) {
             revalidatedUser = true;
-            console.log('ageOfCredentials good', ageOfCredentials);
+            // console.log('ageOfCredentials good', ageOfCredentials);
           }
         }
       }
