@@ -9,28 +9,43 @@ import {
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { getUserRequest } from '../actions/user';
+import { setUserOutdatedCredentials } from '../actions/user';
+import { setUserValidated } from '../actions/user';
 // import validation from 'validate';
 
 export default AuthLoadingScreen = props => {
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
+  const userIsValidated = useSelector(state => state.user.userIsValidated);
+  const userId = useSelector(state => state.user.userId);
+  const userPin = useSelector(state => state.user.userPin);
+  const userLastUpdate = useSelector(state => state.user.lastUpdate);
   const insets = useSafeArea();
+  const dispatch = useDispatch();
 
   console.log('in AuthLoadingScreen');
 
   useEffect(() => {
-    if (userIsSignedIn) {
-      console.log('in auth loading, signed in , going to Main');
-      props.navigation.navigate('Main');
+    if (userEmail && userPin) {
+      if (userLastUpdate) {
+        console.log('in AuthLoadingScreen', userEmail, userPin, userLastUpdate);
+        dispatch(setUserValidated());
+      } else {
+        console.log(
+          'in AuthLoadingScreen no last update',
+          userEmail,
+          userPin,
+          userLastUpdate
+        );
+        dispatch(setUserOutdatedCredentials());
+      }
     } else {
-      console.log('in auth loading, signed out , going to Auth  route');
-      //   console.log(props.navigation);
-      props.navigation.navigate('Auth');
+      console.log('in AuthLoadingScreen no userEmail && userPin');
+      dispatch(setUserOutdatedCredentials());
     }
-  }, [userIsSignedIn]);
+  }, []);
 
   return (
     <View style={{ paddingTop: insets.top, flex: 1 }}>
