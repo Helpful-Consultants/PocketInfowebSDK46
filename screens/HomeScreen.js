@@ -110,7 +110,9 @@ export default HomeScreen = props => {
     if (
       userApiFetchParamsObj &&
       userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
+      userApiFetchParamsObj.intId.length > 0 &&
+      userApiFetchParamsObj.dealerId &&
+      userApiFetchParamsObj.dealerId.length > 0
     ) {
       getAllItems(userApiFetchParamsObj);
     }
