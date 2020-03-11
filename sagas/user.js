@@ -54,9 +54,15 @@ function* getUser({ payload }) {
           })
         );
         let userApiFetchParamsObj = {
-          dealerId: result.data[0].dealerId && result.data[0].intId.dealerId,
+          dealerId:
+            result.data[0].dealerId && result.data[0].dealerId.toString(),
           intId: result.data[0].intId && result.data[0].intId.toString()
         };
+        // console.log(
+        //   'userApiFetchParamsObj is ',
+        //   userApiFetchParamsObj,
+        //   result.data[0]
+        // );
         yield put(wipsActions.getDealerWipsStart());
         yield put(wipsActions.getDealerWipsRequest(userApiFetchParamsObj));
         yield put(toolsActions.getDealerToolsStart());
