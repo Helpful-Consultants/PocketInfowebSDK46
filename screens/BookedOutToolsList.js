@@ -60,7 +60,7 @@ export default function BookedOutToolsList(props) {
               <Text style={styles.searchPromptText}>
                 {`You have ${
                   dataCount && dataCount > 0 ? dataCount : `no`
-                } tool${dataCount && dataCount > 1 ? 's' : ''} booked out.`}
+                } tool${dataCount && dataCount !== 1 ? 's' : ''} booked out.`}
               </Text>
             </View>
           )
