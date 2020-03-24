@@ -218,7 +218,7 @@ export default function DealerToolsList(props) {
                 <Text style={styles.searchPromptText}>
                   {`You have ${
                     dataCount && dataCount > 0 ? dataCount : `no`
-                  } open jobs.`}
+                  } open job${dataCount && dataCount > 1 ? 's' : ''}.`}
                 </Text>
               </View>
             )
