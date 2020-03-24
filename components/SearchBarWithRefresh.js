@@ -90,13 +90,6 @@ export default SearchBarWithRefresh = props => {
           />
         </View>
       )}
-      {searchInput.length > 0 && dataCount === 0 ? (
-        <View style={styles.noneFoundPrompt}>
-          <Text style={styles.noneFoundPromptText}>
-            Your search found no results.
-          </Text>
-        </View>
-      ) : null}
     </View>
   );
 };
@@ -158,16 +151,5 @@ const styles = StyleSheet.create({
   searchFoundPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
-  },
-
-  noneFoundPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed
-  },
-  noneFoundPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgWhite
   }
 });

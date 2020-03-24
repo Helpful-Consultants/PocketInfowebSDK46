@@ -135,14 +135,6 @@ const styles = StyleSheet.create({
   searchBarRowErrorText: {
     color: Colors.vwgWarmRed
   },
-  noneFoundPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed
-  },
-  noneFoundPromptText: {
-    textAlign: 'center',
-    color: Colors.vwgWhite
-  },
   lookupPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgMintGreen
