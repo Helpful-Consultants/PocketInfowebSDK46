@@ -192,13 +192,16 @@ export default JobsScreen = props => {
         dataErrorUrl={dataErrorUrl}
         dataCount={userWipsItems.length}
       />
-      {dataError ? null : searchInput.length >= minSearchLength &&
-        itemsToShow.length === 0 ? (
-        <View style={styles.noneFoundPrompt}>
-          <Text style={styles.noneFoundPromptText}>
-            Your search found no results.
-          </Text>
-        </View>
+      {dataError ? null : searchInput &&
+        searchInput.length &&
+        searchInput.length >= minSearchLength ? (
+        itemsToShow && itemsToShow.length && itemsToShow.length === 0 ? (
+          <View style={styles.noneFoundPrompt}>
+            <Text style={styles.noneFoundPromptText}>
+              Your search found no results.
+            </Text>
+          </View>
+        ) : null
       ) : null}
       {dataError ? (
         <ErrorDetails

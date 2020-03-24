@@ -205,19 +205,23 @@ export default function DealerToolsList(props) {
     );
   };
 
-  if (items)
+  if (items) {
     return (
       <View>
         <ScrollView>
-          {!isLoading &&
-          (!searchInput || searchInput.length <= minSearchLength) ? (
-            <View style={styles.searchPrompt}>
-              <Text style={styles.searchPromptText}>
-                {`You have ${
-                  dataCount && dataCount > 0 ? dataCount : `no`
-                } open jobs.`}
-              </Text>
-            </View>
+          {!isLoading ? (
+            searchInput &&
+            searchInput.length >= minSearchLength &&
+            items.length &&
+            items.length > 0 ? null : (
+              <View style={styles.searchPrompt}>
+                <Text style={styles.searchPromptText}>
+                  {`You have ${
+                    dataCount && dataCount > 0 ? dataCount : `no`
+                  } open jobs.`}
+                </Text>
+              </View>
+            )
           ) : null}
           {!items || items.length === 0
             ? null
@@ -284,6 +288,17 @@ export default function DealerToolsList(props) {
         </ScrollView>
       </View>
     );
+  } else {
+    return (
+      <View style={styles.searchPrompt}>
+        <Text style={styles.searchPromptText}>
+          {`You have ${
+            dataCount && dataCount > 0 ? dataCount : `no`
+          } open jobs.`}
+        </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
