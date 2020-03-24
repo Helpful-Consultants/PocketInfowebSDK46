@@ -212,7 +212,7 @@ export default function DealerToolsList(props) {
           {!isLoading ? (
             searchInput &&
             searchInput.length >= minSearchLength &&
-            items.length &&
+            items &&
             items.length > 0 ? null : (
               <View style={styles.searchPrompt}>
                 <Text style={styles.searchPromptText}>

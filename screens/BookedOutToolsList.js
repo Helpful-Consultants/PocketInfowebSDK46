@@ -51,15 +51,21 @@ export default function BookedOutToolsList(props) {
   return (
     <View style={styles.container}>
       <ScrollView>
-        {!isLoading &&
-        (!searchInput || searchInput.length <= minSearchLength) ? (
-          <View style={styles.searchPrompt}>
-            <Text style={styles.searchPromptText}>
-              {`You have ${dataCount > 0 ? dataCount : `no`} tools booked out.`}
-            </Text>
-          </View>
+        {!isLoading ? (
+          searchInput &&
+          searchInput.length >= minSearchLength &&
+          items &&
+          items.length > 0 ? null : (
+            <View style={styles.searchPrompt}>
+              <Text style={styles.searchPromptText}>
+                {`You have ${
+                  dataCount && dataCount > 0 ? dataCount : `no`
+                } tools booked out.`}
+              </Text>
+            </View>
+          )
         ) : null}
-        {!items || items.length === 0 ? null : (
+        {!items || (items && items.length === 0) ? null : (
           <View style={{ marginHorizontal: 10 }}>
             {items.map((item, i) => (
               <TouchableOpacity
@@ -205,7 +211,7 @@ export default function BookedOutToolsList(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   searchPrompt: {
     padding: 10,

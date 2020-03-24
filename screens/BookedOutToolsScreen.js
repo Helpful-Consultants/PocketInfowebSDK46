@@ -257,13 +257,24 @@ export default BookedOutToolsScreen = props => {
         dataStatusCode={dataStatusCode}
         dataCount={userWipsItems.length}
       />
-      {dataError ? null : searchInput.length >= minSearchLength &&
-        itemsToShow.length === 0 ? (
-        <View style={styles.noneFoundPrompt}>
-          <Text style={styles.noneFoundPromptText}>
-            Your search found no results.
-          </Text>
-        </View>
+      {dataError ? null : searchInput &&
+        searchInput.length &&
+        searchInput.length >= minSearchLength ? (
+        bookedOutItems &&
+        bookedOutItems.length &&
+        bookedOutItems.length === 0 ? (
+          <View style={styles.noneFoundPrompt}>
+            <Text style={styles.noneFoundPromptText}>
+              Your search found no results.
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.noneFoundPrompt}>
+            <Text style={styles.noneFoundPromptText}>
+              You have no jobs yet to search.
+            </Text>
+          </View>
+        )
       ) : null}
       {dataError ? (
         <ErrorDetails
