@@ -218,7 +218,7 @@ export default function DealerToolsList(props) {
                 <Text style={styles.searchPromptText}>
                   {`You have ${
                     dataCount && dataCount > 0 ? dataCount : `no`
-                  } open job${dataCount && dataCount !== 1 ? 's' : ''}.`}
+                  } open job${dataCount && dataCount === 1 ? '' : 's'}.`}
                 </Text>
               </View>
             )
@@ -292,9 +292,9 @@ export default function DealerToolsList(props) {
     return (
       <View style={styles.searchPrompt}>
         <Text style={styles.searchPromptText}>
-          {`You have ${
-            dataCount && dataCount > 0 ? dataCount : `no`
-          } open jobs.`}
+          {`You have ${dataCount && dataCount > 0 ? dataCount : `no`} open job${
+            dataCount && dataCount === 1 ? '' : 's'
+          }.`}
         </Text>
       </View>
     );
