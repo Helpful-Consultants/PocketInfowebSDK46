@@ -6,7 +6,7 @@
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android"],
-    "version": "1.1.36",
+    "version": "1.1.37",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -22,7 +22,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "95",
+      "buildNumber": "96",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
@@ -30,7 +30,7 @@
     },
     "android": {
       "package": "com.helpfulconsultants.pocketinfowebpro",
-      "versionCode": 9
+      "versionCode": 10
     },
     "androidStatusBar": {
       "barStyle": "light-content",
