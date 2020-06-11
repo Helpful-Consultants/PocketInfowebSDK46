@@ -171,9 +171,10 @@ export default function OdisLinkWithStatus(props) {
         (itemsObj.sk.previousProductVersion &&
           itemsObj.sk.previousProductVersion !== itemsObj.sk.productVersion) ||
         (itemsObj.sk.previousMainFeatureVersion &&
-          itemsObj.sk.previousMainFeatureVersion !== sk.mainFeatureVersion) ||
+          itemsObj.sk.previousMainFeatureVersion !==
+            itemsObj.sk.mainFeatureVersion) ||
         (itemsObj.sk.previousDataVersion &&
-          itemsObj.sk.previousDataVersion !== sk.dataVersion)
+          itemsObj.sk.previousDataVersion !== itemsObj.sk.dataVersion)
       ) {
         let skDateOfChange = moment(
           itemsObj.sk.lastUpdated,
@@ -197,7 +198,7 @@ export default function OdisLinkWithStatus(props) {
           itemsObj.vw.previousMainFeatureVersion !==
             itemsObj.vw.mainFeatureVersion) ||
         (itemsObj.vw.previousDataVersion &&
-          itemsObj.vw.previousDataVersion !== vw.dataVersion)
+          itemsObj.vw.previousDataVersion !== itemsObj.vw.dataVersion)
       ) {
         let vwDateOfChange = moment(
           itemsObj.vw.lastUpdated,
