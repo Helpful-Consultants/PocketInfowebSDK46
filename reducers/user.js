@@ -155,7 +155,7 @@ export default function user(state = INITIAL_STATE, action) {
 
     case Types.REVALIDATE_USER_CREDENTIALS: {
       //   console.log('actionis:', action.payload && action.payload);
-      const ageOfCredentialsLimit = 10;
+      const ageOfCredentialsLimit = 90;
       let now = moment();
       let revalidatedUser = false;
       //   console.log(
