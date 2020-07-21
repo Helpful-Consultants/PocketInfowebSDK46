@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Updates } from 'expo';
+import * as Updates from 'expo-updates';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {

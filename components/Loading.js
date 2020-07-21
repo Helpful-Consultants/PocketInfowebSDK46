@@ -1,4 +1,3 @@
-import { Updates } from 'expo';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
