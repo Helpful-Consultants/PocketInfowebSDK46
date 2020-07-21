@@ -21,7 +21,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "96",
+      "buildNumber": "97",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
@@ -29,7 +29,7 @@
     },
     "android": {
       "package": "com.helpfulconsultants.pocketinfowebpro",
-      "versionCode": 10
+      "versionCode": 11
     },
     "androidStatusBar": {
       "barStyle": "light-content",
