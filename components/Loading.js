@@ -17,7 +17,7 @@ export default Loading = () => {
   //           console.log('updateAvailable', update && update);
   //           await Updates.fetchUpdateAsync();
   //           // ... notify user of update ...
-  //           Updates.reloadFromCache();
+  //          Updates.reloadAsync();
   //         }
   //         // continues returns to AppEntry.js, hiding the loader and revealing the app (this could be an action instead but for the sake of this short example this should suffice)
   //       } catch (e) {
@@ -36,7 +36,7 @@ export default Loading = () => {
   //     if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
   //       setShowReloadDialogue(true);
 
-  //       Updates.reloadFromCache();
+  //      Updates.reloadAsync();
   //     }
   //   };
 

@@ -193,7 +193,7 @@ export default HomeScreen = props => {
   //   if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
   //     setShowReloadDialogue(true);
 
-  //     Updates.reloadFromCache();
+  //    Updates.reloadAsync();
   //   }
   // };
   // const getUpdatesAsync = async () => {
@@ -207,7 +207,7 @@ export default HomeScreen = props => {
   //       setIsUpdatingAppVersion(true);
   //       setShowReloadDialogue(true);
   //       await Updates.fetchUpdateAsync();
-  //       Updates.reloadFromCache();
+  //      Updates.reloadAsync();
   //     } else {
   //       updateItemsAsync();
   //       setIsCheckingAppVersion(false);
@@ -270,7 +270,7 @@ export default HomeScreen = props => {
         setIsUpdatingAppVersion(true);
         setShowReloadDialogue(true);
         await Updates.fetchUpdateAsync();
-        Updates.reloadFromCache();
+        Updates.reloadAsync();
       } else {
         updateItemsAsync();
         setIsCheckingAppVersion(false);
