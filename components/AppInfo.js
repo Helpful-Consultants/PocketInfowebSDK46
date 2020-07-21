@@ -86,7 +86,7 @@ export default AppInfo = props => {
           style={styles.appVersion}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={styles.appVersion}>Bug fix for ODIS versions</Text>
+      <Text style={styles.appVersion}>Update to SDK 38</Text>
     </View>
   );
 };
