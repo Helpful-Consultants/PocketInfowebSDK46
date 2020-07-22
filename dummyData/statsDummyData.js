@@ -11,6 +11,6 @@ export default statsDummyData = [
     registeredContacts: '7',
     tiwTicketsClosed: '3',
     tiwTicketsRaised: '3',
-    userName: 'Helpful Consultants (TIW Support)'
-  }
+    userName: 'Helpful Consultants (TIW Support)',
+  },
 ];

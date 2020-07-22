@@ -11,7 +11,7 @@ export default odisDummyData = [
         mainFeatureVersion: '89.5.330',
         productVersion: '5.1.6',
         dataVersion: '2.19.5',
-        otherVersion: ''
+        otherVersion: '',
       },
       {
         id: '5',
@@ -20,7 +20,7 @@ export default odisDummyData = [
         mainFeatureVersion: '89.5.290',
         productVersion: '5.1.6',
         dataVersion: '2.18.9',
-        otherVersion: ''
+        otherVersion: '',
       },
       {
         id: '3',
@@ -29,7 +29,7 @@ export default odisDummyData = [
         mainFeatureVersion: '89.5.250',
         productVersion: '5.1.6',
         dataVersion: '2.16.6',
-        otherVersion: ''
+        otherVersion: '',
       },
       {
         id: '4',
@@ -38,7 +38,7 @@ export default odisDummyData = [
         mainFeatureVersion: '89.5.340',
         productVersion: '5.1.6',
         dataVersion: '2.24.7',
-        otherVersion: ''
+        otherVersion: '',
       },
       {
         id: '2',
@@ -47,8 +47,8 @@ export default odisDummyData = [
         mainFeatureVersion: '89.5.260',
         productVersion: '5.1.6',
         dataVersion: '2.39.11',
-        otherVersion: ''
-      }
-    ]
-  }
+        otherVersion: '',
+      },
+    ],
+  },
 ];

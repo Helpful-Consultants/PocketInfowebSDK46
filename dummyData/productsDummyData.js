@@ -11,7 +11,7 @@ export default productsDummyData = [
     createdDate: '12/07/2019 10:18:12',
     lastUpdated: '12/07/2019 10:18:46',
     updatedBy: 'Lyndon Evans',
-    ipAddress: '86.188.233.41'
+    ipAddress: '86.188.233.41',
   },
   {
     id: '23',
@@ -25,7 +25,7 @@ export default productsDummyData = [
     createdDate: '24/05/2019 13:12:29',
     lastUpdated: '24/05/2019 13:59:29',
     updatedBy: 'Lyndon Evans',
-    ipAddress: '86.188.233.41'
+    ipAddress: '86.188.233.41',
   },
   {
     id: '22',
@@ -39,7 +39,7 @@ export default productsDummyData = [
     createdDate: '24/05/2019 13:05:06',
     lastUpdated: '24/05/2019 13:25:19',
     updatedBy: 'Lyndon Evans',
-    ipAddress: '82.132.240.61'
+    ipAddress: '82.132.240.61',
   },
   {
     id: '11',
@@ -53,7 +53,7 @@ export default productsDummyData = [
     createdDate: '08/11/2018 13:53:02',
     lastUpdated: '30/11/2018 11:13:58',
     updatedBy: 'Simon Groves',
-    ipAddress: '82.132.241.23'
+    ipAddress: '82.132.241.23',
   },
   {
     id: '15',
@@ -67,7 +67,7 @@ export default productsDummyData = [
     createdDate: '30/11/2018 10:16:10',
     lastUpdated: '30/11/2018 10:16:24',
     updatedBy: 'Simon Groves',
-    ipAddress: '82.132.241.23'
+    ipAddress: '82.132.241.23',
   },
   {
     id: '8',
@@ -81,7 +81,7 @@ export default productsDummyData = [
     createdDate: '31/08/2018 11:27:38',
     lastUpdated: '',
     updatedBy: 'Simon Groves',
-    ipAddress: '86.177.21.133'
+    ipAddress: '86.177.21.133',
   },
 
   {
@@ -96,6 +96,6 @@ export default productsDummyData = [
     createdDate: '31/08/2018 11:24:38',
     lastUpdated: '',
     updatedBy: 'Simon Groves',
-    ipAddress: '86.177.21.133'
-  }
+    ipAddress: '86.177.21.133',
+  },
 ];

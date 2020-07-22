@@ -13,9 +13,9 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: 'ASE44705101000',
         toolNumber: '6883 /1A',
-        partDescription: 'Torque wrench 5 - 25Nm\r\n'
-      }
-    ]
+        partDescription: 'Torque wrench 5 - 25Nm\r\n',
+      },
+    ],
   },
   {
     id: 2404,
@@ -31,7 +31,7 @@ export default dealerWipsDummyData = [
         lastWIP: '1001',
         partNumber: 'ASE40110101000',
         toolNumber: '1687',
-        partDescription: 'Charge air tester'
+        partDescription: 'Charge air tester',
       },
       {
         id: '5103',
@@ -40,9 +40,9 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: 'T10402',
         toolNumber: 'V03839037BQ',
-        partDescription: 'Puller'
-      }
-    ]
+        partDescription: 'Puller',
+      },
+    ],
   },
   {
     id: 2403,
@@ -58,9 +58,9 @@ export default dealerWipsDummyData = [
         lastWIP: '1009',
         partNumber: 'ASE40110101000',
         toolNumber: '1687',
-        partDescription: 'Charge air tester'
-      }
-    ]
+        partDescription: 'Charge air tester',
+      },
+    ],
   },
   {
     id: 2078,
@@ -76,7 +76,7 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '10 - 222 A /1',
         toolNumber: 'V03839141KD',
-        partDescription: 'Rack'
+        partDescription: 'Rack',
       },
       {
         id: '4393',
@@ -85,9 +85,9 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '10 - 222 A /11',
         toolNumber: 'V03839140G',
-        partDescription: 'Spindle'
-      }
-    ]
+        partDescription: 'Spindle',
+      },
+    ],
   },
   {
     id: 1768,
@@ -103,7 +103,7 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '2066',
         toolNumber: 'V03839200BE',
-        partDescription: 'Dial gauge adapter'
+        partDescription: 'Dial gauge adapter',
       },
       {
         id: '3805',
@@ -112,9 +112,9 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '3177',
         toolNumber: 'V03839300FQ',
-        partDescription: 'Retainer'
-      }
-    ]
+        partDescription: 'Retainer',
+      },
+    ],
   },
   {
     id: 1754,
@@ -130,7 +130,7 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '3456',
         toolNumber: 'V03839306AG',
-        partDescription: 'Thrust piece'
+        partDescription: 'Thrust piece',
       },
       {
         id: '3775',
@@ -139,8 +139,8 @@ export default dealerWipsDummyData = [
         lastWIP: '',
         partNumber: '3367',
         toolNumber: 'V03839306CS',
-        partDescription: 'Viscous fan fitting tool'
-      }
-    ]
-  }
+        partDescription: 'Viscous fan fitting tool',
+      },
+    ],
+  },
 ];

@@ -9,7 +9,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '14/12/2019 10:04:27',
     wipId: '3205',
-    wipNumber: '1003'
+    wipNumber: '1003',
   },
   {
     id: '6279',
@@ -21,7 +21,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '13/12/2019 08:17:50',
     wipId: '3176',
-    wipNumber: '555'
+    wipNumber: '555',
   },
   {
     id: '6280',
@@ -33,7 +33,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '13/12/2019 08:17:50',
     wipId: '3176',
-    wipNumber: '555'
+    wipNumber: '555',
   },
   {
     id: '6281',
@@ -45,7 +45,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '13/12/2019 08:17:50',
     wipId: '3176',
-    wipNumber: '555'
+    wipNumber: '555',
   },
   {
     id: '6275',
@@ -57,7 +57,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '12/12/2019 22:46:44',
     wipId: '3174',
-    wipNumber: '53333'
+    wipNumber: '53333',
   },
   {
     id: '6276',
@@ -69,7 +69,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '12/12/2019 22:46:44',
     wipId: '3174',
-    wipNumber: '53333'
+    wipNumber: '53333',
   },
   {
     id: '6277',
@@ -81,7 +81,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Equipment',
     wipCreatedDate: '12/12/2019 22:46:44',
     wipId: '3174',
-    wipNumber: '53333'
+    wipNumber: '53333',
   },
   {
     id: '6192',
@@ -93,7 +93,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '11/12/2019 10:04:21',
     wipId: '3118',
-    wipNumber: '6'
+    wipNumber: '6',
   },
   {
     id: '6193',
@@ -105,7 +105,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '11/12/2019 10:04:21',
     wipId: '3118',
-    wipNumber: '6'
+    wipNumber: '6',
   },
   {
     id: '6189',
@@ -117,7 +117,7 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '11/12/2019 09:29:01',
     wipId: '3116',
-    wipNumber: '222'
+    wipNumber: '222',
   },
   {
     id: '6190',
@@ -129,6 +129,6 @@ export default bookedOutToolsDummyData = [
     toolType: 'Tool',
     wipCreatedDate: '11/12/2019 09:29:01',
     wipId: '3116',
-    wipNumber: '222'
-  }
+    wipNumber: '222',
+  },
 ];
