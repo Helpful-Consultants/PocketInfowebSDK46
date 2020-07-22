@@ -53,7 +53,7 @@ export default function LtpList(props) {
   //     </View>
   //   );
 
-  const FlatListItem = props => {
+  const FlatListItem = (props) => {
     const { item } = props;
     // const { onSelectItem } = props;
 
@@ -70,7 +70,7 @@ export default function LtpList(props) {
         titleStyle={{
           color: Colors.vwgBlack,
           fontFamily: 'the-sans-bold',
-          fontSize: RFPercentage(1.9)
+          fontSize: RFPercentage(1.9),
         }}
         contentContainerStyle={styles.listItem}
         bottomDivider
@@ -80,7 +80,7 @@ export default function LtpList(props) {
               style={{
                 color: Colors.vwgVeryDarkGray,
                 fontFamily: 'the-sans',
-                fontSize: RFPercentage(1.9)
+                fontSize: RFPercentage(1.9),
               }}
             >{`${item.toolDescription}`}</Text>
             {item.orderPartNo &&
@@ -90,7 +90,7 @@ export default function LtpList(props) {
                 style={{
                   color: Colors.vwgVeryDarkGray,
                   fontFamily: 'the-sans',
-                  fontSize: RFPercentage(1.9)
+                  fontSize: RFPercentage(1.9),
                 }}
               >
                 {item.orderPartNo}
@@ -108,8 +108,8 @@ export default function LtpList(props) {
       {items && items.length > 0 ? (
         <FlatList
           data={items && items}
-          renderItem={itemData => <FlatListItem item={itemData.item} />}
-          keyExtractor={item => item.id}
+          renderItem={(itemData) => <FlatListItem item={itemData.item} />}
+          keyExtractor={(item) => item.id}
         />
       ) : null}
     </View>
@@ -126,18 +126,18 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 5
+    marginBottom: 5,
   },
 
   listItem: {
     marginLeft: 0,
     marginRight: 0,
-    marginVertical: 0
+    marginVertical: 0,
   },
   summaryText: {
     fontSize: 12,
     marginTop: 5,
     color: '#000',
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 });

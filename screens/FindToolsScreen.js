@@ -9,7 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
 // import SafeAreaView from 'react-native-safe-area-view';
@@ -30,7 +30,7 @@ import { revalidateUserCredentials } from '../actions/user';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import {
   getDealerWipsRequest,
-  deleteDealerWipRequest
+  deleteDealerWipRequest,
 } from '../actions/dealerWips';
 import { getLtpRequest } from '../actions/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
@@ -54,11 +54,11 @@ const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.inputId]: action.value
+      [action.inputId]: action.value,
     };
     const updatedValidities = {
       ...state.inputValidities,
-      [action.inputId]: action.isValid
+      [action.inputId]: action.isValid,
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
@@ -67,7 +67,7 @@ const formReducer = (state, action) => {
     return {
       formIsValid: updatedFormIsValid,
       inputValues: updatedValues,
-      inputValidities: updatedValidities
+      inputValidities: updatedValidities,
     };
   }
   return state;
@@ -91,8 +91,9 @@ const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
   unavailableToolsArr.forEach((item, index) => {
     if (item.tools_id && item.tools_id === toolId) {
       //   console.log('match on', item.tools_id);
-      retValue = `Unavailable. Now booked out to ${item.updatedBy &&
-        item.updatedBy}, job ${item.wipNumber && item.wipNumber}`;
+      retValue = `Unavailable. Now booked out to ${
+        item.updatedBy && item.updatedBy
+      }, job ${item.wipNumber && item.wipNumber}`;
     }
   });
   //   console.log(
@@ -110,7 +111,7 @@ const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
   //   if (dealerWips && dealerWips.length) {
   //     console.log('dealerWips[0]', dealerWips[0]);
   //   }
-  dealerWips.forEach(item => {
+  dealerWips.forEach((item) => {
     // console.log(
     //   'in loop',
     //   item.wipNumber && item.wipNumber,
@@ -140,42 +141,46 @@ const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
   return retValue;
 };
 
-export default FindToolsScreen = props => {
+export default FindToolsScreen = (props) => {
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
-    state => state.user.userApiFetchParamsObj
+    (state) => state.user.userApiFetchParamsObj
   );
-  const userName = useSelector(state => state.user.userName);
-  const userBrand = useSelector(state => state.user.userBrand);
+  const userName = useSelector((state) => state.user.userName);
+  const userBrand = useSelector((state) => state.user.userBrand);
 
   const dealerToolsItems = useSelector(
-    state => state.dealerTools.dealerToolsItems
+    (state) => state.dealerTools.dealerToolsItems
   );
   const dealerWipsItems = useSelector(
-    state => state.dealerWips.dealerWipsItems
+    (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpItems = useSelector(state => state.ltp.ltpItems);
-  const isLoadingTools = useSelector(state => state.dealerTools.isLoading);
-  const dataErrorTools = useSelector(state => state.dealerTools.error);
+  const ltpItems = useSelector((state) => state.ltp.ltpItems);
+  const isLoadingTools = useSelector((state) => state.dealerTools.isLoading);
+  const dataErrorTools = useSelector((state) => state.dealerTools.error);
   const dataErrorUrlTools = useSelector(
-    state => state.dealerTools.dataErrorUrl
+    (state) => state.dealerTools.dataErrorUrl
   );
   const dataStatusCodeTools = useSelector(
-    state => state.dealerTools.statusCode
+    (state) => state.dealerTools.statusCode
   );
-  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
-  const isSendingWip = useSelector(state => state.dealerWips.isSending);
-  const dataErrorWips = useSelector(state => state.dealerWips.error);
-  const dataErrorUrlWips = useSelector(state => state.dealerWips.dataErrorUrl);
-  const dataStatusCodeWips = useSelector(state => state.dealerWips.statusCode);
+  const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
+  const isSendingWip = useSelector((state) => state.dealerWips.isSending);
+  const dataErrorWips = useSelector((state) => state.dealerWips.error);
+  const dataErrorUrlWips = useSelector(
+    (state) => state.dealerWips.dataErrorUrl
+  );
+  const dataStatusCodeWips = useSelector(
+    (state) => state.dealerWips.statusCode
+  );
 
   const lastWipProcessed = useSelector(
-    state => state.dealerWips.lastWipProcessed
+    (state) => state.dealerWips.lastWipProcessed
   );
-  const isLoadingLtp = useSelector(state => state.ltp.isLoading);
-  const dataErrorLtp = useSelector(state => state.ltp.error);
-  const dataErrorUrlLtp = useSelector(state => state.ltp.dataErrorUrl);
-  const dataStatusCodeLtp = useSelector(state => state.ltp.statusCode);
+  const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
+  const dataErrorLtp = useSelector((state) => state.ltp.error);
+  const dataErrorUrlLtp = useSelector((state) => state.ltp.dataErrorUrl);
+  const dataStatusCodeLtp = useSelector((state) => state.ltp.statusCode);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
@@ -201,7 +206,7 @@ export default FindToolsScreen = props => {
 
   const insets = useSafeArea();
 
-  const getWipsItems = useCallback(userApiFetchParamsObj => {
+  const getWipsItems = useCallback((userApiFetchParamsObj) => {
     // console.log('in getWipsItems', userApiFetchParamsObj);
     dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
   });
@@ -243,17 +248,17 @@ export default FindToolsScreen = props => {
   };
 
   const dispatchNewWip = useCallback(
-    wipObj =>
+    (wipObj) =>
       dispatch(createDealerWipRequest({ wipObj, userApiFetchParamsObj })),
     [userApiFetchParamsObj] // something that doesn't change
   );
 
   const deleteDealerWip = useCallback(
-    payload => dispatch(deleteDealerWipRequest(payload)),
+    (payload) => dispatch(deleteDealerWipRequest(payload)),
     [dealerWipsItems]
   );
 
-  const saveToJob = wipObj => {
+  const saveToJob = (wipObj) => {
     dispatchNewWip(wipObj);
   };
 
@@ -333,9 +338,9 @@ export default FindToolsScreen = props => {
     let bookedToolsList = [];
 
     dealerWipsItems &&
-      dealerWipsItems.forEach(wip => {
+      dealerWipsItems.forEach((wip) => {
         if (wip.tools && wip.tools.length > 0) {
-          wip.tools.forEach(tool => bookedToolsList.push(tool.tools_id));
+          wip.tools.forEach((tool) => bookedToolsList.push(tool.tools_id));
         }
       });
     setBookedToolsList(bookedToolsList);
@@ -405,7 +410,7 @@ export default FindToolsScreen = props => {
     dealerToolsItems,
     ltpItems,
     isLoadingTools,
-    isLoadingLtp
+    isLoadingLtp,
   ]);
 
   useEffect(() => {
@@ -416,12 +421,12 @@ export default FindToolsScreen = props => {
     if (userBrand) {
       //   console.log('userBrand is ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
-        item => item[userBrand] === 'Y' || 'y'
+        (item) => item[userBrand] === 'Y' || 'y'
       );
     } else {
       //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
-        item =>
+        (item) =>
           item.au === ('Y' || 'y') ||
           item.cv === ('Y' || 'y') ||
           item.se === ('Y' || 'y') ||
@@ -433,7 +438,7 @@ export default FindToolsScreen = props => {
     let unsortedUniqueLtpItems =
       ltpItemsFiltered.filter(
         (item, index, self) =>
-          index === self.findIndex(t => t.orderPartNo === item.orderPartNo)
+          index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
       ) || [];
 
     let uniqueLtpItemsSorted = sortObjectList(
@@ -454,7 +459,7 @@ export default FindToolsScreen = props => {
   const selectItemHandler = (tool, lastPerson) => {
     // console.log('in selectItemHandler');
     let dup =
-      (toolBasket && toolBasket.filter(item => item.id === tool.id)) || [];
+      (toolBasket && toolBasket.filter((item) => item.id === tool.id)) || [];
 
     if (dup.length === 0) {
       const pickedTool = { ...tool, lastPerson };
@@ -493,13 +498,13 @@ export default FindToolsScreen = props => {
       wipNumber: wipNumber,
       id: wipId,
       userIntId: userApiFetchParamsObj.intId,
-      dealerId: userApiFetchParamsObj.dealerId
+      dealerId: userApiFetchParamsObj.dealerId,
     };
 
     let payload = {
       dealerId: userApiFetchParamsObj.dealerId,
       wipObj: wipObj,
-      userApiFetchParamsObj: userApiFetchParamsObj
+      userApiFetchParamsObj: userApiFetchParamsObj,
     };
 
     console.log('in deleteWipRequestHandler', payload);
@@ -537,9 +542,9 @@ export default FindToolsScreen = props => {
     setMode('basket');
   };
 
-  const removeBasketItemHandler = deadItemId => {
+  const removeBasketItemHandler = (deadItemId) => {
     if (toolBasket && toolBasket.length > 1) {
-      const newBasket = toolBasket.filter(item => item.id !== deadItemId);
+      const newBasket = toolBasket.filter((item) => item.id !== deadItemId);
       setToolBasket(newBasket);
     } else {
       removeBasketHandler();
@@ -548,17 +553,17 @@ export default FindToolsScreen = props => {
 
   const markUnavailableBasketItems = () => {
     let unavailableToolIdsArr = [];
-    lastWipProcessed.unavailableTools.forEach(item => {
+    lastWipProcessed.unavailableTools.forEach((item) => {
       // console.log(item.tools_id);
       unavailableToolIdsArr.push(item.tools_id);
     });
     // console.log('lastWipProcessed', lastWipProcessed);
     // console.log('unavailableToolIdsArr', unavailableToolIdsArr);
     // console.log('old toolBasket', toolBasket);
-    let newToolBasket = toolBasket.map(item => {
+    let newToolBasket = toolBasket.map((item) => {
       return {
         ...item,
-        unavailable: unavailableToolIdsArr.includes(item.id) ? true : false
+        unavailable: unavailableToolIdsArr.includes(item.id) ? true : false,
       };
     });
     // console.log('newToolBasket', newToolBasket);
@@ -571,7 +576,7 @@ export default FindToolsScreen = props => {
     setIsBasketVisible(false);
   };
 
-  const toggleBaskethandler = action => {
+  const toggleBaskethandler = (action) => {
     // console.log('in toggleBaskethandler');
     if (action) {
       setIsBasketVisible(action);
@@ -593,7 +598,7 @@ export default FindToolsScreen = props => {
     // console.log('in dropUnavailableHandler');
     // console.log('old toolBasket before drop', toolBasket);
     let newToolBasket = toolBasket.filter(
-      item => !item.unavailable || item.unavailable === false
+      (item) => !item.unavailable || item.unavailable === false
     );
     // console.log('newToolBasket after drop', newToolBasket);
     setToolBasket(newToolBasket);
@@ -615,7 +620,7 @@ export default FindToolsScreen = props => {
   //     console.log('timeout');
   //   }, 2000);
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     // console.log('searchInputHandler ' + searchInput);
     setSearchInput(searchInput);
 
@@ -631,7 +636,7 @@ export default FindToolsScreen = props => {
   };
 
   const saveToJobRequestHandler = () => {
-    const removeLastWip = item => {
+    const removeLastWip = (item) => {
       const newItem = { ...item };
       delete newItem.lastWIP;
       return newItem;
@@ -641,7 +646,7 @@ export default FindToolsScreen = props => {
       setMode('sending');
       setIsBasketVisible(true);
 
-      let newToolBasket = toolBasket.map(item => removeLastWip(item));
+      let newToolBasket = toolBasket.map((item) => removeLastWip(item));
 
       const wipObj = {
         wipNumber: formState.inputValues.wipNumber.toString(),
@@ -649,7 +654,7 @@ export default FindToolsScreen = props => {
         createdDate: new Date(),
         userIntId: userApiFetchParamsObj.intId,
         dealerId: userApiFetchParamsObj.dealerId,
-        tools: newToolBasket
+        tools: newToolBasket,
       };
 
       saveToJob(wipObj);
@@ -668,9 +673,9 @@ export default FindToolsScreen = props => {
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },
     inputValidities: {
-      wipNumber: false
+      wipNumber: false,
     },
-    formIsValid: false
+    formIsValid: false,
   });
 
   const inputChangeHandler = useCallback(
@@ -684,7 +689,7 @@ export default FindToolsScreen = props => {
         type: Types.FORM_INPUT_UPDATE,
         value: text,
         isValid: isValid,
-        inputId: inputIdentifier
+        inputId: inputIdentifier,
       });
     },
     [dispatchFormState]
@@ -712,7 +717,7 @@ export default FindToolsScreen = props => {
                 autoCapitalize='none'
                 autoCorrect={false}
                 returnKeyType='done'
-                onSubmitEditing={text => console.log(text)}
+                onSubmitEditing={(text) => console.log(text)}
                 errorStyle={{ color: Colors.errorText }}
                 errorText='Job number'
               />
@@ -1037,7 +1042,7 @@ export default FindToolsScreen = props => {
                 <Divider
                   style={{
                     backgroundColor: Colors.vwgDarkGray,
-                    marginVertical: 8
+                    marginVertical: 8,
                   }}
                 />
               ) : null}
@@ -1164,7 +1169,7 @@ export default FindToolsScreen = props => {
           size={18}
           color={Colors.vwgWhite}
           iconStyle={{
-            marginTop: Platform.OS === 'ios' ? 0 : -4
+            marginTop: Platform.OS === 'ios' ? 0 : -4,
           }}
         />
         <Text style={styles.closedBasketPromptText}>
@@ -1191,7 +1196,7 @@ export default FindToolsScreen = props => {
   return (
     <View
       style={{
-        flex: 1
+        flex: 1,
       }}
     >
       <View
@@ -1199,7 +1204,7 @@ export default FindToolsScreen = props => {
           marginBottom:
             mode === 'list' && itemsToShow.length > 0 && toolBasket.length > 0
               ? 170
-              : 140
+              : 140,
         }}
       >
         <KeyboardAvoidingView>
@@ -1273,18 +1278,18 @@ export default FindToolsScreen = props => {
               titleStyle={{
                 fontFamily: 'the-sans',
                 textAlign: 'center',
-                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
               confirmButtonTextStyle={{
                 fontFamily: 'the-sans',
                 textAlign: 'center',
                 elevation: Platform.OS === 'ios' ? 0 : 5,
-                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
               confirmButtonStyle={{
                 width: 100,
                 borderRadius: Platform.OS === 'ios' ? 3 : 2,
-                elevation: Platform.OS === 'ios' ? 0 : 5
+                elevation: Platform.OS === 'ios' ? 0 : 5,
               }}
             />
           ) : null}
@@ -1308,12 +1313,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -1322,14 +1327,14 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
       />
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140
+    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140,
     // backgroundColor: 'red'
   },
   drawerContainer: {
@@ -1342,7 +1347,7 @@ const styles = StyleSheet.create({
     // position: 'absolute',
     // paddingBottom: 5,
     padding: 0,
-    bottom: 0
+    bottom: 0,
     // left: 0,
     // right: 0
     // maxHeight: maxModalHeight
@@ -1355,7 +1360,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 0,
     // position: 'absolute',
-    padding: 10
+    padding: 10,
     // bottom: 0
     // left: 0,
     // right: 0
@@ -1363,14 +1368,14 @@ const styles = StyleSheet.create({
   },
   toolsList: {
     // marginBottom: 50,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
     // backgroundColor: 'red'
     // height: '80%'
   },
   inputStyle: {
     fontFamily: 'the-sans',
     color: Colors.vwgDarkSkyBlue,
-    fontSize: RFPercentage(2.4)
+    fontSize: RFPercentage(2.4),
   },
   basketContents: {
     color: Colors.vwgDeepBlue,
@@ -1379,42 +1384,42 @@ const styles = StyleSheet.create({
     maxHeight: maxModalHeight,
     paddingTop: 0,
     marginBottom: 0,
-    paddingHorizontal: 0
+    paddingHorizontal: 0,
     // padding: 5
   },
   basketText: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2)
+    fontSize: RFPercentage(2),
   },
   basketTextLink: {
     fontFamily: 'the-sans',
     color: Colors.vwgLink,
     fontSize: RFPercentage(2.4),
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
   basketHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   basketItem: {
     color: Colors.vwgDarkSkyBlue,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   basketItemText: {
     fontFamily: 'the-sans',
     color: Colors.vwgDarkGray,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
   },
   basketItemUnavailableText: {
     fontFamily: 'the-sans',
     color: Colors.vwgWarmRed,
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
   },
   basketItemTextEmph: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
@@ -1422,16 +1427,16 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   basketItemFooterRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   basketItemLocation: { flexDirection: 'column' },
   searchBarRow: {
     flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   basketTipRow: {
     flexDirection: 'row',
@@ -1440,14 +1445,14 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 20,
     paddingTop: 0,
     paddingBottom: 0,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   basketItemRow: {
     color: Colors.vwgDeepBlue,
 
     flexDirection: 'row',
     marginBottom: 0,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
@@ -1455,39 +1460,39 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   basketItemFooterRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   basketItemLocation: { flexDirection: 'column' },
   searchBarRow: {
     flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   basketItemImageCol: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    width: 70
+    width: 70,
   },
   basketItemDescCol: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: '72%',
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   basketItemMetaCol: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    width: '50%'
+    width: '50%',
   },
   basketActionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     // paddingHorizontal: 20,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   basketInputRow: {
     flexDirection: 'row',
@@ -1495,7 +1500,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   closedBasket: {
     position: 'absolute',
@@ -1508,35 +1513,35 @@ const styles = StyleSheet.create({
     // paddingTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   closedBasketPromptText: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(2.2)
+    fontSize: RFPercentage(2.2),
     // textAlign: 'center'
   },
   closeButtonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   basketSizeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingTop: 10,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10
+    padding: 10,
   },
   searchBarInputContainer: {
-    backgroundColor: Colors.vwgSearchBarInputContainer
+    backgroundColor: Colors.vwgSearchBarInputContainer,
   },
   searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
 
@@ -1544,48 +1549,48 @@ const styles = StyleSheet.create({
 
   searchFoundPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgMintGreen,
   },
   searchFoundPromptText: {
     fontFamily: 'the-sans',
     textAlign: 'center',
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   checkingNotice: {
     flexDirection: 'row',
-    padding: 10
+    padding: 10,
   },
   confirmedNoticeText: {
     fontFamily: 'the-sans',
     textAlign: 'center',
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.4)
+    fontSize: RFPercentage(2.4),
   },
   unavailableNoticeText: {
     fontFamily: 'the-sans-bold',
     textAlign: 'left',
     color: Colors.vwgBlack,
-    fontSize: RFPercentage(2.2)
+    fontSize: RFPercentage(2.2),
   },
   confirmedPrompt: {
-    padding: 0
+    padding: 0,
   },
   confirmedPromptText: {
     fontFamily: 'the-sans-bold',
     textAlign: 'left',
     color: Colors.vwgMintGreen,
-    fontSize: RFPercentage(2.4)
+    fontSize: RFPercentage(2.4),
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',
     padding: 10,
-    backgroundColor: Colors.vwgWarmRed
+    backgroundColor: Colors.vwgWarmRed,
   },
   noneFoundPromptText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   inputLabelText: {
     marginBottom: 20,
@@ -1593,29 +1598,29 @@ const styles = StyleSheet.create({
     color: Colors.vwgBlack,
     fontSize: 14,
     lineHeight: 19,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'column',
-    width: '60%'
+    width: '60%',
   },
   buttonView: {
     // width: 200,
-    fontSize: 12
+    fontSize: 12,
   },
   trashButton: {
     flexDirection: 'row',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
     // paddingRight: 10
   },
   signInButton: {
     marginVertical: 20,
     marginHorizontal: 20,
-    backgroundColor: Colors.vwgLink
+    backgroundColor: Colors.vwgLink,
   },
   cancelButton: {
     borderColor: Colors.vwgWarmRed,
-    borderRadius: Platform.OS === 'ios' ? 3 : 0
+    borderRadius: Platform.OS === 'ios' ? 3 : 0,
 
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
@@ -1626,7 +1631,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2.3),
     color: Colors.vwgWarmRed,
     paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
     // width: '10%'
@@ -1634,29 +1639,29 @@ const styles = StyleSheet.create({
   closeConfirmationButton: {
     backgroundColor: Colors.vwgDeepBlue,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5
+    elevation: Platform.OS === 'ios' ? 0 : 5,
   },
   closeConfirmationButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     color: Colors.vwgWhite,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
   closeButton: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5
+    elevation: Platform.OS === 'ios' ? 0 : 5,
   },
   closeButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     color: Colors.vwgLink,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
   bookButton: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5
+    elevation: Platform.OS === 'ios' ? 0 : 5,
     // color: Colors.vwgWhite,
 
     // flexDirection: 'column',
@@ -1668,7 +1673,7 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     // flexDirection: 'column',
     // justifyContent: 'flex-start',
     // width: '10%'
@@ -1676,12 +1681,12 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5
+    elevation: Platform.OS === 'ios' ? 0 : 5,
   },
   confirmButtonTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
-  }
+    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+  },
 });

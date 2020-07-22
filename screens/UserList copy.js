@@ -12,83 +12,83 @@ const list = [
       'https://toolsinfoweb.co.uk/content/images/headlines/deliveryTruckTimings.png',
     url: 'https://toolsinfoweb.co.uk/?controller=stories&action=view&id=38',
     summary:
-      'The Tools and Equipment department in AG are seeing an ever-increasing demand for key inventory items, mainly diagnostic equipment. This increase in demand is having significant impact on all markets and their ability to fulfil current demand.'
+      'The Tools and Equipment department in AG are seeing an ever-increasing demand for key inventory items, mainly diagnostic equipment. This increase in demand is having significant impact on all markets and their ability to fulfil current demand.',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The miGHty Blues',
     icon: 'av-timer',
-    url: 'http://chelseafc.com'
+    url: 'http://chelseafc.com',
   },
   {
     title: 'The Beebo',
     icon: 'flight-takeoff',
-    url: 'http://bbc.co.uk'
-  }
+    url: 'http://bbc.co.uk',
+  },
 ];
 
 export default class NewsLinks extends React.Component {
@@ -128,7 +128,7 @@ export default class NewsLinks extends React.Component {
     );
   }
 
-  _handlePressDocs = url => {
+  _handlePressDocs = (url) => {
     WebBrowser.openBrowserAsync(url);
   };
 }
@@ -137,22 +137,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#222'
+    backgroundColor: '#222',
   },
   tipText: {
     fontSize: 12,
     marginLeft: 15,
     marginTop: 3,
-    marginBottom: 20
+    marginBottom: 20,
   },
   optionsTitleText: {
     fontSize: 16,
     marginLeft: 15,
     marginTop: 9,
-    marginBottom: 12
+    marginBottom: 12,
   },
   optionIconContainer: {
-    marginRight: 9
+    marginRight: 9,
   },
   option: {
     backgroundColor: '#eee',
@@ -162,17 +162,17 @@ const styles = StyleSheet.create({
     borderBottomColor: '#fff',
     marginLeft: 10,
     marginRight: 10,
-    paddingRight: 20
+    paddingRight: 20,
   },
   optionText: {
     fontSize: 15,
     marginTop: 1,
-    color: '#000'
+    color: '#000',
   },
   summaryText: {
     fontSize: 12,
     marginTop: 5,
     color: '#000',
-    marginRight: 20
-  }
+    marginRight: 20,
+  },
 });

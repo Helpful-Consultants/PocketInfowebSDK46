@@ -9,7 +9,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  View
+  View,
 } from 'react-native';
 
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -26,7 +26,7 @@ import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import {
   getDealerWipsRequest,
-  emptyDealerWipsRequest
+  emptyDealerWipsRequest,
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
@@ -42,7 +42,7 @@ var gridWidth = screenWidth * 0.3;
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
 
-export default HomeScreen = props => {
+export default HomeScreen = (props) => {
   // console.log(props)
   //   console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
@@ -51,34 +51,34 @@ export default HomeScreen = props => {
   const { navigation } = props;
   const insets = useSafeArea();
 
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userError = useSelector(state => state.user.error);
-  const userName = useSelector(state => state.user.userName);
-  const userAll = useSelector(state => state.user);
-  const userBrand = useSelector(state => state.user.userBrand);
-  const dealerName = useSelector(state => state.user.dealerName);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userError = useSelector((state) => state.user.error);
+  const userName = useSelector((state) => state.user.userName);
+  const userAll = useSelector((state) => state.user);
+  const userBrand = useSelector((state) => state.user.userBrand);
+  const dealerName = useSelector((state) => state.user.dealerName);
   const userApiFetchParamsObj = useSelector(
-    state => state.user.userApiFetchParamsObj
+    (state) => state.user.userApiFetchParamsObj
   );
 
-  const odisObj = useSelector(state => state.odis.odisData);
-  const odisViewCount = useSelector(state => state.odis.viewCount);
+  const odisObj = useSelector((state) => state.odis.odisData);
+  const odisViewCount = useSelector((state) => state.odis.viewCount);
 
-  const lastUpdateNews = useSelector(state => state.news.lastUpdate);
-  const lastUpdateProducts = useSelector(state => state.products.lastUpdate);
-  const newsObj = useSelector(state => state.news);
-  const previousUpdateNews = useSelector(state => state.news.previousUpdate);
+  const lastUpdateNews = useSelector((state) => state.news.lastUpdate);
+  const lastUpdateProducts = useSelector((state) => state.products.lastUpdate);
+  const newsObj = useSelector((state) => state.news);
+  const previousUpdateNews = useSelector((state) => state.news.previousUpdate);
 
   const dealerWipsItems = useSelector(
-    state => state.dealerWips.dealerWipsItems
+    (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpItems = useSelector(state => state.ltp.ltpItems);
+  const ltpItems = useSelector((state) => state.ltp.ltpItems);
 
-  const isLoadingWips = useSelector(state => state.dealerWips.isLoading);
-  const isLoadingOdis = useSelector(state => state.odis.isLoading);
-  const isLoadingNews = useSelector(state => state.news.isLoading);
-  const isLoadingProducts = useSelector(state => state.products.isLoading);
-  const isLoadingLtp = useSelector(state => state.ltp.isLoading);
+  const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
+  const isLoadingOdis = useSelector((state) => state.odis.isLoading);
+  const isLoadingNews = useSelector((state) => state.news.isLoading);
+  const isLoadingProducts = useSelector((state) => state.products.isLoading);
+  const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
@@ -98,7 +98,7 @@ export default HomeScreen = props => {
     dispatch(getLtpRequest());
   });
 
-  const getAllItems = useCallback(async userApiFetchParamsObj => {
+  const getAllItems = useCallback(async (userApiFetchParamsObj) => {
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
@@ -153,7 +153,7 @@ export default HomeScreen = props => {
     isLoadingNews,
     isLoadingWips,
     isLoadingProducts,
-    isLoadingLtp
+    isLoadingLtp,
   ]);
 
   //   useEffect(() => {
@@ -380,7 +380,7 @@ export default HomeScreen = props => {
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
-          item =>
+          (item) =>
             item.tools &&
             item.tools.length > 0 &&
             item.userIntId &&
@@ -390,19 +390,19 @@ export default HomeScreen = props => {
 
     setWipsCount((userWipsItems && userWipsItems.length) || 0);
 
-    const buildBookedOutToolsArrForJob = wip => {
-      const thisWipsToolsArr = wip.tools.map(tool => ({
+    const buildBookedOutToolsArrForJob = (wip) => {
+      const thisWipsToolsArr = wip.tools.map((tool) => ({
         ...tool,
         wipNumber: wip.wipNumber,
         wipId: wip.id.toString(),
-        wipCreatedDate: wip.createdDate
+        wipCreatedDate: wip.createdDate,
       }));
       return thisWipsToolsArr;
     };
-    const buildBookedOutToolsArr = wips => {
+    const buildBookedOutToolsArr = (wips) => {
       let allToolsArr = [];
 
-      wips.forEach(wip => {
+      wips.forEach((wip) => {
         if (wip.tools && wip.tools.length > 0) {
           let wipToolsArr = buildBookedOutToolsArrForJob(wip);
           allToolsArr.push(...wipToolsArr);
@@ -423,7 +423,7 @@ export default HomeScreen = props => {
     <View
       style={{
         paddingTop: insets.top,
-        flex: 1
+        flex: 1,
       }}
     >
       <ScrollView
@@ -522,7 +522,7 @@ export default HomeScreen = props => {
                     style={styles.gridCell}
                     onPress={() =>
                       navigation.navigate('WipsTabs', {
-                        screen: 'BookedOutTools'
+                        screen: 'BookedOutTools',
                       })
                     }
                   >
@@ -639,7 +639,7 @@ export default HomeScreen = props => {
               <View
                 style={{
                   marginTop: 8,
-                  marginHorizontal: 20
+                  marginHorizontal: 20,
                 }}
               >
                 <Text style={styles.instructionsText}>
@@ -682,7 +682,7 @@ export default HomeScreen = props => {
   );
 };
 
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerShown: false,
     tabBarVisible: false,
@@ -694,13 +694,13 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
       />
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
     // alignItems: 'center',
     // justifyContent: 'space-evenly',
     // marginTop: 10
@@ -709,14 +709,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   loadingMessage: {
     marginVertical: 5,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   checkingText: {
     fontFamily: 'the-sans',
@@ -725,7 +725,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   dummyCheckingText: {
     fontFamily: 'the-sans',
@@ -734,7 +734,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   loadingText: {
     fontFamily: 'the-sans',
@@ -745,12 +745,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 50
+    marginBottom: 50,
   },
   gridRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
 
     // backgroundColor: 'red'
   },
@@ -758,7 +758,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10
+    marginTop: 10,
 
     // backgroundColor: 'red'
   },
@@ -785,7 +785,7 @@ const styles = StyleSheet.create({
     elevation: Platform.OS === 'ios' ? 0 : 5,
     borderRadius: Platform.OS === 'ios' ? 5 : 4,
     // height: PixelRatio.getPixelSizeForLayoutSize(40),
-    width: RFPercentage(23.5)
+    width: RFPercentage(23.5),
     // padding: 5
   },
   gridCellDisabled: {
@@ -800,7 +800,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgLightGray,
     margin: 5,
     borderRadius: 10,
-    height: 70
+    height: 70,
     // padding: 5
   },
   doubleGridCell: {
@@ -817,7 +817,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#eee',
     margin: 5,
     padding: 5,
-    borderRadius: 5
+    borderRadius: 5,
   },
 
   gridCellText: {
@@ -826,7 +826,7 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.5),
     textAlign: 'center',
-    lineHeight: RFPercentage(3.0)
+    lineHeight: RFPercentage(3.0),
   },
   gridCellCountText: { fontSize: RFPercentage(2.4) },
   gridCellTextDisabledSmall: {
@@ -834,13 +834,13 @@ const styles = StyleSheet.create({
     color: Colors.vwgWhite,
     fontSize: 10,
 
-    textAlign: 'center'
+    textAlign: 'center',
   },
   gridCellTextDisabled: {
     color: Colors.disabledButtonTextColor,
     fontSize: 14,
 
-    textAlign: 'center'
+    textAlign: 'center',
   },
   odisCellText: {
     color: Colors.vwgDeepBlue,
@@ -848,13 +848,13 @@ const styles = StyleSheet.create({
 
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   signOutRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 5
+    marginTop: 5,
   },
   signOutCellText: {
     color: Colors.vwgDeepBlue,
@@ -862,7 +862,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 3
+    paddingBottom: 3,
   },
 
   announcementText: {
@@ -870,50 +870,50 @@ const styles = StyleSheet.create({
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
     lineHeight: 19,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   instructionsText: {
     fontSize: RFPercentage(2.25),
     marginTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   instructionsTextSmall: {
     fontSize: RFPercentage(2),
     marginTop: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 20,
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
     marginTop: 3,
-    marginLeft: -10
+    marginLeft: -10,
   },
   getStartedContainer: {
     alignItems: 'center',
-    marginHorizontal: 50
+    marginHorizontal: 50,
   },
   homeScreenFilename: {
-    marginVertical: 7
+    marginVertical: 7,
   },
   codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)'
+    color: 'rgba(96,100,109, 0.8)',
   },
   codeHighlightContainer: {
     backgroundColor: 'rgba(0,0,0,0.05)',
     borderRadius: 3,
-    paddingHorizontal: 4
+    paddingHorizontal: 4,
   },
   getStartedText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   tabBarInfoContainer: {
     position: 'absolute',
@@ -925,33 +925,33 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.1,
-        shadowRadius: 3
+        shadowRadius: 3,
       },
       android: {
-        elevation: 20
-      }
+        elevation: 20,
+      },
     }),
     alignItems: 'center',
     backgroundColor: '#fbfbfb',
-    paddingVertical: 20
+    paddingVertical: 20,
   },
   tabBarInfoText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   navigationFilename: {
-    marginTop: 5
+    marginTop: 5,
   },
   helpContainer: {
     marginTop: 15,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   helpLink: {
-    paddingVertical: 15
+    paddingVertical: 15,
   },
   helpLinkText: {
     fontSize: 14,
-    color: '#2e78b7'
-  }
+    color: '#2e78b7',
+  },
 });

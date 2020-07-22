@@ -19,28 +19,28 @@ import Colors from '../constants/Colors';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
-export default StatsScreen = props => {
+export default StatsScreen = (props) => {
   const dispatch = useDispatch();
-  const statsObj = useSelector(state => state.stats.statsItems[0]);
+  const statsObj = useSelector((state) => state.stats.statsItems[0]);
   const dealerWipsItems = useSelector(
-    state => state.dealerWips.dealerWipsItems
+    (state) => state.dealerWips.dealerWipsItems
   );
   const dealerToolsItems = useSelector(
-    state => state.dealerTools.dealerToolsItems
+    (state) => state.dealerTools.dealerToolsItems
   );
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userDataObj = useSelector(state => state.user.userData[0]);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
-  const isLoading = useSelector(state => state.stats.isLoading);
-  const dataError = useSelector(state => state.stats.error);
-  const dataStatusCode = useSelector(state => state.odis.statusCode);
-  const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
+  const isLoading = useSelector((state) => state.stats.isLoading);
+  const dataError = useSelector((state) => state.stats.error);
+  const dataStatusCode = useSelector((state) => state.odis.statusCode);
+  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const userApiFetchParamsObj = {
     dealerId: dealerId,
-    intId: userIntId
+    intId: userIntId,
   };
   //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
 
@@ -112,7 +112,7 @@ export default StatsScreen = props => {
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
       dealerWipsItems.filter(
-        item =>
+        (item) =>
           item.userIntId &&
           item.userIntId.toString() == userDataObj.intId.toString()
       )) ||
@@ -181,12 +181,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -195,7 +195,7 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
       />
-    )
+    ),
   };
 };
 
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
     // backgroundColor: 'blue'
-  }
+  },
 });

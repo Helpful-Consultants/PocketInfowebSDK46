@@ -14,7 +14,7 @@ import { revalidateUserCredentials } from '../actions/user';
 import {
   deleteDealerWipRequest,
   deleteDealerWipToolRequest,
-  getDealerWipsRequest
+  getDealerWipsRequest,
 } from '../actions/dealerWips';
 
 import Urls from '../constants/Urls';
@@ -31,7 +31,7 @@ const identifyUserWipsItems = (userApiFetchParamsObj, dealerWipsItems) =>
     dealerWipsItems &&
     dealerWipsItems.length > 0 &&
     dealerWipsItems.filter(
-      item =>
+      (item) =>
         item.userIntId &&
         item.userIntId.toString() == userApiFetchParamsObj.intId.toString() &&
         item.tools &&
@@ -39,25 +39,25 @@ const identifyUserWipsItems = (userApiFetchParamsObj, dealerWipsItems) =>
     )) ||
   [];
 
-export default JobsScreen = props => {
+export default JobsScreen = (props) => {
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
-    state => state.user.userApiFetchParamsObj
+    (state) => state.user.userApiFetchParamsObj
   );
   const dealerWipsItems = useSelector(
-    state => state.dealerWips.dealerWipsItems
+    (state) => state.dealerWips.dealerWipsItems
   );
-  const isLoading = useSelector(state => state.dealerWips.isLoading);
-  const dataError = useSelector(state => state.dealerWips.error);
-  const dataErrorUrl = useSelector(state => state.dealerWips.dataErrorUrl);
-  const dataStatusCode = useSelector(state => state.dealerWips.statusCode);
+  const isLoading = useSelector((state) => state.dealerWips.isLoading);
+  const dataError = useSelector((state) => state.dealerWips.error);
+  const dataErrorUrl = useSelector((state) => state.dealerWips.dataErrorUrl);
+  const dataStatusCode = useSelector((state) => state.dealerWips.statusCode);
   const [searchInput, setSearchInput] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  const getItems = useCallback(async userApiFetchParamsObj => {
+  const getItems = useCallback(async (userApiFetchParamsObj) => {
     dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
   });
 
@@ -72,12 +72,12 @@ export default JobsScreen = props => {
   };
 
   const deleteDealerWip = useCallback(
-    payload => dispatch(deleteDealerWipRequest(payload)),
+    (payload) => dispatch(deleteDealerWipRequest(payload)),
     [dealerWipsItems]
   );
 
   const deleteDealerWipTool = useCallback(
-    payload => dispatch(deleteDealerWipToolRequest(payload)),
+    (payload) => dispatch(deleteDealerWipToolRequest(payload)),
     [dealerWipsItems]
   );
 
@@ -108,7 +108,7 @@ export default JobsScreen = props => {
     getItemsAsync();
   };
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     // console.log(searchInput);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
@@ -132,7 +132,7 @@ export default JobsScreen = props => {
       let payload = {
         dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
-        userApiFetchParamsObj: userApiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj,
       };
       //   console.log('delete wip ' + currentJob.id);
       //   console.log('delete wip ', payload);
@@ -142,7 +142,7 @@ export default JobsScreen = props => {
         dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        userApiFetchParamsObj: userApiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj,
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -150,7 +150,7 @@ export default JobsScreen = props => {
     }
   };
 
-  const returnAllToolsHandler = job => {
+  const returnAllToolsHandler = (job) => {
     // console.log('in returnToolHandler', job);
     setCurrentJob(job);
     setIsAlertVisible(true);
@@ -259,34 +259,34 @@ export default JobsScreen = props => {
           }}
           contentContainerStyle={{
             borderRadius: Platform.OS === 'ios' ? 6 : 3,
-            elevation: Platform.OS === 'ios' ? 0 : 5
+            elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           titleStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           cancelButtonTextStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           confirmButtonStyle={{
             width: 100,
             borderRadius: Platform.OS === 'ios' ? 3 : 2,
-            elevation: Platform.OS === 'ios' ? 0 : 5
+            elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           cancelButtonStyle={{
             width: 100,
-            borderRadius: Platform.OS === 'ios' ? 3 : 2
+            borderRadius: Platform.OS === 'ios' ? 3 : 2,
           }}
         />
       ) : null}
@@ -303,12 +303,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -317,7 +317,7 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-clipboard'}
       />
-    )
+    ),
   };
 };
 
@@ -325,28 +325,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: 15,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   modal: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#ccc',
-    padding: 100
+    padding: 100,
   },
   text: {
     fontFamily: 'the-sans',
     color: '#3f2949',
-    marginTop: 10
+    marginTop: 10,
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',
     padding: 10,
-    backgroundColor: Colors.vwgWarmRed
+    backgroundColor: Colors.vwgWarmRed,
   },
   noneFoundPromptText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: Colors.vwgWhite
-  }
+    color: Colors.vwgWhite,
+  },
 });

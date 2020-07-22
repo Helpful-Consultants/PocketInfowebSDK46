@@ -19,7 +19,7 @@ import { revalidateUserCredentials } from '../actions/user';
 import {
   deleteDealerWipRequest,
   deleteDealerWipToolRequest,
-  getDealerWipsRequest
+  getDealerWipsRequest,
 } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
@@ -28,18 +28,18 @@ import BookedOutToolsList from './BookedOutToolsList';
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 const minSearchLength = 1;
 
-export default BookedOutToolsScreen = props => {
+export default BookedOutToolsScreen = (props) => {
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
-    state => state.user.userApiFetchParamsObj
+    (state) => state.user.userApiFetchParamsObj
   );
   const dealerWipsItems = useSelector(
-    state => state.dealerWips.dealerWipsItems
+    (state) => state.dealerWips.dealerWipsItems
   );
-  const isLoading = useSelector(state => state.dealerWips.isLoading);
-  const dataError = useSelector(state => state.dealerWips.error);
-  const dataErrorUrl = useSelector(state => state.dealerWips.dataErrorUrl);
-  const dataStatusCode = useSelector(state => state.dealerWips.statusCode);
+  const isLoading = useSelector((state) => state.dealerWips.isLoading);
+  const dataError = useSelector((state) => state.dealerWips.error);
+  const dataErrorUrl = useSelector((state) => state.dealerWips.dataErrorUrl);
+  const dataStatusCode = useSelector((state) => state.dealerWips.statusCode);
   const [searchInput, setSearchInput] = useState('');
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
@@ -50,7 +50,7 @@ export default BookedOutToolsScreen = props => {
 
   const insets = useSafeArea();
 
-  const getItems = useCallback(async userApiFetchParamsObj => {
+  const getItems = useCallback(async (userApiFetchParamsObj) => {
     // console.log('in getItems', userApiFetchParamsObj);
     // console.log(
     //   'in booked tools getItems',
@@ -70,12 +70,12 @@ export default BookedOutToolsScreen = props => {
   };
 
   const deleteDealerWip = useCallback(
-    payload => dispatch(deleteDealerWipRequest(payload)),
+    (payload) => dispatch(deleteDealerWipRequest(payload)),
     [userApiFetchParamsObj]
   );
 
   const deleteDealerWipTool = useCallback(
-    payload => dispatch(deleteDealerWipToolRequest(payload)),
+    (payload) => dispatch(deleteDealerWipToolRequest(payload)),
     [userApiFetchParamsObj]
   );
 
@@ -138,27 +138,27 @@ export default BookedOutToolsScreen = props => {
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
-          item =>
+          (item) =>
             item.userIntId &&
             item.userIntId.toString() == userApiFetchParamsObj.intId.toString()
         )) ||
       [];
     setUserWipsItems(userWipsItems);
 
-    const buildBookedOutToolsArrForJob = wip => {
-      const thisWipsToolsArr = wip.tools.map(tool => ({
+    const buildBookedOutToolsArrForJob = (wip) => {
+      const thisWipsToolsArr = wip.tools.map((tool) => ({
         ...tool,
         wipNumber: wip.wipNumber,
         wipId: wip.id.toString(),
-        wipCreatedDate: wip.createdDate
+        wipCreatedDate: wip.createdDate,
       }));
       return thisWipsToolsArr;
     };
 
-    const buildBookedOutToolsArr = wips => {
+    const buildBookedOutToolsArr = (wips) => {
       let allToolsArr = [];
 
-      wips.forEach(wip => {
+      wips.forEach((wip) => {
         if (wip.tools && wip.tools.length > 0) {
           let wipToolsArr = buildBookedOutToolsArrForJob(wip);
           allToolsArr.push(...wipToolsArr);
@@ -174,7 +174,7 @@ export default BookedOutToolsScreen = props => {
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     // console.log(searchInput, bookedOutItems);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
@@ -183,12 +183,12 @@ export default BookedOutToolsScreen = props => {
     }
   };
 
-  const returnToolHandler = item => {
+  const returnToolHandler = (item) => {
     // console.log('in returnToolHandler', item);
     // console.log('userWipsItems', userWipsItems.length);
     const jobId = item.wipId;
     // console.log('in returnToolHandler jobId is ', jobId);
-    const jobObj = userWipsItems.find(item => item.id.toString() === jobId);
+    const jobObj = userWipsItems.find((item) => item.id.toString() === jobId);
     // const jobObj = jobArr[0];
     // console.log('jobArr', jobArr);
     // console.log('in returnToolHandler jobObj is ', jobObj);
@@ -205,7 +205,7 @@ export default BookedOutToolsScreen = props => {
       let payload = {
         dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
-        userApiFetchParamsObj: userApiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj,
       };
 
       //   console.log('delete wip ' + currentJob.id);
@@ -216,7 +216,7 @@ export default BookedOutToolsScreen = props => {
         dealerId: userApiFetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        userApiFetchParamsObj: userApiFetchParamsObj
+        userApiFetchParamsObj: userApiFetchParamsObj,
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -322,34 +322,34 @@ export default BookedOutToolsScreen = props => {
           }}
           contentContainerStyle={{
             borderRadius: Platform.OS === 'ios' ? 6 : 3,
-            elevation: Platform.OS === 'ios' ? 0 : 5
+            elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           titleStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           cancelButtonTextStyle={{
             fontFamily: 'the-sans',
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
-            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase'
+            textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           confirmButtonStyle={{
             width: 100,
             borderRadius: Platform.OS === 'ios' ? 3 : 2,
-            elevation: Platform.OS === 'ios' ? 0 : 5
+            elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           cancelButtonStyle={{
             width: 100,
-            borderRadius: Platform.OS === 'ios' ? 3 : 2
+            borderRadius: Platform.OS === 'ios' ? 3 : 2,
           }}
         />
       ) : null}
@@ -366,12 +366,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -380,7 +380,7 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'}
       />
-    )
+    ),
   };
 };
 
@@ -392,27 +392,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // paddingTop: 15,
-    marginBottom: 10
+    marginBottom: 10,
   },
   modal: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#ccc',
-    padding: 100
+    padding: 100,
   },
   text: {
     color: '#3f2949',
-    marginTop: 10
+    marginTop: 10,
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',
     padding: 10,
-    backgroundColor: Colors.vwgWarmRed
+    backgroundColor: Colors.vwgWarmRed,
   },
   noneFoundPromptText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: Colors.vwgWhite
-  }
+    color: Colors.vwgWhite,
+  },
 });

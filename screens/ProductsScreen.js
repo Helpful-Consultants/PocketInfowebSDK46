@@ -22,7 +22,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
 
-const checkUrl = rawUrl => {
+const checkUrl = (rawUrl) => {
   if (rawUrl.substring(0, 4) == 'http') {
     return rawUrl;
   } else {
@@ -30,17 +30,17 @@ const checkUrl = rawUrl => {
   }
 };
 
-export default ProductsScreen = props => {
+export default ProductsScreen = (props) => {
   const dispatch = useDispatch();
-  const productsItems = useSelector(state => state.products.productsItems);
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userData = useSelector(state => state.user.userData[0]);
+  const productsItems = useSelector((state) => state.products.productsItems);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userData = useSelector((state) => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
-  const isLoading = useSelector(state => state.products.isLoading);
-  const dataError = useSelector(state => state.products.error);
-  const dataStatusCode = useSelector(state => state.products.statusCode);
-  const dataErrorUrl = useSelector(state => state.products.dataErrorUrl);
+  const isLoading = useSelector((state) => state.products.isLoading);
+  const dataError = useSelector((state) => state.products.error);
+  const dataStatusCode = useSelector((state) => state.products.statusCode);
+  const dataErrorUrl = useSelector((state) => state.products.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
@@ -58,7 +58,7 @@ export default ProductsScreen = props => {
   //   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getProductsRequest()), [
-    productsItems
+    productsItems,
   ]);
 
   //   useEffect(() => {
@@ -87,7 +87,7 @@ export default ProductsScreen = props => {
     }, [])
   );
 
-  const pressOpenHandler = async url => {
+  const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);
     let checkedUrl = checkUrl(url);
 
@@ -111,7 +111,7 @@ export default ProductsScreen = props => {
   //     setIsRefreshNeeded(true);
   //   });
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     // console.log(searchInput);
     setSearchInput(searchInput);
   };
@@ -189,12 +189,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -203,23 +203,23 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
       />
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginBottom: -5
+    marginBottom: -5,
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgInfoBar
+    backgroundColor: Colors.vwgInfoBar,
   },
   lookupPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
-  }
+    fontSize: RFPercentage(1.9),
+  },
 });

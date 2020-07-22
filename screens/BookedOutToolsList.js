@@ -6,7 +6,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 import { Divider, Icon } from 'react-native-elements';
@@ -28,7 +28,7 @@ export default function BookedOutToolsList(props) {
     items,
     baseImageUrl,
     returnToolHandler,
-    searchInput
+    searchInput,
   } = props;
   let { userIntId } = props;
 
@@ -78,7 +78,7 @@ export default function BookedOutToolsList(props) {
                   <Divider
                     style={{
                       backgroundColor: Colors.vwgDarkGray,
-                      marginVertical: 8
+                      marginVertical: 8,
                     }}
                   />
                 ) : null}
@@ -89,12 +89,12 @@ export default function BookedOutToolsList(props) {
                       alignItems: 'flex-start',
                       justifyContent: 'space-between',
                       padding: 0,
-                      margin: 0
+                      margin: 0,
                     }}
                   >
                     <View
                       style={{
-                        width: i === 0 ? '70%' : '90%'
+                        width: i === 0 ? '70%' : '90%',
                       }}
                     >
                       <Text
@@ -103,7 +103,7 @@ export default function BookedOutToolsList(props) {
                           fontSize: RFPercentage(2.2),
                           color: Colors.vwgLink,
                           textAlign: 'left',
-                          paddingTop: 8
+                          paddingTop: 8,
                         }}
                       >{`${item.partNumber} (${item.toolNumber})`}</Text>
                     </View>
@@ -111,14 +111,14 @@ export default function BookedOutToolsList(props) {
                       style={{
                         flexDirection: 'row',
                         alignItems: 'flex-start',
-                        justifyContent: 'flex-end'
+                        justifyContent: 'flex-end',
                       }}
                     >
                       {i === 0 ? (
                         <View
                           style={{
                             alignItems: 'center',
-                            justifyContent: 'center'
+                            justifyContent: 'center',
                           }}
                         >
                           <Text
@@ -127,7 +127,7 @@ export default function BookedOutToolsList(props) {
                               fontSize: RFPercentage(2.2),
                               color: Colors.vwgLink,
                               textAlign: 'right',
-                              paddingTop: 9
+                              paddingTop: 9,
                             }}
                           >
                             Return
@@ -137,7 +137,7 @@ export default function BookedOutToolsList(props) {
                       <View
                         style={{
                           alignItems: 'center',
-                          justifyContent: 'center'
+                          justifyContent: 'center',
                         }}
                       >
                         <Icon
@@ -160,7 +160,7 @@ export default function BookedOutToolsList(props) {
                   <View
                     style={{
                       flexDirection: 'row',
-                      marginTop: 10
+                      marginTop: 10,
                     }}
                   >
                     <ScaledImageFinder
@@ -174,7 +174,7 @@ export default function BookedOutToolsList(props) {
                           fontFamily: 'the-sans',
                           color: Colors.vwgVeryDarkGray,
                           marginBottom: 3,
-                          fontSize: RFPercentage(2.1)
+                          fontSize: RFPercentage(2.1),
                         }}
                       >{`${item.partDescription}`}</Text>
                       {item.location.length > 0 ? (
@@ -183,7 +183,7 @@ export default function BookedOutToolsList(props) {
                             fontFamily: 'the-sans',
                             color: Colors.vwgVeryDarkGray,
                             marginBottom: 3,
-                            fontSize: RFPercentage(2.1)
+                            fontSize: RFPercentage(2.1),
                           }}
                         >{`Storage Location: ${item.location}`}</Text>
                       ) : null}
@@ -193,7 +193,7 @@ export default function BookedOutToolsList(props) {
                             fontFamily: 'the-sans',
                             color: Colors.vwgVeryDarkGray,
                             marginBottom: 3,
-                            fontSize: RFPercentage(2.1)
+                            fontSize: RFPercentage(2.1),
                           }}
                         >{`Booked out to job '${item.wipNumber}'`}</Text>
                       ) : null}
@@ -211,17 +211,17 @@ export default function BookedOutToolsList(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   searchPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgDarkSkyBlue,
-    marginBottom: 5
+    marginBottom: 5,
   },
   searchPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite
-  }
+    color: Colors.vwgWhite,
+  },
 });

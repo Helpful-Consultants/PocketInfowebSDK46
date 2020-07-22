@@ -67,32 +67,32 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.vwgWhite,
     borderLeftColor: Colors.vwgWhite,
     borderRightColor: Colors.vwgWhite,
-    borderWidth: 1
+    borderWidth: 1,
   },
   itemTopRow: {
     flexDirection: 'row',
     marginHorizontal: 0,
-    marginBottom: 10
+    marginBottom: 10,
   },
   itemTitleContainer: {
     width: '70%',
     paddingLeft: 15,
-    paddingRight: 25
+    paddingRight: 25,
   },
   itemTitle: {
     flexWrap: 'wrap',
     fontFamily: 'the-sans-bold',
-    color: Colors.vwgLink
+    color: Colors.vwgLink,
   },
 
   itemMainRow: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
   },
   itemMainText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'justify',
-    color: Colors.vwgVeryDarkGray
-  }
+    color: Colors.vwgVeryDarkGray,
+  },
 });

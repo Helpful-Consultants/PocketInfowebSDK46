@@ -20,7 +20,7 @@ export default function StatsSummary(props) {
     userDataObj,
     activeJobsCount,
     dealerToolsCount,
-    effectiveness
+    effectiveness,
   } = props;
 
   const userDataCount =
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 40,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
     // backgroundColor: 'teal'
 
     // backgroundColor: '#00889d'
@@ -146,13 +146,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     // marginTop: 10,
     marginBottom: 0,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   statsText: {
     color: Colors.vwgVeryDarkGray,
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2),
-    textAlign: 'center'
+    textAlign: 'center',
     // marginBottom: 5
-  }
+  },
 });

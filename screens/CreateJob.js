@@ -4,12 +4,12 @@ import {
   Text,
   TouchableHighlight,
   View,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 class CreateJob extends Component {
   state = {
-    modalVisible: false
+    modalVisible: false,
   };
   toggleModal(visible) {
     this.setState({ modalVisible: visible });
@@ -55,16 +55,16 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     backgroundColor: '#ede3f2',
-    padding: 100
+    padding: 100,
   },
   modal: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#f7021a',
-    padding: 100
+    padding: 100,
   },
   text: {
     color: '#3f2949',
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });

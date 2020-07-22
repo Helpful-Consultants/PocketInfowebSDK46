@@ -24,7 +24,7 @@ export default function DealerToolsList(props) {
     searchInput,
     showPrompt,
     userIntId,
-    toggleBaskethandler
+    toggleBaskethandler,
   } = props;
 
   //   const { selectItemHandler, showPrompt } = props;
@@ -39,7 +39,7 @@ export default function DealerToolsList(props) {
   //   console.log('toolBasket', toolBasket && toolBasket);
 
   let toolBasketList = [];
-  toolBasket && toolBasket.forEach(tool => toolBasketList.push(tool.id));
+  toolBasket && toolBasket.forEach((tool) => toolBasketList.push(tool.id));
   //   useEffect(() => {
   //     let list = [];
 
@@ -49,49 +49,49 @@ export default function DealerToolsList(props) {
   //     setToolBasketList(list);
   //   }, [toolBasket]);
 
-  const findLastBookedOutByFromTool = item => {
+  const findLastBookedOutByFromTool = (item) => {
     // console.log('findLastBookedOutByFromTool', item);
     let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
 
     if (lastWIP.length > 0) {
       //   console.log('lastWIP ', lastWIP);
       const matchingJobs = dealerWipsItems.filter(
-        item => item.wipNumber.toString() === lastWIP.toString()
+        (item) => item.wipNumber.toString() === lastWIP.toString()
       );
 
       if (matchingJobs.length > 0) {
         const personObj = {
           intId:
             matchingJobs[0].createdBy && matchingJobs[0].userIntId.toString(),
-          name: matchingJobs[0].createdBy && matchingJobs[0].createdBy
+          name: matchingJobs[0].createdBy && matchingJobs[0].createdBy,
         };
 
         return personObj;
       } else {
         return {
           intId: null,
-          name: ''
+          name: '',
         };
       }
     } else {
       return {
         intId: null,
-        name: ''
+        name: '',
       };
     }
   };
 
-  const findWipforTool = toolId => {
+  const findWipforTool = (toolId) => {
     // console.log('findWipforTool', toolId);
     // let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
     let matchingJobs = [];
 
     toolId &&
       dealerWipsItems &&
-      dealerWipsItems.forEach(wip => {
+      dealerWipsItems.forEach((wip) => {
         if (wip.tools && wip.tools.length > 0) {
           wip.tools.forEach(
-            tool => tool.tools_id === toolId && matchingJobs.push(wip)
+            (tool) => tool.tools_id === toolId && matchingJobs.push(wip)
           );
         }
       });
@@ -111,7 +111,7 @@ export default function DealerToolsList(props) {
   //     );
   //   };
 
-  const CustomListItem = props => {
+  const CustomListItem = (props) => {
     const { item, lastJobDetails, booked, inToolBasket } = props;
     let personObj = {};
     let personName = '';
@@ -149,7 +149,7 @@ export default function DealerToolsList(props) {
             ? Colors.vwgVeryDarkGray
             : Colors.vwgLink,
           fontFamily: 'the-sans-bold',
-          fontSize: RFPercentage(2.1)
+          fontSize: RFPercentage(2.1),
         }}
         containerStyle={{
           backgroundColor: item.loanToolNo
@@ -157,7 +157,7 @@ export default function DealerToolsList(props) {
             : (booked && booked === true) ||
               (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryLightGray
-            : Colors.vwgWhite
+            : Colors.vwgWhite,
         }}
         subtitle={
           <View>
@@ -174,7 +174,7 @@ export default function DealerToolsList(props) {
                   <Text
                     style={{
                       fontFamily: 'the-sans',
-                      fontSize: RFPercentage(2.0)
+                      fontSize: RFPercentage(2.0),
                     }}
                   >
                     {item.orderPartNo}
@@ -183,7 +183,7 @@ export default function DealerToolsList(props) {
                 <Text
                   style={{
                     fontFamily: 'the-sans-bold',
-                    fontSize: RFPercentage(2.0)
+                    fontSize: RFPercentage(2.0),
                   }}
                 >
                   Available through the Loan Tool Programme
@@ -209,7 +209,7 @@ export default function DealerToolsList(props) {
     );
   };
 
-  const FlatListItem = props => {
+  const FlatListItem = (props) => {
     const { item, selectItemHandler } = props;
     // console.log(props);
 
@@ -243,14 +243,14 @@ export default function DealerToolsList(props) {
               style={{
                 fontFamily: 'the-sans',
                 fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed
+                color: Colors.vwgWarmRed,
               }}
             >
               <Text
                 style={{
                   fontFamily: 'the-sans-bold',
                   fontSize: RFPercentage(2.0),
-                  color: Colors.vwgWarmRed
+                  color: Colors.vwgWarmRed,
                 }}
               >{`Already booked out to you`}</Text>
               {`, on job '${bookedByWip}'`}
@@ -263,7 +263,7 @@ export default function DealerToolsList(props) {
               style={{
                 fontFamily: 'the-sans',
                 fontSize: RFPercentage(2.0),
-                color: Colors.vwgWarmRed
+                color: Colors.vwgWarmRed,
               }}
             >{`Booked out to ${personName}, on job '${bookedByWip}'`}</Text>
           );
@@ -280,7 +280,7 @@ export default function DealerToolsList(props) {
                 <Text
                   style={{
                     fontFamily: 'the-sans',
-                    fontSize: RFPercentage(2.0)
+                    fontSize: RFPercentage(2.0),
                   }}
                 >
                   {`Already in your `}
@@ -296,7 +296,7 @@ export default function DealerToolsList(props) {
                   style={{
                     fontFamily: 'the-sans-bold',
                     fontSize: RFPercentage(2.0),
-                    color: Colors.vwgLink
+                    color: Colors.vwgLink,
                   }}
                 >
                   {` tool basket.`}
@@ -405,13 +405,13 @@ export default function DealerToolsList(props) {
     let newList = (
       <FlatList
         data={items && items}
-        renderItem={itemData => (
+        renderItem={(itemData) => (
           <FlatListItem
             item={itemData.item}
             selectItemHandler={selectItemHandler}
           />
         )}
-        keyExtractor={item => item.loanToolNo || item.id}
+        keyExtractor={(item) => item.loanToolNo || item.id}
         ListHeaderComponent={getHeader}
       />
     );
@@ -426,16 +426,16 @@ export default function DealerToolsList(props) {
 const styles = StyleSheet.create({
   searchPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue
+    backgroundColor: Colors.vwgDarkSkyBlue,
   },
   searchPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
 
   toolItem: {
-    margin: 0
-  }
+    margin: 0,
+  },
 });

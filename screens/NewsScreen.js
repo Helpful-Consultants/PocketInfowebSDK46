@@ -24,7 +24,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
 
-const checkUrl = rawUrl => {
+const checkUrl = (rawUrl) => {
   if (rawUrl.substring(0, 4) == 'http') {
     return encodeURI(rawUrl);
   } else {
@@ -32,18 +32,18 @@ const checkUrl = rawUrl => {
   }
 };
 
-export default NewsScreen = props => {
+export default NewsScreen = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const newsItems = useSelector(state => state.news.newsItems);
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userData = useSelector(state => state.user.userData[0]);
+  const newsItems = useSelector((state) => state.news.newsItems);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userData = useSelector((state) => state.user.userData[0]);
   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
-  const isLoading = useSelector(state => state.news.isLoading);
-  const dataError = useSelector(state => state.news.error);
-  const dataStatusCode = useSelector(state => state.news.statusCode);
-  const dataErrorUrl = useSelector(state => state.news.dataErrorUrl);
+  const isLoading = useSelector((state) => state.news.isLoading);
+  const dataError = useSelector((state) => state.news.error);
+  const dataStatusCode = useSelector((state) => state.news.statusCode);
+  const dataErrorUrl = useSelector((state) => state.news.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
@@ -60,7 +60,7 @@ export default NewsScreen = props => {
   //   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getNewsRequest()), [
-    newsItems
+    newsItems,
   ]);
 
   //   const { navigation } = props;
@@ -95,7 +95,7 @@ export default NewsScreen = props => {
     }, [])
   );
 
-  const pressOpenHandler = async url => {
+  const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);
     let checkedUrl = checkUrl(url);
     // console.log(checkedUrl);
@@ -113,7 +113,7 @@ export default NewsScreen = props => {
     }
   };
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     // console.log(searchInput);
     setSearchInput(searchInput);
   };
@@ -184,12 +184,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -202,7 +202,7 @@ export const screenOptions = navData => {
             : 'md-information-circle'
         }
       />
-    )
+    ),
   };
 };
 
@@ -211,16 +211,16 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
-    marginBottom: -5
+    marginBottom: -5,
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgInfoBar
+    backgroundColor: Colors.vwgInfoBar,
   },
   lookupPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
-  }
+    fontSize: RFPercentage(1.9),
+  },
 });

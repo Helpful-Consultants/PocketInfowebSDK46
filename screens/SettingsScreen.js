@@ -6,7 +6,7 @@ import {
   Platform,
   ScrollView,
   Text,
-  View
+  View,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Constants from 'expo-constants';
@@ -17,16 +17,16 @@ import HeaderButton from '../components/HeaderButton';
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item'
+    title: 'First Item',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item'
+    title: 'Second Item',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item'
-  }
+    title: 'Third Item',
+  },
 ];
 
 function ListItem({ title }) {
@@ -47,13 +47,13 @@ export default function SettingsScreen() {
     <SafeAreaView style={styles.container}>
       <FlatList
         data={DATA}
-        renderItem={itemData => <ListItem title={itemData.item.title} />}
-        keyExtractor={item => item.id}
+        renderItem={(itemData) => <ListItem title={itemData.item.title} />}
+        keyExtractor={(item) => item.id}
       />
     </SafeAreaView>
   );
 }
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: <TitleWithAppLogo title='SettingsScreen' />,
     headerLeft: () => (
@@ -77,22 +77,22 @@ export const screenOptions = navData => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
   },
   item: {
     backgroundColor: '#f9c2ff',
     padding: 5,
     marginVertical: 4,
-    marginHorizontal: 16
+    marginHorizontal: 16,
   },
   title: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });

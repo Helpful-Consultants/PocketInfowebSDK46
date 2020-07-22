@@ -39,27 +39,27 @@ class UsersScreen extends Component {
   }
 }
 
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     title: 'News',
     headerStyle: {
-      backgroundColor: '#efefef'
+      backgroundColor: '#efefef',
     },
     headerTintColor: '#333',
     headerTitleStyle: {
-      fontFamily: 'the-sans-bold'
-    }
+      fontFamily: 'the-sans-bold',
+    },
   };
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15
-  }
+    paddingTop: 15,
+  },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   //   const { friends } = state;
   console.log('in mapStateToProps');
   console.log(state.users);
@@ -67,9 +67,9 @@ const mapStateToProps = state => {
   return state.users;
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUsersRequest: () => dispatch(getUsersRequest())
+    getUsersRequest: () => dispatch(getUsersRequest()),
   };
 };
 

@@ -17,21 +17,21 @@ import Colors from '../constants/Colors';
 import OdisVersions from './OdisVersions';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
-export default OdisScreen = props => {
+export default OdisScreen = (props) => {
   const dispatch = useDispatch();
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userBrand = useSelector(state => state.user.userBrand);
-  const odisObj = useSelector(state => state.odis.odisData);
-  const isLoading = useSelector(state => state.odis.isLoading);
-  const dataError = useSelector(state => state.odis.error);
-  const viewCount = useSelector(state => state.odis.viewCount);
-  const allOdis = useSelector(state => state.odis);
-  const dataStatusCode = useSelector(state => state.odis.statusCode);
-  const dataErrorUrl = useSelector(state => state.odis.dataErrorUrl);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userBrand = useSelector((state) => state.user.userBrand);
+  const odisObj = useSelector((state) => state.odis.odisData);
+  const isLoading = useSelector((state) => state.odis.isLoading);
+  const dataError = useSelector((state) => state.odis.error);
+  const viewCount = useSelector((state) => state.odis.viewCount);
+  const allOdis = useSelector((state) => state.odis);
+  const dataStatusCode = useSelector((state) => state.odis.statusCode);
+  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
   const getItems = useCallback(async () => dispatch(getOdisRequest()), [
-    odisObj
+    odisObj,
   ]);
 
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
@@ -130,12 +130,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -144,7 +144,7 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
       />
-    )
+    ),
   };
 };
 
@@ -152,6 +152,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: 'white',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

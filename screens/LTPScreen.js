@@ -29,20 +29,20 @@ const minSearchLength = 1;
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
-export default LtpScreen = props => {
+export default LtpScreen = (props) => {
   const dispatch = useDispatch();
-  const userBrand = useSelector(state => state.user.userBrand);
-  const ltpItems = useSelector(state => state.ltp.ltpItems);
-  const isLoading = useSelector(state => state.ltp.isLoading);
-  const dataError = useSelector(state => state.ltp.error);
-  const dataStatusCode = useSelector(state => state.ltp.statusCode);
-  const dataErrorUrl = useSelector(state => state.ltp.dataErrorUrl);
+  const userBrand = useSelector((state) => state.user.userBrand);
+  const ltpItems = useSelector((state) => state.ltp.ltpItems);
+  const isLoading = useSelector((state) => state.ltp.isLoading);
+  const dataError = useSelector((state) => state.ltp.error);
+  const dataStatusCode = useSelector((state) => state.ltp.statusCode);
+  const dataErrorUrl = useSelector((state) => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(async () => dispatch(getLtpRequest()), [
-    ltpItems
+    ltpItems,
   ]);
 
   //   const [isDrawerVisible, setIsDrawerVisible] = useState(true);
@@ -76,12 +76,12 @@ export default LtpScreen = props => {
     if (userBrand) {
       //   console.log('userBrand is ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
-        item => item[userBrand] === 'Y' || 'y'
+        (item) => item[userBrand] === 'Y' || 'y'
       );
     } else {
       //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
-        item =>
+        (item) =>
           item.au === ('Y' || 'y') ||
           item.cv === ('Y' || 'y') ||
           item.se === ('Y' || 'y') ||
@@ -98,7 +98,7 @@ export default LtpScreen = props => {
     // console.log('filtered items', uniqueLtpItemsTemp);
   }, [ltpItems, userBrand]);
 
-  const searchInputHandler = searchInput => {
+  const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
@@ -181,12 +181,12 @@ const tabBarLabelFunction = ({ focused }) => (
     value={0}
   />
 );
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
     headerStyle: {
-      backgroundColor: Colors.vwgHeader
+      backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
     tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -195,7 +195,7 @@ export const screenOptions = navData => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
       />
-    )
+    ),
   };
 };
 
@@ -204,46 +204,46 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: 'center',
     // justifyContent: 'center',
-    marginBottom: bottomTabHeight
+    marginBottom: bottomTabHeight,
   },
   errorMessage: {
-    padding: 10
+    padding: 10,
   },
   errorMessageText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'left',
-    color: Colors.vwgDarkSkyBlue
+    color: Colors.vwgDarkSkyBlue,
   },
   noneFoundPrompt: {
     fontFamily: 'the-sans',
     padding: 10,
-    backgroundColor: Colors.vwgWarmRed
+    backgroundColor: Colors.vwgWarmRed,
   },
   noneFoundPromptText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   ltpPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue
+    backgroundColor: Colors.vwgDarkSkyBlue,
   },
   ltpPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgMintGreen,
   },
   lookupPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
-  }
+    fontSize: RFPercentage(1.9),
+  },
 });

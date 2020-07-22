@@ -24,7 +24,7 @@ export default function OdisVersions(props) {
     cv: cvLogo,
     se: seatLogo,
     vw: vwLogo,
-    sk: skodaLogo
+    sk: skodaLogo,
   };
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
@@ -37,7 +37,7 @@ export default function OdisVersions(props) {
 
   let odisDetails = null;
 
-  const getOdisForBrand = item => {
+  const getOdisForBrand = (item) => {
     // if (brand === 'sk') {
     // console.log('getOdisForBrand', item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
@@ -102,7 +102,7 @@ export default function OdisVersions(props) {
     // }
   };
 
-  const getOdisForBrands = itemsObj => {
+  const getOdisForBrands = (itemsObj) => {
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');
@@ -193,43 +193,43 @@ export default function OdisVersions(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   odisRow: {
     flexDirection: 'row',
-    borderColor: '#000'
+    borderColor: '#000',
   },
   odisVersionRow: {
     flexDirection: 'column',
     padding: 5,
-    borderColor: '#000'
+    borderColor: '#000',
   },
   odisVersionText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.1),
-    color: Colors.vwgVeryDarkGray
+    color: Colors.vwgVeryDarkGray,
   },
   odisVersionTextSmaller: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgVeryDarkGray
+    color: Colors.vwgVeryDarkGray,
   },
   odisVersionTextHighlighted: {
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(2.1),
-    color: Colors.vwgCoolOrange
+    color: Colors.vwgCoolOrange,
   },
   logo: {
     height: 50,
     width: 50,
-    marginRight: 10
+    marginRight: 10,
   },
   rowWithImage: {
     marginTop: 15,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 0
+    marginBottom: 0,
   },
   contentImage: {
     width: 225,
@@ -237,6 +237,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 15,
     marginLeft: 'auto',
-    marginRight: 'auto'
-  }
+    marginRight: 'auto',
+  },
 });

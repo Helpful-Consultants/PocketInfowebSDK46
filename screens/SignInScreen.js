@@ -5,7 +5,7 @@ import {
   Platform,
   ScrollView,
   StyleSheet,
-  View
+  View,
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -24,11 +24,11 @@ const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.inputId]: action.value
+      [action.inputId]: action.value,
     };
     const updatedValidities = {
       ...state.inputValidities,
-      [action.inputId]: action.isValid
+      [action.inputId]: action.isValid,
     };
     let updatedFormIsValid = true;
     for (const key in updatedValidities) {
@@ -37,21 +37,21 @@ const formReducer = (state, action) => {
     return {
       formIsValid: updatedFormIsValid,
       inputValues: updatedValues,
-      inputValidities: updatedValidities
+      inputValidities: updatedValidities,
     };
   }
   return state;
 };
 
-export default SignInScreen = props => {
+export default SignInScreen = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-  const userDataObj = useSelector(state => state.user.userData[0]);
-  const userError = useSelector(state => state.user.error);
-  const state = useSelector(state => state);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userError = useSelector((state) => state.user.error);
+  const state = useSelector((state) => state);
 
   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
   console.log('in sign in, userIsValidated', userIsValidated ? 'Yes' : 'No');
@@ -65,11 +65,11 @@ export default SignInScreen = props => {
     inputValues: { email: '', pin: '' },
     inputValidities: {
       email: false,
-      pin: false
+      pin: false,
       //    email: enteredEmail ? true : false,
       //   pin: enteredPin ? true : false
     },
-    formIsValid: false
+    formIsValid: false,
   });
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export default SignInScreen = props => {
         type: Types.FORM_INPUT_UPDATE,
         value: inputIdentifier === 'email' ? text.toLowerCase() : text,
         isValid: isValid,
-        inputId: inputIdentifier
+        inputId: inputIdentifier,
       });
     },
     [dispatchFormState]
@@ -107,7 +107,7 @@ export default SignInScreen = props => {
     if (formState.formIsValid) {
       const signInData = {
         email: formState.inputValues.email,
-        pin: formState.inputValues.pin
+        pin: formState.inputValues.pin,
       };
       setError(null);
       setIsLoading(true);
@@ -157,12 +157,12 @@ export default SignInScreen = props => {
               color: Colors.vwgDarkSkyBlue,
               paddingRight: 10,
 
-              paddingTop: 4
+              paddingTop: 4,
             }}
             keyboardType='email-address'
             autoCorrect={false}
             returnKeyType='next'
-            onSubmitEditing={text => console.log(text)}
+            onSubmitEditing={(text) => console.log(text)}
             errorStyle={{ color: Colors.errorText }}
             errorText='The email you sign in to toolsinfoweb.co.uk with'
           />
@@ -171,7 +171,7 @@ export default SignInScreen = props => {
             onChangeText={inputChangeHandler.bind(this, 'pin')}
             style={{
               marginVertical: 20,
-              marginHorizontal: 40
+              marginHorizontal: 40,
             }}
             label='Your Pocket Infoweb access PIN*'
             labelStyle={baseStyles.inputLabelText}
@@ -184,12 +184,12 @@ export default SignInScreen = props => {
               type: 'ionicon',
               name: Platform.OS === 'ios' ? 'ios-key' : 'md-key',
               color: Colors.vwgDarkSkyBlue,
-              paddingRight: 10
+              paddingRight: 10,
             }}
             keyboardType='numeric'
             secureTextEntry
             returnKeyType='done'
-            onSubmitEditing={text => console.log(text)}
+            onSubmitEditing={(text) => console.log(text)}
             errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
             errorStyle={{ color: 'red' }}
           />
@@ -204,7 +204,7 @@ export default SignInScreen = props => {
                 buttonStyle={styles.signInButton}
                 titleStyle={[
                   { ...baseStyles.text },
-                  { fontSize: RFPercentage(2.4), color: Colors.vwgWhite }
+                  { fontSize: RFPercentage(2.4), color: Colors.vwgWhite },
                 ]}
                 icon={
                   <Icon
@@ -224,7 +224,7 @@ export default SignInScreen = props => {
             <View
               style={{
                 marginHorizontal: 20,
-                textAlign: 'center'
+                textAlign: 'center',
               }}
             >
               <Text style={styles.instructions}>
@@ -238,11 +238,11 @@ export default SignInScreen = props => {
                   props.navigation.navigate('ForgottenPassword');
                 }}
                 buttonStyle={{
-                  marginTop: 10
+                  marginTop: 10,
                 }}
                 titleStyle={[
                   { ...baseStyles.linkText },
-                  { fontSize: RFPercentage(2.6) }
+                  { fontSize: RFPercentage(2.6) },
                 ]}
               />
             </View>
@@ -253,10 +253,10 @@ export default SignInScreen = props => {
   );
 };
 
-export const screenOptions = navData => {
+export const screenOptions = (navData) => {
   return {
     title: 'Sign In',
-    headerShown: false
+    headerShown: false,
   };
 };
 
@@ -266,12 +266,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 10,
     textAlign: 'center',
-    color: Colors.vwgVeryDarkGray
+    color: Colors.vwgVeryDarkGray,
   },
   signInButton: {
     marginVertical: 20,
     marginHorizontal: 20,
-    backgroundColor: Colors.vwgLink
+    backgroundColor: Colors.vwgLink,
   },
   errorText: {
     ...baseStyles.text,
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
     color: Colors.vwgWarmRed,
     fontSize: RFPercentage(2.3),
     textAlign: 'center',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   securityCheckText: {
     ...baseStyles.text,
@@ -291,6 +291,6 @@ const styles = StyleSheet.create({
     color: Colors.vwgMintGreen,
     fontSize: RFPercentage(2.3),
     textAlign: 'center',
-    paddingHorizontal: 15
-  }
+    paddingHorizontal: 15,
+  },
 });

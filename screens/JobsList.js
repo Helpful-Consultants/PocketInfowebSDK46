@@ -6,7 +6,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -29,7 +29,7 @@ export default function DealerToolsList(props) {
     items,
     baseImageUrl,
     returnToolHandler,
-    searchInput
+    searchInput,
   } = props;
   let { userIntId } = props;
   userIntId = userIntId.toString() || '';
@@ -59,12 +59,12 @@ export default function DealerToolsList(props) {
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     padding: 0,
-                    margin: 0
+                    margin: 0,
                   }}
                 >
                   <View
                     style={{
-                      width: listOrder === 0 && i === 0 ? '70%' : '90%'
+                      width: listOrder === 0 && i === 0 ? '70%' : '90%',
                     }}
                   >
                     <Text
@@ -73,7 +73,7 @@ export default function DealerToolsList(props) {
                         fontSize: RFPercentage(2.2),
                         color: Colors.vwgLink,
                         textAlign: 'left',
-                        paddingTop: 10
+                        paddingTop: 10,
                       }}
                     >{`${item.partNumber} (${item.toolNumber})`}</Text>
                   </View>
@@ -81,14 +81,14 @@ export default function DealerToolsList(props) {
                     style={{
                       flexDirection: 'row',
                       alignItems: 'flex-start',
-                      justifyContent: 'flex-end'
+                      justifyContent: 'flex-end',
                     }}
                   >
                     {listOrder === 0 && i === 0 ? (
                       <View
                         style={{
                           alignItems: 'center',
-                          justifyContent: 'center'
+                          justifyContent: 'center',
                         }}
                       >
                         <Text
@@ -97,7 +97,7 @@ export default function DealerToolsList(props) {
                             fontSize: RFPercentage(2.2),
                             color: Colors.vwgLink,
                             textAlign: 'right',
-                            paddingTop: 9
+                            paddingTop: 9,
                           }}
                         >
                           Return
@@ -108,7 +108,7 @@ export default function DealerToolsList(props) {
                     <View
                       style={{
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                       }}
                     >
                       <Icon
@@ -131,7 +131,7 @@ export default function DealerToolsList(props) {
                     style={{
                       flexDirection: 'row',
                       marginTop: 5,
-                      marginBottom: 10
+                      marginBottom: 10,
                     }}
                   >
                     <View style={{ alignItems: 'flex-start' }}>
@@ -144,7 +144,7 @@ export default function DealerToolsList(props) {
                     <View
                       style={{
                         paddingLeft: 10,
-                        marginRight: 10
+                        marginRight: 10,
                       }}
                     >
                       <Text
@@ -154,7 +154,7 @@ export default function DealerToolsList(props) {
                           paddingLeft: 0,
                           marginRight: 10,
                           fontFamily: 'the-sans',
-                          fontSize: RFPercentage(2.1)
+                          fontSize: RFPercentage(2.1),
                         }}
                       >{`${item.partDescription}`}</Text>
 
@@ -165,7 +165,7 @@ export default function DealerToolsList(props) {
                           paddingLeft: 0,
                           marginRight: 10,
                           fontFamily: 'the-sans',
-                          fontSize: RFPercentage(2.1)
+                          fontSize: RFPercentage(2.1),
                         }}
                       >
                         {item.location && item.location.length > 0
@@ -195,7 +195,7 @@ export default function DealerToolsList(props) {
           <Text
             style={{
               fontSize: RFPercentage(2),
-              color: Colors.vwgWarmRed
+              color: Colors.vwgWarmRed,
             }}
           >
             No tools booked to this job
@@ -237,14 +237,14 @@ export default function DealerToolsList(props) {
                         : Colors.vwgveryLightGray,
                     marginHorizontal: 10,
                     paddingTop: 10,
-                    paddingBottom: 10
+                    paddingBottom: 10,
                   }}
                 >
                   {i > 0 ? (
                     <Divider
                       style={{
                         backgroundColor: Colors.vwgDarkGray,
-                        marginVertical: 8
+                        marginVertical: 8,
                       }}
                     />
                   ) : null}
@@ -254,7 +254,7 @@ export default function DealerToolsList(props) {
                         flex: 1,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'center'
+                        alignItems: 'center',
                       }}
                     >
                       <Text
@@ -263,7 +263,7 @@ export default function DealerToolsList(props) {
                           fontSize: RFPercentage(2.2),
                           textAlign: 'left',
                           marginBottom: 5,
-                          color: Colors.vwgDarkSkyBlue
+                          color: Colors.vwgDarkSkyBlue,
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()
@@ -305,17 +305,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#222'
+    backgroundColor: '#222',
   },
   searchPrompt: {
     padding: 10,
     backgroundColor: Colors.vwgDarkSkyBlue,
-    marginBottom: 5
+    marginBottom: 5,
   },
   searchPromptText: {
     textAlign: 'center',
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite
-  }
+    color: Colors.vwgWhite,
+  },
 });
