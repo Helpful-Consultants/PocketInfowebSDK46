@@ -16,7 +16,7 @@ export default searchItems = (
 
     if (rawString && rawString.length > 0) {
       const rawStringLowerCase = rawString.toLowerCase();
-      const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
+      const isNumeric = (n) => !isNaN(parseFloat(n)) && isFinite(n);
       if (rawString.length > 3) {
         if (
           rawStringLowerCase.substring(0, 3) === 'ase' ||
@@ -105,7 +105,7 @@ export default searchItems = (
   //   }
   if (itemList && itemList.length > 0) {
     // console.log('searchRecords, point 0');
-    itemList.map(item => {
+    itemList.map((item) => {
       // console.log('searchRecords, in map', item);
 
       let isMatch = false;

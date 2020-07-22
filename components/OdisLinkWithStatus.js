@@ -40,7 +40,7 @@ export default function OdisLinkWithStatus(props) {
   const now = moment();
   //   console.log(now);
 
-  const getOdisStatusForBrand = itemObj => {
+  const getOdisStatusForBrand = (itemObj) => {
     // console.log(
     //   'brand itemObj date ',
     //   itemObj.dateChanged && itemObj.dateChanged
@@ -80,7 +80,7 @@ export default function OdisLinkWithStatus(props) {
     return alertNeeded;
   };
 
-  const getOdisStatusForAllBrands = itemsObj => {
+  const getOdisStatusForAllBrands = (itemsObj) => {
     // console.log('itemsObj', itemsObj);
     // let auFromNow = 0;
     // let cvFromNow = 0;
@@ -231,7 +231,7 @@ export default function OdisLinkWithStatus(props) {
     return alertNeeded;
   };
 
-  const getOdisStatusForBrands = itemsObj => {
+  const getOdisStatusForBrands = (itemsObj) => {
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');

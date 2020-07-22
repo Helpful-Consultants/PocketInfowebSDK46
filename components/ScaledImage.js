@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import ScalableImage from 'react-native-scalable-image';
 
-export default ScaledImage = props => {
+export default ScaledImage = (props) => {
   const [isImageFound, setIsImageFound] = useState(false);
   const [imageToShow, setImageToShow] = useState(null);
   //   let isImageFound = false;
@@ -14,7 +14,7 @@ export default ScaledImage = props => {
     />
   );
 
-  const checkImage = async uri => {
+  const checkImage = async (uri) => {
     // console.log(props.uri, 'checking ');
     Image.getSize(
       props.uri,

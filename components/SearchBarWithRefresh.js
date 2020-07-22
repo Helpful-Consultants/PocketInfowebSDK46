@@ -4,13 +4,13 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { Icon, SearchBar, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 
-export default SearchBarWithRefresh = props => {
+export default SearchBarWithRefresh = (props) => {
   //   console.log('SearchBarWithRefresh props', props);
   const {
     dataName,
@@ -21,7 +21,7 @@ export default SearchBarWithRefresh = props => {
     dataStatusCode,
     refreshRequestHandler,
     searchInput,
-    searchInputHandler
+    searchInputHandler,
   } = props;
 
   const dataNameToUse = dataName || 'data';
@@ -98,58 +98,58 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   searchBarRow: {
     flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   searchBarRowNoData: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   searchBarRowNoDataTextContainer: {
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingRight: 10,
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   searchBarRowErrorText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgWarmRed
+    color: Colors.vwgWarmRed,
   },
   searchBarRowNoDataText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
-    color: Colors.vwgDarkSkyBlue
+    color: Colors.vwgDarkSkyBlue,
   },
   searchBarInput: {
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10
+    padding: 10,
   },
   searchBarInputContainer: {
     backgroundColor: Colors.vwgVeryLightGray,
     borderColor: Colors.vwgSearchBarInputContainer,
     borderRadius: Platform.OS === 'ios' ? 10 : 20,
-    height: 30
+    height: 30,
   },
   searchBarContainer: {
     backgroundColor: Colors.vwgSearchBarContainer,
-    height: 45
+    height: 45,
     // height: 30
   },
   searchBarRowSearchInput: { width: '85%' },
   searchFoundPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
-  }
+    backgroundColor: Colors.vwgMintGreen,
+  },
 });

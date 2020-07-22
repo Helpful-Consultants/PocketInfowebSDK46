@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
   view: {},
   viewWithNumberBadge: {
     // marginRight: 13
-    marginRight: RFPercentage(4.5)
+    marginRight: RFPercentage(4.5),
   },
   viewWithTextBadge: {
     // marginRight: 13
-    marginRight: RFPercentage(2.5)
+    marginRight: RFPercentage(2.5),
   },
   numberBadge: {
     borderRadius: RFPercentage(1),
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     width: RFPercentage(3.5),
     backgroundColor: Colors.vwgDeepBlue,
-    borderColor: Colors.vwgWhite
+    borderColor: Colors.vwgWhite,
   },
   largeNumberBadge: {
     borderRadius: RFPercentage(1),
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     minWidth: 0,
     width: RFPercentage(4.0),
     backgroundColor: Colors.vwgDeepBlue,
-    borderColor: Colors.vwgWhite
+    borderColor: Colors.vwgWhite,
   },
   textBadge: {
     // borderRadius: 0,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     width: RFPercentage(1.6),
     // backgroundColor: Colors.vwgDeepBlue
     backgroundColor: Colors.vwgCoolOrange,
-    borderColor: Colors.vwgCoolOrange
+    borderColor: Colors.vwgCoolOrange,
   },
   text: {
     color: Colors.vwgWhite,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.5),
     zIndex: +10,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   numberBadgeContainer: {
     position: 'absolute',
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     right: numberBadgeRightMargin,
     // right: -26,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
     // backgroundColor: Colors.vwgDeepBlue
   },
   largeNumberBadgeContainer: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     right: largeNumberBadgeRightMargin,
     // right: -26,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
     // backgroundColor: Colors.vwgDeepBlue
   },
   textBadgeContainer: {
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     right: textBadgeRightMargin,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.vwgDeepBlue
+    backgroundColor: Colors.vwgDeepBlue,
   },
   numberBadgeText: {
     fontSize: RFPercentage(2.4),
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginTop: RFPercentage(0.05),
     marginRight: 0,
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   textBadgeText: {
     fontSize: 1,
@@ -186,16 +186,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginTop: -5,
     marginRight: 0,
-    color: Colors.vwgCoolOrange
+    color: Colors.vwgCoolOrange,
   },
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });

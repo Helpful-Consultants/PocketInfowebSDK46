@@ -17,7 +17,7 @@
             marginLeft: 15,
             marginRight: 15,
             borderRadius: 20,
-            backgroundColor: Colors.vwgDeepBlue
+            backgroundColor: Colors.vwgDeepBlue,
           }}
           icon={
             <Icon
@@ -46,7 +46,7 @@
             marginLeft: 15,
             marginRight: 15,
             borderRadius: 20,
-            backgroundColor: Colors.vwgDeepBlue
+            backgroundColor: Colors.vwgDeepBlue,
           }}
           icon={
             <Icon
@@ -76,7 +76,7 @@
             marginLeft: 15,
             marginRight: 15,
             borderRadius: 20,
-            backgroundColor: Colors.vwgBlack
+            backgroundColor: Colors.vwgBlack,
           }}
           icon={
             <Icon

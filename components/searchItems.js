@@ -8,7 +8,7 @@ export default searchItems = (
 
     if (rawString && rawString.length > 0) {
       const rawStringLowerCase = rawString.toLowerCase();
-      const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
+      const isNumeric = (n) => !isNaN(parseFloat(n)) && isFinite(n);
       if (rawString.length > 3) {
         if (
           rawStringLowerCase.substring(0, 3) === 'ase' ||
@@ -66,7 +66,7 @@ export default searchItems = (
     ? searchStringSpacesStripped.substr(3)
     : searchStringLowerCase;
 
-  const bookedToolMatcher = item => {
+  const bookedToolMatcher = (item) => {
     // console.log('in bookedToolMatcher', item);
     if (item.wipNumber.includes(searchString)) {
       return true;
@@ -140,7 +140,7 @@ export default searchItems = (
     return false;
   };
 
-  const loanToolMatcher = item => {
+  const loanToolMatcher = (item) => {
     let itemLoanToolNo =
       (item.loanToolNo && item.loanToolNo.toLowerCase()) || '';
     let itemSupplierPartNo =
@@ -227,7 +227,7 @@ export default searchItems = (
     return false;
   };
 
-  const dealerToolMatcher = item => {
+  const dealerToolMatcher = (item) => {
     let itemToolNo = (item.toolNumber && item.toolNumber.toLowerCase()) || '';
     let itemPartNo = (item.partNumber && item.partNumber.toLowerCase()) || '';
     let itemDesc =
@@ -309,7 +309,7 @@ export default searchItems = (
     } else {
       let trueCount = 0;
       item.tools &&
-        item.tools.map(item => {
+        item.tools.map((item) => {
           if (dealerToolMatcher(item) === true) {
             trueCount++;
           }
@@ -323,7 +323,7 @@ export default searchItems = (
   //   console.log('searchStringSpacesStripped', searchStringSpacesStripped);
 
   if (itemList && itemList.length > 0) {
-    itemList.map(item => {
+    itemList.map((item) => {
       //   console.log('searchRecords, in map', item);
       let isMatch = false;
 

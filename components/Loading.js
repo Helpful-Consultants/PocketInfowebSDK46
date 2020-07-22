@@ -62,14 +62,14 @@ export default Loading = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30
+    marginTop: 30,
   },
   loadingMessage: {
     marginTop: 50,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   loadingText: {
     fontFamily: 'the-sans',
@@ -80,6 +80,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 50
-  }
+    marginBottom: 50,
+  },
 });

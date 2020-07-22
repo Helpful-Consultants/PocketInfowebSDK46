@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     // borderRadius: 12,
     height: 10,
     minWidth: 0,
-    width: 10
+    width: 10,
   },
   badgeContainer: {
     position: 'absolute',
@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     right: -5,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'yellow'
+    backgroundColor: 'yellow',
   },
   badgeText: {
     fontSize: 6,
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
     // paddingRight: 2
-    paddingHorizontal: 0
-  }
+    paddingHorizontal: 0,
+  },
 });

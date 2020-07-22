@@ -40,7 +40,7 @@ export default BookToJobModal = ({ setIsThisModalVisible }) => (
           marginLeft: 15,
           marginRight: 15,
           borderRadius: 20,
-          backgroundColor: Colors.vwgDeepBlue
+          backgroundColor: Colors.vwgDeepBlue,
         }}
         icon={
           <Icon
@@ -59,16 +59,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    
   },
   modal: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#ccc',
-    padding: 100
+    padding: 100,
   },
   text: {
     color: '#3f2949',
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });

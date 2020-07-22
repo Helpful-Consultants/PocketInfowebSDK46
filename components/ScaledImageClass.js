@@ -12,12 +12,12 @@ export default class ScaledImage extends Component {
       if (this.props.width && !this.props.height) {
         this.setState({
           width: this.props.width,
-          height: height * (this.props.width / width)
+          height: height * (this.props.width / width),
         });
       } else if (!this.props.width && this.props.height) {
         this.setState({
           width: width * (this.props.height / height),
-          height: this.props.height
+          height: this.props.height,
         });
       } else {
         this.setState({ width: width, height: height });

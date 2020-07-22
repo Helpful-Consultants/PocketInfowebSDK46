@@ -5,7 +5,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
 import Colors from '../constants/Colors';
 
-export default HighlightedText = props => {
+export default HighlightedText = (props) => {
   const { item, now, notificationLimit } = props;
   const notificationLimitToUse = notificationLimit || 7;
 
@@ -52,12 +52,12 @@ const styles = StyleSheet.create({
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgDarkGray,
-    paddingTop: 5
+    paddingTop: 5,
   },
   dateHighlighted: {
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(1.8),
     color: Colors.vwgCoolOrange,
-    paddingTop: 5
-  }
+    paddingTop: 5,
+  },
 });

@@ -4,13 +4,13 @@ import {
   Platform,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 import Colors from '../constants/Colors';
-export default DataAlertBarWithRefresh = props => {
+export default DataAlertBarWithRefresh = (props) => {
   //   console.log('DataAlertWithRefresh props', props);
 
   let {
@@ -20,7 +20,7 @@ export default DataAlertBarWithRefresh = props => {
     dataCount,
     dataError,
     dataStatusCode,
-    refreshRequestHandler
+    refreshRequestHandler,
   } = props;
   dataName = dataName || 'data';
 
@@ -83,77 +83,77 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   warningContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 70
+    padding: 70,
   },
   searchBarRow: {
     flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   searchBarRowNoData: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   searchBarRowNoDataTextContainer: {
     flex: 1,
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingRight: 10,
-    backgroundColor: Colors.vwgSearchBarContainer
+    backgroundColor: Colors.vwgSearchBarContainer,
   },
   searchBarRowNoDataText: {
     color: Colors.vwgDarkSkyBlue,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
   },
   searchBarRowRefreshButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10
+    padding: 10,
   },
   searchBarInputContainer: {
     // backgroundColor: Colors.vwgSearchBarInputContainer,
-    borderColor: Colors.vwgSearchBarInputContainer
+    borderColor: Colors.vwgSearchBarInputContainer,
   },
   searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
   searchBarRowSearchInput: { width: '85%' },
   searchFoundPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgMintGreen,
   },
   searchFoundPromptText: {
     textAlign: 'center',
 
-    color: Colors.vwgWhite
+    color: Colors.vwgWhite,
   },
   searchBarRowErrorText: {
-    color: Colors.vwgWarmRed
+    color: Colors.vwgWarmRed,
   },
   lookupPrompt: {
     padding: 10,
-    backgroundColor: Colors.vwgMintGreen
+    backgroundColor: Colors.vwgMintGreen,
   },
   lookupPromptText: {
     textAlign: 'center',
     color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
   },
   buttonContainer: {
     flexDirection: 'column',
-    width: '60%'
+    width: '60%',
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: '60%'
+    width: '60%',
   },
   buttonView: {
     // width: 200,
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });

@@ -24,7 +24,7 @@ const UserListItem = ({ user, onDeleteClick }) => {
           borderRadius: '50%',
           color: 'white',
           fontFamily: 'the-sans-bold',
-          background: stringToHslColor(user.firstName + user.lastName)
+          background: stringToHslColor(user.firstName + user.lastName),
         }}
       >
         {!!user && !!user.firstName && !!user.lastName

@@ -3,7 +3,7 @@ import { Image } from 'react-native';
 // import ScaledImage from '../components/ScaledImage';
 import ScalableImage from 'react-native-scalable-image';
 
-export default ScaledImageFinder = props => {
+export default ScaledImageFinder = (props) => {
   //   console.log('in scaledImageFinder');
   //   console.log(props && props);
   const [isImageFound, setIsImageFound] = useState(false);
@@ -12,14 +12,14 @@ export default ScaledImageFinder = props => {
 
   const { baseImageUrl, item, uri, width } = props;
 
-  const stripForImage = toolNumber => {
+  const stripForImage = (toolNumber) => {
     // console.log(toolNumber);
     let retValue = toolNumber.replace(/[^a-z0-9+]+/gi, '');
     // console.log('strip retValue is ', retValue);
     return retValue;
   };
 
-  const getImageUrl = item => {
+  const getImageUrl = (item) => {
     let retValue = '';
     if (item.toolType && item.toolType.toLowerCase() == 'tool') {
       //   console.log('part ', item.toolType);
@@ -43,7 +43,7 @@ export default ScaledImageFinder = props => {
     />
   );
 
-  const checkImage = async imageUrl => {
+  const checkImage = async (imageUrl) => {
     // console.log(imageUrl, 'checking ');
     Image.getSize(
       imageUrl,

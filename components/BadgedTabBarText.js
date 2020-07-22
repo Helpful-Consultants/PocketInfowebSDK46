@@ -57,28 +57,28 @@ export default function TabBarIcon(props) {
 const styles = StyleSheet.create({
   view: {},
   paddedView: {
-    marginRight: 8
+    marginRight: 8,
   },
   badge: {
     // borderRadius: 12,
     height: 10,
     minWidth: 0,
     width: 10,
-    backgroundColor: Colors.vwgInactiveLink
+    backgroundColor: Colors.vwgInactiveLink,
   },
   badgeFocused: {
     // borderRadius: 12,
     height: 10,
     minWidth: 0,
     width: 10,
-    backgroundColor: Colors.vwgActiveLink
+    backgroundColor: Colors.vwgActiveLink,
   },
   badgeContainer: {
     position: 'absolute',
     top: 0,
     right: -10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
     // backgroundColor: 'yellow'
   },
   badgeText: {
@@ -86,16 +86,16 @@ const styles = StyleSheet.create({
     fontSize: 6,
     textAlign: 'center',
     // paddingRight: 2
-    paddingHorizontal: 0
+    paddingHorizontal: 0,
   },
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });

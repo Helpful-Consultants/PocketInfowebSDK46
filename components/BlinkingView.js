@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
-export default BlinkingView = props => {
+export default BlinkingView = (props) => {
   const [showItem, setShowItem] = useState(true);
 
   const {
@@ -14,7 +14,7 @@ export default BlinkingView = props => {
     iconName,
     iconSize,
     iconType,
-    text
+    text,
   } = props;
 
   //   if (blink) {
@@ -53,7 +53,7 @@ export default BlinkingView = props => {
         style={{
           paddingTop: RFPercentage(0.09),
           fontSize: RFPercentage(2.5),
-          color: blink ? (showItem ? colorOne : colorTwo) : colorOne
+          color: blink ? (showItem ? colorOne : colorTwo) : colorOne,
         }}
       >
         {text}

@@ -42,12 +42,10 @@ export default function MenuDrawer(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    
   },
   menuDrawer: {
     justifyContent: 'flex-end',
     marginRight: 30,
-    margin: 0
-  }
+    margin: 0,
+  },
 });

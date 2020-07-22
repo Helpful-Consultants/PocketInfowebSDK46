@@ -7,16 +7,16 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Constants from 'expo-constants';
 import Colors from '../constants/Colors';
 
-export default ErrorDetails = props => {
+export default ErrorDetails = (props) => {
   const {
     errorSummary,
     errorDetails,
     errorHtml,
     dataStatusCode,
-    dataErrorUrl
+    dataErrorUrl,
   } = props;
 
-  const userDataObj = useSelector(state => state.user.userData[0]);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
   //   console.log(props);
   return (
     <View>
@@ -140,21 +140,21 @@ export default ErrorDetails = props => {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   errorMessage: {
-    padding: 5
+    padding: 5,
   },
   errorMessageText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.7),
     textAlign: 'left',
-    color: Colors.vwgVeryDarkGrey
+    color: Colors.vwgVeryDarkGrey,
   },
   errorMessageSummaryText: {
     fontFamily: 'the-sans-bold',
     fontSize: RFPercentage(1.9),
     textAlign: 'left',
-    color: Colors.vwgVeryDarkGrey
-  }
+    color: Colors.vwgVeryDarkGrey,
+  },
 });

@@ -8,8 +8,8 @@ import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
 import Colors from '../constants/Colors';
 
-export default AppInfo = props => {
-  const userDataObj = useSelector(state => state.user.userData[0]);
+export default AppInfo = (props) => {
+  const userDataObj = useSelector((state) => state.user.userData[0]);
   const brandText =
     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
   //   console.log(props);
@@ -17,7 +17,7 @@ export default AppInfo = props => {
   //   console.log('Constants', Constants);
 
   const isTabletOrMobileDevice = useMediaQuery({
-    maxDeviceWidth: 1224
+    maxDeviceWidth: 1224,
     // alternatively...
     //   query: '(max-device-width: 1224px)'
   });
@@ -103,28 +103,28 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2)
+    fontSize: RFPercentage(2.2),
     // fontStyle: 'italic'
   },
   brand: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
   },
   deviceVersion: {
     paddingTop: 15,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
-  }
+  },
 });

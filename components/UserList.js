@@ -18,7 +18,7 @@ const UserList = ({ users, onDeleteUserClick }) => {
           }
           return 0;
         })
-        .map(user => {
+        .map((user) => {
           return (
             <ListGroupItem key={user.id}>
               <UserListItem onDeleteClick={onDeleteUserClick} user={user} />

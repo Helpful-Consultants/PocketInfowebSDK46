@@ -5,7 +5,7 @@ import MenuOverlay from '../components/MenuOverlay';
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
 
-export default SideMenu = props => {
+export default SideMenu = (props) => {
   let { navigation, onToggleMenu } = props;
 
   return (
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   menu: {
     flex: 1,
@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   menuItem: {
-    paddingTop: 10
-  }
+    paddingTop: 10,
+  },
 });

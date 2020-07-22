@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Text } from 'react-native';
 
-export default FriendlyDate = props => {
+export default FriendlyDate = (props) => {
   //   console.log('in scaledImage');
   //   console.log(props);
   //   console.log('end props');
@@ -12,11 +12,11 @@ export default FriendlyDate = props => {
       style={{
         fontSize: RFPercentage(1.8),
         textAlign: 'left',
-        marginBottom: 5
+        marginBottom: 5,
       }}
-    >{`Job added/changed ${moment(
-      item.createdDate,
-      'YYYY-MM-DD hh:mm:ss'
-    ).format('h:MMa Do MMM ') || null}`}</Text>
+    >{`Job added/changed ${
+      moment(item.createdDate, 'YYYY-MM-DD hh:mm:ss').format('h:MMa Do MMM ') ||
+      null
+    }`}</Text>
   ) : null;
 };

@@ -21,23 +21,23 @@ export default AppNameWithLogo = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   appName: {
     color: Colors.vwgBlack,
     fontSize: RFPercentage(3.9),
-    fontFamily: 'the-sans'
+    fontFamily: 'the-sans',
     // textTransform: 'uppercase'
   },
   logoContainer: {
     alignItems: 'center',
     marginTop: 0,
-    marginBottom: 0
+    marginBottom: 0,
   },
   appLogo: {
     width: 120,
     height: 80,
     resizeMode: 'contain',
-    marginTop: 0
-  }
+    marginTop: 0,
+  },
 });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 
-export default ScaledImage = props => {
+export default ScaledImage = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [source, setSource] = useState(props.uri);
   const [calculatedHeight, setCalculatedHeight] = useState(0);
@@ -36,7 +36,7 @@ export default ScaledImage = props => {
             setIsLoading(false);
           }
         },
-        error => {
+        (error) => {
           setIsLoading(false);
 
           // console.log(error);

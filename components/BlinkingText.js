@@ -13,7 +13,7 @@ export default class BlinkingText extends Component {
     // Change the state every second or the time given by User.
     setInterval(
       () => {
-        this.setState(previousState => {
+        this.setState((previousState) => {
           return { showItem: !previousState.showItem };
         });
       },
