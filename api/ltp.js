@@ -5,6 +5,6 @@ export const getLtp = () => {
   return axios.get('?controller=api&action=listLtpItems', {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

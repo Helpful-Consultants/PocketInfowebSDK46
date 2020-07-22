@@ -4,18 +4,18 @@ export const getUsers = () => {
   //   console.log('here');
   return axios.get('/users', {
     params: {
-      limit: 1000
-    }
+      limit: 1000,
+    },
   });
 };
 
 export const createUser = ({ firstName, lastName }) => {
   return axios.post('/users', {
     firstName,
-    lastName
+    lastName,
   });
 };
 
-export const deleteUser = userId => {
+export const deleteUser = (userId) => {
   return axios.delete(`/users/${userId}`);
 };

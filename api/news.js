@@ -5,6 +5,6 @@ export const getNews = () => {
   return axios.get('?controller=api&action=listLatestNews', {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

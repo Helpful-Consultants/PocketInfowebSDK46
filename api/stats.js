@@ -7,6 +7,6 @@ export const getStats = ({ dealerId }) => {
   return axios.get(url, {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

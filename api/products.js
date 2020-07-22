@@ -5,6 +5,6 @@ export const getProducts = () => {
   return axios.get('?controller=api&action=listLatestProducts', {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

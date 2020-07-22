@@ -7,6 +7,6 @@ export const getOdis = () => {
   return axios.get(url, {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

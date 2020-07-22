@@ -17,6 +17,6 @@ export const getDealerTools = ({ dealerId }) => {
   return axios.get(url, {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };

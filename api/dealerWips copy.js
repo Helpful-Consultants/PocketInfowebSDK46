@@ -8,7 +8,7 @@ const dummyIntId = 850;
 const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
 
-export const getDealerWips = wipObj => {
+export const getDealerWips = (wipObj) => {
   //   console.log('here in getDealerWips API ', wipObj);
   const { dealerId, intId } = wipObj;
   const url =
@@ -20,16 +20,16 @@ export const getDealerWips = wipObj => {
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
-      Accept: 'text/json'
+      Accept: 'text/json',
       //   'Content-Type': 'text/json'
       //   'Content-Type': 'text / text; charset=UTF - 8'
       //   'Content-Type': 'application/json;charset=UTF - 8'
       // 'Content-Type': 'application/json'
-    }
+    },
   });
 };
 
-export const createDealerWip = wipObj => {
+export const createDealerWip = (wipObj) => {
   //   console.log('!!!!!!!!!!!! in create wip api', wipObj);
 
   const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON';
@@ -65,9 +65,9 @@ export const createDealerWip = wipObj => {
       Accept: '*/*',
       //   'Content-Type': 'text/json'
       //   'Content-Type': 'text / text; charset=UTF - 8'
-      'Content-Type': 'application/json;charset=UTF - 8'
+      'Content-Type': 'application/json;charset=UTF - 8',
       // 'Content-Type': 'application/json'
-    }
+    },
   });
   //   return axios.post(postUrl, strungArray);
 };
@@ -78,7 +78,7 @@ export const createDealerWip = wipObj => {
 
 // export const deleteDealerWip = ({ dealerId, wipObj }) => {
 
-export const deleteDealerWipTool = payload => {
+export const deleteDealerWipTool = (payload) => {
   //   console.log('in delete dealer wip tool api', payload);
 
   const wipId = payload.wipObj.id;
@@ -93,7 +93,7 @@ export const deleteDealerWipTool = payload => {
   return axios.post(url);
 };
 
-export const deleteDealerWip = payload => {
+export const deleteDealerWip = (payload) => {
   //   console.log('in delete dealer wip api', payload);
 
   const dealerId = payload.dealerId;
@@ -113,7 +113,7 @@ export const deleteDealerWip = payload => {
   return axios.post(url, sendData, {
     headers: {
       //   'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    },
   });
   //   return console.log('will axios a delete dealerWip');
 };

@@ -19,6 +19,6 @@ export const getUser = ({ email, pin }) => {
   return axios.get(url, {
     params: {
       //   limit: 1000
-    }
+    },
   });
 };
