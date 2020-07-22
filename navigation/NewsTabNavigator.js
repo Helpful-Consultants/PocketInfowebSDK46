@@ -17,16 +17,16 @@ import HeaderButton from '../components/HeaderButton';
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
 import NewsScreen, {
-  screenOptions as NewsScreenOptions
+  screenOptions as NewsScreenOptions,
 } from '../screens/NewsScreen';
 import ProductsScreen, {
-  screenOptions as ProductsScreenOptions
+  screenOptions as ProductsScreenOptions,
 } from '../screens/ProductsScreen';
 import OdisScreen, {
-  screenOptions as OdisScreenOptions
+  screenOptions as OdisScreenOptions,
 } from '../screens/OdisScreen';
 import StatsScreen, {
-  screenOptions as StatsScreenOptions
+  screenOptions as StatsScreenOptions,
 } from '../screens/StatsScreen';
 
 import Colors from '../constants/Colors';
@@ -42,7 +42,7 @@ const defaultStackNavOptions = () => {
   return {
     headerStyle: {
       backgroundColor: Colors.vwgHeader,
-      height: 80
+      height: 80,
     },
     cardStyle: { backgroundColor: 'white' },
     headerLeft: () => (
@@ -69,7 +69,7 @@ const defaultStackNavOptions = () => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -150,8 +150,8 @@ const defaultTabNavScreenOptions =
           labelPosition: 'below-icon',
 
           // height: RFPercentage(6.4),
-          backgroundColor: Colors.vwgWhite
-        }
+          backgroundColor: Colors.vwgWhite,
+        },
         //   tabBarOptions: {
         //     labelPosition: 'below-icon',
         //     style: {
@@ -168,11 +168,11 @@ const defaultTabNavScreenOptions =
           style: {
             // height: RFPercentage(6.4)
           },
-          activeTintColor: Colors.vwgActiveLink
+          activeTintColor: Colors.vwgActiveLink,
         },
         tabStyle: {
           //   height: RFPercentage(2.2)
-        }
+        },
       };
 
 const NewsTabs =
@@ -189,10 +189,10 @@ export default NewsTabNavigator = () => {
         showLabel: true,
         labelPosition: 'below-icon',
         style: {
-          height: RFPercentage(6.4)
+          height: RFPercentage(6.4),
         },
         activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink
+        inactiveTintColor: Colors.vwgInactiveLink,
       }}
     >
       <NewsTabs.Screen
@@ -231,7 +231,7 @@ export default NewsTabNavigator = () => {
         labelPosition: 'below-icon',
 
         // height: RFPercentage(6.4),
-        backgroundColor: Colors.vwgWhite
+        backgroundColor: Colors.vwgWhite,
       }}
     >
       <NewsTabs.Screen
@@ -264,11 +264,11 @@ const styles = StyleSheet.create({
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });

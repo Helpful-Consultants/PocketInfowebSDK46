@@ -16,16 +16,16 @@ import HeaderButton from '../components/HeaderButton';
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
 import FindToolsScreen, {
-  screenOptions as FindToolsScreenOptions
+  screenOptions as FindToolsScreenOptions,
 } from '../screens/FindToolsScreen';
 import BookedOutToolsScreen, {
-  screenOptions as BookedOutToolsScreenOptions
+  screenOptions as BookedOutToolsScreenOptions,
 } from '../screens/BookedOutToolsScreen';
 import JobsScreen, {
-  screenOptions as JobsScreenOptions
+  screenOptions as JobsScreenOptions,
 } from '../screens/JobsScreen';
 import LtpScreen, {
-  screenOptions as LtpScreenOptions
+  screenOptions as LtpScreenOptions,
 } from '../screens/LtpScreen';
 
 import Colors from '../constants/Colors';
@@ -41,7 +41,7 @@ const defaultStackNavOptions = () => {
   return {
     headerStyle: {
       backgroundColor: Colors.vwgHeader,
-      height: 80
+      height: 80,
     },
     cardStyle: { backgroundColor: 'white' },
     headerLeft: () => (
@@ -68,7 +68,7 @@ const defaultStackNavOptions = () => {
           }}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
@@ -142,12 +142,12 @@ const defaultTabNavScreenOptions =
         tabBarOptions: {
           labelPosition: 'below-icon',
           style: {
-            height: RFPercentage(6.4)
-          }
+            height: RFPercentage(6.4),
+          },
         },
         tabStyle: {
-          height: RFPercentage(2.2)
-        }
+          height: RFPercentage(2.2),
+        },
       }
     : {
         labeled: true,
@@ -160,8 +160,8 @@ const defaultTabNavScreenOptions =
           labelPosition: 'below-icon',
 
           // height: RFPercentage(6.4),
-          backgroundColor: Colors.vwgWhite
-        }
+          backgroundColor: Colors.vwgWhite,
+        },
         //   tabBarOptions: {
         //     labelPosition: 'below-icon',
         //     style: {
@@ -187,10 +187,10 @@ export default WipTabNavigator = () => {
         showLabel: true,
         labelPosition: 'below-icon',
         style: {
-          height: RFPercentage(6.4)
+          height: RFPercentage(6.4),
         },
         activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink
+        inactiveTintColor: Colors.vwgInactiveLink,
       }}
     >
       <WipTabs.Screen
@@ -229,7 +229,7 @@ export default WipTabNavigator = () => {
         labelPosition: 'below-icon',
 
         // height: RFPercentage(6.4),
-        backgroundColor: Colors.vwgWhite
+        backgroundColor: Colors.vwgWhite,
       }}
     >
       <WipTabs.Screen
@@ -261,11 +261,11 @@ const styles = StyleSheet.create({
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });

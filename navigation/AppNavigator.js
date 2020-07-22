@@ -10,7 +10,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem
+  DrawerItem,
 } from '@react-navigation/drawer';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
@@ -41,7 +41,7 @@ import SignedOutStack from './SignedOutStack';
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
 
-const CustomDrawerContent = props => {
+const CustomDrawerContent = (props) => {
   //   const insets = useSafeArea();
   /* <DrawerContentScrollView {...props} style={{ paddingTop: insets.top }}> */
 
@@ -58,7 +58,7 @@ const drawerContentOptions = {
   inactiveTintColor: Colors.vwgInactiveLink,
   activeBackgroundColor: 'white',
   labelStyle: { fontFamily: 'the-sans-bold' },
-  itemStyle: { marginVertical: 0 }
+  itemStyle: { marginVertical: 0 },
 };
 
 const Drawer = createDrawerNavigator();
@@ -67,13 +67,13 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       drawerContentOptions={drawerContentOptions}
-      drawerContent={props => <CustomDrawerContent {...props} />}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
         name='Home'
         component={HomeScreen}
         options={{
-          drawerLabel: 'Home'
+          drawerLabel: 'Home',
         }}
       />
       <Drawer.Screen
@@ -81,7 +81,7 @@ const DrawerNavigator = () => {
         component={WipTabNavigator}
         options={{
           drawerLabel: 'Find tools, return tools, jobs & LTP',
-          initialRouteName: 'FindTools'
+          initialRouteName: 'FindTools',
         }}
       />
       <Drawer.Screen
@@ -89,24 +89,24 @@ const DrawerNavigator = () => {
         component={NewsTabNavigator}
         options={{
           drawerLabel: 'News, products, ODIS, stats',
-          initialRouteName: 'News'
+          initialRouteName: 'News',
         }}
       />
       <Drawer.Screen
         name='SignedOutStack'
         component={SignOutScreen}
         options={{
-          drawerLabel: 'Sign out'
+          drawerLabel: 'Sign out',
         }}
       />
     </Drawer.Navigator>
   );
 };
 
-export default AppNavigator = props => {
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userIsSignedIn = useSelector(state => state.user.userIsSignedIn);
-  const userCredsLastChecked = useSelector(state => state.user.lastUpdate);
+export default AppNavigator = (props) => {
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   console.log('AppNavigator, userIsValidated', userIsValidated);
   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
@@ -150,12 +150,12 @@ export default AppNavigator = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   zzstretched: {
     flexDirection: 'column',
     alignItems: 'stretch',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
     // backgroundColor: 'red'
   },
   footerContainer: {
@@ -169,28 +169,28 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2)
+    fontSize: RFPercentage(2.2),
     // fontStyle: 'italic'
   },
   brand: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
   },
   deviceVersion: {
     paddingTop: 15,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
-  }
+  },
 });

@@ -1,18 +1,18 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignInScreen, {
-  screenOptions as SignInScreenOptions
+  screenOptions as SignInScreenOptions,
 } from '../screens/SignInScreen';
 import SignOutScreen, {
-  screenOptions as SignOutScreenOptions
+  screenOptions as SignOutScreenOptions,
 } from '../screens/SignOutScreen';
 import ForgottenPasswordScreen, {
-  screenOptions as ForgottenPasswordScreenOptions
+  screenOptions as ForgottenPasswordScreenOptions,
 } from '../screens/ForgottenPasswordScreen';
 
 const defaultStackNavOptions = {
   headerShown: false,
-  cardStyle: { backgroundColor: 'white' }
+  cardStyle: { backgroundColor: 'white' },
 };
 
 const Stack = createStackNavigator();
