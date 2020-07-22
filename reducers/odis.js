@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: null,
   statusCode: null,
-  dataErrorUrl: null
+  dataErrorUrl: null,
 };
 
 export default function odis(state = INITIAL_STATE, action) {
@@ -20,7 +20,7 @@ export default function odis(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.INCREMENT_ODIS_VIEW_COUNT: {
@@ -29,13 +29,13 @@ export default function odis(state = INITIAL_STATE, action) {
 
       return {
         ...state,
-        viewCount: oldViewCount + 1
+        viewCount: oldViewCount + 1,
       };
     }
     case Types.RESET_ODIS_VIEW_COUNT: {
       return {
         ...state,
-        viewCount: 0
+        viewCount: 0,
       };
     }
     case Types.GET_ODIS_SUCCESS: {
@@ -59,12 +59,12 @@ export default function odis(state = INITIAL_STATE, action) {
 
         // newDataObj[1].productVersion = '5.1.7';
 
-        newDataObj.map(item => newDataObjArr.push(item));
+        newDataObj.map((item) => newDataObjArr.push(item));
         // console.log('newDataObjArr', newDataObjArr);
 
         // console.log('newDataObjArr[3]', newDataObjArr[3]);
 
-        newDataObjArr.map(item => {
+        newDataObjArr.map((item) => {
           //   console.log('item.brandCode is ' + item.brandCode);
           //   console.log('!!!!! item.brandCode', item.brandCode);
           //   console.log('!!!!! start');
@@ -122,7 +122,7 @@ export default function odis(state = INITIAL_STATE, action) {
                   ? state.odisData.au.dataVersion === item.dataVersion
                     ? state.odisData.au.previousDataVersion
                     : state.odisData.au.dataVersion
-                  : null
+                  : null,
             };
           } else if (item.brandCode.toLowerCase() === 'cv') {
             // console.log('cv', item);
@@ -199,7 +199,7 @@ export default function odis(state = INITIAL_STATE, action) {
                   ? state.odisData.cv.dataVersion === item.dataVersion
                     ? state.odisData.cv.previousDataVersion
                     : state.odisData.cv.dataVersion
-                  : null
+                  : null,
             };
           } else if (item.brandCode.toLowerCase() === 'se') {
             // console.log('se', item);
@@ -253,7 +253,7 @@ export default function odis(state = INITIAL_STATE, action) {
                   ? state.odisData.se.dataVersion === item.dataVersion
                     ? state.odisData.se.previousDataVersion
                     : state.odisData.se.dataVersion
-                  : null
+                  : null,
             };
           } else if (item.brandCode.toLowerCase() === 'sk') {
             // console.log('sk', item);
@@ -307,7 +307,7 @@ export default function odis(state = INITIAL_STATE, action) {
                   ? state.odisData.sk.dataVersion === item.dataVersion
                     ? state.odisData.sk.previousDataVersion
                     : state.odisData.sk.dataVersion
-                  : null
+                  : null,
             };
           } else if (item.brandCode.toLowerCase() === 'vw') {
             // console.log('vw', item);
@@ -361,7 +361,7 @@ export default function odis(state = INITIAL_STATE, action) {
                   ? state.odisData.vw.dataVersion === item.dataVersion
                     ? state.odisData.vw.previousDataVersion
                     : state.odisData.vw.dataVersion
-                  : null
+                  : null,
             };
           }
 
@@ -376,7 +376,7 @@ export default function odis(state = INITIAL_STATE, action) {
           cv: cvOdisData,
           se: seOdisData,
           sk: skOdisData,
-          vw: vwOdisData
+          vw: vwOdisData,
         },
         // odisData: {},
         viewCount: state.viewCount
@@ -388,7 +388,7 @@ export default function odis(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.ODIS_ERROR: {
@@ -399,7 +399,7 @@ export default function odis(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

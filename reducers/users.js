@@ -4,7 +4,7 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   usersItems: [],
   isLoading: false,
-  error: null
+  error: null,
 };
 
 export default function users(state = INITIAL_STATE, action) {
@@ -16,7 +16,7 @@ export default function users(state = INITIAL_STATE, action) {
         ...state,
 
         isLoading: true,
-        error: null
+        error: null,
       };
     }
     case Types.GET_USERS_SUCCESS: {
@@ -24,7 +24,7 @@ export default function users(state = INITIAL_STATE, action) {
         ...state,
         usersItems: action.payload.items,
         isLoading: false,
-        error: null
+        error: null,
       };
     }
     case Types.USERS_ERROR: {
@@ -32,7 +32,7 @@ export default function users(state = INITIAL_STATE, action) {
         ...state,
         isLoading: false,
 
-        error: action.payload.error
+        error: action.payload.error,
       };
     }
     default: {

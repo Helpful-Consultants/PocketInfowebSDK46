@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: null,
   statusCode: null,
-  dataErrorUrl: null
+  dataErrorUrl: null,
 };
 
 export default function news(state = INITIAL_STATE, action) {
@@ -22,7 +22,7 @@ export default function news(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.GET_NEWS_SUCCESS: {
@@ -49,7 +49,7 @@ export default function news(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.INCREMENT_NEWS_VIEW_COUNT: {
@@ -58,13 +58,13 @@ export default function news(state = INITIAL_STATE, action) {
 
       return {
         ...state,
-        viewCount: oldViewCount + 1
+        viewCount: oldViewCount + 1,
       };
     }
     case Types.RESET_NEWS_VIEW_COUNT: {
       return {
         ...state,
-        viewCount: 0
+        viewCount: 0,
       };
     }
     case Types.NEWS_ERROR: {
@@ -75,7 +75,7 @@ export default function news(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

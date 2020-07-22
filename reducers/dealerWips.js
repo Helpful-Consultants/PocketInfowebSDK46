@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   lastWipProcessed: null,
-  unavailableTools: false
+  unavailableTools: false,
 };
 
 export default function dealerWips(state = INITIAL_STATE, action) {
@@ -21,7 +21,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.GET_DEALER_WIPS_SUCCESS: {
@@ -34,7 +34,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.CREATE_DEALER_WIP_START: {
@@ -43,7 +43,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         isSending: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
@@ -55,14 +55,14 @@ export default function dealerWips(state = INITIAL_STATE, action) {
           ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
-          message: (action.payload.message && action.payload.message) || null
+          message: (action.payload.message && action.payload.message) || null,
         },
         isLoading: false,
         isSending: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.DEALER_WIP_UNAVAILABLE_TOOLS: {
@@ -74,7 +74,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
           ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
-          message: (action.payload.message && action.payload.message) || null
+          message: (action.payload.message && action.payload.message) || null,
         },
         isLoading: false,
         isSending: false,
@@ -82,7 +82,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.DELETE_DEALER_WIP_SUCCESS: {
@@ -95,13 +95,13 @@ export default function dealerWips(state = INITIAL_STATE, action) {
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
           wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || ''
+            (action.payload.wipNumber && action.payload.wipNumber) || '',
         },
         isLoading: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.DELETE_DEALER_WIP_TOOL_SUCCESS: {
@@ -114,14 +114,14 @@ export default function dealerWips(state = INITIAL_STATE, action) {
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
           wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || ''
+            (action.payload.wipNumber && action.payload.wipNumber) || '',
         },
         isLoading: false,
         error: (action.payload.error && action.payload.error) || null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     case Types.EMPTY_DEALER_WIPS_REQUEST: {
@@ -133,7 +133,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         isLoading: false,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.DEALER_WIPS_ERROR: {
@@ -150,7 +150,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

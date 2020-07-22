@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: null,
   statusCode: null,
-  dataErrorUrl: null
+  dataErrorUrl: null,
 };
 
 export default function ltp(state = INITIAL_STATE, action) {
@@ -18,7 +18,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         statusCode: null,
-        dataErrorUrl: null
+        dataErrorUrl: null,
       };
     }
     case Types.GET_LTP_SUCCESS: {
@@ -32,7 +32,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         isLoading: false,
         error: null,
         statusCode: null,
-        dataErrorUrl: null
+        dataErrorUrl: null,
       };
     }
     case Types.EMPTY_LTP_REQUEST: {
@@ -44,7 +44,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         isLoading: false,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.LTP_ERROR: {
@@ -55,7 +55,7 @@ export default function ltp(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: null,
   dataErrorUrl: null,
-  statusCode: null
+  statusCode: null,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -32,7 +32,7 @@ export default function user(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode: null,
-        userApiFetchParamsObj: null
+        userApiFetchParamsObj: null,
       };
     }
     case Types.GET_USER_SUCCESS: {
@@ -77,7 +77,7 @@ export default function user(state = INITIAL_STATE, action) {
         action.payload.items[0].intId
           ? {
               dealerId: action.payload.items[0].dealerId.toString(),
-              intId: action.payload.items[0].intId.toString()
+              intId: action.payload.items[0].intId.toString(),
             }
           : null;
 
@@ -121,7 +121,7 @@ export default function user(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     // case Types.GET_USER_INVALID_CREDENTIALS: {
@@ -141,7 +141,7 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log('action.payload is:', action.payload.error);
       return {
         ...state,
-        userIsValidated: false
+        userIsValidated: false,
       };
     }
     case Types.SET_USER_VALIDATED: {
@@ -149,7 +149,7 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         userIsSignedIn: true,
-        userIsValidated: true
+        userIsValidated: true,
       };
     }
 
@@ -179,7 +179,7 @@ export default function user(state = INITIAL_STATE, action) {
       );
       return {
         ...state,
-        userIsValidated: revalidatedUser
+        userIsValidated: revalidatedUser,
       };
     }
 
@@ -193,7 +193,7 @@ export default function user(state = INITIAL_STATE, action) {
         isLoading: false,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.USER_ERROR: {
@@ -209,7 +209,7 @@ export default function user(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

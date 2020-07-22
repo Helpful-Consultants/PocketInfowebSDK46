@@ -18,5 +18,5 @@ export default combineReducers({
   odis: OdisReducer,
   stats: StatsReducer,
   dealerTools: DealerToolsReducer,
-  dealerWips: DealerWipsReducer
+  dealerWips: DealerWipsReducer,
 });

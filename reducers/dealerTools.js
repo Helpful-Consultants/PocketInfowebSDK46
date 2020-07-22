@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   error: null,
   statusCode: null,
   dataErrorUrl: null,
-  statusCode: null
+  statusCode: null,
 };
 
 export default function dealerTools(state = INITIAL_STATE, action) {
@@ -20,7 +20,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.GET_DEALER_TOOLS_SUCCESS: {
@@ -32,7 +32,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.EMPTY_DEALER_TOOLS_REQUEST: {
@@ -44,7 +44,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         isLoading: false,
         error: null,
         dataErrorUrl: null,
-        statusCode: null
+        statusCode: null,
       };
     }
     case Types.DEALER_TOOLS_ERROR: {
@@ -56,7 +56,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {

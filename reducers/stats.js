@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   isLoading: false,
   error: null,
   statusCode: null,
-  dataErrorUrl: null
+  dataErrorUrl: null,
 };
 
 export default function stats(state = INITIAL_STATE, action) {
@@ -19,7 +19,7 @@ export default function stats(state = INITIAL_STATE, action) {
         isLoading: true,
         error: null,
         statusCode: null,
-        dataErrorUrl: null
+        dataErrorUrl: null,
       };
     }
     case Types.GET_STATS_SUCCESS: {
@@ -32,7 +32,7 @@ export default function stats(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode:
-          (action.payload.statusCode && action.payload.statusCode) || null
+          (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
     case Types.STATS_ERROR: {
@@ -47,7 +47,7 @@ export default function stats(state = INITIAL_STATE, action) {
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
         dataErrorUrl:
-          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null
+          (action.payload.dataErrorUrl && action.payload.dataErrorUrl) || null,
       };
     }
     default: {
