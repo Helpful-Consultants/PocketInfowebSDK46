@@ -69,5 +69,5 @@ export default {
   EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/empty_dealer_wips_request',
   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error',
 
-  FORM_INPUT_UPDATE: 'FORM_INPUT_UPDATE'
+  FORM_INPUT_UPDATE: 'FORM_INPUT_UPDATE',
 };

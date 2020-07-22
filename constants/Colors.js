@@ -59,5 +59,5 @@ export default {
   vwgBlack: '#000',
   vwgWhite: '#fff',
   vwgSearchBarContainer: '#fff',
-  vwgSearchBarInputContainer: '#c6dfe7'
+  vwgSearchBarInputContainer: '#c6dfe7',
 };
