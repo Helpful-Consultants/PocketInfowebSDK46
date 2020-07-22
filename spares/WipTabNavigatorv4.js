@@ -22,7 +22,7 @@ import Colors from '../constants/Colors';
 
 // Home screen
 const HomeStack = createStackNavigator({
-  Home: HomeScreen
+  Home: HomeScreen,
 });
 
 HomeStack.navigationOptions = {
@@ -34,13 +34,13 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
     />
-  )
+  ),
 };
 // End Home screen
 
 // Find Tools screen
 const FindToolsStack = createStackNavigator({
-  FindTools: FindToolsScreen
+  FindTools: FindToolsScreen,
 });
 
 FindToolsStack.navigationOptions = {
@@ -59,13 +59,13 @@ FindToolsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
     />
-  )
+  ),
 };
 // End Find Tools screen
 
 // BookedOutTools screen
 const BookedOutToolsStack = createStackNavigator({
-  BookedOutTools: BookedOutToolsScreen
+  BookedOutTools: BookedOutToolsScreen,
 });
 
 BookedOutToolsStack.navigationOptions = {
@@ -84,13 +84,13 @@ BookedOutToolsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'}
     />
-  )
+  ),
 };
 // End Return Tools screen
 
 // Jobs screen
 const JobsStack = createStackNavigator({
-  Jobs: JobsScreen
+  Jobs: JobsScreen,
 });
 
 JobsStack.navigationOptions = {
@@ -107,13 +107,13 @@ JobsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'}
     />
-  )
+  ),
 };
 // End Jobs screen
 
 // LTP screen
 const LtpStack = createStackNavigator({
-  Ltp: LtpScreen
+  Ltp: LtpScreen,
 });
 
 LtpStack.navigationOptions = {
@@ -130,7 +130,7 @@ LtpStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
     />
-  )
+  ),
 };
 // End LTP screen
 
@@ -142,7 +142,7 @@ const WipTabNavigator =
           FindToolsStack,
           BookedOutToolsStack,
           JobsStack,
-          LtpStack
+          LtpStack,
         },
         {
           labeled: true,
@@ -155,8 +155,8 @@ const WipTabNavigator =
             labelPosition: 'below-icon',
 
             // height: RFPercentage(6.4),
-            backgroundColor: Colors.vwgWhite
-          }
+            backgroundColor: Colors.vwgWhite,
+          },
           //   tabBarOptions: {
           //     labelPosition: 'below-icon',
           //     style: {
@@ -173,18 +173,18 @@ const WipTabNavigator =
           FindToolsStack,
           BookedOutToolsStack,
           JobsStack,
-          LtpStack
+          LtpStack,
         },
         {
           tabBarOptions: {
             labelPosition: 'below-icon',
             style: {
-              height: RFPercentage(6.4)
-            }
+              height: RFPercentage(6.4),
+            },
           },
           tabStyle: {
-            height: RFPercentage(2.2)
-          }
+            height: RFPercentage(2.2),
+          },
         }
       );
 // End Tab navigator
@@ -193,13 +193,13 @@ const styles = StyleSheet.create({
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });
 
 export default WipTabNavigator;

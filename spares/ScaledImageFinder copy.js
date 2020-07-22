@@ -2,12 +2,12 @@ import React from 'react';
 import { Image } from 'react-native';
 import ScaledImage from '../components/ScaledImage';
 
-export default ScaledImageFinder = props => {
+export default ScaledImageFinder = (props) => {
   //   console.log('in scaledImageFinder');
   //   console.log(props && props);
 
   const { baseImageUrl, item, uri, width } = props;
-  const stripForImage = toolNumber => {
+  const stripForImage = (toolNumber) => {
     // console.log(toolNumber);
     let retValue = toolNumber.replace(/[^a-z0-9+]+/gi, '');
     // console.log('strip retValue is ', retValue);
@@ -21,7 +21,7 @@ export default ScaledImageFinder = props => {
     />
   );
 
-  const getImageUrl = item => {
+  const getImageUrl = (item) => {
     // console.log('in ScaledImageFinder', item);
 
     let retValue = '';

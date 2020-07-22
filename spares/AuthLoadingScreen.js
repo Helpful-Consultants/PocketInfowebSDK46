@@ -5,7 +5,7 @@ import {
   StatusBar,
   StyleSheet,
   View,
-  Alert
+  Alert,
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -17,11 +17,11 @@ import { setUserOutdatedCredentials } from '../actions/user';
 import { setUserValidated } from '../actions/user';
 // import validation from 'validate';
 
-export default AuthLoadingScreen = props => {
-  const userIsValidated = useSelector(state => state.user.userIsValidated);
-  const userId = useSelector(state => state.user.userId);
-  const userPin = useSelector(state => state.user.userPin);
-  const userLastUpdate = useSelector(state => state.user.lastUpdate);
+export default AuthLoadingScreen = (props) => {
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userId = useSelector((state) => state.user.userId);
+  const userPin = useSelector((state) => state.user.userPin);
+  const userLastUpdate = useSelector((state) => state.user.lastUpdate);
   const insets = useSafeArea();
   const dispatch = useDispatch();
 
@@ -58,34 +58,34 @@ export default AuthLoadingScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   appName: {
     color: '#0096da',
     color: '#000',
     fontSize: 18,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   announcementText: {
     marginBottom: 20,
     color: 'rgba(0,0,0,0.4)',
     fontSize: 14,
     lineHeight: 19,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
   },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 20,
   },
   welcomeImage: {
     width: 100,
     height: 80,
     resizeMode: 'contain',
     marginTop: 3,
-    marginLeft: -10
-  }
+    marginLeft: -10,
+  },
 });

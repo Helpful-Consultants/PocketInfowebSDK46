@@ -53,8 +53,8 @@ const useAsync = (asyncFunction, immediate = true) => {
     setError(null);
 
     return asyncFunction()
-      .then(response => setValue(response))
-      .catch(error => setError(error))
+      .then((response) => setValue(response))
+      .catch((error) => setError(error))
       .finally(() => setPending(false));
   }, [asyncFunction]);
 

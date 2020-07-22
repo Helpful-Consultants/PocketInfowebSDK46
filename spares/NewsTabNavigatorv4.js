@@ -27,7 +27,7 @@ import Colors from '../constants/Colors';
 // Home screen
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: HomeScreen,
   }
   //   config
 );
@@ -41,14 +41,14 @@ HomeStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
     />
-  )
+  ),
 };
 // End Home screen
 
 // News screen
 const NewsStack = createStackNavigator(
   {
-    News: NewsScreen
+    News: NewsScreen,
   }
   //   config
 );
@@ -75,14 +75,14 @@ NewsStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  )
+  ),
 };
 // End News screen
 
 // Products screen
 const ProductsStack = createStackNavigator(
   {
-    Products: ProductsScreen
+    Products: ProductsScreen,
   }
   //   config
 );
@@ -114,14 +114,14 @@ ProductsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
     />
-  )
+  ),
 };
 // End Products screen
 
 // ODIS screen
 const OdisStack = createStackNavigator(
   {
-    Odis: OdisScreen
+    Odis: OdisScreen,
   }
   //   config
 );
@@ -140,14 +140,14 @@ OdisStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
     />
-  )
+  ),
 };
 // End ODIS screen
 
 // Stats screen
 const StatsStack = createStackNavigator(
   {
-    Stats: StatsScreen
+    Stats: StatsScreen,
   }
   //   config
 );
@@ -168,7 +168,7 @@ StatsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
     />
-  )
+  ),
 };
 // End Stats screen
 
@@ -180,7 +180,7 @@ const NewsTabNavigator =
           NewsStack,
           ProductsStack,
           OdisStack,
-          StatsStack
+          StatsStack,
         },
         {
           labeled: true,
@@ -193,8 +193,8 @@ const NewsTabNavigator =
             labelPosition: 'below-icon',
 
             // height: RFPercentage(6.4),
-            backgroundColor: Colors.vwgWhite
-          }
+            backgroundColor: Colors.vwgWhite,
+          },
           //   tabBarOptions: {
           //     labelPosition: 'below-icon',
           //     style: {
@@ -211,18 +211,18 @@ const NewsTabNavigator =
           NewsStack,
           ProductsStack,
           OdisStack,
-          StatsStack
+          StatsStack,
         },
         {
           tabBarOptions: {
             labelPosition: 'below-icon',
             style: {
               //   height: RFPercentage(6.4)
-            }
+            },
           },
           tabStyle: {
             // height: RFPercentage(2.2)
-          }
+          },
         }
       );
 // End Tab navigator
@@ -231,13 +231,13 @@ const styles = StyleSheet.create({
   focused: {
     fontFamily: 'the-sans',
     color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7)
+    fontSize: RFPercentage(1.7),
   },
   notFocused: {
     fontFamily: 'the-sans',
     color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7)
-  }
+    fontSize: RFPercentage(1.7),
+  },
 });
 
 export default NewsTabNavigator;

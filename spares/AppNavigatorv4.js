@@ -34,39 +34,39 @@ const SignedOutStack = createStackNavigator({
   SignIn: {
     screen: SignInScreen,
     navigationOptions: {
-      title: 'Sign In'
+      title: 'Sign In',
     },
     navigationOptions: () => ({
-      headerShown: false
-    })
+      headerShown: false,
+    }),
   },
   ForgottenPassword: {
     screen: ForgottenPasswordScreen,
     navigationOptions: {
-      title: 'Forgotten Password'
+      title: 'Forgotten Password',
     },
     navigationOptions: () => ({
-      headerShown: true
-    })
+      headerShown: true,
+    }),
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      title: 'Register'
+      title: 'Register',
     },
     navigationOptions: () => ({
-      headerShown: true
-    })
+      headerShown: true,
+    }),
   },
   SignOut: {
     screen: SignOutScreen,
     navigationOptions: {
-      title: 'Sign out'
-    }
+      title: 'Sign out',
+    },
   },
   navigationOptions: () => ({
-    headerShown: false
-  })
+    headerShown: false,
+  }),
 });
 
 // Stats stack
@@ -108,7 +108,7 @@ const SignedOutStack = createStackNavigator({
 //   }
 // });
 
-const DrawerContent = props => {
+const DrawerContent = (props) => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
@@ -125,32 +125,32 @@ const AppDrawerNavigator = createDrawerNavigator(
   {
     Home: {
       screen: HomeScreen,
-      navigationOptions: { drawerLabel: 'Home' }
+      navigationOptions: { drawerLabel: 'Home' },
     },
     FindToolsStack: {
       screen: WipTabNavigator,
       navigationOptions: {
         drawerLabel: 'Find tools, return tools, jobs & LTP',
-        initialRouteName: 'FindTools'
-      }
+        initialRouteName: 'FindTools',
+      },
     },
     NewsStack: {
       screen: NewsTabNavigator,
       navigationOptions: {
         drawerLabel: 'News, products, ODIS, stats',
-        initialRouteName: 'News'
-      }
+        initialRouteName: 'News',
+      },
     },
 
     SignedOutStack: {
       screen: SignOutScreen,
       navigationOptions: {
-        drawerLabel: 'Sign out'
-      }
-    }
+        drawerLabel: 'Sign out',
+      },
+    },
   },
   {
-    contentComponent: DrawerContent
+    contentComponent: DrawerContent,
   }
 );
 
@@ -168,7 +168,7 @@ export default createAppContainer(
     {
       AuthLoading: AuthLoadingScreen,
       Auth: SignedOutStack,
-      Main: AppDrawerNavigator
+      Main: AppDrawerNavigator,
       //   Main: CustomDrawerContentComponent
     },
     // { initialRouteName: userIsSignedIn ? 'Main' : 'Auth' }
@@ -177,12 +177,12 @@ export default createAppContainer(
 );
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   zzstretched: {
     flexDirection: 'column',
     alignItems: 'stretch',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
     // backgroundColor: 'red'
   },
   footerContainer: {
@@ -196,28 +196,28 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2)
+    fontSize: RFPercentage(2.2),
     // fontStyle: 'italic'
   },
   brand: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.9)
+    fontSize: RFPercentage(1.9),
     // fontStyle: 'italic'
   },
   appVersion: {
     paddingTop: 5,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
   },
   deviceVersion: {
     paddingTop: 15,
     paddingLeft: 18,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8)
+    fontSize: RFPercentage(1.8),
     // fontStyle: 'italic'
-  }
+  },
 });
