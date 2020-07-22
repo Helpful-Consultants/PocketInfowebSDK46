@@ -6,22 +6,22 @@
 import Types from '../constants/Types';
 
 export const getStatsStart = () => ({
-  type: Types.GET_STATS_START
+  type: Types.GET_STATS_START,
 });
 
 export const getStatsRequest = ({ dealerId }) => ({
   type: Types.GET_STATS_REQUEST,
   payload: {
-    dealerId: dealerId
-  }
+    dealerId: dealerId,
+  },
 });
 
 export const getStatsSuccess = ({ statusCode, items }) => ({
   type: Types.GET_STATS_SUCCESS,
   payload: {
     items,
-    statusCode
-  }
+    statusCode,
+  },
 });
 
 export const statsError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -29,6 +29,6 @@ export const statsError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });

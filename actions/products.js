@@ -6,18 +6,18 @@
 import Types from '../constants/Types';
 
 export const getProductsStart = () => ({
-  type: Types.GET_PRODUCTS_START
+  type: Types.GET_PRODUCTS_START,
 });
 
 export const getProductsRequest = () => ({
-  type: Types.GET_PRODUCTS_REQUEST
+  type: Types.GET_PRODUCTS_REQUEST,
 });
 
 export const getProductsSuccess = ({ items }) => ({
   type: Types.GET_PRODUCTS_SUCCESS,
   payload: {
-    items: items
-  }
+    items: items,
+  },
 });
 
 export const productsError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -25,6 +25,6 @@ export const productsError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });

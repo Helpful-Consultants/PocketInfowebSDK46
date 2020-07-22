@@ -6,22 +6,22 @@
 import Types from '../constants/Types';
 
 export const getLtpStart = () => ({
-  type: Types.GET_LTP_START
+  type: Types.GET_LTP_START,
 });
 
 export const getLtpRequest = () => ({
-  type: Types.GET_LTP_REQUEST
+  type: Types.GET_LTP_REQUEST,
 });
 
 export const getLtpSuccess = ({ items }) => ({
   type: Types.GET_LTP_SUCCESS,
   payload: {
-    items: items
-  }
+    items: items,
+  },
 });
 
 export const emptyLtpRequest = () => ({
-  type: Types.EMPTY_LTP_REQUEST
+  type: Types.EMPTY_LTP_REQUEST,
 });
 
 export const ltpError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -29,6 +29,6 @@ export const ltpError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });

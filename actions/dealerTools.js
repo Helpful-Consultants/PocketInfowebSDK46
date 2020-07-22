@@ -7,26 +7,26 @@
 import Types from '../constants/Types';
 
 export const getDealerToolsStart = () => ({
-  type: Types.GET_DEALER_TOOLS_START
+  type: Types.GET_DEALER_TOOLS_START,
 });
 
 export const getDealerToolsRequest = ({ dealerId }) => ({
   type: Types.GET_DEALER_TOOLS_REQUEST,
   payload: {
-    dealerId
-  }
+    dealerId,
+  },
 });
 
 export const getDealerToolsSuccess = ({ statusCode, items }) => ({
   type: Types.GET_DEALER_TOOLS_SUCCESS,
   payload: {
     items,
-    statusCode
-  }
+    statusCode,
+  },
 });
 
 export const emptyDealerToolsRequest = () => ({
-  type: Types.EMPTY_DEALER_TOOLS_REQUEST
+  type: Types.EMPTY_DEALER_TOOLS_REQUEST,
 });
 
 export const dealerToolsError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -34,6 +34,6 @@ export const dealerToolsError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });

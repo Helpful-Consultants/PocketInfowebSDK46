@@ -9,38 +9,38 @@
 import Types from '../constants/Types';
 
 export const getUsersStart = () => ({
-  type: Types.GET_USERS_START
+  type: Types.GET_USERS_START,
 });
 
 export const getUsersRequest = () => ({
-  type: Types.GET_USERS_REQUEST
+  type: Types.GET_USERS_REQUEST,
 });
 
 export const getUsersSuccess = ({ items }) => ({
   type: Types.GET_USERS_SUCCESS,
   payload: {
-    items
-  }
+    items,
+  },
 });
 
 export const createUserRequest = ({ firstName, lastName }) => ({
   type: Types.CREATE_USER_REQUEST,
   payload: {
     firstName,
-    lastName
-  }
+    lastName,
+  },
 });
 
-export const deleteUserRequest = userId => ({
+export const deleteUserRequest = (userId) => ({
   type: Types.DELETE_USER_REQUEST,
   payload: {
-    userId
-  }
+    userId,
+  },
 });
 
 export const usersError = ({ error }) => ({
   type: Types.USERS_ERROR,
   payload: {
-    error
-  }
+    error,
+  },
 });

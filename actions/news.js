@@ -10,18 +10,18 @@ import Types from '../constants/Types';
 // console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);
 
 export const getNewsStart = () => ({
-  type: Types.GET_NEWS_START
+  type: Types.GET_NEWS_START,
 });
 
 export const getNewsRequest = () => ({
-  type: Types.GET_NEWS_REQUEST
+  type: Types.GET_NEWS_REQUEST,
 });
 
 export const getNewsSuccess = ({ items }) => ({
   type: Types.GET_NEWS_SUCCESS,
   payload: {
-    items: items
-  }
+    items: items,
+  },
 });
 
 export const newsError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -29,6 +29,6 @@ export const newsError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });

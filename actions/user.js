@@ -1,19 +1,19 @@
 import Types from '../constants/Types';
 
 export const getUserStart = () => ({
-  type: Types.GET_USER_START
+  type: Types.GET_USER_START,
 });
 
 export const getUserRequest = ({ email, pin }) => ({
   type: Types.GET_USER_REQUEST,
   payload: {
     email,
-    pin
-  }
+    pin,
+  },
 });
 
 export const signOutUserRequest = () => ({
-  type: Types.SIGN_OUT_USER_REQUEST
+  type: Types.SIGN_OUT_USER_REQUEST,
 });
 
 export const getUserSuccess = ({ statusCode, items, userPin }) => ({
@@ -21,23 +21,23 @@ export const getUserSuccess = ({ statusCode, items, userPin }) => ({
   payload: {
     items,
     userPin,
-    statusCode
-  }
+    statusCode,
+  },
 });
 
 export const setUserValidated = () => ({
-  type: Types.SET_USER_VALIDATED
+  type: Types.SET_USER_VALIDATED,
 });
 
 export const setUserOutdatedCredentials = () => ({
-  type: Types.SET_USER_OUTDATED_CREDENTIALS
+  type: Types.SET_USER_OUTDATED_CREDENTIALS,
 });
 
 export const revalidateUserCredentials = ({ calledBy }) => ({
   type: Types.REVALIDATE_USER_CREDENTIALS,
   payload: {
-    calledBy: calledBy || null
-  }
+    calledBy: calledBy || null,
+  },
 });
 
 export const userError = ({ error, statusCode, dataErrorUrl }) => ({
@@ -45,6 +45,6 @@ export const userError = ({ error, statusCode, dataErrorUrl }) => ({
   payload: {
     error,
     statusCode,
-    dataErrorUrl
-  }
+    dataErrorUrl,
+  },
 });
