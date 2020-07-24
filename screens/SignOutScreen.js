@@ -1,5 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  StatusBar,
+  useWindowDimensions,
+} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { useDispatch, useSelector } from 'react-redux';
 import AppNameWithLogo from '../components/AppNameWithLogo';
@@ -8,9 +12,9 @@ import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import { emptyDealerWipsRequest } from '../actions/dealerWips';
 import { emptyLtpRequest } from '../actions/ltp';
 
-// import validation from 'validate';
-
 export default SignOutScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   console.log('in signout screen, signingOut');
   dispatch(emptyDealerWipsRequest());
@@ -20,7 +24,7 @@ export default SignOutScreen = (props) => {
   //   props.navigation.navigate('AuthLoading');
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={baseStyles.containerFlex}>
       <AppNameWithLogo />
       <ActivityIndicator />
       <StatusBar barStyle='default' />
@@ -33,37 +37,3 @@ export const screenOptions = (navData) => {
     title: 'Sign out',
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  appName: {
-    color: '#0096da',
-    color: '#000',
-    fontSize: 18,
-    textTransform: 'uppercase',
-  },
-  announcementText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-});

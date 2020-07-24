@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { Text } from 'react-native-elements';
 
@@ -15,6 +15,8 @@ export default function StatsSummary(props) {
   //   console.log('props.statsItems');
   //   const items = props.items[0].brandVersions || [];
   //   console.log(props);
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const {
     statsObj,
     userDataObj,
@@ -78,45 +80,47 @@ export default function StatsSummary(props) {
   //   console.log(logoChooser);
   //   console.log('statsDummyData', statsDummyData);
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexPadded}>
       {userDataObj && statsObj && userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <View style={{ marginHorizontal: 30 }}>
-            <Text style={styles.statsTitle}>App user</Text>
-            <Text style={styles.statsText}>{userDataObj.userName}</Text>
-            <Text style={styles.statsText}>{userDataObj.dealerName}</Text>
-            <Text style={styles.statsText}>{userDataObj.dealerId}</Text>
+            <Text style={baseStyles.statsTitle}>App user</Text>
+            <Text style={baseStyles.statsText}>{userDataObj.userName}</Text>
+            <Text style={baseStyles.statsText}>{userDataObj.dealerName}</Text>
+            <Text style={baseStyles.statsText}>{userDataObj.dealerId}</Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Mandatory tools</Text>
-            <Text style={styles.statsText}>
+            <Text style={baseStyles.statsTitle}>Mandatory tools</Text>
+            <Text style={baseStyles.statsText}>
               {`${dealerToolsCountFormatted} mandatory; ${loggedToolsFormatted} logged;`}
             </Text>
-            <Text style={styles.statsText}>
+            <Text style={baseStyles.statsText}>
               {`Effectiveness: ${effectiveness} of tool locations recorded`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Loan tool usage</Text>
-            <Text style={styles.statsText}>
+            <Text style={baseStyles.statsTitle}>Loan tool usage</Text>
+            <Text style={baseStyles.statsText}>
               {`${statsObj.ltpUse} used; ${statsObj.ltpCurrent} current`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Support tickets</Text>
-            <Text style={styles.statsText}>
+            <Text style={baseStyles.statsTitle}>Support tickets</Text>
+            <Text style={baseStyles.statsText}>
               {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
             </Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>
+            <Text style={baseStyles.statsTitle}>
               Active jobs with tools booked out
             </Text>
-            <Text style={styles.statsText}>{`${activeJobsCount} jobs`}</Text>
+            <Text
+              style={baseStyles.statsText}
+            >{`${activeJobsCount} jobs`}</Text>
           </View>
           <View>
-            <Text style={styles.statsTitle}>Service measures</Text>
-            <Text style={styles.statsText}>
+            <Text style={baseStyles.statsTitle}>Service measures</Text>
+            <Text style={baseStyles.statsText}>
               {`${statsObj.activeServiceMeasures} active; ${statsObj.completedServiceMeasures} completed`}
             </Text>
           </View>
@@ -125,34 +129,3 @@ export default function StatsSummary(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'teal'
-
-    // backgroundColor: '#00889d'
-  },
-
-  statsTitle: {
-    color: Colors.vwgDeepBlue,
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2),
-    paddingVertical: 10,
-    // marginTop: 10,
-    marginBottom: 0,
-    textAlign: 'center',
-  },
-  statsText: {
-    color: Colors.vwgVeryDarkGray,
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2),
-    textAlign: 'center',
-    // marginBottom: 5
-  },
-});

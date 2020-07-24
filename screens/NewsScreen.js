@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,7 +19,7 @@ import { getNewsRequest } from '../actions/news';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
 import Colors from '../constants/Colors';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import newsDummyData from '../dummyData/newsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -33,6 +33,8 @@ const checkUrl = (rawUrl) => {
 };
 
 export default NewsScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const newsItems = useSelector((state) => state.news.newsItems);
@@ -89,7 +91,11 @@ export default NewsScreen = (props) => {
       const getItemsAsync = async () => {
         getItems();
       };
-      dispatch(revalidateUserCredentials({ calledBy: 'NewsScreen' }));
+      dispatch(
+        revalidateUserCredentials({
+          calledBy: 'NewsScreen',
+        })
+      );
       setSearchInput('');
       getItemsAsync();
     }, [])
@@ -135,7 +141,7 @@ export default NewsScreen = (props) => {
   console.log('rendering News screen');
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.container}>
       <SearchBarWithRefresh
         dataName={'news'}
         someDataExpected={true}
@@ -157,8 +163,8 @@ export default NewsScreen = (props) => {
       ) : (
         <ScrollView>
           {filteredItems && filteredItems.length > 0 ? (
-            <View style={styles.lookupPrompt}>
-              <Text style={styles.lookupPromptText}>
+            <View style={baseStyles.promptRibbon}>
+              <Text style={baseStyles.promptRibbonText}>
                 Touch a news item to see more on Tools Infoweb.
               </Text>
             </View>
@@ -205,22 +211,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    marginBottom: -5,
-  },
-  lookupPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgInfoBar,
-  },
-  lookupPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9),
-  },
-});

@@ -1,11 +1,11 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import {
-  StyleSheet,
   Platform,
   ScrollView,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -22,6 +22,8 @@ import FriendlyDate from '../components/FriendlyDate';
 const minSearchLength = 1;
 
 export default function DealerToolsList(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('props');
   const {
     isLoading,
@@ -214,8 +216,8 @@ export default function DealerToolsList(props) {
             searchInput.length >= minSearchLength &&
             items &&
             items.length > 0 ? null : (
-              <View style={styles.searchPrompt}>
-                <Text style={styles.searchPromptText}>
+              <View style={baseStyles.promptRibbon}>
+                <Text style={baseStyles.promptRibbonText}>
                   {`You have ${
                     dataCount && dataCount > 0 ? dataCount : `no`
                   } open job${dataCount && dataCount === 1 ? '' : 's'}.`}
@@ -290,8 +292,8 @@ export default function DealerToolsList(props) {
     );
   } else {
     return (
-      <View style={styles.searchPrompt}>
-        <Text style={styles.searchPromptText}>
+      <View style={baseStyles.promptRibbon}>
+        <Text style={baseStyles.promptRibbonText}>
           {`You have ${dataCount && dataCount > 0 ? dataCount : `no`} open job${
             dataCount && dataCount === 1 ? '' : 's'
           }.`}
@@ -300,22 +302,3 @@ export default function DealerToolsList(props) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#222',
-  },
-  searchPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue,
-    marginBottom: 5,
-  },
-  searchPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite,
-  },
-});

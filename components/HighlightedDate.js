@@ -1,13 +1,19 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
 import Colors from '../constants/Colors';
 
 export default HighlightedText = (props) => {
+  const windowDim = useWindowDimensions();
   const { item, now, notificationLimit } = props;
   const notificationLimitToUse = notificationLimit || 7;
+
+  //   console.log('windowDim', windowDim && windowDim);
+  //   console.log('in HighlightedText, windowDim:', windowDim);
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in HighlightedText, baseStyles:', baseStyles);
 
   let itemDate = null;
   let highlight = false;
@@ -41,23 +47,8 @@ export default HighlightedText = (props) => {
     null;
 
   return ageOfChange && ageOfChange <= 7 ? (
-    <Text style={styles.dateHighlighted}>{displayDate}</Text>
+    <Text style={baseStyles.dateHighlighted}>{displayDate}</Text>
   ) : (
-    <Text style={styles.date}>{displayDate}</Text>
+    <Text style={baseStyles.date}>{displayDate}</Text>
   );
 };
-
-const styles = StyleSheet.create({
-  date: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    color: Colors.vwgDarkGray,
-    paddingTop: 5,
-  },
-  dateHighlighted: {
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.8),
-    color: Colors.vwgCoolOrange,
-    paddingTop: 5,
-  },
-});

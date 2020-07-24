@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, ScrollView, Text, View } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Icon, ListItem } from 'react-native-elements';
@@ -9,6 +16,8 @@ import Colors from '../constants/Colors';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 
 export default function DealerToolsList(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   const limit = 10;
   //   const allItems = props.items || [];
   //   //   const allItems = dealerToolsDummyData && dealerToolsDummyData;
@@ -273,7 +282,7 @@ export default function DealerToolsList(props) {
           inToolBasket = true;
           lastJobDetails = (
             <Touchable
-              style={styles.toolItem}
+              style={baseStyles.touchableNoMargin}
               onPress={() => toggleBaskethandler(true)}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -374,7 +383,7 @@ export default function DealerToolsList(props) {
       ></CustomListItem>
     ) : (
       <Touchable
-        style={styles.toolItem}
+        style={baseStyles.touchableNoMargin}
         onPress={() => selectItemHandler(item, personName)}
       >
         <CustomListItem
@@ -389,8 +398,8 @@ export default function DealerToolsList(props) {
   };
   const getHeader = () => {
     return showPrompt === true ? (
-      <View style={styles.searchPrompt}>
-        <Text style={styles.searchPromptText}>
+      <View style={baseStyles.promptRibbon}>
+        <Text style={baseStyles.promptRibbonText}>
           {searchInput && searchInput.length > 1
             ? `Press a tool to book it out.`
             : `Search for a tool then press to book it out.`}
@@ -422,20 +431,3 @@ export default function DealerToolsList(props) {
   //   console.log('about to render tools list');
   return listView || null;
 }
-
-const styles = StyleSheet.create({
-  searchPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue,
-  },
-  searchPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite,
-  },
-
-  toolItem: {
-    margin: 0,
-  },
-});

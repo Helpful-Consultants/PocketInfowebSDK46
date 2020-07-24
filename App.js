@@ -2,6 +2,7 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
+import { useWindowDimensions } from 'react-native';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
@@ -11,14 +12,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
-import {
-  Image,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
@@ -76,6 +70,8 @@ const store = createStore(
 sagaMiddleware.run(rootSaga);
 
 export default function App(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   //   persistStore(store).purge();
 
@@ -96,7 +92,7 @@ export default function App(props) {
       <SafeAreaProvider>
         <Provider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
-            <View style={styles.container}>
+            <View style={baseStyles.containerFlex}>
               {Platform.OS === 'ios' ? (
                 <StatusBar barStyle='dark-content' />
               ) : (
@@ -169,10 +165,3 @@ function handleLoadingError(error) {
 function handleFinishLoading(setLoadingComplete) {
   setLoadingComplete(true);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white'
-  }
-});

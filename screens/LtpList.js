@@ -1,12 +1,13 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Text, useWindowDimensions, View } from 'react-native';
 import { ListItem } from 'react-native-elements';
 // import Touchable from 'react-native-platform-touchable';
 // import moment from 'moment';
 // import ltpDummyData from '../dummyData/ltpDummyData';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import Colors from '../constants/Colors';
+
 export default function LtpList(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
@@ -67,32 +68,18 @@ export default function LtpList(props) {
             ? ` (${item.supplierPartNo})`
             : ``
         }`}
-        titleStyle={{
-          color: Colors.vwgBlack,
-          fontFamily: 'the-sans-bold',
-          fontSize: RFPercentage(1.9),
-        }}
-        contentContainerStyle={styles.listItem}
+        titleStyle={baseStyles.textLeftAlignedBold}
+        contentContainerStyle={baseStyles.containerNoMargin}
         bottomDivider
         subtitle={
           <View>
             <Text
-              style={{
-                color: Colors.vwgVeryDarkGray,
-                fontFamily: 'the-sans',
-                fontSize: RFPercentage(1.9),
-              }}
+              style={baseStyles.textLeftAligned}
             >{`${item.toolDescription}`}</Text>
             {item.orderPartNo &&
             item.orderPartNo.toLowerCase() !==
               item.toolDescription.toLowerCase() ? (
-              <Text
-                style={{
-                  color: Colors.vwgVeryDarkGray,
-                  fontFamily: 'the-sans',
-                  fontSize: RFPercentage(1.9),
-                }}
-              >
+              <Text style={baseStyles.textLeftAlignedSmall}>
                 {item.orderPartNo}
               </Text>
             ) : null}
@@ -104,7 +91,7 @@ export default function LtpList(props) {
   //   console.log(items && items);
 
   return (
-    <View style={styles.container}>
+    <View>
       {items && items.length > 0 ? (
         <FlatList
           data={items && items}
@@ -115,29 +102,3 @@ export default function LtpList(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1
-    // paddingTop: 15,
-  },
-  noItems: {
-    fontSize: 16,
-    fontFamily: 'the-sans-bold',
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 5,
-  },
-
-  listItem: {
-    marginLeft: 0,
-    marginRight: 0,
-    marginVertical: 0,
-  },
-  summaryText: {
-    fontSize: 12,
-    marginTop: 5,
-    color: '#000',
-    marginRight: 20,
-  },
-});

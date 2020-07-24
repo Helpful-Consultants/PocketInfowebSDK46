@@ -1,14 +1,14 @@
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
-import HTML from 'react-native-render-html';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
-import Colors from '../constants/Colors';
 
 export default AppInfo = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const brandText =
     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
@@ -22,21 +22,21 @@ export default AppInfo = (props) => {
     //   query: '(max-device-width: 1224px)'
   });
 
-  console.log(
-    '!!!!!!!!!!!! isTabletOrMobileDevice',
-    isTabletOrMobileDevice && isTabletOrMobileDevice
-  );
+  //   console.log(
+  //     '!!!!!!!!!!!! isTabletOrMobileDevice',
+  //     isTabletOrMobileDevice && isTabletOrMobileDevice
+  //   );
   return (
-    <View style={styles.container}>
-      <Text style={styles.appName}>{Constants.manifest.name}</Text>
+    <View style={baseStyles.containerFlex}>
+      <Text style={baseStyles.panelAppName}>{Constants.manifest.name}</Text>
       {userDataObj && userDataObj.userName ? (
-        <Text style={styles.brand}>{userDataObj.userName}</Text>
+        <Text style={baseStyles.panelBrandText}>{userDataObj.userName}</Text>
       ) : null}
-      <Text style={styles.brand}>{brandText}</Text>
+      <Text style={baseStyles.panelBrandText}>{brandText}</Text>
 
       {Platform && Platform.OS === 'ios' ? (
         Constants && Constants.deviceName ? (
-          <Text style={styles.deviceVersion}>
+          <Text style={baseStyles.panelAppInfo}>
             {Platform.Version ? (
               <Text>
                 {`${Platform.constants.systemName} v${Platform.Version}`}
@@ -48,7 +48,7 @@ export default AppInfo = (props) => {
           </Text>
         ) : null
       ) : Constants && Constants.deviceName ? (
-        <Text style={styles.deviceVersion}>
+        <Text style={baseStyles.panelAppInfo}>
           {Platform && Platform.Version ? (
             <Text>
               {Platform && Platform.OS === 'android'
@@ -63,7 +63,7 @@ export default AppInfo = (props) => {
         </Text>
       ) : null}
 
-      <Text style={styles.appVersion}>
+      <Text style={baseStyles.panelAppInfo}>
         {`Build `}
         {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
@@ -83,48 +83,10 @@ export default AppInfo = (props) => {
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
         <Text
-          style={styles.appVersion}
+          style={baseStyles.panelAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={styles.appVersion}>Update to SDK 38</Text>
+      <Text style={baseStyles.panelAppInfo}>Update to SDK 38</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  Container: {
-    // flex: 1,
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // justifyContent: 'flex-end',
-    // backgroundColor: 'red'
-  },
-  appName: {
-    paddingTop: 100,
-    paddingLeft: 18,
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2),
-    // fontStyle: 'italic'
-  },
-  brand: {
-    paddingTop: 5,
-    paddingLeft: 18,
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(1.9),
-    // fontStyle: 'italic'
-  },
-  appVersion: {
-    paddingTop: 5,
-    paddingLeft: 18,
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    // fontStyle: 'italic'
-  },
-  deviceVersion: {
-    paddingTop: 15,
-    paddingLeft: 18,
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    // fontStyle: 'italic'
-  },
-});

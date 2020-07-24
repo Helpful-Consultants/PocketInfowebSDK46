@@ -4,7 +4,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet,
+  useWindowDimensions,
   View,
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
@@ -13,9 +13,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
-import baseStyles from '../constants/baseStyles';
+// import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { getUserRequest } from '../actions/user';
+import getBaseStyles from '../components/getBaseStyles';
 // import validation from 'validate';
 
 import Types from '../constants/Types';
@@ -44,6 +45,7 @@ const formReducer = (state, action) => {
 };
 
 export default SignInScreen = (props) => {
+  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -52,6 +54,11 @@ export default SignInScreen = (props) => {
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const userError = useSelector((state) => state.user.error);
   const state = useSelector((state) => state);
+
+  //   console.log('windowDim', windowDim && windowDim);
+  console.log('in sign in, windowDim:', windowDim);
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in sign in, baseStyles:', baseStyles);
 
   console.log('in sign in, userIsSignedIn', userIsSignedIn ? 'Yes' : 'No');
   console.log('in sign in, userIsValidated', userIsValidated ? 'Yes' : 'No');
@@ -119,22 +126,22 @@ export default SignInScreen = (props) => {
     <View style={{ paddingTop: insets.top }}>
       <ScrollView>
         <AppNameWithLogo />
-        <Text style={styles.instructions}>
+        <Text style={baseStyles.instructions}>
           {userIsValidated
             ? `Signed in as ${userDataObj.userName}`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
         <View>
           {userError ? (
-            <Text style={styles.errorText}>{userError}</Text>
+            <Text style={baseStyles.errorText}>{userError}</Text>
           ) : userIsSignedIn ? (
-            <Text style={styles.securityCheckText}>
+            <Text style={baseStyles.securityCheckText}>
               Please sign in again to renew your access
             </Text>
           ) : null}
         </View>
         <KeyboardAvoidingView
-          style={baseStyles.container}
+          style={baseStyles.containerSignIn}
           behavior='padding'
           keyboardVerticalOffset={50}
         >
@@ -144,9 +151,9 @@ export default SignInScreen = (props) => {
             onChangeText={inputChangeHandler.bind(this, 'email')}
             style={baseStyles.inputLabelText}
             label='User ID - your toolsinfoweb.co.uk email address'
-            containerStyle={baseStyles.inputContainer}
-            inputStyle={baseStyles.inputStyle}
-            labelStyle={baseStyles.inputLabelText}
+            containerStyle={baseStyles.inputContainerSignIn}
+            inputStyle={baseStyles.inputStyleSignIn}
+            labelStyle={baseStyles.inputLabelTextSignIn}
             required
             email
             autoCapitalize='none'
@@ -156,7 +163,6 @@ export default SignInScreen = (props) => {
               name: Platform.OS === 'ios' ? 'ios-mail' : 'md-mail',
               color: Colors.vwgDarkSkyBlue,
               paddingRight: 10,
-
               paddingTop: 4,
             }}
             keyboardType='email-address'
@@ -166,6 +172,7 @@ export default SignInScreen = (props) => {
             errorStyle={{ color: Colors.errorText }}
             errorText='The email you sign in to toolsinfoweb.co.uk with'
           />
+
           <Input
             value={formState.inputValues.pin}
             onChangeText={inputChangeHandler.bind(this, 'pin')}
@@ -174,9 +181,9 @@ export default SignInScreen = (props) => {
               marginHorizontal: 40,
             }}
             label='Your Pocket Infoweb access PIN*'
-            labelStyle={baseStyles.inputLabelText}
-            containerStyle={baseStyles.inputContainer}
-            inputStyle={baseStyles.inputStyle}
+            labelStyle={baseStyles.inputLabelTextSignIn}
+            containerStyle={baseStyles.inputContainerSignIn}
+            inputStyle={baseStyles.inputStyleSignIn}
             required
             maxLength={6}
             placeholder='Six digits, e.g. 123456'
@@ -201,11 +208,8 @@ export default SignInScreen = (props) => {
                 title='Sign in'
                 disabled={formState.formIsValid ? false : true}
                 onPress={submitHandler}
-                buttonStyle={styles.signInButton}
-                titleStyle={[
-                  { ...baseStyles.text },
-                  { fontSize: RFPercentage(2.4), color: Colors.vwgWhite },
-                ]}
+                buttonStyle={baseStyles.buttonSignIn}
+                titleStyle={baseStyles.buttonTextSignIn}
                 icon={
                   <Icon
                     name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
@@ -227,7 +231,7 @@ export default SignInScreen = (props) => {
                 textAlign: 'center',
               }}
             >
-              <Text style={styles.instructions}>
+              <Text style={baseStyles.instructions}>
                 * To activate Pocket Infoweb you will need to generate an access
                 PIN for your User ID.
               </Text>
@@ -240,10 +244,7 @@ export default SignInScreen = (props) => {
                 buttonStyle={{
                   marginTop: 10,
                 }}
-                titleStyle={[
-                  { ...baseStyles.linkText },
-                  { fontSize: RFPercentage(2.6) },
-                ]}
+                titleStyle={[{ ...baseStyles.linkText }]}
               />
             </View>
           </View>
@@ -259,38 +260,3 @@ export const screenOptions = (navData) => {
     headerShown: false,
   };
 };
-
-const styles = StyleSheet.create({
-  instructions: {
-    ...baseStyles.text,
-    marginHorizontal: 30,
-    marginVertical: 10,
-    textAlign: 'center',
-    color: Colors.vwgVeryDarkGray,
-  },
-  signInButton: {
-    marginVertical: 20,
-    marginHorizontal: 20,
-    backgroundColor: Colors.vwgLink,
-  },
-  errorText: {
-    ...baseStyles.text,
-    fontFamily: 'the-sans-bold',
-    marginTop: 5,
-    marginBottom: 3,
-    color: Colors.vwgWarmRed,
-    fontSize: RFPercentage(2.3),
-    textAlign: 'center',
-    paddingHorizontal: 15,
-  },
-  securityCheckText: {
-    ...baseStyles.text,
-    fontFamily: 'the-sans-bold',
-    marginTop: 5,
-    marginBottom: 3,
-    color: Colors.vwgMintGreen,
-    fontSize: RFPercentage(2.3),
-    textAlign: 'center',
-    paddingHorizontal: 15,
-  },
-});

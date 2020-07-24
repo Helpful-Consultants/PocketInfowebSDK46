@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import BadgedTabBarText from '../components/BadgedTabBarText';
@@ -40,6 +40,8 @@ const identifyUserWipsItems = (userApiFetchParamsObj, dealerWipsItems) =>
   [];
 
 export default JobsScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
     (state) => state.user.userApiFetchParamsObj
@@ -179,7 +181,7 @@ export default JobsScreen = (props) => {
   //   );
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexPaddedBtm}>
       <SearchBarWithRefresh
         dataName={'jobs'}
         someDataExpected={false}
@@ -196,14 +198,14 @@ export default JobsScreen = (props) => {
         searchInput.length &&
         searchInput.length >= minSearchLength ? (
         items && items.length && items.length === 0 ? (
-          <View style={styles.noneFoundPrompt}>
-            <Text style={styles.noneFoundPromptText}>
+          <View style={baseStyles.noneFoundPromptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               Your search found no results.
             </Text>
           </View>
         ) : (
-          <View style={styles.noneFoundPrompt}>
-            <Text style={styles.noneFoundPromptText}>
+          <View style={baseStyles.noneFoundPromptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               You have no jobs yet to search.
             </Text>
           </View>
@@ -320,33 +322,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // paddingTop: 15,
-    paddingBottom: 10,
-  },
-  modal: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#ccc',
-    padding: 100,
-  },
-  text: {
-    fontFamily: 'the-sans',
-    color: '#3f2949',
-    marginTop: 10,
-  },
-  noneFoundPrompt: {
-    fontFamily: 'the-sans',
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed,
-  },
-  noneFoundPromptText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-  },
-});

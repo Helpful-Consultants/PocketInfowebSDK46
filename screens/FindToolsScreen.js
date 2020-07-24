@@ -9,6 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
@@ -142,6 +143,8 @@ const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
 };
 
 export default FindToolsScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
     (state) => state.user.userApiFetchParamsObj
@@ -1224,8 +1227,8 @@ export default FindToolsScreen = (props) => {
           {mode === 'list' &&
           searchInput.length > minSearchLength &&
           itemsToShow.length === 0 ? (
-            <View style={styles.noneFoundPrompt}>
-              <Text style={styles.noneFoundPromptText}>
+            <View style={styles.noneFoundPromptRibbon}>
+              <Text style={styles.promptRibbonText}>
                 Your search found no results.
               </Text>
             </View>
@@ -1581,12 +1584,12 @@ const styles = StyleSheet.create({
     color: Colors.vwgMintGreen,
     fontSize: RFPercentage(2.4),
   },
-  noneFoundPrompt: {
+  noneFoundPromptRibbon: {
     fontFamily: 'the-sans',
     padding: 10,
     backgroundColor: Colors.vwgWarmRed,
   },
-  noneFoundPromptText: {
+  promptRibbonText: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     textAlign: 'center',

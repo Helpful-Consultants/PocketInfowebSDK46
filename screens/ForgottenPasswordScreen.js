@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Linking, StyleSheet, View } from 'react-native';
+import { Linking, useWindowDimensions, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
@@ -7,6 +7,8 @@ import Urls from '../constants/Urls';
 import { conditionalExpression } from '@babel/types';
 
 export default ForgottenPasswordScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   return (
     <View
       style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}
@@ -166,37 +168,3 @@ export const screenOptions = (navData) => {
     headerShown: true,
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  appName: {
-    color: '#0096da',
-    color: '#000',
-    fontSize: 18,
-    textTransform: 'uppercase',
-  },
-  announcementText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  contentContainer: {
-    paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-});

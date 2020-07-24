@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from 'react-native';
 
@@ -22,6 +23,8 @@ export default function BookedOutToolsList(props) {
   //   console.log('BookedOutToolsList props');
   //   console.log(props);
   //   console.log('BookedOutToolsList props end');
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const {
     isLoading,
     dataCount,
@@ -49,15 +52,15 @@ export default function BookedOutToolsList(props) {
   //   console.log('in dealer list - items', items.length);
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlex}>
       <ScrollView>
         {!isLoading ? (
           searchInput &&
           searchInput.length >= minSearchLength &&
           items &&
           items.length > 0 ? null : (
-            <View style={styles.searchPrompt}>
-              <Text style={styles.searchPromptText}>
+            <View style={baseStyles.promptRibbon}>
+              <Text style={baseStyles.promptRibbonText}>
                 {`You have ${
                   dataCount && dataCount > 0 ? dataCount : `no`
                 } tool${dataCount && dataCount === 1 ? '' : 's'} booked out.`}
@@ -208,20 +211,3 @@ export default function BookedOutToolsList(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  searchPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue,
-    marginBottom: 5,
-  },
-  searchPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.8),
-    color: Colors.vwgWhite,
-  },
-});

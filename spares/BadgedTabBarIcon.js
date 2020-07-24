@@ -23,7 +23,7 @@ const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
 //  badgeStyle={styles.badge}
 //               textStyle={styles.badgeText}
-export default function TabBarIcon(props) {
+export default function TzzabBarIcon(props) {
   const { value, status } = props;
 
   const valueA = '+';

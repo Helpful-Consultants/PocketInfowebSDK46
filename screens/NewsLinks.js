@@ -1,6 +1,12 @@
 // import React, { useEffect } from 'react';
 import React from 'react';
-import { StyleSheet, ScrollView, Text, View } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import { Base64 } from 'js-base64';
@@ -16,7 +22,13 @@ const notificationLimit = 7;
 
 export default function NewsLinks(props) {
   // console.log(props.items);
+  const windowDim = useWindowDimensions();
   const { items, userIntId } = props;
+
+  //   console.log('windowDim', windowDim && windowDim);
+  //   console.log('in products link, windowDim:', windowDim);
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in products link, baseStyles:', baseStyles);
   let now = moment();
   let intId = (userIntId && userIntId) || '';
 
@@ -31,14 +43,14 @@ export default function NewsLinks(props) {
               }
               key={i}
             >
-              <View style={styles.item}>
-                <View style={styles.itemTopRow}>
+              <View style={baseStyles.item}>
+                <View style={baseStyles.itemTopRow}>
                   <ScaledImageFinder
                     width={70}
                     uri={`${props.baseImageUrl}${item.imageName}`}
                   />
-                  <View style={styles.itemTitleContainer}>
-                    <Text style={styles.itemTitle}>{item.headline}</Text>
+                  <View style={baseStyles.itemTitleContainer}>
+                    <Text style={baseStyles.itemTitle}>{item.headline}</Text>
                     <HighlightedDate
                       item={item}
                       now={now}
@@ -46,8 +58,8 @@ export default function NewsLinks(props) {
                     />
                   </View>
                 </View>
-                <View style={styles.itemMainRow}>
-                  <Text style={styles.itemMainText}>{item.newstext}</Text>
+                <View style={baseStyles.itemMainRow}>
+                  <Text style={baseStyles.itemMainText}>{item.newstext}</Text>
                 </View>
               </View>
             </Touchable>
@@ -57,42 +69,3 @@ export default function NewsLinks(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  item: {
-    marginTop: 10,
-    color: 'red',
-    marginHorizontal: 10,
-    paddingBottom: 10,
-    borderBottomColor: Colors.vwgLightGray,
-    borderTopColor: Colors.vwgWhite,
-    borderLeftColor: Colors.vwgWhite,
-    borderRightColor: Colors.vwgWhite,
-    borderWidth: 1,
-  },
-  itemTopRow: {
-    flexDirection: 'row',
-    marginHorizontal: 0,
-    marginBottom: 10,
-  },
-  itemTitleContainer: {
-    width: '70%',
-    paddingLeft: 15,
-    paddingRight: 25,
-  },
-  itemTitle: {
-    flexWrap: 'wrap',
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.2),
-    color: Colors.vwgLink,
-  },
-  itemMainRow: {
-    fontSize: RFPercentage(1.8),
-  },
-  itemMainText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'justify',
-    color: Colors.vwgVeryDarkGray,
-  },
-});

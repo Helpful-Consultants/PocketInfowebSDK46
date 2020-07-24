@@ -1,6 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 
 import { Card, Image, Text } from 'react-native-elements';
 import vwLogo from '../assets/images/vw-logo.png';
@@ -17,8 +22,10 @@ export default function OdisVersions(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-
+  const windowDim = useWindowDimensions();
   const { itemsObj, userBrand, viewCount } = props;
+
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const logoChooser = {
     au: audiLogo,
     cv: cvLogo,
@@ -42,56 +49,56 @@ export default function OdisVersions(props) {
     // console.log('getOdisForBrand', item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
     return (
-      <View style={styles.odisRow}>
-        <View style={styles.odisLogoContainer}>
+      <View style={baseStyles.odisRow}>
+        <View style={baseStyles.odisLogoContainer}>
           <Image
             source={logoChooser[item.brandCode.toLowerCase()]}
-            style={styles.logo}
+            style={baseStyles.brandLogo}
           />
         </View>
-        <View style={styles.odisVersionRow}>
-          <Text style={styles.odisVersionText}>
+        <View style={baseStyles.odisVersionRow}>
+          <Text style={baseStyles.odisVersionText}>
             {item.previousProductVersion &&
             item.previousProductVersion !== item.productVersion ? (
-              <Text style={styles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.odisVersionTextHighlighted}>
                 {`Product: ${item.productVersion}`}
-                <Text style={styles.odisVersionTextSmaller}>
+                <Text style={baseStyles.odisVersionTextSmaller}>
                   {` (from ${item.previousProductVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={styles.odisVersionText}>
+              <Text style={baseStyles.odisVersionText}>
                 {`Product: ${item.productVersion}`}
               </Text>
             )}
           </Text>
 
-          <Text style={styles.odisVersionText}>
+          <Text style={baseStyles.odisVersionText}>
             {item.previousMainFeatureVersion &&
             item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
-              <Text style={styles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.odisVersionTextHighlighted}>
                 {`Main feature: ${item.mainFeatureVersion}`}
-                <Text style={styles.odisVersionTextSmaller}>
+                <Text style={baseStyles.odisVersionTextSmaller}>
                   {` (from ${item.previousMainFeatureVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={styles.odisVersionText}>
+              <Text style={baseStyles.odisVersionText}>
                 {`Main Feature: ${item.mainFeatureVersion}`}
               </Text>
             )}
           </Text>
-          <Text style={styles.odisVersionText}>
+          <Text style={baseStyles.odisVersionText}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
-              <Text style={styles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.odisVersionTextHighlighted}>
                 {`Data: ${item.dataVersion}`}
-                <Text style={styles.odisVersionTextSmaller}>
+                <Text style={baseStyles.odisVersionTextSmaller}>
                   {` (from ${item.previousDataVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={styles.odisVersionText}>
+              <Text style={baseStyles.odisVersionText}>
                 {`Data: ${item.dataVersion}`}
               </Text>
             )}
@@ -145,21 +152,21 @@ export default function OdisVersions(props) {
   //     odisDetails = items.map((item, i) =>
   //       !userBrand || userBrand === item.brandCode.toLowerCase() ? (
   //         <View key={i}>
-  //           <View style={styles.odisRow}>
-  //             <View style={styles.odisLogoContainer}>
+  //           <View style={baseStyles.odisRow}>
+  //             <View style={baseStyles.odisLogoContainer}>
   //               <Image
   //                 source={logoChooser[item.brandCode.toLowerCase()]}
-  //                 style={styles.logo}
+  //                 style={baseStyles.logo}
   //               />
   //             </View>
-  //             <View style={styles.odisVersionRow}>
-  //               <Text style={styles.odisVersionText}>
+  //             <View style={baseStyles.odisVersionRow}>
+  //               <Text style={baseStyles.odisVersionText}>
   //                 Product: {item.productVersion}
   //               </Text>
-  //               <Text style={styles.odisVersionText}>
+  //               <Text style={baseStyles.odisVersionText}>
   //                 Main feature: {item.mainFeatureVersion}
   //               </Text>
-  //               <Text style={styles.odisVersionText}>
+  //               <Text style={baseStyles.odisVersionText}>
   //                 Data: {item.dataVersion}
   //               </Text>
   //             </View>
@@ -171,11 +178,11 @@ export default function OdisVersions(props) {
   //   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.rowWithImage}>
+    <View style={baseStyles.containerFlexJustfied}>
+      <View style={baseStyles.rowWithImage}>
         <Image
           source={require('../assets/images/odis.jpg')}
-          style={styles.contentImage}
+          style={baseStyles.contentImage}
         />
       </View>
 
@@ -189,54 +196,3 @@ export default function OdisVersions(props) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  odisRow: {
-    flexDirection: 'row',
-    borderColor: '#000',
-  },
-  odisVersionRow: {
-    flexDirection: 'column',
-    padding: 5,
-    borderColor: '#000',
-  },
-  odisVersionText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.1),
-    color: Colors.vwgVeryDarkGray,
-  },
-  odisVersionTextSmaller: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgVeryDarkGray,
-  },
-  odisVersionTextHighlighted: {
-    fontFamily: 'the-sans-bold',
-    fontSize: RFPercentage(2.1),
-    color: Colors.vwgCoolOrange,
-  },
-  logo: {
-    height: 50,
-    width: 50,
-    marginRight: 10,
-  },
-  rowWithImage: {
-    marginTop: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 0,
-  },
-  contentImage: {
-    width: 225,
-    height: 70,
-    resizeMode: 'contain',
-    marginBottom: 15,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-});

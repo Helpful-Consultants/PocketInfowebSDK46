@@ -1,43 +1,22 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import Colors from '../constants/Colors';
+// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
 export default AppNameWithLogo = () => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   return (
     <View>
-      <View style={styles.logoContainer}>
+      <View style={baseStyles.appLogoContainer}>
         <Image
           source={require('../assets/images/tiw-app-logo-less-whitespace.png')}
-          style={styles.appLogo}
+          style={baseStyles.appLogo}
         />
-        <Text style={styles.appName}>Pocket Infoweb</Text>
+        <Text style={baseStyles.appName}>Pocket Infoweb</Text>
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  appName: {
-    color: Colors.vwgBlack,
-    fontSize: RFPercentage(3.9),
-    fontFamily: 'the-sans',
-    // textTransform: 'uppercase'
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginTop: 0,
-    marginBottom: 0,
-  },
-  appLogo: {
-    width: 120,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 0,
-  },
-});

@@ -1,7 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
@@ -17,7 +23,7 @@ import { getProductsRequest } from '../actions/products';
 import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
 import Colors from '../constants/Colors';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import productsDummyData from '../dummyData/productsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -31,6 +37,8 @@ const checkUrl = (rawUrl) => {
 };
 
 export default ProductsScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const productsItems = useSelector((state) => state.products.productsItems);
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
@@ -81,7 +89,11 @@ export default ProductsScreen = (props) => {
       //   if (searchInput && searchInput.length > 0) {
       //     setSearchInput('');
       //   }
-      dispatch(revalidateUserCredentials({ calledBy: 'ProductsScreen' }));
+      dispatch(
+        revalidateUserCredentials({
+          calledBy: 'ProductsScreen',
+        })
+      );
       setSearchInput('');
       getItemsAsync();
     }, [])
@@ -140,7 +152,7 @@ export default ProductsScreen = (props) => {
   console.log('rendering Products screen');
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexAndReducedMargin}>
       {/* <Text>{browserResult && JSON.stringify(browserResult)}</Text> */}
       <SearchBarWithRefresh
         dataName={'products'}
@@ -163,8 +175,8 @@ export default ProductsScreen = (props) => {
       ) : (
         <ScrollView>
           {filteredItems && filteredItems.length > 0 ? (
-            <View style={styles.lookupPrompt}>
-              <Text style={styles.lookupPromptText}>
+            <View style={baseStyles.promptRibbon}>
+              <Text style={baseStyles.promptRibbonText}>
                 Touch a product to see more on Tools Infoweb.
               </Text>
             </View>
@@ -206,20 +218,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginBottom: -5,
-  },
-  lookupPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgInfoBar,
-  },
-  lookupPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9),
-  },
-});

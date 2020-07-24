@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 
 export default Loading = () => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+
   const [showReloadDialogue, setShowReloadDialogue] = useState(false);
   //   useEffect(() => {
   //     console.log('in getUpdatesAsync');
@@ -41,16 +48,16 @@ export default Loading = () => {
   //   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={baseStyles.containerFlexMarginTop}>
       <ScrollView>
         <AppNameWithLogo />
-        <View style={styles.loadingMessage}>
+        <View style={baseStyles.viewLoadingMessage}>
           {showReloadDialogue === true ? (
-            <Text style={styles.loadingText}>
+            <Text style={baseStyles.textLoading}>
               Updating your app to a new app...
             </Text>
           ) : (
-            <Text style={styles.loadingText}>Loading the app...</Text>
+            <Text style={baseStyles.textLoading}>Loading the app...</Text>
           )}
           <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
         </View>
@@ -58,28 +65,3 @@ export default Loading = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 30,
-  },
-  loadingMessage: {
-    marginTop: 50,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  loadingText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.5),
-
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginBottom: 50,
-  },
-});

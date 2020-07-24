@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -20,6 +26,7 @@ import Colors from '../constants/Colors';
 // import statsGrab from '../assets/images/stats.jpg';
 
 export default StatsScreen = (props) => {
+  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const statsObj = useSelector((state) => state.stats.statsItems[0]);
   const dealerWipsItems = useSelector(
@@ -37,6 +44,7 @@ export default StatsScreen = (props) => {
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const userApiFetchParamsObj = {
     dealerId: dealerId,
@@ -141,7 +149,7 @@ export default StatsScreen = (props) => {
   console.log('rendering Stats screen');
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexCentredJustified}>
       <DataAlertBarWithRefresh
         dataName={'stats'}
         someDataExpected={true}
@@ -159,7 +167,7 @@ export default StatsScreen = (props) => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <View style={styles.statsContainer}>
+        <View>
           <StatsSummary
             statsObj={statsObj}
             userDataObj={userDataObj}
@@ -198,12 +206,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'blue'
-  },
-});

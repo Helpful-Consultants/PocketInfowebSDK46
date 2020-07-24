@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -18,6 +18,8 @@ import OdisVersions from './OdisVersions';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
 export default OdisScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userBrand = useSelector((state) => state.user.userBrand);
@@ -90,7 +92,7 @@ export default OdisScreen = (props) => {
   console.log('rendering Odis screen');
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexCentred}>
       <DataAlertBarWithRefresh
         dataName={'ODIS version data'}
         someDataExpected={true}
@@ -102,7 +104,7 @@ export default OdisScreen = (props) => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the ODIS data'}
+          errorSummary={'Error syncing the ODIS dataxxx'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -147,11 +149,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: 'white',
-    alignItems: 'center',
-  },
-});

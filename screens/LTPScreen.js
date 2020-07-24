@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dimensions, Platform, StyleSheet, View } from 'react-native';
+import {
+  Dimensions,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 // import { createFilter } from 'react-native-search-filter';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -13,8 +19,8 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import sortObjectList from '../components/sortObjectList';
+import getBaseStyles from '../components/getBaseStyles';
 // import HeaderButton from '../components/HeaderButton';
-// import MenuDrawer from '../components/MenuDrawer';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
@@ -30,6 +36,8 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
 export default LtpScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const userBrand = useSelector((state) => state.user.userBrand);
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
@@ -123,7 +131,7 @@ export default LtpScreen = (props) => {
   console.log('rendering LTP Screen');
 
   return (
-    <View style={styles.container}>
+    <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh
         dataName={'LTP items'}
         someDataExpected={true}
@@ -137,21 +145,21 @@ export default LtpScreen = (props) => {
       />
       {dataError ? null : itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
-          <View style={styles.noneFoundPrompt}>
-            <Text style={styles.noneFoundPromptText}>
+          <View style={baseStyles.noneFoundPromptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               Your search found no results.
             </Text>
           </View>
         ) : isLoading ? null : (
-          <View style={styles.ltpPrompt}>
-            <Text style={styles.ltpPromptText}>
+          <View style={baseStyles.promptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               No LTP items to show. Try the refresh button.
             </Text>
           </View>
         )
       ) : (
-        <View style={styles.ltpPrompt}>
-          <Text style={styles.ltpPromptText}>
+        <View style={baseStyles.promptRibbon}>
+          <Text style={baseStyles.promptRibbonText}>
             Book these on the LTP website.
           </Text>
         </View>
@@ -198,52 +206,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    marginBottom: bottomTabHeight,
-  },
-  errorMessage: {
-    padding: 10,
-  },
-  errorMessageText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'left',
-    color: Colors.vwgDarkSkyBlue,
-  },
-  noneFoundPrompt: {
-    fontFamily: 'the-sans',
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed,
-  },
-  noneFoundPromptText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-  },
-  ltpPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgDarkSkyBlue,
-  },
-  ltpPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgWhite,
-  },
-  lookupPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgMintGreen,
-  },
-  lookupPromptText: {
-    textAlign: 'center',
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.9),
-  },
-});

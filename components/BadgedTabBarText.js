@@ -1,18 +1,15 @@
 import React from 'react';
 
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 
-import { Badge, Icon, Text } from 'react-native-elements';
+import { Badge, Text } from 'react-native-elements';
+// import { Ionicons } from '@expo/vector-icons';
+// import Colors from '../constants/Colors';
 
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+// const screenWidth = Math.round(Dimensions.get('window').width);
+// const screenHeight = Math.round(Dimensions.get('window').height);
 
-import { Ionicons } from '@expo/vector-icons';
-import Colors from '../constants/Colors';
-
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-
-const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
+// const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth);
@@ -24,9 +21,11 @@ const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 //     />
 
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
-//  badgeStyle={styles.badge}
-//               textStyle={styles.badgeText}
+//  badgeStyle={baseStyles.navBarBadge}
+//               textStyle={baseStyles.navBarBadgeText}
 export default function TabBarIcon(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   const { value, status, focused, showBadge, text } = props;
   const { value, status, focused, text } = props;
 
@@ -38,64 +37,32 @@ export default function TabBarIcon(props) {
 
   return (
     <View
-      style={showBadge && showBadge === true ? styles.paddedView : styles.view}
+      style={
+        showBadge && showBadge === true
+          ? baseStyles.navBarPaddedView
+          : baseStyles.navBarNonPaddedView
+      }
     >
-      <Text style={focused ? styles.focused : styles.notFocused}>{text}</Text>
+      <Text
+        style={
+          focused
+            ? baseStyles.navBarTextFocused
+            : baseStyles.navBarTextNotFocused
+        }
+      >
+        {text}
+      </Text>
       {showBadge ? (
         <Badge
           value={value}
-          containerStyle={styles.badgeContainer}
+          containerStyle={baseStyles.navBarBadgeContainer}
           status={statusB}
-          badgeStyle={focused ? styles.badgeFocused : styles.badge}
-          textStyle={styles.badgeText}
+          badgeStyle={
+            focused ? baseStyles.navBarBadgeFocused : baseStyles.navBarBadge
+          }
+          textStyle={baseStyles.navBarBadgeText}
         />
       ) : null}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  view: {},
-  paddedView: {
-    marginRight: 8,
-  },
-  badge: {
-    // borderRadius: 12,
-    height: 10,
-    minWidth: 0,
-    width: 10,
-    backgroundColor: Colors.vwgInactiveLink,
-  },
-  badgeFocused: {
-    // borderRadius: 12,
-    height: 10,
-    minWidth: 0,
-    width: 10,
-    backgroundColor: Colors.vwgActiveLink,
-  },
-  badgeContainer: {
-    position: 'absolute',
-    top: 0,
-    right: -10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    // backgroundColor: 'yellow'
-  },
-  badgeText: {
-    fontFamily: 'the-sans-bold',
-    fontSize: 6,
-    textAlign: 'center',
-    // paddingRight: 2
-    paddingHorizontal: 0,
-  },
-  focused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-  notFocused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-});

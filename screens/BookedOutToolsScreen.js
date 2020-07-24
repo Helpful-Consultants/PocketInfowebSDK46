@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
@@ -29,6 +35,7 @@ import BookedOutToolsList from './BookedOutToolsList';
 const minSearchLength = 1;
 
 export default BookedOutToolsScreen = (props) => {
+  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
     (state) => state.user.userApiFetchParamsObj
@@ -49,6 +56,8 @@ export default BookedOutToolsScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const insets = useSafeArea();
+
+  const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const getItems = useCallback(async (userApiFetchParamsObj) => {
     // console.log('in getItems', userApiFetchParamsObj);
@@ -246,7 +255,7 @@ export default BookedOutToolsScreen = (props) => {
   console.log('rendering Booked Tools screen');
 
   return (
-    <View style={{ flex: 1, paddingBottom: 3, backgroundColor: 'white' }}>
+    <View style={baseStyles.containerFlexPaddedBtm}>
       <SearchBarWithRefresh
         dataName={'booked out tools'}
         refreshRequestHandler={refreshRequestHandler}
@@ -263,14 +272,14 @@ export default BookedOutToolsScreen = (props) => {
         bookedOutItems &&
         bookedOutItems.length &&
         bookedOutItems.length === 0 ? (
-          <View style={styles.noneFoundPrompt}>
-            <Text style={styles.noneFoundPromptText}>
+          <View style={baseStyles.noneFoundPromptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               Your search found no results.
             </Text>
           </View>
         ) : (
-          <View style={styles.noneFoundPrompt}>
-            <Text style={styles.noneFoundPromptText}>
+          <View style={baseStyles.noneFoundPromptRibbon}>
+            <Text style={baseStyles.promptRibbonText}>
               You have no jobs yet to search.
             </Text>
           </View>
@@ -387,32 +396,3 @@ export const screenOptions = (navData) => {
 // LocatorScreen.navigationOptions = {
 //   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />
 // };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // paddingTop: 15,
-    marginBottom: 10,
-  },
-  modal: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#ccc',
-    padding: 100,
-  },
-  text: {
-    color: '#3f2949',
-    marginTop: 10,
-  },
-  noneFoundPrompt: {
-    fontFamily: 'the-sans',
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed,
-  },
-  noneFoundPromptText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-  },
-});
