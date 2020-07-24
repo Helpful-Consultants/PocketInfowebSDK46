@@ -46,7 +46,7 @@ axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 Sentry.init({
   dsn: 'https://753764f4208a4f429c2c21d20a45adf0@sentry.io/3578989',
   enableInExpoDevelopment: true,
-  debug: true
+  debug: true,
 });
 
 Sentry.setRelease(Constants.manifest.revisionId);
@@ -55,7 +55,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage
+  storage: AsyncStorage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -146,13 +146,13 @@ async function loadResourcesAsync() {
       require('./assets/images/skoda-logo.png'),
       require('./assets/images/vw-logo.png'),
       require('./assets/images/odis.jpg'),
-      require('./assets/images/no-image-placeholder.png')
+      require('./assets/images/no-image-placeholder.png'),
     ]),
     Font.loadAsync({
       'the-sans': require('./assets/fonts/VWAGTheSans-Regular.ttf'),
       'the-sans-bold': require('./assets/fonts/VWAGTheSans-Bold.ttf'),
-      'the-sans-light': require('./assets/fonts/VWAGTheSans-Light.ttf')
-    })
+      'the-sans-light': require('./assets/fonts/VWAGTheSans-Light.ttf'),
+    }),
   ]);
 }
 
