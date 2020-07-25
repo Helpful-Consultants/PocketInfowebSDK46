@@ -24,7 +24,7 @@ export default getBaseStyles = (props) => {
   //   console.log(props && fontScale && 'in getBaseStyles, fontScale:', fontScale);
   //   console.log(props && scale && 'in getBaseStyles, scale:', scale);
   //   console.log(props && height && 'in getBaseStyles, height:', height);
-  console.log(props && width && 'in getBaseStyles, width:', width);
+  //   console.log(props && width && 'in getBaseStyles, width:', width);
 
   const bottomTabHeight = height && height > 1333 ? 100 : 80;
 
@@ -109,13 +109,35 @@ export default getBaseStyles = (props) => {
       ? fontFactor * 2.3
       : fontFactor * 1.9;
 
+  let panelWidth =
+    width > 1023
+      ? 500
+      : width > 767
+      ? 400
+      : width > 413
+      ? 360
+      : width > 374
+      ? 300
+      : '90%';
+
+  let panelTextFontSize =
+    width > 1023
+      ? fontFactor * 1.8
+      : width > 767
+      ? fontFactor * 1.6
+      : width > 413
+      ? fontFactor * 1.1
+      : width > 374
+      ? fontFactor * 1.1
+      : fontFactor * 1;
+
   let navBarFontSize =
     width > 1023
       ? fontFactor * 1.6
       : width > 767
       ? fontFactor * 1.3
       : width > 413
-      ? fontFactor * 0.9
+      ? fontFactor * 0.8
       : width > 374
       ? fontFactor * 0.9
       : fontFactor * 0.8;
@@ -232,7 +254,12 @@ export default getBaseStyles = (props) => {
       color: Colors.vwgBlack,
       fontSize: appNameFontSize,
     },
-
+    panelWidth: {
+      width: panelWidth,
+    },
+    panelNavText: {
+      fontSize: panelTextFontSize,
+    },
     panelAppName: {
       ...baseTextBold,
       color: Colors.vwgBlack,

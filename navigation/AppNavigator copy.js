@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 // import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 // import { createStackNavigator } from 'react-navigation-stack';
@@ -9,6 +10,7 @@ import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from '@react-navigation/drawer';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
@@ -51,30 +53,20 @@ const CustomDrawerContent = (props) => {
   );
 };
 
+const drawerContentOptions = {
+  activeTintColor: Colors.vwgActiveLink,
+  inactiveTintColor: Colors.vwgInactiveLink,
+  activeBackgroundColor: 'white',
+  labelStyle: { fontFamily: 'the-sans-bold', fontSize: 16 },
+  itemStyle: { marginVertical: 0 },
+};
+
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-  //   console.log('@@@@@@@@@@@@@baseStyles', baseStyles);
-
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink,
-        activeBackgroundColor: 'white',
-        labelStyle: baseStyles.panelNavText,
-        style: {},
-        contentContainerStyle: {},
-        itemStyle: {
-          marginVertical: 0,
-          flexWrap: 'wrap',
-        },
-      }}
-      drawerStyle={{
-        width: baseStyles.panelWidth.width,
-      }}
+      drawerContentOptions={drawerContentOptions}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
@@ -88,7 +80,7 @@ const DrawerNavigator = () => {
         name='WipsTabs'
         component={WipTabNavigator}
         options={{
-          drawerLabel: 'Find & return tools, jobs & LTP',
+          drawerLabel: 'Find tools, return tools, jobs & LTP',
           initialRouteName: 'FindTools',
         }}
       />
