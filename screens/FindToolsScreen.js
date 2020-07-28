@@ -734,7 +734,7 @@ export default FindToolsScreen = (props) => {
               formState.inputValues.wipNumber.length > 0 ? (
                 <Text>{` `}</Text>
               ) : (
-                <Text style={{ fontFamily: 'the-sans' }}>
+                <Text style={baseStyles.text}>
                   Please record a job number or job name to book to.
                 </Text>
               )}
@@ -746,8 +746,8 @@ export default FindToolsScreen = (props) => {
             title='Back'
             type='outline'
             onPress={() => basketBackHandler()}
-            titleStyle={styles.cancelButtonTitle}
-            buttonStyle={styles.cancelButton}
+            titleStyle={styles.buttonCancelTitle}
+            buttonStyle={styles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -770,8 +770,8 @@ export default FindToolsScreen = (props) => {
               setMode('sending');
               setIsBasketVisible(true);
             }}
-            titleStyle={styles.confirmButtonTitle}
-            buttonStyle={styles.confirmButton}
+            titleStyle={styles.buttonConfirmTitle}
+            buttonStyle={styles.buttonConfirm}
             icon={
               <Icon
                 name={
@@ -820,12 +820,12 @@ export default FindToolsScreen = (props) => {
           <Button
             title='Close'
             type='clear'
-            titleStyle={styles.closeButtonTitle}
+            titleStyle={styles.buttonCloseTitle}
             onPress={() => {
               acceptMessageHandler();
             }}
-            titleStyle={styles.closeConfirmationButtonTitle}
-            buttonStyle={styles.closeConfirmationButton}
+            titleStyle={styles.buttonCloseConfirmationTitle}
+            buttonStyle={styles.buttonCloseConfirmation}
           />
         </View>
       </View>
@@ -846,7 +846,6 @@ export default FindToolsScreen = (props) => {
               type='ionicon'
               size={20}
               color={Colors.vwgLink}
-              iconStyle={styles.addToolButton}
             />
             <Text style={styles.basketTextLink}>
               {toolBasket.length === 1
@@ -860,8 +859,8 @@ export default FindToolsScreen = (props) => {
             title='Cancel'
             type='outline'
             onPress={() => removeBasketHandler()}
-            titleStyle={styles.cancelButtonTitle}
-            buttonStyle={styles.cancelButton}
+            titleStyle={styles.buttonCancelTitle}
+            buttonStyle={styles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -883,8 +882,8 @@ export default FindToolsScreen = (props) => {
             }
             type='solid'
             onPress={() => bookToolsHandler()}
-            titleStyle={styles.bookButtonTitle}
-            buttonStyle={styles.bookButton}
+            titleStyle={styles.buttonBookTitle}
+            buttonStyle={styles.buttonBook}
             icon={
               <Icon
                 name={
@@ -918,12 +917,12 @@ export default FindToolsScreen = (props) => {
           <Button
             title='Close'
             type='clear'
-            titleStyle={styles.closeButtonTitle}
+            titleStyle={styles.buttonCloseTitle}
             onPress={() => {
               acceptMessageHandler();
             }}
-            titleStyle={styles.closeConfirmationButtonTitle}
-            buttonStyle={styles.closeConfirmationButton}
+            titleStyle={styles.buttonCloseConfirmationTitle}
+            buttonStyle={styles.buttonCloseConfirmation}
           />
         </View>
       </View>
@@ -951,8 +950,8 @@ export default FindToolsScreen = (props) => {
             title='Cancel booking'
             type='outline'
             onPress={() => deleteWipRequestHandler()}
-            titleStyle={styles.cancelButtonTitle}
-            buttonStyle={styles.cancelButton}
+            titleStyle={styles.buttonCancelTitle}
+            buttonStyle={styles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -976,8 +975,8 @@ export default FindToolsScreen = (props) => {
             }
             type='solid'
             onPress={() => dropUnavailableHandler()}
-            titleStyle={styles.bookButtonTitle}
-            buttonStyle={styles.bookButton}
+            titleStyle={styles.buttonBookTitle}
+            buttonStyle={styles.buttonBook}
             icon={
               <Icon
                 name={
@@ -1011,12 +1010,11 @@ export default FindToolsScreen = (props) => {
           <Button
             title='Close'
             type='clear'
-            titleStyle={styles.closeButtonTitle}
             onPress={() => {
               acceptNotBookedMessageHandler();
             }}
-            titleStyle={styles.closeConfirmationButtonTitle}
-            buttonStyle={styles.closeConfirmationButton}
+            titleStyle={styles.buttonCloseConfirmationTitle}
+            buttonStyle={styles.buttonCloseConfirmation}
           />
         </View>
       </View>
@@ -1110,7 +1108,7 @@ export default FindToolsScreen = (props) => {
                   mode !== 'all-unavailable' &&
                   toolBasket.length > 1 ? (
                     <TouchableOpacity
-                      style={styles.trashButton}
+                      style={styles.buttonTrash}
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
                       <Icon
@@ -1308,14 +1306,14 @@ export default FindToolsScreen = (props) => {
 };
 
 const titleString = 'Find Tools';
-const tabBarLabelFunction = ({ focused }) => (
-  <BadgedTabBarText
-    showBadge={false}
-    text={titleString}
-    focused={focused}
-    value={0}
-  />
-);
+// const tabBarLabelFunction = ({ focused }) => (
+//   <BadgedTabBarText
+//     showBadge={false}
+//     text={titleString}
+//     focused={focused}
+//     value={0}
+//   />
+// );
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
@@ -1324,11 +1322,13 @@ export const screenOptions = (navData) => {
       backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarIcon: ({ focused }) => (
+    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
+    tabBarLabel: titleString,
+    tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+        size={size}
       />
     ),
   };
@@ -1603,90 +1603,60 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
-  buttonContainer: {
-    flexDirection: 'column',
-    width: '60%',
-  },
-  buttonView: {
-    // width: 200,
-    fontSize: 12,
-  },
-  trashButton: {
+  buttonTrash: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    // paddingRight: 10
   },
-  signInButton: {
-    marginVertical: 20,
-    marginHorizontal: 20,
-    backgroundColor: Colors.vwgLink,
-  },
-  cancelButton: {
+  buttonCancel: {
     borderColor: Colors.vwgWarmRed,
     borderRadius: Platform.OS === 'ios' ? 3 : 0,
-
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
   },
-  cancelButtonTitle: {
+  buttonCancelTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     color: Colors.vwgWarmRed,
     paddingLeft: 5,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
   },
-  closeConfirmationButton: {
+  buttonCloseConfirmation: {
     backgroundColor: Colors.vwgDeepBlue,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5,
   },
-  closeConfirmationButtonTitle: {
+  buttonCloseConfirmationTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(1.9),
     color: Colors.vwgWhite,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
-  closeButton: {
+  buttonClose: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5,
   },
-  closeButtonTitle: {
+  buttonCloseTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     color: Colors.vwgLink,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
-  bookButton: {
+  buttonBook: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5,
-    // color: Colors.vwgWhite,
-
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
   },
-  bookButtonTitle: {
-    // color: Colors.vwgWhite,
+  buttonBookTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     paddingLeft: 5,
     textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-    // flexDirection: 'column',
-    // justifyContent: 'flex-start',
-    // width: '10%'
   },
-  confirmButton: {
+  buttonConfirm: {
     backgroundColor: Colors.vwgLink,
     borderRadius: Platform.OS === 'ios' ? 3 : 2,
     elevation: Platform.OS === 'ios' ? 0 : 5,
   },
-  confirmButtonTitle: {
+  buttonConfirmTitle: {
     fontFamily: 'the-sans',
     fontSize: RFPercentage(2.3),
     paddingLeft: 5,
