@@ -714,7 +714,7 @@ export default FindToolsScreen = (props) => {
                 number
                 value={formState.inputValues.wipNumber}
                 onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
-                style={styles.inputLabeText}
+                style={styles.inputLabelText}
                 placeholder='Job number/job name'
                 required
                 autoCapitalize='none'
