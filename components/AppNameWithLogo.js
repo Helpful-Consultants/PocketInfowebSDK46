@@ -8,6 +8,12 @@ import { Image, Text } from 'react-native-elements';
 export default AppNameWithLogo = () => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  console.log(
+    'in AppNameWithLogo, windowDim:',
+    windowDim,
+    'baseStyles.appName',
+    baseStyles.appName
+  );
   return (
     <View>
       <View style={baseStyles.appLogoContainer}>

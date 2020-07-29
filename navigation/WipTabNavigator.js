@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 // import { createStackNavigator } from 'react-navigation-stack';
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 // import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
@@ -28,15 +27,30 @@ import LtpScreen, {
   screenOptions as LtpScreenOptions,
 } from '../screens/LtpScreen';
 
+console.log('LtpScreenOptions', LtpScreenOptions);
+
 import Colors from '../constants/Colors';
 
-// const screenWidth = Math.round(Dimensions.get('window').width);
+const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
+const baseFontSize = 12;
+let navBarFontSize =
+  screenWidth > 1023
+    ? baseFontSize * 1.3
+    : screenWidth > 767
+    ? baseFontSize * 1.2
+    : screenWidth > 413
+    ? baseFontSize * 1.1
+    : screenWidth > 374
+    ? baseFontSize * 1
+    : baseFontSize * 1;
 
 // console.log('screenHeight', screenHeight);
-// console.log('screenWidth', screenWidth);
+// console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
 
 const defaultStackNavOptions = () => {
+  //   const windowDim = useWindowDimensions();
+  //   const baseStyles = windowDim && getBaseStyles(windowDim);
   const navigation = useNavigation();
   return {
     headerStyle: {
@@ -135,44 +149,6 @@ const LtpStack = () => {
 };
 
 // Tab navigator
-
-const defaultTabNavScreenOptions =
-  Platform.OS === 'ios'
-    ? {
-        tabBarOptions: {
-          labelPosition: 'below-icon',
-          style: {
-            height: RFPercentage(6.4),
-          },
-        },
-        tabStyle: {
-          height: RFPercentage(2.2),
-        },
-      }
-    : {
-        labeled: true,
-        shifting: false,
-        backBehavior: 'history',
-        activeColor: Colors.vwgDeepBlue,
-        inactiveColor: Colors.vwgLink,
-        tabBarColor: Colors.vwgWhite,
-        barStyle: {
-          labelPosition: 'below-icon',
-
-          // height: RFPercentage(6.4),
-          backgroundColor: Colors.vwgWhite,
-        },
-        //   tabBarOptions: {
-        //     labelPosition: 'below-icon',
-        //     style: {
-        //       height: RFPercentage(6.4)
-        //     }
-        //   },
-        //   tabStyle: {
-        //     height: RFPercentage(2.2)
-        //   }
-      };
-
 const WipTabs =
   Platform.OS === 'ios'
     ? createBottomTabNavigator()
@@ -180,18 +156,19 @@ const WipTabs =
 
 export default WipTabNavigator = () => {
   return Platform.OS === 'ios' ? (
-    <WipTabs.Navigator
+    <WipTabs.Navigator //iOS
       lazy={true}
-      screenOptions={defaultTabNavScreenOptions}
       tabBarOptions={{
         showLabel: true,
-        labelPosition: 'below-icon',
-        style: {
-          height: RFPercentage(6.4),
+        labelPosition: 'below-icon', // Otherwise weird for landscape
+        labelStyle: {
+          fontSize: navBarFontSize,
         },
         activeTintColor: Colors.vwgActiveLink,
         inactiveTintColor: Colors.vwgInactiveLink,
+        adaptive: false,
       }}
+      //screenOptions={defaultTabNavScreenOptions}
     >
       <WipTabs.Screen
         name='FindTools'
@@ -215,21 +192,22 @@ export default WipTabNavigator = () => {
       />
     </WipTabs.Navigator>
   ) : (
-    <WipTabs.Navigator
+    <WipTabs.Navigator // Android
       lazy={true}
-      screenOptions={defaultTabNavScreenOptions}
       labeled={true}
       title='Default Title'
       shifting={false}
       backBehavior={'history'}
       activeColor={Colors.vwgActiveLink}
       inactiveColor={Colors.vwgInactiveLink}
-      tabBarColor={Colors.vwgWhite}
+      tabBarOptions={{
+        labelStyle: {
+          fontSize: navBarFontSize, // Doesn't seem to work
+        },
+      }}
       barStyle={{
         labelPosition: 'below-icon',
-
-        // height: RFPercentage(6.4),
-        backgroundColor: Colors.vwgWhite,
+        backgroundColor: Colors.vwgVeryVeryLightGray,
       }}
     >
       <WipTabs.Screen
@@ -256,16 +234,3 @@ export default WipTabNavigator = () => {
   );
 };
 // End Tab navigator
-
-const styles = StyleSheet.create({
-  focused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-  notFocused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-});

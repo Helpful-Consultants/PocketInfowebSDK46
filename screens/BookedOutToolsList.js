@@ -9,12 +9,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-
 import { Divider, Icon } from 'react-native-elements';
-
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import ScaledImageFinder from '../components/ScaledImageFinder';
-
 import Colors from '../constants/Colors';
 
 const minSearchLength = 1;
@@ -102,10 +98,7 @@ export default function BookedOutToolsList(props) {
                     >
                       <Text
                         style={{
-                          fontFamily: 'the-sans-bold',
-                          fontSize: RFPercentage(2.2),
-                          color: Colors.vwgLink,
-                          textAlign: 'left',
+                          ...baseStyles.toolNumber,
                           paddingTop: 8,
                         }}
                       >{`${item.partNumber} (${item.toolNumber})`}</Text>
@@ -126,9 +119,7 @@ export default function BookedOutToolsList(props) {
                         >
                           <Text
                             style={{
-                              fontFamily: 'the-sans',
-                              fontSize: RFPercentage(2.2),
-                              color: Colors.vwgLink,
+                              ...baseStyles.linkText,
                               textAlign: 'right',
                               paddingTop: 9,
                             }}
@@ -174,29 +165,23 @@ export default function BookedOutToolsList(props) {
                     <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
                       <Text
                         style={{
-                          fontFamily: 'the-sans',
-                          color: Colors.vwgVeryDarkGray,
+                          ...baseStyles.text,
                           marginBottom: 3,
-                          fontSize: RFPercentage(2.1),
                         }}
                       >{`${item.partDescription}`}</Text>
                       {item.location.length > 0 ? (
                         <Text
                           style={{
-                            fontFamily: 'the-sans',
-                            color: Colors.vwgVeryDarkGray,
+                            ...baseStyles.text,
                             marginBottom: 3,
-                            fontSize: RFPercentage(2.1),
                           }}
                         >{`Storage Location: ${item.location}`}</Text>
                       ) : null}
                       {item.wipNumber.length > 0 ? (
                         <Text
                           style={{
-                            fontFamily: 'the-sans',
-                            color: Colors.vwgVeryDarkGray,
+                            ...baseStyles.text,
                             marginBottom: 3,
-                            fontSize: RFPercentage(2.1),
                           }}
                         >{`Booked out to job '${item.wipNumber}'`}</Text>
                       ) : null}

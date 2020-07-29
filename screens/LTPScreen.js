@@ -17,7 +17,7 @@ import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-import BadgedTabBarText from '../components/BadgedTabBarText';
+// import TabBarText from '../components/TabBarText';
 import sortObjectList from '../components/sortObjectList';
 import getBaseStyles from '../components/getBaseStyles';
 // import HeaderButton from '../components/HeaderButton';
@@ -181,15 +181,11 @@ export default LtpScreen = (props) => {
 };
 
 const titleString = 'Loan Tools';
-const tabBarLabelFunction = ({ focused }) => (
-  <BadgedTabBarText
-    showBadge={false}
-    text={titleString}
-    focused={focused}
-    value={0}
-  />
-);
+// const tabBarLabelFunction = () => <TabBarText text={titleString} />;
+// const tabBarLabelFunction = () => null;
+
 export const screenOptions = (navData) => {
+  //   console.log('navData', navData);
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
 
@@ -197,12 +193,17 @@ export const screenOptions = (navData) => {
       backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarIcon: ({ focused }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
-      />
-    ),
+    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
+    tabBarLabel: titleString,
+    tabBarIcon: ({ focused, size }) => {
+      //   console.log('$$$$$$$$$$$$$$$$ tabBarIcon props size:', size);
+      return (
+        <TabBarIcon
+          focused={focused}
+          name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+          size={size}
+        />
+      );
+    },
   };
 };

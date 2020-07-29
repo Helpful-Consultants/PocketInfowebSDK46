@@ -38,16 +38,20 @@ export default function TabBarIcon(props) {
   return (
     <View
       style={
-        showBadge && showBadge === true
+        {
+          /* showBadge && showBadge === true
           ? baseStyles.navBarPaddedView
-          : baseStyles.navBarNonPaddedView
+          : baseStyles.navBarNonPaddedView */
+        }
       }
     >
       <Text
         style={
-          focused
+          {
+            /* focused
             ? baseStyles.navBarTextFocused
-            : baseStyles.navBarTextNotFocused
+            : baseStyles.navBarTextNotFocused */
+          }
         }
       >
         {text}

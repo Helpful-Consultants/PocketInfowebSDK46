@@ -34,19 +34,23 @@ export default function getLogoTitle(props) {
         }
         style={{
           width:
-            windowDim.width > 1023
-              ? 42
-              : windowDim.width > 767
-              ? 36
-              : windowDim.width > 374
+            windowDim.width >= 1024
+              ? 38
+              : windowDim.width >= 768
+              ? 32
+              : windowDim.width >= 411
+              ? 32
+              : windowDim.width >= 375
               ? 26
               : 22,
           height:
-            windowDim.width > 1023
-              ? 42
-              : windowDim.width > 767
-              ? 36
-              : windowDim.width > 374
+            windowDim.width >= 1024
+              ? 38
+              : windowDim.width >= 768
+              ? 32
+              : windowDim.width >= 411
+              ? 32
+              : windowDim.width >= 375
               ? 26
               : 22,
         }}

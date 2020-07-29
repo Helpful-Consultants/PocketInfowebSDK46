@@ -86,7 +86,9 @@ export default AppInfo = (props) => {
           style={baseStyles.panelAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelAppInfo}>Update to SDK 38</Text>
+      <Text style={baseStyles.panelAppInfo}>
+        Update to SDK 38. Layout for iPad.
+      </Text>
     </View>
   );
 };

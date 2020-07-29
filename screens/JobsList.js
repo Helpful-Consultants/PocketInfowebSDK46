@@ -8,14 +8,9 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-
-import { Ionicons } from '@expo/vector-icons';
 import { Divider, Button, Icon } from 'react-native-elements';
-
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import ScaledImageFinder from '../components/ScaledImageFinder';
-import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
-
+// import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 import Colors from '../constants/Colors';
 import FriendlyDate from '../components/FriendlyDate';
 
@@ -24,7 +19,7 @@ const minSearchLength = 1;
 export default function DealerToolsList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  //   console.log('props');
+  console.log('p, baseStyles', baseStyles);
   const {
     isLoading,
     dataCount,
@@ -56,7 +51,6 @@ export default function DealerToolsList(props) {
               <View>
                 <View
                   style={{
-                    fontFamily: 'the-sans',
                     flexDirection: 'row',
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
@@ -71,11 +65,7 @@ export default function DealerToolsList(props) {
                   >
                     <Text
                       style={{
-                        fontFamily: 'the-sans-bold',
-                        fontSize: RFPercentage(2.2),
-                        color: Colors.vwgLink,
-                        textAlign: 'left',
-                        paddingTop: 10,
+                        ...baseStyles.toolNumberSmall,
                       }}
                     >{`${item.partNumber} (${item.toolNumber})`}</Text>
                   </View>
@@ -95,9 +85,7 @@ export default function DealerToolsList(props) {
                       >
                         <Text
                           style={{
-                            fontFamily: 'the-sans',
-                            fontSize: RFPercentage(2.2),
-                            color: Colors.vwgLink,
+                            ...baseStyles.linkText,
                             textAlign: 'right',
                             paddingTop: 9,
                           }}
@@ -151,23 +139,19 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
-                          color: Colors.vwgVeryDarkGray,
+                          ...baseStyles.text,
+                          marginRight: 10,
                           marginBottom: 3,
                           paddingLeft: 0,
-                          marginRight: 10,
-                          fontFamily: 'the-sans',
-                          fontSize: RFPercentage(2.1),
                         }}
                       >{`${item.partDescription}`}</Text>
 
                       <Text
                         style={{
-                          color: Colors.vwgVeryDarkGray,
+                          ...baseStyles.text,
+                          marginRight: 10,
                           marginBottom: 3,
                           paddingLeft: 0,
-                          marginRight: 10,
-                          fontFamily: 'the-sans',
-                          fontSize: RFPercentage(2.1),
                         }}
                       >
                         {item.location && item.location.length > 0
@@ -196,7 +180,7 @@ export default function DealerToolsList(props) {
         ) : (
           <Text
             style={{
-              fontSize: RFPercentage(2),
+              ...baseStyles.text,
               color: Colors.vwgWarmRed,
             }}
           >
@@ -261,11 +245,8 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
-                          fontFamily: 'the-sans-bold',
-                          fontSize: RFPercentage(2.2),
-                          textAlign: 'left',
+                          ...baseStyles.jobSummaryText,
                           marginBottom: 5,
-                          color: Colors.vwgDarkSkyBlue,
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()

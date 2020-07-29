@@ -704,17 +704,15 @@ export default FindToolsScreen = (props) => {
   basketActionRows =
     mode === 'book' ? (
       <View>
-        <View style={styles.basketInputRow}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ width: '100%' }}>
+        <View style={baseStyles.rowBasketInput}>
+          <View style={baseStyles.rowFlex}>
+            <View style={baseStyles.rowFullWidth}>
               <Input
                 ref={input}
-                style={{ flexDirection: 'row' }}
-                inputStyle={styles.inputStyle}
-                number
+                style={baseStyles.rowFlex}
+                inputStyle={baseStyles.basketInputTextJob}
                 value={formState.inputValues.wipNumber}
                 onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
-                style={styles.inputLabelText}
                 placeholder='Job number/job name'
                 required
                 autoCapitalize='none'
@@ -728,8 +726,8 @@ export default FindToolsScreen = (props) => {
           </View>
         </View>
         <View style={styles.basketTipRow}>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ width: '100%', fontFamily: 'the-sans' }}>
+          <View style={baseStyles.rowFlex}>
+            <View style={{ ...baseStyles.rowFullWidth, paddingBottom: 5 }}>
               {formState.inputValues.wipNumber &&
               formState.inputValues.wipNumber.length > 0 ? (
                 <Text>{` `}</Text>
@@ -741,13 +739,13 @@ export default FindToolsScreen = (props) => {
             </View>
           </View>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Back'
             type='outline'
             onPress={() => basketBackHandler()}
-            titleStyle={styles.buttonCancelTitle}
-            buttonStyle={styles.buttonCancel}
+            titleStyle={baseStyles.buttonTitleWithIconCancel}
+            buttonStyle={baseStyles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -770,8 +768,8 @@ export default FindToolsScreen = (props) => {
               setMode('sending');
               setIsBasketVisible(true);
             }}
-            titleStyle={styles.buttonConfirmTitle}
-            buttonStyle={styles.buttonConfirm}
+            titleStyle={baseStyles.buttonTitleWithIcon}
+            buttonStyle={baseStyles.buttonConfirm}
             icon={
               <Icon
                 name={
@@ -789,16 +787,16 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'sending' && isSendingWip ? (
       <View>
-        <View style={styles.basketActionRow}>
-          <View style={styles.checkingNotice}>
+        <View style={baseStyles.rowBasket}>
+          <View style={baseStyles.rowFlexLeftPadded}>
             <ActivityIndicator size='small' color={Colors.vwgDeepBlue} />
             <View>
-              <Text style={styles.checkingNoticeText}>
+              <Text style={baseStyles.textColoured}>
                 {`  ${toolBasket.length} ${
                   toolBasket.length === 1 ? `tool` : `tools`
                 } being booked to `}
               </Text>
-              <Text style={styles.checkingNoticeText}>
+              <Text style={baseStyles.textColoured}>
                 {`  job ${wipNumber}...`}
               </Text>
             </View>
@@ -807,25 +805,24 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'confirm' ? (
       <View>
-        <View style={styles.basketActionRow}>
-          <View style={styles.confirmedPrompt}>
-            <Text style={styles.confirmedPromptText}>
+        <View style={baseStyles.rowBasket}>
+          <View style={baseStyles.viewNoPadding}>
+            <Text style={baseStyles.textConfirmation}>
               {`${toolBasket.length} ${
                 toolBasket.length === 1 ? `tool` : `tools`
               } succesfully booked out to you on job '${wipNumber}'.`}
             </Text>
           </View>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Close'
             type='clear'
-            titleStyle={styles.buttonCloseTitle}
             onPress={() => {
               acceptMessageHandler();
             }}
-            titleStyle={styles.buttonCloseConfirmationTitle}
-            buttonStyle={styles.buttonCloseConfirmation}
+            titleStyle={baseStyles.buttonTitle}
+            buttonStyle={baseStyles.buttonClose}
           />
         </View>
       </View>
@@ -833,7 +830,7 @@ export default FindToolsScreen = (props) => {
       <View>
         <View
           style={
-            ({ ...styles.basketActionRow },
+            ({ ...baseStyles.rowBasket },
             { alignItems: 'flex-end', marginTop: 10, paddingBottom: 10 })
           }
         >
@@ -847,20 +844,25 @@ export default FindToolsScreen = (props) => {
               size={20}
               color={Colors.vwgLink}
             />
-            <Text style={styles.basketTextLink}>
+            <Text
+              style={{
+                ...baseStyles.linkTextLarge,
+                textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+              }}
+            >
               {toolBasket.length === 1
                 ? ` Add another tool`
                 : ` Add another tool`}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Cancel'
             type='outline'
             onPress={() => removeBasketHandler()}
-            titleStyle={styles.buttonCancelTitle}
-            buttonStyle={styles.buttonCancel}
+            titleStyle={baseStyles.buttonTitleWithIconCancel}
+            buttonStyle={baseStyles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -882,8 +884,8 @@ export default FindToolsScreen = (props) => {
             }
             type='solid'
             onPress={() => bookToolsHandler()}
-            titleStyle={styles.buttonBookTitle}
-            buttonStyle={styles.buttonBook}
+            titleStyle={baseStyles.buttonTitleWithIcon}
+            buttonStyle={baseStyles.buttonConfirm}
             icon={
               <Icon
                 name={
@@ -901,9 +903,9 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'confirm-revised-list' ? (
       <View>
-        <View style={styles.basketActionRow}>
-          <View style={styles.confirmedPrompt}>
-            <Text style={styles.confirmedPromptText}>
+        <View style={baseStyles.rowBasket}>
+          <View style={baseStyles.viewNoPadding}>
+            <Text style={baseStyles.textConfirmation}>
               {`${
                 lastWipProcessed.unavailableTools &&
                 lastWipProcessed.unavailableTools.length > 1
@@ -913,24 +915,23 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Close'
             type='clear'
-            titleStyle={styles.buttonCloseTitle}
             onPress={() => {
               acceptMessageHandler();
             }}
-            titleStyle={styles.buttonCloseConfirmationTitle}
-            buttonStyle={styles.buttonCloseConfirmation}
+            titleStyle={baseStyles.buttonTitle}
+            buttonStyle={baseStyles.buttonClose}
           />
         </View>
       </View>
     ) : mode === 'some-unavailable' ? (
       <View>
-        <View style={styles.basketActionRow}>
-          <View style={styles.confirmedPrompt}>
-            <Text style={styles.unavailableNoticeText}>
+        <View style={baseStyles.rowBasket}>
+          <View style={baseStyles.viewNoPadding}>
+            <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked the item${
                 lastWipProcessed.unavailableTools &&
                 lastWipProcessed.unavailableTools.length > 1
@@ -945,13 +946,13 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Cancel booking'
             type='outline'
             onPress={() => deleteWipRequestHandler()}
-            titleStyle={styles.buttonCancelTitle}
-            buttonStyle={styles.buttonCancel}
+            titleStyle={baseStyles.buttonTitleWithIconCancel}
+            buttonStyle={baseStyles.buttonCancel}
             icon={
               <Icon
                 name={
@@ -975,8 +976,8 @@ export default FindToolsScreen = (props) => {
             }
             type='solid'
             onPress={() => dropUnavailableHandler()}
-            titleStyle={styles.buttonBookTitle}
-            buttonStyle={styles.buttonBook}
+            titleStyle={baseStyles.buttonTitleWithIcon}
+            buttonStyle={baseStyles.buttonConfirm}
             icon={
               <Icon
                 name={
@@ -994,9 +995,9 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'all-unavailable' ? (
       <View>
-        <View style={styles.basketActionRow}>
-          <View style={styles.confirmedPrompt}>
-            <Text style={styles.unavailableNoticeText}>
+        <View style={baseStyles.rowBasket}>
+          <View style={baseStyles.viewNoPadding}>
+            <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked ${
                 lastWipProcessed.unavailableTools &&
                 lastWipProcessed.unavailableTools.length > 1
@@ -1006,15 +1007,15 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={styles.basketActionRow}>
+        <View style={baseStyles.rowBasket}>
           <Button
             title='Close'
             type='clear'
             onPress={() => {
               acceptNotBookedMessageHandler();
             }}
-            titleStyle={styles.buttonCloseConfirmationTitle}
-            buttonStyle={styles.buttonCloseConfirmation}
+            titleStyle={baseStyles.buttonTitle}
+            buttonStyle={baseStyles.buttonClose}
           />
         </View>
       </View>
@@ -1029,8 +1030,14 @@ export default FindToolsScreen = (props) => {
           style={styles.basketContents}
           showsVerticalScrollIndicator={true}
         >
-          <View style={styles.basketSizeRow}>
-            <Text style={styles.basketText}>
+          <View
+            style={{
+              ...baseStyles.rowFlexSpaceBetween,
+              paddingTop: 10,
+              paddingBottom: 5,
+            }}
+          >
+            <Text style={baseStyles.text}>
               {`${toolBasket.length} ${
                 toolBasket.length === 1 ? `tool` : `tools`
               } selected:`}
@@ -1048,8 +1055,14 @@ export default FindToolsScreen = (props) => {
                 />
               ) : null}
               <View>
-                <View style={styles.basketItemRow}>
-                  <View style={styles.basketItemImageCol}>
+                <View
+                  style={{
+                    ...baseStyles.rowFlex,
+                    marginBottom: 0,
+                    paddingBottom: 5,
+                  }}
+                >
+                  <View style={{ ...baseStyles.columnFlexLeft, width: 70 }}>
                     {item.loanToolNo ? null : (
                       <ScaledImageFinder
                         width={70}
@@ -1060,9 +1073,15 @@ export default FindToolsScreen = (props) => {
                       />
                     )}
                   </View>
-                  <View style={styles.basketItemDescCol}>
+                  <View
+                    style={{
+                      ...baseStyles.basketItemDescCol,
+                      width: '72%',
+                      paddingLeft: 10,
+                    }}
+                  >
                     {item.partNumber ? (
-                      <Text style={styles.basketItemTextEmph}>{`${
+                      <Text style={baseStyles.textSmallColoured}>{`${
                         item.partNumber
                       }${
                         item.partNumber &&
@@ -1078,11 +1097,11 @@ export default FindToolsScreen = (props) => {
                       item.toolType === 'Tool' ||
                       item.toolType === 'tool') ? (
                       <Text
-                        style={styles.basketItemTextEmph}
+                        style={baseStyles.textSmallColoured}
                       >{`Order no: ${item.toolNumber}`}</Text>
                     ) : null}
                     {
-                      <Text style={styles.basketItemText}>
+                      <Text style={baseStyles.textSmall}>
                         {item.location
                           ? `Location: ${item.location}`
                           : `Location not recorded`}
@@ -1094,7 +1113,7 @@ export default FindToolsScreen = (props) => {
                     item.unavailable &&
                     item.unavailable === true ? (
                       <Text
-                        style={styles.basketItemUnavailableText}
+                        style={baseStyles.textSmallError}
                       >{`${getUnavailableToolDetails(
                         item.id,
                         lastWipProcessed.unavailableTools
@@ -1108,7 +1127,7 @@ export default FindToolsScreen = (props) => {
                   mode !== 'all-unavailable' &&
                   toolBasket.length > 1 ? (
                     <TouchableOpacity
-                      style={styles.buttonTrash}
+                      style={baseStyles.columnFlexLeft}
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
                       <Icon
@@ -1173,7 +1192,7 @@ export default FindToolsScreen = (props) => {
             marginTop: Platform.OS === 'ios' ? 0 : -4,
           }}
         />
-        <Text style={styles.closedBasketPromptText}>
+        <Text style={baseStyles.textReopenClosedBasket}>
           {` Back to tool basket`}
           {toolBasket && toolBasket.length > 1
             ? ` (${toolBasket.length} items)`
@@ -1195,11 +1214,7 @@ export default FindToolsScreen = (props) => {
   console.log('rendering Find Tools screen', mode);
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={baseStyles.containerFlex}>
       <View
         style={{
           marginBottom:
@@ -1225,15 +1240,15 @@ export default FindToolsScreen = (props) => {
           {mode === 'list' &&
           searchInput.length > minSearchLength &&
           itemsToShow.length === 0 ? (
-            <View style={styles.noneFoundPromptRibbon}>
-              <Text style={styles.promptRibbonText}>
+            <View style={baseStyles.noneFoundPromptRibbon}>
+              <Text style={baseStyles.promptRibbonText}>
                 Your search found no results.
               </Text>
             </View>
           ) : null}
 
           {isLoadingAny || dataErrorAny ? null : (
-            <View style={styles.toolsList}>
+            <View>
               <DealerToolsList
                 items={itemsToShow}
                 userIntId={userApiFetchParamsObj.userIntId}
@@ -1277,15 +1292,13 @@ export default FindToolsScreen = (props) => {
                 cancelDupPickedHandler();
               }}
               titleStyle={{
-                fontFamily: 'the-sans',
-                textAlign: 'center',
+                ...baseStyles.textCentred,
                 textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
               confirmButtonTextStyle={{
-                fontFamily: 'the-sans',
-                textAlign: 'center',
-                elevation: Platform.OS === 'ios' ? 0 : 5,
+                ...baseStyles.textCentred,
                 textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+                elevation: Platform.OS === 'ios' ? 0 : 5,
               }}
               confirmButtonStyle={{
                 width: 100,
@@ -1338,91 +1351,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140,
-    // backgroundColor: 'red'
   },
   drawerContainer: {
     justifyContent: 'flex-end',
     margin: 0,
-    // marginTop: 140,
-    // backgroundColor: 'red',
-    // backgroundColor: 'white',
-    // paddingHorizontal: 10,
-    // position: 'absolute',
-    // paddingBottom: 5,
     padding: 0,
     bottom: 0,
-    // left: 0,
-    // right: 0
-    // maxHeight: maxModalHeight
   },
   drawerContent: {
     justifyContent: 'flex-end',
-    // margin: 0,
-    // marginTop: 140,
-    // backgroundColor: 'red',
     backgroundColor: 'white',
     marginHorizontal: 0,
-    // position: 'absolute',
     padding: 10,
-    // bottom: 0
-    // left: 0,
-    // right: 0
-    // maxHeight: maxModalHeight
-  },
-  toolsList: {
-    // marginBottom: 50,
-    backgroundColor: 'transparent',
-    // backgroundColor: 'red'
-    // height: '80%'
-  },
-  inputStyle: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDarkSkyBlue,
-    fontSize: RFPercentage(2.4),
   },
   basketContents: {
-    color: Colors.vwgDeepBlue,
-    // backgroundColor: 'teal',
-    // margin: 5,
     maxHeight: maxModalHeight,
     paddingTop: 0,
     marginBottom: 0,
     paddingHorizontal: 0,
-    // padding: 5
-  },
-  basketText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2),
-  },
-  basketTextLink: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgLink,
-    fontSize: RFPercentage(2.4),
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-  },
-  basketHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  basketItem: {
-    color: Colors.vwgDarkSkyBlue,
-    flexDirection: 'row',
-  },
-  basketItemText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDarkGray,
-    fontSize: RFPercentage(1.8),
-  },
-  basketItemUnavailableText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgWarmRed,
-    fontSize: RFPercentage(1.8),
-  },
-  basketItemTextEmph: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.9),
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
@@ -1431,31 +1377,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
-  basketItemFooterRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  basketItemLocation: { flexDirection: 'column' },
-  searchBarRow: {
-    flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer,
   },
   basketTipRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    // paddingHorizontal: 20,
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: 10,
-  },
-  basketItemRow: {
-    color: Colors.vwgDeepBlue,
-
-    flexDirection: 'row',
-    marginBottom: 0,
-    paddingBottom: 5,
   },
   basketItemNumbers: { flexDirection: 'column', width: '50%' },
   basketItemDesc: { flexDirection: 'column', width: '32%' },
@@ -1465,201 +1394,14 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover',
   },
-  basketItemFooterRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  basketItemLocation: { flexDirection: 'column' },
-  searchBarRow: {
-    flexDirection: 'row',
-    backgroundColor: Colors.vwgSearchBarContainer,
-  },
-  basketItemImageCol: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: 70,
-  },
-  basketItemDescCol: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: '72%',
-    paddingLeft: 10,
-  },
-  basketItemMetaCol: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: '50%',
-  },
-  basketActionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // paddingHorizontal: 20,
-    paddingVertical: 5,
-  },
-  basketInputRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 5,
-  },
   closedBasket: {
     position: 'absolute',
     width: '100%',
     height: 30,
-    // bottom: TAB_BAR_HEIGHT,
     bottom: 0,
-    // left: 0,
     backgroundColor: Colors.vwgLink,
-    // paddingTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  closedBasketPromptText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(2.2),
-    // textAlign: 'center'
-  },
-  closeButtonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 20,
-  },
-  basketSizeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 10,
-    paddingBottom: 5,
-  },
-  searchBarRowRefreshButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.vwgSearchBarContainer,
-    padding: 10,
-  },
-  searchBarInputContainer: {
-    backgroundColor: Colors.vwgSearchBarInputContainer,
-  },
-  searchBarContainer: { backgroundColor: Colors.vwgSearchBarContainer },
-
-  searchBarRowSearchInput: { width: '85%' },
-
-  searchFoundPrompt: {
-    padding: 10,
-    backgroundColor: Colors.vwgMintGreen,
-  },
-  searchFoundPromptText: {
-    fontFamily: 'the-sans',
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-  },
-  checkingNotice: {
-    flexDirection: 'row',
-    padding: 10,
-  },
-  confirmedNoticeText: {
-    fontFamily: 'the-sans',
-    textAlign: 'center',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.4),
-  },
-  unavailableNoticeText: {
-    fontFamily: 'the-sans-bold',
-    textAlign: 'left',
-    color: Colors.vwgBlack,
-    fontSize: RFPercentage(2.2),
-  },
-  confirmedPrompt: {
-    padding: 0,
-  },
-  confirmedPromptText: {
-    fontFamily: 'the-sans-bold',
-    textAlign: 'left',
-    color: Colors.vwgMintGreen,
-    fontSize: RFPercentage(2.4),
-  },
-  noneFoundPromptRibbon: {
-    fontFamily: 'the-sans',
-    padding: 10,
-    backgroundColor: Colors.vwgWarmRed,
-  },
-  promptRibbonText: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    textAlign: 'center',
-    color: Colors.vwgWhite,
-  },
-  inputLabelText: {
-    marginBottom: 20,
-    fontFamily: 'the-sans',
-    color: Colors.vwgBlack,
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
-  buttonTrash: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  buttonCancel: {
-    borderColor: Colors.vwgWarmRed,
-    borderRadius: Platform.OS === 'ios' ? 3 : 0,
-  },
-  buttonCancelTitle: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
-    color: Colors.vwgWarmRed,
-    paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-  },
-  buttonCloseConfirmation: {
-    backgroundColor: Colors.vwgDeepBlue,
-    borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5,
-  },
-  buttonCloseConfirmationTitle: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(1.9),
-    color: Colors.vwgWhite,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-  },
-  buttonClose: {
-    backgroundColor: Colors.vwgLink,
-    borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5,
-  },
-  buttonCloseTitle: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
-    color: Colors.vwgLink,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-  },
-  buttonBook: {
-    backgroundColor: Colors.vwgLink,
-    borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5,
-  },
-  buttonBookTitle: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
-    paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-  },
-  buttonConfirm: {
-    backgroundColor: Colors.vwgLink,
-    borderRadius: Platform.OS === 'ios' ? 3 : 2,
-    elevation: Platform.OS === 'ios' ? 0 : 5,
-  },
-  buttonConfirmTitle: {
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.3),
-    paddingLeft: 5,
-    textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
   },
 });

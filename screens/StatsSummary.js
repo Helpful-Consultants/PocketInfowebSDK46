@@ -25,6 +25,8 @@ export default function StatsSummary(props) {
     effectiveness,
   } = props;
 
+  console.log('StatSummary Props', props);
+
   const userDataCount =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
@@ -80,7 +82,7 @@ export default function StatsSummary(props) {
   //   console.log(logoChooser);
   //   console.log('statsDummyData', statsDummyData);
   return (
-    <View style={baseStyles.containerFlexPadded}>
+    <View>
       {userDataObj && statsObj && userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <View style={{ marginHorizontal: 30 }}>

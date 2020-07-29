@@ -26,125 +26,87 @@ export default getBaseStyles = (props) => {
   //   console.log(props && height && 'in getBaseStyles, height:', height);
   //   console.log(props && width && 'in getBaseStyles, width:', width);
 
-  const bottomTabHeight = height && height > 1333 ? 100 : 80;
+  const bottomTabHeight = height && height >= 1333 ? 100 : 80;
 
   let paddingSize =
-    width > 1023
+    width >= 1024
       ? 180
-      : width > 767
+      : width >= 768
       ? 140
-      : width > 413
+      : width >= 411
       ? 5
-      : width > 374
+      : width >= 375
       ? 5
       : 5;
 
-  let fontFactor =
-    scale && scale == 1 ? scale * 7 : scale == 3 ? scale * 6 : scale * 7;
+  let fontFactor = scale
+    ? scale >= 3.5
+      ? width >= 768
+        ? scale * 6
+        : scale * 5
+      : scale >= 3
+      ? width >= 768
+        ? scale * 6
+        : scale * 5.5
+      : scale >= 2
+      ? width >= 768
+        ? scale * 10
+        : scale * 6
+      : scale * 6
+    : scale * 6;
 
   //   console.log('fontFactor!!!!!!!!', fontFactor);
-
-  let baseFontSizeSmaller =
-    width > 1023
-      ? fontFactor * 1
-      : width > 767
-      ? fontFactor * 1
-      : width > 374
-      ? fontFactor * 0.9
-      : fontFactor * 0.8;
-
-  let baseFontSizeSmall =
-    width > 1023
-      ? fontFactor * 1.2
-      : width > 767
-      ? fontFactor * 1.1
-      : width > 374
-      ? fontFactor * 1
-      : fontFactor * 0.9;
-
-  let baseFontSize =
-    width > 1023
+  let baseFontSize = fontFactor * 1;
+  let zzbaseFontSize =
+    width >= 1024
       ? fontFactor * 1.4
-      : width > 767
+      : width >= 768
       ? fontFactor * 1.3
-      : width > 374
-      ? fontFactor * 1.1
+      : width >= 411
+      ? fontFactor * 1.0
+      : width >= 375
+      ? fontFactor * 1.0
       : fontFactor * 1;
 
-  let baseFontSizeLarge =
-    width > 1023
-      ? fontFactor * 1.5
-      : width > 767
-      ? fontFactor * 1.4
-      : width > 374
-      ? fontFactor * 1.2
-      : fontFactor * 1.1;
+  let baseFontSizeSmall = fontFactor * 0.9;
+  let baseFontSizeSmaller = fontFactor * 0.8;
+  let baseFontSizeLarge = fontFactor * 1.1;
+  let baseFontSizeLarger = fontFactor * 1.2;
+  let baseFontSizeLargest = fontFactor * 1.2;
 
-  let baseFontSizeLarger =
-    width > 1023
-      ? fontFactor * 2
-      : width > 767
-      ? fontFactor * 1.8
-      : width > 374
-      ? fontFactor * 1.3
-      : fontFactor * 1.2;
-
-  let baseFontSizeLargest =
-    width > 1023
-      ? fontFactor * 2.2
-      : width > 767
-      ? fontFactor * 2
-      : width > 374
-      ? fontFactor * 1.5
-      : fontFactor * 1.4;
-
-  let appNameFontSize =
-    width > 1023
-      ? fontFactor * 3.5
-      : width > 767
-      ? fontFactor * 3
-      : width > 413
-      ? fontFactor * 2
-      : width > 374
-      ? fontFactor * 2.3
-      : fontFactor * 1.9;
+  let appNameFontSize = fontFactor * 2;
+  let panelTextFontSize = fontFactor * 1.1;
+  let navBarFontSize = fontFactor * 1;
 
   let panelWidth =
-    width > 1023
+    width >= 1024
       ? 500
-      : width > 767
+      : width >= 768
       ? 400
-      : width > 413
+      : width >= 411
       ? 360
-      : width > 374
+      : width >= 375
       ? 300
       : '90%';
-
-  let panelTextFontSize =
-    width > 1023
-      ? fontFactor * 1.8
-      : width > 767
-      ? fontFactor * 1.6
-      : width > 413
-      ? fontFactor * 1.1
-      : width > 374
-      ? fontFactor * 1.1
-      : fontFactor * 1;
-
-  let navBarFontSize =
-    width > 1023
-      ? fontFactor * 1.6
-      : width > 767
-      ? fontFactor * 1.3
-      : width > 413
-      ? fontFactor * 0.8
-      : width > 374
-      ? fontFactor * 0.9
-      : fontFactor * 0.8;
 
   let baseText = {
     fontFamily: 'the-sans',
     color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSize,
+  };
+  let baseTextBold = {
+    fontFamily: 'the-sans-bold',
+    color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSize,
+  };
+  let baseTextColoured = {
+    fontFamily: 'the-sans',
+    color: Colors.vwgDeepBlue,
+    fontSize: baseFontSize,
+  };
+  let baseTextColouredBold = {
+    fontFamily: 'the-sans-bold',
+    color: Colors.vwgDeepBlue,
     fontSize: baseFontSize,
   };
   let baseTextSmall = {
@@ -157,21 +119,18 @@ export default getBaseStyles = (props) => {
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
   };
-  let baseTextColoured = {
+  let baseTextSmallColoured = {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
-    fontSize: baseFontSize,
+    fontSize: baseFontSizeSmall,
   };
-  let baseTextBold = {
+
+  let baseTextlargeBold = {
     fontFamily: 'the-sans-bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSize,
+    fontSize: baseFontSizeLarge,
   };
-  let baseTextColouredBold = {
-    fontFamily: 'the-sans-bold',
-    color: Colors.vwgDeepBlue,
-    fontSize: baseFontSize,
-  };
+
   let baseLinkText = {
     fontFamily: 'the-sans',
     color: Colors.vwgLink,
@@ -181,6 +140,16 @@ export default getBaseStyles = (props) => {
     fontFamily: 'the-sans-bold',
     color: Colors.vwgLink,
     fontSize: baseFontSize,
+  };
+  let baseLinkTextLarge = {
+    fontFamily: 'the-sans',
+    color: Colors.vwgLink,
+    fontSize: baseFontSizeLarge,
+  };
+  let baseLinkTextLargeBold = {
+    fontFamily: 'the-sans-bold',
+    color: Colors.vwgLink,
+    fontSize: baseFontSizeLarge,
   };
 
   const baseStyles = StyleSheet.create({
@@ -199,6 +168,9 @@ export default getBaseStyles = (props) => {
     },
     viewPaddedLeft: {
       padding: 5,
+    },
+    viewNoPadding: {
+      padding: 0,
     },
     viewFlexRow: {
       flexDirection: 'row',
@@ -228,12 +200,12 @@ export default getBaseStyles = (props) => {
     },
     // StatsSummary
     containerFlexPadded: {
-      flex: 1,
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingBottom: 40,
-      alignItems: 'center',
-      justifyContent: 'center',
+      //   flex: 1,
+      //   paddingLeft: 10,
+      //   paddingRight: 10,
+      //   paddingBottom: 40,
+      //   alignItems: 'center',
+      //   justifyContent: 'center',
     },
     // JobsScreen BookedOutToolsScreen
     containerFlexPaddedBtm: {
@@ -285,28 +257,29 @@ export default getBaseStyles = (props) => {
     },
     appLogo: {
       width:
-        width > 1023
+        width >= 1024
           ? 180
-          : width > 767
+          : width >= 768
           ? 150
-          : width > 413
+          : width >= 411
           ? 120
-          : width > 374
+          : width >= 375
           ? 90
           : 60,
       height:
-        width > 1023
+        width >= 1024
           ? 120
-          : width > 767
+          : width >= 768
           ? 100
-          : width > 413
+          : width >= 411
           ? 80
-          : width > 374
+          : width >= 375
           ? 60
           : 40,
       resizeMode: 'contain',
       marginTop: 0,
     },
+    navBarFontSize: baseFontSizeLarger,
     // navBar
     navBarNonPaddedView: {},
     navBarPaddedView: {
@@ -336,10 +309,14 @@ export default getBaseStyles = (props) => {
     },
     navBarBadgeText: {
       ...baseTextBold,
-      fontSize: 6,
+      fontSize: 8,
       textAlign: 'center',
       // paddingRight: 2
       paddingHorizontal: 0,
+    },
+    navBarText: {
+      ...baseTextBold,
+      fontSize: baseFontSizeLarge,
     },
     navBarTextFocused: {
       ...baseText,
@@ -361,9 +338,6 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       backgroundColor: Colors.vwgWhite,
       padding: 10,
-    },
-    searchBarRowErrorText: {
-      color: Colors.vwgWarmRed,
     },
     searchBarInputContainer: {
       backgroundColor: Colors.vwgVeryLightGray,
@@ -400,6 +374,41 @@ export default getBaseStyles = (props) => {
       color: Colors.vwgHeaderTitle,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
+    text: {
+      ...baseText,
+    },
+    textError: {
+      ...baseText,
+      color: Colors.vwgWarmRed,
+    },
+    textSmall: {
+      ...baseTextSmall,
+    },
+    textColoured: {
+      ...baseTextColoured,
+    },
+    textSmallColoured: {
+      ...baseTextSmallColoured,
+    },
+    textSmallError: {
+      ...baseTextSmall,
+      color: Colors.vwgWarmRed,
+    },
+    textBold: {
+      ...baseTextColouredBold,
+    },
+    linkText: {
+      ...baseLinkText,
+    },
+    linkTextBold: {
+      ...baseLinkTextBold,
+    },
+    linkTextBoldLarge: {
+      ...baseLinkTextLargeBold,
+    },
+    linkTextLarge: {
+      ...baseLinkTextLarge,
+    },
     textLeftAlignedSmall: {
       ...baseTextSmall,
       textAlign: 'left',
@@ -408,13 +417,27 @@ export default getBaseStyles = (props) => {
       ...baseText,
       textAlign: 'left',
     },
-    textLeftAlignedBold: {
+    textCentred: {
+      ...baseText,
+      textAlign: 'center',
+    },
+    textLeftAlignedLarge: {
+      ...baseText,
+      textAlign: 'left',
+    },
+    textReopenClosedBasket: {
+      ...baseText,
+      fontSize: baseFontSizeLarge,
+      color: Colors.vwgWhite,
+    },
+    textConfirmation: {
       ...baseTextBold,
       textAlign: 'left',
+      color: Colors.vwgMintGreen,
+      fontSize: baseFontSizeLarger,
     },
     textLoading: {
       ...baseText,
-      fontSize: RFPercentage(2.5),
 
       // flexDirection: 'column',
       justifyContent: 'center',
@@ -429,7 +452,38 @@ export default getBaseStyles = (props) => {
       alignItems: 'center',
       textAlign: 'center',
     },
-
+    columnFlexLeft: {
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+    },
+    rowFlexSpaceBetween: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    rowFlex: {
+      flexDirection: 'row',
+    },
+    rowFullWidth: {
+      width: '100%',
+    },
+    rowFlexLeftPadded: {
+      flexDirection: 'row',
+      padding: 10,
+    },
+    rowBasket: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 5,
+    },
+    rowBasketInput: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop: 20,
+      paddingBottom: 5,
+    },
+    //Highl
     //HighlightedDate
     date: {
       ...baseTextSmall,
@@ -448,17 +502,40 @@ export default getBaseStyles = (props) => {
       backgroundColor: '#ccc',
       padding: 100,
     },
+    jobSummaryText: {
+      ...baseTextColouredBold,
+      fontSize: baseFontSizeLarge,
+      textAlign: 'left',
+    },
+    toolNumber: {
+      ...baseLinkTextBold,
+      fontSize: baseFontSizeLarge,
+      textAlign: 'left',
+      paddingTop: 10,
+      textTransform: 'uppercase',
+    },
+    toolNumberSmall: {
+      ...baseLinkTextBold,
+      fontSize: baseFontSizeSmall,
+      textAlign: 'left',
+      paddingTop: 10,
+      textTransform: 'uppercase',
+    },
     // StatsSummary
     statsTitle: {
       ...baseTextColouredBold,
-      fontSize: baseFontSizeLarger,
-      paddingVertical: 10,
+      fontSize: baseFontSize,
+      //   color: 'teal',
+      paddingTop: 15,
+      paddingBottom: 5,
+      paddingHorizontal: 10,
       marginBottom: 0,
       textAlign: 'center',
     },
     // StatsSummary
     statsText: {
       ...baseText,
+      paddingHorizontal: 20,
       textAlign: 'center',
     },
     // OdisScreen
@@ -609,6 +686,10 @@ export default getBaseStyles = (props) => {
       //   lineHeight: 19,
       textAlign: 'left',
     },
+    basketInputTextJob: {
+      ...baseText,
+      fontSize: baseFontSizeLarger,
+    },
     inputLabelText: {
       ...baseTextColoured,
       marginTop: 10,
@@ -647,6 +728,44 @@ export default getBaseStyles = (props) => {
       paddingHorizontal: 15,
     },
     //SignInScreen
+    buttonClose: {
+      backgroundColor: Colors.vwgDeepBlue,
+      borderRadius: Platform.OS === 'ios' ? 3 : 2,
+      elevation: Platform.OS === 'ios' ? 0 : 5,
+    },
+    buttonConfirm: {
+      backgroundColor: Colors.vwgLink,
+      borderRadius: Platform.OS === 'ios' ? 3 : 2,
+      elevation: Platform.OS === 'ios' ? 0 : 5,
+    },
+    buttonCancel: {
+      borderColor: Colors.vwgWarmRed,
+      borderRadius: Platform.OS === 'ios' ? 3 : 0,
+    },
+    buttonTitle: {
+      ...baseTextSmall,
+      color: Colors.vwgWhite,
+
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleWithIcon: {
+      ...baseTextSmall,
+      color: Colors.vwgWhite,
+      paddingLeft: 5,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleCancel: {
+      ...baseTextSmall,
+      color: Colors.vwgWarmRed,
+
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleWithIconCancel: {
+      ...baseTextSmall,
+      color: Colors.vwgWarmRed,
+      paddingLeft: 5,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
     buttonSignIn: {
       marginVertical: 20,
       marginHorizontal: paddingSize,
@@ -656,18 +775,7 @@ export default getBaseStyles = (props) => {
       ...baseText,
       color: Colors.vwgWhite,
     },
-    text: {
-      ...baseTextColoured,
-    },
-    textBold: {
-      ...baseTextColouredBold,
-    },
-    linkText: {
-      ...baseLinkText,
-    },
-    linkTextBold: {
-      ...baseLinkTextBold,
-    },
+
     screen: {
       flex: 1,
       justifyContent: 'center',

@@ -182,14 +182,14 @@ export default NewsScreen = (props) => {
 };
 
 const titleString = 'News';
-const tabBarLabelFunction = ({ focused }) => (
-  <BadgedTabBarText
-    showBadge={false}
-    text={titleString}
-    focused={focused}
-    value={0}
-  />
-);
+// const tabBarLabelFunction = ({ focused }) => (
+//   <BadgedTabBarText
+//     showBadge={false}
+//     text={titleString}
+//     focused={focused}
+//     value={0}
+//   />
+// );
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
@@ -198,8 +198,9 @@ export const screenOptions = (navData) => {
       backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarIcon: ({ focused }) => (
+    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
+    tabBarLabel: titleString,
+    tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
         name={
@@ -207,6 +208,7 @@ export const screenOptions = (navData) => {
             ? `ios-information-circle${focused ? '' : '-outline'}`
             : 'md-information-circle'
         }
+        size={size}
       />
     ),
   };

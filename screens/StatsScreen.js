@@ -1,11 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Platform, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -149,7 +143,7 @@ export default StatsScreen = (props) => {
   console.log('rendering Stats screen');
 
   return (
-    <View style={baseStyles.containerFlexCentredJustified}>
+    <View>
       <DataAlertBarWithRefresh
         dataName={'stats'}
         someDataExpected={true}
@@ -181,14 +175,14 @@ export default StatsScreen = (props) => {
   );
 };
 const titleString = 'Stats';
-const tabBarLabelFunction = ({ focused }) => (
-  <BadgedTabBarText
-    showBadge={false}
-    text={titleString}
-    focused={focused}
-    value={0}
-  />
-);
+// const tabBarLabelFunction = ({ focused }) => (
+//   <BadgedTabBarText
+//     showBadge={false}
+//     text={titleString}
+//     focused={focused}
+//     value={0}
+//   />
+// );
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
@@ -197,11 +191,13 @@ export const screenOptions = (navData) => {
       backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarIcon: ({ focused }) => (
+    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
+    tabBarLabel: titleString,
+    tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-stats' : 'md-stats'}
+        size={size}
       />
     ),
   };

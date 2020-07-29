@@ -151,14 +151,13 @@ export default function DealerToolsList(props) {
               }`
         }
         titleStyle={{
+          ...baseStyles.linkTextBoldLarge,
           color: item.loanToolNo
             ? Colors.vwgVeryDarkGray
             : (booked && booked === true) ||
               (inToolBasket && inToolBasket === true)
             ? Colors.vwgVeryDarkGray
             : Colors.vwgLink,
-          fontFamily: 'the-sans-bold',
-          fontSize: RFPercentage(2.1),
         }}
         containerStyle={{
           backgroundColor: item.loanToolNo
@@ -170,9 +169,7 @@ export default function DealerToolsList(props) {
         }}
         subtitle={
           <View>
-            <Text
-              style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
-            >
+            <Text style={{ ...baseStyles.textSmall }}>
               {item.partDescription
                 ? item.partDescription
                 : item.toolDescription}
@@ -180,32 +177,18 @@ export default function DealerToolsList(props) {
             {item.loanToolNo ? (
               <View>
                 {item.orderPartNo ? (
-                  <Text
-                    style={{
-                      fontFamily: 'the-sans',
-                      fontSize: RFPercentage(2.0),
-                    }}
-                  >
-                    {item.orderPartNo}
-                  </Text>
+                  <Text style={{ ...baseStyles.text }}>{item.orderPartNo}</Text>
                 ) : null}
-                <Text
-                  style={{
-                    fontFamily: 'the-sans-bold',
-                    fontSize: RFPercentage(2.0),
-                  }}
-                >
+                <Text style={{ ...baseStyles.textSmall }}>
                   Available through the Loan Tool Programme
                 </Text>
               </View>
             ) : item.location ? (
               <Text
-                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
+                style={{ ...baseStyles.textSmall }}
               >{`Storage location: ${item.location}`}</Text>
             ) : (
-              <Text
-                style={{ fontFamily: 'the-sans', fontSize: RFPercentage(2.0) }}
-              >
+              <Text style={{ ...baseStyles.text }}>
                 Storage location not recorded
               </Text>
             )}
@@ -250,15 +233,13 @@ export default function DealerToolsList(props) {
           lastJobDetails = (
             <Text
               style={{
-                fontFamily: 'the-sans',
-                fontSize: RFPercentage(2.0),
+                ...baseStyles.text,
                 color: Colors.vwgWarmRed,
               }}
             >
               <Text
                 style={{
-                  fontFamily: 'the-sans-bold',
-                  fontSize: RFPercentage(2.0),
+                  ...baseStyles.text,
                   color: Colors.vwgWarmRed,
                 }}
               >{`Already booked out to you`}</Text>
@@ -270,8 +251,7 @@ export default function DealerToolsList(props) {
           lastJobDetails = (
             <Text
               style={{
-                fontFamily: 'the-sans',
-                fontSize: RFPercentage(2.0),
+                ...baseStyles.textSmall,
                 color: Colors.vwgWarmRed,
               }}
             >{`Booked out to ${personName}, on job '${bookedByWip}'`}</Text>
@@ -288,8 +268,7 @@ export default function DealerToolsList(props) {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={{
-                    fontFamily: 'the-sans',
-                    fontSize: RFPercentage(2.0),
+                    ...baseStyles.text,
                   }}
                 >
                   {`Already in your `}
@@ -303,9 +282,7 @@ export default function DealerToolsList(props) {
                 />
                 <Text
                   style={{
-                    fontFamily: 'the-sans-bold',
-                    fontSize: RFPercentage(2.0),
-                    color: Colors.vwgLink,
+                    ...baseStyles.linkTextBold,
                   }}
                 >
                   {` tool basket.`}

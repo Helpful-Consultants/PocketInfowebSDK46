@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 // import { createStackNavigator } from 'react-navigation-stack';
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 // import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 
@@ -30,12 +29,19 @@ import StatsScreen, {
 } from '../screens/StatsScreen';
 
 import Colors from '../constants/Colors';
-
-// const screenWidth = Math.round(Dimensions.get('window').width);
+const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
-
-// console.log('screenHeight', screenHeight);
-// console.log('screenWidth', screenWidth);
+const baseFontSize = 12;
+let navBarFontSize =
+  screenWidth > 1023
+    ? baseFontSize * 1.3
+    : screenWidth > 767
+    ? baseFontSize * 1.2
+    : screenWidth > 413
+    ? baseFontSize * 1.1
+    : screenWidth > 374
+    ? baseFontSize * 1
+    : baseFontSize * 1;
 
 const defaultStackNavOptions = () => {
   const navigation = useNavigation();
@@ -137,43 +143,46 @@ const StatsStack = () => {
 
 // Tab navigator
 
-const defaultTabNavScreenOptions =
-  Platform.OS === 'android'
-    ? {
-        labeled: true,
-        shifting: false,
-        backBehavior: 'history',
-        activeColor: Colors.vwgDeepBlue,
-        inactiveColor: Colors.vwgLink,
-        tabBarColor: Colors.vwgWhite,
-        barStyle: {
-          labelPosition: 'below-icon',
+// const defaultTabNavScreenOptions =
+//   Platform.OS === 'android'
+//     ? {
+//         showLabel: true,
+//         shifting: false,
+//         backBehavior: 'history',
+//         activeColor: Colors.vwgDeepBlue,
+//         inactiveColor: Colors.vwgLink,
+//         tabBarColor: Colors.vwgWhite,
+//         barStyle: {
+//           labelPosition: 'below-icon',
 
-          // height: RFPercentage(6.4),
-          backgroundColor: Colors.vwgWhite,
-        },
-        //   tabBarOptions: {
-        //     labelPosition: 'below-icon',
-        //     style: {
-        //       height: RFPercentage(6.4)
-        //     }
-        //   },
-        //   tabStyle: {
-        //     height: RFPercentage(2.2)
-        //   }
-      }
-    : {
-        tabBarOptions: {
-          labelPosition: 'below-icon',
-          style: {
-            // height: RFPercentage(6.4)
-          },
-          activeTintColor: Colors.vwgActiveLink,
-        },
-        tabStyle: {
-          //   height: RFPercentage(2.2)
-        },
-      };
+//           // height: RFPercentage(6.4),
+//           backgroundColor: Colors.vwgWhite,
+//         },
+
+//         //   tabBarOptions: {
+//         //     labelPosition: 'below-icon',
+//         //     style: {
+//         //       height: RFPercentage(6.4)
+//         //     }
+//         //   },
+//         //   tabStyle: {
+//         //     height: RFPercentage(2.2)
+//         //   },
+//         allowFontScaling: false,
+//       }
+//     : {
+//         tabBarOptions: {
+//           labelPosition: 'below-icon',
+//           style: {
+//             // height: RFPercentage(6.4)
+//           },
+//           activeTintColor: Colors.vwgActiveLink,
+//         },
+//         tabStyle: {
+//           //   height: RFPercentage(2.2)
+//         },
+//         allowFontScaling: false,
+//       };
 
 const NewsTabs =
   Platform.OS === 'android'
@@ -182,14 +191,13 @@ const NewsTabs =
 
 export default NewsTabNavigator = () => {
   return Platform.OS === 'ios' ? (
-    <NewsTabs.Navigator
+    <NewsTabs.Navigator //iOS
       lazy={true}
-      screenOptions={defaultTabNavScreenOptions}
       tabBarOptions={{
         showLabel: true,
-        labelPosition: 'below-icon',
-        style: {
-          height: RFPercentage(6.4),
+        labelPosition: 'below-icon', // Otherwise weird for landscape
+        labelStyle: {
+          fontSize: navBarFontSize,
         },
         activeTintColor: Colors.vwgActiveLink,
         inactiveTintColor: Colors.vwgInactiveLink,
@@ -217,21 +225,22 @@ export default NewsTabNavigator = () => {
       />
     </NewsTabs.Navigator>
   ) : (
-    <NewsTabs.Navigator
+    <NewsTabs.Navigator // Android
       lazy={true}
-      screenOptions={defaultTabNavScreenOptions}
       labeled={true}
       title='Default Title'
       shifting={false}
       backBehavior={'history'}
       activeColor={Colors.vwgActiveLink}
       inactiveColor={Colors.vwgInactiveLink}
-      tabBarColor={Colors.vwgWhite}
+      tabBarOptions={{
+        labelStyle: {
+          fontSize: navBarFontSize, // Doesn't seem to work
+        },
+      }}
       barStyle={{
         labelPosition: 'below-icon',
-
-        // height: RFPercentage(6.4),
-        backgroundColor: Colors.vwgWhite,
+        backgroundColor: Colors.vwgVeryVeryLightGray,
       }}
     >
       <NewsTabs.Screen
@@ -257,18 +266,4 @@ export default NewsTabNavigator = () => {
     </NewsTabs.Navigator>
   );
 };
-
 // End Tab navigator
-
-const styles = StyleSheet.create({
-  focused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgActiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-  notFocused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgInactiveLink,
-    fontSize: RFPercentage(1.7),
-  },
-});

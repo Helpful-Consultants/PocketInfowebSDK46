@@ -457,7 +457,9 @@ export default HomeScreen = (props) => {
                     </Text>
                   ) : (
                     // dummy to keep layout
-                    <Text style={styles.dummyCheckingText}>
+                    <Text
+                      style={{ ...styles.checkingText, color: Colors.vwgWhite }}
+                    >
                       This should be white (i.e. invisible)...
                     </Text>
                   )
@@ -466,7 +468,9 @@ export default HomeScreen = (props) => {
                   <Text style={styles.checkingText}>Syncing your data...</Text>
                 ) : (
                   // dummy to keep layout
-                  <Text style={styles.dummyCheckingText}>
+                  <Text
+                    style={{ ...styles.checkingText, color: Colors.vwgWhite }}
+                  >
                     This should be white (i.e. invisible)...
                   </Text>
                 )}
@@ -727,15 +731,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
   },
-  dummyCheckingText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: RFPercentage(1.8),
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
+
   loadingText: {
     fontFamily: 'the-sans',
     color: Colors.vwgDeepBlue,
@@ -754,14 +750,7 @@ const styles = StyleSheet.create({
 
     // backgroundColor: 'red'
   },
-  odisRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
 
-    // backgroundColor: 'red'
-  },
   gridCell: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -842,6 +831,14 @@ const styles = StyleSheet.create({
 
     textAlign: 'center',
   },
+  odisRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+
+    // backgroundColor: 'red'
+  },
   odisCellText: {
     color: Colors.vwgDeepBlue,
     fontSize: RFPercentage(2.5),
@@ -865,13 +862,6 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
 
-  announcementText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
-  },
   instructionsText: {
     fontSize: RFPercentage(2.25),
     marginTop: 5,
@@ -881,77 +871,5 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(2),
     marginTop: 5,
     textAlign: 'center',
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
-  },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
   },
 });

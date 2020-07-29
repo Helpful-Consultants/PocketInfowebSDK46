@@ -11,10 +11,10 @@ import {
 import { Text } from 'react-native-elements';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
 // import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import BadgedTabBarText from '../components/BadgedTabBarText';
+// import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import sortObjectList from '../components/sortObjectList';
@@ -334,19 +334,21 @@ export default BookedOutToolsScreen = (props) => {
             elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           titleStyle={{
-            fontFamily: 'the-sans',
+            ...baseStyles.textColoured,
             textAlign: 'center',
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
-            fontFamily: 'the-sans',
+            ...baseStyles.text,
+            color: Colors.vwgWhite,
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           cancelButtonTextStyle={{
-            fontFamily: 'the-sans',
+            ...baseStyles.text,
+            color: Colors.vwgWhite,
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
@@ -367,14 +369,14 @@ export default BookedOutToolsScreen = (props) => {
 };
 
 const titleString = 'Booked Tools';
-const tabBarLabelFunction = ({ focused }) => (
-  <BadgedTabBarText
-    showBadge={false}
-    text={titleString}
-    focused={focused}
-    value={0}
-  />
-);
+// const tabBarLabelFunction = ({ focused }) => (
+//   <BadgedTabBarText
+//     showBadge={false}
+//     text={titleString}
+//     focused={focused}
+//     value={0}
+//   />
+// );
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
@@ -383,11 +385,13 @@ export const screenOptions = (navData) => {
       backgroundColor: Colors.vwgHeader,
     },
     tabBarColor: Colors.vwgWhite,
-    tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarIcon: ({ focused }) => (
+    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
+    tabBarLabel: titleString,
+    tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-return-left' : 'md-return-left'}
+        size={size}
       />
     ),
   };
