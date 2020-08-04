@@ -54,6 +54,7 @@ export default {
   vwgVeryLightGray: '#f0f0f0',
   vwgLightGray: '#ccc',
   vwgMidGray: '#999',
+  vwgMidDarkGray: '#777',
   vwgDarkGray: '#666',
   vwgVeryDarkGray: '#333',
   vwgBlack: '#000',
