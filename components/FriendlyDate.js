@@ -1,22 +1,25 @@
 import React from 'react';
 import moment from 'moment';
-import { Text } from 'react-native';
+import { Text } from 'react-native-elements';
+import { useWindowDimensions } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default FriendlyDate = (props) => {
-  //   console.log('in scaledImage');
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in FriendlyDate');
   //   console.log(props);
-  //   console.log('end props');
+  //   console.log('FriendlyDate - end props');
 
-  return true === false ? (
+  const { date } = props;
+
+  return true !== false ? (
     <Text
       style={{
-        fontSize: RFPercentage(1.8),
-        textAlign: 'left',
-        marginBottom: 5,
+        ...baseStyles.textSmallLight,
       }}
-    >{`Job added/changed ${
-      moment(item.createdDate, 'YYYY-MM-DD hh:mm:ss').format('h:MMa Do MMM ') ||
-      null
+    >{`${
+      moment(date, 'YYYY-MM-DD hh:mm:ss').format('h:MMa, Do MMM ') || null
     }`}</Text>
   ) : null;
 };

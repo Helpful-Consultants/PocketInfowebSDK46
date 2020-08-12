@@ -2,9 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, useWindowDimensions, View } from 'react-native';
-import { Image, Text } from 'react-native-elements';
-
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
@@ -135,11 +132,6 @@ const titleString = 'ODIS';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

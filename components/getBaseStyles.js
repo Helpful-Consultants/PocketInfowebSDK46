@@ -1,22 +1,6 @@
-// import React from 'react';
-// import { useWindowDimensions } from 'react-native';
-// import { Dimensions } from 'react-native';
-// const windowWidth = useWindowDimensions().width;
-// const windowHeight = useWindowDimensions().height;
-
-// const { height, width } = Dimensions.get('window');
-
 import { Platform, StyleSheet } from 'react-native';
-// import { useWindowDimensions } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
-
-// export default getBaseStyles = (props) => {
-//   //   const windowWidth = useWindowDimensions().width;
-//   //   const windowHeight = useWindowDimensions().height;
-//   console.log(props && 'in getBaseStyles', props && props);
-//   return { hi: 22 };
-// };
 
 export default getBaseStyles = (props) => {
   const { fontScale, height, scale, width } = props;
@@ -51,28 +35,21 @@ export default getBaseStyles = (props) => {
       : scale >= 2
       ? width >= 768
         ? scale * 10
-        : scale * 6
-      : scale * 6
-    : scale * 6;
+        : scale * 8
+      : scale * 8
+    : scale * 8;
 
+  //   console.log('scale!!!!!!!!', scale);
   //   console.log('fontFactor!!!!!!!!', fontFactor);
-  let baseFontSize = fontFactor * 1;
-  let zzbaseFontSize =
-    width >= 1024
-      ? fontFactor * 1.4
-      : width >= 768
-      ? fontFactor * 1.3
-      : width >= 411
-      ? fontFactor * 1.0
-      : width >= 375
-      ? fontFactor * 1.0
-      : fontFactor * 1;
 
+  let baseFontSize = fontFactor * 1;
   let baseFontSizeSmall = fontFactor * 0.9;
   let baseFontSizeSmaller = fontFactor * 0.8;
   let baseFontSizeLarge = fontFactor * 1.1;
   let baseFontSizeLarger = fontFactor * 1.2;
-  let baseFontSizeLargest = fontFactor * 1.2;
+  let baseFontSizeLargest = fontFactor * 1.4;
+
+  //   console.log('baseFontSizeLarger!!!!!!!!', baseFontSizeLarger);
 
   let appNameFontSize = fontFactor * 2;
   let panelTextFontSize = fontFactor * 1.1;
@@ -124,13 +101,6 @@ export default getBaseStyles = (props) => {
     color: Colors.vwgDeepBlue,
     fontSize: baseFontSizeSmall,
   };
-
-  let baseTextlargeBold = {
-    fontFamily: 'the-sans-bold',
-    color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeLarge,
-  };
-
   let baseLinkText = {
     fontFamily: 'the-sans',
     color: Colors.vwgLink,
@@ -153,27 +123,77 @@ export default getBaseStyles = (props) => {
   };
 
   const baseStyles = StyleSheet.create({
+    // BUTTON - START
+    //SignInScreen
+    buttonClose: {
+      backgroundColor: Colors.vwgDeepBlue,
+      borderRadius: Platform.OS === 'ios' ? 3 : 2,
+      elevation: Platform.OS === 'ios' ? 0 : 5,
+    },
+    buttonConfirm: {
+      backgroundColor: Colors.vwgLink,
+      borderRadius: Platform.OS === 'ios' ? 3 : 2,
+      elevation: Platform.OS === 'ios' ? 0 : 5,
+    },
+    buttonCancel: {
+      borderColor: Colors.vwgWarmRed,
+      borderRadius: Platform.OS === 'ios' ? 3 : 0,
+    },
+    buttonTitle: {
+      ...baseText,
+      fontSize: baseFontSizeLarger,
+      color: Colors.vwgWhite,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleSmall: {
+      ...baseText,
+      fontSize: baseFontSize,
+      color: Colors.vwgWhite,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleWithIcon: {
+      ...baseText,
+      fontSize: baseFontSizeLarger,
+      color: Colors.vwgWhite,
+      paddingLeft: 5,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleCancel: {
+      ...baseText,
+      fontSize: baseFontSizeLarger,
+      color: Colors.vwgWarmRed,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonTitleWithIconCancel: {
+      ...baseText,
+      fontSize: baseFontSizeLarger,
+      color: Colors.vwgWarmRed,
+      paddingLeft: 5,
+      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    },
+    buttonSignIn: {
+      marginVertical: 5,
+      marginHorizontal: paddingSize,
+      backgroundColor: Colors.vwgLink,
+    },
+    buttonTextSignIn: {
+      ...baseText,
+      color: Colors.vwgWhite,
+    },
+    // BUTTON - END
+    // CONTAINER - START
     container: {
       backgroundColor: Colors.vwgWhite,
     },
-
     // BookedOutTools
     containerFlex: {
       flex: 1,
+      backgroundColor: Colors.vwgWhite,
     },
     // OdisScreen
     containerFlexCentred: {
       flex: 1,
       alignItems: 'center',
-    },
-    viewPaddedLeft: {
-      padding: 5,
-    },
-    viewNoPadding: {
-      padding: 0,
-    },
-    viewFlexRow: {
-      flexDirection: 'row',
     },
     // OdisVersions
     containerFlexJustfied: {
@@ -196,7 +216,7 @@ export default getBaseStyles = (props) => {
       flex: 1,
       // alignItems: 'center',
       // justifyContent: 'center',
-      marginTop: 30,
+      marginTop: 100,
     },
     // StatsSummary
     containerFlexPadded: {
@@ -221,41 +241,21 @@ export default getBaseStyles = (props) => {
     containerSignIn: {
       marginHorizontal: paddingSize,
     },
-    appName: {
-      ...baseText,
-      color: Colors.vwgBlack,
-      fontSize: appNameFontSize,
+    // LtpScreen
+    containerFlexAndMargin: {
+      flex: 1,
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      marginBottom: bottomTabHeight,
     },
-    panelWidth: {
-      width: panelWidth,
+    // ProductsScreen
+    containerFlexAndReducedMargin: {
+      flex: 1,
+      marginBottom: -5,
     },
-    panelNavText: {
-      fontSize: panelTextFontSize,
-    },
-    panelAppName: {
-      ...baseTextBold,
-      color: Colors.vwgBlack,
-      fontSize: baseFontSizeLarge,
-      paddingTop: 100,
-      paddingLeft: 18,
-    },
-    panelBrandText: {
-      ...baseTextBold,
-      paddingTop: 5,
-      paddingLeft: 18,
-    },
-    panelAppInfo: {
-      ...baseText,
-      fontSize: baseFontSizeSmaller,
-      paddingTop: 5,
-      paddingLeft: 18,
-    },
-    appLogoContainer: {
-      alignItems: 'center',
-      marginTop: 0,
-      marginBottom: 0,
-    },
-    appLogo: {
+    // CONTAINER - END
+    // IMAGE - START
+    imageAppLogo: {
       width:
         width >= 1024
           ? 180
@@ -279,6 +279,25 @@ export default getBaseStyles = (props) => {
       resizeMode: 'contain',
       marginTop: 0,
     },
+
+    // OdisScreen
+    imageBrandLogo: {
+      height: 50,
+      width: 50,
+      marginRight: 10,
+    },
+
+    // OdisScreen
+    imageContent: {
+      width: 225,
+      height: 70,
+      resizeMode: 'contain',
+      marginBottom: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+    // IMAGE - END
+    // NAV BAR - START
     navBarFontSize: baseFontSizeLarger,
     // navBar
     navBarNonPaddedView: {},
@@ -307,7 +326,7 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       // backgroundColor: 'yellow'
     },
-    navBarBadgeText: {
+    navBarTextBadge: {
       ...baseTextBold,
       fontSize: 8,
       textAlign: 'center',
@@ -328,6 +347,34 @@ export default getBaseStyles = (props) => {
       color: Colors.vwgInactiveLink,
       fontSize: navBarFontSize,
     },
+    // NAV BAR - END
+    // PANEL - START
+    panelWidth: {
+      width: panelWidth,
+    },
+    panelTextNav: {
+      fontSize: panelTextFontSize,
+    },
+    panelTextAppName: {
+      ...baseTextBold,
+      color: Colors.vwgBlack,
+      fontSize: baseFontSizeLarge,
+      paddingTop: 100,
+      paddingLeft: 18,
+    },
+    panelTextBrand: {
+      ...baseTextBold,
+      paddingTop: 5,
+      paddingLeft: 18,
+    },
+    panelTextAppInfo: {
+      ...baseText,
+      fontSize: baseFontSizeSmaller,
+      paddingTop: 5,
+      paddingLeft: 18,
+    },
+    // PANEL - END
+    // SEARCH BAR - START
     searchBarContainer: {
       backgroundColor: Colors.vwgWhite,
       height: 45,
@@ -346,34 +393,34 @@ export default getBaseStyles = (props) => {
       height: 30,
     },
     searchBarRowSearchInput: { width: '85%' },
-    searchBarRowNoDataTextContainer: {
+    searchBarRowTextNoDataContainer: {
       flex: 1,
       alignItems: 'flex-start',
       justifyContent: 'center',
       paddingRight: 10,
       backgroundColor: Colors.vwgWhite,
     },
-    searchBarRowNoDataText: {
+    searchBarRowTextNoData: {
       ...baseText,
       color: Colors.vwgDarkSkyBlue,
     },
-    searchBarRowErrorText: {
+    searchBarRowTextError: {
       ...baseText,
       color: Colors.vwgWarmRed,
     },
-    searchBarInput: {
+    searchBarTextInput: {
       ...baseText,
-    },
-    // DealerToolsList
-    touchableNoMargin: { margin: 0 },
-    screenTitleText: {
-      ...baseTextBold,
-      textAlign: 'justify',
       fontSize: baseFontSizeLarger,
-      paddingLeft: 5,
-      color: Colors.vwgHeaderTitle,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
+    searchBarTextCancel: {
+      ...baseText,
+      color: Colors.vwgWarmRed,
+    },
+    // SEARCH BAR - END
+    // DealerToolsList
+
+    // TEXT - START
+
     text: {
       ...baseText,
     },
@@ -390,40 +437,67 @@ export default getBaseStyles = (props) => {
     textSmallColoured: {
       ...baseTextSmallColoured,
     },
+    textSmallLight: {
+      ...baseTextSmall,
+      color: Colors.vwgMidDarkGray,
+    },
+    textSmallColouredCentred: {
+      ...baseTextSmallColoured,
+      textAlign: 'center',
+    },
     textSmallError: {
       ...baseTextSmall,
       color: Colors.vwgWarmRed,
     },
+    textLargeColouredCentred: {
+      ...baseTextColoured,
+      fontSize: baseFontSizeLarger,
+      textAlign: 'center',
+    },
     textBold: {
       ...baseTextColouredBold,
     },
-    linkText: {
+    textLink: {
       ...baseLinkText,
     },
-    linkTextBold: {
+    textLinkBold: {
       ...baseLinkTextBold,
     },
-    linkTextBoldLarge: {
+    textLinkBoldLarge: {
       ...baseLinkTextLargeBold,
     },
-    linkTextLarge: {
-      ...baseLinkTextLarge,
+    textLinkLarge: {
+      ...baseLinkText,
+      fontSize: baseFontSizeLarge,
+    },
+    textLinkLarger: {
+      ...baseLinkText,
+      fontSize: baseFontSizeLarger,
+    },
+    textLeftAligned: {
+      ...baseText,
+      textAlign: 'left',
     },
     textLeftAlignedSmall: {
       ...baseTextSmall,
       textAlign: 'left',
     },
-    textLeftAligned: {
+    textLeftAlignedLarge: {
       ...baseText,
+      textAlign: 'left',
+    },
+    textLeftAlignedBold: {
+      ...baseTextBold,
       textAlign: 'left',
     },
     textCentred: {
       ...baseText,
       textAlign: 'center',
     },
-    textLeftAlignedLarge: {
+    textLargerCentred: {
       ...baseText,
-      textAlign: 'left',
+      fontSize: baseFontSizeLarger,
+      textAlign: 'center',
     },
     textReopenClosedBasket: {
       ...baseText,
@@ -445,76 +519,44 @@ export default getBaseStyles = (props) => {
       textAlign: 'center',
       marginBottom: 50,
     },
-    viewloadingMessage: {
-      marginTop: 50,
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+    textLoading: {
+      ...baseTextColoured,
+      fontSize: baseFontSizeLarger,
       textAlign: 'center',
+      marginBottom: 50,
     },
-    columnFlexLeft: {
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-    },
-    rowFlexSpaceBetween: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-    },
-    rowFlex: {
-      flexDirection: 'row',
-    },
-    rowFullWidth: {
-      width: '100%',
-    },
-    rowFlexLeftPadded: {
-      flexDirection: 'row',
-      padding: 10,
-    },
-    rowBasket: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingVertical: 5,
-    },
-    rowBasketInput: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingTop: 20,
-      paddingBottom: 5,
-    },
-    //Highl
-    //HighlightedDate
-    date: {
-      ...baseTextSmall,
-      paddingTop: 5,
-    },
-    //HighlightedDate
-    dateHighlighted: {
-      ...baseTextSmallBold,
-      color: Colors.vwgCoolOrange,
-      paddingTop: 5,
-    },
-    // JobsScreen
-    modal: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: '#ccc',
-      padding: 100,
-    },
-    jobSummaryText: {
+    textJobSummary: {
       ...baseTextColouredBold,
       fontSize: baseFontSizeLarge,
       textAlign: 'left',
     },
-    toolNumber: {
+    // StatsSummary
+    textStats: {
+      ...baseText,
+      paddingHorizontal: 10,
+      textAlign: 'center',
+    },
+    // OdisScreen
+    textOdisVersion: {
+      ...baseText,
+    },
+    // OdisScreen
+    textOdisVersionSmaller: {
+      ...baseTextSmall,
+    },
+    // OdisScreen
+    textOdisVersionHighlighted: {
+      ...baseTextBold,
+      color: Colors.vwgCoolOrange,
+    },
+    textToolNumber: {
       ...baseLinkTextBold,
       fontSize: baseFontSizeLarge,
       textAlign: 'left',
       paddingTop: 10,
       textTransform: 'uppercase',
     },
-    toolNumberSmall: {
+    textToolNumberSmall: {
       ...baseLinkTextBold,
       fontSize: baseFontSizeSmall,
       textAlign: 'left',
@@ -522,7 +564,7 @@ export default getBaseStyles = (props) => {
       textTransform: 'uppercase',
     },
     // StatsSummary
-    statsTitle: {
+    textStatsTitle: {
       ...baseTextColouredBold,
       fontSize: baseFontSize,
       //   color: 'teal',
@@ -532,129 +574,50 @@ export default getBaseStyles = (props) => {
       marginBottom: 0,
       textAlign: 'center',
     },
-    // StatsSummary
-    statsText: {
-      ...baseText,
-      paddingHorizontal: 20,
-      textAlign: 'center',
-    },
-    // OdisScreen
-    odisRow: {
-      flexDirection: 'row',
-      borderColor: '#000',
-    },
-    // OdisScreen
-    // odisVersionRow: {
-    //   flexDirection: 'column',
-    //   padding: 5,
-    //   borderColor: '#000',
-    // },
-    // OdisScreen
-    odisVersionText: {
-      ...baseText,
-    },
-    // OdisScreen
-    odisVersionTextSmaller: {
+    //HighlightedDate
+    textDate: {
       ...baseTextSmall,
+      paddingTop: 5,
     },
-    // OdisScreen
-    odisVersionTextHighlighted: {
-      ...baseTextBold,
+    //HighlightedDate
+    textDateHighlighted: {
+      ...baseTextSmallBold,
       color: Colors.vwgCoolOrange,
-    },
-    // OdisScreen
-    brandLogo: {
-      height: 50,
-      width: 50,
-      marginRight: 10,
-    },
-    // OdisScreen
-    rowWithImage: {
-      marginTop: 15,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 0,
-    },
-    // OdisScreen
-    contentImage: {
-      width: 225,
-      height: 70,
-      resizeMode: 'contain',
-      marginBottom: 15,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      paddingTop: 5,
     },
     // LtpScreen JobsScreen BookedOutToolsScreen
-    promptRibbon: {
-      padding: 10,
-      backgroundColor: Colors.vwgDarkSkyBlue,
-    },
-    // LtpScreen JobsScreen BookedOutToolsScreen
-    noneFoundPromptRibbon: {
-      padding: 10,
-      backgroundColor: Colors.vwgWarmRed,
-    },
-    // LtpScreen JobsScreen BookedOutToolsScreen
-    promptRibbonText: {
+    textPromptRibbon: {
       ...baseText,
       textAlign: 'center',
       color: Colors.vwgWhite,
     },
-    // LtpScreen
-    containerFlexAndMargin: {
-      flex: 1,
-      // alignItems: 'center',
-      // justifyContent: 'center',
-      marginBottom: bottomTabHeight,
-    },
-    // ProductsScreen
-    containerFlexAndReducedMargin: {
-      flex: 1,
-      marginBottom: -5,
-    },
-    // ProductsScreen
-    item: {
-      marginTop: 10,
-      color: 'red',
-      marginHorizontal: 10,
-      paddingBottom: 10,
-      borderBottomColor: Colors.vwgLightGray,
-      borderTopColor: Colors.vwgWhite,
-      borderLeftColor: Colors.vwgWhite,
-      borderRightColor: Colors.vwgWhite,
-      borderWidth: 1,
+    textAppName: {
+      ...baseText,
+      color: Colors.vwgBlack,
+      fontSize: appNameFontSize,
     },
     // ProductsLinks
-    itemTopRow: {
-      flexDirection: 'row',
-      marginHorizontal: 0,
-      marginBottom: 10,
-    },
-    // ProductsLinks
-    itemTitleContainer: {
-      width: '70%',
-      paddingLeft: 15,
-      paddingRight: 25,
-    },
-    // ProductsLinks
-    itemTitle: {
+    textItemTitle: {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
+      fontSize:
+        width >= 1024
+          ? fontFactor * 1
+          : width >= 768
+          ? fontFactor * 1
+          : width >= 411
+          ? fontFactor * 0.9
+          : width >= 375
+          ? fontFactor * 1.2
+          : fontFactor * 1.2,
     },
     // ProductsLinks
-    // itemMainRow: {
-    //   fontFamily: 'the-sans',
-    //   fontSize: RFPercentage(1.8),
-    //   color: Colors.vwgVeryDarkGray,
-    // },
-    // ProductsLinks
-    itemMainText: {
+    textItemMain: {
       ...baseText,
       textAlign: 'justify',
     },
     //SignInScreen
-    errorText: {
+    textError: {
       ...baseTextColouredBold,
       marginTop: 5,
       marginBottom: 3,
@@ -663,12 +626,8 @@ export default getBaseStyles = (props) => {
       textAlign: 'center',
       paddingHorizontal: 15,
     },
-    inputContainer: {
-      margin: 10,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputStyle: {
+
+    textInputStyle: {
       ...baseTextColoured,
       marginTop: 3,
       marginBottom: 3,
@@ -677,7 +636,7 @@ export default getBaseStyles = (props) => {
       lineHeight: 19,
       textAlign: 'left',
     },
-    inputStyleSignIn: {
+    textInputStyleSignIn: {
       ...baseTextColoured,
       marginTop: 3,
       marginBottom: 0,
@@ -686,11 +645,11 @@ export default getBaseStyles = (props) => {
       //   lineHeight: 19,
       textAlign: 'left',
     },
-    basketInputTextJob: {
+    textBasketInputJob: {
       ...baseText,
       fontSize: baseFontSizeLarger,
     },
-    inputLabelText: {
+    textInputLabel: {
       ...baseTextColoured,
       marginTop: 10,
       marginBottom: 3,
@@ -699,7 +658,7 @@ export default getBaseStyles = (props) => {
       lineHeight: 19,
       textAlign: 'center',
     },
-    inputLabelTextSignIn: {
+    textInputLabelSignIn: {
       ...baseTextColoured,
       marginTop: 10,
       marginBottom: 3,
@@ -709,17 +668,35 @@ export default getBaseStyles = (props) => {
       textAlign: 'left',
     },
     //SignInScreen
-    instructions: {
-      ...baseTextColoured,
+    textSignedIn: {
+      ...baseText,
+      fontSize: baseFontSizeLarge,
+      marginTop: 5,
+      textAlign: 'center',
+    },
+    textSignedInSmall: {
+      ...baseText,
+      fontSize: baseFontSizeSmall,
+      marginTop: 5,
+      textAlign: 'center',
+    },
+    textInstructions: {
+      ...baseText,
+      marginHorizontal: 30,
+      marginVertical: 10,
+      textAlign: 'center',
+    },
+    textInstructionsSmall: {
+      ...baseText,
+      fontSize: baseFontSizeSmall,
       marginHorizontal: 30,
       marginVertical: 10,
       textAlign: 'center',
       color: Colors.vwgVeryDarkGray,
     },
     //SignInScreen
-    securityCheckText: {
-      fontFamily: 'the-sans',
-      fontFamily: 'the-sans-bold',
+    textSecurityCheck: {
+      ...baseTextBold,
       marginTop: 5,
       marginBottom: 3,
       color: Colors.vwgMintGreen,
@@ -727,61 +704,177 @@ export default getBaseStyles = (props) => {
       textAlign: 'center',
       paddingHorizontal: 15,
     },
-    //SignInScreen
-    buttonClose: {
-      backgroundColor: Colors.vwgDeepBlue,
-      borderRadius: Platform.OS === 'ios' ? 3 : 2,
-      elevation: Platform.OS === 'ios' ? 0 : 5,
-    },
-    buttonConfirm: {
-      backgroundColor: Colors.vwgLink,
-      borderRadius: Platform.OS === 'ios' ? 3 : 2,
-      elevation: Platform.OS === 'ios' ? 0 : 5,
-    },
-    buttonCancel: {
-      borderColor: Colors.vwgWarmRed,
-      borderRadius: Platform.OS === 'ios' ? 3 : 0,
-    },
-    buttonTitle: {
-      ...baseTextSmall,
-      color: Colors.vwgWhite,
-
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-    },
-    buttonTitleWithIcon: {
-      ...baseTextSmall,
-      color: Colors.vwgWhite,
+    textScreenTitle: {
+      ...baseTextBold,
+      textAlign: 'justify',
+      fontSize: baseFontSizeLarger,
       paddingLeft: 5,
+      color: Colors.vwgHeaderTitle,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
-    buttonTitleCancel: {
-      ...baseTextSmall,
-      color: Colors.vwgWarmRed,
-
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+    textHomeGridCell: {
+      ...baseText,
+      fontSize: baseFontSizeLarge,
+      color: Colors.vwgWhite,
+      lineHeight: baseFontSizeLarger,
+      textAlign: 'center',
     },
-    buttonTitleWithIconCancel: {
-      ...baseTextSmall,
-      color: Colors.vwgWarmRed,
-      paddingLeft: 5,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
-    },
-    buttonSignIn: {
-      marginVertical: 20,
-      marginHorizontal: paddingSize,
-      backgroundColor: Colors.vwgLink,
-    },
-    buttonTextSignIn: {
+    textHomeGridCellCount: {
       ...baseText,
       color: Colors.vwgWhite,
+      fontSize: baseFontSizeSmall,
     },
-
-    screen: {
+    // TEXT - END
+    // TOUCHABLE - START
+    touchableNoMargin: { margin: 0 },
+    // TOUCHABLE - END
+    // VIEW - START
+    // JobsScreen
+    viewModal: {
       flex: 1,
+      alignItems: 'center',
+      backgroundColor: '#ccc',
+      padding: 100,
+    },
+    viewHomeGridCell: {
+      flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: Colors.vwgWhite,
+      // width: PixelRatio.getPixelSizeForLayoutSize(50),
+      height: Platform.OS === 'ios' ? RFPercentage(14) : RFPercentage(20),
+      borderColor: Colors.vwgDeepBlue,
+      borderStyle: 'solid',
+      borderWidth: 1,
+      backgroundColor: Colors.vwgDeepBlue,
+      margin: 5,
+      shadowColor: 'black',
+      // shadowOpacity: 0.26,
+      shadowOffset: { width: 0, height: 2 },
+      // shadowRadius: 10,
+      // elevation: 5,
+      shadowOpacity: Platform.OS === 'ios' ? 0 : 0.26,
+      //   shadowOffset: { width: 0, height: 2 },
+      shadowRadius: Platform.OS === 'ios' ? 0 : 10,
+      elevation: Platform.OS === 'ios' ? 0 : 5,
+      borderRadius: Platform.OS === 'ios' ? 5 : 4,
+      // height: PixelRatio.getPixelSizeForLayoutSize(40),
+      width: Platform.OS === 'ios' ? RFPercentage(23.5) : RFPercentage(34),
+      // padding: 5
     },
+
+    viewPaddedLeft: {
+      padding: 5,
+    },
+    viewNoPadding: {
+      padding: 0,
+    },
+    viewLoadingMessage: {
+      marginTop: 50,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
+    },
+    viewImageAppLogo: {
+      alignItems: 'center',
+      marginTop: 0,
+      marginBottom: 0,
+    },
+    viewColumnFlexLeft: {
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+    },
+    viewInputContainerSignIn: {
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+
+      marginBottom: 0,
+    },
+    viewRowFlexSpaceBetween: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    viewRowFlex: {
+      flexDirection: 'row',
+    },
+    viewRowFlexCentreJustified: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    viewRowFlexCentreJustifiedAligned: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    viewRowFullWidth: {
+      width: '100%',
+    },
+    viewRowFlexLeftPadded: {
+      flexDirection: 'row',
+      padding: 10,
+    },
+    viewRowBasket: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 5,
+    },
+    viewRowBasketInput: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingTop: 20,
+      paddingBottom: 5,
+    },
+    // OdisScreen
+    viewRowWithImage: {
+      marginTop: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+    },
+    // LtpScreen JobsScreen BookedOutToolsScreen
+    viewPromptRibbon: {
+      padding: 10,
+      backgroundColor: Colors.vwgDarkSkyBlue,
+    },
+    // LtpScreen JobsScreen BookedOutToolsScreen
+    viewPromptRibbonNoneFound: {
+      padding: 10,
+      backgroundColor: Colors.vwgWarmRed,
+    },
+    // OdisScreen
+    viewRowWithImage: {
+      marginTop: 15,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 0,
+    },
+    // ProductsScreen
+    viewItem: {
+      marginTop: 10,
+      marginHorizontal: 10,
+      paddingBottom: 10,
+      borderBottomColor: Colors.vwgLightGray,
+      borderTopColor: Colors.vwgWhite,
+      borderLeftColor: Colors.vwgWhite,
+      borderRightColor: Colors.vwgWhite,
+      borderWidth: 1,
+    },
+    viewItemTitle: {
+      width: '70%',
+      paddingLeft: 15,
+      paddingRight: 25,
+    },
+    // ProductsLinks
+    viewItemTopRow: {
+      flexDirection: 'row',
+      marginHorizontal: 0,
+      marginBottom: 10,
+    },
+    // VIEW - END
   });
 
   //   const windowWidth = useWindowDimensions().width;

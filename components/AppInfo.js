@@ -28,15 +28,15 @@ export default AppInfo = (props) => {
   //   );
   return (
     <View style={baseStyles.containerFlex}>
-      <Text style={baseStyles.panelAppName}>{Constants.manifest.name}</Text>
+      <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
       {userDataObj && userDataObj.userName ? (
-        <Text style={baseStyles.panelBrandText}>{userDataObj.userName}</Text>
+        <Text style={baseStyles.panelTextBrand}>{userDataObj.userName}</Text>
       ) : null}
-      <Text style={baseStyles.panelBrandText}>{brandText}</Text>
+      <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
 
       {Platform && Platform.OS === 'ios' ? (
         Constants && Constants.deviceName ? (
-          <Text style={baseStyles.panelAppInfo}>
+          <Text style={baseStyles.panelTextAppInfo}>
             {Platform.Version ? (
               <Text>
                 {`${Platform.constants.systemName} v${Platform.Version}`}
@@ -48,7 +48,7 @@ export default AppInfo = (props) => {
           </Text>
         ) : null
       ) : Constants && Constants.deviceName ? (
-        <Text style={baseStyles.panelAppInfo}>
+        <Text style={baseStyles.panelTextAppInfo}>
           {Platform && Platform.Version ? (
             <Text>
               {Platform && Platform.OS === 'android'
@@ -63,7 +63,7 @@ export default AppInfo = (props) => {
         </Text>
       ) : null}
 
-      <Text style={baseStyles.panelAppInfo}>
+      <Text style={baseStyles.panelTextAppInfo}>
         {`Build `}
         {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
@@ -83,11 +83,11 @@ export default AppInfo = (props) => {
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
         <Text
-          style={baseStyles.panelAppInfo}
+          style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelAppInfo}>
-        Update to SDK 38. Layout for iPad.
+      <Text style={baseStyles.panelTextAppInfo}>
+        Accepting larger text. Fix search bug.
       </Text>
     </View>
   );

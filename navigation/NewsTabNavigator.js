@@ -43,12 +43,27 @@ let navBarFontSize =
     ? baseFontSize * 1
     : baseFontSize * 1;
 
+let headerHeight =
+  screenWidth > 1023
+    ? 90
+    : screenWidth > 767
+    ? 80
+    : screenWidth > 413
+    ? 70
+    : screenWidth > 374
+    ? 60
+    : 60;
+// console.log('screenHeight', screenHeight);
+// console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
+
 const defaultStackNavOptions = () => {
+  //   const windowDim = useWindowDimensions();
+  //   const baseStyles = windowDim && getBaseStyles(windowDim);
   const navigation = useNavigation();
   return {
     headerStyle: {
       backgroundColor: Colors.vwgHeader,
-      height: 80,
+      height: headerHeight,
     },
     cardStyle: { backgroundColor: 'white' },
     headerLeft: () => (
@@ -143,47 +158,6 @@ const StatsStack = () => {
 
 // Tab navigator
 
-// const defaultTabNavScreenOptions =
-//   Platform.OS === 'android'
-//     ? {
-//         showLabel: true,
-//         shifting: false,
-//         backBehavior: 'history',
-//         activeColor: Colors.vwgDeepBlue,
-//         inactiveColor: Colors.vwgLink,
-//         tabBarColor: Colors.vwgWhite,
-//         barStyle: {
-//           labelPosition: 'below-icon',
-
-//           // height: RFPercentage(6.4),
-//           backgroundColor: Colors.vwgWhite,
-//         },
-
-//         //   tabBarOptions: {
-//         //     labelPosition: 'below-icon',
-//         //     style: {
-//         //       height: RFPercentage(6.4)
-//         //     }
-//         //   },
-//         //   tabStyle: {
-//         //     height: RFPercentage(2.2)
-//         //   },
-//         allowFontScaling: false,
-//       }
-//     : {
-//         tabBarOptions: {
-//           labelPosition: 'below-icon',
-//           style: {
-//             // height: RFPercentage(6.4)
-//           },
-//           activeTintColor: Colors.vwgActiveLink,
-//         },
-//         tabStyle: {
-//           //   height: RFPercentage(2.2)
-//         },
-//         allowFontScaling: false,
-//       };
-
 const NewsTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
@@ -201,6 +175,9 @@ export default NewsTabNavigator = () => {
         },
         activeTintColor: Colors.vwgActiveLink,
         inactiveTintColor: Colors.vwgInactiveLink,
+        activeBackgroundColor: Colors.vwgWhite,
+        inactiveBackgroundColor: Colors.vwgWhite,
+        adaptive: false,
       }}
     >
       <NewsTabs.Screen

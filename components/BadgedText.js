@@ -1,11 +1,12 @@
 import React from 'react';
-
-import { Dimensions, StyleSheet, View } from 'react-native';
-
-import { Badge, Icon, Text } from 'react-native-elements';
-
+import {
+  Dimensions,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import { Badge, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
@@ -42,7 +43,9 @@ const textBadgeRightMargin =
 //  badgeStyle={styles.badge}
 //               textStyle={styles.badgeText}
 export default function BadgedText(props) {
-  const { value, status, focused, showBadge, text } = props;
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  const { value, status, showBadge, text } = props;
 
   const valueA = '+';
   const statusA = 'warning';
@@ -66,27 +69,29 @@ export default function BadgedText(props) {
           : styles.view
       }
     >
-      <Text style={styles.text}>{text}</Text>
+      <Text style={baseStyles.textHomeGridCell}>{text}</Text>
       {showBadge ? (
         <Badge
           value={value}
           containerStyle={
             valueIsNumeric
               ? value > 9
-                ? styles.largeNumberBadgeContainer
-                : styles.numberBadgeContainer
-              : styles.textBadgeContainer
+                ? styles.containerLargeNumberBadge
+                : styles.containerNumberBadge
+              : styles.containerTextBadge
           }
           status={statusB}
           badgeStyle={
             valueIsNumeric
               ? value > 9
-                ? styles.largeNumberBadge
-                : styles.numberBadge
-              : styles.textBadge
+                ? styles.badgeStyleForLargeNumber
+                : styles.badgeStyleForNumber
+              : styles.badgeStyleForText
           }
           textStyle={
-            valueIsNumeric ? styles.numberBadgeText : styles.textBadgeText
+            valueIsNumeric
+              ? styles.textStyleForNumberBadge
+              : styles.textStyleForTextBadge
           }
         />
       ) : null}
@@ -95,16 +100,7 @@ export default function BadgedText(props) {
 }
 
 const styles = StyleSheet.create({
-  view: {},
-  viewWithNumberBadge: {
-    // marginRight: 13
-    marginRight: RFPercentage(4.5),
-  },
-  viewWithTextBadge: {
-    // marginRight: 13
-    marginRight: RFPercentage(2.5),
-  },
-  numberBadge: {
+  badgeStyleForNumber: {
     borderRadius: RFPercentage(1),
     borderWidth: 1,
     height: RFPercentage(3.5),
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgDeepBlue,
     borderColor: Colors.vwgWhite,
   },
-  largeNumberBadge: {
+  badgeStyleForLargeNumber: {
     borderRadius: RFPercentage(1),
     borderWidth: 1,
     height: RFPercentage(3.5),
@@ -122,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.vwgDeepBlue,
     borderColor: Colors.vwgWhite,
   },
-  textBadge: {
+  badgeStyleForText: {
     // borderRadius: 0,
     height: RFPercentage(1.6),
     minWidth: 0,
@@ -135,11 +131,11 @@ const styles = StyleSheet.create({
     color: Colors.vwgWhite,
     // fontSize: 14,
     fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.5),
+    fontSize: Platform.OS === 'ios' ? RFPercentage(1.8) : RFPercentage(4),
     zIndex: +10,
     textAlign: 'center',
   },
-  numberBadgeContainer: {
+  containerNumberBadge: {
     position: 'absolute',
     top: numberBadgeTopMargin,
     right: numberBadgeRightMargin,
@@ -148,7 +144,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // backgroundColor: Colors.vwgDeepBlue
   },
-  largeNumberBadgeContainer: {
+  containerLargeNumberBadge: {
     position: 'absolute',
     top: numberBadgeTopMargin,
     right: largeNumberBadgeRightMargin,
@@ -157,7 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // backgroundColor: Colors.vwgDeepBlue
   },
-  textBadgeContainer: {
+  containerTextBadge: {
     position: 'absolute',
     // top: 1,
     // right: -8,
@@ -168,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: Colors.vwgDeepBlue,
   },
-  numberBadgeText: {
+  textStyleForNumberBadge: {
     fontSize: RFPercentage(2.4),
     fontFamily: 'the-sans',
     textAlign: 'center',
@@ -178,7 +174,7 @@ const styles = StyleSheet.create({
     marginRight: 0,
     color: Colors.vwgWhite,
   },
-  textBadgeText: {
+  textStyleForTextBadge: {
     fontSize: 1,
     fontFamily: 'the-sans-bold',
     textAlign: 'center',
@@ -187,15 +183,5 @@ const styles = StyleSheet.create({
     marginTop: -5,
     marginRight: 0,
     color: Colors.vwgCoolOrange,
-  },
-  focused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.7),
-  },
-  notFocused: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgLink,
-    fontSize: RFPercentage(1.7),
   },
 });

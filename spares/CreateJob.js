@@ -25,7 +25,7 @@ class CreateJob extends Component {
             console.log('Modal has been closed.');
           }}
         >
-          <View style={styles.modal}>
+          <View style={styles.viewModal}>
             <Text style={styles.text}>Modal is open!</Text>
 
             <TouchableHighlight

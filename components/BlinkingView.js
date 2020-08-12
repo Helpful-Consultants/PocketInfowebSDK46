@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export default BlinkingView = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const [showItem, setShowItem] = useState(true);
 
   const {
@@ -41,7 +43,7 @@ export default BlinkingView = (props) => {
   // let color = this.state.showItem ? this.props.colorOne : this.props.colorTwo;
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={baseStyles.viewRowFlex}>
       <Icon
         name={iconName}
         type={iconType}
@@ -51,8 +53,7 @@ export default BlinkingView = (props) => {
       <Text> </Text>
       <Text
         style={{
-          paddingTop: RFPercentage(0.09),
-          fontSize: RFPercentage(2.5),
+          ...baseStyles.textColoured,
           color: blink ? (showItem ? colorOne : colorTwo) : colorOne,
         }}
       >

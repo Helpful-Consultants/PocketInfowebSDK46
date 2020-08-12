@@ -1,21 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import {
-  StyleSheet,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
-
-import { Card, Image, Text } from 'react-native-elements';
+import { useWindowDimensions, ScrollView, View } from 'react-native';
+import { Image, Text } from 'react-native-elements';
 import vwLogo from '../assets/images/vw-logo.png';
 import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
-
-import Colors from '../constants/Colors';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export default function OdisVersions(props) {
   //   console.log(props.items);
@@ -49,56 +39,56 @@ export default function OdisVersions(props) {
     // console.log('getOdisForBrand', item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
     return (
-      <View style={baseStyles.odisRow}>
+      <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
           <Image
             source={logoChooser[item.brandCode.toLowerCase()]}
-            style={baseStyles.brandLogo}
+            style={baseStyles.imageBrandLogo}
           />
         </View>
-        <View style={baseStyles.odisVersionRow}>
-          <Text style={baseStyles.odisVersionText}>
+        <View style={{ padding: 5 }}>
+          <Text style={baseStyles.textOdisVersion}>
             {item.previousProductVersion &&
             item.previousProductVersion !== item.productVersion ? (
-              <Text style={baseStyles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.textOdisVersionHighlighted}>
                 {`Product: ${item.productVersion}`}
-                <Text style={baseStyles.odisVersionTextSmaller}>
+                <Text style={baseStyles.textOdisVersionSmaller}>
                   {` (from ${item.previousProductVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={baseStyles.odisVersionText}>
+              <Text style={baseStyles.textOdisVersion}>
                 {`Product: ${item.productVersion}`}
               </Text>
             )}
           </Text>
 
-          <Text style={baseStyles.odisVersionText}>
+          <Text style={baseStyles.textOdisVersion}>
             {item.previousMainFeatureVersion &&
             item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
-              <Text style={baseStyles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.textOdisVersionHighlighted}>
                 {`Main feature: ${item.mainFeatureVersion}`}
-                <Text style={baseStyles.odisVersionTextSmaller}>
+                <Text style={baseStyles.textOdisVersionSmaller}>
                   {` (from ${item.previousMainFeatureVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={baseStyles.odisVersionText}>
+              <Text style={baseStyles.textOdisVersion}>
                 {`Main Feature: ${item.mainFeatureVersion}`}
               </Text>
             )}
           </Text>
-          <Text style={baseStyles.odisVersionText}>
+          <Text style={baseStyles.textOdisVersion}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
-              <Text style={baseStyles.odisVersionTextHighlighted}>
+              <Text style={baseStyles.textOdisVersionHighlighted}>
                 {`Data: ${item.dataVersion}`}
-                <Text style={baseStyles.odisVersionTextSmaller}>
+                <Text style={baseStyles.textOdisVersionSmaller}>
                   {` (from ${item.previousDataVersion})`}
                 </Text>
               </Text>
             ) : (
-              <Text style={baseStyles.odisVersionText}>
+              <Text style={baseStyles.textOdisVersion}>
                 {`Data: ${item.dataVersion}`}
               </Text>
             )}
@@ -140,59 +130,27 @@ export default function OdisVersions(props) {
     }
   };
   itemsObj && getOdisForBrands(itemsObj);
-  //   if (items && items.length > 0) {
-  //     odisDetails = items.map((item, i) =>
-  //       !userBrand || userBrand === item.brandCode.toLowerCase() ? (
-  //         <View>{getOdisForBrands()}</View>
-  //       ) : null
-  //     );
-  //     // console.log(odisDetails);
-  //   }
-  //   if (items && items.length > 0) {
-  //     odisDetails = items.map((item, i) =>
-  //       !userBrand || userBrand === item.brandCode.toLowerCase() ? (
-  //         <View key={i}>
-  //           <View style={baseStyles.odisRow}>
-  //             <View style={baseStyles.odisLogoContainer}>
-  //               <Image
-  //                 source={logoChooser[item.brandCode.toLowerCase()]}
-  //                 style={baseStyles.logo}
-  //               />
-  //             </View>
-  //             <View style={baseStyles.odisVersionRow}>
-  //               <Text style={baseStyles.odisVersionText}>
-  //                 Product: {item.productVersion}
-  //               </Text>
-  //               <Text style={baseStyles.odisVersionText}>
-  //                 Main feature: {item.mainFeatureVersion}
-  //               </Text>
-  //               <Text style={baseStyles.odisVersionText}>
-  //                 Data: {item.dataVersion}
-  //               </Text>
-  //             </View>
-  //           </View>
-  //         </View>
-  //       ) : null
-  //     );
-  //     // console.log(odisDetails);
-  //   }
 
   return (
-    <View style={baseStyles.containerFlexJustfied}>
-      <View style={baseStyles.rowWithImage}>
-        <Image
-          source={require('../assets/images/odis.jpg')}
-          style={baseStyles.contentImage}
-        />
-      </View>
+    <ScrollView>
+      <View style={baseStyles.containerFlexJustfied}>
+        <View style={baseStyles.viewRowWithImage}>
+          <Image
+            source={require('../assets/images/odis.jpg')}
+            style={baseStyles.imageContent}
+          />
+        </View>
 
-      {/* {viewCount && viewCount > 0 ? (
+        {/* {viewCount && viewCount > 0 ? (
         <View>
           <Text>{`Viewed ${viewCount}`}</Text>
         </View>
       ) : null} */}
 
-      <View>{itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}</View>
-    </View>
+        <View>
+          {itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}
+        </View>
+      </View>
+    </ScrollView>
   );
 }

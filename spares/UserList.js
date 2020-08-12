@@ -1,9 +1,9 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
-import { StyleSheet, Image, ScrollView, Text, View } from 'react-native';
+import { StyleSheet, Image, ScrollView, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
-import { Divider, ListItem } from 'react-native-elements';
+import { Text } from 'react-native-elements';
 
 const list = [
   {

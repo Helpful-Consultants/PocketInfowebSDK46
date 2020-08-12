@@ -2,18 +2,17 @@ import React from 'react';
 import {
   StyleSheet,
   ScrollView,
-  Text,
   useWindowDimensions,
   View,
 } from 'react-native';
+import { Text } from 'react-native-elements';
+import StyledText from '../components/StyledText';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
 import amendLink from '../components/amendLink';
-// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-// import Colors from '../constants/Colors';
 
 const appCode = Base64.encode(moment().format('MMMM'));
 // console.log('appCode is ', appCode);
@@ -42,14 +41,16 @@ export default function ProductsLinks(props) {
               }
               key={i}
             >
-              <View style={baseStyles.item}>
-                <View style={baseStyles.itemTopRow}>
+              <View style={baseStyles.viewItem}>
+                <View style={baseStyles.viewItemTopRow}>
                   <ScaledImageFinder
                     width={70}
                     uri={`${props.baseImageUrl}${item.imageName}`}
                   />
-                  <View style={baseStyles.itemTitleContainer}>
-                    <Text style={baseStyles.itemTitle}>{item.headline}</Text>
+                  <View style={baseStyles.viewItemTitle}>
+                    <Text style={baseStyles.textItemTitle}>
+                      {item.headline}
+                    </Text>
                     <HighlightedDate
                       item={item}
                       now={now}
@@ -58,7 +59,7 @@ export default function ProductsLinks(props) {
                   </View>
                 </View>
                 <View>
-                  <Text style={baseStyles.itemMainText}>{item.newstext}</Text>
+                  <Text style={baseStyles.textItemMain}>{item.newstext}</Text>
                 </View>
               </View>
             </Touchable>

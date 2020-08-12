@@ -23,7 +23,6 @@ import { getProductsRequest } from '../actions/products';
 import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
 import Colors from '../constants/Colors';
-// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import productsDummyData from '../dummyData/productsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -175,8 +174,8 @@ export default ProductsScreen = (props) => {
       ) : (
         <ScrollView>
           {filteredItems && filteredItems.length > 0 ? (
-            <View style={baseStyles.promptRibbon}>
-              <Text style={baseStyles.promptRibbonText}>
+            <View style={baseStyles.viewPromptRibbon}>
+              <Text style={baseStyles.textPromptRibbon}>
                 Touch a product to see more on Tools Infoweb.
               </Text>
             </View>
@@ -204,11 +203,6 @@ const titleString = 'Products';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList, Text, useWindowDimensions, View } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { FlatList, useWindowDimensions, View } from 'react-native';
+import { ListItem, Text } from 'react-native-elements';
 // import Touchable from 'react-native-platform-touchable';
 // import moment from 'moment';
 // import ltpDummyData from '../dummyData/ltpDummyData';

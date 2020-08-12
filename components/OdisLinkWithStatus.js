@@ -1,7 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Dimensions, StyleSheet, View } from 'react-native';
-import { Icon, Text } from 'react-native-elements';
+import { Dimensions, useWindowDimensions } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
 import Colors from '../constants/Colors';
@@ -23,6 +21,8 @@ const iconColorHighlighted = Colors.vwgWarmOrange;
 const disabledButtonColor = Colors.vwgMidGray;
 
 export default function OdisLinkWithStatus(props) {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('%%%%%% in OdisLinkWithStatus ');
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];

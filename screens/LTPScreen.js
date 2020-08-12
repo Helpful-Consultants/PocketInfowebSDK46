@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 // import { createFilter } from 'react-native-search-filter';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -25,8 +19,6 @@ import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
 import Colors from '../constants/Colors';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
 import searchItems from '../components/searchItems';
 // import stringCleaner from '../components/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
@@ -69,7 +61,7 @@ export default LtpScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('ltp - useFocusEffect');
+      //   console.log('ltp - useFocusEffect');
       // don't refresh the every time user visits the page LTP - they don't change too much
       dispatch(revalidateUserCredentials({ calledBy: 'LtpScreen' }));
       setSearchInput('');
@@ -145,21 +137,21 @@ export default LtpScreen = (props) => {
       />
       {dataError ? null : itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
-          <View style={baseStyles.noneFoundPromptRibbon}>
-            <Text style={baseStyles.promptRibbonText}>
+          <View style={baseStyles.viewPromptRibbonNoneFound}>
+            <Text style={baseStyles.textPromptRibbon}>
               Your search found no results.
             </Text>
           </View>
         ) : isLoading ? null : (
-          <View style={baseStyles.promptRibbon}>
-            <Text style={baseStyles.promptRibbonText}>
+          <View style={baseStyles.viewPromptRibbon}>
+            <Text style={baseStyles.textPromptRibbon}>
               No LTP items to show. Try the refresh button.
             </Text>
           </View>
         )
       ) : (
-        <View style={baseStyles.promptRibbon}>
-          <Text style={baseStyles.promptRibbonText}>
+        <View style={baseStyles.viewPromptRibbon}>
+          <Text style={baseStyles.textPromptRibbon}>
             Book these on the LTP website.
           </Text>
         </View>
@@ -188,11 +180,6 @@ export const screenOptions = (navData) => {
   //   console.log('navData', navData);
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => {

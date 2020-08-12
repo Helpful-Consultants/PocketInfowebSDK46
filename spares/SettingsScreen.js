@@ -31,7 +31,7 @@ const DATA = [
 
 function ListItem({ title }) {
   return (
-    <View style={styles.item}>
+    <View style={styles.viewItem}>
       <Text style={styles.title}>{title}</Text>
     </View>
   );

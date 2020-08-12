@@ -2,14 +2,11 @@ import React from 'react';
 import {
   ActivityIndicator,
   Platform,
-  StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
 import { Icon, Text } from 'react-native-elements';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
 import Colors from '../constants/Colors';
 
 export default DataAlertBarWithRefresh = (props) => {
@@ -31,7 +28,7 @@ export default DataAlertBarWithRefresh = (props) => {
   const dataNameToUse = dataName || 'data';
 
   return dataCount && dataCount > 0 ? null : (
-    <View style={baseStyles.viewFlexRow}>
+    <View style={baseStyles.viewRowFlex}>
       {isLoading ? (
         <View style={baseStyles.searchBarRowRefreshButton}>
           <ActivityIndicator size={'small'} />
@@ -52,29 +49,29 @@ export default DataAlertBarWithRefresh = (props) => {
         </TouchableOpacity>
       )}
       {isLoading ? (
-        <View style={baseStyles.searchBarRowNoDataTextContainer}>
-          <Text style={baseStyles.searchBarRowNoDataText}>
+        <View style={baseStyles.searchBarRowTextNoDataContainer}>
+          <Text style={baseStyles.searchBarRowTextNoData}>
             Updating {`${dataName}`}...
           </Text>
         </View>
       ) : dataError ? (
         dataStatusCode && dataStatusCode === 408 ? (
-          <View style={baseStyles.searchBarRowNoDataTextContainer}>
-            <Text style={baseStyles.searchBarRowErrorText}>
+          <View style={baseStyles.searchBarRowTextNoDataContainer}>
+            <Text style={baseStyles.searchBarRowTextError}>
               {`You need an internet connection to download the ${dataNameToUse}.`}
             </Text>
           </View>
         ) : (
-          <View style={baseStyles.searchBarRowNoDataTextContainer}>
-            <Text style={baseStyles.searchBarRowErrorText}>
+          <View style={baseStyles.searchBarRowTextNoDataContainer}>
+            <Text style={baseStyles.searchBarRowTextError}>
               {`There was a problem syncing the ${dataNameToUse}. Please refresh.`}
               {dataStatusCode && ` (Error code ${dataStatusCode})`}
             </Text>
           </View>
         )
       ) : someDataExpected && dataCount && dataCount === 0 ? (
-        <View style={baseStyles.searchBarRowNoDataTextContainer}>
-          <Text style={baseStyles.searchBarRowNoDataText}>
+        <View style={baseStyles.searchBarRowTextNoDataContainer}>
+          <Text style={baseStyles.searchBarRowTextNoData}>
             {`No ${dataName} downloaded yet. Please refresh. Thanks.`}
           </Text>
         </View>

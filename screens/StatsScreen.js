@@ -186,11 +186,6 @@ const titleString = 'Stats';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

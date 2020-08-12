@@ -2,7 +2,6 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
-import { useWindowDimensions } from 'react-native';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
@@ -12,7 +11,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
-import { Platform, StatusBar, View } from 'react-native';
+import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
+import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
@@ -74,8 +74,22 @@ export default function App(props) {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   //   persistStore(store).purge();
-
   //   const userIsValidated = true;
+
+  // This prevents any fontscaling by the user - a bit mean
+  //   Text.defaultProps = Text.defaultProps || {};
+  //   Text.defaultProps.allowFontScaling = false;
+  //   TextInput.defaultProps = TextInput.defaultProps || {};
+  //   TextInput.defaultProps.allowFontScaling = false;
+  //   const userIsValidated = true;
+
+  // This limits fontscaling by the user - a bit kinder
+  Text.defaultProps = Text.defaultProps || {};
+  Text.defaultProps.maxFontSizeMultiplier = Platform.OS === 'ios' ? 1.6 : 1.4;
+  TextInput.defaultProps = TextInput.defaultProps || {};
+  TextInput.defaultProps.maxFontSizeMultiplier =
+    Platform.OS === 'ios' ? 1.5 : 1.4;
+  //   console.log('7777 Text.defaultProps', Text && Text, TextInput && TextInput);
 
   const persistor = persistStore(store);
   if (!isLoadingComplete && !props.skipLoadingScreen) {

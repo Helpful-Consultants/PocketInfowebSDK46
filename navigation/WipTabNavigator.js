@@ -27,8 +27,6 @@ import LtpScreen, {
   screenOptions as LtpScreenOptions,
 } from '../screens/LtpScreen';
 
-console.log('LtpScreenOptions', LtpScreenOptions);
-
 import Colors from '../constants/Colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -45,6 +43,16 @@ let navBarFontSize =
     ? baseFontSize * 1
     : baseFontSize * 1;
 
+let headerHeight =
+  screenWidth > 1023
+    ? 90
+    : screenWidth > 767
+    ? 80
+    : screenWidth > 413
+    ? 70
+    : screenWidth > 374
+    ? 60
+    : 60;
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
 
@@ -55,7 +63,7 @@ const defaultStackNavOptions = () => {
   return {
     headerStyle: {
       backgroundColor: Colors.vwgHeader,
-      height: 80,
+      height: headerHeight,
     },
     cardStyle: { backgroundColor: 'white' },
     headerLeft: () => (
@@ -166,6 +174,8 @@ export default WipTabNavigator = () => {
         },
         activeTintColor: Colors.vwgActiveLink,
         inactiveTintColor: Colors.vwgInactiveLink,
+        activeBackgroundColor: Colors.vwgWhite,
+        inactiveBackgroundColor: Colors.vwgWhite,
         adaptive: false,
       }}
       //screenOptions={defaultTabNavScreenOptions}

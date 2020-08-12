@@ -16,7 +16,7 @@ export default BookToJobModal = ({ setIsThisModalVisible }) => (
       console.log('Modal has been closed.');
     }}
   >
-    <View style={styles.modal}>
+    <View style={styles.viewModal}>
       <Text style={styles.text}>Create job</Text>
 
       <TouchableHighlight

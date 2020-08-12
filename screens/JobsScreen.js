@@ -176,6 +176,9 @@ export default JobsScreen = (props) => {
   //     items.length
   //   );
 
+  //   console.log('searchInput.length', searchInput && searchInput.length);
+  //   console.log('itemsToShow.length', itemsToShow && itemsToShow.length);
+
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>
       <SearchBarWithRefresh
@@ -193,15 +196,19 @@ export default JobsScreen = (props) => {
       {dataError ? null : searchInput &&
         searchInput.length &&
         searchInput.length >= minSearchLength ? (
-        items && items.length && items.length === 0 ? (
-          <View style={baseStyles.noneFoundPromptRibbon}>
-            <Text style={baseStyles.promptRibbonText}>
+        itemsToShow &&
+        itemsToShow.length &&
+        itemsToShow.length > 0 ? null : items &&
+          items.length &&
+          items.length > 0 ? (
+          <View style={baseStyles.viewPromptRibbonNoneFound}>
+            <Text style={baseStyles.textPromptRibbon}>
               Your search found no results.
             </Text>
           </View>
         ) : (
-          <View style={baseStyles.noneFoundPromptRibbon}>
-            <Text style={baseStyles.promptRibbonText}>
+          <View style={baseStyles.viewPromptRibbonNoneFound}>
+            <Text style={baseStyles.textPromptRibbon}>
               You have no jobs yet to search.
             </Text>
           </View>
@@ -260,21 +267,18 @@ export default JobsScreen = (props) => {
             elevation: Platform.OS === 'ios' ? 0 : 5,
           }}
           titleStyle={{
-            ...baseStyles.textColoured,
-            textAlign: 'center',
+            ...baseStyles.textLargeColouredCentred,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
           confirmButtonTextStyle={{
-            ...baseStyles.text,
-            color: Colors.vwgWhite,
+            ...baseStyles.buttonTitle,
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
           cancelButtonTextStyle={{
-            ...baseStyles.text,
-            color: Colors.vwgWhite,
+            ...baseStyles.buttonTitle,
             textAlign: 'center',
             elevation: Platform.OS === 'ios' ? 0 : 5,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
@@ -306,11 +310,6 @@ const titleString = 'My Jobs';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

@@ -2,16 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import { useDispatch, useSelector } from 'react-redux';
-
 import {
   ActivityIndicator,
-  Dimensions,
   Platform,
   ScrollView,
-  StyleSheet,
+  useWindowDimensions,
   View,
 } from 'react-native';
-
 import { useSafeArea } from 'react-native-safe-area-context';
 import { Icon, Text } from 'react-native-elements';
 import Touchable from 'react-native-platform-touchable';
@@ -35,14 +32,12 @@ import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
-
-var { screenHeight, screenWidth } = Dimensions.get('window');
-var gridHeight = screenHeight * 0.18;
-var gridWidth = screenWidth * 0.3;
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
 
 export default HomeScreen = (props) => {
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   // console.log(props)
   //   console.log('IN HOME !!!!!');
   const dispatch = useDispatch();
@@ -54,7 +49,6 @@ export default HomeScreen = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
-  const userAll = useSelector((state) => state.user);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const userApiFetchParamsObj = useSelector(
@@ -417,7 +411,7 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
-  console.log('Rendering Home screen');
+  //   console.log('Rendering Home screen');
 
   return (
     <View
@@ -427,58 +421,73 @@ export default HomeScreen = (props) => {
       }}
     >
       <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
+        style={baseStyles.containerFlex}
+        contentContainerStyle={baseStyles.containerFlexCentredJustfied}
       >
         <AppNameWithLogo />
 
-        <View style={styles.contentContainer}>
+        <View style={baseStyles.containerFlexCentredJustfied}>
           {showReloadDialogue === true ? (
             <View>
-              <Text style={styles.loadingText}>
+              <Text style={baseStyles.textSmall}>
                 There is a new version of this app.
               </Text>
               <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
 
-              <Text style={styles.loadingText}>Updating...</Text>
+              <Text style={baseStyles.textSmall}>Updating...</Text>
             </View>
           ) : (
             <View>
-              <View style={styles.loadingMessage}>
+              <View
+                style={{
+                  ...baseStyles.viewRowFlexCentreJustifiedAligned,
+                  marginVertical: 5,
+                }}
+              >
                 {shouldCheckAppVersion ? (
                   //prod mode
                   isCheckingAppVersion ? (
-                    <Text style={styles.checkingText}>
+                    <Text style={baseStyles.textSmallColouredCentred}>
                       Checking you have the latest app version...
                     </Text>
                   ) : isLoadingAny ? (
-                    <Text style={styles.checkingText}>
+                    <Text style={baseStyles.textSmallColouredCentred}>
                       Syncing your data...
                     </Text>
                   ) : (
                     // dummy to keep layout
                     <Text
-                      style={{ ...styles.checkingText, color: Colors.vwgWhite }}
+                      style={{
+                        ...baseStyles.textSmallColouredCentred,
+                        color: Colors.vwgWhite,
+                        opacity: 1,
+                      }}
                     >
-                      This should be white (i.e. invisible)...
+                      .
                     </Text>
                   )
                 ) : isLoadingAny ? (
                   //dev mode - no OTA app refressh
-                  <Text style={styles.checkingText}>Syncing your data...</Text>
+                  <Text style={baseStyles.textSmallColouredCentred}>
+                    Syncing your data...
+                  </Text>
                 ) : (
                   // dummy to keep layout
                   <Text
-                    style={{ ...styles.checkingText, color: Colors.vwgWhite }}
+                    style={{
+                      ...baseStyles.textSmallColouredCentred,
+                      color: Colors.vwgWhite,
+                      opacity: 1,
+                    }}
                   >
-                    This should be white (i.e. invisible)...
+                    .
                   </Text>
                 )}
               </View>
               <View>
-                <View style={styles.gridRow}>
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('WipsTabs', { screen: 'FindTools' })
                     }
@@ -491,11 +500,13 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Find Tools</Text>
+                      <Text style={baseStyles.textHomeGridCell}>
+                        Find Tools
+                      </Text>
                     </View>
                   </Touchable>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('WipsTabs', { screen: 'Jobs' })
                     }
@@ -509,11 +520,10 @@ export default HomeScreen = (props) => {
                         color={buttonTextColor}
                         size={iconSize}
                       />
-
-                      <Text style={styles.gridCellText}>
+                      <Text style={baseStyles.textHomeGridCell}>
                         {`My Jobs`}
                         {wipsCount && wipsCount > 0 ? (
-                          <Text style={styles.gridCellCountText}>
+                          <Text style={baseStyles.textHomeGridCellCount}>
                             {` (${wipsCount})`}
                           </Text>
                         ) : null}
@@ -521,9 +531,9 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                 </View>
-                <View style={styles.gridRow}>
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('WipsTabs', {
                         screen: 'BookedOutTools',
@@ -544,24 +554,27 @@ export default HomeScreen = (props) => {
                       {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
                         <View>
                           <Text
-                            style={{ ...styles.gridCellText, marginTop: -8 }}
+                            style={{
+                              ...baseStyles.textHomeGridCell,
+                              marginTop: -6,
+                            }}
                           >{`Booked`}</Text>
-                          <Text style={styles.gridCellText}>
+                          <Text style={baseStyles.textHomeGridCell}>
                             {`Tools`}
-                            <Text style={styles.gridCellCountText}>
+                            <Text style={baseStyles.textHomeGridCellCount}>
                               {` (${bookedOutToolsCount})`}
-                            </Text>{' '}
+                            </Text>
                           </Text>
                         </View>
                       ) : (
                         <Text
-                          style={styles.gridCellText}
+                          style={baseStyles.textHomeGridCell}
                         >{`Booked Tools`}</Text>
                       )}
                     </View>
                   </Touchable>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('WipsTabs', { screen: 'Ltp' })
                     }
@@ -574,13 +587,15 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Loan Tools</Text>
+                      <Text style={baseStyles.textHomeGridCell}>
+                        Loan Tools
+                      </Text>
                     </View>
                   </Touchable>
                 </View>
-                <View style={styles.gridRow}>
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('NewsTabs', { screen: 'Products' })
                     }
@@ -603,7 +618,7 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                   <Touchable
-                    style={styles.gridCell}
+                    style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('NewsTabs', { screen: 'News' })
                     }
@@ -619,7 +634,6 @@ export default HomeScreen = (props) => {
                         color={buttonTextColor}
                         size={iconSize}
                       />
-
                       <BadgedText
                         showBadge={ageOfNews < notificationLimit ? true : false}
                         focused={false}
@@ -630,7 +644,12 @@ export default HomeScreen = (props) => {
                   </Touchable>
                 </View>
               </View>
-              <View style={styles.odisRow}>
+              <View
+                style={{
+                  ...baseStyles.viewRowFlexCentreJustifiedAligned,
+                  marginTop: 10,
+                }}
+              >
                 <OdisLinkWithStatus
                   navigation={navigation}
                   userBrand={userBrand}
@@ -646,12 +665,12 @@ export default HomeScreen = (props) => {
                   marginHorizontal: 20,
                 }}
               >
-                <Text style={styles.instructionsText}>
+                <Text style={baseStyles.textSignedIn}>
                   {userIsValidated
                     ? `Signed in as ${userName}`
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
-                <Text style={styles.instructionsTextSmall}>
+                <Text style={baseStyles.textSignedInSmall}>
                   {userIsValidated ? `${dealerName}` : null}
                 </Text>
               </View>
@@ -659,27 +678,25 @@ export default HomeScreen = (props) => {
                 style={{ marginTop: 0 }}
                 onPress={() => requestSignOutHandler()}
               >
-                <View style={styles.signOutRow}>
+                <View
+                  style={{
+                    ...baseStyles.viewRowFlexCentreJustifiedAligned,
+                    marginTop: 5,
+                  }}
+                >
                   <Icon
                     name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                     type='ionicon'
                     size={20}
                     color={Colors.vwgDeepBlue}
                   />
-                  <Text style={styles.signOutCellText}>{` Sign out`}</Text>
+                  <Text
+                    style={baseStyles.textLargeColouredCentred}
+                  >{` Sign out`}</Text>
                 </View>
               </Touchable>
             </View>
           )}
-
-          {/* <View>
-            <Text style={styles.checkingText}>
-              Time:{' '}
-              {timeCheckedAppVersion
-                ? moment(timeCheckedAppVersion).format('MMMM Do, h:mm:ss')
-                : null}
-            </Text>
-          </View> */}
         </View>
       </ScrollView>
     </View>
@@ -690,9 +707,7 @@ export const screenOptions = (navData) => {
   return {
     headerShown: false,
     tabBarVisible: false,
-    tabBarLabel: ({ focused }) => (
-      <Text style={focused ? styles.focused : styles.notFocused}>Home</Text>
-    ),
+    tabBarLabel: ({ focused }) => <Text>Home</Text>,
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}
@@ -701,175 +716,3 @@ export const screenOptions = (navData) => {
     ),
   };
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
-    // marginTop: 10
-  },
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    backgroundColor: 'white',
-  },
-  loadingMessage: {
-    marginVertical: 5,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-  checkingText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(1.8),
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-  },
-
-  loadingText: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.5),
-
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginBottom: 50,
-  },
-  gridRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    // backgroundColor: 'red'
-  },
-
-  gridCell: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // width: PixelRatio.getPixelSizeForLayoutSize(50),
-    height: RFPercentage(14),
-    borderColor: Colors.vwgDeepBlue,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: Colors.vwgDeepBlue,
-    backgroundColor: Colors.vwgDeepBlue,
-    margin: 5,
-    shadowColor: 'black',
-    // shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 2 },
-    // shadowRadius: 10,
-    // elevation: 5,
-    shadowOpacity: Platform.OS === 'ios' ? 0 : 0.26,
-    //   shadowOffset: { width: 0, height: 2 },
-    shadowRadius: Platform.OS === 'ios' ? 0 : 10,
-    elevation: Platform.OS === 'ios' ? 0 : 5,
-    borderRadius: Platform.OS === 'ios' ? 5 : 4,
-    // height: PixelRatio.getPixelSizeForLayoutSize(40),
-    width: RFPercentage(23.5),
-    // padding: 5
-  },
-  gridCellDisabled: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '45%',
-    borderColor: Colors.vwgLightGray,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: Colors.vwgLightGray,
-    backgroundColor: Colors.vwgLightGray,
-    margin: 5,
-    borderRadius: 10,
-    height: 70,
-    // padding: 5
-  },
-  doubleGridCell: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '93%',
-    height: 40,
-    borderColor: '#aaa',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    color: '#333',
-
-    backgroundColor: '#eee',
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
-  },
-
-  gridCellText: {
-    color: Colors.vwgWhite,
-    // fontSize: 14,
-    fontFamily: 'the-sans',
-    fontSize: RFPercentage(2.5),
-    textAlign: 'center',
-    lineHeight: RFPercentage(3.0),
-  },
-  gridCellCountText: { fontSize: RFPercentage(2.4) },
-  gridCellTextDisabledSmall: {
-    fontFamily: 'the-sans',
-    color: Colors.vwgWhite,
-    fontSize: 10,
-
-    textAlign: 'center',
-  },
-  gridCellTextDisabled: {
-    color: Colors.disabledButtonTextColor,
-    fontSize: 14,
-
-    textAlign: 'center',
-  },
-  odisRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-
-    // backgroundColor: 'red'
-  },
-  odisCellText: {
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.5),
-
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  signOutRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 5,
-  },
-  signOutCellText: {
-    color: Colors.vwgDeepBlue,
-    fontSize: RFPercentage(2.5),
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 3,
-  },
-
-  instructionsText: {
-    fontSize: RFPercentage(2.25),
-    marginTop: 5,
-    textAlign: 'center',
-  },
-  instructionsTextSmall: {
-    fontSize: RFPercentage(2),
-    marginTop: 5,
-    textAlign: 'center',
-  },
-});

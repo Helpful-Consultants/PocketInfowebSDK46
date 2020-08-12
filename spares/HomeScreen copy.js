@@ -3,7 +3,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { Updates } from 'expo';
 import { useDispatch, useSelector } from 'react-redux';
 // import { NavigationContainer, CommonActions } from '@react-navigation/native';
-
 import {
   ActivityIndicator,
   Dimensions,
@@ -12,10 +11,10 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { Icon, Text } from 'react-native-elements';
 // import { useNavigation } from '@react-navigation/native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Icon, Text } from 'react-native-elements';
 // import AppNavigator from '../navigation/AppNavigator';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
@@ -515,7 +514,7 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Find Tools</Text>
+                      <Text style={styles.textGridCell}>Find Tools</Text>
                     </View>
                   </Touchable>
                   <Touchable
@@ -534,7 +533,7 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>
+                      <Text style={styles.textGridCell}>
                         {`My Jobs`}
                         {wipsCount && wipsCount > 0 ? (
                           <Text style={styles.gridCellCountText}>
@@ -568,9 +567,9 @@ export default HomeScreen = (props) => {
                       {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
                         <View>
                           <Text
-                            style={{ ...styles.gridCellText, marginTop: -8 }}
+                            style={{ ...styles.textGridCell, marginTop: -8 }}
                           >{`Booked`}</Text>
-                          <Text style={styles.gridCellText}>
+                          <Text style={styles.textGridCell}>
                             {`Tools`}
                             <Text style={styles.gridCellCountText}>
                               {` (${bookedOutToolsCount})`}
@@ -578,7 +577,7 @@ export default HomeScreen = (props) => {
                           </Text>
                         </View>
                       ) : (
-                        <Text style={styles.gridCellText}>{`Booked Tols`}</Text>
+                        <Text style={styles.textGridCell}>{`Booked Tols`}</Text>
                       )}
                     </View>
                   </Touchable>
@@ -596,7 +595,7 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
 
-                      <Text style={styles.gridCellText}>Loan Tools</Text>
+                      <Text style={styles.textGridCell}>Loan Tools</Text>
                     </View>
                   </Touchable>
                 </View>
@@ -652,7 +651,7 @@ export default HomeScreen = (props) => {
                   </Touchable>
                 </View>
               </View>
-              <View style={styles.odisRow}>
+              <View style={styles.viewOdisRow}>
                 <OdisLinkWithStatus
                   navigation={navigation}
                   userBrand={userBrand}
@@ -668,12 +667,12 @@ export default HomeScreen = (props) => {
                   marginHorizontal: 20,
                 }}
               >
-                <Text style={styles.instructionsText}>
+                <Text style={styles.textInstructions}>
                   {userIsSignedIn
                     ? `Signed in as ${userDataObj.userName}`
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
-                <Text style={styles.instructionsTextSmall}>
+                <Text style={styles.textInstructionsSmall}>
                   {userIsSignedIn ? `${userDataObj.dealerName}` : null}
                 </Text>
               </View>
@@ -780,7 +779,7 @@ const styles = StyleSheet.create({
 
     // backgroundColor: 'red'
   },
-  odisRow: {
+  viewOdisRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -846,7 +845,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  gridCellText: {
+  textGridCell: {
     color: Colors.vwgWhite,
     // fontSize: 14,
     fontFamily: 'the-sans',
@@ -855,14 +854,14 @@ const styles = StyleSheet.create({
     lineHeight: RFPercentage(3.0),
   },
   gridCellCountText: { fontSize: RFPercentage(2.4) },
-  gridCellTextDisabledSmall: {
+  textGridCellDisabledSmall: {
     fontFamily: 'the-sans',
     color: Colors.vwgWhite,
     fontSize: 10,
 
     textAlign: 'center',
   },
-  gridCellTextDisabled: {
+  textGridCellDisabled: {
     color: Colors.disabledButtonTextColor,
     fontSize: 14,
 

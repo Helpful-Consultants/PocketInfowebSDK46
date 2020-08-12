@@ -1,8 +1,18 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text } from 'react-native-elements';
 
-export function MonoText(props) {
+export default StyledText = (props) => {
+  const { text, style, stylee, textStyle } = props;
+
+  //   console.log('style is', style);
+  //   console.log('stylee is', stylee);
+  //   console.log('textStyle is', textStyle);
+  //   console.log('text', text);
+  //   //   console.log('baseStyles', baseStyles);
+
   return (
-    <Text {...props} style={[props.style, { fontFamily: 'space-mono' }]} />
+    <Text style={style} allowFontScaling={false}>
+      {text}
+    </Text>
   );
-}
+};

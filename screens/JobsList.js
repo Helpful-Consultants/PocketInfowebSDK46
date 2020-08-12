@@ -19,7 +19,7 @@ const minSearchLength = 1;
 export default function DealerToolsList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  console.log('p, baseStyles', baseStyles);
+  //   console.log('p, baseStyles', baseStyles);
   const {
     isLoading,
     dataCount,
@@ -65,7 +65,7 @@ export default function DealerToolsList(props) {
                   >
                     <Text
                       style={{
-                        ...baseStyles.toolNumberSmall,
+                        ...baseStyles.textToolNumber,
                       }}
                     >{`${item.partNumber} (${item.toolNumber})`}</Text>
                   </View>
@@ -85,7 +85,7 @@ export default function DealerToolsList(props) {
                       >
                         <Text
                           style={{
-                            ...baseStyles.linkText,
+                            ...baseStyles.textLink,
                             textAlign: 'right',
                             paddingTop: 9,
                           }}
@@ -121,7 +121,7 @@ export default function DealerToolsList(props) {
                     style={{
                       flexDirection: 'row',
                       marginTop: 5,
-                      marginBottom: 10,
+                      marginBottom: 5,
                     }}
                   >
                     <View style={{ alignItems: 'flex-start' }}>
@@ -200,8 +200,8 @@ export default function DealerToolsList(props) {
             searchInput.length >= minSearchLength &&
             items &&
             items.length > 0 ? null : (
-              <View style={baseStyles.promptRibbon}>
-                <Text style={baseStyles.promptRibbonText}>
+              <View style={baseStyles.viewPromptRibbon}>
+                <Text style={baseStyles.textPromptRibbon}>
                   {`You have ${
                     dataCount && dataCount > 0 ? dataCount : `no`
                   } open job${dataCount && dataCount === 1 ? '' : 's'}.`}
@@ -223,7 +223,7 @@ export default function DealerToolsList(props) {
                         : Colors.vwgveryLightGray,
                     marginHorizontal: 10,
                     paddingTop: 10,
-                    paddingBottom: 10,
+                    paddingBottom: 0,
                   }}
                 >
                   {i > 0 ? (
@@ -245,8 +245,7 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
-                          ...baseStyles.jobSummaryText,
-                          marginBottom: 5,
+                          ...baseStyles.textJobSummary,
                         }}
                       >
                         {item.userIntId.toString() == userIntId.toString()
@@ -273,8 +272,8 @@ export default function DealerToolsList(props) {
     );
   } else {
     return (
-      <View style={baseStyles.promptRibbon}>
-        <Text style={baseStyles.promptRibbonText}>
+      <View style={baseStyles.viewPromptRibbon}>
+        <Text style={baseStyles.textPromptRibbon}>
           {`You have ${dataCount && dataCount > 0 ? dataCount : `no`} open job${
             dataCount && dataCount === 1 ? '' : 's'
           }.`}

@@ -1,21 +1,10 @@
 import React, { useEffect } from 'react';
-import {
-  ActivityIndicator,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
-  Alert,
-} from 'react-native';
-// import SafeAreaView from 'react-native-safe-area-view';
+import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, Icon, Image, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
-import { getUserRequest } from '../actions/user';
 import { setUserOutdatedCredentials } from '../actions/user';
 import { setUserValidated } from '../actions/user';
-// import validation from 'validate';
 
 export default AuthLoadingScreen = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);

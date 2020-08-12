@@ -19,7 +19,6 @@ import { getNewsRequest } from '../actions/news';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
 import Colors from '../constants/Colors';
-// import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import newsDummyData from '../dummyData/newsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -163,8 +162,8 @@ export default NewsScreen = (props) => {
       ) : (
         <ScrollView>
           {filteredItems && filteredItems.length > 0 ? (
-            <View style={baseStyles.promptRibbon}>
-              <Text style={baseStyles.promptRibbonText}>
+            <View style={baseStyles.viewPromptRibbon}>
+              <Text style={baseStyles.textPromptRibbon}>
                 Touch a news item to see more on Tools Infoweb.
               </Text>
             </View>
@@ -193,11 +192,6 @@ const titleString = 'News';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

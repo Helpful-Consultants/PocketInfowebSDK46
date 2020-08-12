@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Header } from 'react-native-elements';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { getUsersRequest } from '../actions/users';
 import UserList from '../components/UserList';

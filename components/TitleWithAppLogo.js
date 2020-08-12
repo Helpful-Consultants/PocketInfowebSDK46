@@ -1,21 +1,22 @@
 import React from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import Colors from '../constants/Colors';
+import getBaseStyles from './getBaseStyles';
 
-export default function getLogoTitle(props) {
+export default function TitleWithAppLogo(props) {
   const windowDim = useWindowDimensions();
 
   //   console.log('windowDim', windowDim && windowDim);
-  console.log(
-    'in getLogoTitle/TitleWithAppLogo, windowDim.width:',
-    windowDim.width
-  );
-  console.log(
-    'in getLogoTitle/TitleWithAppLogo, windowDim.height:',
-    windowDim.height
-  );
+  //   console.log(
+  //     'in getLogoTitle/TitleWithAppLogo, windowDim.width:',
+  //     windowDim.width
+  //   );
+  //   console.log(
+  //     'in getLogoTitle/TitleWithAppLogo, windowDim.height:',
+  //     windowDim.height
+  //   );
+
+  //   console.log('in getLogoTitle styled text is', StyledText);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('in getLogoTitle/TitleWithAppLogo, baseStyles:', baseStyles);
 
@@ -55,7 +56,7 @@ export default function getLogoTitle(props) {
               : 22,
         }}
       />
-      <Text style={baseStyles.screenTitleText}>{props.title}</Text>
+      <Text style={{ ...baseStyles.textScreenTitle }}>{props.title}</Text>
     </View>
   );
 }

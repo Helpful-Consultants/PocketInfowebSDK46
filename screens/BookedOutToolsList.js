@@ -55,8 +55,8 @@ export default function BookedOutToolsList(props) {
           searchInput.length >= minSearchLength &&
           items &&
           items.length > 0 ? null : (
-            <View style={baseStyles.promptRibbon}>
-              <Text style={baseStyles.promptRibbonText}>
+            <View style={baseStyles.viewPromptRibbon}>
+              <Text style={baseStyles.textPromptRibbon}>
                 {`You have ${
                   dataCount && dataCount > 0 ? dataCount : `no`
                 } tool${dataCount && dataCount === 1 ? '' : 's'} booked out.`}
@@ -98,7 +98,7 @@ export default function BookedOutToolsList(props) {
                     >
                       <Text
                         style={{
-                          ...baseStyles.toolNumber,
+                          ...baseStyles.textToolNumber,
                           paddingTop: 8,
                         }}
                       >{`${item.partNumber} (${item.toolNumber})`}</Text>
@@ -119,7 +119,7 @@ export default function BookedOutToolsList(props) {
                         >
                           <Text
                             style={{
-                              ...baseStyles.linkText,
+                              ...baseStyles.textLink,
                               textAlign: 'right',
                               paddingTop: 9,
                             }}

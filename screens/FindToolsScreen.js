@@ -624,12 +624,13 @@ export default FindToolsScreen = (props) => {
   //   }, 2000);
 
   const searchInputHandler = (searchInput) => {
-    // console.log('searchInputHandler ' + searchInput);
+    console.log('searchInputHandler ' + searchInput);
     setSearchInput(searchInput);
 
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(combinedItems, searchInput);
       setFilteredItems(newFilteredItems);
+      console.log('searchInputHandler ' + newFilteredItems);
     }
   };
 
@@ -704,13 +705,13 @@ export default FindToolsScreen = (props) => {
   basketActionRows =
     mode === 'book' ? (
       <View>
-        <View style={baseStyles.rowBasketInput}>
-          <View style={baseStyles.rowFlex}>
-            <View style={baseStyles.rowFullWidth}>
+        <View style={baseStyles.viewRowBasketInput}>
+          <View style={baseStyles.viewRowFlex}>
+            <View style={baseStyles.viewRowFullWidth}>
               <Input
                 ref={input}
-                style={baseStyles.rowFlex}
-                inputStyle={baseStyles.basketInputTextJob}
+                style={baseStyles.viewRowFlex}
+                inputStyle={baseStyles.textBasketInputJob}
                 value={formState.inputValues.wipNumber}
                 onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
                 placeholder='Job number/job name'
@@ -726,8 +727,8 @@ export default FindToolsScreen = (props) => {
           </View>
         </View>
         <View style={styles.basketTipRow}>
-          <View style={baseStyles.rowFlex}>
-            <View style={{ ...baseStyles.rowFullWidth, paddingBottom: 5 }}>
+          <View style={baseStyles.viewRowFlex}>
+            <View style={{ ...baseStyles.viewRowFullWidth, paddingBottom: 5 }}>
               {formState.inputValues.wipNumber &&
               formState.inputValues.wipNumber.length > 0 ? (
                 <Text>{` `}</Text>
@@ -739,7 +740,7 @@ export default FindToolsScreen = (props) => {
             </View>
           </View>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Back'
             type='outline'
@@ -787,8 +788,8 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'sending' && isSendingWip ? (
       <View>
-        <View style={baseStyles.rowBasket}>
-          <View style={baseStyles.rowFlexLeftPadded}>
+        <View style={baseStyles.viewRowBasket}>
+          <View style={baseStyles.viewRowFlexLeftPadded}>
             <ActivityIndicator size='small' color={Colors.vwgDeepBlue} />
             <View>
               <Text style={baseStyles.textColoured}>
@@ -805,7 +806,7 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'confirm' ? (
       <View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textConfirmation}>
               {`${toolBasket.length} ${
@@ -814,7 +815,7 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Close'
             type='clear'
@@ -830,12 +831,12 @@ export default FindToolsScreen = (props) => {
       <View>
         <View
           style={
-            ({ ...baseStyles.rowBasket },
+            ({ ...baseStyles.viewRowBasket },
             { alignItems: 'flex-end', marginTop: 10, paddingBottom: 10 })
           }
         >
           <TouchableOpacity
-            style={styles.basketItemRow}
+            style={baseStyles.viewRowBasket}
             onPress={() => addBasketItemHandler()}
           >
             <Icon
@@ -846,17 +847,15 @@ export default FindToolsScreen = (props) => {
             />
             <Text
               style={{
-                ...baseStyles.linkTextLarge,
+                ...baseStyles.textLinkLarger,
                 textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
             >
-              {toolBasket.length === 1
-                ? ` Add another tool`
-                : ` Add another tool`}
+              {` Add another tool`}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Cancel'
             type='outline'
@@ -903,7 +902,7 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'confirm-revised-list' ? (
       <View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textConfirmation}>
               {`${
@@ -915,7 +914,7 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Close'
             type='clear'
@@ -929,7 +928,7 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'some-unavailable' ? (
       <View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked the item${
@@ -946,7 +945,7 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Cancel booking'
             type='outline'
@@ -995,7 +994,7 @@ export default FindToolsScreen = (props) => {
       </View>
     ) : mode === 'all-unavailable' ? (
       <View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked ${
@@ -1007,7 +1006,7 @@ export default FindToolsScreen = (props) => {
             </Text>
           </View>
         </View>
-        <View style={baseStyles.rowBasket}>
+        <View style={baseStyles.viewRowBasket}>
           <Button
             title='Close'
             type='clear'
@@ -1032,7 +1031,7 @@ export default FindToolsScreen = (props) => {
         >
           <View
             style={{
-              ...baseStyles.rowFlexSpaceBetween,
+              ...baseStyles.viewviewRowFlexSpaceBetween,
               paddingTop: 10,
               paddingBottom: 5,
             }}
@@ -1057,12 +1056,12 @@ export default FindToolsScreen = (props) => {
               <View>
                 <View
                   style={{
-                    ...baseStyles.rowFlex,
+                    ...baseStyles.viewRowFlex,
                     marginBottom: 0,
                     paddingBottom: 5,
                   }}
                 >
-                  <View style={{ ...baseStyles.columnFlexLeft, width: 70 }}>
+                  <View style={{ ...baseStyles.viewColumnFlexLeft, width: 70 }}>
                     {item.loanToolNo ? null : (
                       <ScaledImageFinder
                         width={70}
@@ -1127,7 +1126,7 @@ export default FindToolsScreen = (props) => {
                   mode !== 'all-unavailable' &&
                   toolBasket.length > 1 ? (
                     <TouchableOpacity
-                      style={baseStyles.columnFlexLeft}
+                      style={baseStyles.viewColumnFlexLeft}
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
                       <Icon
@@ -1211,7 +1210,7 @@ export default FindToolsScreen = (props) => {
   //   );
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
 
-  console.log('rendering Find Tools screen', mode);
+  //   console.log('rendering Find Tools screen', mode);
 
   return (
     <View style={baseStyles.containerFlex}>
@@ -1240,8 +1239,8 @@ export default FindToolsScreen = (props) => {
           {mode === 'list' &&
           searchInput.length > minSearchLength &&
           itemsToShow.length === 0 ? (
-            <View style={baseStyles.noneFoundPromptRibbon}>
-              <Text style={baseStyles.promptRibbonText}>
+            <View style={baseStyles.viewPromptRibbonNoneFound}>
+              <Text style={baseStyles.textPromptRibbon}>
                 Your search found no results.
               </Text>
             </View>
@@ -1330,11 +1329,6 @@ const titleString = 'Find Tools';
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
-
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-    },
-    tabBarColor: Colors.vwgWhite,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
     tabBarLabel: titleString,
     tabBarIcon: ({ focused, size }) => (

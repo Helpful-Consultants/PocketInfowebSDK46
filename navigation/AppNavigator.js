@@ -64,7 +64,7 @@ const DrawerNavigator = () => {
         activeTintColor: Colors.vwgActiveLink,
         inactiveTintColor: Colors.vwgInactiveLink,
         activeBackgroundColor: 'white',
-        labelStyle: baseStyles.panelNavText,
+        labelStyle: baseStyles.panelTextNav,
         style: {},
         contentContainerStyle: {},
         itemStyle: {
@@ -162,50 +162,3 @@ export default AppNavigator = (props) => {
     </NavigationContainer>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   zzstretched: {
-//     flexDirection: 'column',
-//     alignItems: 'stretch',
-//     justifyContent: 'space-between',
-//     // backgroundColor: 'red'
-//   },
-//   footerContainer: {
-//     // flex: 1,
-//     // flexDirection: 'column',
-//     // alignItems: 'flex-start',
-//     // justifyContent: 'flex-end',
-//     // backgroundColor: 'red'
-//   },
-//   appName: {
-//     paddingTop: 100,
-//     paddingLeft: 18,
-//     fontFamily: 'the-sans-bold',
-//     fontSize: RFPercentage(2.2),
-//     // fontStyle: 'italic'
-//   },
-//   brand: {
-//     paddingTop: 5,
-//     paddingLeft: 18,
-//     fontFamily: 'the-sans-bold',
-//     fontSize: RFPercentage(1.9),
-//     // fontStyle: 'italic'
-//   },
-//   appVersion: {
-//     paddingTop: 5,
-//     paddingLeft: 18,
-//     fontFamily: 'the-sans',
-//     fontSize: RFPercentage(1.8),
-//     // fontStyle: 'italic'
-//   },
-//   deviceVersion: {
-//     paddingTop: 15,
-//     paddingLeft: 18,
-//     fontFamily: 'the-sans',
-//     fontSize: RFPercentage(1.8),
-//     // fontStyle: 'italic'
-//   },
-// });

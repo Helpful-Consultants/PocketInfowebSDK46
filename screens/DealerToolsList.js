@@ -151,7 +151,7 @@ export default function DealerToolsList(props) {
               }`
         }
         titleStyle={{
-          ...baseStyles.linkTextBoldLarge,
+          ...baseStyles.textLinkBoldLarge,
           color: item.loanToolNo
             ? Colors.vwgVeryDarkGray
             : (booked && booked === true) ||
@@ -282,7 +282,7 @@ export default function DealerToolsList(props) {
                 />
                 <Text
                   style={{
-                    ...baseStyles.linkTextBold,
+                    ...baseStyles.textLinkBold,
                   }}
                 >
                   {` tool basket.`}
@@ -375,8 +375,8 @@ export default function DealerToolsList(props) {
   };
   const getHeader = () => {
     return showPrompt === true ? (
-      <View style={baseStyles.promptRibbon}>
-        <Text style={baseStyles.promptRibbonText}>
+      <View style={baseStyles.viewPromptRibbon}>
+        <Text style={baseStyles.textPromptRibbon}>
           {searchInput && searchInput.length > 1
             ? `Press a tool to book it out.`
             : `Search for a tool then press to book it out.`}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import MenuOverlay from '../components/MenuOverlay';
 
 export default SideMenu = (props) => {

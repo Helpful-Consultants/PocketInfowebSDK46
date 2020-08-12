@@ -10,8 +10,8 @@ import {
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, Icon, Image, Text } from 'react-native-elements';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { Button, Input, Icon, Text } from 'react-native-elements';
+
 import Colors from '../constants/Colors';
 // import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
@@ -56,7 +56,7 @@ export default SignInScreen = (props) => {
   const state = useSelector((state) => state);
 
   //   console.log('windowDim', windowDim && windowDim);
-  console.log('in sign in, windowDim:', windowDim);
+  //   console.log('in sign in, windowDim:', windowDim);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('in sign in, baseStyles:', baseStyles);
 
@@ -126,16 +126,16 @@ export default SignInScreen = (props) => {
     <View style={{ paddingTop: insets.top }}>
       <ScrollView>
         <AppNameWithLogo />
-        <Text style={baseStyles.instructions}>
+        <Text style={baseStyles.textInstructions}>
           {userIsValidated
             ? `Signed in as ${userDataObj.userName}`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
         <View>
           {userError ? (
-            <Text style={baseStyles.errorText}>{userError}</Text>
+            <Text style={baseStyles.textError}>{userError}</Text>
           ) : userIsSignedIn ? (
-            <Text style={baseStyles.securityCheckText}>
+            <Text style={baseStyles.textSecurityCheck}>
               Please sign in again to renew your access
             </Text>
           ) : null}
@@ -149,11 +149,10 @@ export default SignInScreen = (props) => {
             autoFocus
             value={formState.inputValues.email}
             onChangeText={inputChangeHandler.bind(this, 'email')}
-            style={baseStyles.inputLabelText}
             label='User ID - your toolsinfoweb.co.uk email address'
-            containerStyle={baseStyles.inputContainerSignIn}
-            inputStyle={baseStyles.inputStyleSignIn}
-            labelStyle={baseStyles.inputLabelTextSignIn}
+            containerStyle={baseStyles.viewInputContainerSignIn}
+            textInputStyle={baseStyles.textInputStyleSignIn}
+            labelStyle={baseStyles.textInputLabelSignIn}
             required
             email
             autoCapitalize='none'
@@ -176,14 +175,10 @@ export default SignInScreen = (props) => {
           <Input
             value={formState.inputValues.pin}
             onChangeText={inputChangeHandler.bind(this, 'pin')}
-            style={{
-              marginVertical: 20,
-              marginHorizontal: 40,
-            }}
             label='Your Pocket Infoweb access PIN*'
-            labelStyle={baseStyles.inputLabelTextSignIn}
-            containerStyle={baseStyles.inputContainerSignIn}
-            inputStyle={baseStyles.inputStyleSignIn}
+            labelStyle={baseStyles.textInputLabelSignIn}
+            containerStyle={baseStyles.viewInputContainerSignIn}
+            textInputStyle={baseStyles.textInputStyleSignIn}
             required
             maxLength={6}
             placeholder='Six digits, e.g. 123456'
@@ -225,16 +220,12 @@ export default SignInScreen = (props) => {
           </View>
 
           <View>
-            <View
-              style={{
-                marginHorizontal: 20,
-                textAlign: 'center',
-              }}
-            >
-              <Text style={baseStyles.instructions}>
+            <View>
+              <Text style={baseStyles.textInstructions}>
                 * To activate Pocket Infoweb you will need to generate an access
                 PIN for your User ID.
               </Text>
+
               <Button
                 title='Trouble signing in? Need a PIN?'
                 type='clear'
@@ -242,9 +233,9 @@ export default SignInScreen = (props) => {
                   props.navigation.navigate('ForgottenPassword');
                 }}
                 buttonStyle={{
-                  marginTop: 10,
+                  marginTop: 0,
                 }}
-                titleStyle={[{ ...baseStyles.linkText }]}
+                titleStyle={[{ ...baseStyles.textLink }]}
               />
             </View>
           </View>

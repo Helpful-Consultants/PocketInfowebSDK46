@@ -1,11 +1,6 @@
 import React from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
-
+import { useWindowDimensions, ScrollView, View } from 'react-native';
 import { Text } from 'react-native-elements';
-
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-
-import Colors from '../constants/Colors';
 
 // import statsGrab from '../assets/images/stats.jpg';
 
@@ -25,7 +20,7 @@ export default function StatsSummary(props) {
     effectiveness,
   } = props;
 
-  console.log('StatSummary Props', props);
+  //   console.log('StatSummary Props', props);
 
   const userDataCount =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
@@ -82,52 +77,52 @@ export default function StatsSummary(props) {
   //   console.log(logoChooser);
   //   console.log('statsDummyData', statsDummyData);
   return (
-    <View>
+    <ScrollView>
       {userDataObj && statsObj && userDataCount > 0 && statsDataCount > 0 ? (
         <View>
           <View style={{ marginHorizontal: 30 }}>
-            <Text style={baseStyles.statsTitle}>App user</Text>
-            <Text style={baseStyles.statsText}>{userDataObj.userName}</Text>
-            <Text style={baseStyles.statsText}>{userDataObj.dealerName}</Text>
-            <Text style={baseStyles.statsText}>{userDataObj.dealerId}</Text>
+            <Text style={baseStyles.textStatsTitle}>App user</Text>
+            <Text style={baseStyles.textStats}>{userDataObj.userName}</Text>
+            <Text style={baseStyles.textStats}>{userDataObj.dealerName}</Text>
+            <Text style={baseStyles.textStats}>{userDataObj.dealerId}</Text>
           </View>
           <View>
-            <Text style={baseStyles.statsTitle}>Mandatory tools</Text>
-            <Text style={baseStyles.statsText}>
+            <Text style={baseStyles.textStatsTitle}>Mandatory tools</Text>
+            <Text style={baseStyles.textStats}>
               {`${dealerToolsCountFormatted} mandatory; ${loggedToolsFormatted} logged;`}
             </Text>
-            <Text style={baseStyles.statsText}>
+            <Text style={baseStyles.textStats}>
               {`Effectiveness: ${effectiveness} of tool locations recorded`}
             </Text>
           </View>
           <View>
-            <Text style={baseStyles.statsTitle}>Loan tool usage</Text>
-            <Text style={baseStyles.statsText}>
+            <Text style={baseStyles.textStatsTitle}>Loan tool usage</Text>
+            <Text style={baseStyles.textStats}>
               {`${statsObj.ltpUse} used; ${statsObj.ltpCurrent} current`}
             </Text>
           </View>
           <View>
-            <Text style={baseStyles.statsTitle}>Support tickets</Text>
-            <Text style={baseStyles.statsText}>
+            <Text style={baseStyles.textStatsTitle}>Support tickets</Text>
+            <Text style={baseStyles.textStats}>
               {`${statsObj.tiwTicketsRaised} raised; ${statsObj.tiwTicketsClosed} closed`}
             </Text>
           </View>
           <View>
-            <Text style={baseStyles.statsTitle}>
+            <Text style={baseStyles.textStatsTitle}>
               Active jobs with tools booked out
             </Text>
             <Text
-              style={baseStyles.statsText}
+              style={baseStyles.textStats}
             >{`${activeJobsCount} jobs`}</Text>
           </View>
           <View>
-            <Text style={baseStyles.statsTitle}>Service measures</Text>
-            <Text style={baseStyles.statsText}>
+            <Text style={baseStyles.textStatsTitle}>Service measures</Text>
+            <Text style={baseStyles.textStats}>
               {`${statsObj.activeServiceMeasures} active; ${statsObj.completedServiceMeasures} completed`}
             </Text>
           </View>
         </View>
       ) : null}
-    </View>
+    </ScrollView>
   );
 }

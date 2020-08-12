@@ -22,7 +22,7 @@ import { Badge, Text } from 'react-native-elements';
 
 // containerStyle={{ size: 2, position: 'absolute', top: -4, right: -4 }}
 //  badgeStyle={baseStyles.navBarBadge}
-//               textStyle={baseStyles.navBarBadgeText}
+//               textStyle={baseStyles.navBarTextBadge}
 export default function TabBarIcon(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
@@ -64,7 +64,7 @@ export default function TabBarIcon(props) {
           badgeStyle={
             focused ? baseStyles.navBarBadgeFocused : baseStyles.navBarBadge
           }
-          textStyle={baseStyles.navBarBadgeText}
+          textStyle={baseStyles.navBarTextBadge}
         />
       ) : null}
     </View>

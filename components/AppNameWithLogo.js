@@ -8,20 +8,20 @@ import { Image, Text } from 'react-native-elements';
 export default AppNameWithLogo = () => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  console.log(
-    'in AppNameWithLogo, windowDim:',
-    windowDim,
-    'baseStyles.appName',
-    baseStyles.appName
-  );
+  //   console.log(
+  //     'in AppNameWithLogo, windowDim:',
+  //     windowDim,
+  //     'baseStyles.textAppName',
+  //     baseStyles.textAppName
+  //   );
   return (
     <View>
-      <View style={baseStyles.appLogoContainer}>
+      <View style={baseStyles.viewImageAppLogo}>
         <Image
           source={require('../assets/images/tiw-app-logo-less-whitespace.png')}
-          style={baseStyles.appLogo}
+          style={baseStyles.imageAppLogo}
         />
-        <Text style={baseStyles.appName}>Pocket Infoweb</Text>
+        <Text style={baseStyles.textAppName}>Pocket Infoweb</Text>
       </View>
     </View>
   );

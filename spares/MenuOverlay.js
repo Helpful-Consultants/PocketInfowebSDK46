@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Dimensions, TouchableHighlight, Text } from 'react-native';
+import { Text } from 'react-native-elements';
 
 let width = Dimensions.get('window').width;
 let height = Dimensions.get('window').height;
