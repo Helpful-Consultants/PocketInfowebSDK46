@@ -61,9 +61,7 @@ export default function NewsLinks(props) {
                   </View>
                 </View>
                 <View style={baseStyles.itemMainRow}>
-                  <Text style={baseStyles.textItemMainText}>
-                    {item.newstext}
-                  </Text>
+                  <Text style={baseStyles.textItemMain}>{item.newstext}</Text>
                 </View>
               </View>
             </Touchable>

@@ -642,8 +642,8 @@ export default getBaseStyles = (props) => {
           : width >= 411
           ? fontFactor * 0.9
           : width >= 375
-          ? fontFactor * 1.2
-          : fontFactor * 1.2,
+          ? fontFactor * 0.9
+          : fontFactor * 0.9,
     },
     // ProductsLinks
     textItemMain: {
