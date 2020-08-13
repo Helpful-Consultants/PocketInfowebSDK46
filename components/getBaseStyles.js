@@ -39,7 +39,41 @@ export default getBaseStyles = (props) => {
       : scale * 8
     : scale * 8;
 
-  //   console.log('scale!!!!!!!!', scale);
+  let gridHeight = height
+    ? height >= 1200
+      ? 160
+      : height >= 1024
+      ? 120
+      : height >= 840
+      ? 125
+      : height >= 720
+      ? 110
+      : height >= 630
+      ? 100
+      : 88
+    : 80;
+
+  let gridWidth =
+    scale && width
+      ? scale >= 3.5
+        ? width >= 768
+          ? '45%'
+          : '45%'
+        : scale >= 3
+        ? width >= 768
+          ? '45%'
+          : '45%'
+        : scale >= 2
+        ? width >= 768
+          ? '37%'
+          : width >= 600
+          ? '45%'
+          : '45%'
+        : '45%'
+      : '45%';
+
+  //   console.log('gridHeight!!!!!!!!', gridHeight);
+  //   console.log('gridWidth!!!!!!!!', gridWidth);
   //   console.log('fontFactor!!!!!!!!', fontFactor);
 
   let baseFontSize = fontFactor * 1;
@@ -741,7 +775,8 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       alignItems: 'center',
       // width: PixelRatio.getPixelSizeForLayoutSize(50),
-      height: Platform.OS === 'ios' ? RFPercentage(14) : RFPercentage(20),
+      //height: Platform.OS === 'ios' ? RFPercentage(14) : RFPercentage(20),
+      height: gridHeight,
       borderColor: Colors.vwgDeepBlue,
       borderStyle: 'solid',
       borderWidth: 1,
@@ -758,8 +793,8 @@ export default getBaseStyles = (props) => {
       elevation: Platform.OS === 'ios' ? 0 : 5,
       borderRadius: Platform.OS === 'ios' ? 5 : 4,
       // height: PixelRatio.getPixelSizeForLayoutSize(40),
-      width: Platform.OS === 'ios' ? RFPercentage(23.5) : RFPercentage(34),
-      // padding: 5
+      // width: Platform.OS === 'ios' ? RFPercentage(23.5) : RFPercentage(34),
+      width: gridWidth,
     },
 
     viewPaddedLeft: {
