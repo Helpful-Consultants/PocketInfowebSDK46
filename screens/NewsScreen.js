@@ -164,7 +164,7 @@ export default NewsScreen = (props) => {
           {filteredItems && filteredItems.length > 0 ? (
             <View style={baseStyles.viewPromptRibbon}>
               <Text style={baseStyles.textPromptRibbon}>
-                Touch a news item to see more on Tools Infoweb.
+                Touch an item to see more on Tools Infoweb.
               </Text>
             </View>
           ) : null}
