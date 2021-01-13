@@ -4,7 +4,7 @@ import {
   take,
   call,
   put,
-  fork
+  fork,
 } from 'redux-saga/effects';
 import * as actions from '../actions/user';
 import * as wipsActions from '../actions/dealerWips';
@@ -23,7 +23,7 @@ function* getUser({ payload }) {
   try {
     const result = yield call(api.getUser, {
       email: payload.email,
-      pin: payload.pin
+      pin: payload.pin,
     });
     // console.log('in user saga - 200');
     // console.log(result && result);
@@ -47,16 +47,17 @@ function* getUser({ payload }) {
           actions.getUserSuccess({
             items: result.data,
             userPin: payload.pin,
+            userId: payload.email,
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
-              null
+              null,
           })
         );
         let userApiFetchParamsObj = {
           dealerId:
             result.data[0].dealerId && result.data[0].dealerId.toString(),
-          intId: result.data[0].intId && result.data[0].intId.toString()
+          intId: result.data[0].intId && result.data[0].intId.toString(),
         };
         // console.log(
         //   'userApiFetchParamsObj is ',
@@ -86,7 +87,7 @@ function* getUser({ payload }) {
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
-              null
+              null,
           })
         );
       } else {
@@ -103,7 +104,7 @@ function* getUser({ payload }) {
                 result.request &&
                 result.request._url &&
                 result.request._url) ||
-              null
+              null,
           })
         );
       }
@@ -120,7 +121,7 @@ function* getUser({ payload }) {
               result.request &&
               result.request._url &&
               result.request._url) ||
-            null
+            null,
         })
       );
     }
@@ -192,7 +193,7 @@ function* getUser({ payload }) {
       actions.userError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }

@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   userApiFetchParamsObj: null,
   userIsSignedIn: false,
   userIsValidated: false,
-  userEmail: null,
+  //   userEmail: null,
+  userId: null,
   userPin: null,
   userName: null,
   userIsValidated: false,
@@ -60,6 +61,11 @@ export default function user(state = INITIAL_STATE, action) {
       let userPin =
         (action.payload && action.payload.userPin && action.payload.userPin) ||
         null;
+      //   let userEmail =
+      //     (action.payload &&
+      //       action.payload.userEmail &&
+      //       action.payload.userEmail) ||
+      //     null;
       let userId =
         (action.payload &&
           action.payload.items &&
@@ -122,6 +128,7 @@ export default function user(state = INITIAL_STATE, action) {
         userData: action.payload.items,
         userName: userName,
         userPin: userPin,
+        // userEmail: userEmail,
         userId: userId,
         dealerName: dealerName,
         userBrand: userBrand,
