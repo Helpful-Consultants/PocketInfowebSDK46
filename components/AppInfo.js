@@ -86,9 +86,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>
-        Accept larger text. Fix search bug.
-      </Text>
+      <Text style={baseStyles.panelTextAppInfo}>Improve brand check.</Text>
     </View>
   );
 };

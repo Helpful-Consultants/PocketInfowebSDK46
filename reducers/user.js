@@ -84,27 +84,37 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log(action.payload && action.payload);
       //   console.log('action.payload.items ', action.payload.items);
       //   console.log('action.payload.items[0] ', action.payload.items[0]);
-      //   console.log('userDataBrand is ', userDataBrand);
+      console.log('userDataBrand is ', userDataBrand);
 
       switch (userDataBrand) {
         case 'audi': {
+          console.log('userDataBrand is audi ');
           userBrand = 'au';
+          break;
         }
         case 'seat': {
+          console.log('userDataBrand is seat ');
           userBrand = 'se';
+          break;
         }
         case 'skoda': {
+          console.log('userDataBrand is skoda');
           userBrand = 'sk';
+          break;
         }
         case 'volkswagen': {
+          console.log('userDataBrand is vw');
           userBrand = 'vw';
+          break;
         }
         case 'volkswagen commercial vehicles': {
+          console.log('userDataBrand is cv ');
           userBrand = 'cv';
+          break;
         }
       }
       //   userBrand = 'se';
-      //   console.log('userBrand in reducer is ', userBrand);
+      console.log('userBrand in reducer is ', userBrand);
       return {
         ...state,
         userIsSignedIn: true,
