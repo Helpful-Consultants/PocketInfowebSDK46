@@ -484,10 +484,10 @@ export default FindToolsScreen = (props) => {
 
   const deleteWipRequestHandler = () => {
     const wipNumber = (lastWipProcessed && lastWipProcessed.wipNumber) || '';
-    console.log(
-      'in deleteWipRequestHandler last wip',
-      lastWipProcessed && lastWipProcessed
-    );
+    // console.log(
+    //   'in deleteWipRequestHandler last wip',
+    //   lastWipProcessed && lastWipProcessed
+    // );
 
     const wipId =
       (wipNumber && lastWipProcessed.wipId) ||

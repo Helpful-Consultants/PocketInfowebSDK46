@@ -69,15 +69,21 @@ export default LtpScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    // console.log('getting unique LTP items', ltpItems && ltpItems);
     // console.log('userBrand is ', userBrand);
     let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
     let ltpItemsFiltered = [];
     if (userBrand) {
-      //   console.log('userBrand is ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(
-        (item) => item[userBrand] === 'Y' || 'y'
-      );
+      const tempItem = ltpItemsAll[2];
+      //   console.log(
+      //     'userBrand is ',
+      //     userBrand,
+      //     ltpItemsAll[2],
+      //     tempItem[userBrand]
+      //   );
+      ltpItemsFiltered =
+        userBrand &&
+        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
     } else {
       //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
@@ -89,6 +95,11 @@ export default LtpScreen = (props) => {
           item.vw === ('Y' || 'y')
       );
     }
+
+    // console.log(
+    //   'ltpItemsFiltered',
+    //   ltpItemsFiltered && ltpItemsFiltered.length
+    // );
 
     let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
     // console.log(ltpItemsSorted);
@@ -120,7 +131,11 @@ export default LtpScreen = (props) => {
   //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
   //     dataError
   //   );
-  console.log('rendering LTP Screen');
+  console.log(
+    'rendering LTP Screen',
+    ltpItems && ltpItems.length,
+    itemsToShow && itemsToShow.length
+  );
 
   return (
     <View style={baseStyles.containerFlexAndMargin}>

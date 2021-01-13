@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const eMailAddress = 'alan@helpfulconsultants.com';
-const dummyDealerId = 'sgroves';
-const pin = '808255';
+// const eMailAddress = 'alan@helpfulconsultants.com';
+// const dummyDealerId = 'sgroves';
+// const pin = '808255';
 
-const dummyUrl =
-  '/mandatoryList/?controller=api&action=listAllTools&dealerId=' +
-  dummyDealerId;
+// const dummyUrl =
+//   '/mandatoryList/?controller=api&action=listAllTools&dealerId=' +
+//   dummyDealerId;
 // console.log(dummyUrl);
 
 export const getDealerTools = ({ dealerId }) => {
