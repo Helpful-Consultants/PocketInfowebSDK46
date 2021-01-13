@@ -18,7 +18,11 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
-import { revalidateUserCredentials, signOutUserRequest } from '../actions/user';
+import {
+  getUserRequest,
+  revalidateUserCredentials,
+  signOutUserRequest,
+} from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
 import {
@@ -49,6 +53,8 @@ export default HomeScreen = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
+  const userId = useSelector((state) => state.user.userId);
+  const userPin = useSelector((state) => state.user.userPin);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const userApiFetchParamsObj = useSelector(
@@ -68,6 +74,7 @@ export default HomeScreen = (props) => {
   );
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
 
+  const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isLoadingOdis = useSelector((state) => state.odis.isLoading);
   const isLoadingNews = useSelector((state) => state.news.isLoading);
@@ -93,6 +100,12 @@ export default HomeScreen = (props) => {
   });
 
   const getAllItems = useCallback(async (userApiFetchParamsObj) => {
+    dispatch(
+      getUserRequest({
+        email: userId,
+        pin: userPin,
+      })
+    );
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
@@ -132,6 +145,7 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (
+      isLoadingUser ||
       isLoadingOdis ||
       isLoadingNews ||
       isLoadingWips ||
@@ -143,6 +157,7 @@ export default HomeScreen = (props) => {
       setIsLoadingAny(false);
     }
   }, [
+    isLoadingUser,
     isLoadingOdis,
     isLoadingNews,
     isLoadingWips,

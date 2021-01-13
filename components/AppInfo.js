@@ -86,7 +86,9 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>Improve brand check.</Text>
+      <Text style={baseStyles.panelTextAppInfo}>
+        Changes: Improved brand check for LTP
+      </Text>
     </View>
   );
 };

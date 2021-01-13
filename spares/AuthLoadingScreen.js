@@ -15,23 +15,23 @@ export default AuthLoadingScreen = (props) => {
   const dispatch = useDispatch();
 
   console.log('in AuthLoadingScreen');
-
+  ///dddd
   useEffect(() => {
-    if (userEmail && userPin) {
+    if (userId && userPin) {
       if (userLastUpdate) {
-        console.log('in AuthLoadingScreen', userEmail, userPin, userLastUpdate);
+        console.log('in AuthLoadingScreen', userId, userPin, userLastUpdate);
         dispatch(setUserValidated());
       } else {
         console.log(
           'in AuthLoadingScreen no last update',
-          userEmail,
+          userId,
           userPin,
           userLastUpdate
         );
         dispatch(setUserOutdatedCredentials());
       }
     } else {
-      console.log('in AuthLoadingScreen no userEmail && userPin');
+      console.log('in AuthLoadingScreen no userId && userPin');
       dispatch(setUserOutdatedCredentials());
     }
   }, []);
