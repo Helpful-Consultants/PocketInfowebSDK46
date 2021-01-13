@@ -423,9 +423,9 @@ export default FindToolsScreen = (props) => {
     let ltpItemsFiltered = [];
     if (userBrand) {
       //   console.log('userBrand is ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(
-        (item) => item[userBrand] === 'Y' || 'y'
-      );
+      ltpItemsFiltered =
+        userBrand &&
+        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
     } else {
       //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
