@@ -159,6 +159,7 @@ export default FindToolsScreen = (props) => {
     (state) => state.dealerWips.dealerWipsItems
   );
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
+  const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingTools = useSelector((state) => state.dealerTools.isLoading);
   const dataErrorTools = useSelector((state) => state.dealerTools.error);
   const dataErrorUrlTools = useSelector(
@@ -352,12 +353,12 @@ export default FindToolsScreen = (props) => {
   useEffect(() => {
     // runs only once
     // console.log('in tools use effect');
-    if (isLoadingTools || isLoadingWips || isLoadingLtp) {
+    if (isLoadingUser || isLoadingTools || isLoadingWips || isLoadingLtp) {
       setIsLoadingAny(true);
     } else {
       setIsLoadingAny(false);
     }
-  }, [isLoadingTools, isLoadingWips, isLoadingLtp]);
+  }, [isLoadingUser, isLoadingTools, isLoadingWips, isLoadingLtp]);
 
   useEffect(() => {
     // runs only once
@@ -412,6 +413,7 @@ export default FindToolsScreen = (props) => {
     dataErrorLtp,
     dealerToolsItems,
     ltpItems,
+    isLoadingUser,
     isLoadingTools,
     isLoadingLtp,
   ]);
