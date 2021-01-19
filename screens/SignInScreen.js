@@ -15,7 +15,7 @@ import { Button, Input, Icon, Text } from 'react-native-elements';
 import Colors from '../constants/Colors';
 // import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
-import { getUserRequest } from '../actions/user';
+import { checkUserCredentialsRequest } from '../actions/user';
 import getBaseStyles from '../components/getBaseStyles';
 // import validation from 'validate';
 
@@ -80,15 +80,23 @@ export default SignInScreen = (props) => {
   });
 
   useEffect(() => {
+    console.log(
+      'in sign in, here a1, userIsValidated ',
+      userIsValidated,
+      'userError',
+      userError
+    );
     if (userIsValidated || userError) {
-      //   console.log('useEffect applied');
+      console.log('useEffect applied', userIsValidated, 'userError', userError);
       setIsLoading(false);
     }
     if (userIsValidated) {
-      console.log('userIsValidated so navigating to main');
+      console.log('userIsValidated: ', userIsValidated && userIsValidated);
       //   navigation.navigate('Main');
     }
   }, [userIsValidated, userError]);
+
+  console.log('in sign in, here a2');
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, text) => {
@@ -109,7 +117,7 @@ export default SignInScreen = (props) => {
     },
     [dispatchFormState]
   );
-
+  console.log('in sign in, here a3');
   const submitHandler = async () => {
     if (formState.formIsValid) {
       const signInData = {
@@ -118,17 +126,21 @@ export default SignInScreen = (props) => {
       };
       setError(null);
       setIsLoading(true);
-      dispatch(getUserRequest(signInData));
+      dispatch(checkUserCredentialsRequest(signInData));
     }
   };
-
+  console.log('in sign in, here a4');
   return (
     <View style={{ paddingTop: insets.top }}>
       <ScrollView>
         <AppNameWithLogo />
         <Text style={baseStyles.textInstructions}>
           {userIsValidated
-            ? `Signed in as ${userDataObj.userName}`
+            ? `Signed in as ${
+                userDataObj && userDataObj.userName
+                  ? userDataObj.userName
+                  : null
+              }`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
         <View>

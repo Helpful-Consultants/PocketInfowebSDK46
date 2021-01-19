@@ -22,22 +22,25 @@ const INITIAL_STATE = {
 
 export default function user(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  //   console.log('in user reducer');
-  //   console.log('action.type is:', action.type);
+  console.log('in user reducer, action.type is:', action.type);
   switch (action.type) {
     case Types.GET_USER_START: {
       return {
         ...state,
-        userData: [],
+        //  userData: [],
         isLoading: true,
         error: null,
         dataErrorUrl: null,
         statusCode: null,
-        userApiFetchParamsObj: null,
+        //  userApiFetchParamsObj: null,
       };
     }
     case Types.GET_USER_SUCCESS: {
-      //   console.log('action.payload is:', action.payload.items);
+      console.log(
+        ' GET_USER_SUCCESS reducer action.payload is:',
+        action.payload.items
+      );
+      console.log('reducer got here: a');
       let userBrand = null;
       let userDataBrand =
         (action.payload &&
@@ -45,19 +48,22 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].brand &&
           action.payload.items[0].brand) ||
         null;
-
+      console.log('reducer got here: a2');
       let userName =
         (action.payload &&
           action.payload.items &&
           action.payload.items[0].userName &&
           action.payload.items[0].userName) ||
         null;
+      console.log('reducer got here: b');
       let dealerName =
         (action.payload &&
           action.payload.items &&
           action.payload.items[0].dealerName &&
           action.payload.items[0].dealerName) ||
         null;
+
+      console.log('reducer got here: c');
       let userPin =
         (action.payload && action.payload.userPin && action.payload.userPin) ||
         null;
@@ -73,7 +79,16 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].userId) ||
         null;
 
-      userDataBrand = userDataBrand && userDataBrand.toLowerCase();
+      console.log('reducer got here: d');
+
+      userDataBrand = (userDataBrand && userDataBrand.toLowerCase()) || null;
+
+      let userIntId =
+        action.payload &&
+        action.payload.items &&
+        action.payload.items[0] &&
+        action.payload.items[0].intId &&
+        action.payload.items[0].intId.toString();
 
       let userApiFetchParamsObj =
         action.payload &&
@@ -90,6 +105,8 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log(action.payload && action.payload);
       //   console.log('action.payload.items ', action.payload.items);
       //   console.log('action.payload.items[0] ', action.payload.items[0]);
+      userDataBrand = (userDataBrand && userDataBrand.toLowerCase()) || null;
+
       console.log('userDataBrand is ', userDataBrand);
 
       switch (userDataBrand) {
@@ -130,6 +147,7 @@ export default function user(state = INITIAL_STATE, action) {
         userPin: userPin,
         // userEmail: userEmail,
         userId: userId,
+        userIntId: userIntId,
         dealerName: dealerName,
         userBrand: userBrand,
         userApiFetchParamsObj: userApiFetchParamsObj,
@@ -162,7 +180,7 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_USER_VALIDATED: {
-      //   console.log('action.payload is:', action.payload.error);
+      console.log('action.payload is:', action.payload.error);
       return {
         ...state,
         userIsSignedIn: true,
@@ -171,14 +189,13 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.REVALIDATE_USER_CREDENTIALS: {
-      //   console.log('actionis:', action.payload && action.payload);
       const ageOfCredentialsLimit = 90;
       let now = moment();
       let revalidatedUser = false;
-      //   console.log(
-      //     'in revalidateUserCredentials',
-      //     action.payload && action.payload.calledBy && action.payload.calledBy
-      //   );
+      console.log(
+        'in revalidateUserCredentials reducer',
+        action.payload && action.payload.calledBy && action.payload.calledBy
+      );
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
         if (state.lastUpdate) {
           console.log('now:', now);
@@ -202,7 +219,7 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.SIGN_OUT_USER_REQUEST: {
-      //   console.log('action.is:', action.type);
+      console.log('action.is:', action.type);
       return {
         ...state,
         userIsSignedIn: false,
@@ -215,9 +232,9 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.USER_ERROR: {
-      //   console.log('action.payload starts');
-      //   console.log(action.payload);
-      //   console.log('action.payload ends');
+      console.log('action.payload starts');
+      console.log(action.payload);
+      console.log('action.payload ends');
       return {
         ...state,
         userIsSignedIn: false,

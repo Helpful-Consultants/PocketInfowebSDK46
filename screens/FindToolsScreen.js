@@ -413,7 +413,6 @@ export default FindToolsScreen = (props) => {
     dataErrorLtp,
     dealerToolsItems,
     ltpItems,
-    isLoadingUser,
     isLoadingTools,
     isLoadingLtp,
   ]);
@@ -1212,7 +1211,10 @@ export default FindToolsScreen = (props) => {
   //   );
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
 
-  //   console.log('rendering Find Tools screen', mode);
+  console.log(
+    'rendering Find Tools screen, userApiFetchParamsObj:',
+    userApiFetchParamsObj
+  );
 
   return (
     <View style={baseStyles.containerFlex}>
@@ -1252,7 +1254,10 @@ export default FindToolsScreen = (props) => {
             <View>
               <DealerToolsList
                 items={itemsToShow}
-                userIntId={userApiFetchParamsObj.userIntId}
+                userIntId={
+                  (userApiFetchParamsObj && userApiFetchParamsObj.userIntId) ||
+                  null
+                }
                 dealerWipsItems={dealerWipsItems}
                 bookedToolsList={bookedToolsList}
                 selectItemHandler={selectItemHandler}

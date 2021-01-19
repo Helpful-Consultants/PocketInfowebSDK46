@@ -12,7 +12,7 @@ export default AppInfo = (props) => {
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const brandText =
     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
-  //   console.log(props);
+  console.log('AppInfo props, userDataObj', userDataObj && userDataObj);
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
 
@@ -30,7 +30,9 @@ export default AppInfo = (props) => {
     <View style={baseStyles.containerFlex}>
       <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
       {userDataObj && userDataObj.userName ? (
-        <Text style={baseStyles.panelTextBrand}>{userDataObj.userName}</Text>
+        <Text style={baseStyles.panelTextBrand}>
+          {(userDataObj && userDataObj.userName) || null}
+        </Text>
       ) : null}
       <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
 

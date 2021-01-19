@@ -42,8 +42,9 @@ var iconSize = RFPercentage(5);
 export default HomeScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  // console.log(props)
-  //   console.log('IN HOME !!!!!');
+
+  console.log('IN HOME !!!!!');
+  //   console.log(props);
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
 
@@ -54,6 +55,8 @@ export default HomeScreen = (props) => {
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
   const userId = useSelector((state) => state.user.userId);
+  const userIntId =
+    userDataObj && userDataObj.intId ? userDataObj.intId.toString() : null;
   const userPin = useSelector((state) => state.user.userPin);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
@@ -100,12 +103,16 @@ export default HomeScreen = (props) => {
   });
 
   const getAllItems = useCallback(async (userApiFetchParamsObj) => {
-    dispatch(
-      getUserRequest({
-        email: userId,
-        pin: userPin,
-      })
-    );
+    // dispatch(
+    //   getUserRequest({
+    //     intId:
+    //       (userIntId && userIntId) ||
+    //       (userApiFetchParamsObj &&
+    //         userApiFetchParamsObj.intId &&
+    //         userApiFetchParamsObj.intId) ||
+    //       null,
+    //   })
+    // );
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
@@ -113,7 +120,10 @@ export default HomeScreen = (props) => {
   });
 
   const updateItemsAsync = async () => {
-    // console.log('home - updateItemsAsync');
+    console.log(
+      'home - updateItemsAsync, userApiFetchParamsObj:',
+      userApiFetchParamsObj && userApiFetchParamsObj
+    );
     if (
       userApiFetchParamsObj &&
       userApiFetchParamsObj.intId &&

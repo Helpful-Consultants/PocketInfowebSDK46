@@ -82,9 +82,15 @@ export default function StatsSummary(props) {
         <View>
           <View style={{ marginHorizontal: 30 }}>
             <Text style={baseStyles.textStatsTitle}>App user</Text>
-            <Text style={baseStyles.textStats}>{userDataObj.userName}</Text>
-            <Text style={baseStyles.textStats}>{userDataObj.dealerName}</Text>
-            <Text style={baseStyles.textStats}>{userDataObj.dealerId}</Text>
+            <Text style={baseStyles.textStats}>
+              {(userDataObj && userDataObj.userName) || null}
+            </Text>
+            <Text style={baseStyles.textStats}>
+              {(userDataObj && userDataObj.dealerName) || null}
+            </Text>
+            <Text style={baseStyles.textStats}>
+              {(userDataObj && userDataObj.dealerId) || null}
+            </Text>
           </View>
           <View>
             <Text style={baseStyles.textStatsTitle}>Mandatory tools</Text>

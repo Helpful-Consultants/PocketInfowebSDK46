@@ -164,7 +164,7 @@ export default StatsScreen = (props) => {
         <View>
           <StatsSummary
             statsObj={statsObj}
-            userDataObj={userDataObj}
+            userDataObj={userDataObj ? userDataObj : null}
             activeJobsCount={activeJobsCount}
             dealerToolsCount={dealerToolsCount}
             effectiveness={effectiveness}

@@ -4,11 +4,18 @@ export const getUserStart = () => ({
   type: Types.GET_USER_START,
 });
 
-export const getUserRequest = ({ email, pin }) => ({
-  type: Types.GET_USER_REQUEST,
+export const checkUserCredentialsRequest = ({ email, pin }) => ({
+  type: Types.CHECK_USER_CREDENTIALS_REQUEST,
   payload: {
     email,
     pin,
+  },
+});
+
+export const getUserRequest = ({ intId }) => ({
+  type: Types.GET_USER_REQUEST,
+  payload: {
+    intId,
   },
 });
 
@@ -16,11 +23,11 @@ export const signOutUserRequest = () => ({
   type: Types.SIGN_OUT_USER_REQUEST,
 });
 
-export const getUserSuccess = ({ statusCode, items, userPin }) => ({
+export const getUserSuccess = ({ statusCode, items }) => ({
   type: Types.GET_USER_SUCCESS,
   payload: {
     items,
-    userPin,
+    // userPin,
     statusCode,
   },
 });

@@ -3,6 +3,7 @@ export default {
   GET_USER_REQUEST: 'user/get_user_request',
   GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
   GET_USER_SUCCESS: 'user/get_user_success',
+  CHECK_USER_CREDENTIALS_REQUEST: 'user/check_user_credentials_request',
   SIGN_OUT_USER_REQUEST: 'user/sign_out_user',
   SET_USER_OUTDATED_CREDENTIALS: 'user/set_user_outdated_credentials',
   SET_USER_VALIDATED: 'user/set_user_validated',
