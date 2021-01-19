@@ -196,16 +196,20 @@ export default function user(state = INITIAL_STATE, action) {
         'in revalidateUserCredentials reducer',
         action.payload && action.payload.calledBy && action.payload.calledBy
       );
+      //   if (state.userIsSignedIn && state.userIsSignedIn === true) {
+      //     if (state.lastUpdate) {
+      //       console.log('now:', now);
+      //       let ageOfCredentials = now.diff(state.lastUpdate, 'days');
+      //       console.log('ageOfCredentials:', ageOfCredentials);
+      //       if (ageOfCredentials <= ageOfCredentialsLimit) {
+      //         revalidatedUser = true;
+      //         console.log('ageOfCredentials good', ageOfCredentials);
+      //       }
+      //     }
+      //   }
+
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
-        if (state.lastUpdate) {
-          console.log('now:', now);
-          let ageOfCredentials = now.diff(state.lastUpdate, 'days');
-          console.log('ageOfCredentials:', ageOfCredentials);
-          if (ageOfCredentials <= ageOfCredentialsLimit) {
-            revalidatedUser = true;
-            console.log('ageOfCredentials good', ageOfCredentials);
-          }
-        }
+        revalidatedUser = true;
       }
       console.log(
         'in revalidateUserCredentials, userIsValidated',
@@ -214,7 +218,7 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         // userIsValidated: revalidatedUser,
-        userIsValidated: true,
+        userIsValidated: revalidatedUser,
       };
     }
 
