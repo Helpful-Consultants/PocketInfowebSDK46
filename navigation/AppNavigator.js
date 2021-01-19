@@ -148,6 +148,9 @@ export default AppNavigator = (props) => {
 
   //   revalidateUser();
   dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+  console.log('AppNavigator, userIsValidated 2', userIsValidated);
+  console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
+  console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
 
   return (
     <NavigationContainer>
