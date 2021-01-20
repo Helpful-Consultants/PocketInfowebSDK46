@@ -55,8 +55,12 @@ export default HomeScreen = (props) => {
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
   const userId = useSelector((state) => state.user.userId);
-  const userIntId =
-    userDataObj && userDataObj.intId ? userDataObj.intId.toString() : null;
+  //   console.log('IN HOME !!!!! 1f');
+  const userIntId = useSelector((state) => state.user.userIntId);
+  //   console.log('IN HOME !!!!! 1g');
+  //   const userIntId =
+  //     userDataObj && userDataObj.intId ? userDataObj.intId.toString() : null;
+
   const userPin = useSelector((state) => state.user.userPin);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
@@ -103,16 +107,16 @@ export default HomeScreen = (props) => {
   });
 
   const getAllItems = useCallback(async (userApiFetchParamsObj) => {
-    // dispatch(
-    //   getUserRequest({
-    //     intId:
-    //       (userIntId && userIntId) ||
-    //       (userApiFetchParamsObj &&
-    //         userApiFetchParamsObj.intId &&
-    //         userApiFetchParamsObj.intId) ||
-    //       null,
-    //   })
-    // );
+    dispatch(
+      getUserRequest({
+        intId:
+          (userIntId && userIntId) ||
+          (userApiFetchParamsObj &&
+            userApiFetchParamsObj.intId &&
+            userApiFetchParamsObj.intId) ||
+          null,
+      })
+    );
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
