@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   userIsSignedIn: false,
   userIsValidated: false,
   //   userEmail: null,
+  userIntId: null,
   userId: null,
   userPin: null,
   userName: null,
@@ -22,7 +23,7 @@ const INITIAL_STATE = {
 
 export default function user(state = INITIAL_STATE, action) {
   //   console.log(Types);
-  console.log('in user reducer, action.type is:', action.type);
+  //   console.log('@@@@@@@@@ in user reducer, action.type is:', action.type);
   switch (action.type) {
     case Types.GET_USER_START: {
       return {
@@ -193,7 +194,7 @@ export default function user(state = INITIAL_STATE, action) {
       let now = moment();
       let revalidatedUser = false;
       console.log(
-        'in revalidateUserCredentials reducer',
+        'in revalidateUserCredentials reducer, called by',
         action.payload && action.payload.calledBy && action.payload.calledBy
       );
       //   if (state.userIsSignedIn && state.userIsSignedIn === true) {
@@ -252,7 +253,7 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     default: {
-      //   console.log(state);
+      //   console.log('in user reducer, default case', state);
       return state;
     }
   }
