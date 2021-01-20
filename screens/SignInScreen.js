@@ -96,8 +96,6 @@ export default SignInScreen = (props) => {
     }
   }, [userIsValidated, userError]);
 
-  console.log('in sign in, here a2');
-
   const inputChangeHandler = useCallback(
     (inputIdentifier, text) => {
       let isValid = false;
@@ -117,7 +115,7 @@ export default SignInScreen = (props) => {
     },
     [dispatchFormState]
   );
-  console.log('in sign in, here a3');
+
   const submitHandler = async () => {
     if (formState.formIsValid) {
       const signInData = {
@@ -129,18 +127,14 @@ export default SignInScreen = (props) => {
       dispatch(checkUserCredentialsRequest(signInData));
     }
   };
-  console.log('in sign in, here a4');
+
   return (
     <View style={{ paddingTop: insets.top }}>
       <ScrollView>
         <AppNameWithLogo />
         <Text style={baseStyles.textInstructions}>
           {userIsValidated
-            ? `Signed in as ${
-                userDataObj && userDataObj.userName
-                  ? userDataObj.userName
-                  : null
-              }`
+            ? `Signed in`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
         <View>
