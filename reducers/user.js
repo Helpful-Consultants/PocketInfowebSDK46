@@ -190,9 +190,9 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.REVALIDATE_USER_CREDENTIALS: {
-      const ageOfCredentialsLimit = 90;
-      let now = moment();
-      let revalidatedUser = false;
+      //   const ageOfCredentialsLimit = 90;
+      //   let now = moment();
+      let revalidatedUser = true;
       console.log(
         'in revalidateUserCredentials reducer, called by',
         action.payload && action.payload.calledBy && action.payload.calledBy
@@ -224,12 +224,16 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.SIGN_OUT_USER_REQUEST: {
-      console.log('action.is:', action.type);
+      console.log('reducer action.is:', action.type);
+      console.log(
+        'in signOutuser reducer, called by',
+        action.payload && action.payload.calledBy && action.payload.calledBy
+      );
       return {
         ...state,
         userIsSignedIn: false,
         userIsValidated: false,
-        userData: [],
+        //    userData: [],
         isLoading: false,
         error: null,
         dataErrorUrl: null,

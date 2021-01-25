@@ -19,8 +19,11 @@ export const getUserRequest = ({ intId }) => ({
   },
 });
 
-export const signOutUserRequest = () => ({
+export const signOutUserRequest = ({ calledBy }) => ({
   type: Types.SIGN_OUT_USER_REQUEST,
+  payload: {
+    calledBy: calledBy || null,
+  },
 });
 
 export const getUserSuccess = ({ statusCode, items }) => ({

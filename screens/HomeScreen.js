@@ -101,7 +101,7 @@ export default HomeScreen = (props) => {
   const [ageOfProducts, setAgeOfProducts] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-
+  console.log('IN HOME !!!!!  2');
   const getLtpItems = useCallback(async () => {
     dispatch(getLtpRequest());
   });
@@ -146,6 +146,8 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! brand', userBrand);
   const notificationLimit = 168;
   const now = moment();
+
+  console.log('IN HOME !!!!! 3');
 
   useEffect(() => {
     // runs only once as LTP doesnt change too often
@@ -268,6 +270,8 @@ export default HomeScreen = (props) => {
   // }
   //   }, [isRefreshNeeded]);
 
+  console.log('IN HOME !!!!! 4');
+
   const getUpdatesAsync = async () => {
     //   console.log('in home screen getUpdatesAsync');
     try {
@@ -350,10 +354,11 @@ export default HomeScreen = (props) => {
     dispatch(emptyDealerToolsRequest());
     // dispatch(signOutUserRequest()), [userIsValidated];
     dispatch(emptyLtpRequest());
-    dispatch(signOutUserRequest());
+    dispatch(signOutUserRequest({ calledBy: 'HomeScreen' }));
     // navigation.navigate('AuthLoading');
   });
 
+  console.log('IN HOME !!!!!  5');
   useEffect(() => {
     // console.log('news useEffect', lastUpdateNews);
     if (lastUpdateNews && lastUpdateNews !== null) {
@@ -440,7 +445,7 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
-  //   console.log('Rendering Home screen');
+  console.log('Rendering Home screen');
 
   return (
     <View

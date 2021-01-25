@@ -10,8 +10,14 @@ export default AppInfo = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const brandText =
-    (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
+  //   const brandText =
+  //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
+
+  const brandText = userDataObj
+    ? userDataObj.brand
+      ? userDataObj.brand
+      : 'All brands'
+    : '';
   console.log('AppInfo props, userDataObj', userDataObj && userDataObj);
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);

@@ -107,13 +107,13 @@ const DrawerNavigator = () => {
           initialRouteName: 'News',
         }}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name='SignedOutStack'
         component={SignOutScreen}
         options={{
           drawerLabel: 'Sign out',
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 };
@@ -152,16 +152,19 @@ export default AppNavigator = (props) => {
   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
 
+  const allOK =
+    userIsValidated &&
+    userIsValidated === true &&
+    userIsSignedIn &&
+    userIsSignedIn === true
+      ? true
+      : false;
+
+  console.log('AppNavigator,allOK ', allOK);
+
   return (
     <NavigationContainer>
-      {userIsValidated &&
-      userIsValidated === true &&
-      userIsSignedIn &&
-      userIsSignedIn === true ? (
-        <DrawerNavigator />
-      ) : userIsValidated === false || userIsSignedIn === false ? (
-        <SignedOutStack />
-      ) : null}
+      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
     </NavigationContainer>
   );
 };

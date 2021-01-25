@@ -20,7 +20,7 @@ export default SignOutScreen = (props) => {
   dispatch(emptyDealerWipsRequest());
   dispatch(emptyDealerToolsRequest());
   dispatch(emptyLtpRequest());
-  dispatch(signOutUserRequest());
+  dispatch(signOutUserRequest({ calledBy: 'SignoutScreen' }));
   //   props.navigation.navigate('AuthLoading');
 
   return (
