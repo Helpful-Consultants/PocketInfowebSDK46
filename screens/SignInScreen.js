@@ -124,6 +124,7 @@ export default SignInScreen = (props) => {
       };
       setError(null);
       setIsLoading(true);
+      //   console.log('dispatch(checkUserCredentialsRequest', signInData);
       dispatch(checkUserCredentialsRequest(signInData));
     }
   };
