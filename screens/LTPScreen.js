@@ -70,22 +70,22 @@ export default LtpScreen = (props) => {
 
   useEffect(() => {
     // console.log('getting unique LTP items', ltpItems && ltpItems);
-    // console.log('userBrand is ', userBrand);
+    console.log('userBrand is ', userBrand);
     let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
     let ltpItemsFiltered = [];
     if (userBrand) {
-      const tempItem = ltpItemsAll[2];
+      //   const tempItem = ltpItemsAll[2];
       //   console.log(
       //     'userBrand is ',
       //     userBrand,
-      //     ltpItemsAll[2],
+      //     ltpItemsAll.length,
       //     tempItem[userBrand]
       //   );
       ltpItemsFiltered =
         userBrand &&
         ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
     } else {
-      //   console.log('userBrand isnt : ', userBrand);
+      console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
         (item) =>
           item.au === ('Y' || 'y') ||
@@ -102,7 +102,7 @@ export default LtpScreen = (props) => {
     // );
 
     let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
-    // console.log(ltpItemsSorted);
+    console.log('ltpItemsSorted', ltpItemsSorted && ltpItemsSorted.length);
 
     setUniqueLtpItems(ltpItemsSorted);
     // setUniqueLtpItems([]);
@@ -113,6 +113,19 @@ export default LtpScreen = (props) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
+      //   console.log(
+      //     'LTP Screen  searchInputHandler for: ',
+      //     searchInput && searchInput,
+      //     'ltpItems: ',
+      //     ltpItems && ltpItems.length,
+      //     'itemsToShow: ',
+      //     itemsToShow && itemsToShow.length,
+      //     'uniqueLtpItems: ',
+      //     uniqueLtpItems && uniqueLtpItems.length,
+      //     'newFilteredItems:',
+      //     newFilteredItems && newFilteredItems.length,
+      //     newFilteredItems
+      //   );
       setFilteredItems(newFilteredItems);
     }
   };
@@ -131,11 +144,11 @@ export default LtpScreen = (props) => {
   //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
   //     dataError
   //   );
-  console.log(
-    'rendering LTP Screen',
-    ltpItems && ltpItems.length,
-    itemsToShow && itemsToShow.length
-  );
+  //   console.log(
+  //     'rendering LTP Screen',
+  //     ltpItems && ltpItems.length,
+  //     itemsToShow && itemsToShow.length
+  //   );
 
   return (
     <View style={baseStyles.containerFlexAndMargin}>
