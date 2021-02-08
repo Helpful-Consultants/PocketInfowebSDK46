@@ -1,1 +1,1 @@
-expo upload:ios --apple-id alanupstone@mac.com --apple-id-password 17Gdangafish1a@ --app-name Pocket Infoweb Pro --sku PocketInfowebPro
+expo upload:ios --apple-id alanupstone@mac.com --apple-id-password 16Gdangafish1a@ --app-name Pocket Infoweb Demo --sku PocketInfowebDemo
