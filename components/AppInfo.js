@@ -35,6 +35,10 @@ export default AppInfo = (props) => {
   return (
     <View style={baseStyles.containerFlex}>
       <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
+      {Constants.manifest.name &&
+      Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+        <Text style={baseStyles.panelTextBrand}>Showing new features</Text>
+      ) : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}

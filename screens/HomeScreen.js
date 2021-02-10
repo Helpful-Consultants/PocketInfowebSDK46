@@ -32,6 +32,7 @@ import {
 import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
+import Constants from 'expo-constants';
 
 const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
@@ -459,6 +460,10 @@ export default HomeScreen = (props) => {
         contentContainerStyle={baseStyles.containerFlexCentredJustfied}
       >
         <AppNameWithLogo />
+        {Constants.manifest.name &&
+        Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+          <Text style={baseStyles.panelTextBrand}>Showing new features</Text>
+        ) : null}
 
         <View style={baseStyles.containerFlexCentredJustfied}>
           {showReloadDialogue === true ? (
