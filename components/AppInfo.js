@@ -98,9 +98,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>
-        Changes: Newsfeed improvement
-      </Text>
+      <Text style={baseStyles.panelTextAppInfo}>Changes: 2 new features</Text>
     </View>
   );
 };

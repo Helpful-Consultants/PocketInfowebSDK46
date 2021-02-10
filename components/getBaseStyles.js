@@ -1,6 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
+import Constants from 'expo-constants';
 
 export default getBaseStyles = (props) => {
   const { fontScale, height, scale, width } = props;
@@ -9,6 +10,13 @@ export default getBaseStyles = (props) => {
   //   console.log(props && scale && 'in getBaseStyles, scale:', scale);
   //   console.log(props && height && 'in getBaseStyles, height:', height);
   //   console.log(props && width && 'in getBaseStyles, width:', width);
+
+  const gridRows =
+    Constants.manifest.name &&
+    Constants.manifest.name === 'Pocket Infoweb Extra'
+      ? 8
+      : 6;
+  console.log('gridRows', gridRows);
 
   const bottomTabHeight = height && height >= 1333 ? 100 : 80;
 
@@ -40,7 +48,19 @@ export default getBaseStyles = (props) => {
     : scale * 8;
 
   let gridHeight = height
-    ? height >= 1200
+    ? gridRows && gridRows === 8
+      ? height >= 1200
+        ? 140
+        : height >= 1024
+        ? 115
+        : height >= 840
+        ? 115
+        : height >= 720
+        ? 98
+        : height >= 630
+        ? 80
+        : 68
+      : height >= 1200
       ? 160
       : height >= 1024
       ? 120
@@ -85,7 +105,8 @@ export default getBaseStyles = (props) => {
 
   //   console.log('baseFontSizeLarger!!!!!!!!', baseFontSizeLarger);
 
-  let appNameFontSize = fontFactor * 2;
+  let appNameFontSize =
+    gridRows && gridRows === 8 ? fontFactor * 1.7 : fontFactor * 2;
   let panelTextFontSize = fontFactor * 1.1;
   let navBarFontSize = fontFactor * 1;
 
@@ -224,6 +245,10 @@ export default getBaseStyles = (props) => {
       flex: 1,
       backgroundColor: Colors.vwgWhite,
     },
+    containerFlexCentredJustfied: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     // OdisScreen
     containerFlexCentred: {
       flex: 1,
@@ -235,7 +260,7 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
     },
     // StatScreen
-    containerFlexCentredJustfied: {
+    containerFlexCentredJustfiedGrow: {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
@@ -405,6 +430,12 @@ export default getBaseStyles = (props) => {
       ...baseText,
       fontSize: baseFontSizeSmaller,
       paddingTop: 5,
+      paddingLeft: 18,
+    },
+    textExtraApp: {
+      ...baseText,
+      fontSize: baseFontSizeSmaller,
+      paddingTop: 2,
       paddingLeft: 18,
     },
     // PANEL - END
@@ -704,14 +735,14 @@ export default getBaseStyles = (props) => {
     //SignInScreen
     textSignedIn: {
       ...baseText,
-      fontSize: baseFontSizeLarge,
-      marginTop: 5,
+      fontSize: gridRows && gridRows === 8 ? baseFontSize : baseFontSizeLarge,
+      marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
     textSignedInSmall: {
       ...baseText,
       fontSize: baseFontSizeSmall,
-      marginTop: 5,
+      marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
     textInstructions: {
@@ -748,7 +779,8 @@ export default getBaseStyles = (props) => {
     },
     textHomeGridCell: {
       ...baseText,
-      fontSize: baseFontSizeLarge,
+      fontSize: gridRows === 8 ? baseFontSize : baseFontSizeLarge,
+      //color: gridRows === 8 ? Colors.vwgCoolOrange : Colors.vwgWhite,
       color: Colors.vwgWhite,
       lineHeight: baseFontSizeLarger,
       textAlign: 'center',
@@ -781,7 +813,24 @@ export default getBaseStyles = (props) => {
       borderStyle: 'solid',
       borderWidth: 1,
       backgroundColor: Colors.vwgDeepBlue,
-      margin: 5,
+      margin:
+        height >= 1200
+          ? 5
+          : height >= 1024
+          ? 5
+          : height >= 840
+          ? 5
+          : height >= 720
+          ? gridRows && gridRows === 8
+            ? 4
+            : 5
+          : height >= 630
+          ? gridRows && gridRows === 8
+            ? 4
+            : 5
+          : gridRows && gridRows === 8
+          ? 4
+          : 5,
       shadowColor: 'black',
       // shadowOpacity: 0.26,
       shadowOffset: { width: 0, height: 2 },
@@ -791,7 +840,7 @@ export default getBaseStyles = (props) => {
       //   shadowOffset: { width: 0, height: 2 },
       shadowRadius: Platform.OS === 'ios' ? 0 : 10,
       elevation: Platform.OS === 'ios' ? 0 : 5,
-      borderRadius: Platform.OS === 'ios' ? 5 : 4,
+      borderRadius: Platform.OS === 'ios' ? 3 : 4,
       // height: PixelRatio.getPixelSizeForLayoutSize(40),
       // width: Platform.OS === 'ios' ? RFPercentage(23.5) : RFPercentage(34),
       width: gridWidth,

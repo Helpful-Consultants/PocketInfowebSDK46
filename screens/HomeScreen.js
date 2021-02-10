@@ -446,6 +446,12 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
+  const gridRows =
+    Constants.manifest.name &&
+    Constants.manifest.name === 'Pocket Infoweb Extra'
+      ? 8
+      : 6;
+  console.log('home screen gridRows', gridRows);
   console.log('Rendering Home screen');
 
   return (
@@ -462,10 +468,17 @@ export default HomeScreen = (props) => {
         <AppNameWithLogo />
         {Constants.manifest.name &&
         Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-          <Text style={baseStyles.panelTextBrand}>Showing new features</Text>
+          <Text
+            style={{
+              ...baseStyles.textExtraApp,
+              color: Colors.vwgCoolOrange,
+            }}
+          >
+            Showing proposed new features
+          </Text>
         ) : null}
 
-        <View style={baseStyles.containerFlexCentredJustfied}>
+        <View style={baseStyles.containerFlexCentredJustfiedGrow}>
           {showReloadDialogue === true ? (
             <View>
               <Text style={baseStyles.textSmall}>
@@ -480,7 +493,7 @@ export default HomeScreen = (props) => {
               <View
                 style={{
                   ...baseStyles.viewRowFlexCentreJustifiedAligned,
-                  marginVertical: 5,
+                  marginVertical: gridRows && gridRows === 8 ? 2 : 5,
                 }}
               >
                 {shouldCheckAppVersion ? (
@@ -523,7 +536,7 @@ export default HomeScreen = (props) => {
                   </Text>
                 )}
               </View>
-              <View>
+              <View style={baseStyles.containerFlexCentredJustfied}>
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
@@ -682,11 +695,48 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                 </View>
+                {Constants.manifest.name &&
+                Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+                  <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
+                    <Touchable style={baseStyles.viewHomeGridCell}>
+                      <View>
+                        <Icon
+                          name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        <BadgedText
+                          showBadge={false}
+                          focused={false}
+                          text={'New feature 1'}
+                          value={'+'}
+                        />
+                      </View>
+                    </Touchable>
+                    <Touchable style={baseStyles.viewHomeGridCell}>
+                      <View>
+                        <Icon
+                          name={Platform.OS === 'ios' ? 'ios-add' : 'md-iadd'}
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        <BadgedText
+                          showBadge={false}
+                          focused={false}
+                          text={'New Feature 2'}
+                          value={'+'}
+                        />
+                      </View>
+                    </Touchable>
+                  </View>
+                ) : null}
               </View>
               <View
                 style={{
                   ...baseStyles.viewRowFlexCentreJustifiedAligned,
-                  marginTop: 10,
+                  marginTop: gridRows && gridRows === 8 ? 6 : 10,
                 }}
               >
                 <OdisLinkWithStatus
@@ -700,7 +750,7 @@ export default HomeScreen = (props) => {
 
               <View
                 style={{
-                  marginTop: 8,
+                  marginTop: gridRows && gridRows === 8 ? 3 : 8,
                   marginHorizontal: 20,
                 }}
               >
