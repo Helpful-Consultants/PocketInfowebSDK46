@@ -10,23 +10,23 @@ import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-// import { getAlertsRequest } from '../actions/dealerAlerts';
-// import { getDealerWipsRequest } from '../actions/dealerAlerts';
+// import { getCatalogueRequest } from '../actions/dealerCatalogue';
+// import { getDealerWipsRequest } from '../actions/dealerCatalogue';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
-// import AlertsSummary from './AlertsSummary';
+// import CatalogueSummary from './CatalogueSummary';
 import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
-export default AlertsScreen = (props) => {
+export default CatalogueScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  //   const dealerLtpAction
+  //   const dealerCatalogueAction
   //   Items = useSelector(
-  //     (state) => state.dealerAlerts.dealerLtpActionItems
+  //     (state) => state.dealerCatalogue.dealerCatalogueActionItems
   //   );
-  const dealerLtpActionItems = [];
+  const dealerCatalogueActionItems = [];
 
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
@@ -49,7 +49,7 @@ export default AlertsScreen = (props) => {
   //     userApiFetchParamsObj
   //   ]);
 
-  //   console.log('getAlertsData', getAlertsData);
+  //   console.log('getCatalogueData', getCatalogueData);
 
   //   const { navigation } = props;
 
@@ -77,13 +77,13 @@ export default AlertsScreen = (props) => {
       const getItemsAsync = async () => {
         getItems();
       };
-      dispatch(revalidateUserCredentials({ calledBy: 'AlertsScreen' }));
+      dispatch(revalidateUserCredentials({ calledBy: 'CatalogueScreen' }));
       getItemsAsync();
     }, [])
   );
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getAlertsData);
+    // console.log('in refreshRequestHandler', getCatalogueData);
     getItems();
   };
 
@@ -99,8 +99,8 @@ export default AlertsScreen = (props) => {
   //     // console.log('in stats screen, no userDataObj');
   //     getItems();
   //   }
-  const ltpActionItemsDataCount = 0;
-  console.log('rendering Alerts screen');
+  const catalogueItemsDataCount = 0;
+  console.log('rendering Catalogue screen');
 
   return (
     <View>
@@ -113,13 +113,13 @@ export default AlertsScreen = (props) => {
         />
       ) : (
         <View>
-          <Text>Notifications screen will show urgent alerts</Text>
+          <Text>Catalogue Screen will go here.</Text>
         </View>
       )}
     </View>
   );
 };
-const titleString = 'Notifications';
+const titleString = 'Catalogue';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
@@ -136,7 +136,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? `ios-alert` : 'md-alert'}
+        name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
         size={size}
       />
     ),

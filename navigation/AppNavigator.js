@@ -34,6 +34,7 @@ import Colors from '../constants/Colors';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
+import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
 
 // console.log(Constants && Constants);
@@ -88,7 +89,7 @@ const DrawerNavigator = () => {
         name='WipsTabs'
         component={WipTabNavigator}
         options={{
-          drawerLabel: 'Find & return tools, jobs & LTP',
+          drawerLabel: 'Find tools, jobs & LTP',
           initialRouteName: 'FindTools',
         }}
         tabBarOptions={{
@@ -103,8 +104,16 @@ const DrawerNavigator = () => {
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'News, products, ODIS, stats',
-          initialRouteName: 'News',
+          drawerLabel: 'ODIS, news &  products',
+          initialRouteName: 'Odis',
+        }}
+      />
+      <Drawer.Screen
+        name='RemindersTabs'
+        component={RemindersTabNavigator}
+        options={{
+          drawerLabel: 'Alerts and actions',
+          initialRouteName: 'Notifications',
         }}
       />
       {/* <Drawer.Screen

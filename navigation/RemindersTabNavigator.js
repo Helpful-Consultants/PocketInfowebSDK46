@@ -15,18 +15,18 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
-import NewsScreen, {
-  screenOptions as NewsScreenOptions,
-} from '../screens/NewsScreen';
-import ProductsScreen, {
-  screenOptions as ProductsScreenOptions,
-} from '../screens/ProductsScreen';
-import OdisScreen, {
-  screenOptions as OdisScreenOptions,
-} from '../screens/OdisScreen';
-import CatalogueScreen, {
-  screenOptions as CatalogueScreenOptions,
-} from '../screens/CatalogueScreen';
+import AlertsScreen, {
+  screenOptions as AlertsScreenOptions,
+} from '../screens/AlertsScreen';
+import CampaignsScreen, {
+  screenOptions as CampaignsScreenOptions,
+} from '../screens/CampaignsScreen';
+import LtpActionsScreen, {
+  screenOptions as LtpActionsScreenOptions,
+} from '../screens/LtpActionsScreen';
+import StatsScreen, {
+  screenOptions as StatsScreenOptions,
+} from '../screens/StatsScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -103,69 +103,69 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
-const News = createStackNavigator();
+const Alerts = createStackNavigator();
 
-const NewsStack = () => {
+const AlertsStack = () => {
   return (
-    <News.Navigator screenOptions={defaultStackNavOptions}>
-      <News.Screen
-        name={'NewsScreen'}
-        component={NewsScreen}
-        options={NewsScreenOptions}
+    <Alerts.Navigator screenOptions={defaultStackNavOptions}>
+      <Alerts.Screen
+        name={'AlertsScreen'}
+        component={AlertsScreen}
+        options={AlertsScreenOptions}
       />
-    </News.Navigator>
+    </Alerts.Navigator>
   );
 };
 
-const Products = createStackNavigator();
-const ProductsStack = () => {
+const Campaigns = createStackNavigator();
+const CampaignsStack = () => {
   return (
-    <Products.Navigator screenOptions={defaultStackNavOptions}>
-      <Products.Screen
-        name={'ProductsScreen'}
-        component={ProductsScreen}
-        options={ProductsScreenOptions}
+    <Campaigns.Navigator screenOptions={defaultStackNavOptions}>
+      <Campaigns.Screen
+        name={'CampaignsScreen'}
+        component={CampaignsScreen}
+        options={CampaignsScreenOptions}
       />
-    </Products.Navigator>
+    </Campaigns.Navigator>
   );
 };
 
-const Odis = createStackNavigator();
-const OdisStack = () => {
+const LtpActions = createStackNavigator();
+const LtpActionsStack = () => {
   return (
-    <Odis.Navigator screenOptions={defaultStackNavOptions}>
-      <Odis.Screen
-        name={'OdisScreen'}
-        component={OdisScreen}
-        options={OdisScreenOptions}
+    <LtpActions.Navigator screenOptions={defaultStackNavOptions}>
+      <LtpActions.Screen
+        name={'LtpActionsScreen'}
+        component={LtpActionsScreen}
+        options={LtpActionsScreenOptions}
       />
-    </Odis.Navigator>
+    </LtpActions.Navigator>
   );
 };
 
-const Catalogue = createStackNavigator();
-const CatalogueStack = () => {
+const Stats = createStackNavigator();
+const StatsStack = () => {
   return (
-    <Catalogue.Navigator screenOptions={defaultStackNavOptions}>
-      <Catalogue.Screen
-        name={'CatalogueScreen'}
-        component={CatalogueScreen}
-        options={CatalogueScreenOptions}
+    <Stats.Navigator screenOptions={defaultStackNavOptions}>
+      <Stats.Screen
+        name={'StatsScreen'}
+        component={StatsScreen}
+        options={StatsScreenOptions}
       />
-    </Catalogue.Navigator>
+    </Stats.Navigator>
   );
 };
 
 // Tab navigator
 
-const NewsTabs =
+const RemindersTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-export default NewsTabNavigator = () => {
+export default RemindersTabNavigator = () => {
   return Platform.OS === 'ios' ? (
-    <NewsTabs.Navigator //iOS
+    <RemindersTabs.Navigator //iOS
       lazy={true}
       tabBarOptions={{
         showLabel: true,
@@ -180,29 +180,29 @@ export default NewsTabNavigator = () => {
         adaptive: false,
       }}
     >
-      <NewsTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
+      <RemindersTabs.Screen
+        name='Alerts'
+        component={AlertsStack}
+        options={AlertsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='News'
-        component={NewsStack}
-        options={NewsScreenOptions}
+      <RemindersTabs.Screen
+        name='Campaigns'
+        component={CampaignsStack}
+        options={CampaignsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='Products'
-        component={ProductsStack}
-        options={ProductsScreenOptions}
+      <RemindersTabs.Screen
+        name='LtpActions'
+        component={LtpActionsStack}
+        options={LtpActionsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='Catalogue'
-        component={CatalogueStack}
-        options={CatalogueScreenOptions}
+      <RemindersTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
-    </NewsTabs.Navigator>
+    </RemindersTabs.Navigator>
   ) : (
-    <NewsTabs.Navigator // Android
+    <RemindersTabs.Navigator // Android
       lazy={true}
       labeled={true}
       title='Default Title'
@@ -220,27 +220,27 @@ export default NewsTabNavigator = () => {
         backgroundColor: Colors.vwgVeryVeryLightGray,
       }}
     >
-      <NewsTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
+      <RemindersTabs.Screen
+        name='Reminders'
+        component={RemindersStack}
+        options={AlertsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='News'
-        component={NewsStack}
-        options={NewsScreenOptions}
+      <RemindersTabs.Screen
+        name='Campaigns'
+        component={CampaignsStack}
+        options={CampaignsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='Products'
-        component={ProductsStack}
-        options={ProductsScreenOptions}
+      <RemindersTabs.Screen
+        name='LtpActions'
+        component={LtpActionsStack}
+        options={LtpActionsScreenOptions}
       />
-      <NewsTabs.Screen
-        name='Catalogue'
-        component={CatalogueStack}
-        options={CatalogueScreenOptions}
+      <RemindersTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
-    </NewsTabs.Navigator>
+    </RemindersTabs.Navigator>
   );
 };
 // End Tab navigator

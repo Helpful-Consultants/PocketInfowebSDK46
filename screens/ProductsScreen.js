@@ -191,7 +191,7 @@ export default ProductsScreen = (props) => {
     </View>
   );
 };
-const titleString = 'Products';
+const titleString = 'Key Products';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
@@ -208,7 +208,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+        name={Platform.OS === 'ios' ? 'ios-speedometer' : 'md-speedometer'}
         size={size}
       />
     ),
