@@ -646,10 +646,40 @@ export default HomeScreen = (props) => {
                   </Touchable>
                 </View>
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
+                  {Constants.manifest.name &&
+                  Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+                    <Touchable
+                      style={baseStyles.viewHomeGridCell}
+                      onPress={() =>
+                        navigation.navigate('NewsTabs', { screen: 'Products' })
+                      }
+                    >
+                      <View>
+                        <Icon
+                          name={
+                            Platform.OS === 'ios'
+                              ? 'ios-speedometer'
+                              : 'md-speedometer'
+                          }
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        <BadgedText
+                          showBadge={
+                            ageOfProducts < notificationLimit ? true : false
+                          }
+                          focused={false}
+                          text={'Key Products'}
+                          value={'+'}
+                        />
+                      </View>
+                    </Touchable>
+                  ) : null}
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('NewsTabs', { screen: 'Products' })
+                      navigation.navigate('NewsTabs', { screen: 'Catalogue' })
                     }
                   >
                     <View>
@@ -660,26 +690,28 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={
-                          ageOfProducts < notificationLimit ? true : false
-                        }
+                        showBadge={false}
                         focused={false}
-                        text={'Products'}
+                        text={'Catalogue'}
                         value={'+'}
                       />
                     </View>
                   </Touchable>
+                </View>
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('NewsTabs', { screen: 'News' })
+                      navigation.navigate('NewsTabs', {
+                        screen: 'News',
+                      })
                     }
                   >
                     <View>
                       <Icon
                         name={
                           Platform.OS === 'ios'
-                            ? 'ios-information-circle-outline'
+                            ? 'ios-document'
                             : 'md-information-circle'
                         }
                         type='ionicon'
@@ -687,52 +719,39 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={ageOfNews < notificationLimit ? true : false}
+                        showBadge={false}
                         focused={false}
                         text={'News'}
                         value={'+'}
                       />
                     </View>
                   </Touchable>
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('RemindersTabs', {
+                        screen: 'Alerts',
+                      })
+                    }
+                  >
+                    <View>
+                      <Icon
+                        name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={false}
+                        focused={false}
+                        text={'Notifications'}
+                        value={'+'}
+                      />
+                    </View>
+                  </Touchable>
                 </View>
-                {Constants.manifest.name &&
-                Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-                  <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                    <Touchable style={baseStyles.viewHomeGridCell}>
-                      <View>
-                        <Icon
-                          name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={false}
-                          focused={false}
-                          text={'New feature 1'}
-                          value={'+'}
-                        />
-                      </View>
-                    </Touchable>
-                    <Touchable style={baseStyles.viewHomeGridCell}>
-                      <View>
-                        <Icon
-                          name={Platform.OS === 'ios' ? 'ios-add' : 'md-iadd'}
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={false}
-                          focused={false}
-                          text={'New Feature 2'}
-                          value={'+'}
-                        />
-                      </View>
-                    </Touchable>
-                  </View>
-                ) : null}
               </View>
+
               <View
                 style={{
                   ...baseStyles.viewRowFlexCentreJustifiedAligned,

@@ -18,7 +18,7 @@ export default AppInfo = (props) => {
       ? userDataObj.brand
       : 'All brands'
     : '';
-  console.log('AppInfo props, userDataObj', userDataObj && userDataObj);
+  //   console.log('AppInfo props, userDataObj', userDataObj && userDataObj);
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
 
@@ -98,7 +98,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>Changes: 2 new features</Text>
+      <Text style={baseStyles.panelTextAppInfo}>Changes: New screens</Text>
     </View>
   );
 };

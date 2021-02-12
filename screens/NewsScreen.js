@@ -197,13 +197,16 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={
-          Platform.OS === 'ios'
-            ? `ios-information-circle${focused ? '' : '-outline'}`
-            : 'md-information-circle'
-        }
+        name={Platform.OS === 'ios' ? `ios-document` : 'information-circle'}
         size={size}
       />
     ),
   };
 };
+
+//  name={
+//           Platform.OS === 'ios'
+//             ? `ios-information-circle${focused ? '' : '-outline'}`
+//             : 'md-information-circle'
+//         } */
+//  }

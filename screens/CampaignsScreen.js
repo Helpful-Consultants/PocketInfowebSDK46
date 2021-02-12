@@ -10,21 +10,21 @@ import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-// import { getAlertsRequest } from '../actions/dealerAlerts';
-// import { getDealerWipsRequest } from '../actions/dealerAlerts';
+// import { getLtpActionsRequest } from '../actions/dealerLtpActions';
+// import { getDealerWipsRequest } from '../actions/dealerLtpActions';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
-// import AlertsSummary from './AlertsSummary';
+// import LtpActionsSummary from './LtpActionsSummary';
 import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
-export default AlertsScreen = (props) => {
+export default LtpActionsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   //   const dealerLtpAction
   //   Items = useSelector(
-  //     (state) => state.dealerAlerts.dealerLtpActionItems
+  //     (state) => state.dealerLtpActions.dealerLtpActionItems
   //   );
   const dealerLtpActionItems = [];
 
@@ -49,7 +49,7 @@ export default AlertsScreen = (props) => {
   //     userApiFetchParamsObj
   //   ]);
 
-  //   console.log('getAlertsData', getAlertsData);
+  //   console.log('getLtpActionsData', getLtpActionsData);
 
   //   const { navigation } = props;
 
@@ -77,13 +77,13 @@ export default AlertsScreen = (props) => {
       const getItemsAsync = async () => {
         getItems();
       };
-      dispatch(revalidateUserCredentials({ calledBy: 'AlertsScreen' }));
+      dispatch(revalidateUserCredentials({ calledBy: 'LtpActionsScreen' }));
       getItemsAsync();
     }, [])
   );
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getAlertsData);
+    // console.log('in refreshRequestHandler', getLtpActionsData);
     getItems();
   };
 
@@ -99,27 +99,27 @@ export default AlertsScreen = (props) => {
   //     // console.log('in stats screen, no userDataObj');
   //     getItems();
   //   }
-  const ltpActionItemsDataCount = 0;
-  console.log('rendering Alerts screen');
+  const campaignItemsDataCount = 0;
+  console.log('rendering LtpActions screen');
 
   return (
     <View>
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the stats data'}
+          errorSummary={'Error syncing the campaign data'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
         <View>
-          <Text>Notifications screen will show urgent alerts</Text>
+          <Text>Service measures will go here</Text>
         </View>
       )}
     </View>
   );
 };
-const titleString = 'Notifications';
+const titleString = 'S Measures';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
@@ -136,7 +136,9 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? `ios-alert` : 'md-alert'}
+        name={
+          Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline'
+        }
         size={size}
       />
     ),
