@@ -11,14 +11,14 @@ export default function CampaignsList(props) {
   //   console.log('props');
   //   console.log(props);
   //   console.log('props end');
-  const limit = 10;
+
   //   const allItems = props.items || [];
   //   //   const allItems = campaignsDummyData && campaignsDummyData;
   //   const items = allItems && allItems.slice(0, limit);
 
-  //   const items = props.items || [];
-
-  const items = campaignsDummyData.slice(0, limit);
+  const items = props.items || [];
+  // const limit = 10;
+  // const items = campaignsDummyData.slice(0, limit);
   //   const items = campaignsDummyData;
   // console.log('start campaignsDummyData');
   //   console.log(items);
