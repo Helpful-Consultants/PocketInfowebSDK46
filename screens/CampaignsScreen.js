@@ -41,19 +41,19 @@ export default DealerCampaignsScreen = (props) => {
     []
   );
 
-  console.log('in campaigns screen - userDataObj is set to ', userDataObj);
+  //   console.log('in campaigns screen - userDataObj is set to ', userDataObj);
 
   const userApiFetchParamsObj = {
     dealerId: (userDataObj && userDataObj.dealerId) || null,
     intId: (userDataObj && userDataObj.intId.toString()) || null,
   };
 
-  console.log(
-    'in campaigns screen - userApiFetchParamsObj is set to ',
-    userApiFetchParamsObj,
-    'dealerCampaignsItems ',
-    dealerCampaignsItems
-  );
+  //   console.log(
+  //     'in campaigns screen - userApiFetchParamsObj is set to ',
+  //     userApiFetchParamsObj,
+  //     'dealerCampaignsItems ',
+  //     dealerCampaignsItems
+  //   );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     userApiFetchParamsObj
@@ -64,19 +64,19 @@ export default DealerCampaignsScreen = (props) => {
   //   const { navigation } = props;
 
   const getItems = useCallback(async (userApiFetchParamsObj) => {
-    console.log(
-      'in campaigns getItems userApiFetchParamsObj',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'in campaigns getItems userApiFetchParamsObj',
+    //   userApiFetchParamsObj
+    // );
     dispatch(getDealerCampaignsRequest(userApiFetchParamsObj)),
       [dealerCampaignsItems];
   });
 
   const getItemsAsync = async () => {
-    console.log(
-      'rendering DealerCampaigns screen, userApiFetchParamsObj:',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'rendering DealerCampaigns screen, userApiFetchParamsObj:',
+    //   userApiFetchParamsObj
+    // );
 
     if (
       userApiFetchParamsObj &&

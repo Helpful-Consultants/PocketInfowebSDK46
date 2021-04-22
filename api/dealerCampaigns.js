@@ -9,8 +9,8 @@ const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
 
 export const getDealerCampaigns = (wipObj) => {
-  console.log('here in getDealerCampaigns API ');
-  console.log('here in getDealerCampaigns API ', wipObj);
+  //   console.log('here in getDealerCampaigns API ');
+  //   console.log('here in getDealerCampaigns API ', wipObj);
   const { dealerId } = wipObj;
   const url =
     '/default.asp?controller=api&action=listActiveRetailerCampaignsAsJSON&dealerId=' +

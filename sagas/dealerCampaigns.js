@@ -4,10 +4,10 @@ import * as api from '../api/dealerCampaigns';
 import Types from '../constants/Types';
 
 function* getDealerCampaigns({ payload }) {
-  console.log(
-    '%%%%%%%%%%%%%%in saga get dealerCampaigns, payload',
-    payload && payload
-  );
+  //   console.log(
+  //     '%%%%%%%%%%%%%%in saga get dealerCampaigns, payload',
+  //     payload && payload
+  //   );
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the dealer tools';
   let dataErrorUrl = null;
@@ -151,7 +151,7 @@ function* getDealerCampaigns({ payload }) {
 }
 
 function* watchGetDealerCampaignsRequest() {
-  console.log('in saga watch for dealerCampaigns');
+  //   console.log('in saga watch for dealerCampaigns');
   yield takeLatest(Types.GET_DEALER_CAMPAIGNS_REQUEST, getDealerCampaigns);
 }
 

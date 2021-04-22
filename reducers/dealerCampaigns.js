@@ -22,8 +22,8 @@ export default function dealerCampaigns(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_DEALER_CAMPAIGNS_SUCCESS: {
-      console.log('action.type is:', action.type);
-      console.log(action.payload.items && action.payload.items);
+      //   console.log('action.type is:', action.type);
+      //   console.log(action.payload.items && action.payload.items);
 
       return {
         ...state,
