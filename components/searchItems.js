@@ -318,6 +318,26 @@ export default searchItems = (
     }
   };
 
+  const dealerCampaignMatcher = (item) => {
+    let itemTitle = (item.menuText && item.menuText.toLowerCase()) || '';
+    let itemDesc =
+      (item.toolsAffected && item.toolsAffected.toLowerCase()) || '';
+
+    let itemTitleSpacesStripped = itemTitle && itemTitle.replace(/\s+/g, '');
+    let itemDescSpacesStripped = itemDesc && itemDesc.replace(/\s+/g, '');
+
+    if (
+      (itemTitleSpacesStripped &&
+        itemTitleSpacesStripped.includes(searchStringSpacesStripped)) ||
+      (itemDescSpacesStripped &&
+        itemDescSpacesStripped.includes(searchStringSpacesStripped))
+    ) {
+      //   console.log('searchRecords, point 3', item.toolNo);
+      return true;
+    }
+    return false;
+  };
+
   //   console.log('searchString', searchString);
   //   console.log('searchStringLowerCase', searchStringLowerCase);
   //   console.log('searchStringSpacesStripped', searchStringSpacesStripped);
@@ -327,7 +347,11 @@ export default searchItems = (
       //   console.log('searchRecords, in map', item);
       let isMatch = false;
 
-      if (item.tools_id) {
+      if (item.menuText) {
+        // It's a campaign !
+        isMatch = dealerCampaignMatcher(item);
+        // It's a booked tool! - end
+      } else if (item.tools_id) {
         // It's a booked tool !
         isMatch = bookedToolMatcher(item);
         // It's a booked tool! - end
