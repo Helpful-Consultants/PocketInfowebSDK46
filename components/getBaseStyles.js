@@ -16,7 +16,7 @@ export default getBaseStyles = (props) => {
     Constants.manifest.name === 'Pocket Infoweb Extra'
       ? 8
       : 6;
-  console.log('gridRows', gridRows);
+  //   console.log('gridRows', gridRows);
 
   const bottomTabHeight = height && height >= 1333 ? 100 : 80;
 

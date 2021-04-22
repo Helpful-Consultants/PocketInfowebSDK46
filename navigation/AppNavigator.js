@@ -131,9 +131,9 @@ export default AppNavigator = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
-  console.log('AppNavigator, userIsValidated', userIsValidated);
-  console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
-  console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
+  //   console.log('AppNavigator, userIsValidated', userIsValidated);
+  //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
+  //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
   //   return <AuthLoadingScreen />;
 

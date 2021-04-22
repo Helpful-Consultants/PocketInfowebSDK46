@@ -60,8 +60,8 @@ export default SignInScreen = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('in sign in, baseStyles:', baseStyles);
 
-  console.log('in sign in, userIsSignedIn', userIsSignedIn);
-  console.log('in sign in, userIsValidated', userIsValidated);
+  //   console.log('in sign in, userIsSignedIn', userIsSignedIn);
+  //   console.log('in sign in, userIsValidated', userIsValidated);
   //   console.log('in sign in, userError', userError ? 'Yes' : 'No');
   //   console.log('in sign in, state', state);
 

@@ -27,8 +27,8 @@ function* getUser({ payload }) {
         intId: payload.intId,
       });
       console.log('in user saga - 200');
-      console.log('result is:', result && result);
-      console.log('result is:', result.data[0]);
+      //   console.log('result is:', result && result);
+      //   console.log('result is:', result.data[0]);
       // console.log('result userId is:', result.data[0].userId);
       // console.log('result intIdis:', result.data[0].intId);
 

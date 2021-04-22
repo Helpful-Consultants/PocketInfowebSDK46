@@ -37,11 +37,11 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_USER_SUCCESS: {
-      console.log(
-        ' GET_USER_SUCCESS reducer action.payload is:',
-        action.payload.items
-      );
-      console.log('reducer got here: a');
+      //   console.log(
+      //     ' GET_USER_SUCCESS reducer action.payload is:',
+      //     action.payload.items
+      //   );
+
       let userBrand = null;
       let userDataBrand =
         (action.payload &&
@@ -49,14 +49,14 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].brand &&
           action.payload.items[0].brand) ||
         null;
-      console.log('reducer got here: a2');
+
       let userName =
         (action.payload &&
           action.payload.items &&
           action.payload.items[0].userName &&
           action.payload.items[0].userName) ||
         null;
-      console.log('reducer got here: b');
+
       let dealerName =
         (action.payload &&
           action.payload.items &&
@@ -64,7 +64,6 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].dealerName) ||
         null;
 
-      console.log('reducer got here: c');
       let userPin =
         (action.payload && action.payload.userPin && action.payload.userPin) ||
         null;
@@ -79,8 +78,6 @@ export default function user(state = INITIAL_STATE, action) {
           action.payload.items[0].userId &&
           action.payload.items[0].userId) ||
         null;
-
-      console.log('reducer got here: d');
 
       userDataBrand = (userDataBrand && userDataBrand.toLowerCase()) || null;
 
@@ -108,37 +105,35 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log('action.payload.items[0] ', action.payload.items[0]);
       userDataBrand = (userDataBrand && userDataBrand.toLowerCase()) || null;
 
-      console.log('userDataBrand is ', userDataBrand);
-
       switch (userDataBrand) {
         case 'audi': {
-          console.log('userDataBrand is audi ');
+          //   console.log('userDataBrand is audi ');
           userBrand = 'au';
           break;
         }
         case 'seat': {
-          console.log('userDataBrand is seat ');
+          //   console.log('userDataBrand is seat ');
           userBrand = 'se';
           break;
         }
         case 'skoda': {
-          console.log('userDataBrand is skoda');
+          //   console.log('userDataBrand is skoda');
           userBrand = 'sk';
           break;
         }
         case 'volkswagen': {
-          console.log('userDataBrand is vw');
+          //   console.log('userDataBrand is vw');
           userBrand = 'vw';
           break;
         }
         case 'volkswagen commercial vehicles': {
-          console.log('userDataBrand is cv ');
+          //   console.log('userDataBrand is cv ');
           userBrand = 'cv';
           break;
         }
       }
       //   userBrand = 'se';
-      console.log('userBrand in reducer is ', userBrand);
+      console.log('%%% user reducer -userBrand in reducer is ', userBrand);
       return {
         ...state,
         userIsSignedIn: true,
@@ -181,7 +176,7 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_USER_VALIDATED: {
-      console.log('action.payload is:', action.payload.error);
+      //   console.log('action.payload is:', action.payload.error);
       return {
         ...state,
         userIsSignedIn: true,
@@ -193,10 +188,10 @@ export default function user(state = INITIAL_STATE, action) {
       //   const ageOfCredentialsLimit = 90;
       //   let now = moment();
       let revalidatedUser = true;
-      console.log(
-        'in revalidateUserCredentials reducer, called by',
-        action.payload && action.payload.calledBy && action.payload.calledBy
-      );
+      //   console.log(
+      //     'in revalidateUserCredentials reducer, called by',
+      //     action.payload && action.payload.calledBy && action.payload.calledBy
+      //   );
       //   if (state.userIsSignedIn && state.userIsSignedIn === true) {
       //     if (state.lastUpdate) {
       //       console.log('now:', now);
@@ -212,10 +207,10 @@ export default function user(state = INITIAL_STATE, action) {
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
         revalidatedUser = true;
       }
-      console.log(
-        'in revalidateUserCredentials, userIsValidated',
-        revalidatedUser
-      );
+      //   console.log(
+      //     'in revalidateUserCredentials, userIsValidated',
+      //     revalidatedUser
+      //   );
       return {
         ...state,
         // userIsValidated: revalidatedUser,
@@ -224,11 +219,11 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.SIGN_OUT_USER_REQUEST: {
-      console.log('reducer action.is:', action.type);
-      console.log(
-        'in signOutuser reducer, called by',
-        action.payload && action.payload.calledBy && action.payload.calledBy
-      );
+      //   console.log('reducer action.is:', action.type);
+      //   console.log(
+      //     'in signOutuser reducer, called by',
+      //     action.payload && action.payload.calledBy && action.payload.calledBy
+      //   );
       return {
         ...state,
         userIsSignedIn: false,
@@ -241,9 +236,9 @@ export default function user(state = INITIAL_STATE, action) {
       };
     }
     case Types.USER_ERROR: {
-      console.log('action.payload starts');
-      console.log(action.payload);
-      console.log('action.payload ends');
+      //   console.log('action.payload starts');
+      //   console.log(action.payload);
+      //   console.log('action.payload ends');
       return {
         ...state,
         userIsSignedIn: false,

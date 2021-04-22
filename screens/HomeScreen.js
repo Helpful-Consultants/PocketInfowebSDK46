@@ -44,7 +44,7 @@ export default HomeScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  console.log('IN HOME !!!!!');
+  //   console.log('IN HOME !!!!!');
   //   console.log(props);
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
@@ -102,7 +102,7 @@ export default HomeScreen = (props) => {
   const [ageOfProducts, setAgeOfProducts] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  console.log('IN HOME !!!!!  2');
+  //   console.log('IN HOME !!!!!  2');
   const getLtpItems = useCallback(async () => {
     dispatch(getLtpRequest());
   });
@@ -148,7 +148,7 @@ export default HomeScreen = (props) => {
   const notificationLimit = 168;
   const now = moment();
 
-  console.log('IN HOME !!!!! 3');
+  //   console.log('IN HOME !!!!! 3');
 
   useEffect(() => {
     // runs only once as LTP doesnt change too often
@@ -271,7 +271,7 @@ export default HomeScreen = (props) => {
   // }
   //   }, [isRefreshNeeded]);
 
-  console.log('IN HOME !!!!! 4');
+  //   console.log('IN HOME !!!!! 4');
 
   const getUpdatesAsync = async () => {
     //   console.log('in home screen getUpdatesAsync');
@@ -359,7 +359,7 @@ export default HomeScreen = (props) => {
     // navigation.navigate('AuthLoading');
   });
 
-  console.log('IN HOME !!!!!  5');
+  //   console.log('IN HOME !!!!!  5');
   useEffect(() => {
     // console.log('news useEffect', lastUpdateNews);
     if (lastUpdateNews && lastUpdateNews !== null) {
@@ -451,8 +451,8 @@ export default HomeScreen = (props) => {
     Constants.manifest.name === 'Pocket Infoweb Extra'
       ? 8
       : 6;
-  console.log('home screen gridRows', gridRows);
-  console.log('Rendering Home screen');
+  //   console.log('home screen gridRows', gridRows);
+  //   console.log('Rendering Home screen');
 
   return (
     <View
