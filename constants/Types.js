@@ -16,6 +16,13 @@ export default {
   EMPTY_DEALER_TOOLS_REQUEST: 'dealerTools/empty_dealer_tools_request',
   DEALER_TOOLS_ERROR: 'dealerTools/dealer_tools_error',
 
+  GET_DEALER_CAMPAIGNS_START: 'dealerCampaigns/get_dealer_campaigns_start',
+  GET_DEALER_CAMPAIGNS_REQUEST: 'dealerCampaigns/get_dealer_campaigns_request',
+  GET_DEALER_CAMPAIGNS_SUCCESS: 'dealerCampaigns/get_dealer_campaigns_success',
+  EMPTY_DEALER_CAMPAIGNS_REQUEST:
+    'dealerCampaigns/empty_dealer_campaigns_request',
+  DEALER_CAMPAIGNS_ERROR: 'dealerCampaigns/dealer_campaigns_error',
+
   GET_LTP_START: 'ltp/get_ltp_start',
   GET_LTP_REQUEST: 'ltp/get_ltp_request',
   GET_LTP_SUCCESS: 'ltp/get_ltp_success',

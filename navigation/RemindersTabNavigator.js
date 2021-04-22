@@ -15,18 +15,9 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
-import AlertsScreen, {
-  screenOptions as AlertsScreenOptions,
-} from '../screens/AlertsScreen';
 import CampaignsScreen, {
   screenOptions as CampaignsScreenOptions,
 } from '../screens/CampaignsScreen';
-import LtpActionsScreen, {
-  screenOptions as LtpActionsScreenOptions,
-} from '../screens/LtpActionsScreen';
-import StatsScreen, {
-  screenOptions as StatsScreenOptions,
-} from '../screens/StatsScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -103,20 +94,6 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
-const Alerts = createStackNavigator();
-
-const AlertsStack = () => {
-  return (
-    <Alerts.Navigator screenOptions={defaultStackNavOptions}>
-      <Alerts.Screen
-        name={'AlertsScreen'}
-        component={AlertsScreen}
-        options={AlertsScreenOptions}
-      />
-    </Alerts.Navigator>
-  );
-};
-
 const Campaigns = createStackNavigator();
 const CampaignsStack = () => {
   return (
@@ -127,32 +104,6 @@ const CampaignsStack = () => {
         options={CampaignsScreenOptions}
       />
     </Campaigns.Navigator>
-  );
-};
-
-const LtpActions = createStackNavigator();
-const LtpActionsStack = () => {
-  return (
-    <LtpActions.Navigator screenOptions={defaultStackNavOptions}>
-      <LtpActions.Screen
-        name={'LtpActionsScreen'}
-        component={LtpActionsScreen}
-        options={LtpActionsScreenOptions}
-      />
-    </LtpActions.Navigator>
-  );
-};
-
-const Stats = createStackNavigator();
-const StatsStack = () => {
-  return (
-    <Stats.Navigator screenOptions={defaultStackNavOptions}>
-      <Stats.Screen
-        name={'StatsScreen'}
-        component={StatsScreen}
-        options={StatsScreenOptions}
-      />
-    </Stats.Navigator>
   );
 };
 
@@ -181,24 +132,9 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
-        name='Alerts'
-        component={AlertsStack}
-        options={AlertsScreenOptions}
-      />
-      <RemindersTabs.Screen
         name='Campaigns'
         component={CampaignsStack}
         options={CampaignsScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='LtpActions'
-        component={LtpActionsStack}
-        options={LtpActionsScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='Stats'
-        component={StatsStack}
-        options={StatsScreenOptions}
       />
     </RemindersTabs.Navigator>
   ) : (
@@ -221,24 +157,9 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
-        name='Reminders'
-        component={RemindersStack}
-        options={AlertsScreenOptions}
-      />
-      <RemindersTabs.Screen
         name='Campaigns'
         component={CampaignsStack}
         options={CampaignsScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='LtpActions'
-        component={LtpActionsStack}
-        options={LtpActionsScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='Stats'
-        component={StatsStack}
-        options={StatsScreenOptions}
       />
     </RemindersTabs.Navigator>
   );

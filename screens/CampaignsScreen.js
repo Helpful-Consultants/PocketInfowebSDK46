@@ -10,51 +10,82 @@ import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-// import { getLtpActionsRequest } from '../actions/dealerLtpActions';
-// import { getDealerWipsRequest } from '../actions/dealerLtpActions';
+import { getDealerCampaignsRequest } from '../actions/dealerCampaigns';
+// import { getDealerWipsRequest } from '../actions/dealerCampaigns';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
-// import LtpActionsSummary from './LtpActionsSummary';
+import CampaignsList from './CampaignsList';
 import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
-// import statsDummyData from '../dummyData/statsDummyData.js';
+// import campaignsDummyData from '../dummyData/campaignsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
-export default LtpActionsScreen = (props) => {
+const minSearchLength = 1;
+
+export default DealerCampaignsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  //   const dealerLtpAction
-  //   Items = useSelector(
-  //     (state) => state.dealerLtpActions.dealerLtpActionItems
-  //   );
-  const dealerLtpActionItems = [];
-
+  const dealerCampaignsItems = useSelector(
+    (state) => state.dealerCampaigns.dealerCampaignsItems
+  );
+  const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId.toString();
   const isLoading = useSelector((state) => state.stats.isLoading);
   const dataError = useSelector((state) => state.stats.error);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [uniqueDealerCampaignItems, setUniqueDealerCampaignItems] = useState(
+    []
+  );
+
+  console.log('in campaigns screen - userDataObj is set to ', userDataObj);
 
   const userApiFetchParamsObj = {
-    dealerId: dealerId,
-    intId: userIntId,
+    dealerId: (userDataObj && userDataObj.dealerId) || null,
+    intId: (userDataObj && userDataObj.intId.toString()) || null,
   };
-  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
+
+  console.log(
+    'in campaigns screen - userApiFetchParamsObj is set to ',
+    userApiFetchParamsObj,
+    'dealerCampaignsItems ',
+    dealerCampaignsItems
+  );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     userApiFetchParamsObj
   //   ]);
 
-  //   console.log('getLtpActionsData', getLtpActionsData);
+  //   console.log('getDealerCampaignsData', getDealerCampaignsData);
 
   //   const { navigation } = props;
 
-  const getItems = useCallback(async () => []);
+  const getItems = useCallback(async (userApiFetchParamsObj) => {
+    console.log(
+      'in campaigns getItems userApiFetchParamsObj',
+      userApiFetchParamsObj
+    );
+    dispatch(getDealerCampaignsRequest(userApiFetchParamsObj)),
+      [dealerCampaignsItems];
+  });
 
+  const getItemsAsync = async () => {
+    console.log(
+      'rendering DealerCampaigns screen, userApiFetchParamsObj:',
+      userApiFetchParamsObj
+    );
+
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      getItems(userApiFetchParamsObj);
+    }
+  };
   //   useEffect(() => {
   //     // runs only once
   //     // console.log('in stats use effect');
@@ -72,19 +103,28 @@ export default LtpActionsScreen = (props) => {
   //     setIsRefreshNeeded(true);
   //   });
 
+  //   useEffect(() => {
+  //     // runs only once
+  //     console.log('in campaigns useEffect', userApiFetchParamsObj);
+  //     //   setGetWipsDataObj(userApiFetchParamsObj);
+  //     getItemsAsync();
+  //   }, [userApiFetchParamsObj]);
+
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
-      };
-      dispatch(revalidateUserCredentials({ calledBy: 'LtpActionsScreen' }));
+      dispatch(
+        revalidateUserCredentials({
+          calledBy: 'Campaigns Screen',
+        })
+      );
+      setSearchInput('');
       getItemsAsync();
-    }, [])
+    }, [userApiFetchParamsObj])
   );
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getLtpActionsData);
-    getItems();
+    console.log('in refreshRequestHandler');
+    getItemsAsync();
   };
 
   //   if (!userIsValidated) {
@@ -99,21 +139,98 @@ export default LtpActionsScreen = (props) => {
   //     // console.log('in stats screen, no userDataObj');
   //     getItems();
   //   }
-  const campaignItemsDataCount = 0;
-  console.log('rendering LtpActions screen');
+
+  //   let uniqueDealerCampaignsSorted = sortObjectList(
+  //     unsortedUniqueDealerCampaigns,
+  //     'loanToolNo',
+  //     'asc'
+  //   );
+
+  //   setUniqueDealerCampaignItems(dealerCampaignsItems);
+
+  const dealerCampaignsItemsDataCount = 0;
+
+  const searchInputHandler = (searchInput) => {
+    setSearchInput(searchInput);
+    if (searchInput && searchInput.length > minSearchLength) {
+      let newFilteredItems = searchItems(
+        uniqueDealerCampaignItems,
+        searchInput
+      );
+      //   console.log(
+      //     'LTP Screen  searchInputHandler for: ',
+      //     searchInput && searchInput,
+      //     'DealerCampaigns: ',
+      //     DealerCampaigns && DealerCampaigns.length,
+      //     'itemsToShow: ',
+      //     itemsToShow && itemsToShow.length,
+      //     'uniqueDealerCampaignItems: ',
+      //     uniqueDealerCampaignItems && uniqueDealerCampaignItems.length,
+      //     'newFilteredItems:',
+      //     newFilteredItems && newFilteredItems.length,
+      //     newFilteredItems
+      //   );
+      setFilteredItems(newFilteredItems);
+    }
+  };
+
+  //   let itemsToShow = !isLoading
+  //     ? searchInput && searchInput.length > minSearchLength
+  //       ? filteredItems
+  //       : uniqueDealerCampaignItems
+  //     : [];
+
+  const items = (!isLoading && !dataError && dealerCampaignsItems) || [];
+
+  let itemsToShow =
+    searchInput && searchInput.length > minSearchLength ? filteredItems : items;
+
+  console.log('rendering DealerCampaigns screen, dataError:', dataError);
 
   return (
-    <View>
+    <View style={baseStyles.containerFlexAndMargin}>
+      <SearchBarWithRefresh
+        dataName={'Campaigns items'}
+        someDataExpected={true}
+        refreshRequestHandler={refreshRequestHandler}
+        searchInputHandler={searchInputHandler}
+        searchInput={searchInput}
+        dataError={dataError}
+        dataStatusCode={dataStatusCode}
+        isLoading={isLoading}
+        dataCount={dealerCampaignsItems.length}
+      />
+      {dataError ? null : itemsToShow.length === 0 ? (
+        searchInput.length >= minSearchLength ? (
+          <View style={baseStyles.viewPromptRibbonNoneFound}>
+            <Text style={baseStyles.textPromptRibbon}>
+              Your search found no results.
+            </Text>
+          </View>
+        ) : isLoading ? null : (
+          <View style={baseStyles.viewPromptRibbon}>
+            <Text style={baseStyles.textPromptRibbon}>
+              No service measures to show. Try the refresh button.
+            </Text>
+          </View>
+        )
+      ) : (
+        <View style={baseStyles.viewPromptRibbon}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Action these measures on the web site
+          </Text>
+        </View>
+      )}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the campaign data'}
+          errorSummary={'Error syncing Service Measures'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
         <View>
-          <Text>Service measures will go here</Text>
+          <CampaignsList items={itemsToShow} />
         </View>
       )}
     </View>

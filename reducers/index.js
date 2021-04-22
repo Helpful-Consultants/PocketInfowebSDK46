@@ -8,6 +8,7 @@ import OdisReducer from './odis';
 import StatsReducer from './stats';
 import DealerWipsReducer from './dealerWips';
 import DealerToolsReducer from './dealerTools';
+import DealerCampaignsReducer from './dealerCampaigns';
 
 export default combineReducers({
   users: UsersReducer,
@@ -19,4 +20,5 @@ export default combineReducers({
   stats: StatsReducer,
   dealerTools: DealerToolsReducer,
   dealerWips: DealerWipsReducer,
+  dealerCampaigns: DealerCampaignsReducer,
 });
