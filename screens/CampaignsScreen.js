@@ -15,6 +15,7 @@ import { getDealerCampaignsRequest } from '../actions/dealerCampaigns';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import CampaignsList from './CampaignsList';
 import Colors from '../constants/Colors';
+import searchItems from '../components/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import campaignsDummyData from '../dummyData/campaignsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
@@ -37,9 +38,6 @@ export default DealerCampaignsScreen = (props) => {
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [uniqueDealerCampaignItems, setUniqueDealerCampaignItems] = useState(
-    []
-  );
 
   //   console.log('in campaigns screen - userDataObj is set to ', userDataObj);
 
@@ -154,19 +152,15 @@ export default DealerCampaignsScreen = (props) => {
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(
-        uniqueDealerCampaignItems,
-        searchInput
-      );
+      let newFilteredItems = searchItems(dealerCampaignsItems, searchInput);
       //   console.log(
-      //     'LTP Screen  searchInputHandler for: ',
+      //     'Campaigns Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
       //     'DealerCampaigns: ',
-      //     DealerCampaigns && DealerCampaigns.length,
+      //     dealerCampaignsItems && dealerCampaignsItems.length,
       //     'itemsToShow: ',
       //     itemsToShow && itemsToShow.length,
       //     'uniqueDealerCampaignItems: ',
-      //     uniqueDealerCampaignItems && uniqueDealerCampaignItems.length,
       //     'newFilteredItems:',
       //     newFilteredItems && newFilteredItems.length,
       //     newFilteredItems
@@ -183,10 +177,23 @@ export default DealerCampaignsScreen = (props) => {
 
   const items = (!isLoading && !dataError && dealerCampaignsItems) || [];
 
-  let itemsToShow =
-    searchInput && searchInput.length > minSearchLength ? filteredItems : items;
+  //   let itemsToShow =
+  //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
-  console.log('rendering DealerCampaigns screen, dataError:', dataError);
+  let itemsToShow = !isLoading
+    ? searchInput && searchInput.length > minSearchLength
+      ? filteredItems
+      : items
+    : [];
+
+  //   console.log(
+  //     'rendering DealerCampaigns screen, dataError:',
+  //     dataError,
+  //     'filteredItems',
+  //     filteredItems && filteredItems.length,
+  //     ' itemsToShow length',
+  //     (itemsToShow && itemsToShow.length) || '0'
+  //   );
 
   return (
     <View style={baseStyles.containerFlexAndMargin}>
@@ -201,7 +208,7 @@ export default DealerCampaignsScreen = (props) => {
         isLoading={isLoading}
         dataCount={dealerCampaignsItems.length}
       />
-      {dataError ? null : itemsToShow.length === 0 ? (
+      {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
             <Text style={baseStyles.textPromptRibbon}>
@@ -237,7 +244,7 @@ export default DealerCampaignsScreen = (props) => {
     </View>
   );
 };
-const titleString = 'S Measures';
+const titleString = 'Serv Measurecams';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
