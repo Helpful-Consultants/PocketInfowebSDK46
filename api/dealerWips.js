@@ -98,7 +98,7 @@ export const deleteDealerWipTool = (payload) => {
 export const deleteDealerWip = (payload) => {
   //   console.log('in delete dealer wip api', payload);
 
-  const dealerId = payload.dealerId;
+  const dealerId = (payload && payload.dealerId && payload.dealerId) || '';
   const wipObj = payload.wipObj;
   const sendData =
     'id=' +
