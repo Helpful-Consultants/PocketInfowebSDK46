@@ -4,7 +4,7 @@ import {
   take,
   call,
   put,
-  fork
+  fork,
 } from 'redux-saga/effects';
 import * as actions from '../actions/dealerTools';
 import * as api from '../api/dealerTools';
@@ -18,7 +18,7 @@ function* getDealerTools({ payload }) {
   yield put(actions.getDealerToolsStart());
   try {
     const result = yield call(api.getDealerTools, {
-      dealerId: payload.dealerId
+      dealerId: payload.dealerId,
     });
     // console.log('in saga get dealerTools - 200');
     // console.log(result);
@@ -41,7 +41,7 @@ function* getDealerTools({ payload }) {
           statusCode:
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
-            null
+            null,
         })
       );
     } else if (result && result.data && result.data.length > 0) {
@@ -57,7 +57,7 @@ function* getDealerTools({ payload }) {
           statusCode:
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
-            null
+            null,
         })
       );
     } else {
@@ -67,7 +67,7 @@ function* getDealerTools({ payload }) {
         actions.dealerToolsError({
           error:
             (result.request.response && result.request.response.toString()) ||
-            'An error occurred when trying to update the jobs',
+            'An error occurred when trying to update the tools',
           statusCode: (result.request.status && result.request.status) || null,
           dataErrorUrl:
             (result && result.responseURL && result.responseURL) ||
@@ -75,7 +75,7 @@ function* getDealerTools({ payload }) {
               result.request &&
               result.request._url &&
               result.request._url) ||
-            null
+            null,
         })
       );
     }
@@ -152,7 +152,7 @@ function* getDealerTools({ payload }) {
       actions.dealerToolsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
