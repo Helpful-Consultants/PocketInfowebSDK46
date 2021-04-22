@@ -117,9 +117,10 @@ export default DealerCampaignsScreen = (props) => {
           calledBy: 'Campaigns Screen',
         })
       );
+      console.log('in campaigns focusffect ');
       setSearchInput('');
       getItemsAsync();
-    }, [userApiFetchParamsObj])
+    }, [])
   );
 
   const refreshRequestHandler = () => {
