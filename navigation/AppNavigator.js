@@ -34,7 +34,7 @@ import Colors from '../constants/Colors';
 // import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
-import RemindersTabNavigator from './RemindersTabNavigator';
+import RemindersTabNavigator from './RemindersTabNavigatorAll';
 import SignedOutStack from './SignedOutStack';
 
 // console.log(Constants && Constants);

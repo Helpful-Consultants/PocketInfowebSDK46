@@ -15,9 +15,18 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
+import AlertsScreen, {
+  screenOptions as AlertsScreenOptions,
+} from '../screens/AlertsScreen';
 import ServiceMeasuresScreen, {
   screenOptions as ServiceMeasuresScreenOptions,
 } from '../screens/ServiceMeasuresScreen';
+import LtpActionsScreen, {
+  screenOptions as LtpActionsScreenOptions,
+} from '../screens/LtpActionsScreen';
+import StatsScreen, {
+  screenOptions as StatsScreenOptions,
+} from '../screens/StatsScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -94,6 +103,20 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
+const Alerts = createStackNavigator();
+
+const AlertsStack = () => {
+  return (
+    <Alerts.Navigator screenOptions={defaultStackNavOptions}>
+      <Alerts.Screen
+        name={'AlertsScreen'}
+        component={AlertsScreen}
+        options={AlertsScreenOptions}
+      />
+    </Alerts.Navigator>
+  );
+};
+
 const ServiceMeasures = createStackNavigator();
 const ServiceMeasuresStack = () => {
   return (
@@ -104,6 +127,32 @@ const ServiceMeasuresStack = () => {
         options={ServiceMeasuresScreenOptions}
       />
     </ServiceMeasures.Navigator>
+  );
+};
+
+const LtpActions = createStackNavigator();
+const LtpActionsStack = () => {
+  return (
+    <LtpActions.Navigator screenOptions={defaultStackNavOptions}>
+      <LtpActions.Screen
+        name={'LtpActionsScreen'}
+        component={LtpActionsScreen}
+        options={LtpActionsScreenOptions}
+      />
+    </LtpActions.Navigator>
+  );
+};
+
+const Stats = createStackNavigator();
+const StatsStack = () => {
+  return (
+    <Stats.Navigator screenOptions={defaultStackNavOptions}>
+      <Stats.Screen
+        name={'StatsScreen'}
+        component={StatsScreen}
+        options={StatsScreenOptions}
+      />
+    </Stats.Navigator>
   );
 };
 
@@ -132,9 +181,24 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
+        name='Alerts'
+        component={AlertsStack}
+        options={AlertsScreenOptions}
+      />
+      <RemindersTabs.Screen
         name='ServiceMeasures'
         component={ServiceMeasuresStack}
         options={ServiceMeasuresScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='LtpActions'
+        component={LtpActionsStack}
+        options={LtpActionsScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
     </RemindersTabs.Navigator>
   ) : (
@@ -157,9 +221,24 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
+        name='Reminders'
+        component={RemindersStack}
+        options={AlertsScreenOptions}
+      />
+      <RemindersTabs.Screen
         name='ServiceMeasures'
         component={ServiceMeasuresStack}
         options={ServiceMeasuresScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='LtpActions'
+        component={LtpActionsStack}
+        options={LtpActionsScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
     </RemindersTabs.Navigator>
   );
