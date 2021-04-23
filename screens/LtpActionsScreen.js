@@ -113,7 +113,12 @@ export default LtpActionsScreen = (props) => {
         />
       ) : (
         <View>
-          <Text>LTP return reminders will go here</Text>
+          <Text>
+            The LTP screen will show urgent alerts for LTP items needed back.
+          </Text>
+          <Text>
+            Only the service measures and stats screens are ready at the moment.
+          </Text>
         </View>
       )}
     </View>

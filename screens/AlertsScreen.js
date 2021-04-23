@@ -113,7 +113,10 @@ export default AlertsScreen = (props) => {
         />
       ) : (
         <View>
-          <Text>Notifications screen will show urgent alerts</Text>
+          <Text>The notifications screen will show urgent alerts.</Text>
+          <Text>
+            Only the service measures and stats screens are ready at the moment.
+          </Text>
         </View>
       )}
     </View>
