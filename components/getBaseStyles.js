@@ -885,6 +885,10 @@ export default getBaseStyles = (props) => {
       flexDirection: 'row',
       justifyContent: 'center',
     },
+    viewRowFlexCentreAligned: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     viewRowFlexCentreJustifiedAligned: {
       flexDirection: 'row',
       justifyContent: 'center',
