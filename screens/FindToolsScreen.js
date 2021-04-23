@@ -26,7 +26,7 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import TabBarIcon from '../components/TabBarIcon';
 // import HeaderButton from '../components/HeaderButton';
-import sortObjectList from '../components/sortObjectList';
+import sortObjectList from '../helpers/sortObjectList';
 import { revalidateUserCredentials } from '../actions/user';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import {
@@ -40,7 +40,7 @@ import Colors from '../constants/Colors';
 import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
 
-import searchItems from '../components/searchItems';
+import searchItems from '../helpers/searchItems';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const minSearchLength = 1;

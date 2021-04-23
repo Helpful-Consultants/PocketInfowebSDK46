@@ -17,7 +17,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-import sortObjectList from '../components/sortObjectList';
+import sortObjectList from '../helpers/sortObjectList';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
 // import Alert from '../components/Alert';

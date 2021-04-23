@@ -15,7 +15,7 @@ import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import Colors from '../constants/Colors';
-import searchItems from '../components/searchItems';
+import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';

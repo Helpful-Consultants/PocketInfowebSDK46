@@ -12,7 +12,7 @@ import moment from 'moment';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
-import amendLink from '../components/amendLink';
+import amendLink from '../helpers/amendLink';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 

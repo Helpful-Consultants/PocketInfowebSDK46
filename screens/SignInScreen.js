@@ -16,7 +16,7 @@ import Colors from '../constants/Colors';
 // import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { checkUserCredentialsRequest } from '../actions/user';
-import getBaseStyles from '../components/getBaseStyles';
+import getBaseStyles from '../helpers/getBaseStyles';
 // import validation from 'validate';
 
 import Types from '../constants/Types';

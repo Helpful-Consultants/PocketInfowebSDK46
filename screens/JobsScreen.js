@@ -17,7 +17,7 @@ import {
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import JobsList from './JobsList';
-import searchItems from '../components/searchItems';
+import searchItems from '../helpers/searchItems';
 
 const minSearchLength = 1;
 

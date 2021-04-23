@@ -12,7 +12,7 @@ import moment from 'moment';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import HighlightedDate from '../components/HighlightedDate';
-import amendLink from '../components/amendLink';
+import amendLink from '../helpers/amendLink';
 
 const appCode = Base64.encode(moment().format('MMMM'));
 // console.log('appCode is ', appCode);
