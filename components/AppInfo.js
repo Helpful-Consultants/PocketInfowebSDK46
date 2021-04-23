@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
+import appChangeInfoString from '../helpers/appChangeInfoString';
 
 export default AppInfo = (props) => {
   const windowDim = useWindowDimensions();
@@ -98,7 +99,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>Changes: Real SM data</Text>
+      <Text style={baseStyles.panelTextAppInfo}>{appChangeInfoString}</Text>
     </View>
   );
 };
