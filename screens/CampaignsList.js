@@ -1,61 +1,21 @@
 import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { ListItem, Text } from 'react-native-elements';
-// import Touchable from 'react-native-platform-touchable';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import InlineIcon from '../components/InlineIcon';
+import Colors from '../constants/Colors';
+
 // import moment from 'moment';
 import campaignsDummyData from '../dummyData/campaignsDummyData';
 
 export default function CampaignsList(props) {
   const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-  //   console.log('props');
-  //   console.log(props);
-  //   console.log('props end');
-
-  //   const allItems = props.items || [];
-  //   //   const allItems = campaignsDummyData && campaignsDummyData;
-  //   const items = allItems && allItems.slice(0, limit);
 
   const items = props.items || [];
-  // const limit = 10;
-  // const items = campaignsDummyData.slice(0, limit);
-  //   const items = campaignsDummyData;
-  // console.log('start campaignsDummyData');
-  //   console.log(items);
-  // console.log('campaignsDummyData');
-
-  //   const onSelectItem = item => {
-  //     return alert(
-  //       `the user selected tool ${item.id} for job 999? ; OK; change job; cancel`
-  //     );
-  //   };
-
-  //   const orderAs = () => (
-  //     // not wanted yet
-  //     <Text>{`Order as ${item.orderPartNo}, from ${moment(
-  //       item.nextAvailableDate,
-  //       'YYYY-MM-DD'
-  //     ).format('Do MMM') || null}`}</Text>
-  //   );
-
-  //   const rightIcon = () => (
-  //     // not wanted yet
-  //     <View>
-  //       <Icon
-  //         name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
-  //         type='ionicon'
-  //       />
-  //       <Icon
-  //         name={
-  //           Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-arrow-round-up'
-  //         }
-  //         type='ionicon'
-  //       />
-  //     </View>
-  //   );
 
   const FlatListItem = (props) => {
     const { item } = props;
+    const baseStyles = windowDim && getBaseStyles(windowDim);
     // const { onSelectItem } = props;
 
     return (
@@ -66,8 +26,53 @@ export default function CampaignsList(props) {
         bottomDivider
         subtitle={
           <View>
+            <View
+              style={{
+                ...baseStyles.viewRowFlexCentreAligned,
+                paddingLeft: 2,
+                marginTop: 5,
+              }}
+            >
+              <InlineIcon
+                itemType='font-awesome'
+                iconName={
+                  item.status && item.status.toLowerCase() === 'c'
+                    ? 'calendar-times'
+                    : 'calendar-check'
+                }
+                iconSize={RFPercentage(2.2)}
+                iconColor={
+                  item.status && item.status.toLowerCase() === 'c'
+                    ? Colors.vwgWarmRed
+                    : Colors.vwgKhaki
+                }
+              />
+              <Text
+                style={{ ...baseStyles.textLeftAligned, paddingLeft: 8 }}
+              >{`Service measure ${
+                item.status && item.status.toLowerCase() === 'c'
+                  ? 'closed'
+                  : 'still open'
+              }`}</Text>
+            </View>
+
+            <View style={baseStyles.viewRowFlexCentreAligned}>
+              <InlineIcon
+                itemType='font-awesome'
+                iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
+                iconSize={RFPercentage(2)}
+                iconColor={
+                  item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
+                }
+              />
+              <Text
+                style={{ ...baseStyles.textLeftAligned, paddingLeft: 5 }}
+              >{`Retailer actions ${
+                item.retailerStatus ? 'completed' : 'not completed'
+              }`}</Text>
+            </View>
             <Text
-              style={baseStyles.textLeftAligned}
+              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
             >{`Tools: ${item.toolsAffected}`}</Text>
             <Text
               style={baseStyles.textLeftAligned}
@@ -75,15 +80,7 @@ export default function CampaignsList(props) {
 
             <Text
               style={baseStyles.textLeftAligned}
-            >{`Complete all actions by: ${item.expiryDate}`}</Text>
-
-            <Text
-              style={baseStyles.textLeftAligned}
-            >{`Service Measure status: ${item.status}`}</Text>
-
-            <Text
-              style={baseStyles.textLeftAligned}
-            >{`Retailer status: ${item.retailerStatus}`}</Text>
+            >{`To be completed by: ${item.expiryDate}`}</Text>
           </View>
         }
       ></ListItem>
