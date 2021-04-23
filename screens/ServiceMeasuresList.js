@@ -2,21 +2,66 @@ import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { ListItem, Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import moment from 'moment';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 
 // import moment from 'moment';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
+const now = moment();
+
+const getDisplayDate = (rawDate) => {
+  return (
+    (rawDate && moment(rawDate, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')) ||
+    ''
+  );
+};
+
+const getItemStatus = (startDate, expiryDate) => {
+  let theFromDate = null;
+  let theToDate = null;
+  let ageOfExpiry = 0;
+  let ageOfStart = 0;
+
+  if (expiryDate && expiryDate.length > 0) {
+    theToDate = moment(expiryDate, 'DD/MM/YYYY HH:mm:ss');
+    ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
+    console.log('ageOfExpiry', ageOfExpiry);
+  }
+
+  if (ageOfExpiry >= 1) {
+    return false;
+  } else {
+    if (startDate && startDate.length > 0) {
+      theFromDate = moment(startDate, 'DD/MM/YYYY HH:mm:ss');
+      ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
+      console.log('ageOfStart', ageOfStart);
+    }
+
+    if (ageOfStart >= 0) {
+      return true;
+    }
+  }
+  return false;
+};
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
 
-  const items = props.items || [];
+  //   const items = props.items || [];
+  const items = serviceMeasuresDummyData;
+  //   let now = moment();
 
   const FlatListItem = (props) => {
     const { item } = props;
     const baseStyles = windowDim && getBaseStyles(windowDim);
+
     // const { onSelectItem } = props;
+    const measureIsLive =
+      (item.dateCreated &&
+        item.expiryDate &&
+        getItemStatus(item.dateCreated, item.expiryDate)) ||
+      false;
 
     return (
       <ListItem
@@ -35,24 +80,18 @@ export default function ServiceMeasuresList(props) {
             >
               <InlineIcon
                 itemType='font-awesome'
-                iconName={
-                  item.status && item.status.toLowerCase() === 'c'
-                    ? 'calendar-times'
-                    : 'calendar-check'
-                }
-                iconSize={RFPercentage(2.2)}
+                iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
+                iconSize={RFPercentage(2.4)}
                 iconColor={
-                  item.status && item.status.toLowerCase() === 'c'
-                    ? Colors.vwgWarmRed
-                    : Colors.vwgKhaki
+                  //item.status && item.status.toLowerCase() === 'c'
+                  measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
                 }
               />
               <Text
                 style={{ ...baseStyles.textLeftAligned, paddingLeft: 8 }}
               >{`Service measure ${
-                item.status && item.status.toLowerCase() === 'c'
-                  ? 'closed'
-                  : 'still open'
+                //item.status && item.status.toLowerCase() === 'c'
+                measureIsLive ? 'still open' : 'closed'
               }`}</Text>
             </View>
 
@@ -75,12 +114,12 @@ export default function ServiceMeasuresList(props) {
               style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
             >{`Tools: ${item.toolsAffected}`}</Text>
             <Text
-              style={baseStyles.textLeftAligned}
-            >{`Start date: ${item.dateCreated.substr(0, 10)}`}</Text>
+              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+            >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
 
             <Text
               style={baseStyles.textLeftAligned}
-            >{`To be completed by: ${item.expiryDate}`}</Text>
+            >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
           </View>
         }
       ></ListItem>
@@ -95,6 +134,7 @@ export default function ServiceMeasuresList(props) {
           data={items && items}
           renderItem={(itemData) => <FlatListItem item={itemData.item} />}
           keyExtractor={(item) => item.id}
+          now={now}
         />
       ) : null}
     </View>

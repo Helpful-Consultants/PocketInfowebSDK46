@@ -98,7 +98,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>Changes: New screens</Text>
+      <Text style={baseStyles.panelTextAppInfo}>Changes: Real SM data</Text>
     </View>
   );
 };

@@ -5,10 +5,10 @@ export default serviceMeasuresDummyData = [
     toolsAffected:
       'Torque Wrenches: VAG 1331 1331A,  1332 1332A, 1576 1576A, 1601, VAS 5820 VAS 5820A',
     toolBrief: 'Stahwille_Action_ANNEX_BC_010519.pdf',
-    dateCreated: '08/04/2019 08:12:00',
+    dateCreated: '23/04/2021 08:12:00',
     lastUpdated: '23/08/2019 14:26:21',
     updatedBy: 'Simon Groves',
-    expiryDate: '27/09/2019',
+    expiryDate: '23/04/2021',
     startDate: '08/04/2019',
     actionSteps: 'YYNNNNNY',
     actionText:
@@ -44,7 +44,7 @@ export default serviceMeasuresDummyData = [
     dateCreated: '29/04/2019 12:27:44',
     lastUpdated: '02/09/2019 09:30:40',
     updatedBy: 'Lyndon Evans',
-    expiryDate: '31/08/2019',
+    expiryDate: '31/08/2021',
     startDate: '01/05/2019',
     actionSteps: 'YYNYNNNN',
     actionText:
