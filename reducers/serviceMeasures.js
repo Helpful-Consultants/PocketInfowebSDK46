@@ -1,18 +1,18 @@
-// import { Types } from '../actions/dealerCampaigns';
+// import { Types } from '../actions/serviceMeasures';
 import Types from '../constants/Types';
 const INITIAL_STATE = {
-  dealerCampaignsItems: [],
+  serviceMeasuresItems: [],
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
 };
 
-export default function dealerCampaigns(state = INITIAL_STATE, action) {
+export default function serviceMeasures(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
   switch (action.type) {
-    case Types.GET_DEALER_CAMPAIGNS_START: {
+    case Types.GET_SERVICE_MEASURES_START: {
       return {
         ...state,
         isLoading: true,
@@ -21,14 +21,14 @@ export default function dealerCampaigns(state = INITIAL_STATE, action) {
         statusCode: null,
       };
     }
-    case Types.GET_DEALER_CAMPAIGNS_SUCCESS: {
+    case Types.GET_SERVICE_MEASURES_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
 
       return {
         ...state,
         // newsItems: [],
-        dealerCampaignsItems:
+        serviceMeasuresItems:
           (action.payload.items && action.payload.items) || [],
         isLoading: false,
         error: null,
@@ -37,19 +37,19 @@ export default function dealerCampaigns(state = INITIAL_STATE, action) {
           (action.payload.statusCode && action.payload.statusCode) || null,
       };
     }
-    case Types.EMPTY_DEALER_CAMPAIGNS_REQUEST: {
+    case Types.EMPTY_SERVICE_MEASURES_REQUEST: {
       //   console.log(action.payload);
       //   console.log('reducer end data');
       return {
         ...state,
-        dealerCampaignsItems: [],
+        serviceMeasuresItems: [],
         isLoading: false,
         error: null,
         dataErrorUrl: null,
         statusCode: null,
       };
     }
-    case Types.DEALER_CAMPAIGNS_ERROR: {
+    case Types.SERVICE_MEASURES_ERROR: {
       console.log('action.type is:', action.type);
       console.log('action.payload starts');
       console.log(action.payload);

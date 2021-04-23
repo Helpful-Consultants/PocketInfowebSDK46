@@ -6,7 +6,7 @@ import odisSagas from './odis';
 import statsSagas from './stats';
 import dealerToolsSagas from './dealerTools';
 import dealerWipsSagas from './dealerWips';
-import dealerCampaignsSagas from './dealerCampaigns';
+import serviceMeasuresSagas from './serviceMeasures';
 import { all } from 'redux-saga/effects';
 
 export default function* rootSaga() {
@@ -19,6 +19,6 @@ export default function* rootSaga() {
     ...odisSagas,
     ...dealerToolsSagas,
     ...dealerWipsSagas,
-    ...dealerCampaignsSagas,
+    ...serviceMeasuresSagas,
   ]);
 }

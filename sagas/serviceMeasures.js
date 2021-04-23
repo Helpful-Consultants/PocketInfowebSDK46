@@ -1,22 +1,22 @@
 import { takeLatest, call, put, fork } from 'redux-saga/effects';
-import * as actions from '../actions/dealerCampaigns';
-import * as api from '../api/dealerCampaigns';
+import * as actions from '../actions/serviceMeasures';
+import * as api from '../api/serviceMeasures';
 import Types from '../constants/Types';
 
-function* getDealerCampaigns({ payload }) {
+function* getServiceMeasures({ payload }) {
   //   console.log(
-  //     '%%%%%%%%%%%%%%in saga get dealerCampaigns, payload',
+  //     '%%%%%%%%%%%%%%in saga get serviceMeasures, payload',
   //     payload && payload
   //   );
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the dealer tools';
   let dataErrorUrl = null;
-  yield put(actions.getDealerCampaignsStart());
+  yield put(actions.getServiceMeasuresStart());
   try {
-    const result = yield call(api.getDealerCampaigns, {
+    const result = yield call(api.getServiceMeasures, {
       dealerId: payload.dealerId,
     });
-    console.log('in saga get dealerCampaigns - 200');
+    console.log('in saga get serviceMeasures - 200');
     // console.log(result);
     if (
       result.data &&
@@ -25,10 +25,10 @@ function* getDealerCampaigns({ payload }) {
       result.data[0].id &&
       result.data[0].dateCreated
     ) {
-      //   console.log('in Campaigns saga - good 200');
+      //   console.log('in ServiceMeasures saga - good 200');
       //   console.log(result.data);
       yield put(
-        actions.getDealerCampaignsSuccess({
+        actions.getServiceMeasuresSuccess({
           items: result.data,
           statusCode:
             (result.status && result.status) ||
@@ -37,14 +37,14 @@ function* getDealerCampaigns({ payload }) {
         })
       );
     } else if (result && result.data && result.data.length > 0) {
-      //   console.log('in Campaigns saga - empty 200');
+      //   console.log('in ServiceMeasures saga - empty 200');
       // console.log(
-      //     'in Campaigns saga - empty 200',
+      //     'in ServiceMeasures saga - empty 200',
       //     result.request.status && result.request.status
       // );
       //   console.log(result && result);
       yield put(
-        actions.getDealerCampaignsSuccess({
+        actions.getServiceMeasuresSuccess({
           items: [],
           statusCode:
             (result.status && result.status) ||
@@ -53,13 +53,13 @@ function* getDealerCampaigns({ payload }) {
         })
       );
     } else {
-      console.log('dealer campaigns weird result');
+      console.log('dealer serviceMeasures weird result');
       //   console.log(result && result);
       yield put(
-        actions.dealerCampaignsError({
+        actions.serviceMeasuresError({
           error:
             (result.request.response && result.request.response.toString()) ||
-            'An error occurred when trying to update the campaigns',
+            'An error occurred when trying to update the serviceMeasures',
           statusCode: (result.request.status && result.request.status) || null,
           dataErrorUrl:
             (result && result.responseURL && result.responseURL) ||
@@ -72,15 +72,15 @@ function* getDealerCampaigns({ payload }) {
       );
     }
     // console.log(result);
-    // console.log('end results in saga get dealerCampaigns, success');
+    // console.log('end results in saga get serviceMeasures, success');
   } catch (error) {
-    console.log('server error in saga get dealerCampaigns !!!!!!!!!!!!!!');
+    console.log('server error in saga get serviceMeasures !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
     // console.log('whole Error ends');
     // console.log(error && error.config);
     let statusCode = null;
     let errorText =
-      'An server error occurred when trying to get the dealer campaigns';
+      'An server error occurred when trying to get the dealer serviceMeasures';
     let dataErrorUrl = null;
     if (error.response) {
       //   console.log('error response starts');
@@ -141,7 +141,7 @@ function* getDealerCampaigns({ payload }) {
       errorText = error.message;
     }
     yield put(
-      actions.dealerCampaignsError({
+      actions.serviceMeasuresError({
         error: errorText,
         statusCode: statusCode,
         dataErrorUrl: dataErrorUrl,
@@ -150,11 +150,11 @@ function* getDealerCampaigns({ payload }) {
   }
 }
 
-function* watchGetDealerCampaignsRequest() {
-  //   console.log('in saga watch for dealerCampaigns');
-  yield takeLatest(Types.GET_DEALER_CAMPAIGNS_REQUEST, getDealerCampaigns);
+function* watchGetServiceMeasuresRequest() {
+  //   console.log('in saga watch for serviceMeasures');
+  yield takeLatest(Types.GET_SERVICE_MEASURES_REQUEST, getServiceMeasures);
 }
 
-const dealerCampaignsSagas = [fork(watchGetDealerCampaignsRequest)];
+const serviceMeasuresSagas = [fork(watchGetServiceMeasuresRequest)];
 
-export default dealerCampaignsSagas;
+export default serviceMeasuresSagas;

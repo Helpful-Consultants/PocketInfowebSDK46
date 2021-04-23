@@ -318,7 +318,7 @@ export default searchItems = (
     }
   };
 
-  const dealerCampaignMatcher = (item) => {
+  const serviceMeasureMatcher = (item) => {
     let itemTitle = (item.menuText && item.menuText.toLowerCase()) || '';
     let itemDesc =
       (item.toolsAffected && item.toolsAffected.toLowerCase()) || '';
@@ -348,8 +348,8 @@ export default searchItems = (
       let isMatch = false;
 
       if (item.menuText) {
-        // It's a campaign !
-        isMatch = dealerCampaignMatcher(item);
+        // It's a service measure !
+        isMatch = serviceMeasureMatcher(item);
         // It's a booked tool! - end
       } else if (item.tools_id) {
         // It's a booked tool !

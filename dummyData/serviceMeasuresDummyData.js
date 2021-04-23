@@ -1,4 +1,4 @@
-export default campaignsDummyData = [
+export default serviceMeasuresDummyData = [
   {
     id: '203',
     menuText: 'STAHLWILLE Torque Wrenches',

@@ -6,9 +6,9 @@ import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 
 // import moment from 'moment';
-import campaignsDummyData from '../dummyData/campaignsDummyData';
+import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 
-export default function CampaignsList(props) {
+export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
 
   const items = props.items || [];

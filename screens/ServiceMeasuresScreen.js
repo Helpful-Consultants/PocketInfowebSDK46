@@ -10,23 +10,23 @@ import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-import { getDealerCampaignsRequest } from '../actions/dealerCampaigns';
-// import { getDealerWipsRequest } from '../actions/dealerCampaigns';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+// import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
-import CampaignsList from './CampaignsList';
+import ServiceMeasuresList from './ServiceMeasuresList';
 import Colors from '../constants/Colors';
 import searchItems from '../components/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-// import campaignsDummyData from '../dummyData/campaignsDummyData.js';
+// import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
 
-export default DealerCampaignsScreen = (props) => {
+export default ServiceMeasuresScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  const dealerCampaignsItems = useSelector(
-    (state) => state.dealerCampaigns.dealerCampaignsItems
+  const serviceMeasuresItems = useSelector(
+    (state) => state.serviceMeasures.serviceMeasuresItems
   );
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
@@ -39,7 +39,7 @@ export default DealerCampaignsScreen = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  //   console.log('in campaigns screen - userDataObj is set to ', userDataObj);
+  //   console.log('in serviceMeasures screen - userDataObj is set to ', userDataObj);
 
   const userApiFetchParamsObj = {
     dealerId: (userDataObj && userDataObj.dealerId) || null,
@@ -47,32 +47,32 @@ export default DealerCampaignsScreen = (props) => {
   };
 
   //   console.log(
-  //     'in campaigns screen - userApiFetchParamsObj is set to ',
+  //     'in serviceMeasures screen - userApiFetchParamsObj is set to ',
   //     userApiFetchParamsObj,
-  //     'dealerCampaignsItems ',
-  //     dealerCampaignsItems
+  //     'serviceMeasuresItems ',
+  //     serviceMeasuresItems
   //   );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     userApiFetchParamsObj
   //   ]);
 
-  //   console.log('getDealerCampaignsData', getDealerCampaignsData);
+  //   console.log('getServiceMeasuresData', getServiceMeasuresData);
 
   //   const { navigation } = props;
 
   const getItems = useCallback(async (userApiFetchParamsObj) => {
     // console.log(
-    //   'in campaigns getItems userApiFetchParamsObj',
+    //   'in serviceMeasures getItems userApiFetchParamsObj',
     //   userApiFetchParamsObj
     // );
-    dispatch(getDealerCampaignsRequest(userApiFetchParamsObj)),
-      [dealerCampaignsItems];
+    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj)),
+      [serviceMeasuresItems];
   });
 
   const getItemsAsync = async () => {
     // console.log(
-    //   'rendering DealerCampaigns screen, userApiFetchParamsObj:',
+    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
     //   userApiFetchParamsObj
     // );
 
@@ -103,7 +103,7 @@ export default DealerCampaignsScreen = (props) => {
 
   //   useEffect(() => {
   //     // runs only once
-  //     console.log('in campaigns useEffect', userApiFetchParamsObj);
+  //     console.log('in serviceMeasures useEffect', userApiFetchParamsObj);
   //     //   setGetWipsDataObj(userApiFetchParamsObj);
   //     getItemsAsync();
   //   }, [userApiFetchParamsObj]);
@@ -112,10 +112,10 @@ export default DealerCampaignsScreen = (props) => {
     useCallback(() => {
       dispatch(
         revalidateUserCredentials({
-          calledBy: 'Campaigns Screen',
+          calledBy: 'ServiceMeasures Screen',
         })
       );
-      console.log('in campaigns focusffect ');
+      console.log('in serviceMeasures focusffect ');
       setSearchInput('');
       getItemsAsync();
     }, [])
@@ -139,28 +139,28 @@ export default DealerCampaignsScreen = (props) => {
   //     getItems();
   //   }
 
-  //   let uniqueDealerCampaignsSorted = sortObjectList(
-  //     unsortedUniqueDealerCampaigns,
+  //   let uniqueServiceMeasuresSorted = sortObjectList(
+  //     unsortedUniqueServiceMeasures,
   //     'loanToolNo',
   //     'asc'
   //   );
 
-  //   setUniqueDealerCampaignItems(dealerCampaignsItems);
+  //   setUniqueserviceMeasureItems(serviceMeasuresItems);
 
-  const dealerCampaignsItemsDataCount = 0;
+  const serviceMeasuresItemsDataCount = 0;
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(dealerCampaignsItems, searchInput);
+      let newFilteredItems = searchItems(serviceMeasuresItems, searchInput);
       //   console.log(
-      //     'Campaigns Screen  searchInputHandler for: ',
+      //     'ServiceMeasures Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
-      //     'DealerCampaigns: ',
-      //     dealerCampaignsItems && dealerCampaignsItems.length,
+      //     'ServiceMeasures: ',
+      //     serviceMeasuresItems && serviceMeasuresItems.length,
       //     'itemsToShow: ',
       //     itemsToShow && itemsToShow.length,
-      //     'uniqueDealerCampaignItems: ',
+      //     'uniqueserviceMeasureItems: ',
       //     'newFilteredItems:',
       //     newFilteredItems && newFilteredItems.length,
       //     newFilteredItems
@@ -172,10 +172,10 @@ export default DealerCampaignsScreen = (props) => {
   //   let itemsToShow = !isLoading
   //     ? searchInput && searchInput.length > minSearchLength
   //       ? filteredItems
-  //       : uniqueDealerCampaignItems
+  //       : uniqueserviceMeasureItems
   //     : [];
 
-  const items = (!isLoading && !dataError && dealerCampaignsItems) || [];
+  const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
@@ -187,7 +187,7 @@ export default DealerCampaignsScreen = (props) => {
     : [];
 
   //   console.log(
-  //     'rendering DealerCampaigns screen, dataError:',
+  //     'rendering ServiceMeasures screen, dataError:',
   //     dataError,
   //     'filteredItems',
   //     filteredItems && filteredItems.length,
@@ -198,7 +198,7 @@ export default DealerCampaignsScreen = (props) => {
   return (
     <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh
-        dataName={'Campaigns items'}
+        dataName={'ServiceMeasures items'}
         someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -206,7 +206,7 @@ export default DealerCampaignsScreen = (props) => {
         dataError={dataError}
         dataStatusCode={dataStatusCode}
         isLoading={isLoading}
-        dataCount={dealerCampaignsItems.length}
+        dataCount={serviceMeasuresItems.length}
       />
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
@@ -238,7 +238,7 @@ export default DealerCampaignsScreen = (props) => {
         />
       ) : (
         <View>
-          <CampaignsList items={itemsToShow} />
+          <ServiceMeasuresList items={itemsToShow} />
         </View>
       )}
     </View>

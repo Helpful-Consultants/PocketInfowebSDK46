@@ -15,9 +15,9 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
-import CampaignsScreen, {
-  screenOptions as CampaignsScreenOptions,
-} from '../screens/CampaignsScreen';
+import ServiceMeasuresScreen, {
+  screenOptions as ServiceMeasuresScreenOptions,
+} from '../screens/ServiceMeasuresScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -94,16 +94,16 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
-const Campaigns = createStackNavigator();
-const CampaignsStack = () => {
+const ServiceMeasures = createStackNavigator();
+const ServiceMeasuresStack = () => {
   return (
-    <Campaigns.Navigator screenOptions={defaultStackNavOptions}>
-      <Campaigns.Screen
-        name={'CampaignsScreen'}
-        component={CampaignsScreen}
-        options={CampaignsScreenOptions}
+    <ServiceMeasures.Navigator screenOptions={defaultStackNavOptions}>
+      <ServiceMeasures.Screen
+        name={'ServiceMeasuresScreen'}
+        component={ServiceMeasuresScreen}
+        options={ServiceMeasuresScreenOptions}
       />
-    </Campaigns.Navigator>
+    </ServiceMeasures.Navigator>
   );
 };
 
@@ -132,9 +132,9 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
-        name='Campaigns'
-        component={CampaignsStack}
-        options={CampaignsScreenOptions}
+        name='ServiceMeasures'
+        component={ServiceMeasuresStack}
+        options={ServiceMeasuresScreenOptions}
       />
     </RemindersTabs.Navigator>
   ) : (
@@ -157,9 +157,9 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
-        name='Campaigns'
-        component={CampaignsStack}
-        options={CampaignsScreenOptions}
+        name='ServiceMeasures'
+        component={ServiceMeasuresStack}
+        options={ServiceMeasuresScreenOptions}
       />
     </RemindersTabs.Navigator>
   );

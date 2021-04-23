@@ -1,4 +1,4 @@
-export default dealerCampaignsDummyData = [
+export default serviceMeasuresDummyData = [
   {
     id: '250',
     menuText: 'Electronic measuring system for camshaft adjustment ',
