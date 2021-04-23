@@ -244,7 +244,7 @@ export default DealerCampaignsScreen = (props) => {
     </View>
   );
 };
-const titleString = 'Serv Measurecams';
+const titleString = 'Serv Measures';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
