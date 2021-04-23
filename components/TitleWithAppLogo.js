@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import getBaseStyles from './getBaseStyles';
+import getBaseStyles from '../helpers/getBaseStyles';
 
 export default function TitleWithAppLogo(props) {
   const windowDim = useWindowDimensions();
