@@ -1,7 +1,7 @@
 export default serviceMeasuresDummyData = [
   {
     id: '203',
-    menuText: 'STAHLWILLE Torque Wrenches',
+    menuText: 'STAHLWILLE Trorque Wrenches',
     toolsAffected:
       'Torque Wrenches: VAG 1331 1331A,  1332 1332A, 1576 1576A, 1601, VAS 5820 VAS 5820A',
     toolBrief: 'Stahwille_Action_ANNEX_BC_010519.pdf',
@@ -33,7 +33,7 @@ export default serviceMeasuresDummyData = [
     status: 'C',
     qMeasure_id: '',
     retailerUpdate: '',
-    retailerStatus: '',
+    retailerStatus: 'c',
     retailerResponses: '472',
   },
   {

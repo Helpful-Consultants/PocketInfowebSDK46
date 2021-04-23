@@ -48,8 +48,8 @@ const getItemStatus = (startDate, expiryDate) => {
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
 
-  //   const items = props.items || [];
-  const items = serviceMeasuresDummyData;
+  const items = props.items || [];
+  //   const items = serviceMeasuresDummyData;
   //   let now = moment();
 
   const FlatListItem = (props) => {
@@ -74,7 +74,6 @@ export default function ServiceMeasuresList(props) {
             <View
               style={{
                 ...baseStyles.viewRowFlexCentreAligned,
-                paddingLeft: 2,
                 marginTop: 5,
               }}
             >
@@ -88,13 +87,12 @@ export default function ServiceMeasuresList(props) {
                 }
               />
               <Text
-                style={{ ...baseStyles.textLeftAligned, paddingLeft: 8 }}
+                style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
               >{`Service measure ${
                 //item.status && item.status.toLowerCase() === 'c'
                 measureIsLive ? 'still open' : 'closed'
               }`}</Text>
             </View>
-
             <View style={baseStyles.viewRowFlexCentreAligned}>
               <InlineIcon
                 itemType='font-awesome'
@@ -111,15 +109,25 @@ export default function ServiceMeasuresList(props) {
               }`}</Text>
             </View>
             <Text
-              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-            >{`Tools: ${item.toolsAffected}`}</Text>
-            <Text
-              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-            >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
-
-            <Text
-              style={baseStyles.textLeftAligned}
-            >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
+              style={{
+                ...baseStyles.textLeftAligned,
+                ...baseStyles.textBold,
+                marginTop: 5,
+                color: Colors.vwgDarkSkyBlue,
+              }}
+            >
+              {item.toolsAffected}
+            </Text>
+            {item.retailerStatus ? null : (
+              <Text
+                style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+              >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+            )}
+            {item.retailerStatus ? null : (
+              <Text
+                style={baseStyles.textLeftAligned}
+              >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
+            )}
           </View>
         }
       ></ListItem>
