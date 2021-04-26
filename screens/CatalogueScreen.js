@@ -112,8 +112,16 @@ export default CatalogueScreen = (props) => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <View>
-          <Text>Catalogue Screen will go here.</Text>
+        <View
+          style={{
+            marginTop: 20,
+            paddingHorizontal: 10,
+          }}
+        >
+          <Text>
+            Catalogue Screen will go here when Volkswagen AG release it the new
+            version.
+          </Text>
         </View>
       )}
     </View>

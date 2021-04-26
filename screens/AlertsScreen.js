@@ -114,11 +114,11 @@ export default AlertsScreen = (props) => {
       ) : (
         <View
           style={{
-            marginTop: 5,
+            marginTop: 20,
             paddingHorizontal: 10,
           }}
         >
-          <Text>The dsfsdfnotifications screen will show urgent alerts.</Text>
+          <Text>The notifications screen will show urgent alerts.</Text>
           <Text>
             This screen is still in design so not ready at the moment.
           </Text>

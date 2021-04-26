@@ -104,7 +104,7 @@ const DrawerNavigator = () => {
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'ODIS, news &  products',
+          drawerLabel: 'ODIS, news & products',
           initialRouteName: 'Odis',
         }}
       />
@@ -112,7 +112,7 @@ const DrawerNavigator = () => {
         name='RemindersTabs'
         component={RemindersTabNavigator}
         options={{
-          drawerLabel: 'Alerts and actions',
+          drawerLabel: 'Stats, alerts and actions',
           initialRouteName: 'Notifications',
         }}
       />
