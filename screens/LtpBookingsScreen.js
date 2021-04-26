@@ -266,7 +266,7 @@ export default LtpBookingsScreen = (props) => {
   );
 };
 
-const titleString = 'Overdue LTP';
+const titleString = 'Overdue Tools';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
