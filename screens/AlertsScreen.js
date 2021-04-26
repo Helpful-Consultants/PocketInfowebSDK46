@@ -112,10 +112,15 @@ export default AlertsScreen = (props) => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <View>
-          <Text>The notifications screen will show urgent alerts.</Text>
+        <View
+          style={{
+            marginTop: 5,
+            paddingHorizontal: 10,
+          }}
+        >
+          <Text>The dsfsdfnotifications screen will show urgent alerts.</Text>
           <Text>
-            Only the service measures and stats screens are ready at the moment.
+            This screen is still in design so not ready at the moment.
           </Text>
         </View>
       )}
