@@ -29,6 +29,12 @@ export default {
   EMPTY_LTP_REQUEST: 'ltp/empty_ltp_request',
   LTP_ERROR: 'ltp/ltp_error',
 
+  GET_LTP_BOOKINGS_START: 'ltpBookings/get_ltp_bookings_start',
+  GET_LTP_BOOKINGS_REQUEST: 'ltpBookings/get_ltp_bookings_request',
+  GET_LTP_BOOKINGS_SUCCESS: 'ltpBookings/get_ltp_bookings_success',
+  EMPTY_LTP_BOOKINGS_REQUEST: 'ltpBookings/empty_ltp_bookings_request',
+  LTP_BOOKINGS_ERROR: 'ltpBookings/ltp_bookings_error',
+
   GET_NEWS_START: 'news/get_news_start',
   GET_NEWS_REQUEST: 'news/get_news_request',
   GET_NEWS_SUCCESS: 'news/get_news_success',
