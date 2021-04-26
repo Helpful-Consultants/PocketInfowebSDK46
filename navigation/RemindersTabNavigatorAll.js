@@ -21,9 +21,9 @@ import AlertsScreen, {
 import ServiceMeasuresScreen, {
   screenOptions as ServiceMeasuresScreenOptions,
 } from '../screens/ServiceMeasuresScreen';
-import LtpActionsScreen, {
-  screenOptions as LtpActionsScreenOptions,
-} from '../screens/LtpActionsScreen';
+import LtpBookingsScreen, {
+  screenOptions as LtpBookingsScreenOptions,
+} from '../screens/LtpBookingsScreen';
 import StatsScreen, {
   screenOptions as StatsScreenOptions,
 } from '../screens/StatsScreen';
@@ -130,16 +130,16 @@ const ServiceMeasuresStack = () => {
   );
 };
 
-const LtpActions = createStackNavigator();
-const LtpActionsStack = () => {
+const LtpBookings = createStackNavigator();
+const LtpBookingsStack = () => {
   return (
-    <LtpActions.Navigator screenOptions={defaultStackNavOptions}>
-      <LtpActions.Screen
-        name={'LtpActionsScreen'}
-        component={LtpActionsScreen}
-        options={LtpActionsScreenOptions}
+    <LtpBookings.Navigator screenOptions={defaultStackNavOptions}>
+      <LtpBookings.Screen
+        name={'LtpBookingsScreen'}
+        component={LtpBookingsScreen}
+        options={LtpBookingsScreenOptions}
       />
-    </LtpActions.Navigator>
+    </LtpBookings.Navigator>
   );
 };
 
@@ -191,9 +191,9 @@ export default RemindersTabNavigator = () => {
         options={ServiceMeasuresScreenOptions}
       />
       <RemindersTabs.Screen
-        name='LtpActions'
-        component={LtpActionsStack}
-        options={LtpActionsScreenOptions}
+        name='LtpBookings'
+        component={LtpBookingsStack}
+        options={LtpBookingsScreenOptions}
       />
       <RemindersTabs.Screen
         name='Stats'
@@ -231,9 +231,9 @@ export default RemindersTabNavigator = () => {
         options={ServiceMeasuresScreenOptions}
       />
       <RemindersTabs.Screen
-        name='LtpActions'
-        component={LtpActionsStack}
-        options={LtpActionsScreenOptions}
+        name='LtpBookings'
+        component={LtpBookingsStack}
+        options={LtpBookingsScreenOptions}
       />
       <RemindersTabs.Screen
         name='Stats'

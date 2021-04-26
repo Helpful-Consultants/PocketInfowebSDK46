@@ -4,6 +4,7 @@ import UsersReducer from './users';
 import NewsReducer from './news';
 import ProductsReducer from './products';
 import LtpReducer from './ltp';
+import LtpBookingsReducer from './ltpBookings';
 import OdisReducer from './odis';
 import StatsReducer from './stats';
 import DealerWipsReducer from './dealerWips';
@@ -16,6 +17,7 @@ export default combineReducers({
   news: NewsReducer,
   products: ProductsReducer,
   ltp: LtpReducer,
+  ltpBookings: LtpBookingsReducer,
   odis: OdisReducer,
   stats: StatsReducer,
   dealerTools: DealerToolsReducer,
