@@ -2,7 +2,7 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 const dummyEmailAddress = 'alan@helpfulconsultants.com';
-const dummyDealerId = 'sgroves';
+const dummyDealerId = '21000014';
 const dummyPin = '808255';
 const dummyIntId = 850;
 const dummyIntIdString = '850';
