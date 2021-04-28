@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { ListItem, Text } from 'react-native-elements';
-import { RFPercentage } from 'react-native-responsive-fontsize';
+// import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
-import InlineIcon from '../components/InlineIcon';
-import Colors from '../constants/Colors';
+// import InlineIcon from '../components/InlineIcon';
+// import Colors from '../constants/Colors';
 
 // import moment from 'moment';
 import ltpBookingsDummyData from '../dummyData/ltpBookingsDummyData';
