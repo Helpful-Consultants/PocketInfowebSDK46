@@ -21,10 +21,10 @@ import Colors from './constants/Colors';
 import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
 import '@expo/match-media';
-import { useMediaQuery } from 'react-responsive';
+// import { useMediaQuery } from 'react-responsive';
 import Constants from 'expo-constants';
-import { Ionicons } from '@expo/vector-icons';
-import { Button, colors, ThemeProvider } from 'react-native-elements';
+// import { Ionicons } from '@expo/vector-icons';
+// import { Button, colors, ThemeProvider } from 'react-native-elements';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 
