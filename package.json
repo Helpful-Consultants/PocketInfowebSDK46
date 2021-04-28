@@ -25,6 +25,7 @@
     "axios": "^0.21.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "expo": "~38.0.8",
+    "expo-app-loading": "^1.0.3",
     "expo-asset": "~8.1.7",
     "expo-constants": "~9.1.1",
     "expo-font": "~8.2.1",
