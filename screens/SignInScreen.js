@@ -214,7 +214,7 @@ export default SignInScreen = (props) => {
                 buttonStyle={baseStyles.buttonSignIn}
                 titleStyle={baseStyles.buttonTextSignIn}
                 icon={
-                  <Ionicon
+                  <Ionicons
                     name={Platform.OS === 'ios' ? 'log-in' : 'log-in'}
                     color={Colors.vwgWhite}
                     size={20}

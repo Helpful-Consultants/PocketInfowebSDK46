@@ -950,7 +950,7 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
             icon={
-              <Ionicon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
                     ? 'close-circle-outline'
@@ -974,7 +974,7 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
             icon={
-              <Ionicon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
                     ? 'checkmark-circle-outline'
@@ -1124,7 +1124,7 @@ export default FindToolsScreen = (props) => {
                       style={baseStyles.viewColumnFlexLeft}
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
-                      <Ionicon
+                      <Ionicons
                         name={Platform.OS === 'ios' ? 'trash' : 'trash'}
                         size={20}
                         color={Colors.vwgWarmRed}
@@ -1176,7 +1176,7 @@ export default FindToolsScreen = (props) => {
         }}
         style={{ flexDirection: 'row', alignItems: 'center' }}
       >
-        <Ionicon
+        <Ionicons
           name={Platform.OS === 'ios' ? 'basket' : 'basket'}
           size={18}
           color={Colors.vwgWhite}
