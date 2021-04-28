@@ -1,28 +1,22 @@
 import React, { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-import BadgedTabBarText from '../components/BadgedTabBarText';
+// import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import HeaderButton from '../components/HeaderButton';
+// import HeaderButton from '../components/HeaderButton';
 import { revalidateUserCredentials } from '../actions/user';
 import { getProductsRequest } from '../actions/products';
 import Urls from '../constants/Urls';
 import ProductsLinks from './ProductsLinks';
-import Colors from '../constants/Colors';
+// import Colors from '../constants/Colors';
 // import productsDummyData from '../dummyData/productsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];

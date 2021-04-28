@@ -2,19 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
+// import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import HeaderButton from '../components/HeaderButton';
-import BadgedTabBarText from '../components/BadgedTabBarText';
+// import HeaderButton from '../components/HeaderButton';
+// import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 // import { getCatalogueRequest } from '../actions/dealerCatalogue';
 // import { getDealerWipsRequest } from '../actions/dealerCatalogue';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 // import CatalogueSummary from './CatalogueSummary';
-import Colors from '../constants/Colors';
+// import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
@@ -26,18 +26,18 @@ export default CatalogueScreen = (props) => {
   //   Items = useSelector(
   //     (state) => state.dealerCatalogue.dealerCatalogueActionItems
   //   );
-  const dealerCatalogueActionItems = [];
+  //   const dealerCatalogueActionItems = [];
 
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  //   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
-  const isLoading = useSelector((state) => state.stats.isLoading);
+  //   const isLoading = useSelector((state) => state.stats.isLoading);
   const dataError = useSelector((state) => state.stats.error);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  //   const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const userApiFetchParamsObj = {
     dealerId: dealerId,
