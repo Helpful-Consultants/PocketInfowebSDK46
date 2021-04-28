@@ -73,41 +73,25 @@ export default function LtpBookingsList(props) {
         bottomDivider
         subtitle={
           <View>
-            {item.VIN ? (
-              <Text
-                style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-              >{`VIN: ${item.VIN}`}</Text>
-            ) : null}
-            {item.sapOrderNumber ? (
-              <Text
-                style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-              >{`Order No: ${item.sapOrderNumber}`}</Text>
-            ) : null}
-
-            {item.startDate ? (
+            {item.startDate || item.endDateDue ? (
               <View
                 style={{
                   ...baseStyles.viewRowFlexCentreAligned,
-                  marginTop: 5,
+                  marginTop: 3,
                 }}
               >
-                <Text
-                  style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-                >{`Start date: ${getDisplayDate(item.startDate)}`}</Text>
+                <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
+                  {item.startDate ? `${getDisplayDate(item.startDate)}` : null}
+                  {item.endDateDue
+                    ? ` to ${getDisplayDate(item.endDateDue)}`
+                    : null}
+                </Text>
               </View>
             ) : null}
-
-            {item.endDateDue ? (
-              <View
-                style={{
-                  ...baseStyles.viewRowFlexCentreAligned,
-                  marginTop: 5,
-                }}
-              >
-                <Text
-                  style={{ ...baseStyles.textLeftAligned }}
-                >{`Due date: ${getDisplayDate(item.endDateDue)}`}</Text>
-              </View>
+            {item.createdBy ? (
+              <Text
+                style={{ ...baseStyles.textLeftAligned, marginTop: 3 }}
+              >{`Ordered by: ${item.createdBy}`}</Text>
             ) : null}
           </View>
         }

@@ -239,17 +239,12 @@ export default LtpBookingsScreen = (props) => {
           </View>
         )
       ) : (
-        <View style={baseStyles.viewPromptRibbonNoneFound}>
+        <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            These loan tools are overdue
+            Showing sample data for Lyndon
           </Text>
         </View>
       )}
-      <View style={baseStyles.viewPromptRibbon}>
-        <Text style={baseStyles.textPromptRibbon}>
-          Showing sample data for Lyndon
-        </Text>
-      </View>
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing Service Measures'}
@@ -266,7 +261,7 @@ export default LtpBookingsScreen = (props) => {
   );
 };
 
-const titleString = 'Overdue Tools';
+const titleString = 'LTP Bookings';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}

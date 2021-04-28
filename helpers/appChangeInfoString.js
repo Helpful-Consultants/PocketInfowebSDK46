@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Service measure status icons';
+const appChangeInfoString = 'Changes: Service measures & LTP bookings';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
