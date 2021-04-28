@@ -3,15 +3,10 @@ import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Colors from '../constants/Colors';
 
-const iconSize = RFPercentage(2);
-
 export default function InlineIcon(props) {
   const { iconName, itemType, iconColor, iconSize } = props;
   const color = iconColor || Colors.vwgLink;
-
   const size = iconSize || RFPercentage(2);
-
-  //   iconName = Platform.OS === 'ios' ? 'ios-home' : 'md-home';
 
   return itemType && itemType === 'font-awesome' ? (
     <FontAwesome5
