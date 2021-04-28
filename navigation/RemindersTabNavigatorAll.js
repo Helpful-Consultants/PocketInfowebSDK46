@@ -70,7 +70,7 @@ const defaultStackNavOptions = () => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='home'
-          iconName={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+          iconName={Platform.OS === 'ios' ? 'home' : 'home'}
           onPress={() => {
             {
               /* console.log('pressed homescreen icon'); */
@@ -84,7 +84,7 @@ const defaultStackNavOptions = () => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title='menu'
-          iconName={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
+          iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
           onPress={() => {
             navigation.toggleDrawer();
           }}
