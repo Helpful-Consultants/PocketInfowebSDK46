@@ -6,7 +6,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Icon, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 export default DataAlertBarWithRefresh = (props) => {
@@ -40,9 +41,8 @@ export default DataAlertBarWithRefresh = (props) => {
             refreshRequestHandler();
           }}
         >
-          <Icon
-            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-            type='ionicon'
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'refresh' : 'refresh'}
             size={25}
             color={Colors.vwgLink}
           />

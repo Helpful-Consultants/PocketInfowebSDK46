@@ -10,7 +10,8 @@ import {
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, Icon, Text } from 'react-native-elements';
+import { Button, Input, Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 // import baseStyles from '../constants/baseStyles';
@@ -213,9 +214,8 @@ export default SignInScreen = (props) => {
                 buttonStyle={baseStyles.buttonSignIn}
                 titleStyle={baseStyles.buttonTextSignIn}
                 icon={
-                  <Icon
+                  <Ionicon
                     name={Platform.OS === 'ios' ? 'log-in' : 'log-in'}
-                    type='ionicon'
                     color={Colors.vwgWhite}
                     size={20}
                     paddingTop={4}

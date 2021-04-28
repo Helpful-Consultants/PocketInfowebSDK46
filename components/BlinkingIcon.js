@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 //import react in our project
 
-import { Icon } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 //import all the components we needed
 
 export default class BlinkingIcon extends Component {
@@ -26,9 +26,8 @@ export default class BlinkingIcon extends Component {
     // let display = this.state.showItem ? this.props.text : ' ';
     let color = this.state.showItem ? this.props.colorOne : this.props.colorTwo;
     return (
-      <Icon
+      <Ionicons
         name={this.props.iconName}
-        type={this.props.iconType}
         size={this.props.iconSize}
         color={color}
       />

@@ -38,22 +38,6 @@ export default function LtpList(props) {
   //     ).format('Do MMM') || null}`}</Text>
   //   );
 
-  //   const rightIcon = () => (
-  //     // not wanted yet
-  //     <View>
-  //       <Icon
-  //         name={Platform.OS === 'ios' ? 'basket' : 'basket'}
-  //         type='ionicon'
-  //       />
-  //       <Icon
-  //         name={
-  //           Platform.OS === 'ios' ? 'ios-arrow-round-up' : 'md-arrow-round-up'
-  //         }
-  //         type='ionicon'
-  //       />
-  //     </View>
-  //   );
-
   const FlatListItem = (props) => {
     const { item } = props;
     // const { onSelectItem } = props;

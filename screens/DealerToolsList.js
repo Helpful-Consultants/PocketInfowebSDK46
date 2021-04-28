@@ -290,9 +290,8 @@ export default function DealerToolsList(props) {
                 >
                   {`Already in your `}
                 </Text>
-                <Icon
+                <Ionicons
                   name={Platform.OS === 'ios' ? 'basket' : 'basket'}
-                  type='ionicon'
                   size={13}
                   color={Colors.vwgLink}
                   iconStyle={{ marginTop: Platform.OS === 'ios' ? 2 : -1 }}

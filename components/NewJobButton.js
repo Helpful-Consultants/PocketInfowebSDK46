@@ -1,6 +1,7 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Button, Icon } from 'react-native-elements';
+import { Button } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 // Call as <NewJobButton setIsModalVisible={setIsModalVisible} />
@@ -24,7 +25,7 @@ export default NewJobButton = ({ setIsModalVisible }) => (
       backgroundColor: Colors.vwgDeepBlue,
     }}
     icon={
-      <Icon
+      <Ionicons
         name={
           Platform.OS === 'ios' ? 'add-circle-outline' : 'add-circle-outline'
         }

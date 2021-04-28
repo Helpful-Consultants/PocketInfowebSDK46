@@ -12,7 +12,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Button, Divider, Icon, Input, Text } from 'react-native-elements';
+import { Button, Divider, Input, Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -749,13 +750,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
             icon={
-              <Icon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-arrow-round-back'
-                    : 'md-arrow-round-back'
+                    ? 'return-down-back'
+                    : 'return-down-back'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWarmRed}
               />
@@ -773,13 +773,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
             icon={
-              <Icon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-checkmark-circle-outline'
-                    : 'md-checkmark-circle-outline'
+                    ? 'checkmark-circle-outline'
+                    : 'checkmark-circle-outline'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWhite}
               />
@@ -840,9 +839,8 @@ export default FindToolsScreen = (props) => {
             style={baseStyles.viewRowBasket}
             onPress={() => addBasketItemHandler()}
           >
-            <Icon
+            <Ionicons
               name={Platform.OS === 'ios' ? 'add-circle' : 'add-circle'}
-              type='ionicon'
               size={20}
               color={Colors.vwgLink}
             />
@@ -864,13 +862,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
             icon={
-              <Icon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
                     ? 'ios-close-circle-outline'
                     : 'md-close-circle-outline'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWarmRed}
               />
@@ -887,13 +884,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
             icon={
-              <Icon
+              <Ionicons
                 name={
                   Platform.OS === 'ios'
                     ? 'ios-checkmark-circle-outline'
                     : 'md-checkmark-circle-outline'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWhite}
               />
@@ -954,13 +950,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
             icon={
-              <Icon
+              <Ionicon
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-close-circle-outline'
-                    : 'md-close-circle-outline'
+                    ? 'close-circle-outline'
+                    : 'close-circle-outline'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWarmRed}
               />
@@ -979,13 +974,12 @@ export default FindToolsScreen = (props) => {
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
             icon={
-              <Icon
+              <Ionicon
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-checkmark-circle-outline'
-                    : 'md-checkmark-circle-outline'
+                    ? 'checkmark-circle-outline'
+                    : 'checkmark-circle-outline'
                 }
-                type='ionicon'
                 size={20}
                 color={Colors.vwgWhite}
               />
@@ -1130,9 +1124,8 @@ export default FindToolsScreen = (props) => {
                       style={baseStyles.viewColumnFlexLeft}
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
-                      <Icon
+                      <Ionicon
                         name={Platform.OS === 'ios' ? 'trash' : 'trash'}
-                        type='ionicon'
                         size={20}
                         color={Colors.vwgWarmRed}
                       />
@@ -1183,9 +1176,8 @@ export default FindToolsScreen = (props) => {
         }}
         style={{ flexDirection: 'row', alignItems: 'center' }}
       >
-        <Icon
+        <Ionicon
           name={Platform.OS === 'ios' ? 'basket' : 'basket'}
-          type='ionicon'
           size={18}
           color={Colors.vwgWhite}
           iconStyle={{

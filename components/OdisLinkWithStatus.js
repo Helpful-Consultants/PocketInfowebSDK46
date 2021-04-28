@@ -272,7 +272,7 @@ export default function OdisLinkWithStatus(props) {
       style={{ padding: 5 }}
     >
       <BlinkingView
-        iconName={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
+        iconName={Platform.OS === 'ios' ? 'tv' : 'md-tv'}
         iconType='ionicon'
         iconSize={iconSizeSmall}
         text={

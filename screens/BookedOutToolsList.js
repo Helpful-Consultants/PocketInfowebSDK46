@@ -9,7 +9,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Divider, Icon } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';
 
@@ -134,7 +135,7 @@ export default function BookedOutToolsList(props) {
                           justifyContent: 'center',
                         }}
                       >
-                        <Icon
+                        <Ionicons
                           name={
                             Platform.OS === 'ios'
                               ? 'ios-return-down-back'

@@ -8,7 +8,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Divider, Button, Icon } from 'react-native-elements';
+import { Divider } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 import Colors from '../constants/Colors';
@@ -101,14 +102,13 @@ export default function DealerToolsList(props) {
                         justifyContent: 'center',
                       }}
                     >
-                      <Icon
+                      <Ionicons
                         name={
                           Platform.OS === 'ios'
                             ? 'return-down-back'
                             : 'return-down-back'
                         }
                         iconStyle={{ margin: 0, padding: 0 }}
-                        type='ionicon'
                         color={Colors.vwgLink}
                         reverse
                         size={10}

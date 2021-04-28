@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { Icon, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 export default BlinkingView = (props) => {
@@ -44,9 +45,8 @@ export default BlinkingView = (props) => {
 
   return (
     <View style={baseStyles.viewRowFlex}>
-      <Icon
+      <Ionicons
         name={iconName}
-        type={iconType}
         size={iconSize}
         color={blink ? fallbackColor : colorOne}
       />

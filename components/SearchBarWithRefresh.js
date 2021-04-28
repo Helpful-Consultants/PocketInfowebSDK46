@@ -6,7 +6,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Icon, SearchBar, Text } from 'react-native-elements';
+import { SearchBar, Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 export default SearchBarWithRefresh = (props) => {
@@ -42,9 +43,8 @@ export default SearchBarWithRefresh = (props) => {
             refreshRequestHandler();
           }}
         >
-          <Icon
-            name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
-            type='ionicon'
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'refresh' : 'refresh'}
             size={25}
             color={Colors.vwgLink}
           />
