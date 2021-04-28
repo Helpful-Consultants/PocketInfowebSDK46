@@ -64,79 +64,82 @@ export default function ServiceMeasuresList(props) {
       false;
 
     return (
-      <ListItem
-        title={`${item.menuText}`}
-        titleStyle={baseStyles.textLeftAlignedBold}
-        contentContainerStyle={baseStyles.containerNoMargin}
-        bottomDivider
-        subtitle={
-          <View>
-            <View
-              style={{
-                ...baseStyles.viewRowFlexCentreAligned,
-                marginTop: 5,
-              }}
-            >
-              <InlineIcon
-                itemType='font-awesome'
-                iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
-                iconSize={RFPercentage(2.4)}
-                iconColor={
+      <ListItem bottomDivider>
+        <ListItem.Content style={baseStyles.containerNoMargin}>
+          <ListItem.Title
+            style={baseStyles.textLeftAlignedBold}
+          >{`${item.menuText}`}</ListItem.Title>
+          <ListItem.Subtitle>
+            <View>
+              <View
+                style={{
+                  ...baseStyles.viewRowFlexCentreAligned,
+                  marginTop: 5,
+                }}
+              >
+                <InlineIcon
+                  itemType='font-awesome'
+                  iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
+                  iconSize={RFPercentage(2.4)}
+                  iconColor={
+                    //item.status && item.status.toLowerCase() === 'c'
+                    measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
+                  }
+                />
+                <Text
+                  style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
+                >{`Service measure ${
                   //item.status && item.status.toLowerCase() === 'c'
-                  measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
-                }
-              />
+                  measureIsLive ? 'still open' : 'closed'
+                }`}</Text>
+              </View>
+              <View style={baseStyles.viewRowFlexCentreAligned}>
+                <InlineIcon
+                  itemType='font-awesome'
+                  iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
+                  iconSize={RFPercentage(2)}
+                  iconColor={
+                    item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
+                  }
+                />
+                <Text
+                  style={{ ...baseStyles.textLeftAligned, paddingLeft: 5 }}
+                >{`Retailer actions ${
+                  item.retailerStatus ? 'completed' : 'not completed'
+                }`}</Text>
+              </View>
               <Text
-                style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
-              >{`Service measure ${
-                //item.status && item.status.toLowerCase() === 'c'
-                measureIsLive ? 'still open' : 'closed'
-              }`}</Text>
+                style={{
+                  ...baseStyles.textLeftAligned,
+                  ...baseStyles.textBold,
+                  marginTop: 5,
+                  color: Colors.vwgDarkSkyBlue,
+                }}
+              >
+                {item.toolsAffected}
+              </Text>
+              {item.retailerStatus &&
+              item.retailerStatus.toLowercase() === 'y' ? null : (
+                <Text
+                  style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
+                >{`You have not yet responded`}</Text>
+              )}
+              {item.retailerStatus ? null : (
+                <Text
+                  style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+                >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+              )}
+              {item.retailerStatus ? null : (
+                <Text
+                  style={baseStyles.textLeftAligned}
+                >{`To be completed by: ${getDisplayDate(
+                  item.expiryDate
+                )}`}</Text>
+              )}
             </View>
-            <View style={baseStyles.viewRowFlexCentreAligned}>
-              <InlineIcon
-                itemType='font-awesome'
-                iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
-                iconSize={RFPercentage(2)}
-                iconColor={
-                  item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
-                }
-              />
-              <Text
-                style={{ ...baseStyles.textLeftAligned, paddingLeft: 5 }}
-              >{`Retailer actions ${
-                item.retailerStatus ? 'completed' : 'not completed'
-              }`}</Text>
-            </View>
-            <Text
-              style={{
-                ...baseStyles.textLeftAligned,
-                ...baseStyles.textBold,
-                marginTop: 5,
-                color: Colors.vwgDarkSkyBlue,
-              }}
-            >
-              {item.toolsAffected}
-            </Text>
-            {item.retailerStatus &&
-            item.retailerStatus.toLowercase() === 'y' ? null : (
-              <Text
-                style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
-              >{`You have not yet responded`}</Text>
-            )}
-            {item.retailerStatus ? null : (
-              <Text
-                style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-              >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
-            )}
-            {item.retailerStatus ? null : (
-              <Text
-                style={baseStyles.textLeftAligned}
-              >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
-            )}
-          </View>
-        }
-      ></ListItem>
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
     );
   };
   //   console.log(items && items);

@@ -66,36 +66,39 @@ export default function LtpBookingsList(props) {
       false;
 
     return (
-      <ListItem
-        title={`${item.loanToolNo} ${item.toolDescription}`}
-        titleStyle={baseStyles.textLeftAlignedBold}
-        contentContainerStyle={baseStyles.containerNoMargin}
-        bottomDivider
-        subtitle={
-          <View>
-            {item.startDate || item.endDateDue ? (
-              <View
-                style={{
-                  ...baseStyles.viewRowFlexCentreAligned,
-                  marginTop: 3,
-                }}
-              >
-                <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
-                  {item.startDate ? `${getDisplayDate(item.startDate)}` : null}
-                  {item.endDateDue
-                    ? ` to ${getDisplayDate(item.endDateDue)}`
-                    : null}
-                </Text>
-              </View>
-            ) : null}
-            {item.createdBy ? (
-              <Text
-                style={{ ...baseStyles.textLeftAligned, marginTop: 3 }}
-              >{`Ordered by: ${item.createdBy}`}</Text>
-            ) : null}
-          </View>
-        }
-      ></ListItem>
+      <ListItem bottomDivider>
+        <ListItem.Content style={baseStyles.containerNoMargin}>
+          <ListItem.Title style={baseStyles.textLeftAlignedBold}>
+            {`${item.loanToolNo} ${item.toolDescription}`}
+          </ListItem.Title>
+          <ListItem.Subtitle>
+            <View>
+              {item.startDate || item.endDateDue ? (
+                <View
+                  style={{
+                    ...baseStyles.viewRowFlexCentreAligned,
+                    marginTop: 3,
+                  }}
+                >
+                  <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
+                    {item.startDate
+                      ? `${getDisplayDate(item.startDate)}`
+                      : null}
+                    {item.endDateDue
+                      ? ` to ${getDisplayDate(item.endDateDue)}`
+                      : null}
+                  </Text>
+                </View>
+              ) : null}
+              {item.createdBy ? (
+                <Text
+                  style={{ ...baseStyles.textLeftAligned, marginTop: 3 }}
+                >{`Ordered by: ${item.createdBy}`}</Text>
+              ) : null}
+            </View>
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
     );
   };
   //   console.log(items && items);

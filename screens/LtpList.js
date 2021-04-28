@@ -59,33 +59,36 @@ export default function LtpList(props) {
     // const { onSelectItem } = props;
 
     return (
-      <ListItem
-        title={`${item.loanToolNo}${
-          (item.supplierPartNo && !item.orderPartNo) ||
-          (item.supplierPartNo &&
-            item.supplierPartNo.toLowerCase() !==
-              item.orderPartNo.toLowerCase())
-            ? ` (${item.supplierPartNo})`
-            : ``
-        }`}
-        titleStyle={baseStyles.textLeftAlignedBold}
-        contentContainerStyle={baseStyles.containerNoMargin}
-        bottomDivider
-        subtitle={
-          <View>
-            <Text
-              style={baseStyles.textLeftAligned}
-            >{`${item.toolDescription}`}</Text>
-            {item.orderPartNo &&
-            item.orderPartNo.toLowerCase() !==
-              item.toolDescription.toLowerCase() ? (
-              <Text style={baseStyles.textLeftAlignedSmall}>
-                {item.orderPartNo}
-              </Text>
-            ) : null}
-          </View>
-        }
-      ></ListItem>
+      <ListItem bottomDivider>
+        <ListItem.Content style={baseStyles.containerNoMargin}>
+          <ListItem.Title style={baseStyles.textLeftAlignedBold}>
+            {`${item.loanToolNo}${
+              (item.supplierPartNo && !item.orderPartNo) ||
+              (item.supplierPartNo &&
+                item.supplierPartNo.toLowerCase() !==
+                  item.orderPartNo.toLowerCase())
+                ? ` (${item.supplierPartNo})`
+                : ``
+            }`}
+          </ListItem.Title>
+          <ListItem.Subtitle>
+            {
+              <View>
+                <Text
+                  style={baseStyles.textLeftAligned}
+                >{`${item.toolDescription}`}</Text>
+                {item.orderPartNo &&
+                item.orderPartNo.toLowerCase() !==
+                  item.toolDescription.toLowerCase() ? (
+                  <Text style={baseStyles.textLeftAlignedSmall}>
+                    {item.orderPartNo}
+                  </Text>
+                ) : null}
+              </View>
+            }
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
     );
   };
   //   console.log(items && items);

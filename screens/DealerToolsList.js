@@ -133,71 +133,88 @@ export default function DealerToolsList(props) {
     }
     // console.log(' CustomListItem - bookedByUser ', bookedByUser);
     return (
-      <ListItem
-        title={
-          item.partNumber
-            ? `${item.partNumber} ${
-                (item.toolNumber && !item.partNumber) ||
-                (item.toolNumber && item.toolNumber !== item.partNumber)
-                  ? `(${item.toolNumber})`
-                  : ``
-              }`
-            : `${item.loanToolNo}${
-                (item.supplierPartNo && !item.orderPartNo) ||
-                (item.supplierPartNo &&
-                  item.supplierPartNo !== item.orderPartNo)
-                  ? ` - ${item.supplierPartNo}`
-                  : ``
-              }`
-        }
-        titleStyle={{
-          ...baseStyles.textLinkBoldLarge,
-          color: item.loanToolNo
-            ? Colors.vwgVeryDarkGray
-            : (booked && booked === true) ||
-              (inToolBasket && inToolBasket === true)
-            ? Colors.vwgVeryDarkGray
-            : Colors.vwgLink,
-        }}
-        containerStyle={{
-          backgroundColor: item.loanToolNo
-            ? Colors.vwgVeryVeryLightGray
-            : (booked && booked === true) ||
-              (inToolBasket && inToolBasket === true)
-            ? Colors.vwgVeryLightGray
-            : Colors.vwgWhite,
-        }}
-        subtitle={
-          <View>
-            <Text style={{ ...baseStyles.textSmall }}>
-              {item.partDescription
-                ? item.partDescription
-                : item.toolDescription}
-            </Text>
-            {item.loanToolNo ? (
+      <ListItem bottomDivider>
+        <ListItem.Content
+          style={{
+            backgroundColor: item.loanToolNo
+              ? Colors.vwgVeryVeryLightGray
+              : (booked && booked === true) ||
+                (inToolBasket && inToolBasket === true)
+              ? Colors.vwgVeryLightGray
+              : Colors.vwgWhite,
+          }}
+        >
+          <ListItem.Title
+            style={{
+              ...baseStyles.textLinkBoldLarge,
+              color: item.loanToolNo
+                ? Colors.vwgVeryDarkGray
+                : (booked && booked === true) ||
+                  (inToolBasket && inToolBasket === true)
+                ? Colors.vwgVeryDarkGray
+                : Colors.vwgLink,
+            }}
+          >
+            {item.partNumber
+              ? `${item.partNumber} ${
+                  (item.toolNumber && !item.partNumber) ||
+                  (item.toolNumber && item.toolNumber !== item.partNumber)
+                    ? `(${item.toolNumber})`
+                    : ``
+                }`
+              : `${item.loanToolNo}${
+                  (item.supplierPartNo && !item.orderPartNo) ||
+                  (item.supplierPartNo &&
+                    item.supplierPartNo !== item.orderPartNo)
+                    ? ` - ${item.supplierPartNo}`
+                    : ``
+                }`}
+          </ListItem.Title>
+          <ListItem.Subtitle
+            style={{
+              backgroundColor: item.loanToolNo
+                ? Colors.vwgVeryVeryLightGray
+                : (booked && booked === true) ||
+                  (inToolBasket && inToolBasket === true)
+                ? Colors.vwgVeryLightGray
+                : Colors.vwgWhite,
+              marginTop: 3,
+            }}
+          >
+            {
               <View>
-                {item.orderPartNo ? (
-                  <Text style={{ ...baseStyles.text }}>{item.orderPartNo}</Text>
-                ) : null}
                 <Text style={{ ...baseStyles.textSmall }}>
-                  Available through the Loan Tool Programme
+                  {item.partDescription
+                    ? item.partDescription
+                    : item.toolDescription}
                 </Text>
-              </View>
-            ) : item.location ? (
-              <Text
-                style={{ ...baseStyles.textSmall }}
-              >{`Storage location: ${item.location}`}</Text>
-            ) : (
-              <Text style={{ ...baseStyles.text }}>
-                Storage location not recorded
-              </Text>
-            )}
+                {item.loanToolNo ? (
+                  <View>
+                    {item.orderPartNo ? (
+                      <Text style={{ ...baseStyles.text }}>
+                        {item.orderPartNo}
+                      </Text>
+                    ) : null}
+                    <Text style={{ ...baseStyles.textSmall }}>
+                      Available through the Loan Tool Programme
+                    </Text>
+                  </View>
+                ) : item.location ? (
+                  <Text
+                    style={{ ...baseStyles.textSmall }}
+                  >{`Storage location: ${item.location}`}</Text>
+                ) : (
+                  <Text style={{ ...baseStyles.text }}>
+                    Storage location not recorded
+                  </Text>
+                )}
 
-            {lastJobDetails}
-          </View>
-        }
-        bottomDivider
-      />
+                {lastJobDetails}
+              </View>
+            }
+          </ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
     );
   };
 
