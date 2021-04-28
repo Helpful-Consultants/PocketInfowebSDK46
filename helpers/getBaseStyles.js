@@ -868,6 +868,10 @@ export default getBaseStyles = (props) => {
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
+    viewColumnFlexCentre: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
     viewInputContainerSignIn: {
       alignItems: 'flex-start',
       justifyContent: 'center',
