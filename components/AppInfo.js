@@ -78,6 +78,9 @@ export default AppInfo = (props) => {
 
       <Text style={baseStyles.panelTextAppInfo}>
         {`Build `}
+        {Constants.manifest.sdkVersion
+          ? `${Constants.manifest.sdkVersion}/`
+          : null}
         {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
           ? `${Constants.manifest.version} OTA`
