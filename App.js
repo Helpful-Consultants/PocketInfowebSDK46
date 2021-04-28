@@ -47,9 +47,11 @@ Sentry.init({
   dsn: 'https://753764f4208a4f429c2c21d20a45adf0@sentry.io/3578989',
   enableInExpoDevelopment: true,
   debug: true,
+  release: Constants.manifest.revisionId,
 });
 
-Sentry.setRelease(Constants.manifest.revisionId);
+// deprecated so moved above
+// Sentry.setRelease(Constants.manifest.revisionId);
 
 const sagaMiddleware = createSagaMiddleware();
 
