@@ -137,7 +137,7 @@ export default function BookedOutToolsList(props) {
                         <Icon
                           name={
                             Platform.OS === 'ios'
-                              ? 'ios-return-left'
+                              ? 'ios-return-down-back'
                               : 'md-return-left'
                           }
                           iconStyle={{ margin: 0, padding: 0 }}

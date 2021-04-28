@@ -42,7 +42,7 @@ export default function LtpList(props) {
   //     // not wanted yet
   //     <View>
   //       <Icon
-  //         name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+  //         name={Platform.OS === 'ios' ? 'basket' : 'basket'}
   //         type='ionicon'
   //       />
   //       <Icon

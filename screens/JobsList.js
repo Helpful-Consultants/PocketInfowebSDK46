@@ -104,8 +104,8 @@ export default function DealerToolsList(props) {
                       <Icon
                         name={
                           Platform.OS === 'ios'
-                            ? 'ios-return-left'
-                            : 'md-return-left'
+                            ? 'return-down-back'
+                            : 'return-down-back'
                         }
                         iconStyle={{ margin: 0, padding: 0 }}
                         type='ionicon'

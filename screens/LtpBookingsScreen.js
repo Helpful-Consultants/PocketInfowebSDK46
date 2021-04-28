@@ -278,7 +278,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-calendar' : 'md-calendar'}
+        name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
         size={size}
       />
     ),

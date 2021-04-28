@@ -137,7 +137,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-tv' : 'md-tv'}
+        name={Platform.OS === 'ios' ? 'tv' : 'tv'}
         size={size}
       />
     ),

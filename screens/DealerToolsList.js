@@ -291,7 +291,7 @@ export default function DealerToolsList(props) {
                   {`Already in your `}
                 </Text>
                 <Icon
-                  name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+                  name={Platform.OS === 'ios' ? 'basket' : 'basket'}
                   type='ionicon'
                   size={13}
                   color={Colors.vwgLink}

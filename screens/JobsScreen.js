@@ -315,7 +315,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-clipboard' : 'md-clipboard'}
+        name={Platform.OS === 'ios' ? 'clipboard' : 'clipboard'}
         size={size}
       />
     ),

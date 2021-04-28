@@ -208,7 +208,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-speedometer' : 'md-speedometer'}
+        name={Platform.OS === 'ios' ? 'speedometer' : 'speedometer'}
         size={size}
       />
     ),

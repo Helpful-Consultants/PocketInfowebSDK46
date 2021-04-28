@@ -261,9 +261,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={
-          Platform.OS === 'ios' ? 'ios-checkbox-outline' : 'md-checkbox-outline'
-        }
+        name={Platform.OS === 'ios' ? 'checkbox' : 'checkbox'}
         size={size}
       />
     ),

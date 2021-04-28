@@ -166,7 +166,7 @@ export default SignInScreen = (props) => {
             placeholder='e.g. janedoe@dtauto.co.uk'
             leftIcon={{
               type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'ios-mail' : 'md-mail',
+              name: Platform.OS === 'ios' ? 'mail' : 'mail',
               color: Colors.vwgDarkSkyBlue,
               paddingRight: 10,
               paddingTop: 4,
@@ -191,7 +191,7 @@ export default SignInScreen = (props) => {
             placeholder='Six digits, e.g. 123456'
             leftIcon={{
               type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'ios-key' : 'md-key',
+              name: Platform.OS === 'ios' ? 'key' : 'key',
               color: Colors.vwgDarkSkyBlue,
               paddingRight: 10,
             }}
@@ -214,7 +214,7 @@ export default SignInScreen = (props) => {
                 titleStyle={baseStyles.buttonTextSignIn}
                 icon={
                   <Icon
-                    name={Platform.OS === 'ios' ? 'ios-log-in' : 'md-log-in'}
+                    name={Platform.OS === 'ios' ? 'log-in' : 'log-in'}
                     type='ionicon'
                     color={Colors.vwgWhite}
                     size={20}

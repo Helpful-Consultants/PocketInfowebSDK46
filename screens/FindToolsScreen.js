@@ -841,7 +841,7 @@ export default FindToolsScreen = (props) => {
             onPress={() => addBasketItemHandler()}
           >
             <Icon
-              name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle'}
+              name={Platform.OS === 'ios' ? 'add-circle' : 'add-circle'}
               type='ionicon'
               size={20}
               color={Colors.vwgLink}
@@ -1131,7 +1131,7 @@ export default FindToolsScreen = (props) => {
                       onPress={() => removeBasketItemHandler(item.id)}
                     >
                       <Icon
-                        name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
+                        name={Platform.OS === 'ios' ? 'trash' : 'trash'}
                         type='ionicon'
                         size={20}
                         color={Colors.vwgWarmRed}
@@ -1184,7 +1184,7 @@ export default FindToolsScreen = (props) => {
         style={{ flexDirection: 'row', alignItems: 'center' }}
       >
         <Icon
-          name={Platform.OS === 'ios' ? 'ios-basket' : 'md-basket'}
+          name={Platform.OS === 'ios' ? 'basket' : 'basket'}
           type='ionicon'
           size={18}
           color={Colors.vwgWhite}
@@ -1341,7 +1341,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused, size }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+        name={Platform.OS === 'ios' ? 'build' : 'build'}
         size={size}
       />
     ),

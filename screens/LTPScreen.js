@@ -215,7 +215,7 @@ export const screenOptions = (navData) => {
       return (
         <TabBarIcon
           focused={focused}
-          name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+          name={Platform.OS === 'ios' ? 'swap-horizontal' : 'swap-horizontal'}
           size={size}
         />
       );

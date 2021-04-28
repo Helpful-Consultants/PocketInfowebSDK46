@@ -10,7 +10,8 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Icon, Text } from 'react-native-elements';
+import { Text } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import moment from 'moment';
@@ -544,9 +545,9 @@ export default HomeScreen = (props) => {
                       navigation.navigate('WipsTabs', { screen: 'FindTools' })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={Platform.OS === 'ios' ? 'ios-build' : 'md-build'}
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'build' : 'build'}
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -563,11 +564,9 @@ export default HomeScreen = (props) => {
                       navigation.navigate('WipsTabs', { screen: 'Jobs' })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={
-                          Platform.OS === 'ios' ? 'ios-clipboard' : 'md-today'
-                        }
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'clipboard' : 'clipboard'}
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -592,12 +591,12 @@ export default HomeScreen = (props) => {
                       })
                     }
                   >
-                    <View>
-                      <Icon
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
                         name={
                           Platform.OS === 'ios'
-                            ? 'ios-return-left'
-                            : 'md-return-left'
+                            ? 'return-down-back'
+                            : 'return-down-back'
                         }
                         type='ionicon'
                         color={buttonTextColor}
@@ -631,9 +630,13 @@ export default HomeScreen = (props) => {
                       navigation.navigate('WipsTabs', { screen: 'Ltp' })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={Platform.OS === 'ios' ? 'ios-swap' : 'md-swap'}
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'swap-horizontal'
+                            : 'swap-horizontal'
+                        }
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -654,12 +657,12 @@ export default HomeScreen = (props) => {
                         navigation.navigate('NewsTabs', { screen: 'Products' })
                       }
                     >
-                      <View>
-                        <Icon
+                      <View style={baseStyles.viewColumnFlexCentre}>
+                        <Ionicons
                           name={
                             Platform.OS === 'ios'
-                              ? 'ios-speedometer'
-                              : 'md-speedometer'
+                              ? 'speedometer'
+                              : 'speedometer'
                           }
                           type='ionicon'
                           color={buttonTextColor}
@@ -682,9 +685,9 @@ export default HomeScreen = (props) => {
                       navigation.navigate('NewsTabs', { screen: 'Catalogue' })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={Platform.OS === 'ios' ? 'ios-book' : 'md-book'}
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'book' : 'book'}
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -707,13 +710,9 @@ export default HomeScreen = (props) => {
                       })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={
-                          Platform.OS === 'ios'
-                            ? 'ios-document'
-                            : 'md-information-circle'
-                        }
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'document' : 'document'}
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -734,9 +733,13 @@ export default HomeScreen = (props) => {
                       })
                     }
                   >
-                    <View>
-                      <Icon
-                        name={Platform.OS === 'ios' ? 'ios-alert' : 'md-alert'}
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'alert-circle'
+                            : 'alert-circle'
+                        }
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -792,8 +795,12 @@ export default HomeScreen = (props) => {
                     marginTop: 5,
                   }}
                 >
-                  <Icon
-                    name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
+                  <Ionicons
+                    name={
+                      Platform.OS === 'ios'
+                        ? 'log-out-outline'
+                        : 'log-out-outline'
+                    }
                     type='ionicon'
                     size={20}
                     color={Colors.vwgDeepBlue}
@@ -819,7 +826,7 @@ export const screenOptions = (navData) => {
     tabBarIcon: ({ focused }) => (
       <TabBarIcon
         focused={focused}
-        name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
+        name={Platform.OS === 'ios' ? 'home' : 'home'}
       />
     ),
   };
