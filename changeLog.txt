@@ -6,3 +6,18 @@ Finished info on stats screen, and fixed crash
 Reformatting jobs screen
 Speeded up the revised tools basket
 Lightened text on news & Products
+
+
+SDK 41
+
+✅ The following packages were updated:
+@expo/vector-icons, @react-native-community/async-storage, @react-native-community/masked-view, expo-application, expo-asset, expo-constants, expo-font, expo-linking, expo-notifications, expo-screen-orientation, expo-secure-store, expo-splash-screen, expo-status-bar, expo-updates, expo-web-browser, react-native-gesture-handler, react-native-reanimated, react-native-safe-area-context, react-native-screens, react-native-webview, sentry-expo, jest-expo, react-native, react, react-dom, typescript, @babel/core, @types/react, react-native-web, babel-preset-expo, @types/react-native, @react-native-async-storage/async-storage, expo
+
+🗑️ The following packages were removed:
+@react-native-community/async-storage
+
+🚨 The following packages were not updated. You should check the READMEs for those repositories to determine what version is compatible with your new set of packages:
+@expo/match-media, @hapi/topo, @react-navigation/bottom-tabs, @react-navigation/drawer, @react-navigation/material-bottom-tabs, @react-navigation/native, @react-navigation/stack, axios, babel-plugin-transform-remove-console, expo-app-loading, ios, joi, js-base64, moment, node-fetch, react-native-awesome-alerts, react-native-elements, react-native-modal, react-native-paper, react-native-platform-touchable, react-native-render-html, react-native-responsive-fontsize, react-native-safe-area-view, react-native-scalable-image, react-native-search-filter, react-navigation-header-buttons, react-redux, react-responsive, redux, redux-persist, redux-saga
+
+🚨 @react-native-community/async-storage has been renamed to @react-native-async-storage/async-storage. The dependency has been updated automatically, you will now need to either update the imports in your source code manually, or run `npx expo-codemod sdk41-async-storage './**/*'`.
+
