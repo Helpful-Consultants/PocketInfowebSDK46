@@ -17,8 +17,8 @@ import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
 
-// import AsyncStorage from '@react-native-community/async-storage'; //breaks
-import { AsyncStorage } from 'react-native'; // deprecated
+import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
+// import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
 import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
