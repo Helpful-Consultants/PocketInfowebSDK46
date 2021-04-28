@@ -133,17 +133,18 @@ export default function DealerToolsList(props) {
     }
     // console.log(' CustomListItem - bookedByUser ', bookedByUser);
     return (
-      <ListItem bottomDivider>
-        <ListItem.Content
-          style={{
-            backgroundColor: item.loanToolNo
-              ? Colors.vwgVeryVeryLightGray
-              : (booked && booked === true) ||
-                (inToolBasket && inToolBasket === true)
-              ? Colors.vwgVeryLightGray
-              : Colors.vwgWhite,
-          }}
-        >
+      <ListItem
+        bottomDivider
+        containerStyle={{
+          backgroundColor: item.loanToolNo
+            ? Colors.vwgVeryVeryLightGray
+            : (booked && booked === true) ||
+              (inToolBasket && inToolBasket === true)
+            ? Colors.vwgVeryLightGray
+            : Colors.vwgWhite,
+        }}
+      >
+        <ListItem.Content>
           <ListItem.Title
             style={{
               ...baseStyles.textLinkBoldLarge,
