@@ -138,8 +138,8 @@ export default function BookedOutToolsList(props) {
                         <Ionicons
                           name={
                             Platform.OS === 'ios'
-                              ? 'ios-return-down-back'
-                              : 'md-return-left'
+                              ? 'return-down-back'
+                              : 'return-down-back'
                           }
                           iconStyle={{ margin: 0, padding: 0 }}
                           type='ionicon'

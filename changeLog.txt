@@ -17,7 +17,76 @@ SDK 41
 @react-native-community/async-storage
 
 🚨 The following packages were not updated. You should check the READMEs for those repositories to determine what version is compatible with your new set of packages:
-@expo/match-media, @hapi/topo, @react-navigation/bottom-tabs, @react-navigation/drawer, @react-navigation/material-bottom-tabs, @react-navigation/native, @react-navigation/stack, axios, babel-plugin-transform-remove-console, expo-app-loading, ios, joi, js-base64, moment, node-fetch, react-native-awesome-alerts, react-native-elements, react-native-modal, react-native-paper, react-native-platform-touchable, react-native-render-html, react-native-responsive-fontsize, react-native-safe-area-view, react-native-scalable-image, react-native-search-filter, react-navigation-header-buttons, react-redux, react-responsive, redux, redux-persist, redux-saga
+@expo/match-media, 
+@hapi/topo, 
+
+axios, 
+babel-plugin-transform-remove-console, 
+expo-app-loading, 
+ios, 
+joi, 
+js-base64, 
+moment, 
+node-fetch, 
+react-native-awesome-alerts, 
+react-native-elements, 
+react-native-modal, 
+react-native-paper, 
+react-native-platform-touchable, 
+react-native-render-html, 
+react-native-responsive-fontsize, 
+react-native-safe-area-view, 
+react-native-scalable-image, 
+react-native-search-filter, 
+react-navigation-header-buttons, 
+, , 
+
+
+
+
+
+updated
+react-redux
+react-responsive
+
+
+checked 
+@react-navigation/bottom-tabs, 
+@react-navigation/drawer, 
+@react-navigation/material-bottom-tabs, 
+@react-navigation/native, 
+@react-navigation/stack, 
+
+already on latest
+redux-saga
+redux, 
+redux-persist, 
 
 🚨 @react-native-community/async-storage has been renamed to @react-native-async-storage/async-storage. The dependency has been updated automatically, you will now need to either update the imports in your source code manually, or run `npx expo-codemod sdk41-async-storage './**/*'`.
 
+
+@expo/match-media                    0.0.0-beta.2  →     0.1.0     
+ @expo/vector-icons                        ^12.0.0  →   ^12.0.4     
+ @react-native-community/masked-view        0.1.10  →    0.1.11     
+ expo                                      ^41.0.0  →   ^41.0.1     
+ expo-asset                                 ~8.3.1  →    ~8.3.2     
+ js-base64                                  ^3.2.3  →    ^3.6.0     
+ moment                                    ^2.27.0  →   ^2.29.1     
+ react                                     16.13.1  →    17.0.2     
+ react-dom                                 16.13.1  →    17.0.2     
+ react-native-awesome-alerts                ^1.3.3  →    ^1.4.2     
+ react-native-elements                      ^2.3.2  →    ^3.4.1     
+ react-native-gesture-handler              ~1.10.2  →   ~1.10.3     
+ react-native-modal                        ^11.5.6  →  ^11.10.0     
+ react-native-paper                         ^4.0.1  →    ^4.8.1     
+ react-native-render-html                   ^4.2.1  →    ^5.1.0     
+ react-native-responsive-fontsize           ^0.4.3  →    ^0.5.0     
+ react-native-scalable-image                ^1.0.0  →    ^1.1.0     
+ react-native-screens                       ~3.0.0  →    ~3.1.1     
+ react-native-webview                       11.2.3  →    11.4.3     
+ react-navigation-header-buttons            ^4.0.2  →    ^7.0.1     
+ redux                                      ^4.0.5  →    ^4.1.0     
+ @babel/core                                ^7.9.6  →  ^7.13.16     
+ @types/react                             ~16.9.35  →   ~17.0.4     
+ @types/react-native                       ~0.63.2  →   ~0.64.4     
+ typescript                                 ~4.0.0  →    ~4.2.4    

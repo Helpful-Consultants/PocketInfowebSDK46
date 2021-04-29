@@ -863,11 +863,7 @@ export default FindToolsScreen = (props) => {
             buttonStyle={baseStyles.buttonCancel}
             icon={
               <Ionicons
-                name={
-                  Platform.OS === 'ios'
-                    ? 'ios-close-circle-outline'
-                    : 'md-close-circle-outline'
-                }
+                name={Platform.OS === 'ios' ? 'close-circle' : 'close-circle'}
                 size={20}
                 color={Colors.vwgWarmRed}
               />
@@ -887,8 +883,8 @@ export default FindToolsScreen = (props) => {
               <Ionicons
                 name={
                   Platform.OS === 'ios'
-                    ? 'ios-checkmark-circle-outline'
-                    : 'md-checkmark-circle-outline'
+                    ? 'checkmark-circle'
+                    : 'checkmark-circle'
                 }
                 size={20}
                 color={Colors.vwgWhite}
