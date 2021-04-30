@@ -93,7 +93,7 @@ export default function LtpBookingsList(props) {
               {item.createdBy ? (
                 <Text style={{ ...baseStyles.textLeftAligned, marginTop: 3 }}>
                   {item.createdBy.toLowerCase() === 'lyndon evans'
-                    ? 'Loan arranged by Tools & Equipment Manager'
+                    ? 'Arranged by Tools & Equipment Manager'
                     : `Ordered by: ${item.createdBy}`}
                 </Text>
               ) : null}
