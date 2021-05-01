@@ -1199,10 +1199,10 @@ export default FindToolsScreen = (props) => {
   //   );
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
 
-  console.log(
-    'rendering Find Tools screen, userApiFetchParamsObj:',
-    userApiFetchParamsObj
-  );
+  //   console.log(
+  //     'rendering Find Tools screen, userApiFetchParamsObj:',
+  //     userApiFetchParamsObj
+  //   );
 
   return (
     <View style={baseStyles.containerFlex}>
