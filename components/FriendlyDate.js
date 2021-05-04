@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import { Text } from 'react-native-elements';
 import { useWindowDimensions } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 export default FriendlyDate = (props) => {
   const windowDim = useWindowDimensions();
