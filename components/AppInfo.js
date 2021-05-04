@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
+import Colors from '../constants/Colors';
 
 export default AppInfo = (props) => {
   const windowDim = useWindowDimensions();
@@ -34,11 +35,25 @@ export default AppInfo = (props) => {
   //     isTabletOrMobileDevice && isTabletOrMobileDevice
   //   );
   return (
-    <View style={baseStyles.containerFlex}>
+    <View
+      style={{
+        ...baseStyles.container,
+        marginTop: 'auto',
+        marginHorizontal: 10,
+      }}
+    >
       <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
       {Constants.manifest.name &&
       Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-        <Text style={baseStyles.panelTextBrand}>Showing new features</Text>
+        <Text
+          style={{
+            ...baseStyles.panelTextBrand,
+            color: Colors.vwgCoolOrange,
+            fontFamily: 'the-sans',
+          }}
+        >
+          Showing new features
+        </Text>
       ) : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
