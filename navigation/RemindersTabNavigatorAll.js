@@ -1,13 +1,9 @@
 import React from 'react';
 import { Dimensions, Platform } from 'react-native';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
-// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 

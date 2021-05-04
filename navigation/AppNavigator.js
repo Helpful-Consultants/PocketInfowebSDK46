@@ -1,24 +1,20 @@
 import React from 'react';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { Text, useWindowDimensions, View } from 'react-native';
+// import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
-// import { createAppContainer, createSwitchNavigator } from 'react-navigation';
-// import { createStackNavigator } from 'react-navigation-stack';
 // import moment from 'moment';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+//import { Ionicons } from '@expo/vector-icons';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
 import { revalidateUserCredentials } from '../actions/user';
-
-// import {
-//   createDrawerNavigator,
-//   DrawerNavigatorItems as DrawerItems
-// } from 'react-navigation-drawer';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+//import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import {
 //   getBrand,
 //   getVersion,
@@ -29,9 +25,6 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
 import Colors from '../constants/Colors';
-// import AppNameWithLogo from '../components/AppNameWithLogo';
-// import StatsScreen from '../screens/StatsScreen';
-// import OdisScreen from '../screens/OdisScreen';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigatorAll';
@@ -40,43 +33,48 @@ import SignedOutStack from './SignedOutStack';
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
 
-const CustomDrawerContent = (props) => {
-  //   const insets = useSafeArea();
-  /* <DrawerContentScrollView {...props} style={{ paddingTop: insets.top }}> */
-
-  return (
-    <DrawerContentScrollView {...props}>
-      <DrawerItemList {...props} />
-      <AppInfo />
-    </DrawerContentScrollView>
-  );
-};
+const CustomDrawerContent = (props) => (
+  <DrawerContentScrollView
+    {...props}
+    contentContainerStyle={{
+      flex: 1,
+      flexDirection: 'column',
+      alignContents: 'space-between',
+      paddingBottom: 20,
+    }}
+  >
+    <Text
+      style={{
+        marginLeft: 10,
+        marginTop: 10,
+        marginBottom: 5,
+        fontFamily: 'the-sans-bold',
+      }}
+    >
+      QUICK LINKS
+    </Text>
+    <DrawerItemList {...props} style={{ marginBottom: 20 }} />
+    <AppInfo />
+  </DrawerContentScrollView>
+);
 
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigator = () => {
+const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  //   console.log('@@@@@@@@@@@@@baseStyles', baseStyles);
 
   return (
     <Drawer.Navigator
-      drawerContentOptions={{
-        activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink,
-        activeBackgroundColor: 'white',
-        labelStyle: baseStyles.panelTextNav,
-        style: {},
-        contentContainerStyle: {},
-        itemStyle: {
-          marginVertical: 0,
-          flexWrap: 'wrap',
-        },
-      }}
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContentOptions={{
+        activeBackgroundColor: Colors.vwgActiveLink,
+        inactiveBackgroundColor: Colors.vwgInactiveLink,
+        labelStyle: baseStyles.panelTextNav,
+      }}
     >
       <Drawer.Screen
         name='Home'
@@ -85,26 +83,20 @@ const DrawerNavigator = () => {
           drawerLabel: 'Home',
         }}
       />
+
       <Drawer.Screen
         name='WipsTabs'
         component={WipTabNavigator}
         options={{
-          drawerLabel: 'Find tools, jobs & LTP',
+          drawerLabel: 'Find Tools, Jobs & LTP List',
           initialRouteName: 'FindTools',
-        }}
-        tabBarOptions={{
-          labelStyle: {
-            fontSize: 23,
-          },
-          activeTintColor: Colors.vwgActiveLink,
-          inactiveTintColor: Colors.vwgInactiveLink,
         }}
       />
       <Drawer.Screen
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'ODIS, news & products',
+          drawerLabel: 'ODIS, News & Products',
           initialRouteName: 'Odis',
         }}
       />
@@ -112,7 +104,7 @@ const DrawerNavigator = () => {
         name='RemindersTabs'
         component={RemindersTabNavigator}
         options={{
-          drawerLabel: 'Stats, alerts and actions',
+          drawerLabel: 'Alerts, S Measures, Bookings & Stats',
           initialRouteName: 'Notifications',
         }}
       />
@@ -137,6 +129,8 @@ export default AppNavigator = (props) => {
   const dispatch = useDispatch();
   //   return <AuthLoadingScreen />;
 
+  //   console.log('AppNavigator props', props);
+
   //   let now = moment();
   //   const ageOfCredentialsLimit = 3;
 
@@ -157,9 +151,9 @@ export default AppNavigator = (props) => {
 
   //   revalidateUser();
   dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
-  console.log('AppNavigator, userIsValidated 2', userIsValidated);
-  console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
-  console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+  //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
+  //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
+  //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
 
   const allOK =
     userIsValidated &&
@@ -169,11 +163,13 @@ export default AppNavigator = (props) => {
       ? true
       : false;
 
-  console.log('AppNavigator,allOK ', allOK);
+  const AppStack = createStackNavigator();
+
+  //   console.log('AppNavigator,allOK ', allOK);
 
   return (
     <NavigationContainer>
-      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
+      {allOK === true ? <DrawerNavigator props={props} /> : <SignedOutStack />}
     </NavigationContainer>
   );
 };
