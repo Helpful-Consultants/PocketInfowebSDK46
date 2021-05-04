@@ -55,8 +55,7 @@ export default function DealerToolsList(props) {
                     flexDirection: 'row',
                     alignItems: 'flex-start',
                     justifyContent: 'space-between',
-                    padding: 0,
-                    margin: 0,
+                    paddingTop: 8,
                   }}
                 >
                   <View
@@ -65,16 +64,14 @@ export default function DealerToolsList(props) {
                     }}
                   >
                     <Text
-                      style={{
-                        ...baseStyles.textToolNumber,
-                      }}
+                      style={baseStyles.textToolNumber}
                     >{`${item.partNumber} (${item.toolNumber})`}</Text>
                   </View>
                   <View
                     style={{
                       flexDirection: 'row',
-                      alignItems: 'flex-start',
-                      justifyContent: 'flex-end',
+                      alignContent: 'center',
+                      justifyContent: 'center',
                     }}
                   >
                     {listOrder === 0 && i === 0 ? (
@@ -88,7 +85,6 @@ export default function DealerToolsList(props) {
                           style={{
                             ...baseStyles.textLink,
                             textAlign: 'right',
-                            paddingTop: 9,
                           }}
                         >
                           Return
@@ -98,8 +94,12 @@ export default function DealerToolsList(props) {
 
                     <View
                       style={{
-                        alignItems: 'center',
+                        flexDirection: 'row',
+                        alignContent: 'center',
                         justifyContent: 'center',
+                        backgroundColor: Colors.vwgLink,
+                        marginLeft: 5,
+                        borderRadius: 40,
                       }}
                     >
                       <Ionicons
@@ -108,10 +108,10 @@ export default function DealerToolsList(props) {
                             ? 'return-down-back'
                             : 'return-down-back'
                         }
-                        iconStyle={{ margin: 0, padding: 0 }}
-                        color={Colors.vwgLink}
-                        reverse
-                        size={10}
+                        style={{ margin: 0, paddingHorizontal: 5 }}
+                        color={Colors.vwgWhite}
+                        reverse={false}
+                        size={20}
                       />
                     </View>
                   </View>

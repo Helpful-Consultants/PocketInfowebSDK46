@@ -616,15 +616,6 @@ export default getBaseStyles = (props) => {
       ...baseLinkTextBold,
       fontSize: baseFontSizeLarge,
       textAlign: 'left',
-      paddingTop: 10,
-      textTransform: 'uppercase',
-    },
-    textToolNumberSmall: {
-      ...baseLinkTextBold,
-      fontSize: baseFontSizeSmall,
-      textAlign: 'left',
-      paddingTop: 10,
-      textTransform: 'uppercase',
     },
     // StatsSummary
     textStatsTitle: {

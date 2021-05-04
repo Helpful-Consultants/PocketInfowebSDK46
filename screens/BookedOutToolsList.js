@@ -86,10 +86,11 @@ export default function BookedOutToolsList(props) {
                   <View
                     style={{
                       flexDirection: 'row',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: 0,
-                      margin: 0,
+                      paddingTop: 8,
+                      //      padding: 0,
+                      //      margin: 0,
                     }}
                   >
                     <View
@@ -98,41 +99,35 @@ export default function BookedOutToolsList(props) {
                       }}
                     >
                       <Text
-                        style={{
-                          ...baseStyles.textToolNumber,
-                          paddingTop: 8,
-                        }}
+                        style={baseStyles.textToolNumber}
                       >{`${item.partNumber} (${item.toolNumber})`}</Text>
                     </View>
                     <View
                       style={{
                         flexDirection: 'row',
-                        alignItems: 'flex-start',
-                        justifyContent: 'flex-end',
+                        alignContent: 'center',
+                        justifyContent: 'center',
                       }}
                     >
                       {i === 0 ? (
-                        <View
+                        <Text
                           style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
+                            ...baseStyles.textLink,
+                            textAlign: 'right',
+                            // backgroundColor: 'blue',
                           }}
                         >
-                          <Text
-                            style={{
-                              ...baseStyles.textLink,
-                              textAlign: 'right',
-                              paddingTop: 9,
-                            }}
-                          >
-                            Return
-                          </Text>
-                        </View>
+                          Return
+                        </Text>
                       ) : null}
                       <View
                         style={{
-                          alignItems: 'center',
+                          flexDirection: 'row',
+                          alignContent: 'center',
                           justifyContent: 'center',
+                          backgroundColor: Colors.vwgLink,
+                          marginLeft: 5,
+                          borderRadius: 40,
                         }}
                       >
                         <Ionicons
@@ -141,11 +136,10 @@ export default function BookedOutToolsList(props) {
                               ? 'return-down-back'
                               : 'return-down-back'
                           }
-                          iconStyle={{ margin: 0, padding: 0 }}
-                          type='ionicon'
-                          color={Colors.vwgLink}
-                          reverse
-                          size={10}
+                          style={{ margin: 0, paddingHorizontal: 5 }}
+                          color={Colors.vwgWhite}
+                          reverse={false}
+                          size={20}
                         />
                       </View>
                     </View>

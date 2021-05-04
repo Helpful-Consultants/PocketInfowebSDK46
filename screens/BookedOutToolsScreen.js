@@ -336,7 +336,10 @@ export default BookedOutToolsScreen = (props) => {
           contentContainerStyle={{
             borderRadius: Platform.OS === 'ios' ? 6 : 3,
             elevation: Platform.OS === 'ios' ? 0 : 5,
+            borderColor: Colors.vwgLightGray,
+            borderWidth: 1,
           }}
+          overlayStyle={{ height: '100%' }}
           titleStyle={{
             ...baseStyles.textLargeColouredCentred,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
