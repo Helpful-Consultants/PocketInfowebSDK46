@@ -413,30 +413,28 @@ export default getBaseStyles = (props) => {
     },
     panelTextNav: {
       fontSize: panelTextFontSize,
+      color: Colors.vwgWhite,
+      fontSize: baseFontSizeSmaller,
     },
     panelTextAppName: {
       ...baseTextBold,
       color: Colors.vwgBlack,
       fontSize: baseFontSizeLarge,
-      paddingTop: 100,
-      paddingLeft: 18,
+      paddingTop: 20,
     },
     panelTextBrand: {
       ...baseTextBold,
       paddingTop: 5,
-      paddingLeft: 18,
     },
     panelTextAppInfo: {
       ...baseText,
       fontSize: baseFontSizeSmaller,
       paddingTop: 5,
-      paddingLeft: 18,
     },
     textExtraApp: {
       ...baseText,
       fontSize: baseFontSizeSmaller,
       paddingTop: 2,
-      paddingLeft: 18,
     },
     // PANEL - END
     // SEARCH BAR - START
