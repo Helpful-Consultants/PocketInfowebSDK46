@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Service measures & LTP bookings';
+const appChangeInfoString = 'Changes: Added new aftersales catalogue';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);

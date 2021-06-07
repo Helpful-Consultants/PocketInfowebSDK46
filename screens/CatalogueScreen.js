@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import * as WebBrowser from 'expo-web-browser';
@@ -17,19 +17,19 @@ let iconSize = RFPercentage(5);
 export default CatalogueScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const [browserResult, setBrowserResult] = useState(null);
+
   const pressOpenHandler = async () => {
     if (Platform.OS === 'ios') {
       WebBrowser.dismissBrowser();
+      setBrowserResult(null);
     }
-    try {
-      let result = await WebBrowser.openBrowserAsync(catalogueUrl);
-      setBrowserResult(result);
-    } catch (e) {
-      console.error(e);
-    }
+
+    let result = await WebBrowser.openBrowserAsync(catalogueUrl);
+    setBrowserResult(result);
   };
 
-  console.log('rendering Catalogue screen');
+  console.log('rendering Catalogue screen', browserResult);
 
   return (
     <View
@@ -43,7 +43,7 @@ export default CatalogueScreen = (props) => {
         The button below will open it on your phone.
       </Text>
       <Touchable
-        style={{ ...baseStyles.viewHomeGridCell, marginVertical: 20 }}
+        style={{ ...baseStyles.viewHomeGridCell, marginVertical: 30 }}
         onPress={() => pressOpenHandler()}
       >
         <View style={baseStyles.viewColumnFlexCentre}>
@@ -62,9 +62,17 @@ export default CatalogueScreen = (props) => {
         </View>
       </Touchable>
       <Text>
-        You can also see the catalogue on Tools Infoweb in the Product,
-        Information, Marketing section.
+        You can also see the catalogue on the Tools Infoweb website in the{' '}
+        <Text style={{ fontStyle: 'italic' }}>
+          Product, Information, Marketing
+        </Text>{' '}
+        section.
       </Text>
+      {browserResult &&
+      browserResult.type !== 'cancel' &&
+      browserResult.type !== 'dismiss' ? (
+        <Text>{JSON.stringify(browserResult)}</Text>
+      ) : null}
     </View>
   );
 };
