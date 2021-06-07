@@ -69,7 +69,7 @@ export default function LtpBookingsList(props) {
       <ListItem bottomDivider>
         <ListItem.Content style={baseStyles.containerNoMargin}>
           <ListItem.Title style={baseStyles.textLeftAlignedBold}>
-            {`${item.loanToolNo} ${item.toolDescription}`}
+            {`${item.loanToolNo} - ${item.toolDescription}`}
           </ListItem.Title>
           <ListItem.Subtitle>
             <View>

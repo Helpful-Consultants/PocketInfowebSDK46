@@ -215,7 +215,7 @@ export default LtpBookingsScreen = (props) => {
     <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh
         dataName={'LtpBookings items'}
-        someDataExpected={true}
+        someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
@@ -234,7 +234,10 @@ export default LtpBookingsScreen = (props) => {
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
-              No service measures to show. Try the refresh button.
+              No live LTP bookings to show.
+            </Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              Showing sample data for Lyndon
             </Text>
           </View>
         )
