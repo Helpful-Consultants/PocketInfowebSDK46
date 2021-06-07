@@ -1,141 +1,76 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Platform, Text, useWindowDimensions, View } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Touchable from 'react-native-platform-touchable';
+import * as WebBrowser from 'expo-web-browser';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-// import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
-import ErrorDetails from '../components/ErrorDetails';
-// import HeaderButton from '../components/HeaderButton';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
-import { revalidateUserCredentials } from '../actions/user';
-// import { getCatalogueRequest } from '../actions/dealerCatalogue';
-// import { getDealerWipsRequest } from '../actions/dealerCatalogue';
-// import { getDealerToolsRequest } from '../actions/dealerTools';
-// import CatalogueSummary from './CatalogueSummary';
-// import Colors from '../constants/Colors';
-// import userDummyData from '../dummyData/userDummyData.js';
-// import statsDummyData from '../dummyData/statsDummyData.js';
-// import statsGrab from '../assets/images/stats.jpg';
+import { Ionicons } from '@expo/vector-icons';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import BadgedText from '../components/BadgedText';
+import Colors from '../constants/Colors';
+
+const catalogueUrl =
+  'https://toolsinfoweb.co.uk/VW_AG_Sales_Catalogue/Catalogue_2021_May/';
+const buttonTextColor = Colors.vwgWhite;
+let iconSize = RFPercentage(5);
 
 export default CatalogueScreen = (props) => {
   const windowDim = useWindowDimensions();
-  const dispatch = useDispatch();
-  //   const dealerCatalogueAction
-  //   Items = useSelector(
-  //     (state) => state.dealerCatalogue.dealerCatalogueActionItems
-  //   );
-  //   const dealerCatalogueActionItems = [];
-
-  //   const userIsValidated = useSelector((state) => state.user.userIsValidated);
-  const userDataObj = useSelector((state) => state.user.userData[0]);
-  const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId.toString();
-  //   const isLoading = useSelector((state) => state.stats.isLoading);
-  const dataError = useSelector((state) => state.stats.error);
-  const dataStatusCode = useSelector((state) => state.odis.statusCode);
-  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
-  //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  //   const baseStyles = windowDim && getBaseStyles(windowDim);
-
-  const userApiFetchParamsObj = {
-    dealerId: dealerId,
-    intId: userIntId,
-  };
-  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
-
-  //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
-  //   ]);
-
-  //   console.log('getCatalogueData', getCatalogueData);
-
-  //   const { navigation } = props;
-
-  const getItems = useCallback(async () => []);
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in stats use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  useFocusEffect(
-    useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
-      };
-      dispatch(revalidateUserCredentials({ calledBy: 'CatalogueScreen' }));
-      getItemsAsync();
-    }, [])
-  );
-
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getCatalogueData);
-    getItems();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  const pressOpenHandler = async () => {
+    if (Platform.OS === 'ios') {
+      WebBrowser.dismissBrowser();
+    }
+    try {
+      let result = await WebBrowser.openBrowserAsync(catalogueUrl);
+      setBrowserResult(result);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   const userDataPresent =
-  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
-
-  //   if (userDataPresent === true) {
-  //     // console.log('in stats screen,userDataObj OK', userDataPresent);
-  //   } else {
-  //     // console.log('in stats screen, no userDataObj');
-  //     getItems();
-  //   }
-  const catalogueItemsDataCount = 0;
   console.log('rendering Catalogue screen');
 
   return (
-    <View>
-      {dataError ? (
-        <ErrorDetails
-          errorSummary={'Error syncing the stats data'}
-          dataStatusCode={dataStatusCode}
-          errorHtml={dataError}
-          dataErrorUrl={dataErrorUrl}
-        />
-      ) : (
-        <View
-          style={{
-            marginTop: 20,
-            paddingHorizontal: 10,
-          }}
-        >
-          <Text>
-            Catalogue Screen will go here when Volkswagen AG releases the new
-            version.
-          </Text>
+    <View
+      style={{
+        ...baseStyles.viewColumnFlexCentre,
+        marginTop: 20,
+      }}
+    >
+      <Text>
+        The Volkswagen AG Group Aftersales Catalogue is a document on the web.
+        The button below will open it on your phone.
+      </Text>
+      <Touchable
+        style={{ ...baseStyles.viewHomeGridCell, marginVertical: 20 }}
+        onPress={() => pressOpenHandler()}
+      >
+        <View style={baseStyles.viewColumnFlexCentre}>
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'book' : 'book'}
+            type='ionicon'
+            color={buttonTextColor}
+            size={iconSize}
+          />
+          <BadgedText
+            showBadge={false}
+            focused={false}
+            text={'Catalogue'}
+            value={'+'}
+          />
         </View>
-      )}
+      </Touchable>
+      <Text>
+        You can also see the catalogue on Tools Infoweb in the Product,
+        Information, Marketing section.
+      </Text>
     </View>
   );
 };
+
 const titleString = 'Catalogue';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
+
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
