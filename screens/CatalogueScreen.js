@@ -119,7 +119,7 @@ export default CatalogueScreen = (props) => {
           }}
         >
           <Text>
-            Catalogue Screen will go here when Volkswagen AG release it the new
+            Catalogue Screen will go here when Volkswagen AG releases the new
             version.
           </Text>
         </View>
