@@ -44,7 +44,7 @@ axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 // };
 
 Sentry.init({
-  dsn: 'https://753764f4208a4f429c2c21d20a45adf0@sentry.io/3578989',
+  dsn: 'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088',
   enableInExpoDevelopment: true,
   debug: true,
   release: Constants.manifest.revisionId,
