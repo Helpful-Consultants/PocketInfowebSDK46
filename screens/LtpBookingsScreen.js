@@ -236,18 +236,12 @@ export default LtpBookingsScreen = (props) => {
             <Text style={baseStyles.textPromptRibbon}>
               No live LTP bookings to show.
             </Text>
-            <Text style={baseStyles.textPromptRibbon}>
-              Showing sample data for Lyndon
-            </Text>
+            {/* <Text style={baseStyles.textPromptRibbon}>
+              Showing sample data for Lyndon.
+            </Text> */}
           </View>
         )
-      ) : (
-        <View style={baseStyles.viewPromptRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data for Lyndon
-          </Text>
-        </View>
-      )}
+      ) : null}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing Service Measures'}
