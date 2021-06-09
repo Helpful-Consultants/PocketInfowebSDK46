@@ -218,7 +218,7 @@ export default ServiceMeasuresScreen = (props) => {
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
-              No service measures to show. Try the refresh button.
+              No service measures to show.
             </Text>
           </View>
         )
