@@ -4,7 +4,7 @@ import { Button, Text } from 'react-native-elements';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
-import { conditionalExpression } from '@babel/types';
+//import { conditionalExpression } from '@babel/types';
 
 export default ForgottenPasswordScreen = (props) => {
   const windowDim = useWindowDimensions();
