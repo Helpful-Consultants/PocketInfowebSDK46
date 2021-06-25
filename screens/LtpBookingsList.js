@@ -48,8 +48,8 @@ const getItemStatus = (startDate, expiryDate) => {
 export default function LtpBookingsList(props) {
   const windowDim = useWindowDimensions();
 
-  const items = ltpBookingsDummyData;
-  //   const items = props.items || [];
+  //   const items = ltpBookingsDummyData;
+  const items = props.items || [];
   console.log('ltp list props', props);
   //   const items = ltpBookingsDummyData;
   //   let now = moment();

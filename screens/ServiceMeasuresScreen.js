@@ -218,14 +218,14 @@ export default ServiceMeasuresScreen = (props) => {
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
-              No service measures to show. Try the refresh button.
+              No service measures to show.
             </Text>
           </View>
         )
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Complete these measures on Tools Infoweb
+            Complete these measures on Tools Infoweb.
           </Text>
         </View>
       )}

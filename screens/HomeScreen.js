@@ -279,6 +279,7 @@ export default HomeScreen = (props) => {
     try {
       // const update = await Updates.checkForUpdateAsync(listener(event));
       const update = await Updates.checkForUpdateAsync();
+      //   console.log(update && update);
       if (update.isAvailable) {
         //   console.log('updateAvailable', update && update);
         setIsCheckingAppVersion(false);
@@ -294,7 +295,7 @@ export default HomeScreen = (props) => {
     } catch (e) {
       setIsCheckingAppVersion(false);
       setIsUpdatingAppVersion(false);
-      console.log('updateAvailable error');
+      //   console.log('updateAvailable error', e);
     }
   };
 
