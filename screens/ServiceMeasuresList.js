@@ -1,13 +1,11 @@
 import React from 'react';
-import { FlatList, useWindowDimensions, View } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { useWindowDimensions, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 
-// import moment from 'moment';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 const now = moment();
 
 const getDisplayDate = (rawDate) => {
@@ -47,113 +45,103 @@ const getItemStatus = (startDate, expiryDate) => {
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const items = props.items || [];
   //   const items = serviceMeasuresDummyData;
   //   let now = moment();
 
-  const FlatListItem = (props) => {
-    const { item } = props;
-    const baseStyles = windowDim && getBaseStyles(windowDim);
-
-    // const { onSelectItem } = props;
-    const measureIsLive =
-      (item.dateCreated &&
-        item.expiryDate &&
-        getItemStatus(item.dateCreated, item.expiryDate)) ||
-      false;
+  const getFormattedServiceMeasure = (item) => {
+    let measureIsLive = false;
+    if (item && item.dateCreated && item.expiryDate) {
+      measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
+    }
 
     return (
-      <ListItem bottomDivider>
-        <ListItem.Content style={baseStyles.containerNoMargin}>
-          <ListItem.Title
+      <View style={baseStyles.containerNoMargin}>
+        <View>
+          <Text
             style={baseStyles.textLeftAlignedBold}
-          >{`${item.menuText}`}</ListItem.Title>
-          <ListItem.Subtitle>
-            <View>
-              <View
-                style={{
-                  ...baseStyles.viewRowFlexCentreAligned,
-                  marginTop: 5,
-                }}
-              >
-                <InlineIcon
-                  itemType='font-awesome'
-                  iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
-                  iconSize={RFPercentage(2.4)}
-                  iconColor={
-                    //item.status && item.status.toLowerCase() === 'c'
-                    measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
-                  }
-                />
-                <Text
-                  style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
-                >{`Service measure ${
-                  //item.status && item.status.toLowerCase() === 'c'
-                  measureIsLive ? 'still open' : 'closed'
-                }`}</Text>
-              </View>
-              <View style={baseStyles.viewRowFlexCentreAligned}>
-                <InlineIcon
-                  itemType='font-awesome'
-                  iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
-                  iconSize={RFPercentage(2)}
-                  iconColor={
-                    item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
-                  }
-                />
-                <Text
-                  style={{ ...baseStyles.textLeftAligned, paddingLeft: 5 }}
-                >{`Retailer actions ${
-                  item.retailerStatus ? 'completed' : 'not completed'
-                }`}</Text>
-              </View>
-              <Text
-                style={{
-                  ...baseStyles.textLeftAligned,
-                  ...baseStyles.textBold,
-                  marginTop: 5,
-                  color: Colors.vwgDarkSkyBlue,
-                }}
-              >
-                {item.toolsAffected}
-              </Text>
-              {item.retailerStatus &&
-              item.retailerStatus.toLowerCase() === 'y' ? null : (
-                <Text
-                  style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
-                >{`You have not yet responded`}</Text>
-              )}
-              {item.retailerStatus ? null : (
-                <Text
-                  style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-                >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
-              )}
-              {item.retailerStatus ? null : (
-                <Text
-                  style={baseStyles.textLeftAligned}
-                >{`To be completed by: ${getDisplayDate(
-                  item.expiryDate
-                )}`}</Text>
-              )}
-            </View>
-          </ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
+          >{`${item.menuText}`}</Text>
+        </View>
+        <View
+          style={{
+            ...baseStyles.viewRowFlexCentreAligned,
+            marginTop: 5,
+          }}
+        >
+          <InlineIcon
+            itemType='font-awesome'
+            iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
+            iconSize={RFPercentage(2.4)}
+            iconColor={
+              //item.status && item.status.toLowerCase() === 'c'
+              measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
+            }
+          />
+          <Text
+            style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
+          >{`Service measure ${
+            //item.status && item.status.toLowerCase() === 'c'
+            measureIsLive ? 'still open' : 'closed'
+          }`}</Text>
+        </View>
+        <View style={baseStyles.viewRowFlexCentreAligned}>
+          <InlineIcon
+            itemType='font-awesome'
+            iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
+            iconSize={RFPercentage(2)}
+            iconColor={
+              item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
+            }
+          />
+          <Text
+            style={{ ...baseStyles.textLeftAligned, paddingLeft: 5 }}
+          >{`Retailer actions ${
+            item.retailerStatus ? 'completed' : 'not completed'
+          }`}</Text>
+        </View>
+        <Text
+          style={{
+            ...baseStyles.textLeftAligned,
+            ...baseStyles.textBold,
+            marginTop: 5,
+            color: Colors.vwgDarkSkyBlue,
+          }}
+        >
+          {item.toolsAffected}
+        </Text>
+        {item.retailerStatus &&
+        item.retailerStatus.toLowerCase() === 'y' ? null : (
+          <Text
+            style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
+          >{`You have not yet responded`}</Text>
+        )}
+        {item.retailerStatus ? null : (
+          <Text
+            style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+          >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+        )}
+        {item.retailerStatus ? null : (
+          <Text
+            style={baseStyles.textLeftAligned}
+          >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
+        )}
+      </View>
     );
   };
+
   //   console.log(items && items);
 
   return (
-    <View>
-      {items && items.length > 0 ? (
-        <FlatList
-          data={items && items}
-          renderItem={(itemData) => <FlatListItem item={itemData.item} />}
-          keyExtractor={(item) => item.id}
-          now={now}
-        />
-      ) : null}
+    <View style={baseStyles.viewDataList}>
+      {items && items.length > 0
+        ? items.map((item) => (
+            <View style={baseStyles.viewDataListItem}>
+              {getFormattedServiceMeasure(item)}
+            </View>
+          ))
+        : null}
     </View>
   );
 }

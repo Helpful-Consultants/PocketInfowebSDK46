@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, Text, useWindowDimensions, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -204,7 +210,7 @@ export default ServiceMeasuresScreen = (props) => {
   //   );
 
   return (
-    <View style={baseStyles.containerFlexAndMargin}>
+    <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
         dataName={'ServiceMeasures items'}
         someDataExpected={true}
@@ -216,6 +222,7 @@ export default ServiceMeasuresScreen = (props) => {
         isLoading={isLoading}
         dataCount={serviceMeasuresItems.length}
       />
+
       {demoModeOn ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
@@ -252,9 +259,9 @@ export default ServiceMeasuresScreen = (props) => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <View>
+        <ScrollView>
           <ServiceMeasuresList items={itemsToShow} />
-        </View>
+        </ScrollView>
       )}
     </View>
   );

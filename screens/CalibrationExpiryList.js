@@ -41,7 +41,7 @@ export default function CalibrationExpiryList(props) {
   //     ).format('Do MMM') || null}`}</Text>
   //   );
 
-  const getFormatNotification = (item) => {
+  const getFormattedNotification = (item) => {
     const expiryText = item.expiry ? item.expiry.toLowerCase() : '';
     if (item) {
       if (expiryText.indexOf('expired') !== -1) {
@@ -107,29 +107,15 @@ export default function CalibrationExpiryList(props) {
     }
   };
 
-  const FlatListItem = (props) => {
-    const { item } = props;
-    // const { onSelectItem } = props;
-
-    return (
-      <ListItem bottomDivider>
-        <ListItem.Content style={baseStyles.containerNoMargin}>
-          <ListItem.Subtitle>{getFormatNotification(item)}</ListItem.Subtitle>
-        </ListItem.Content>
-      </ListItem>
-    );
-  };
-  //   console.log(items && items);
-
   return (
-    <View>
-      {items && items.length > 0 ? (
-        <FlatList
-          data={items && items}
-          renderItem={(itemData) => <FlatListItem item={itemData.item} />}
-          keyExtractor={(item) => item.expiry}
-        />
-      ) : null}
+    <View style={baseStyles.viewDataList}>
+      {items && items.length > 0
+        ? items.map((item) => (
+            <View style={baseStyles.viewDataListItem}>
+              {getFormattedNotification(item)}
+            </View>
+          ))
+        : null}
     </View>
   );
 }
