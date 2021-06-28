@@ -10,24 +10,18 @@ import ErrorDetails from '../components/ErrorDetails';
 // import HeaderButton from '../components/HeaderButton';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-// import { getAlertsRequest } from '../actions/dealerAlerts';
-// import { getDealerWipsRequest } from '../actions/dealerAlerts';
-// import { getDealerToolsRequest } from '../actions/dealerTools';
-// import AlertsSummary from './AlertsSummary';
-// import Colors from '../constants/Colors';
-// import userDummyData from '../dummyData/userDummyData.js';
-// import statsDummyData from '../dummyData/statsDummyData.js';
-// import statsGrab from '../assets/images/stats.jpg';
+import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
+import CalibrationExpiryList from './CalibrationExpiryList';
+import calibrationExpiryDummyData from '../dummyData/calibrationExpiryDummyData.js';
 
-export default AlertsScreen = (props) => {
+const demoModeOn = true;
+
+export default NotificationsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  //   const dealerLtpAction
-  //   Items = useSelector(
-  //     (state) => state.dealerAlerts.dealerLtpActionItems
-  //   );
-  const dealerLtpActionItems = [];
-
+  const calibrationExpiryItems = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryItems
+  );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
@@ -52,8 +46,28 @@ export default AlertsScreen = (props) => {
   //   console.log('getAlertsData', getAlertsData);
 
   //   const { navigation } = props;
+  const getItems = useCallback(async (userApiFetchParamsObj) => {
+    console.log(
+      'in calibrationExpiry getItems userApiFetchParamsObj',
+      userApiFetchParamsObj
+    );
+    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj)), [];
+  });
 
-  const getItems = useCallback(async () => []);
+  const getItemsAsync = async () => {
+    // console.log(
+    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
+    //   userApiFetchParamsObj
+    // );
+
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      getItems(userApiFetchParamsObj);
+    }
+  };
 
   //   useEffect(() => {
   //     // runs only once
@@ -72,20 +86,31 @@ export default AlertsScreen = (props) => {
   //     setIsRefreshNeeded(true);
   //   });
 
+  const filterCalibrationExpiryItems = (calibrationExpiryItems) => {
+    let calibrationExpiryItemsFiltered = [];
+    if (calibrationExpiryItems && calibrationExpiryItems.length > 0) {
+      calibrationExpiryItemsFiltered = calibrationExpiryItems.filter(
+        (item) =>
+          (item.expiry && item.expiry.indexOf('1.') !== -1) ||
+          item.expiry.indexOf('2.') !== -1 ||
+          item.expiry.indexOf('3.') !== -1
+      );
+    }
+
+    console.log(
+      'calibrationExpiryItemsFiltered',
+      calibrationExpiryItemsFiltered
+    );
+    return calibrationExpiryItemsFiltered;
+  };
+
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
-      };
-      dispatch(revalidateUserCredentials({ calledBy: 'AlertsScreen' }));
+      //   dispatch(revalidateUserCredentials({ calledBy: 'NotificationsScreen' }));
+      console.log('in Notifications focusEffect ');
       getItemsAsync();
     }, [])
   );
-
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', getAlertsData);
-    getItems();
-  };
 
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
@@ -99,31 +124,53 @@ export default AlertsScreen = (props) => {
   //     // console.log('in stats screen, no userDataObj');
   //     getItems();
   //   }
-  const ltpActionItemsDataCount = 0;
-  console.log('rendering Alerts screen');
+
+  //   let itemsToShow = !isLoading ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
+  let itemsToShow =
+    !isLoading && !dataError
+      ? demoModeOn
+        ? filterCalibrationExpiryItems(calibrationExpiryDummyData)
+        : filterCalibrationExpiryItems(calibrationExpiryItems)
+      : [];
+
+  console.log('rendering Notifications screen');
 
   return (
     <View>
-      {dataError ? (
-        <ErrorDetails
-          errorSummary={'Error syncing the stats data'}
-          dataStatusCode={dataStatusCode}
-          errorHtml={dataError}
-          dataErrorUrl={dataErrorUrl}
-        />
-      ) : (
-        <View
-          style={{
-            marginTop: 20,
-            paddingHorizontal: 10,
-          }}
-        >
-          <Text>The notifications screen will show urgent alerts.</Text>
-          <Text>
-            This screen is still in design so not ready at the moment.
+      {demoModeOn ? (
+        <View style={baseStyles.viewPromptRibbonNoneFound}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Showing sample data for Lyndon.
           </Text>
         </View>
-      )}
+      ) : dataError ? null : itemsToShow.length === 0 ? (
+        isLoading ? null : (
+          <View style={baseStyles.viewPromptRibbon}>
+            <Text style={baseStyles.textPromptRibbon}>
+              No calibration expiry notifications to show.
+            </Text>
+          </View>
+        )
+      ) : null}
+      {!isLoading ? (
+        dataError ? (
+          <ErrorDetails
+            errorSummary={'Error syncing calibration expiry'}
+            dataStatusCode={dataStatusCode}
+            errorHtml={dataError}
+            dataErrorUrl={dataErrorUrl}
+          />
+        ) : itemsToShow.length > 0 ? (
+          <View>
+            <View style={baseStyles.viewPromptRibbon}>
+              <Text style={baseStyles.textPromptRibbon}>
+                Calibration expiry coming up
+              </Text>
+            </View>
+            <CalibrationExpiryList items={itemsToShow} />
+          </View>
+        ) : null
+      ) : null}
     </View>
   );
 };

@@ -11,9 +11,9 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
-import AlertsScreen, {
-  screenOptions as AlertsScreenOptions,
-} from '../screens/AlertsScreen';
+import NotificationsScreen, {
+  screenOptions as NotificationsScreenOptions,
+} from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen, {
   screenOptions as ServiceMeasuresScreenOptions,
 } from '../screens/ServiceMeasuresScreen';
@@ -99,17 +99,17 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
-const Alerts = createStackNavigator();
+const Notifications = createStackNavigator();
 
-const AlertsStack = () => {
+const NotificationsStack = () => {
   return (
-    <Alerts.Navigator screenOptions={defaultStackNavOptions}>
-      <Alerts.Screen
-        name={'AlertsScreen'}
-        component={AlertsScreen}
-        options={AlertsScreenOptions}
+    <Notifications.Navigator screenOptions={defaultStackNavOptions}>
+      <Notifications.Screen
+        name={'NotificationsScreen'}
+        component={NotificationsScreen}
+        options={NotificationsScreenOptions}
       />
-    </Alerts.Navigator>
+    </Notifications.Navigator>
   );
 };
 
@@ -177,9 +177,9 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
-        name='Alerts'
-        component={AlertsStack}
-        options={AlertsScreenOptions}
+        name='Notifications'
+        component={NotificationsStack}
+        options={NotificationsScreenOptions}
       />
       <RemindersTabs.Screen
         name='ServiceMeasures'
@@ -219,7 +219,7 @@ export default RemindersTabNavigator = () => {
       <RemindersTabs.Screen
         name='Reminders'
         component={RemindersStack}
-        options={AlertsScreenOptions}
+        options={NotificationsScreenOptions}
       />
       <RemindersTabs.Screen
         name='ServiceMeasures'

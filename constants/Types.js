@@ -23,6 +23,16 @@ export default {
     'serviceMeasures/empty_service_measures_request',
   SERVICE_MEASURES_ERROR: 'serviceMeasures/service_measures_error',
 
+  GET_CALIBRATION_EXPIRY_START:
+    'calibrationExpiry/get_calibration_expiry_start',
+  GET_CALIBRATION_EXPIRY_REQUEST:
+    'calibrationExpiry/get_calibration_expiry_request',
+  GET_CALIBRATION_EXPIRY_SUCCESS:
+    'calibrationExpiry/get_calibration_expiry_success',
+  EMPTY_CALIBRATION_EXPIRY_REQUEST:
+    'calibrationExpiry/empty_calibration_expiry_request',
+  CALIBRATION_EXPIRY_ERROR: 'calibrationExpiry/calibration_expiry_error',
+
   GET_LTP_START: 'ltp/get_ltp_start',
   GET_LTP_REQUEST: 'ltp/get_ltp_request',
   GET_LTP_SUCCESS: 'ltp/get_ltp_success',

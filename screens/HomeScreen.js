@@ -32,6 +32,7 @@ import {
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
+import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import Constants from 'expo-constants';
 
@@ -89,6 +90,9 @@ export default HomeScreen = (props) => {
   const isLoadingNews = useSelector((state) => state.news.isLoading);
   const isLoadingProducts = useSelector((state) => state.products.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
+  const isLoadingCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.isLoading
+  );
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
@@ -123,6 +127,7 @@ export default HomeScreen = (props) => {
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
     dispatch(getProductsRequest());
+    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
   });
 
   const updateItemsAsync = async () => {
@@ -168,6 +173,7 @@ export default HomeScreen = (props) => {
       isLoadingNews ||
       isLoadingWips ||
       isLoadingProducts ||
+      isLoadingCalibrationExpiry ||
       isLoadingLtp
     ) {
       setIsLoadingAny(true);
@@ -180,6 +186,7 @@ export default HomeScreen = (props) => {
     isLoadingNews,
     isLoadingWips,
     isLoadingProducts,
+    isLoadingCalibrationExpiry,
     isLoadingLtp,
   ]);
 
@@ -730,7 +737,7 @@ export default HomeScreen = (props) => {
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('RemindersTabs', {
-                        screen: 'Alerts',
+                        screen: 'Notifications',
                       })
                     }
                   >
