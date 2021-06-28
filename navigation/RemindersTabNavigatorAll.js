@@ -17,9 +17,9 @@ import NotificationsScreen, {
 import ServiceMeasuresScreen, {
   screenOptions as ServiceMeasuresScreenOptions,
 } from '../screens/ServiceMeasuresScreen';
-import LtpBookingsScreen, {
-  screenOptions as LtpBookingsScreenOptions,
-} from '../screens/LtpBookingsScreen';
+import LtpLoansScreen, {
+  screenOptions as LtpLoansScreenOptions,
+} from '../screens/LtpLoansScreen';
 import StatsScreen, {
   screenOptions as StatsScreenOptions,
 } from '../screens/StatsScreen';
@@ -126,16 +126,16 @@ const ServiceMeasuresStack = () => {
   );
 };
 
-const LtpBookings = createStackNavigator();
-const LtpBookingsStack = () => {
+const LtpLoans = createStackNavigator();
+const LtpLoansStack = () => {
   return (
-    <LtpBookings.Navigator screenOptions={defaultStackNavOptions}>
-      <LtpBookings.Screen
-        name={'LtpBookingsScreen'}
-        component={LtpBookingsScreen}
-        options={LtpBookingsScreenOptions}
+    <LtpLoans.Navigator screenOptions={defaultStackNavOptions}>
+      <LtpLoans.Screen
+        name={'LtpLoansScreen'}
+        component={LtpLoansScreen}
+        options={LtpLoansScreenOptions}
       />
-    </LtpBookings.Navigator>
+    </LtpLoans.Navigator>
   );
 };
 
@@ -187,9 +187,9 @@ export default RemindersTabNavigator = () => {
         options={ServiceMeasuresScreenOptions}
       />
       <RemindersTabs.Screen
-        name='LtpBookings'
-        component={LtpBookingsStack}
-        options={LtpBookingsScreenOptions}
+        name='LtpLoans'
+        component={LtpLoansStack}
+        options={LtpLoansScreenOptions}
       />
       <RemindersTabs.Screen
         name='Stats'
@@ -227,9 +227,9 @@ export default RemindersTabNavigator = () => {
         options={ServiceMeasuresScreenOptions}
       />
       <RemindersTabs.Screen
-        name='LtpBookings'
-        component={LtpBookingsStack}
-        options={LtpBookingsScreenOptions}
+        name='LtpLoans'
+        component={LtpLoansStack}
+        options={LtpLoansScreenOptions}
       />
       <RemindersTabs.Screen
         name='Stats'

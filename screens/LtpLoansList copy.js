@@ -7,7 +7,7 @@ import moment from 'moment';
 // import Colors from '../constants/Colors';
 
 // import moment from 'moment';
-import ltpBookingsDummyData from '../dummyData/ltpBookingsDummyData';
+import ltpLoansDummyData from '../dummyData/ltpLoansDummyData';
 const now = moment();
 
 const getDisplayDate = (rawDate) => {
@@ -45,13 +45,13 @@ const getItemStatus = (startDate, expiryDate) => {
   return false;
 };
 
-export default function LtpBookingsList(props) {
+export default function LtpLoansList(props) {
   const windowDim = useWindowDimensions();
 
-  //   const items = ltpBookingsDummyData;
+  //   const items = ltpLoansDummyData;
   const items = props.items || [];
   console.log('ltp list props', props);
-  //   const items = ltpBookingsDummyData;
+  //   const items = ltpLoansDummyData;
   //   let now = moment();
 
   const FlatListItem = (props) => {

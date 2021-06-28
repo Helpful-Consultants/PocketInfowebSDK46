@@ -104,7 +104,7 @@ const DrawerNavigator = (props) => {
         name='RemindersTabs'
         component={RemindersTabNavigator}
         options={{
-          drawerLabel: 'Alerts, S Measures, Bookings & Stats',
+          drawerLabel: 'Alerts, S Measures, Loans & Stats',
           initialRouteName: 'Notifications',
         }}
       />

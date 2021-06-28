@@ -1,22 +1,22 @@
 import { takeLatest, call, put, fork } from 'redux-saga/effects';
-import * as actions from '../actions/ltpBookings';
-import * as api from '../api/ltpBookings';
+import * as actions from '../actions/ltpLoans';
+import * as api from '../api/ltpLoans';
 import Types from '../constants/Types';
 
-function* getLtpBookings({ payload }) {
+function* getLtpLoans({ payload }) {
   //   console.log(
-  //     '%%%%%%%%%%%%%%in saga get ltpBookings, payload',
+  //     '%%%%%%%%%%%%%%in saga get ltpLoans, payload',
   //     payload && payload
   //   );
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the dealer tools';
   let dataErrorUrl = null;
-  yield put(actions.getLtpBookingsStart());
+  yield put(actions.getLtpLoansStart());
   try {
-    const result = yield call(api.getLtpBookings, {
+    const result = yield call(api.getLtpLoans, {
       intId: payload.intId,
     });
-    console.log('in saga get ltpBookings - 200');
+    console.log('in saga get ltpLoans - 200');
     // console.log(result);
     if (
       result.data &&
@@ -25,10 +25,10 @@ function* getLtpBookings({ payload }) {
       result.data[0].id &&
       result.data[0].createdDate
     ) {
-      //   console.log('in LtpBookings saga - good 200');
+      //   console.log('in LtpLoans saga - good 200');
       console.log(result.data);
       yield put(
-        actions.getLtpBookingsSuccess({
+        actions.getLtpLoansSuccess({
           items: result.data,
           statusCode:
             (result.status && result.status) ||
@@ -41,14 +41,14 @@ function* getLtpBookings({ payload }) {
       !result.data ||
       (result.data && result.data === null)
     ) {
-      console.log('in LtpBookings saga - empty 200');
+      console.log('in LtpLoans saga - empty 200');
       // console.log(
-      //     'in LtpBookings saga - empty 200',
+      //     'in LtpLoans saga - empty 200',
       //     result.request.status && result.request.status
       // );
       //   console.log(result && result);
       yield put(
-        actions.getLtpBookingsSuccess({
+        actions.getLtpLoansSuccess({
           items: [],
           statusCode:
             (result.status && result.status) ||
@@ -57,13 +57,13 @@ function* getLtpBookings({ payload }) {
         })
       );
     } else {
-      console.log('dealer ltpBookings weird result');
+      console.log('dealer ltpLoans weird result');
       console.log(result && result);
       yield put(
-        actions.ltpBookingsError({
+        actions.ltpLoansError({
           error:
             (result.request.response && result.request.response.toString()) ||
-            'An error occurred when trying to update the LTP Bookings',
+            'An error occurred when trying to update the LTP loans',
           statusCode: (result.request.status && result.request.status) || null,
           dataErrorUrl:
             (result && result.responseURL && result.responseURL) ||
@@ -76,15 +76,14 @@ function* getLtpBookings({ payload }) {
       );
     }
     // console.log(result);
-    // console.log('end results in saga get ltpBookings, success');
+    // console.log('end results in saga get ltpLoans, success');
   } catch (error) {
-    console.log('server error in saga get LTP Bookings !!!!!!!!!!!!!!');
+    console.log('server error in saga get LTP loans !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
     // console.log('whole Error ends');
     // console.log(error && error.config);
     let statusCode = null;
-    let errorText =
-      'An server error occurred when trying to get the LTP Bookings';
+    let errorText = 'An server error occurred when trying to get the LTP loans';
     let dataErrorUrl = null;
     if (error.response) {
       //   console.log('error response starts');
@@ -145,7 +144,7 @@ function* getLtpBookings({ payload }) {
       errorText = error.message;
     }
     yield put(
-      actions.ltpBookingsError({
+      actions.ltpLoansError({
         error: errorText,
         statusCode: statusCode,
         dataErrorUrl: dataErrorUrl,
@@ -154,11 +153,11 @@ function* getLtpBookings({ payload }) {
   }
 }
 
-function* watchgetLtpBookingsRequest() {
-  console.log('in saga watch for ltpBookings');
-  yield takeLatest(Types.GET_LTP_BOOKINGS_REQUEST, getLtpBookings);
+function* watchgetLtpLoansRequest() {
+  console.log('in saga watch for ltpLoans');
+  yield takeLatest(Types.GET_LTP_LOANS_REQUEST, getLtpLoans);
 }
 
-const ltpBookingsSagas = [fork(watchgetLtpBookingsRequest)];
+const ltpLoansSagas = [fork(watchgetLtpLoansRequest)];
 
-export default ltpBookingsSagas;
+export default ltpLoansSagas;

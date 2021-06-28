@@ -2,7 +2,7 @@ import userSagas from './user';
 import newsSagas from './news';
 import productsSagas from './products';
 import ltpSagas from './ltp';
-import ltpBookingsSagas from './ltpBookings';
+import ltpLoansSagas from './ltpLoans';
 import odisSagas from './odis';
 import statsSagas from './stats';
 import dealerToolsSagas from './dealerTools';
@@ -17,7 +17,7 @@ export default function* rootSaga() {
     ...newsSagas,
     ...productsSagas,
     ...ltpSagas,
-    ...ltpBookingsSagas,
+    ...ltpLoansSagas,
     ...statsSagas,
     ...odisSagas,
     ...dealerToolsSagas,

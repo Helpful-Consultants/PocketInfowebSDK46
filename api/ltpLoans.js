@@ -8,9 +8,9 @@ const dummyIntId = '513';
 const dummyIntIdString = '513';
 const dummyUserName = 'Alan Upstone';
 
-export const getLtpBookings = (wipObj) => {
-  //   console.log('here in getLtpBookings API ');
-  //   console.log('here in getLtpBookings API ', wipObj);
+export const getLtpLoans = (wipObj) => {
+  //   console.log('here in getLtpLoans API ');
+  //   console.log('here in getLtpLoans API ', wipObj);
   const { intId } = wipObj;
   const url =
     '/default.asp?controller=api&action=listActiveLTPBookings&intUserId=' +

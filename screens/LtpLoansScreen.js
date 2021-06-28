@@ -1,7 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, Text, useWindowDimensions, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
@@ -10,71 +17,122 @@ import ErrorDetails from '../components/ErrorDetails';
 import HeaderButton from '../components/HeaderButton';
 import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
-import { getLtpBookingsRequest } from '../actions/ltpBookings';
-// import { getDealerWipsRequest } from '../actions/ltpBookings';
+import { getLtpLoansRequest } from '../actions/ltpLoans';
+// import { getDealerWipsRequest } from '../actions/ltpLoans';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
-import LtpBookingsList from './LtpBookingsList';
+import LtpLoansList from './LtpLoansList';
 import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-import ltpBookingsDummyData from '../dummyData/ltpBookingsDummyData.js';
-// import statsGrab from '../assets/images/stats.jpg';
+import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
 const demoModeOn = true;
+const now = moment();
 
-export default LtpBookingsScreen = (props) => {
+export default LtpLoansScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  const ltpBookingsItems = useSelector(
-    (state) => state.ltpBookings.ltpBookingsItems
-  );
+  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const isLoading = useSelector((state) => state.ltpBookings.isLoading);
-  const dataError = useSelector((state) => state.ltpBookings.error);
-  const dataStatusCode = useSelector((state) => state.ltpBookings.statusCode);
-  const dataErrorUrl = useSelector((state) => state.ltpBookings.dataErrorUrl);
+  const isLoading = useSelector((state) => state.ltpLoans.isLoading);
+  const dataError = useSelector((state) => state.ltpLoans.error);
+  const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
+  const dataErrorUrl = useSelector((state) => state.ltpLoans.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  //   console.log('in ltpBookings screen - userDataObj is set to ', userDataObj);
+  //   console.log('in ltpLoans screen - userDataObj is set to ', userDataObj);
 
   const userApiFetchParamsObj = {
     dealerId: (userDataObj && userDataObj.dealerId) || null,
     intId: (userDataObj && userDataObj.intId.toString()) || null,
   };
-  //   console.log('in ltpBookings screen - point 1');
+  //   console.log('in ltpLoans screen - point 1');
   //   console.log(
-  //     'in ltpBookings screen - userApiFetchParamsObj is set to ',
+  //     'in ltpLoans screen - userApiFetchParamsObj is set to ',
   //     userApiFetchParamsObj,
-  //     'ltpBookingsItems ',
-  //     ltpBookingsItems
+  //     'ltpLoansItems ',
+  //     ltpLoansItems
   //   );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
   //     userApiFetchParamsObj
   //   ]);
 
-  //   console.log('getLtpBookingsData', getLtpBookingsData);
+  //   console.log('getLtpLoansData', getLtpLoansData);
 
   //   const { navigation } = props;
 
   const getItems = useCallback(async (userApiFetchParamsObj) => {
     console.log(
-      'in ltpBookings getItems userApiFetchParamsObj',
+      'in ltpLoans getItems userApiFetchParamsObj',
       userApiFetchParamsObj
     );
-    dispatch(getLtpBookingsRequest(userApiFetchParamsObj)), [ltpBookingsItems];
+    dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [ltpLoansItems];
   });
 
-  //   console.log('in ltpBookings screen - point 2');
+  const getItemStatus = (item) => {
+    console.log(
+      'tool',
+      item.toolNr,
+      'now',
+      now,
+      'startDate',
+      item.startDate,
+      'expiryDate',
+      item.endDateDue
+    );
+    let theFromDate = null;
+    let theToDate = null;
+    let ageOfExpiry = 0;
+    let ageOfStart = 0;
+
+    if (item.collectedDate && item.collectionNumber) {
+      return false;
+    }
+
+    if (item.endDateDue && item.endDateDue.length > 0) {
+      theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
+      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
+      console.log('ageOfExpiry', ageOfExpiry);
+    }
+
+    if (ageOfExpiry >= -2) {
+      return false;
+    } else {
+      if (item.startDate && item.startDate.length > 0) {
+        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
+        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
+        console.log('ageOfStart', ageOfStart, moment(theFromDate));
+      }
+
+      if (ageOfStart >= -3) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const filterLtpLoansItems = (ltpLoansItems) => {
+    let ltpLoansItemsFiltered = [];
+    if (ltpLoansItems && ltpLoansItems.length > 0) {
+      ltpLoansItemsFiltered = ltpLoansItems.filter(
+        (item) => item.startDate && item.endDateDue && getItemStatus(item)
+      );
+    }
+    console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
+    return ltpLoansItemsFiltered;
+  };
+
+  //   console.log('in ltpLoans screen - point 2');
 
   const getItemsAsync = async () => {
     console.log(
-      'rendering LtpBookings screen, userApiFetchParamsObj:',
+      'rendering LtpLoans screen, userApiFetchParamsObj:',
       userApiFetchParamsObj
     );
 
@@ -87,10 +145,10 @@ export default LtpBookingsScreen = (props) => {
     }
   };
 
-  //   console.log('in ltpBookings screen - point 3');
+  //   console.log('in ltpLoans screen - point 3');
   //   useEffect(() => {
   //     // runs only once
-  //     // console.log('in stats use effect');
+  //     // console.log('in ltpLoans use effect');
   //     const getItemsAsync = async () => {
   //       setIsRefreshNeeded(false);
   //       getItems();
@@ -107,34 +165,34 @@ export default LtpBookingsScreen = (props) => {
 
   //   useEffect(() => {
   //     // runs only once
-  //     console.log('in ltpBookings useEffect', userApiFetchParamsObj);
+  //     console.log('in ltpLoans useEffect', userApiFetchParamsObj);
   //     //   setGetWipsDataObj(userApiFetchParamsObj);
   //     getItemsAsync();
   //   }, [userApiFetchParamsObj]);
-  //   console.log('in ltpBookings screen - point 4');
+  //   console.log('in ltpLoans screen - point 4');
   useFocusEffect(
     useCallback(() => {
       dispatch(
         revalidateUserCredentials({
-          calledBy: 'LtpBookings Screen',
+          calledBy: 'LtpLoans Screen',
         })
       );
-      console.log('in ltpBookings focusffect ');
+      console.log('in ltpLoans focusffect ');
       setSearchInput('');
       getItemsAsync();
     }, [])
   );
-  //   console.log('in ltpBookings screen - point 5');
+  //   console.log('in ltpLoans screen - point 5');
   useEffect(() => {
     // runs only once
     // console.log('in booked useEffect', userApiFetchParamsObj && userApiFetchParamsObj.dealerId);
     console.log(
-      'in ltpBookings getItems userApiFetchParamsObj',
+      'in ltpLoans getItems userApiFetchParamsObj',
       userApiFetchParamsObj
     );
   }, []);
 
-  //   console.log('in ltpBookings screen - point 6');
+  //   console.log('in ltpLoans screen - point 6');
   const refreshRequestHandler = () => {
     console.log('in refreshRequestHandler');
     getItemsAsync();
@@ -147,33 +205,33 @@ export default LtpBookingsScreen = (props) => {
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
   //   if (userDataPresent === true) {
-  //     // console.log('in stats screen,userDataObj OK', userDataPresent);
+  //     // console.log('in ltpLoans screen,userDataObj OK', userDataPresent);
   //   } else {
-  //     // console.log('in stats screen, no userDataObj');
+  //     // console.log('in ltpLoans screen, no userDataObj');
   //     getItems();
   //   }
 
-  //   let uniqueLtpBookingsSorted = sortObjectList(
-  //     unsortedUniqueLtpBookings,
+  //   let uniqueLtpLoansSorted = sortObjectList(
+  //     unsortedUniqueLtpLoans,
   //     'loanToolNo',
   //     'asc'
   //   );
 
-  //   setUniqueserviceMeasureItems(ltpBookingsItems);
+  //   setUniqueserviceMeasureItems(ltpLoansItems);
 
-  const ltpBookingsItemsDataCount = 0;
+  const ltpLoansItemsDataCount = 0;
 
-  //   console.log('in ltpBookings screen - point 7');
+  //   console.log('in ltpLoans screen - point 7');
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(ltpBookingsItems, searchInput);
+      let newFilteredItems = searchItems(ltpLoansItems, searchInput);
       //   console.log(
-      //     'LtpBookings Screen  searchInputHandler for: ',
+      //     'LtpLoans Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
-      //     'LtpBookings: ',
-      //     ltpBookingsItems && ltpBookingsItems.length,
+      //     'LtpLoans: ',
+      //     ltpLoansItems && ltpLoansItems.length,
       //     'itemsToShow: ',
       //     itemsToShow && itemsToShow.length,
       //     'uniqueserviceMeasureItems: ',
@@ -191,17 +249,17 @@ export default LtpBookingsScreen = (props) => {
   //       : uniqueserviceMeasureItems
   //     : [];
 
-  //   console.log('in ltpBookings screen - point 8');
+  //   console.log('in ltpLoans screen - point 8');
   const items =
     !isLoading && !dataError
       ? demoModeOn
-        ? ltpBookingsDummyData
-        : ltpBookingsItems
+        ? ltpLoansDummyData
+        : ltpLoansItems
       : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
-  //   console.log('in ltpBookings screen - point 9');
+  //   console.log('in ltpLoans screen - point 9');
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
@@ -209,18 +267,18 @@ export default LtpBookingsScreen = (props) => {
     : [];
 
   //   console.log(
-  //     'rendering LtpBookings screen, dataError:',
+  //     'rendering LtpLoans screen, dataError:',
   //     dataError,
   //     'filteredItems',
   //     filteredItems && filteredItems.length,
   //     ' itemsToShow length',
   //     (itemsToShow && itemsToShow.length) || '0'
   //   );
-  console.log('in ltpBookings screen - point 10', itemsToShow);
+  console.log('in ltpLoans screen - point 10', itemsToShow);
   return (
-    <View style={baseStyles.containerFlexAndMargin}>
+    <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'LtpBookings items'}
+        dataName={'LtpLoans items'}
         someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -228,7 +286,7 @@ export default LtpBookingsScreen = (props) => {
         dataError={dataError}
         dataStatusCode={dataStatusCode}
         isLoading={isLoading}
-        dataCount={ltpBookingsItems.length}
+        dataCount={ltpLoansItems.length}
       />
       {demoModeOn ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
@@ -247,7 +305,7 @@ export default LtpBookingsScreen = (props) => {
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
-              No live LTP bookings to show.
+              No live LTP loans to show.
             </Text>
             {/* <Text style={baseStyles.textPromptRibbon}>
               Showing sample data for Lyndon.
@@ -263,15 +321,15 @@ export default LtpBookingsScreen = (props) => {
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
-        <View>
-          <LtpBookingsList items={itemsToShow} />
-        </View>
+        <ScrollView>
+          <LtpLoansList items={itemsToShow} />
+        </ScrollView>
       )}
     </View>
   );
 };
 
-const titleString = 'LTP Bookings';
+const titleString = 'LTP Loans';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
