@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Added new aftersales catalogue';
+const appChangeInfoString = 'Changes: New notiications screen';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
