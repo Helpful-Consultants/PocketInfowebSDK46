@@ -119,7 +119,7 @@ export default function ServiceMeasuresList(props) {
                 {item.toolsAffected}
               </Text>
               {item.retailerStatus &&
-              item.retailerStatus.toLowercase() === 'y' ? null : (
+              item.retailerStatus.toLowerCase() === 'y' ? null : (
                 <Text
                   style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
                 >{`You have not yet responded`}</Text>
