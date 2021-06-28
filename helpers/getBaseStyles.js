@@ -645,6 +645,12 @@ export default getBaseStyles = (props) => {
       textAlign: 'center',
       color: Colors.vwgWhite,
     },
+    textNoData: {
+      ...baseText,
+      textAlign: 'left',
+      marginLeft: 5,
+      color: Colors.vwgBlack,
+    },
     textAppName: {
       ...baseText,
       color: Colors.vwgBlack,
@@ -919,6 +925,15 @@ export default getBaseStyles = (props) => {
     viewPromptRibbon: {
       padding: 10,
       backgroundColor: Colors.vwgDarkSkyBlue,
+    },
+    viewDataList: {
+      paddingHorizontal: 10,
+      paddingVertical: 10,
+      backgroundColor: Colors.vwgWhite,
+    },
+    viewDataListItem: {
+      paddingVertical: 5,
+      backgroundColor: Colors.vwgWhite,
     },
     // LtpScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbonNoneFound: {
