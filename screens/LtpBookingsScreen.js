@@ -17,10 +17,11 @@ import LtpBookingsList from './LtpBookingsList';
 import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-// import ltpBookingsDummyData from '../dummyData/ltpBookingsDummyData.js';
+import ltpBookingsDummyData from '../dummyData/ltpBookingsDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
+const demoModeOn = true;
 
 export default LtpBookingsScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -191,7 +192,12 @@ export default LtpBookingsScreen = (props) => {
   //     : [];
 
   //   console.log('in ltpBookings screen - point 8');
-  const items = (!isLoading && !dataError && ltpBookingsItems) || [];
+  const items =
+    !isLoading && !dataError
+      ? demoModeOn
+        ? ltpBookingsDummyData
+        : ltpBookingsItems
+      : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
@@ -224,6 +230,13 @@ export default LtpBookingsScreen = (props) => {
         isLoading={isLoading}
         dataCount={ltpBookingsItems.length}
       />
+      {demoModeOn ? (
+        <View style={baseStyles.viewPromptRibbonNoneFound}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Showing sample data for Lyndon.
+          </Text>
+        </View>
+      ) : null}
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>

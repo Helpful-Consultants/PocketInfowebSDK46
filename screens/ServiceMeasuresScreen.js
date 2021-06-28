@@ -17,10 +17,11 @@ import ServiceMeasuresList from './ServiceMeasuresList';
 // import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-// import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
+const demoModeOn = true;
 
 export default ServiceMeasuresScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -175,7 +176,14 @@ export default ServiceMeasuresScreen = (props) => {
   //       : uniqueserviceMeasureItems
   //     : [];
 
-  const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
+  //   const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
+
+  const items =
+    !isLoading && !dataError
+      ? demoModeOn
+        ? serviceMeasuresDummyData
+        : serviceMeasuresItems
+      : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
@@ -208,6 +216,13 @@ export default ServiceMeasuresScreen = (props) => {
         isLoading={isLoading}
         dataCount={serviceMeasuresItems.length}
       />
+      {demoModeOn ? (
+        <View style={baseStyles.viewPromptRibbonNoneFound}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Showing sample data for Lyndon.
+          </Text>
+        </View>
+      ) : null}
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
