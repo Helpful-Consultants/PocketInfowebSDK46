@@ -8,8 +8,8 @@ export default serviceMeasuresDummyData = [
     dateCreated: '23/04/2021 08:12:00',
     lastUpdated: '23/08/2019 14:26:21',
     updatedBy: 'Simon Groves',
-    expiryDate: '23/04/2021',
-    startDate: '08/04/2019',
+    expiryDate: '23/07/2021',
+    startDate: '08/06/2021',
     actionSteps: 'YYNNNNNY',
     actionText:
       'Please do not mark the service measure as complete until you have received all of your wrenches back from Stahlwille. Thank you',
