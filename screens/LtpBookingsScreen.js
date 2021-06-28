@@ -32,10 +32,10 @@ export default LtpBookingsScreen = (props) => {
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const isLoading = useSelector((state) => state.stats.isLoading);
-  const dataError = useSelector((state) => state.stats.error);
-  const dataStatusCode = useSelector((state) => state.odis.statusCode);
-  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
+  const isLoading = useSelector((state) => state.ltpBookings.isLoading);
+  const dataError = useSelector((state) => state.ltpBookings.error);
+  const dataStatusCode = useSelector((state) => state.ltpBookings.statusCode);
+  const dataErrorUrl = useSelector((state) => state.ltpBookings.dataErrorUrl);
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
