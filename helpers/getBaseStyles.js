@@ -931,9 +931,23 @@ export default getBaseStyles = (props) => {
       paddingVertical: 10,
       backgroundColor: Colors.vwgWhite,
     },
-    viewDataListItem: {
+    viewDataListItemWithBorder: {
       paddingVertical: 5,
       backgroundColor: Colors.vwgWhite,
+      borderBottomColor: Colors.vwgMidGray,
+      borderTopColor: Colors.vwgWhite,
+      borderLeftColor: Colors.vwgWhite,
+      borderRightColor: Colors.vwgWhite,
+      borderWidth: 1,
+    },
+    viewDataListItemNoBorder: {
+      paddingVertical: 5,
+      backgroundColor: Colors.vwgWhite,
+      borderBottomColor: Colors.vwgWhite,
+      borderTopColor: Colors.vwgWhite,
+      borderLeftColor: Colors.vwgWhite,
+      borderRightColor: Colors.vwgWhite,
+      borderWidth: 1,
     },
     // LtpScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbonNoneFound: {
