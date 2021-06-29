@@ -34,13 +34,17 @@ import { getNewsRequest } from '../actions/news';
 import { getProductsRequest } from '../actions/products';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
+import { getLtpLoansRequest } from '../actions/ltpLoans';
 import Constants from 'expo-constants';
+
+import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
+const demoModeOn = true;
 
 export default HomeScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -82,7 +86,9 @@ export default HomeScreen = (props) => {
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpItems = useSelector((state) => state.ltp.ltpItems);
+  const ltpLoansItems = demoModeOn
+    ? ltpLoansDummyData
+    : useSelector((state) => state.ltpLoans.ltpLoansItems);
 
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
@@ -90,6 +96,7 @@ export default HomeScreen = (props) => {
   const isLoadingNews = useSelector((state) => state.news.isLoading);
   const isLoadingProducts = useSelector((state) => state.products.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
+  const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
@@ -124,6 +131,7 @@ export default HomeScreen = (props) => {
       })
     );
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
+    dispatch(getLtpLoansRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
     dispatch(getProductsRequest());
@@ -174,6 +182,7 @@ export default HomeScreen = (props) => {
       isLoadingWips ||
       isLoadingProducts ||
       isLoadingCalibrationExpiry ||
+      isLoadingLtpLoans ||
       isLoadingLtp
     ) {
       setIsLoadingAny(true);
@@ -187,6 +196,7 @@ export default HomeScreen = (props) => {
     isLoadingWips,
     isLoadingProducts,
     isLoadingCalibrationExpiry,
+    isLoadingLtpLoans,
     isLoadingLtp,
   ]);
 
@@ -651,88 +661,12 @@ export default HomeScreen = (props) => {
                       />
 
                       <Text style={baseStyles.textHomeGridCell}>
-                        Loan Tools
+                        Loan Tool List
                       </Text>
                     </View>
                   </Touchable>
                 </View>
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                  {Constants.manifest.name &&
-                  Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-                    <Touchable
-                      style={baseStyles.viewHomeGridCell}
-                      onPress={() =>
-                        navigation.navigate('NewsTabs', { screen: 'Products' })
-                      }
-                    >
-                      <View style={baseStyles.viewColumnFlexCentre}>
-                        <Ionicons
-                          name={
-                            Platform.OS === 'ios'
-                              ? 'speedometer'
-                              : 'speedometer'
-                          }
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={
-                            ageOfProducts < notificationLimit ? true : false
-                          }
-                          focused={false}
-                          text={'Key Products'}
-                          value={'+'}
-                        />
-                      </View>
-                    </Touchable>
-                  ) : null}
-                  <Touchable
-                    style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('NewsTabs', { screen: 'Catalogue' })
-                    }
-                  >
-                    <View style={baseStyles.viewColumnFlexCentre}>
-                      <Ionicons
-                        name={Platform.OS === 'ios' ? 'book' : 'book'}
-                        type='ionicon'
-                        color={buttonTextColor}
-                        size={iconSize}
-                      />
-                      <BadgedText
-                        showBadge={false}
-                        focused={false}
-                        text={'Catalogue'}
-                        value={'+'}
-                      />
-                    </View>
-                  </Touchable>
-                </View>
-                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                  <Touchable
-                    style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('NewsTabs', {
-                        screen: 'News',
-                      })
-                    }
-                  >
-                    <View style={baseStyles.viewColumnFlexCentre}>
-                      <Ionicons
-                        name={Platform.OS === 'ios' ? 'document' : 'document'}
-                        type='ionicon'
-                        color={buttonTextColor}
-                        size={iconSize}
-                      />
-                      <BadgedText
-                        showBadge={false}
-                        focused={false}
-                        text={'News'}
-                        value={'+'}
-                      />
-                    </View>
-                  </Touchable>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
@@ -756,6 +690,86 @@ export default HomeScreen = (props) => {
                         showBadge={false}
                         focused={false}
                         text={'Notifications'}
+                        value={'+'}
+                      />
+                    </View>
+                  </Touchable>
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('RemindersTabs', {
+                        screen: 'LtpLoans',
+                      })
+                    }
+                  >
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
+                        <View>
+                          <Text style={baseStyles.textHomeGridCell}>
+                            {`LTP Loans`}
+                            <Text style={baseStyles.textHomeGridCellCount}>
+                              {` (${ltpLoansItems && ltpLoansItems.length})`}
+                            </Text>
+                          </Text>
+                        </View>
+                      ) : (
+                        <Text
+                          style={baseStyles.textHomeGridCell}
+                        >{`LTP Loans`}</Text>
+                      )}
+                    </View>
+                  </Touchable>
+                </View>
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
+                  {Constants.manifest.name &&
+                  Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+                    <Touchable
+                      style={baseStyles.viewHomeGridCell}
+                      onPress={() =>
+                        navigation.navigate('NewsTabs', {
+                          screen: 'News',
+                        })
+                      }
+                    >
+                      <View style={baseStyles.viewColumnFlexCentre}>
+                        <Ionicons
+                          name={Platform.OS === 'ios' ? 'document' : 'document'}
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        <BadgedText
+                          showBadge={false}
+                          focused={false}
+                          text={'News'}
+                          value={'+'}
+                        />
+                      </View>
+                    </Touchable>
+                  ) : null}
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('NewsTabs', { screen: 'Catalogue' })
+                    }
+                  >
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'book' : 'book'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={false}
+                        focused={false}
+                        text={'Catalogue'}
                         value={'+'}
                       />
                     </View>

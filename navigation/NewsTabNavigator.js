@@ -18,9 +18,9 @@ import HeaderButton from '../components/HeaderButton';
 import NewsScreen, {
   screenOptions as NewsScreenOptions,
 } from '../screens/NewsScreen';
-import ProductsScreen, {
-  screenOptions as ProductsScreenOptions,
-} from '../screens/ProductsScreen';
+// import ProductsScreen, {
+//   screenOptions as ProductsScreenOptions,
+// } from '../screens/ProductsScreen';
 import OdisScreen, {
   screenOptions as OdisScreenOptions,
 } from '../screens/OdisScreen';
@@ -117,18 +117,18 @@ const NewsStack = () => {
   );
 };
 
-const Products = createStackNavigator();
-const ProductsStack = () => {
-  return (
-    <Products.Navigator screenOptions={defaultStackNavOptions}>
-      <Products.Screen
-        name={'ProductsScreen'}
-        component={ProductsScreen}
-        options={ProductsScreenOptions}
-      />
-    </Products.Navigator>
-  );
-};
+// const Products = createStackNavigator();
+// const ProductsStack = () => {
+//   return (
+//     <Products.Navigator screenOptions={defaultStackNavOptions}>
+//       <Products.Screen
+//         name={'ProductsScreen'}
+//         component={ProductsScreen}
+//         options={ProductsScreenOptions}
+//       />
+//     </Products.Navigator>
+//   );
+// };
 
 const Odis = createStackNavigator();
 const OdisStack = () => {
@@ -191,11 +191,6 @@ export default NewsTabNavigator = () => {
         options={NewsScreenOptions}
       />
       <NewsTabs.Screen
-        name='Products'
-        component={ProductsStack}
-        options={ProductsScreenOptions}
-      />
-      <NewsTabs.Screen
         name='Catalogue'
         component={CatalogueStack}
         options={CatalogueScreenOptions}
@@ -229,11 +224,6 @@ export default NewsTabNavigator = () => {
         name='News'
         component={NewsStack}
         options={NewsScreenOptions}
-      />
-      <NewsTabs.Screen
-        name='Products'
-        component={ProductsStack}
-        options={ProductsScreenOptions}
       />
       <NewsTabs.Screen
         name='Catalogue'

@@ -96,7 +96,7 @@ const DrawerNavigator = (props) => {
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'ODIS, News & Products',
+          drawerLabel: 'ODIS, News & Catalogue',
           initialRouteName: 'Odis',
         }}
       />
