@@ -36,6 +36,7 @@ export default CatalogueScreen = (props) => {
       style={{
         ...baseStyles.viewColumnFlexCentre,
         marginTop: 20,
+        marginHorizontal: 10,
       }}
     >
       <Text>
