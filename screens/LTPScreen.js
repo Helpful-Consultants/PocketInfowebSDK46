@@ -41,9 +41,10 @@ export default LtpScreen = (props) => {
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  const getItems = useCallback(async () => dispatch(getLtpRequest()), [
-    ltpItems,
-  ]);
+  const getItems = useCallback(
+    async () => dispatch(getLtpRequest()),
+    [ltpItems]
+  );
 
   //   const [isDrawerVisible, setIsDrawerVisible] = useState(true);
   //   console.log('in ltp screen');
