@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: New notiications screen';
+const appChangeInfoString = 'Changes: Home and Notifications screens';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
