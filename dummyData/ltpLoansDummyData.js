@@ -57,7 +57,7 @@ export default ltpLoansDummyData = [
   },
   {
     loanToolNo: 'LT0001',
-    toolDescription: 'Brake servo tester - not yet',
+    toolDescription: 'Brake servo tester',
     id: '9148',
     dealers_id: '21000005',
     bookingType: 'hard',
@@ -169,7 +169,7 @@ export default ltpLoansDummyData = [
   },
   {
     loanToolNo: 'LT0014',
-    toolDescription: 'Adjustable support - not due back yet',
+    toolDescription: 'Adjustable support',
     id: '9648',
     dealers_id: '21000005',
     bookingType: 'hard',
