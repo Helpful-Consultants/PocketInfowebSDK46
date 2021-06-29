@@ -146,8 +146,23 @@ export default getBaseStyles = (props) => {
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
   };
-  let baseTextSmallBold = {
+  let baseTextLarge = {
     fontFamily: 'the-sans',
+    color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSizeLarge,
+  };
+  let baseTextLargeBold = {
+    fontFamily: 'the-sans-bold',
+    color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSizeLarge,
+  };
+  let baseTextLargerBold = {
+    fontFamily: 'the-sans-bold',
+    color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSizeLarger,
+  };
+  let baseTextSmallBold = {
+    fontFamily: 'the-sans-bold',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
   };
@@ -546,11 +561,19 @@ export default getBaseStyles = (props) => {
       textAlign: 'left',
     },
     textLeftAlignedLarge: {
-      ...baseText,
+      ...baseTextLarge,
       textAlign: 'left',
     },
     textLeftAlignedBold: {
       ...baseTextBold,
+      textAlign: 'left',
+    },
+    textLeftAlignedBoldLarge: {
+      ...baseTextLargeBold,
+      textAlign: 'left',
+    },
+    textLeftAlignedBoldLarger: {
+      ...baseTextLargerBold,
       textAlign: 'left',
     },
     textCentred: {

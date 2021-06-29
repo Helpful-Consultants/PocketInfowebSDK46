@@ -56,7 +56,7 @@ export default function CalibrationExpiryList(props) {
                 Colors.vwgWarmRed
               }
             />
-            <Text>{`  ${item.howMany} ${
+            <Text style={baseStyles.textLeftAligned}>{`  ${item.howMany} ${
               item.howMany == 1
                 ? `item's calibration has expired.`
                 : `items' calibrations have expired.`
@@ -75,7 +75,7 @@ export default function CalibrationExpiryList(props) {
                 Colors.vwgCoolOrange
               }
             />
-            <Text>{`  ${item.howMany} ${
+            <Text style={baseStyles.textLeftAlignedLarge}>{`  ${item.howMany} ${
               item.howMany == 1
                 ? `item's calibration expires within 30 days.`
                 : `items' calibrations expire within 30 days.`
@@ -94,7 +94,7 @@ export default function CalibrationExpiryList(props) {
                 Colors.vwgMintGreen
               }
             />
-            <Text>{`  ${item.howMany} ${
+            <Text style={baseStyles.textLeftAligned}>{`  ${item.howMany} ${
               item.howMany == 1
                 ? `item's calibration expires within 60 days.`
                 : `items' calibrations expire within 60 days.`

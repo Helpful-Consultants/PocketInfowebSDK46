@@ -63,7 +63,7 @@ export default function ServiceMeasuresList(props) {
       <View style={baseStyles.containerNoMargin}>
         <View>
           <Text
-            style={baseStyles.textLeftAlignedBold}
+            style={baseStyles.textLeftAlignedBoldLarge}
           >{`${item.menuText}`}</Text>
         </View>
         {showFullDetails && showFullDetails === true ? (
@@ -120,8 +120,12 @@ export default function ServiceMeasuresList(props) {
         {item.retailerStatus &&
         item.retailerStatus.toLowerCase() === 'c' ? null : (
           <Text
-            style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
-          >{`You have not yet responded`}</Text>
+            style={
+              showFullDetails && showFullDetails === true
+                ? { ...baseStyles.textLeftAlignedBold, marginTop: 5 }
+                : { ...baseStyles.textLeftAligned }
+            }
+          >{`You haven't responded yet`}</Text>
         )}
         {showFullDetails && showFullDetails === true ? (
           item.retailerStatus ? null : (
