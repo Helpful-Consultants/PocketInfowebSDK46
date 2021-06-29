@@ -16,7 +16,7 @@ function* getServiceMeasures({ payload }) {
     const result = yield call(api.getServiceMeasures, {
       dealerId: payload.dealerId,
     });
-    console.log('in saga get serviceMeasures - 200');
+    // console.log('in saga get serviceMeasures - 200');
     // console.log(result);
     if (
       result.data &&
@@ -53,7 +53,7 @@ function* getServiceMeasures({ payload }) {
         })
       );
     } else {
-      console.log('dealer serviceMeasures weird result');
+      //   console.log('dealer serviceMeasures weird result');
       //   console.log(result && result);
       yield put(
         actions.serviceMeasuresError({
@@ -74,7 +74,7 @@ function* getServiceMeasures({ payload }) {
     // console.log(result);
     // console.log('end results in saga get serviceMeasures, success');
   } catch (error) {
-    console.log('server error in saga get serviceMeasures !!!!!!!!!!!!!!');
+    // console.log('server error in saga get serviceMeasures !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
     // console.log('whole Error ends');
     // console.log(error && error.config);
