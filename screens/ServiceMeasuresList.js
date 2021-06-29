@@ -153,6 +153,7 @@ export default function ServiceMeasuresList(props) {
                     ? baseStyles.viewDataListItemNoBorder
                     : baseStyles.viewDataListItemWithBorder
                 }
+                key={i}
               >
                 {getFormattedServiceMeasure(item)}
               </View>

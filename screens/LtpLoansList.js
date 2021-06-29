@@ -101,6 +101,7 @@ export default function LtpLoansList(props) {
                   ? baseStyles.viewDataListItemNoBorder
                   : baseStyles.viewDataListItemWithBorder
               }
+              key={i}
             >
               {getFormattedLtpLoan(item)}
             </View>
