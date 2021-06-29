@@ -384,13 +384,19 @@ export default NotificationsScreen = (props) => {
 
   return (
     <ScrollView>
-      {demoModeOn ? (
+      {!demoModeOn ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data for Lyndon.
           </Text>
         </View>
-      ) : null}
+      ) : (
+        <View style={baseStyles.viewPromptRibbon}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Current LTP loans and upcoming deadlines
+          </Text>
+        </View>
+      )}
       {!isLoadingCalibrationExpiry ? (
         dataErrorCalibrationExpiry ? (
           <ErrorDetails
@@ -401,8 +407,8 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewPromptRibbon}>
-              <Text style={baseStyles.textPromptRibbon}>
+            <View style={baseStyles.viewSectionRibbon}>
+              <Text style={baseStyles.textSectionRibbon}>
                 Calibration expiry alerts
               </Text>
             </View>
@@ -428,8 +434,8 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewPromptRibbon}>
-              <Text style={baseStyles.textPromptRibbon}>
+            <View style={baseStyles.viewSectionRibbon}>
+              <Text style={baseStyles.textSectionRibbon}>
                 Current and upcoming LTP loans
               </Text>
             </View>
@@ -455,8 +461,8 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewPromptRibbon}>
-              <Text style={baseStyles.textPromptRibbon}>
+            <View style={baseStyles.viewSectionRibbon}>
+              <Text style={baseStyles.textSectionRibbon}>
                 Outstanding service measures
               </Text>
             </View>

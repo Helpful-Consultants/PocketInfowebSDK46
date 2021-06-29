@@ -42,6 +42,7 @@ export default {
   vwgMintGreen: '#95a844',
   vwgKhaki: '#848b00',
   vwgMidBlue: '#006384',
+  vwgVeryLightSkyBlue: '#d6eff7',
   vwgLightSkyBlue: '#c6dfe7',
   vwgSkyBlue: '#80b0c8',
   vwgDarkSkyBlue: '#4777a3',
