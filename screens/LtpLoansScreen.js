@@ -9,21 +9,13 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
-import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import HeaderButton from '../components/HeaderButton';
-import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-// import { getDealerWipsRequest } from '../actions/ltpLoans';
-// import { getDealerToolsRequest } from '../actions/dealerTools';
 import LtpLoansList from './LtpLoansList';
-import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
-// import userDummyData from '../dummyData/userDummyData.js';
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
@@ -35,13 +27,11 @@ export default LtpLoansScreen = (props) => {
   const dispatch = useDispatch();
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const [searchInput, setSearchInput] = useState('');
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
   const dataErrorUrl = useSelector((state) => state.ltpLoans.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
 

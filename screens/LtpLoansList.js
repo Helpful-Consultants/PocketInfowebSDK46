@@ -1,13 +1,8 @@
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
-// import { RFPercentage } from 'react-native-responsive-fontsize';
 import moment from 'moment';
-// import InlineIcon from '../components/InlineIcon';
-// import Colors from '../constants/Colors';
 
-// import moment from 'moment';
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData';
 const now = moment();
 
 const getDisplayDate = (rawDate) => {
