@@ -47,8 +47,10 @@ export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const items = props.items || [];
-  //   const items = serviceMeasuresDummyData;
+  const { showFullDetails, items } = props;
+
+  const serviceMeasures = items || [];
+  //   const serviceMeasures = serviceMeasuresDummyData;
   //   let now = moment();
 
   const getFormattedServiceMeasure = (item) => {
@@ -64,28 +66,30 @@ export default function ServiceMeasuresList(props) {
             style={baseStyles.textLeftAlignedBold}
           >{`${item.menuText}`}</Text>
         </View>
-        <View
-          style={{
-            ...baseStyles.viewRowFlexCentreAligned,
-            marginTop: 5,
-          }}
-        >
-          <InlineIcon
-            itemType='font-awesome'
-            iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
-            iconSize={RFPercentage(2.4)}
-            iconColor={
+        {showFullDetails && showFullDetails === true ? (
+          <View
+            style={{
+              ...baseStyles.viewRowFlexCentreAligned,
+              marginTop: 5,
+            }}
+          >
+            <InlineIcon
+              itemType='font-awesome'
+              iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
+              iconSize={RFPercentage(2.4)}
+              iconColor={
+                //item.status && item.status.toLowerCase() === 'c'
+                measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
+              }
+            />
+            <Text
+              style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
+            >{`Service measure ${
               //item.status && item.status.toLowerCase() === 'c'
-              measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
-            }
-          />
-          <Text
-            style={{ ...baseStyles.textLeftAligned, paddingLeft: 7 }}
-          >{`Service measure ${
-            //item.status && item.status.toLowerCase() === 'c'
-            measureIsLive ? 'still open' : 'closed'
-          }`}</Text>
-        </View>
+              measureIsLive ? 'still open' : 'closed'
+            }`}</Text>
+          </View>
+        ) : null}
         <View style={baseStyles.viewRowFlexCentreAligned}>
           <InlineIcon
             itemType='font-awesome'
@@ -101,27 +105,31 @@ export default function ServiceMeasuresList(props) {
             item.retailerStatus ? 'completed' : 'not completed'
           }`}</Text>
         </View>
-        <Text
-          style={{
-            ...baseStyles.textLeftAligned,
-            ...baseStyles.textBold,
-            marginTop: 5,
-            color: Colors.vwgDarkSkyBlue,
-          }}
-        >
-          {item.toolsAffected}
-        </Text>
+        {showFullDetails && showFullDetails === true ? (
+          <Text
+            style={{
+              ...baseStyles.textLeftAligned,
+              ...baseStyles.textBold,
+              marginTop: 5,
+              color: Colors.vwgDarkSkyBlue,
+            }}
+          >
+            {item.toolsAffected}
+          </Text>
+        ) : null}
         {item.retailerStatus &&
-        item.retailerStatus.toLowerCase() === 'y' ? null : (
+        item.retailerStatus.toLowerCase() === 'c' ? null : (
           <Text
             style={{ ...baseStyles.textLeftAlignedBold, marginTop: 5 }}
           >{`You have not yet responded`}</Text>
         )}
-        {item.retailerStatus ? null : (
-          <Text
-            style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-          >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
-        )}
+        {showFullDetails && showFullDetails === true ? (
+          item.retailerStatus ? null : (
+            <Text
+              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+            >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+          )
+        ) : null}
         {item.retailerStatus ? null : (
           <Text
             style={baseStyles.textLeftAligned}
@@ -131,16 +139,25 @@ export default function ServiceMeasuresList(props) {
     );
   };
 
-  //   console.log(items && items);
+  //   console.log(serviceMeasures && serviceMeasures);
 
   return (
     <View style={baseStyles.viewDataList}>
-      {items && items.length > 0
-        ? items.map((item) => (
-            <View style={baseStyles.viewDataListItem}>
-              {getFormattedServiceMeasure(item)}
-            </View>
-          ))
+      {serviceMeasures && serviceMeasures.length > 0
+        ? serviceMeasures.map((item, i) =>
+            item.retailerStatus &&
+            item.retailerStatus.toLowerCase() === 'c' ? null : (
+              <View
+                style={
+                  i === serviceMeasures.length - 1
+                    ? baseStyles.viewDataListItemNoBorder
+                    : baseStyles.viewDataListItemWithBorder
+                }
+              >
+                {getFormattedServiceMeasure(item)}
+              </View>
+            )
+          )
         : null}
     </View>
   );

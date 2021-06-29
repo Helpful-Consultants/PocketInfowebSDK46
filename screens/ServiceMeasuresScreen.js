@@ -260,7 +260,7 @@ export default ServiceMeasuresScreen = (props) => {
         />
       ) : (
         <ScrollView>
-          <ServiceMeasuresList items={itemsToShow} />
+          <ServiceMeasuresList items={itemsToShow} showFullDetails={true} />
         </ScrollView>
       )}
     </View>
