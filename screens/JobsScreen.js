@@ -81,7 +81,7 @@ export default JobsScreen = (props) => {
 
   useEffect(() => {
     // runs only once
-    console.log('in jobs useEffect', userApiFetchParamsObj);
+    // console.log('in jobs useEffect', userApiFetchParamsObj);
     //   setGetWipsDataObj(userApiFetchParamsObj);
     getItemsAsync();
   }, [userApiFetchParamsObj]);

@@ -24,8 +24,8 @@ const getItemStatus = (startDate, expiryDate) => {
   if (expiryDate && expiryDate.length > 0) {
     theToDate = moment(expiryDate, 'DD/MM/YYYY HH:mm:ss');
     ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    console.log('ageOfExpiry', ageOfExpiry);
   }
+  //   console.log('ageOfExpiry', ageOfExpiry);
 
   if (ageOfExpiry >= 1) {
     return false;
@@ -33,7 +33,7 @@ const getItemStatus = (startDate, expiryDate) => {
     if (startDate && startDate.length > 0) {
       theFromDate = moment(startDate, 'DD/MM/YYYY HH:mm:ss');
       ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-      console.log('ageOfStart', ageOfStart);
+      //   console.log('ageOfStart', ageOfStart);
     }
 
     if (ageOfStart >= 0) {

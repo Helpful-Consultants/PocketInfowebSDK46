@@ -70,7 +70,7 @@ export default LtpScreen = (props) => {
 
   useEffect(() => {
     // console.log('getting unique LTP items', ltpItems && ltpItems);
-    console.log('userBrand is ', userBrand);
+    // console.log('userBrand is ', userBrand);
     let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
     let ltpItemsFiltered = [];
     if (userBrand) {
@@ -85,7 +85,7 @@ export default LtpScreen = (props) => {
         userBrand &&
         ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
     } else {
-      console.log('userBrand isnt : ', userBrand);
+      //   console.log('userBrand isnt : ', userBrand);
       ltpItemsFiltered = ltpItemsAll.filter(
         (item) =>
           item.au === ('Y' || 'y') ||
@@ -102,7 +102,7 @@ export default LtpScreen = (props) => {
     // );
 
     let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
-    console.log('ltpItemsSorted', ltpItemsSorted && ltpItemsSorted.length);
+    // console.log('ltpItemsSorted', ltpItemsSorted && ltpItemsSorted.length);
 
     setUniqueLtpItems(ltpItemsSorted);
     // setUniqueLtpItems([]);

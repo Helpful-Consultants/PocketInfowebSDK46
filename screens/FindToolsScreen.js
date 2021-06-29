@@ -217,10 +217,10 @@ export default FindToolsScreen = (props) => {
   });
 
   const getWipsItemsAsync = async () => {
-    console.log(
-      'find tools - getWipsItemsAsync, userApiFetchParamsObj is',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'find tools - getWipsItemsAsync, userApiFetchParamsObj is',
+    //   userApiFetchParamsObj
+    // );
     if (
       userApiFetchParamsObj &&
       userApiFetchParamsObj.intId &&
@@ -231,10 +231,10 @@ export default FindToolsScreen = (props) => {
 
   const getOtherItems = useCallback(async () => {
     // console.log('in getOtherItems');
-    console.log(
-      'find tools - getOtherItems, userApiFetchParamsObj is',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'find tools - getOtherItems, userApiFetchParamsObj is',
+    //   userApiFetchParamsObj
+    // );
     dispatch(getDealerToolsRequest(userApiFetchParamsObj));
     // dispatch(getDealerWipsRequest(userApiFetchParamsObj));
     if (!ltpItems || ltpItems.length === 0) {
@@ -269,12 +269,12 @@ export default FindToolsScreen = (props) => {
 
   useEffect(() => {
     // runs only once
-    console.log(
-      'in findtools, isSendingWip is ',
-      isSendingWip,
-      'code is ',
-      dataStatusCodeWips
-    );
+    // console.log(
+    //   'in findtools, isSendingWip is ',
+    //   isSendingWip,
+    //   'code is ',
+    //   dataStatusCodeWips
+    // );
     if (isSendingWip === false) {
       if (dataStatusCodeWips === 201) {
         // console.log(
@@ -329,10 +329,10 @@ export default FindToolsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log(
-        'find tools - useFocusEffect, userApiFetchParamsObj is',
-        userApiFetchParamsObj
-      );
+      //   console.log(
+      //     'find tools - useFocusEffect, userApiFetchParamsObj is',
+      //     userApiFetchParamsObj
+      //   );
       dispatch(revalidateUserCredentials({ calledBy: 'FindToolsScreen' }));
       setSearchInput('');
       getWipsItemsAsync();
@@ -512,7 +512,7 @@ export default FindToolsScreen = (props) => {
       userApiFetchParamsObj: userApiFetchParamsObj,
     };
 
-    console.log('in deleteWipRequestHandler', payload);
+    // console.log('in deleteWipRequestHandler', payload);
     setToolBasket([]);
     setMode('list');
     setIsBasketVisible(false);
@@ -534,9 +534,9 @@ export default FindToolsScreen = (props) => {
 
   const backdropPressHandler = () => {
     if (mode === 'all-unavailable') {
-      console.log(
-        'inbackdropPressHandler, calling acceptNotBookedMessageHandler'
-      );
+      //   console.log(
+      //     'inbackdropPressHandler, calling acceptNotBookedMessageHandler'
+      //   );
       acceptNotBookedMessageHandler();
       setIsBasketVisible(false);
     }
@@ -626,18 +626,18 @@ export default FindToolsScreen = (props) => {
   //   }, 2000);
 
   const searchInputHandler = (searchInput) => {
-    console.log('searchInputHandler ' + searchInput);
+    // console.log('searchInputHandler ' + searchInput);
     setSearchInput(searchInput);
 
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(combinedItems, searchInput);
       setFilteredItems(newFilteredItems);
-      console.log('searchInputHandler ' + newFilteredItems);
+      //   console.log('searchInputHandler ' + newFilteredItems);
     }
   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getOtherItemsAsync();
   };
 

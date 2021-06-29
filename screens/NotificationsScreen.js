@@ -100,10 +100,10 @@ export default NotificationsScreen = (props) => {
 
   //   const { navigation } = props;
   const getItems = useCallback(async (userApiFetchParamsObj) => {
-    console.log(
-      'in calibrationExpiry getItems userApiFetchParamsObj',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'in calibrationExpiry getItems userApiFetchParamsObj',
+    //   userApiFetchParamsObj
+    // );
     dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [];
     dispatch(getServiceMeasuresRequest(userApiFetchParamsObj)), [];
     dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj)), [];
@@ -142,16 +142,16 @@ export default NotificationsScreen = (props) => {
   //   });
 
   const getLtpLoanStatus = (item) => {
-    console.log(
-      'tool',
-      item.toolNr,
-      'now',
-      now,
-      'startDate',
-      item.startDate,
-      'expiryDate',
-      item.endDateDue
-    );
+    // console.log(
+    //   'tool',
+    //   item.toolNr,
+    //   'now',
+    //   now,
+    //   'startDate',
+    //   item.startDate,
+    //   'expiryDate',
+    //   item.endDateDue
+    // );
     let theFromDate = null;
     let theToDate = null;
     let ageOfExpiry = 0;
@@ -165,7 +165,7 @@ export default NotificationsScreen = (props) => {
       theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
       ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
     }
-    console.log('ageOfExpiry', ageOfExpiry);
+    // console.log('ageOfExpiry', ageOfExpiry);
 
     if (ageOfExpiry >= -2) {
       return false;
@@ -173,7 +173,7 @@ export default NotificationsScreen = (props) => {
       if (item.startDate && item.startDate.length > 0) {
         theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
         ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        console.log('ageOfStart', ageOfStart, moment(theFromDate));
+        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
       }
 
       if (ageOfStart >= -3) {
@@ -240,7 +240,7 @@ export default NotificationsScreen = (props) => {
         (item) => item.startDate && item.endDateDue && getLtpLoanStatus(item)
       );
     }
-    console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
+    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
     return ltpLoansItemsFiltered;
   };
 
@@ -255,10 +255,10 @@ export default NotificationsScreen = (props) => {
       );
     }
 
-    console.log(
-      'calibrationExpiryItemsFiltered',
-      calibrationExpiryItemsFiltered
-    );
+    // console.log(
+    //   'calibrationExpiryItemsFiltered',
+    //   calibrationExpiryItemsFiltered
+    // );
     return calibrationExpiryItemsFiltered;
   };
 
@@ -356,31 +356,31 @@ export default NotificationsScreen = (props) => {
         : filterServiceMeasuresItems(serviceMeasuresItems)
       : [];
 
-  console.log(
-    'rendering Notifications screen',
-    calibrationExpiryItemsToShow,
-    'isLoadingCalibrationExpiry',
-    isLoadingCalibrationExpiry,
-    'dataErrorCalibrationExpiry',
-    dataErrorCalibrationExpiry
-  );
-  console.log(
-    'rendering Notifications screen',
-    serviceMeasuresItemsToShow.length,
-    'isLoadingServiceMeasures',
-    isLoadingServiceMeasures,
-    'dataErrorServiceMeasures',
-    dataErrorServiceMeasures
-  );
+  //   console.log(
+  //     'rendering Notifications screen',
+  //     calibrationExpiryItemsToShow,
+  //     'isLoadingCalibrationExpiry',
+  //     isLoadingCalibrationExpiry,
+  //     'dataErrorCalibrationExpiry',
+  //     dataErrorCalibrationExpiry
+  //   );
+  //   console.log(
+  //     'rendering Notifications screen',
+  //     serviceMeasuresItemsToShow.length,
+  //     'isLoadingServiceMeasures',
+  //     isLoadingServiceMeasures,
+  //     'dataErrorServiceMeasures',
+  //     dataErrorServiceMeasures
+  //   );
 
-  console.log(
-    'rendering Notifications screen',
-    ltpLoansItemsToShow.length,
-    'isLoadingLtpLoans',
-    isLoadingLtpLoans,
-    'dataErrorLtpLoansItems',
-    dataErrorLtpLoans
-  );
+  //   console.log(
+  //     'rendering Notifications screen',
+  //     ltpLoansItemsToShow.length,
+  //     'isLoadingLtpLoans',
+  //     isLoadingLtpLoans,
+  //     'dataErrorLtpLoansItems',
+  //     dataErrorLtpLoans
+  //   );
 
   return (
     <ScrollView>

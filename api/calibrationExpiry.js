@@ -8,7 +8,7 @@ export const getCalibrationExpiry = (wipObj) => {
   const url =
     '/mandatoryList/?controller=api&action=listCalibrationExpiry&id=' +
     dealerId;
-  console.log(url);
+  //   console.log(url);
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'

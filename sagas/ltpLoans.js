@@ -16,7 +16,7 @@ function* getLtpLoans({ payload }) {
     const result = yield call(api.getLtpLoans, {
       intId: payload.intId,
     });
-    console.log('in saga get ltpLoans - 200');
+    // console.log('in saga get ltpLoans - 200');
     // console.log(result);
     if (
       result.data &&
@@ -26,7 +26,7 @@ function* getLtpLoans({ payload }) {
       result.data[0].createdDate
     ) {
       //   console.log('in LtpLoans saga - good 200');
-      console.log(result.data);
+      //   console.log(result.data);
       yield put(
         actions.getLtpLoansSuccess({
           items: result.data,
@@ -41,7 +41,7 @@ function* getLtpLoans({ payload }) {
       !result.data ||
       (result.data && result.data === null)
     ) {
-      console.log('in LtpLoans saga - empty 200');
+      //   console.log('in LtpLoans saga - empty 200');
       // console.log(
       //     'in LtpLoans saga - empty 200',
       //     result.request.status && result.request.status
@@ -154,7 +154,7 @@ function* getLtpLoans({ payload }) {
 }
 
 function* watchgetLtpLoansRequest() {
-  console.log('in saga watch for ltpLoans');
+  //   console.log('in saga watch for ltpLoans');
   yield takeLatest(Types.GET_LTP_LOANS_REQUEST, getLtpLoans);
 }
 

@@ -60,9 +60,10 @@ export default NewsScreen = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   //   const [isLoading, setIsLoading] = useState(false);
 
-  const getItems = useCallback(async () => dispatch(getNewsRequest()), [
-    newsItems,
-  ]);
+  const getItems = useCallback(
+    async () => dispatch(getNewsRequest()),
+    [newsItems]
+  );
 
   //   const { navigation } = props;
 
@@ -137,7 +138,7 @@ export default NewsScreen = (props) => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  console.log('rendering News screen');
+  //   console.log('rendering News screen');
 
   return (
     <View style={baseStyles.container}>

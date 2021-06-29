@@ -131,10 +131,10 @@ export default HomeScreen = (props) => {
   });
 
   const updateItemsAsync = async () => {
-    console.log(
-      'home - updateItemsAsync, userApiFetchParamsObj:',
-      userApiFetchParamsObj && userApiFetchParamsObj
-    );
+    // console.log(
+    //   'home - updateItemsAsync, userApiFetchParamsObj:',
+    //   userApiFetchParamsObj && userApiFetchParamsObj
+    // );
     if (
       userApiFetchParamsObj &&
       userApiFetchParamsObj.intId &&
@@ -307,14 +307,14 @@ export default HomeScreen = (props) => {
   };
 
   const checkAppUpdates = () => {
-    console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-    console.log('timeCheckedAppVersion now', now);
+    // console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+    // console.log('timeCheckedAppVersion now', now);
     if (timeCheckedAppVersion) {
       setShouldCheckAppVersion(true);
-      console.log(
-        'timeCheckedAppVersion diff',
-        now.diff(moment(timeCheckedAppVersion))
-      );
+      //   console.log(
+      //     'timeCheckedAppVersion diff',
+      //     now.diff(moment(timeCheckedAppVersion))
+      //   );
 
       if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
         setTimeCheckedAppVersion(now);

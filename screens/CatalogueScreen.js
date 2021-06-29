@@ -29,7 +29,7 @@ export default CatalogueScreen = (props) => {
     setBrowserResult(result);
   };
 
-  console.log('rendering Catalogue screen', browserResult);
+  //   console.log('rendering Catalogue screen', browserResult);
 
   return (
     <View

@@ -24,7 +24,7 @@ export const checkUserCredentials = ({ email, pin }) => {
 };
 
 export const getUser = ({ intId }) => {
-  console.log('in user api - getUser called', intId);
+  //   console.log('in user api - getUser called', intId);
   const url = '?controller=api&action=getUserDetails&intUserId=' + intId;
   //   console.log(url);
 

@@ -14,7 +14,7 @@ import * as api from '../api/user';
 import Types from '../constants/Types';
 
 function* getUser({ payload }) {
-  console.log('in user saga - getUser called for', payload && payload);
+  //   console.log('in user saga - getUser called for', payload && payload);
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the user';
   let dataErrorUrl = null;
@@ -26,7 +26,7 @@ function* getUser({ payload }) {
       const result = yield call(api.getUser, {
         intId: payload.intId,
       });
-      console.log('in user saga - 200');
+      //   console.log('in user saga - 200');
       //   console.log('result is:', result && result);
       //   console.log('result is:', result.data[0]);
       // console.log('result userId is:', result.data[0].userId);
@@ -43,7 +43,7 @@ function* getUser({ payload }) {
           result.data[0].dealerId &&
           result.data[0].dealerId.length > 0
         ) {
-          console.log('in user saga - good 200', result.data);
+          //   console.log('in user saga - good 200', result.data);
           yield put(
             actions.getUserSuccess({
               items: result.data,
@@ -70,8 +70,8 @@ function* getUser({ payload }) {
           // yield put(toolsActions.getDealerToolsStart());
           // yield put(toolsActions.getDealerToolsRequest(userApiFetchParamsObj));
         } else if (result.data[0].userId && result.data[0].userId.length > 0) {
-          console.log('in user saga - bad 200');
-          console.log(result.data && result.data[0]);
+          //   console.log('in user saga - bad 200');
+          //   console.log(result.data && result.data[0]);
 
           const message =
             (result.data[0].userName && result.data[0].username) ||

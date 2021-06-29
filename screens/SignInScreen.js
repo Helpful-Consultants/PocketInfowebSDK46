@@ -81,18 +81,18 @@ export default SignInScreen = (props) => {
   });
 
   useEffect(() => {
-    console.log(
-      'in sign in, here a1, userIsValidated ',
-      userIsValidated,
-      'userError',
-      userError
-    );
+    // console.log(
+    //   'in sign in, here a1, userIsValidated ',
+    //   userIsValidated,
+    //   'userError',
+    //   userError
+    // );
     if (userIsValidated || userError) {
-      console.log('useEffect applied', userIsValidated, 'userError', userError);
+      //   console.log('useEffect applied', userIsValidated, 'userError', userError);
       setIsLoading(false);
     }
     if (userIsValidated) {
-      console.log('userIsValidated: ', userIsValidated && userIsValidated);
+      //   console.log('userIsValidated: ', userIsValidated && userIsValidated);
       //   navigation.navigate('Main');
     }
   }, [userIsValidated, userError]);

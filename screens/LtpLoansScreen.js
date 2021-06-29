@@ -68,24 +68,24 @@ export default LtpLoansScreen = (props) => {
   //   const { navigation } = props;
 
   const getItems = useCallback(async (userApiFetchParamsObj) => {
-    console.log(
-      'in ltpLoans getItems userApiFetchParamsObj',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'in ltpLoans getItems userApiFetchParamsObj',
+    //   userApiFetchParamsObj
+    // );
     dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [ltpLoansItems];
   });
 
   const getItemStatus = (item) => {
-    console.log(
-      'tool',
-      item.toolNr,
-      'now',
-      now,
-      'startDate',
-      item.startDate,
-      'expiryDate',
-      item.endDateDue
-    );
+    // console.log(
+    //   'tool',
+    //   item.toolNr,
+    //   'now',
+    //   now,
+    //   'startDate',
+    //   item.startDate,
+    //   'expiryDate',
+    //   item.endDateDue
+    // );
     let theFromDate = null;
     let theToDate = null;
     let ageOfExpiry = 0;
@@ -98,8 +98,8 @@ export default LtpLoansScreen = (props) => {
     if (item.endDateDue && item.endDateDue.length > 0) {
       theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
       ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-      console.log('ageOfExpiry', ageOfExpiry);
     }
+    // console.log('ageOfExpiry', ageOfExpiry);
 
     if (ageOfExpiry >= -2) {
       return false;
@@ -107,7 +107,7 @@ export default LtpLoansScreen = (props) => {
       if (item.startDate && item.startDate.length > 0) {
         theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
         ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        console.log('ageOfStart', ageOfStart, moment(theFromDate));
+        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
       }
 
       if (ageOfStart >= -3) {
@@ -124,17 +124,17 @@ export default LtpLoansScreen = (props) => {
         (item) => item.startDate && item.endDateDue && getItemStatus(item)
       );
     }
-    console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
+    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
     return ltpLoansItemsFiltered;
   };
 
   //   console.log('in ltpLoans screen - point 2');
 
   const getItemsAsync = async () => {
-    console.log(
-      'rendering LtpLoans screen, userApiFetchParamsObj:',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'rendering LtpLoans screen, userApiFetchParamsObj:',
+    //   userApiFetchParamsObj
+    // );
 
     if (
       userApiFetchParamsObj &&
@@ -177,7 +177,7 @@ export default LtpLoansScreen = (props) => {
           calledBy: 'LtpLoans Screen',
         })
       );
-      console.log('in ltpLoans focusffect ');
+      //   console.log('in ltpLoans focusffect ');
       setSearchInput('');
       getItemsAsync();
     }, [])
@@ -186,15 +186,15 @@ export default LtpLoansScreen = (props) => {
   useEffect(() => {
     // runs only once
     // console.log('in booked useEffect', userApiFetchParamsObj && userApiFetchParamsObj.dealerId);
-    console.log(
-      'in ltpLoans getItems userApiFetchParamsObj',
-      userApiFetchParamsObj
-    );
+    // console.log(
+    //   'in ltpLoans getItems userApiFetchParamsObj',
+    //   userApiFetchParamsObj
+    // );
   }, []);
 
   //   console.log('in ltpLoans screen - point 6');
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItemsAsync();
   };
 
@@ -274,7 +274,7 @@ export default LtpLoansScreen = (props) => {
   //     ' itemsToShow length',
   //     (itemsToShow && itemsToShow.length) || '0'
   //   );
-  console.log('in ltpLoans screen - point 10', itemsToShow);
+  //   console.log('in ltpLoans screen - point 10', itemsToShow);
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh

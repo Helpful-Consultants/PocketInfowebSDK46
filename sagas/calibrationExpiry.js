@@ -4,10 +4,10 @@ import * as api from '../api/calibrationExpiry';
 import Types from '../constants/Types';
 
 function* getCalibrationExpiry({ payload }) {
-  console.log(
-    '%%%%%%%%%%%%%%in saga get calibrationExpiry, payload',
-    payload && payload
-  );
+  //   console.log(
+  //     '%%%%%%%%%%%%%%in saga get calibrationExpiry, payload',
+  //     payload && payload
+  //   );
   let statusCode = null;
   let errorText =
     'An error occurred when trying to get the calibartion expirations';
@@ -17,8 +17,8 @@ function* getCalibrationExpiry({ payload }) {
     const result = yield call(api.getCalibrationExpiry, {
       dealerId: payload.dealerId,
     });
-    console.log('in saga get calibrationExpiry - 200');
-    console.log(result);
+    // console.log('in saga get calibrationExpiry - 200');
+    // console.log(result);
     if (
       result.data &&
       result.data.length > 0 &&
@@ -26,8 +26,8 @@ function* getCalibrationExpiry({ payload }) {
       result.data[0].howMany &&
       result.data[0].expiry
     ) {
-      console.log('in CalibrationExpiry saga - good 200');
-      console.log(result.data);
+      //   console.log('in CalibrationExpiry saga - good 200');
+      //   console.log(result.data);
       yield put(
         actions.getCalibrationExpirySuccess({
           items: result.data,
@@ -39,11 +39,11 @@ function* getCalibrationExpiry({ payload }) {
       );
     } else if (result && result.data) {
       //   console.log('in CalibrationExpiry saga - empty 200');
-      console.log(
-        'in CalibrationExpiry saga - empty 200',
-        result.request.status && result.request.status
-      );
-      console.log(result && result);
+      //   console.log(
+      //     'in CalibrationExpiry saga - empty 200',
+      //     result.request.status && result.request.status
+      //   );
+      //   console.log(result && result);
       yield put(
         actions.getCalibrationExpirySuccess({
           items: [],

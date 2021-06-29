@@ -133,7 +133,7 @@ export default function user(state = INITIAL_STATE, action) {
         }
       }
       //   userBrand = 'se';
-      console.log('%%% user reducer -userBrand in reducer is ', userBrand);
+      //   console.log('%%% user reducer -userBrand in reducer is ', userBrand);
       return {
         ...state,
         userIsSignedIn: true,

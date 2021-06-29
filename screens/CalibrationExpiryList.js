@@ -111,7 +111,7 @@ export default function CalibrationExpiryList(props) {
     <View style={baseStyles.viewDataList}>
       {items && items.length > 0
         ? items.map((item, i) => (
-            <View style={baseStyles.viewDataListItemNoBorder}>
+            <View key={i} style={baseStyles.viewDataListItemNoBorder}>
               {getFormattedNotification(item)}
             </View>
           ))

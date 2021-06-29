@@ -58,9 +58,10 @@ export default ProductsScreen = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   //   const [isLoading, setIsLoading] = useState(false);
 
-  const getItems = useCallback(async () => dispatch(getProductsRequest()), [
-    productsItems,
-  ]);
+  const getItems = useCallback(
+    async () => dispatch(getProductsRequest()),
+    [productsItems]
+  );
 
   //   useEffect(() => {
   //     // runs only once
@@ -142,7 +143,7 @@ export default ProductsScreen = (props) => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  console.log('rendering Products screen');
+  //   console.log('rendering Products screen');
 
   return (
     <View style={baseStyles.containerFlexAndReducedMargin}>
