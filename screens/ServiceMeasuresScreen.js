@@ -222,14 +222,6 @@ export default ServiceMeasuresScreen = (props) => {
         isLoading={isLoading}
         dataCount={serviceMeasuresItems.length}
       />
-
-      {demoModeOn ? (
-        <View style={baseStyles.viewPromptRibbonNoneFound}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data for Lyndon.
-          </Text>
-        </View>
-      ) : null}
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
@@ -247,10 +239,17 @@ export default ServiceMeasuresScreen = (props) => {
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Complete these measures on Tools Infoweb.
+            Complete these on Tools Infoweb.
           </Text>
         </View>
       )}
+      {demoModeOn ? (
+        <View style={baseStyles.viewPromptRibbonNoneFound}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Showing sample data for Lyndon.
+          </Text>
+        </View>
+      ) : null}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing Service Measures'}

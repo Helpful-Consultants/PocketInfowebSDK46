@@ -44,10 +44,12 @@ export default function LtpLoansList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  //   const items = ltpLoansDummyData;
-  const items = props.items || [];
+  //   const ltpLoans = ltpLoansDummyData;
+
+  const { showFullDetails, items } = props;
+  const ltpLoans = items || [];
   //   console.log('ltp list props', props);
-  //   const items = ltpLoansDummyData;
+  //   const ltpLoans = ltpLoansDummyData;
   //   let now = moment();
   const getFormattedLtpLoan = (item) => {
     let measureIsLive = false;
@@ -67,7 +69,7 @@ export default function LtpLoansList(props) {
             <View
               style={{
                 ...baseStyles.viewRowFlexCentreAligned,
-                marginTop: 3,
+                marginTop: showFullDetails && showFullDetails === true ? 3 : 0,
               }}
             >
               <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
@@ -89,15 +91,15 @@ export default function LtpLoansList(props) {
       </View>
     );
   };
-  //   console.log(items && items);
+  //   console.log(ltpLoans && ltpLoans);
 
   return (
     <View style={baseStyles.viewDataList}>
-      {items && items.length > 0
-        ? items.map((item, i) => (
+      {ltpLoans && ltpLoans.length > 0
+        ? ltpLoans.map((item, i) => (
             <View
               style={
-                i === items.length - 1
+                i === ltpLoans.length - 1
                   ? baseStyles.viewDataListItemNoBorder
                   : baseStyles.viewDataListItemWithBorder
               }

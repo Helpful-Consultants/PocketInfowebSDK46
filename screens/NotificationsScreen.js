@@ -384,19 +384,19 @@ export default NotificationsScreen = (props) => {
 
   return (
     <ScrollView>
-      {!demoModeOn ? (
+      <View style={baseStyles.viewPromptRibbon}>
+        <Text style={baseStyles.textPromptRibbon}>
+          Current LTP loans and upcoming deadlines
+        </Text>
+      </View>
+      {demoModeOn && demoModeOn === true ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data for Lyndon.
           </Text>
         </View>
-      ) : (
-        <View style={baseStyles.viewPromptRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Current LTP loans and upcoming deadlines
-          </Text>
-        </View>
-      )}
+      ) : null}
+
       {!isLoadingCalibrationExpiry ? (
         dataErrorCalibrationExpiry ? (
           <ErrorDetails
@@ -440,7 +440,10 @@ export default NotificationsScreen = (props) => {
               </Text>
             </View>
             {ltpLoansItemsToShow.length > 0 ? (
-              <LtpLoansList items={ltpLoansItemsToShow} />
+              <LtpLoansList
+                items={ltpLoansItemsToShow}
+                showFullDetails={false}
+              />
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>

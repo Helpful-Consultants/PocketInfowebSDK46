@@ -312,7 +312,7 @@ export default LtpLoansScreen = (props) => {
         />
       ) : (
         <ScrollView>
-          <LtpLoansList items={itemsToShow} />
+          <LtpLoansList items={itemsToShow} showFullDetails={true} />
         </ScrollView>
       )}
     </View>
