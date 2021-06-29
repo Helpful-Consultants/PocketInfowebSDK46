@@ -75,7 +75,7 @@ export default function CalibrationExpiryList(props) {
                 Colors.vwgCoolOrange
               }
             />
-            <Text style={baseStyles.textLeftAlignedLarge}>{`  ${item.howMany} ${
+            <Text style={baseStyles.textLeftAligned}>{`  ${item.howMany} ${
               item.howMany == 1
                 ? `item's calibration expires within 30 days.`
                 : `items' calibrations expire within 30 days.`
