@@ -403,7 +403,7 @@ export default NotificationsScreen = (props) => {
           <View>
             <View style={baseStyles.viewPromptRibbon}>
               <Text style={baseStyles.textPromptRibbon}>
-                Calibration expiry
+                Calibration expiry alerts
               </Text>
             </View>
             {calibrationExpiryItemsToShow.length > 0 ? (
@@ -429,7 +429,9 @@ export default NotificationsScreen = (props) => {
         ) : (
           <View>
             <View style={baseStyles.viewPromptRibbon}>
-              <Text style={baseStyles.textPromptRibbon}>Current LTP loans</Text>
+              <Text style={baseStyles.textPromptRibbon}>
+                Current and upcoming LTP loans
+              </Text>
             </View>
             {ltpLoansItemsToShow.length > 0 ? (
               <LtpLoansList items={ltpLoansItemsToShow} />
@@ -455,11 +457,14 @@ export default NotificationsScreen = (props) => {
           <View>
             <View style={baseStyles.viewPromptRibbon}>
               <Text style={baseStyles.textPromptRibbon}>
-                Current service measures
+                Outstanding service measures
               </Text>
             </View>
             {serviceMeasuresItemsToShow.length > 0 ? (
-              <ServiceMeasuresList items={serviceMeasuresItemsToShow} />
+              <ServiceMeasuresList
+                items={serviceMeasuresItemsToShow}
+                showFullDetails={false}
+              />
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>

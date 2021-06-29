@@ -99,8 +99,14 @@ export default function LtpLoansList(props) {
   return (
     <View style={baseStyles.viewDataList}>
       {items && items.length > 0
-        ? items.map((item) => (
-            <View style={baseStyles.viewDataListItem}>
+        ? items.map((item, i) => (
+            <View
+              style={
+                i === items.length - 1
+                  ? baseStyles.viewDataListItemNoBorder
+                  : baseStyles.viewDataListItemWithBorder
+              }
+            >
               {getFormattedLtpLoan(item)}
             </View>
           ))
