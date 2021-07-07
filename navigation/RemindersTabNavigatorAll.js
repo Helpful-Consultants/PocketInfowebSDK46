@@ -218,7 +218,7 @@ export default RemindersTabNavigator = () => {
     >
       <RemindersTabs.Screen
         name='Reminders'
-        component={RemindersStack}
+        component={NotificationsStack}
         options={NotificationsScreenOptions}
       />
       <RemindersTabs.Screen
