@@ -27,7 +27,6 @@ import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
-const demoModeOn = true;
 
 export default ServiceMeasuresScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -38,6 +37,7 @@ export default ServiceMeasuresScreen = (props) => {
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
   const isLoading = useSelector((state) => state.stats.isLoading);
   const dataError = useSelector((state) => state.stats.error);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
@@ -186,7 +186,7 @@ export default ServiceMeasuresScreen = (props) => {
 
   const items =
     !isLoading && !dataError
-      ? demoModeOn
+      ? userRequestedDemo
         ? serviceMeasuresDummyData
         : serviceMeasuresItems
       : [];
@@ -243,10 +243,10 @@ export default ServiceMeasuresScreen = (props) => {
           </Text>
         </View>
       )}
-      {demoModeOn ? (
+      {userRequestedDemo ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data for Lyndon.
+            Showing sample data - change in menu.
           </Text>
         </View>
       ) : null}

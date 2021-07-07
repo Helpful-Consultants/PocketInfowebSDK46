@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   error: null,
   dataErrorUrl: null,
   statusCode: null,
+  requestedDemo: false,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -181,6 +182,19 @@ export default function user(state = INITIAL_STATE, action) {
         ...state,
         userIsSignedIn: true,
         userIsValidated: true,
+      };
+    }
+    case Types.SET_USER_REQUESTED_DEMO: {
+      console.log('action.payload is:', action.payload.requestedDemo);
+      console.log(
+        'in reducer switch switchStatus',
+        action.payload.requestedDemo && action.payload.requestedDemo
+      );
+      return {
+        ...state,
+        requestedDemo:
+          (action.payload.requestedDemo && action.payload.requestedDemo) ||
+          false,
       };
     }
 

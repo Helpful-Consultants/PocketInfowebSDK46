@@ -19,7 +19,6 @@ import searchItems from '../helpers/searchItems';
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
-const demoModeOn = true;
 const now = moment();
 
 export default LtpLoansScreen = (props) => {
@@ -28,6 +27,7 @@ export default LtpLoansScreen = (props) => {
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const [searchInput, setSearchInput] = useState('');
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
@@ -242,7 +242,7 @@ export default LtpLoansScreen = (props) => {
   //   console.log('in ltpLoans screen - point 8');
   const items =
     !isLoading && !dataError
-      ? demoModeOn
+      ? userRequestedDemo
         ? ltpLoansDummyData
         : ltpLoansItems
       : [];
@@ -278,10 +278,10 @@ export default LtpLoansScreen = (props) => {
         isLoading={isLoading}
         dataCount={ltpLoansItems.length}
       />
-      {demoModeOn ? (
+      {userRequestedDemo ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data for Lyndon.
+            Showing sample data - change in menu.
           </Text>
         </View>
       ) : null}
@@ -298,7 +298,7 @@ export default LtpLoansScreen = (props) => {
               No live LTP loans to show.
             </Text>
             {/* <Text style={baseStyles.textPromptRibbon}>
-              Showing sample data for Lyndon.
+              Showing sample data - change in menu.
             </Text> */}
           </View>
         )

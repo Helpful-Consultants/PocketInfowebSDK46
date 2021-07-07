@@ -24,6 +24,7 @@ import { revalidateUserCredentials } from '../actions/user';
 
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
+import DemoSwitch from '../components/DemoSwitch';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
@@ -54,6 +55,7 @@ const CustomDrawerContent = (props) => (
       QUICK LINKS
     </Text>
     <DrawerItemList {...props} style={{ marginBottom: 20 }} />
+    <DemoSwitch />
     <AppInfo />
   </DrawerContentScrollView>
 );

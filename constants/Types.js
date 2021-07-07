@@ -8,6 +8,7 @@ export default {
   SET_USER_OUTDATED_CREDENTIALS: 'user/set_user_outdated_credentials',
   SET_USER_VALIDATED: 'user/set_user_validated',
   REVALIDATE_USER_CREDENTIALS: 'user/revalidate_user_credentials',
+  SET_USER_REQUESTED_DEMO: 'user/set_user_requested_demo',
   USER_ERROR: 'user/user_error',
 
   GET_DEALER_TOOLS_START: 'dealerTools/get_dealer_tools_start',

@@ -28,7 +28,6 @@ import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 
-const demoModeOn = true;
 const now = moment();
 
 export default NotificationsScreen = (props) => {
@@ -43,6 +42,7 @@ export default NotificationsScreen = (props) => {
   );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
@@ -337,21 +337,21 @@ export default NotificationsScreen = (props) => {
   //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
   let calibrationExpiryItemsToShow =
     !isLoadingCalibrationExpiry && !dataErrorCalibrationExpiry
-      ? demoModeOn
+      ? userRequestedDemo
         ? filterCalibrationExpiryItems(calibrationExpiryDummyData)
         : filterCalibrationExpiryItems(calibrationExpiryItems)
       : [];
 
   let ltpLoansItemsToShow =
     !isLoadingLtpLoans && !dataErrorLtpLoans
-      ? demoModeOn
+      ? userRequestedDemo
         ? filterLtpLoansItems(ltpLoansDummyData)
         : filterLtpLoansItems(ltpLoansItems)
       : [];
 
   let serviceMeasuresItemsToShow =
     !isLoadingServiceMeasures && !dataErrorServiceMeasures
-      ? demoModeOn
+      ? userRequestedDemo
         ? filterServiceMeasuresItems(serviceMeasuresDummyData)
         : filterServiceMeasuresItems(serviceMeasuresItems)
       : [];
@@ -389,10 +389,10 @@ export default NotificationsScreen = (props) => {
           Current LTP loans and upcoming deadlines
         </Text>
       </View>
-      {demoModeOn && demoModeOn === true ? (
+      {userRequestedDemo && userRequestedDemo === true ? (
         <View style={baseStyles.viewPromptRibbonNoneFound}>
           <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data for Lyndon.
+            Showing sample data - change in menu.
           </Text>
         </View>
       ) : null}

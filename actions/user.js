@@ -43,6 +43,13 @@ export const setUserOutdatedCredentials = () => ({
   type: Types.SET_USER_OUTDATED_CREDENTIALS,
 });
 
+export const setUserRequestedDemo = ({ requestedDemo }) => ({
+  type: Types.SET_USER_REQUESTED_DEMO,
+  payload: {
+    requestedDemo: requestedDemo || null,
+  },
+});
+
 export const revalidateUserCredentials = ({ calledBy }) => ({
   type: Types.REVALIDATE_USER_CREDENTIALS,
   payload: {
