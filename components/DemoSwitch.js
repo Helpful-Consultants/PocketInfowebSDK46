@@ -17,7 +17,12 @@ export default AppInfo = (props) => {
   const switchedOnText =
     'Turn off to show live data for LTP bookings, service measures & notifications';
 
-  console.log('in switch reducer switchStatus', userRequestedDemo);
+  //   console.log(
+  //     'in switch reducer switchStatus',
+  //     userRequestedDemo,
+  //     'for ',
+  //     userDataObj.userName.toLowerCase()
+  //   );
   const toggleSwitch = () => {
     let switchStatus = userRequestedDemo;
     if (userRequestedDemo && userRequestedDemo === true) {
@@ -30,11 +35,11 @@ export default AppInfo = (props) => {
     // setuserRequestedDemo((previousState) => !demoSwitch);
   };
 
-  return ((userDataObj &&
+  return userDataObj &&
     userDataObj.userName &&
-    userDataObj.userName.toLowerCase().indexOf('upstone')) ||
-    userDataObj.userName.toLowerCase().indexOf('lyndon') ||
-    userDataObj.userName.toLowerCase().indexOf('groves')) > 0 ? (
+    (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
+      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
     <View
       style={{
         ...baseStyles.container,
