@@ -424,7 +424,9 @@ export default NotificationsScreen = (props) => {
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
-                  <Text>No calibration expirations to show.</Text>
+                  <Text style={baseStyles.textLeftAligned}>
+                    No calibration expirations to show.
+                  </Text>
                 </View>
               </View>
             )}
@@ -458,7 +460,9 @@ export default NotificationsScreen = (props) => {
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
-                  <Text>No LTP loans to show.</Text>
+                  <Text style={baseStyles.textLeftAligned}>
+                    No LTP loans to show.
+                  </Text>
                 </View>
               </View>
             )}
@@ -492,7 +496,9 @@ export default NotificationsScreen = (props) => {
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
-                  <Text>No Service Measures to show.</Text>
+                  <Text style={baseStyles.textLeftAligned}>
+                    No Service Measures to show.
+                  </Text>
                 </View>
               </View>
             )}
