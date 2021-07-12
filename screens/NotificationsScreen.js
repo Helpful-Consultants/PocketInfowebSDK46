@@ -30,6 +30,9 @@ import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 
 const now = moment();
 
+const calibrationExpiryCount = 0;
+const getCalibrationExpiryCount = () => 12;
+
 export default NotificationsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
@@ -280,14 +283,14 @@ export default NotificationsScreen = (props) => {
       setDataErrorAny(dataErrorLtpLoans);
       setDataStatusCodeAny(dataStatusCodeLtpLoans);
       setDataErrorUrlAny(dataErrorUrlLtpLoans);
-      setDataErrorSummary('Error syncing LtpLoans');
+      setDataErrorSummary('Error syncing LTP Bookings');
       setDataNameInPlay('LTP loans');
     } else if (dataErrorServiceMeasures) {
       setDataErrorAny(dataErrorServiceMeasures);
       setDataStatusCodeAny(dataStatusCodeServiceMeasures);
       setDataErrorUrlAny(dataErrorUrlServiceMeasures);
-      setDataErrorSummary('Error syncing service measures');
-      setDataNameInPlay('service measures');
+      setDataErrorSummary('Error syncing Service Measures');
+      setDataNameInPlay('Service Measures');
     } else if (dataErrorCalibrationExpiry) {
       setDataErrorAny(dataErrorCalibrationExpiry);
       setDataStatusCodeAny(dataStatusCodeCalibrationExpiry);
@@ -386,7 +389,7 @@ export default NotificationsScreen = (props) => {
     <ScrollView>
       <View style={baseStyles.viewPromptRibbon}>
         <Text style={baseStyles.textPromptRibbon}>
-          Current LTP loans and upcoming deadlines
+          Your Important Notifications
         </Text>
       </View>
       {userRequestedDemo && userRequestedDemo === true ? (
@@ -409,7 +412,11 @@ export default NotificationsScreen = (props) => {
           <View>
             <View style={baseStyles.viewSectionRibbon}>
               <Text style={baseStyles.textSectionRibbon}>
-                Calibration expiry alerts
+                {calibrationExpiryCount > 1
+                  ? `${calibrationExpiryCount} Calibration Expiry Alerts`
+                  : calibrationExpiryCount > 0
+                  ? `${calibrationExpiryCount} Calibration Expiry Alert`
+                  : 'No Calibration Expiry Alerts'}
               </Text>
             </View>
             {calibrationExpiryItemsToShow.length > 0 ? (
@@ -436,7 +443,11 @@ export default NotificationsScreen = (props) => {
           <View>
             <View style={baseStyles.viewSectionRibbon}>
               <Text style={baseStyles.textSectionRibbon}>
-                Current and upcoming LTP loans
+                {ltpLoansItemsToShow.length > 1
+                  ? `${ltpLoansItemsToShow.length} LTP Actions`
+                  : ltpLoansItemsToShow.length > 0
+                  ? `${ltpLoansItemsToShow.length} LTP Action`
+                  : 'No LTP Actions'}
               </Text>
             </View>
             {ltpLoansItemsToShow.length > 0 ? (
@@ -457,7 +468,7 @@ export default NotificationsScreen = (props) => {
       {!isLoadingServiceMeasures ? (
         dataErrorServiceMeasures ? (
           <ErrorDetails
-            errorSummary={'Error syncing service measures'}
+            errorSummary={'Error syncing Service Measures'}
             dataStatusCode={dataStatusCodeServiceMeasures}
             errorHtml={dataErrorServiceMeasures}
             dataErrorUrl={dataErrorUrlServiceMeasures}
@@ -466,7 +477,11 @@ export default NotificationsScreen = (props) => {
           <View>
             <View style={baseStyles.viewSectionRibbon}>
               <Text style={baseStyles.textSectionRibbon}>
-                Outstanding service measures
+                {serviceMeasuresItemsToShow.length > 1
+                  ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
+                  : serviceMeasuresItemsToShow.length > 0
+                  ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
+                  : 'No Outstanding Service Measures'}
               </Text>
             </View>
             {serviceMeasuresItemsToShow.length > 0 ? (
@@ -477,7 +492,7 @@ export default NotificationsScreen = (props) => {
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
-                  <Text>No service measures to show.</Text>
+                  <Text>No Service Measures to show.</Text>
                 </View>
               </View>
             )}
