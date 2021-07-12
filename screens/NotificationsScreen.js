@@ -30,8 +30,20 @@ import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 
 const now = moment();
 
-const calibrationExpiryCount = 0;
-const getCalibrationExpiryCount = () => 12;
+const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
+  let retSum = 0;
+
+  calibrationExpiryItemsToShow.map((item) => {
+    if (!isNaN(parseInt(item.howMany))) {
+      //   console.log('Not NaN', item.howMany);
+      retSum = retSum + parseInt(item.howMany);
+    } else {
+      //   console.log('NaN', item.howMany);
+    }
+  });
+  //   console.log('retSum', retSum);
+  return retSum;
+};
 
 export default NotificationsScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -359,6 +371,10 @@ export default NotificationsScreen = (props) => {
         : filterServiceMeasuresItems(serviceMeasuresItems)
       : [];
 
+  let calibrationExpiryCount = getCalibrationExpiryCount(
+    calibrationExpiryItemsToShow
+  );
+
   //   console.log(
   //     'rendering Notifications screen',
   //     calibrationExpiryItemsToShow,
@@ -413,10 +429,10 @@ export default NotificationsScreen = (props) => {
             <View style={baseStyles.viewSectionRibbon}>
               <Text style={baseStyles.textSectionRibbon}>
                 {calibrationExpiryCount > 1
-                  ? `${calibrationExpiryCount} Calibration Expiry Alerts`
+                  ? `${calibrationExpiryCount} Calibration Expiry Actions`
                   : calibrationExpiryCount > 0
-                  ? `${calibrationExpiryCount} Calibration Expiry Alert`
-                  : 'No Calibration Expiry Alerts'}
+                  ? `${calibrationExpiryCount} Calibration Expiry Actions`
+                  : 'No Calibration Expiry Actions'}
               </Text>
             </View>
             {calibrationExpiryItemsToShow.length > 0 ? (
