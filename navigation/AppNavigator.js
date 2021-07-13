@@ -28,7 +28,7 @@ import DemoSwitch from '../components/DemoSwitch';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
-import RemindersTabNavigator from './RemindersTabNavigatorAll';
+import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
 
 // console.log(Constants && Constants);

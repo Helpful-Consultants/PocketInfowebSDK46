@@ -1,13 +1,9 @@
 import React from 'react';
 import { Dimensions, Platform } from 'react-native';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
-// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 
@@ -15,9 +11,18 @@ import HeaderButton from '../components/HeaderButton';
 // import HomeScreen, {
 //   screenOptions as HomeScreenOptions
 // } from '../screens/HomeScreen';
+import NotificationsScreen, {
+  screenOptions as NotificationsScreenOptions,
+} from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen, {
   screenOptions as ServiceMeasuresScreenOptions,
 } from '../screens/ServiceMeasuresScreen';
+import LtpLoansScreen, {
+  screenOptions as LtpLoansScreenOptions,
+} from '../screens/LtpLoansScreen';
+import OdisScreen, {
+  screenOptions as OdisScreenOptions,
+} from '../screens/OdisScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -94,6 +99,20 @@ const defaultStackNavOptions = () => {
 //   />
 // </HomeStack.Navigator>;
 
+const Notifications = createStackNavigator();
+
+const NotificationsStack = () => {
+  return (
+    <Notifications.Navigator screenOptions={defaultStackNavOptions}>
+      <Notifications.Screen
+        name={'NotificationsScreen'}
+        component={NotificationsScreen}
+        options={NotificationsScreenOptions}
+      />
+    </Notifications.Navigator>
+  );
+};
+
 const ServiceMeasures = createStackNavigator();
 const ServiceMeasuresStack = () => {
   return (
@@ -104,6 +123,32 @@ const ServiceMeasuresStack = () => {
         options={ServiceMeasuresScreenOptions}
       />
     </ServiceMeasures.Navigator>
+  );
+};
+
+const LtpLoans = createStackNavigator();
+const LtpLoansStack = () => {
+  return (
+    <LtpLoans.Navigator screenOptions={defaultStackNavOptions}>
+      <LtpLoans.Screen
+        name={'LtpLoansScreen'}
+        component={LtpLoansScreen}
+        options={LtpLoansScreenOptions}
+      />
+    </LtpLoans.Navigator>
+  );
+};
+
+const Odis = createStackNavigator();
+const OdisStack = () => {
+  return (
+    <Odis.Navigator screenOptions={defaultStackNavOptions}>
+      <Odis.Screen
+        name={'OdisScreen'}
+        component={OdisScreen}
+        options={OdisScreenOptions}
+      />
+    </Odis.Navigator>
   );
 };
 
@@ -132,9 +177,24 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
+        name='Notifications'
+        component={NotificationsStack}
+        options={NotificationsScreenOptions}
+      />
+      <RemindersTabs.Screen
         name='ServiceMeasures'
         component={ServiceMeasuresStack}
         options={ServiceMeasuresScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='LtpLoans'
+        component={LtpLoansStack}
+        options={LtpLoansScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
       />
     </RemindersTabs.Navigator>
   ) : (
@@ -157,9 +217,24 @@ export default RemindersTabNavigator = () => {
       }}
     >
       <RemindersTabs.Screen
+        name='Reminders'
+        component={NotificationsStack}
+        options={NotificationsScreenOptions}
+      />
+      <RemindersTabs.Screen
         name='ServiceMeasures'
         component={ServiceMeasuresStack}
         options={ServiceMeasuresScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='LtpLoans'
+        component={LtpLoansStack}
+        options={LtpLoansScreenOptions}
+      />
+      <RemindersTabs.Screen
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
       />
     </RemindersTabs.Navigator>
   );
