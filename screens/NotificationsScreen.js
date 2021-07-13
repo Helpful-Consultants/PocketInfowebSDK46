@@ -247,12 +247,33 @@ export default NotificationsScreen = (props) => {
     if (serviceMeasuresItems && serviceMeasuresItems.length > 0) {
       serviceMeasuresItemsFiltered = serviceMeasuresItems.filter(
         (item) =>
-          item.startDate && item.expiryDate && getServiceMeasureStatus(item)
+          (!item.retailerStatus || item.retailerStatus.toLowerCase() !== 'c') &&
+          item.startDate &&
+          item.expiryDate &&
+          getServiceMeasureStatus(item)
       );
     }
-    // console.log('serviceMeasuresItemsFiltered', serviceMeasuresItemsFiltered);
+    // console.log(
+    //   'serviceMeasuresItemsFiltered',
+    //   serviceMeasuresItemsFiltered.length
+    // );
     return serviceMeasuresItemsFiltered;
   };
+
+  //   const filterServiceMeasuresItems = (serviceMeasuresItems) => {
+  //     let serviceMeasuresItemsFiltered = [];
+  //     if (serviceMeasuresItems && serviceMeasuresItems.length > 0) {
+  //       serviceMeasuresItemsFiltered = serviceMeasuresItems.filter(
+  //         (item) =>
+  //           item.startDate && item.expiryDate && getServiceMeasureStatus(item)
+  //       );
+  //     }
+  //     console.log(
+  //       'serviceMeasuresItemsFiltered',
+  //       serviceMeasuresItemsFiltered.length
+  //     );
+  //     return serviceMeasuresItemsFiltered;
+  //   };
 
   const filterLtpLoansItems = (ltpLoansItems) => {
     let ltpLoansItemsFiltered = [];
