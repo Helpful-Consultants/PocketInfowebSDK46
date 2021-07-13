@@ -9,6 +9,8 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
 import ErrorDetails from '../components/ErrorDetails';
@@ -279,10 +281,11 @@ export default LtpLoansScreen = (props) => {
         dataCount={ltpLoansItems.length}
       />
       {userRequestedDemo ? (
-        <View style={baseStyles.viewPromptRibbonNoneFound}>
+        <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
           </Text>
+          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (

@@ -992,6 +992,13 @@ export default getBaseStyles = (props) => {
       padding: 10,
       backgroundColor: Colors.vwgWarmRed,
     },
+    viewDummyDataRibbon: {
+      padding: 10,
+      backgroundColor: Colors.vwgWarmOrange,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     // OdisScreen
     viewRowWithImage: {
       marginTop: 15,

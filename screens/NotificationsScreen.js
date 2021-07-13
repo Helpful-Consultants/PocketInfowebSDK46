@@ -12,6 +12,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
+import Colors from '../constants/Colors';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
@@ -29,7 +30,6 @@ import LtpLoansList from './LtpLoansList';
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
-import Colors from '../constants/Colors';
 
 const now = moment();
 
@@ -415,10 +415,11 @@ export default NotificationsScreen = (props) => {
         </Text>
       </View>
       {userRequestedDemo && userRequestedDemo === true ? (
-        <View style={baseStyles.viewPromptRibbonNoneFound}>
+        <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
           </Text>
+          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
 
