@@ -322,7 +322,7 @@ export default LtpLoansScreen = (props) => {
   );
 };
 
-const titleString = 'LTP Loans';
+const titleString = 'All LTP Loans';
 // const tabBarLabelFunction = ({ focused }) => (
 //   <BadgedTabBarText
 //     showBadge={false}
