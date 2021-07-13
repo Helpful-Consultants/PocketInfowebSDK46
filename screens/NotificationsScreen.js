@@ -65,7 +65,7 @@ export default NotificationsScreen = (props) => {
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
-  const [isOpenLtpBookings, setIsOpenLtpBookings] = useState(false);
+  const [isOpenLtpLoans, setIsOpenLtpLoans] = useState(false);
   const [isOpenServiceMeasures, setIsOpenServiceMeasures] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
@@ -359,6 +359,7 @@ export default NotificationsScreen = (props) => {
     useCallback(() => {
       //   dispatch(revalidateUserCredentials({ calledBy: 'NotificationsScreen' }));
       console.log('in Notifications focusEffect ');
+
       getItemsAsync();
     }, [])
   );
@@ -457,7 +458,7 @@ export default NotificationsScreen = (props) => {
             <TouchableOpacity
               onPress={() => {
                 setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
-                setIsOpenLtpBookings(false);
+                setIsOpenLtpLoans(false);
                 setIsOpenServiceMeasures(false);
               }}
             >
@@ -478,19 +479,19 @@ export default NotificationsScreen = (props) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {calibrationExpiryItemsToShow.length > 0 ? (
-              isOpenCalibrationExpiry ? (
+            {isOpenCalibrationExpiry ? (
+              calibrationExpiryItemsToShow.length > 0 ? (
                 <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
-              ) : null
-            ) : (
-              <View style={baseStyles.viewDataList}>
-                <View style={baseStyles.textDataListItem}>
-                  <Text style={baseStyles.textLeftAligned}>
-                    No calibration expirations to show.
-                  </Text>
+              ) : (
+                <View style={baseStyles.viewDataList}>
+                  <View style={baseStyles.textDataListItem}>
+                    <Text style={baseStyles.textLeftAligned}>
+                      No calibration expirations to show.
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
+              )
+            ) : null}
           </View>
         )
       ) : null}
@@ -507,13 +508,13 @@ export default NotificationsScreen = (props) => {
             <TouchableOpacity
               onPress={() => {
                 setIsOpenCalibrationExpiry(false);
-                setIsOpenLtpBookings(!isOpenLtpBookings);
+                setIsOpenLtpLoans(!isOpenLtpLoans);
                 setIsOpenServiceMeasures(false);
               }}
             >
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons
-                  name={isOpenLtpBookings ? 'caret-up' : 'caret-down'}
+                  name={isOpenLtpLoans ? 'caret-up' : 'caret-down'}
                   size={20}
                   color={Colors.vwgVeryDarkGray}
                 />
@@ -527,22 +528,22 @@ export default NotificationsScreen = (props) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {ltpLoansItemsToShow.length > 0 ? (
-              isOpenLtpBookings ? (
+            {isOpenLtpLoans ? (
+              ltpLoansItemsToShow.length > 0 ? (
                 <LtpLoansList
                   items={ltpLoansItemsToShow}
                   showFullDetails={false}
                 />
-              ) : null
-            ) : (
-              <View style={baseStyles.viewDataList}>
-                <View style={baseStyles.textDataListItem}>
-                  <Text style={baseStyles.textLeftAligned}>
-                    No LTP loans to show.
-                  </Text>
+              ) : (
+                <View style={baseStyles.viewDataList}>
+                  <View style={baseStyles.textDataListItem}>
+                    <Text style={baseStyles.textLeftAligned}>
+                      No LTP loans to show.
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
+              )
+            ) : null}
           </View>
         )
       ) : null}
@@ -559,7 +560,7 @@ export default NotificationsScreen = (props) => {
             <TouchableOpacity
               onPress={() => {
                 setIsOpenCalibrationExpiry(false);
-                setIsOpenLtpBookings(false);
+                setIsOpenLtpLoans(false);
                 setIsOpenServiceMeasures(!isOpenServiceMeasures);
               }}
             >
@@ -579,22 +580,22 @@ export default NotificationsScreen = (props) => {
                 </Text>
               </View>
             </TouchableOpacity>
-            {serviceMeasuresItemsToShow.length > 0 ? (
-              isOpenServiceMeasures ? (
+            {isOpenServiceMeasures ? (
+              serviceMeasuresItemsToShow.length > 0 ? (
                 <ServiceMeasuresList
                   items={serviceMeasuresItemsToShow}
                   showFullDetails={false}
                 />
-              ) : null
-            ) : (
-              <View style={baseStyles.viewDataList}>
-                <View style={baseStyles.textDataListItem}>
-                  <Text style={baseStyles.textLeftAligned}>
-                    No Service Measures to show.
-                  </Text>
+              ) : (
+                <View style={baseStyles.viewDataList}>
+                  <View style={baseStyles.textDataListItem}>
+                    <Text style={baseStyles.textLeftAligned}>
+                      No Service Measures to show.
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
+              )
+            ) : null}
           </View>
         )
       ) : null}
