@@ -998,6 +998,12 @@ export default getBaseStyles = (props) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
+      borderTopColor: Colors.vwgWhite,
+      borderBottomColor: Colors.vwgWhite,
+      borderTopWidth: 1,
+      borderBottomWidth: 2,
+      borderLeftWidth: 0,
+      borderRightWidth: 0,
     },
     // OdisScreen
     viewRowWithImage: {
