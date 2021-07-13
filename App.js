@@ -2,6 +2,8 @@ import AppLoading from 'expo-app-loading';
 // import * as Notifications from 'expo-notifications';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
 import React, { useState } from 'react';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
@@ -96,6 +98,18 @@ sagaMiddleware.run(rootSaga);
 //     ask: true,
 //   }
 // );
+
+const BACKGROUND_FETCH_TASK = 'background-fetch';
+// 1. Define the task by providing a name and the function that should be executed
+// Note: This needs to be called in the global scope (e.g outside of your React components)
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+  const now = Date.now();
+  console.log(
+    `Got background fetch call at date: ${new Date(now).toISOString()}`
+  );
+  // Be sure to return the successful result type!
+  return BackgroundFetch.Result.NewData;
+});
 
 export default function App(props) {
   const windowDim = useWindowDimensions();
