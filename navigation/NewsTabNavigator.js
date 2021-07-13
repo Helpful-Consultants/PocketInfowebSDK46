@@ -21,9 +21,9 @@ import NewsScreen, {
 // import ProductsScreen, {
 //   screenOptions as ProductsScreenOptions,
 // } from '../screens/ProductsScreen';
-import OdisScreen, {
-  screenOptions as OdisScreenOptions,
-} from '../screens/OdisScreen';
+import StatsScreen, {
+  screenOptions as StatsScreenOptions,
+} from '../screens/StatsScreen';
 import CatalogueScreen, {
   screenOptions as CatalogueScreenOptions,
 } from '../screens/CatalogueScreen';
@@ -130,16 +130,16 @@ const NewsStack = () => {
 //   );
 // };
 
-const Odis = createStackNavigator();
-const OdisStack = () => {
+const Stats = createStackNavigator();
+const StatsStack = () => {
   return (
-    <Odis.Navigator screenOptions={defaultStackNavOptions}>
-      <Odis.Screen
-        name={'OdisScreen'}
-        component={OdisScreen}
-        options={OdisScreenOptions}
+    <Stats.Navigator screenOptions={defaultStackNavOptions}>
+      <Stats.Screen
+        name={'StatsScreen'}
+        component={StatsScreen}
+        options={StatsScreenOptions}
       />
-    </Odis.Navigator>
+    </Stats.Navigator>
   );
 };
 
@@ -181,11 +181,6 @@ export default NewsTabNavigator = () => {
       }}
     >
       <NewsTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
-      />
-      <NewsTabs.Screen
         name='News'
         component={NewsStack}
         options={NewsScreenOptions}
@@ -194,6 +189,11 @@ export default NewsTabNavigator = () => {
         name='Catalogue'
         component={CatalogueStack}
         options={CatalogueScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
     </NewsTabs.Navigator>
   ) : (
@@ -216,11 +216,6 @@ export default NewsTabNavigator = () => {
       }}
     >
       <NewsTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
-      />
-      <NewsTabs.Screen
         name='News'
         component={NewsStack}
         options={NewsScreenOptions}
@@ -229,6 +224,11 @@ export default NewsTabNavigator = () => {
         name='Catalogue'
         component={CatalogueStack}
         options={CatalogueScreenOptions}
+      />
+      <NewsTabs.Screen
+        name='Stats'
+        component={StatsStack}
+        options={StatsScreenOptions}
       />
     </NewsTabs.Navigator>
   );

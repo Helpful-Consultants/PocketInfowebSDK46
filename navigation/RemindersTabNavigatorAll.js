@@ -20,9 +20,9 @@ import ServiceMeasuresScreen, {
 import LtpLoansScreen, {
   screenOptions as LtpLoansScreenOptions,
 } from '../screens/LtpLoansScreen';
-import StatsScreen, {
-  screenOptions as StatsScreenOptions,
-} from '../screens/StatsScreen';
+import OdisScreen, {
+  screenOptions as OdisScreenOptions,
+} from '../screens/OdisScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -139,16 +139,16 @@ const LtpLoansStack = () => {
   );
 };
 
-const Stats = createStackNavigator();
-const StatsStack = () => {
+const Odis = createStackNavigator();
+const OdisStack = () => {
   return (
-    <Stats.Navigator screenOptions={defaultStackNavOptions}>
-      <Stats.Screen
-        name={'StatsScreen'}
-        component={StatsScreen}
-        options={StatsScreenOptions}
+    <Odis.Navigator screenOptions={defaultStackNavOptions}>
+      <Odis.Screen
+        name={'OdisScreen'}
+        component={OdisScreen}
+        options={OdisScreenOptions}
       />
-    </Stats.Navigator>
+    </Odis.Navigator>
   );
 };
 
@@ -192,9 +192,9 @@ export default RemindersTabNavigator = () => {
         options={LtpLoansScreenOptions}
       />
       <RemindersTabs.Screen
-        name='Stats'
-        component={StatsStack}
-        options={StatsScreenOptions}
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
       />
     </RemindersTabs.Navigator>
   ) : (
@@ -232,9 +232,9 @@ export default RemindersTabNavigator = () => {
         options={LtpLoansScreenOptions}
       />
       <RemindersTabs.Screen
-        name='Stats'
-        component={StatsStack}
-        options={StatsScreenOptions}
+        name='Odis'
+        component={OdisStack}
+        options={OdisScreenOptions}
       />
     </RemindersTabs.Navigator>
   );
