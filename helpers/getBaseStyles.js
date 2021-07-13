@@ -957,6 +957,12 @@ export default getBaseStyles = (props) => {
     viewSectionRibbon: {
       padding: 5,
       backgroundColor: Colors.vwgVeryLightSkyBlue,
+      flexDirection: 'row',
+      borderBottomColor: Colors.vwgWhite,
+      borderTopColor: Colors.vwgVeryLightSkyBlue,
+      borderLeftColor: Colors.vwgVeryLightSkyBlue,
+      borderRightColor: Colors.vwgVeryLightSkyBlue,
+      borderWidth: 2,
     },
     viewDataList: {
       paddingHorizontal: 10,

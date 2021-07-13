@@ -4,11 +4,13 @@ import {
   ScrollView,
   SectionList,
   Text,
+  TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -27,6 +29,7 @@ import LtpLoansList from './LtpLoansList';
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+import Colors from '../constants/Colors';
 
 const now = moment();
 
@@ -61,6 +64,9 @@ export default NotificationsScreen = (props) => {
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
+  const [isOpenLtpBookings, setIsOpenLtpBookings] = useState(false);
+  const [isOpenServiceMeasures, setIsOpenServiceMeasures] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
@@ -426,17 +432,34 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewSectionRibbon}>
-              <Text style={baseStyles.textSectionRibbon}>
-                {calibrationExpiryCount > 1
-                  ? `${calibrationExpiryCount} Calibration Expiry Actions`
-                  : calibrationExpiryCount > 0
-                  ? `${calibrationExpiryCount} Calibration Expiry Actions`
-                  : 'No Calibration Expiry Actions'}
-              </Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                setIsOpenLtpBookings(false);
+                setIsOpenServiceMeasures(false);
+              }}
+            >
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons
+                  name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
+                  size={20}
+                  color={Colors.vwgVeryDarkGray}
+                />
+
+                <Text style={baseStyles.textSectionRibbon}> </Text>
+                <Text style={baseStyles.textSectionRibbon}>
+                  {calibrationExpiryCount > 1
+                    ? `${calibrationExpiryCount} Calibration Expiry Actions`
+                    : calibrationExpiryCount > 0
+                    ? `${calibrationExpiryCount} Calibration Expiry Actions`
+                    : 'No Calibration Expiry Actions'}
+                </Text>
+              </View>
+            </TouchableOpacity>
             {calibrationExpiryItemsToShow.length > 0 ? (
-              <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
+              isOpenCalibrationExpiry ? (
+                <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
+              ) : null
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
@@ -459,20 +482,36 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewSectionRibbon}>
-              <Text style={baseStyles.textSectionRibbon}>
-                {ltpLoansItemsToShow.length > 1
-                  ? `${ltpLoansItemsToShow.length} LTP Actions`
-                  : ltpLoansItemsToShow.length > 0
-                  ? `${ltpLoansItemsToShow.length} LTP Action`
-                  : 'No LTP Actions'}
-              </Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setIsOpenCalibrationExpiry(false);
+                setIsOpenLtpBookings(!isOpenLtpBookings);
+                setIsOpenServiceMeasures(false);
+              }}
+            >
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons
+                  name={isOpenLtpBookings ? 'caret-up' : 'caret-down'}
+                  size={20}
+                  color={Colors.vwgVeryDarkGray}
+                />
+                <Text style={baseStyles.textSectionRibbon}> </Text>
+                <Text style={baseStyles.textSectionRibbon}>
+                  {ltpLoansItemsToShow.length > 1
+                    ? `${ltpLoansItemsToShow.length} LTP Actions`
+                    : ltpLoansItemsToShow.length > 0
+                    ? `${ltpLoansItemsToShow.length} LTP Action`
+                    : 'No LTP Actions'}
+                </Text>
+              </View>
+            </TouchableOpacity>
             {ltpLoansItemsToShow.length > 0 ? (
-              <LtpLoansList
-                items={ltpLoansItemsToShow}
-                showFullDetails={false}
-              />
+              isOpenLtpBookings ? (
+                <LtpLoansList
+                  items={ltpLoansItemsToShow}
+                  showFullDetails={false}
+                />
+              ) : null
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
@@ -495,20 +534,36 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <View style={baseStyles.viewSectionRibbon}>
-              <Text style={baseStyles.textSectionRibbon}>
-                {serviceMeasuresItemsToShow.length > 1
-                  ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
-                  : serviceMeasuresItemsToShow.length > 0
-                  ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
-                  : 'No Outstanding Service Measures'}
-              </Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                setIsOpenCalibrationExpiry(false);
+                setIsOpenLtpBookings(false);
+                setIsOpenServiceMeasures(!isOpenServiceMeasures);
+              }}
+            >
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons
+                  name={isOpenServiceMeasures ? 'caret-up' : 'caret-down'}
+                  size={20}
+                  color={Colors.vwgVeryDarkGray}
+                />
+                <Text style={baseStyles.textSectionRibbon}> </Text>
+                <Text style={baseStyles.textSectionRibbon}>
+                  {serviceMeasuresItemsToShow.length > 1
+                    ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
+                    : serviceMeasuresItemsToShow.length > 0
+                    ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
+                    : 'No Outstanding Service Measures'}
+                </Text>
+              </View>
+            </TouchableOpacity>
             {serviceMeasuresItemsToShow.length > 0 ? (
-              <ServiceMeasuresList
-                items={serviceMeasuresItemsToShow}
-                showFullDetails={false}
-              />
+              isOpenServiceMeasures ? (
+                <ServiceMeasuresList
+                  items={serviceMeasuresItemsToShow}
+                  showFullDetails={false}
+                />
+              ) : null
             ) : (
               <View style={baseStyles.viewDataList}>
                 <View style={baseStyles.textDataListItem}>
