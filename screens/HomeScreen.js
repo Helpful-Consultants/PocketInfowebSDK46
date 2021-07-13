@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
+import * as Notifications from 'expo-notifications';
+// import * as Permissions from 'expo-permissions';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ActivityIndicator,
@@ -44,6 +46,60 @@ const buttonTextColor = Colors.vwgWhite;
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
+
+// if (Platform.OS !== 'android') {
+//   Notifications.setNotificationHandler({
+//     handleNotification: async () => ({
+//       shouldShowAlert: false,
+//       shouldPlaySound: false,
+//       shouldSetBadge: true,
+//     }),
+//   });
+// }
+
+// await Notifications.scheduleLocalNotificationAsync({
+//   title: '...',
+//   body: '...',
+//   ios: {count: 1},
+// }, {
+//   time: ...
+// })
+
+// async function getiOSNotificationPermission() {
+//   console.log('in home getiOSNotificationPermission');
+
+//   const { status } = await Notifications.requestPermissionsAsync;
+
+//   const { status } = await Permissions.getAsync(
+//     Permissions.USER_FACING_NOTIFICATIONS
+//   );
+//   if (status !== 'granted') {
+//     await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+//   }
+// }
+
+export async function allowsNotificationsAsync() {
+  const settings = await Notifications.getPermissionsAsync();
+  return (
+    settings.granted ||
+    settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
+  );
+}
+export async function requestPermissionsAsync() {
+  return await Notifications.requestPermissionsAsync({
+    android: {},
+    ios: {
+      allowAlert: false,
+      allowBadge: true,
+      allowSound: false,
+      allowDisplayInCarPlay: false,
+      allowCriticalAlerts: false,
+      provideAppNotificationSettings: false,
+      allowProvisional: false,
+      allowAnnouncements: false,
+    },
+  });
+}
 
 export default HomeScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -162,6 +218,29 @@ export default HomeScreen = (props) => {
   const now = moment();
 
   //   console.log('IN HOME !!!!! 3');
+
+  //   useEffect(() => {
+  //     registerForPushNotificationsAsync().then((token) =>
+  //       setExpoPushToken(token)
+  //     );
+
+  //     notificationListener.current =
+  //       Notifications.addNotificationReceivedListener((notification) => {
+  //         setNotification(notification);
+  //       });
+
+  //     responseListener.current =
+  //       Notifications.addNotificationResponseReceivedListener((response) => {
+  //         console.log(response);
+  //       });
+
+  //     return () => {
+  //       Notifications.removeNotificationSubscription(
+  //         notificationListener.current
+  //       );
+  //       Notifications.removeNotificationSubscription(responseListener.current);
+  //     };
+  //   }, []);
 
   useEffect(() => {
     // runs only once as LTP doesnt change too often
@@ -352,6 +431,8 @@ export default HomeScreen = (props) => {
       //   if (searchInput && searchInput.length > 0) {
       //     setSearchInput('');
       //   }
+      console.log('in home useFocusEffect');
+
       updateItemsAsync();
       checkAppUpdates();
       if (__DEV__) {

@@ -1,4 +1,5 @@
 import AppLoading from 'expo-app-loading';
+// import * as Notifications from 'expo-notifications';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
@@ -60,6 +61,24 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
+// if (Platform.OS !== 'android') {
+//   Notifications.setNotificationHandler({
+//     handleNotification: async () => ({
+//       shouldShowAlert: false,
+//       shouldPlaySound: false,
+//       shouldSetBadge: true,
+//     }),
+//   });
+// }
+
+// await Notifications.scheduleLocalNotificationAsync({
+//   title: '...',
+//   body: '...',
+//   ios: {count: 1},
+// }, {
+//   time: ...
+// })
+
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 // const store = compose(persistedReducer, {}, applyMiddleware(sagaMiddleware));
@@ -71,10 +90,18 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
+// const [permission, askForPermission, getPermission] = usePermissions(
+//   Permissions.USER_FACING_NOTIFICATIONS,
+//   {
+//     ask: true,
+//   }
+// );
+
 export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
   //   persistStore(store).purge();
   //   const userIsValidated = true;
 
