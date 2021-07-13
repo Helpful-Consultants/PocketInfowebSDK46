@@ -44,7 +44,6 @@ const buttonTextColor = Colors.vwgWhite;
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
-const demoModeOn = true;
 
 export default HomeScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -64,6 +63,8 @@ export default HomeScreen = (props) => {
   const userId = useSelector((state) => state.user.userId);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
+  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
+
   //   console.log('IN HOME !!!!! 1g');
   //   const userIntId =
   //     userDataObj && userDataObj.intId ? userDataObj.intId.toString() : null;
@@ -86,9 +87,7 @@ export default HomeScreen = (props) => {
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpLoansItems = demoModeOn
-    ? ltpLoansDummyData
-    : useSelector((state) => state.ltpLoans.ltpLoansItems);
+  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
 
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
@@ -714,7 +713,15 @@ export default HomeScreen = (props) => {
                           <Text style={baseStyles.textHomeGridCell}>
                             {`LTP Loans`}
                             <Text style={baseStyles.textHomeGridCellCount}>
-                              {` (${ltpLoansItems && ltpLoansItems.length})`}
+                              {` (${
+                                userRequestedDemo
+                                  ? ltpLoansDummyData
+                                    ? ltpLoansDummyData.length
+                                    : 0
+                                  : ltpLoansItems
+                                  ? ltpLoansItems.length
+                                  : 0
+                              })`}
                             </Text>
                           </Text>
                         </View>
