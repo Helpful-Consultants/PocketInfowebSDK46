@@ -42,16 +42,20 @@ export default function odis(state = INITIAL_STATE, action) {
       //   console.log('state', state && state);
       //   console.log('from API', action.payload.items && action.payload.items);
 
-      let auOdisData = {};
-      let cvOdisData = {};
-      let seOdisData = {};
-      let skOdisData = {};
-      let vwOdisData = {};
-      let auChanged = null;
-      let cvChanged = null;
-      let seChanged = null;
-      let skChanged = null;
-      let vwChanged = null;
+      let odisDataObj = {
+        au: {},
+        cv: {},
+        se: {},
+        sk: {},
+        vw: {},
+      };
+      let endPointChangedObj = {
+        au: null,
+        cv: null,
+        se: null,
+        sk: null,
+        vw: null,
+      };
 
       if (action.payload && action.payload.items) {
         let newDataObj = action.payload.items;
@@ -68,319 +72,84 @@ export default function odis(state = INITIAL_STATE, action) {
           //   console.log('item.brandCode is ' + item.brandCode);
           //   console.log('!!!!! item.brandCode', item.brandCode);
           //   console.log('!!!!! start');
+          let brandCode = item.brandCode.toLowerCase();
 
-          if (item.brandCode.toLowerCase() === 'au') {
-            // console.log('au', item);
+          console.log('item', item);
+          console.log('odisData', state.odisData[brandCode]);
 
-            if (state.odisData && state.odisData.au) {
-              if (
-                (state.odisData.au.productVersion &&
-                  state.odisData.au.productVersion !== item.productVersion) ||
-                (state.odisData.au.mainFeatureVersion &&
-                  state.odisData.au.mainFeatureVersion !==
-                    item.mainFeatureVersion) ||
-                (state.odisData.au.dataVersion &&
-                  state.odisData.au.dataVersion !== item.dataVersion)
-              ) {
-                auChanged = new Date();
-              }
+          if (state.odisData && state.odisData[brandCode]) {
+            if (
+              (state.odisData[brandCode].productVersion &&
+                state.odisData[brandCode].productVersion !==
+                  item.productVersion) ||
+              (state.odisData[brandCode].mainFeatureVersion &&
+                state.odisData[brandCode].mainFeatureVersion !==
+                  item.mainFeatureVersion) ||
+              (state.odisData[brandCode].dataVersion &&
+                state.odisData[brandCode].dataVersion !== item.dataVersion)
+            ) {
+              endPointChangedObj[brandCode] = new Date();
             }
-
-            auOdisData = {
-              ...item,
-              dateChangedInApp:
-                (auChanged && auChanged) ||
-                (state.odisData &&
-                  state.odisData.au &&
-                  state.odisData.au.dateChangedInApp &&
-                  state.odisData.au.dateChangedInApp) ||
-                null,
-              previousProductVersion:
-                state.odisData &&
-                state.odisData.au &&
-                state.odisData.au.productVersion &&
-                item.productVersion
-                  ? state.odisData.au.productVersion === item.productVersion
-                    ? state.odisData.au.previousProductVersion
-                    : state.odisData.au.productVersion
-                  : null,
-              previousMainFeatureVersion:
-                state.odisData &&
-                state.odisData.au &&
-                state.odisData.au.mainFeatureVersion &&
-                item.mainFeatureVersion
-                  ? state.odisData.au.mainFeatureVersion ===
-                    item.mainFeatureVersion
-                    ? state.odisData.au.previousMainFeaureVersion
-                    : state.odisData.au.mainFeatureVersion
-                  : null,
-              previousDataVersion:
-                state.odisData &&
-                state.odisData.au &&
-                state.odisData.au.dataVersion &&
-                item.dataVersion
-                  ? state.odisData.au.dataVersion === item.dataVersion
-                    ? state.odisData.au.previousDataVersion
-                    : state.odisData.au.dataVersion
-                  : null,
-            };
-          } else if (item.brandCode.toLowerCase() === 'cv') {
-            // console.log('cv', item);
-            // console.log(
-            //   state.odisData &&
-            //     state.odisData.cv &&
-            //     state.odisData.cv.productVersion &&
-            //     state.odisData.cv.productVersion,
-            //   item.productVersion
-            // );
-            // console.log(
-            //   state.odisData &&
-            //     state.odisData.cv &&
-            //     state.odisData.cv.mainFeatureVersion &&
-            //     state.odisData.cv.mainFeatureVersion,
-            //   item.mainFeatureVersion
-            // );
-            // console.log(
-            //   state.odisData &&
-            //     state.odisData.cv &&
-            //     state.odisData.cv.dataVersion &&
-            //     state.odisData.cv.dataVersion,
-            //   item.dataVersion
-            // );
-
-            if (state.odisData && state.odisData.cv) {
-              if (
-                (state.odisData.cv.productVersion &&
-                  state.odisData.cv.productVersion !== item.productVersion) ||
-                (state.odisData.cv.mainFeatureVersion &&
-                  state.odisData.cv.mainFeatureVersion !==
-                    item.mainFeatureVersion) ||
-                (state.odisData.cv.dataVersion &&
-                  state.odisData.cv.dataVersion !== item.dataVersion)
-              ) {
-                cvChanged = new Date();
-              }
-            }
-            // cvChanged = new Date();
-            cvOdisData = {
-              ...item,
-              //   productVersion: '5.1.5',
-              dateChangedInApp:
-                (cvChanged && cvChanged) ||
-                (state.odisData &&
-                  state.odisData.cv &&
-                  state.odisData.cv.dateChangedInApp &&
-                  state.odisData.cv.dateChangedInApp) ||
-                null,
-              previousProductVersion:
-                state.odisData &&
-                state.odisData.cv &&
-                state.odisData.cv.productVersion &&
-                item.productVersion
-                  ? state.odisData.cv.productVersion === item.productVersion
-                    ? state.odisData.cv.previousProductVersion
-                    : state.odisData.cv.productVersion
-                  : null,
-              previousMainFeatureVersion:
-                state.odisData &&
-                state.odisData.cv &&
-                state.odisData.cv.mainFeatureVersion &&
-                item.mainFeatureVersion
-                  ? state.odisData.cv.mainFeatureVersion ===
-                    item.mainFeatureVersion
-                    ? state.odisData.cv.previousMainFeaureVersion
-                    : state.odisData.cv.mainFeatureVersion
-                  : null,
-              previousDataVersion:
-                state.odisData &&
-                state.odisData.cv &&
-                state.odisData.cv.dataVersion &&
-                item.dataVersion
-                  ? state.odisData.cv.dataVersion === item.dataVersion
-                    ? state.odisData.cv.previousDataVersion
-                    : state.odisData.cv.dataVersion
-                  : null,
-            };
-          } else if (item.brandCode.toLowerCase() === 'se') {
-            // console.log('se', item);
-
-            if (state.odisData && state.odisData.se) {
-              if (
-                (state.odisData.se.productVersion &&
-                  state.odisData.se.productVersion !== item.productVersion) ||
-                (state.odisData.se.mainFeatureVersion &&
-                  state.odisData.se.mainFeatureVersion !==
-                    item.mainFeatureVersion) ||
-                (state.odisData.se.dataVersion &&
-                  state.odisData.se.dataVersion !== item.dataVersion)
-              ) {
-                seChanged = new Date();
-              }
-            }
-            seOdisData = {
-              ...item,
-              dateChangedInApp:
-                (seChanged && seChanged) ||
-                (state.odisData &&
-                  state.odisData.se &&
-                  state.odisData.se.dateChangedInApp &&
-                  state.odisData.se.dateChangedInApp) ||
-                null,
-              previousProductVersion:
-                state.odisData &&
-                state.odisData.se &&
-                state.odisData.se.productVersion &&
-                item.productVersion
-                  ? state.odisData.se.productVersion === item.productVersion
-                    ? state.odisData.se.previousProductVersion
-                    : state.odisData.se.productVersion
-                  : null,
-              previousMainFeatureVersion:
-                state.odisData &&
-                state.odisData.se &&
-                state.odisData.se.mainFeatureVersion &&
-                item.mainFeatureVersion
-                  ? state.odisData.se.mainFeatureVersion ===
-                    item.mainFeatureVersion
-                    ? state.odisData.se.previousMainFeaureVersion
-                    : state.odisData.se.mainFeatureVersion
-                  : null,
-              previousDataVersion:
-                state.odisData &&
-                state.odisData.se &&
-                state.odisData.se.dataVersion &&
-                item.dataVersion
-                  ? state.odisData.se.dataVersion === item.dataVersion
-                    ? state.odisData.se.previousDataVersion
-                    : state.odisData.se.dataVersion
-                  : null,
-            };
-          } else if (item.brandCode.toLowerCase() === 'sk') {
-            // console.log('sk', item);
-
-            if (state.odisData && state.odisData.sk) {
-              if (
-                (state.odisData.sk.productVersion &&
-                  state.odisData.sk.productVersion !== item.productVersion) ||
-                (state.odisData.sk.mainFeatureVersion &&
-                  state.odisData.sk.mainFeatureVersion !==
-                    item.mainFeatureVersion) ||
-                (state.odisData.sk.dataVersion &&
-                  state.odisData.sk.dataVersion !== item.dataVersion)
-              ) {
-                skChanged = new Date();
-              }
-            }
-            skOdisData = {
-              ...item,
-              dateChangedInApp:
-                (skChanged && skChanged) ||
-                (state.odisData &&
-                  state.odisData.sk &&
-                  state.odisData.sk.dateChangedInApp &&
-                  state.odisData.sk.dateChangedInApp) ||
-                null,
-              previousProductVersion:
-                state.odisData &&
-                state.odisData.sk &&
-                state.odisData.sk.productVersion &&
-                item.productVersion
-                  ? state.odisData.sk.productVersion === item.productVersion
-                    ? state.odisData.sk.previousProductVersion
-                    : state.odisData.sk.productVersion
-                  : null,
-              previousMainFeatureVersion:
-                state.odisData &&
-                state.odisData.sk &&
-                state.odisData.sk.mainFeatureVersion &&
-                item.mainFeatureVersion
-                  ? state.odisData.sk.mainFeatureVersion ===
-                    item.mainFeatureVersion
-                    ? state.odisData.sk.previousMainFeaureVersion
-                    : state.odisData.sk.mainFeatureVersion
-                  : null,
-              previousDataVersion:
-                state.odisData &&
-                state.odisData.sk &&
-                state.odisData.sk.dataVersion &&
-                item.dataVersion
-                  ? state.odisData.sk.dataVersion === item.dataVersion
-                    ? state.odisData.sk.previousDataVersion
-                    : state.odisData.sk.dataVersion
-                  : null,
-            };
-          } else if (item.brandCode.toLowerCase() === 'vw') {
-            // console.log('vw', item);
-
-            if (state.odisData && state.odisData.vw) {
-              if (
-                (state.odisData.vw.productVersion &&
-                  state.odisData.vw.productVersion !== item.productVersion) ||
-                (state.odisData.vw.mainFeatureVersion &&
-                  state.odisData.vw.mainFeatureVersion !==
-                    item.mainFeatureVersion) ||
-                (state.odisData.vw.dataVersion &&
-                  state.odisData.vw.dataVersion !== item.dataVersion)
-              ) {
-                vwChanged = new Date();
-              }
-            }
-            vwOdisData = {
-              ...item,
-              dateChangedInApp:
-                (vwChanged && vwChanged) ||
-                (state.odisData &&
-                  state.odisData.vw &&
-                  state.odisData.vw.dateChangedInApp &&
-                  state.odisData.vw.dateChangedInApp) ||
-                null,
-              previousProductVersion:
-                state.odisData &&
-                state.odisData.vw &&
-                state.odisData.vw.productVersion &&
-                item.productVersion
-                  ? state.odisData.vw.productVersion === item.productVersion
-                    ? state.odisData.vw.previousProductVersion
-                    : state.odisData.vw.productVersion
-                  : null,
-              previousMainFeatureVersion:
-                state.odisData &&
-                state.odisData.vw &&
-                state.odisData.vw.mainFeatureVersion &&
-                item.mainFeatureVersion
-                  ? state.odisData.vw.mainFeatureVersion ===
-                    item.mainFeatureVersion
-                    ? state.odisData.vw.previousMainFeaureVersion
-                    : state.odisData.vw.mainFeatureVersion
-                  : null,
-              previousDataVersion:
-                state.odisData &&
-                state.odisData.vw &&
-                state.odisData.vw.dataVersion &&
-                item.dataVersion
-                  ? state.odisData.vw.dataVersion === item.dataVersion
-                    ? state.odisData.vw.previousDataVersion
-                    : state.odisData.vw.dataVersion
-                  : null,
-            };
           }
+          /// remove after testing!!!!
+          endPointChangedObj[brandCode] = new Date();
+
+          odisDataObj[brandCode] = {
+            ...item,
+            dateChangedInApp:
+              (endPointChangedObj[brandCode] &&
+                endPointChangedObj[brandCode]) ||
+              (state.odisData &&
+                state.odisData[brandCode] &&
+                state.odisData[brandCode].dateChangedInApp &&
+                state.odisData[brandCode].dateChangedInApp) ||
+              null,
+            previousProductVersion:
+              state.odisData &&
+              state.odisData[brandCode] &&
+              state.odisData[brandCode].productVersion &&
+              item.productVersion
+                ? state.odisData[brandCode].productVersion ===
+                  item.productVersion
+                  ? state.odisData[brandCode].previousProductVersion
+                  : state.odisData[brandCode].productVersion
+                : null,
+            previousMainFeatureVersion:
+              state.odisData &&
+              state.odisData[brandCode] &&
+              state.odisData[brandCode].mainFeatureVersion &&
+              item.mainFeatureVersion
+                ? state.odisData[brandCode].mainFeatureVersion ===
+                  item.mainFeatureVersion
+                  ? state.odisData[brandCode].previousMainFeatureVersion
+                  : state.odisData[brandCode].mainFeatureVersion
+                : null,
+            previousDataVersion:
+              state.odisData &&
+              state.odisData[brandCode] &&
+              state.odisData[brandCode].dataVersion &&
+              item.dataVersion
+                ? state.odisData[brandCode].dataVersion === item.dataVersion
+                  ? state.odisData[brandCode].previousDataVersion
+                  : state.odisData[brandCode].dataVersion
+                : null,
+          };
 
           //   console.log('!!!!! end');
         });
       }
       //   console.log('skOdisData', skOdisData);
-      //   console.log('vwOdisData', vwOdisData);
+      console.log('odisDataObj', odisDataObj);
+      console.log('endPointChangedObj', endPointChangedObj);
       return {
-        odisData: {
-          au: auOdisData,
-          cv: cvOdisData,
-          se: seOdisData,
-          sk: skOdisData,
-          vw: vwOdisData,
-        },
+        odisData: odisDataObj,
         // odisData: {},
         viewCount: state.viewCount
-          ? auChanged || cvChanged || seChanged || skChanged || vwChanged
+          ? endPointChangedObj.au ||
+            endPointChangedObj.cv ||
+            endPointChangedObj.se ||
+            endPointChangedObj.sk ||
+            endPointChangedObj.vw
             ? 0
             : state.viewCount
           : 0,
