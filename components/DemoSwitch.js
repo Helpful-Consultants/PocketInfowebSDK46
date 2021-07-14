@@ -39,7 +39,8 @@ export default AppInfo = (props) => {
     userDataObj.userName &&
     (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
       userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
+      (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
+        userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
     <View
       style={{
         ...baseStyles.container,
