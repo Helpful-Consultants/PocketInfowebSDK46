@@ -25,6 +25,7 @@ import { revalidateUserCredentials } from '../actions/user';
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
 import DemoSwitch from '../components/DemoSwitch';
+import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
@@ -57,6 +58,7 @@ const CustomDrawerContent = (props) => (
     <DrawerItemList {...props} style={{ marginBottom: 20 }} />
     <DemoSwitch />
     <AppInfo />
+    <BackgroundFetchBlock />
   </DrawerContentScrollView>
 );
 
