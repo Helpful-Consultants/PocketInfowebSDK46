@@ -26,7 +26,7 @@ async function unregisterBackgroundFetchAsync() {
   return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_TASK);
 }
 
-export default backgroundFetchBlock = () => {
+export default BackgroundFetchBlock = () => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [status, setStatus] = useState(null);
 
