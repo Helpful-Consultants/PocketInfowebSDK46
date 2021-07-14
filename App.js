@@ -19,6 +19,7 @@ import { Text, TextInput } from 'react-native'; // not react-native-elements, fo
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
+import Tasks from './constants/Tasks';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
@@ -92,23 +93,20 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-// const [permission, askForPermission, getPermission] = usePermissions(
-//   Permissions.USER_FACING_NOTIFICATIONS,
-//   {
-//     ask: true,
-//   }
-// );
-
-const BACKGROUND_FETCH_TASK = 'background-fetch';
+// const BACKGROUND_FETCH_TASK = 'background-fetcher';
 // 1. Define the task by providing a name and the function that should be executed
 // Note: This needs to be called in the global scope (e.g outside of your React components)
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
   const now = Date.now();
+  const result = true;
+  console.log(`Got background fetch call`);
   console.log(
     `Got background fetch call at date: ${new Date(now).toISOString()}`
   );
   // Be sure to return the successful result type!
-  return BackgroundFetch.Result.NewData;
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
 });
 
 export default function App(props) {
