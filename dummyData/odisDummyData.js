@@ -12,6 +12,8 @@ export default odisDummyData = [
         productVersion: '5.1.6',
         dataVersion: '2.19.5',
         otherVersion: '',
+        updatedBy: 'Beth Clarke',
+        dateCreated: '01/10/2019',
       },
       {
         id: '5',
@@ -21,6 +23,8 @@ export default odisDummyData = [
         productVersion: '5.1.6',
         dataVersion: '2.18.9',
         otherVersion: '',
+        updatedBy: 'Beth Clarke',
+        dateCreated: '01/10/2019',
       },
       {
         id: '3',
@@ -30,6 +34,8 @@ export default odisDummyData = [
         productVersion: '5.1.6',
         dataVersion: '2.16.6',
         otherVersion: '',
+        updatedBy: 'Beth Clarke',
+        dateCreated: '01/10/2019',
       },
       {
         id: '4',
@@ -39,6 +45,8 @@ export default odisDummyData = [
         productVersion: '5.1.6',
         dataVersion: '2.24.7',
         otherVersion: '',
+        updatedBy: 'Beth Clarke',
+        dateCreated: '01/10/2019',
       },
       {
         id: '2',
@@ -48,6 +56,8 @@ export default odisDummyData = [
         productVersion: '5.1.6',
         dataVersion: '2.39.11',
         otherVersion: '',
+        updatedBy: 'Beth Clarke',
+        dateCreated: '01/10/2019',
       },
     ],
   },
