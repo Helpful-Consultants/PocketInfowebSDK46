@@ -1,4 +1,5 @@
 // import { Types } from '../actions/odis';
+import odisDummyData from '../dummyData/odisDummyData';
 import Types from '../constants/Types';
 
 const INITIAL_STATE = {
@@ -8,6 +9,7 @@ const INITIAL_STATE = {
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  fetchTime: null,
 };
 
 export default function odis(state = INITIAL_STATE, action) {
@@ -24,8 +26,11 @@ export default function odis(state = INITIAL_STATE, action) {
       };
     }
     case Types.INCREMENT_ODIS_VIEW_COUNT: {
-      //   console.log('in odis reducer increment view couunt ');
       let oldViewCount = (state && state.viewCount) || 0;
+      console.log(
+        'in odis reducer, INCREMENT_ODIS_VIEW_COUNT, oldViewCount is ',
+        oldViewCount
+      );
 
       return {
         ...state,
@@ -58,12 +63,14 @@ export default function odis(state = INITIAL_STATE, action) {
       };
 
       if (action.payload && action.payload.items) {
-        let newDataObj = action.payload.items;
-        let newDataObjArr = [];
+        let newDataObjArr = action.payload.items;
+        // let newDataObjArr = odisDummyData[0].brandVersions;
+        // console.log('newDataObjArr', newDataObjArr);
+        // let newDataObjArr = [];
 
         // newDataObj[1].productVersion = '5.1.7';
 
-        newDataObj.map((item) => newDataObjArr.push(item));
+        // newDataObj.map((item) => newDataObjArr.push(item));
         // console.log('newDataObjArr', newDataObjArr);
 
         // console.log('newDataObjArr[3]', newDataObjArr[3]);
@@ -74,8 +81,8 @@ export default function odis(state = INITIAL_STATE, action) {
           //   console.log('!!!!! start');
           let brandCode = item.brandCode.toLowerCase();
 
-          console.log('item', item);
-          console.log('odisData', state.odisData[brandCode]);
+          //   console.log('new odis item', item);
+          //   console.log('state odisData', state.odisData[brandCode]);
 
           if (state.odisData && state.odisData[brandCode]) {
             if (
@@ -88,11 +95,12 @@ export default function odis(state = INITIAL_STATE, action) {
               (state.odisData[brandCode].dataVersion &&
                 state.odisData[brandCode].dataVersion !== item.dataVersion)
             ) {
+              //   console.log('odis change for ', brandCode);
               endPointChangedObj[brandCode] = new Date();
             }
           }
           /// remove after testing!!!!
-          endPointChangedObj[brandCode] = new Date();
+          //   endPointChangedObj[brandCode] = new Date();
 
           odisDataObj[brandCode] = {
             ...item,
@@ -139,20 +147,30 @@ export default function odis(state = INITIAL_STATE, action) {
         });
       }
       //   console.log('skOdisData', skOdisData);
-      console.log('odisDataObj', odisDataObj);
-      console.log('endPointChangedObj', endPointChangedObj);
+      //   console.log('odisDataObj', odisDataObj);
+      //   console.log('endPointChangedObj', endPointChangedObj);
+      const newViewCount =
+        endPointChangedObj.au ||
+        endPointChangedObj.cv ||
+        endPointChangedObj.se ||
+        endPointChangedObj.sk ||
+        endPointChangedObj.vw
+          ? 0
+          : state.viewCount;
+
+      //   console.log(
+      //     'setting whole state, old viewCount ',
+      //     state.viewCount,
+      //     'new viewCount ',
+      //     newViewCount
+      //   );
+
+      const fetchTime = Date.now();
       return {
         odisData: odisDataObj,
+        fetchTime: fetchTime,
         // odisData: {},
-        viewCount: state.viewCount
-          ? endPointChangedObj.au ||
-            endPointChangedObj.cv ||
-            endPointChangedObj.se ||
-            endPointChangedObj.sk ||
-            endPointChangedObj.vw
-            ? 0
-            : state.viewCount
-          : 0,
+        viewCount: newViewCount,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
