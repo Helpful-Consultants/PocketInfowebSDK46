@@ -26,7 +26,13 @@ export default function TabBarIcon(props) {
     <Ionicons
       name={props.name}
       size={props.size || navBarIconSize} // Size not passed in Android API
-      color={props.focused ? Colors.vwgActiveLink : Colors.vwgInactiveLink}
+      color={
+        props.alert
+          ? Colors.vwgAlertColor
+          : props.focused
+          ? Colors.vwgActiveLink
+          : Colors.vwgInactiveLink
+      }
       type='ionicon'
     />
   );
