@@ -1,4 +1,7 @@
 export default {
+  BACKGROUND_SUCCESS: 'appStatus/get_background_success',
+  BACKGROUND_ERROR: 'appStatus/get_background_error',
+
   GET_USER_START: 'user/get_user_start',
   GET_USER_REQUEST: 'user/get_user_request',
   GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
