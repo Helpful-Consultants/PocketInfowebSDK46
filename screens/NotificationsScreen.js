@@ -49,8 +49,10 @@ const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
 };
 
 export default NotificationsScreen = (props) => {
+  const { navigation } = props;
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
+  const odisViewCount = useSelector((state) => state.odis.viewCount);
   const calibrationExpiryItems = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryItems
   );
@@ -445,6 +447,31 @@ export default NotificationsScreen = (props) => {
         </View>
       ) : null}
 
+      {!odisViewCount ? (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('RemindersTabs', { screen: 'Odis' })
+          }
+        >
+          <View style={baseStyles.viewSectionRibbon}>
+            <Ionicons name='tv' size={20} color={Colors.vwgWarmOrange} />
+            <Text style={baseStyles.textSectionRibbon}>
+              {`  Please see the `}
+              <Text
+                style={{
+                  ...baseStyles.textSectionRibbon,
+
+                  fontFamily: 'the-sans-bold',
+                }}
+              >
+                {`new ODIS versions  `}
+              </Text>
+            </Text>
+            <Ionicons name='open-outline' size={20} />
+          </View>
+        </TouchableOpacity>
+      ) : null}
+
       {!isLoadingCalibrationExpiry ? (
         dataErrorCalibrationExpiry ? (
           <ErrorDetails
@@ -472,10 +499,10 @@ export default NotificationsScreen = (props) => {
                 <Text style={baseStyles.textSectionRibbon}> </Text>
                 <Text style={baseStyles.textSectionRibbon}>
                   {calibrationExpiryCount > 1
-                    ? `${calibrationExpiryCount} Calibration Expiry Actions`
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
                     : calibrationExpiryCount > 0
-                    ? `${calibrationExpiryCount} Calibration Expiry Actions`
-                    : 'No Calibration Expiry Actions'}
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
+                    : ' No Calibration Expiry Actions'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -521,10 +548,10 @@ export default NotificationsScreen = (props) => {
                 <Text style={baseStyles.textSectionRibbon}> </Text>
                 <Text style={baseStyles.textSectionRibbon}>
                   {ltpLoansItemsToShow.length > 1
-                    ? `${ltpLoansItemsToShow.length} LTP Actions`
+                    ? ` ${ltpLoansItemsToShow.length} LTP Actions`
                     : ltpLoansItemsToShow.length > 0
-                    ? `${ltpLoansItemsToShow.length} LTP Action`
-                    : 'No LTP Actions'}
+                    ? ` ${ltpLoansItemsToShow.length} LTP Action`
+                    : ' No LTP Actions'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -573,10 +600,10 @@ export default NotificationsScreen = (props) => {
                 <Text style={baseStyles.textSectionRibbon}> </Text>
                 <Text style={baseStyles.textSectionRibbon}>
                   {serviceMeasuresItemsToShow.length > 1
-                    ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
+                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
                     : serviceMeasuresItemsToShow.length > 0
-                    ? `${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
-                    : 'No Outstanding Service Measures'}
+                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
+                    : ' No Outstanding Service Measures'}
                 </Text>
               </View>
             </TouchableOpacity>
