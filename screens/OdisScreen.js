@@ -23,15 +23,17 @@ export default OdisScreen = (props) => {
   const odisObj = useSelector((state) => state.odis.odisData);
   const isLoading = useSelector((state) => state.odis.isLoading);
   const dataError = useSelector((state) => state.odis.error);
-  const viewCount = useSelector((state) => state.odis.viewCount);
+  const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const odisFetchTime = useSelector((state) => state.odis.fetchTime);
   const allOdis = useSelector((state) => state.odis);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
 
-  const getItems = useCallback(async () => dispatch(getOdisRequest()), [
-    odisObj,
-  ]);
+  const getItems = useCallback(
+    async () => dispatch(getOdisRequest()),
+    [odisObj]
+  );
 
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
@@ -72,6 +74,7 @@ export default OdisScreen = (props) => {
       };
       dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
+      incrementViewCount();
     }, [])
   );
 
@@ -86,7 +89,11 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  console.log('rendering Odis screen');
+  console.log(
+    'rendering Odis screen, odisViewCount',
+    odisViewCount,
+    odisFetchTime
+  );
 
   return (
     <View style={baseStyles.containerFlexCentred}>
@@ -113,7 +120,8 @@ export default OdisScreen = (props) => {
         <OdisVersions
           itemsObj={odisObj}
           userBrand={userBrand}
-          viewCount={viewCount}
+          viewCount={odisViewCount}
+          fetchTime={odisFetchTime}
         />
       ) : null}
     </View>
@@ -130,6 +138,7 @@ const titleString = 'ODIS';
 //   />
 // );
 export const screenOptions = (navData) => {
+  const odisViewCount = useSelector((state) => state.odis.viewCount);
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
     // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
@@ -139,6 +148,7 @@ export const screenOptions = (navData) => {
         focused={focused}
         name={Platform.OS === 'ios' ? 'tv' : 'tv'}
         size={size}
+        alert={odisViewCount ? false : true}
       />
     ),
   };
