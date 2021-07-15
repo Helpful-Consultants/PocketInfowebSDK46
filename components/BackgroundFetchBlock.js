@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
@@ -26,41 +31,61 @@ const unregisterBackgroundFetchAsync = async () => {
 
 export default BackgroundFetchBlock = () => {
   const [isRegistered, setIsRegistered] = useState(false);
-  const [status, setStatus] = useState(null);
-  const [badgeStatus, setBadgeStatus] = useState(null);
+  const [taskStatus, setTaskStatus] = useState(null);
+  const [appBadgeCount, setAppBadgeCount] = useState(0);
+  const [appBadgeStatus, setAppBadgeStatus] = useState(null);
   const [notificationsStatus, setNotificationsStatus] = useState(null);
   const [permissionsStatus, setPermissionsStatus] = useState(null);
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const getBadgeCount = async () => {
+  const getBadgeCountAsync = async () => {
     // set notifications badge count
     try {
-      const appBadgeCount = await Notifications.getBadgeCountAsync();
-      console.log(`badge number is ${appBadgeCount}`);
-      setBadgeStatus(appBadgeCount);
-      return appBadgeCount;
+      const count = await Notifications.getBadgeCountAsync();
+      console.log(`app badge number is ${count}`);
+      setAppBadgeCount(count);
+      setAppBadgeStatus(count ? true : false);
+      return count;
     } catch (err) {
       console.log('did not manage to get app badge count!', err);
       return null;
     }
   };
 
-  const setBadgeCount = async () => {
+  const incrementBadgeCountAsync = async () => {
     // set notifications badge count
     try {
-      const setAppBadgeCount = await Notifications.setBadgeCountAsync(1);
-      console.log(`showing app badge with number 1 ${setAppBadgeCount}`);
-      setBadgeStatus(setAppBadgeCount);
+      const count = await Notifications.getBadgeCountAsync();
+      console.log(`app badge number is now  ${count}, setting to ${count + 1}`);
+      await Notifications.setBadgeCountAsync(count + 1);
+      setAppBadgeCount(count + 1);
+      setAppBadgeStatus(true);
+      return count;
     } catch (err) {
-      console.log('did not manage to show notif app badge count!', err);
+      console.log('did not manage to increment app badge count!', err);
+      return null;
     }
   };
 
-  const resetBadgeCount = async () => {
+  const setBadgeCountAsync = async () => {
     // set notifications badge count
     try {
-      const resetAppBadgeCount = await Notifications.setBadgeCountAsync(0);
-      console.log(`reset app badge count ${resetAppBadgeCount}`);
-      setBadgeStatus(resetAppBadgeCount);
+      const setCount = await Notifications.setBadgeCountAsync(1);
+      console.log(`setting app badge with number 1 ${setCount}`);
+      setAppBadgeStatus(setCount);
+    } catch (err) {
+      console.log('did not manage to set notif app badge count!', err);
+    }
+  };
+
+  const resetBadgeCountAsync = async () => {
+    // set notifications badge count
+    try {
+      const resetCount = await Notifications.setBadgeCountAsync(0);
+      console.log(`reset app badge count ${resetCount}`);
+      setAppBadgeStatus(!resetCount);
+      getBadgeCountAsync();
     } catch (err) {
       console.log('did not manage to reset notif app badge count!', err);
     }
@@ -68,7 +93,7 @@ export default BackgroundFetchBlock = () => {
 
   const checkNotificationsStatusAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
-    console.log(`notif status`, settings);
+    // console.log(`notif status`, settings);
     setNotificationsStatus(settings);
     return (
       settings.granted ||
@@ -85,43 +110,45 @@ export default BackgroundFetchBlock = () => {
         allowAnnouncements: false,
       },
     });
-    console.log(`permissionsStatus`, permissionsStatus);
+    // console.log(`permissionsStatus`, permissionsStatus);
     setPermissionsStatus(permissionsStatus);
   };
 
-  const checkStatusAsync = async () => {
+  const checkTaskStatusAsync = async () => {
     const status = await BackgroundFetch.getStatusAsync();
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_TASK
     );
-    setStatus(status);
+    setTaskStatus(status);
     setIsRegistered(isRegistered);
   };
 
-  const toggleFetchTask = async () => {
+  const toggleFetchTaskAsync = async () => {
+    console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
     if (isRegistered) {
       await unregisterBackgroundFetchAsync();
+      checkTaskStatusAsync();
     } else {
       await registerBackgroundFetchAsync();
+      checkTaskStatusAsync();
     }
-
-    checkStatusAsync();
   };
 
   useEffect(() => {
-    checkStatusAsync();
+    checkTaskStatusAsync();
     checkNotificationsStatusAsync();
     requestNotificationsPermissionAsync();
-    setBadgeCount();
-    // console.log('in useEffect badgeCount is', badgeCount);
+    getBadgeCountAsync();
+    // console.log('in useEffect appBadgeCount is', appBadgeCount);
   }, []);
 
-  console.log('notificationsStatus', notificationsStatus);
+  //   console.log('notificationsStatus', notificationsStatus);
+  console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
   return (
     <View style={styles.screen}>
       <View style={styles.textContainer}>
-        <Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Notif status:{' '}
           <Text style={styles.boldText}>
             {notificationsStatus && notificationsStatus.granted
@@ -129,32 +156,36 @@ export default BackgroundFetchBlock = () => {
               : 'not granted'}
           </Text>
         </Text>
-        <Text>
-          Badge status:{' '}
-          <Text style={styles.boldText}>{badgeStatus ? 'true' : 'false'}</Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
+          <TouchableOpacity onPress={resetBadgeCountAsync}>
+            <Text>{` Reset`}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={incrementBadgeCountAsync}>
+            <Text>{` Increment`}</Text>
+          </TouchableOpacity>
         </Text>
-        <Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Background permitted:{' '}
           <Text style={styles.boldText}>
-            {status ? BackgroundFetch.Status[status] : null}
+            {taskStatus ? BackgroundFetch.Status[taskStatus] : null}
           </Text>
         </Text>
-        <Text>
-          Background task name:{' '}
+        <TouchableOpacity onPress={toggleFetchTaskAsync}>
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            {isRegistered
+              ? 'Unregister BackgroundFetch task'
+              : 'Register BackgroundFetch task'}
+          </Text>
+        </TouchableOpacity>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          Task{' '}
+          <Text style={styles.boldText}>{Tasks.BACKGROUND_FETCH_TASK}</Text>
           <Text style={styles.boldText}>
-            {isRegistered ? Tasks.BACKGROUND_FETCH_TASK : 'Not registered yet!'}
+            {isRegistered ? ' is registered' : ' is not registered yet'}
           </Text>
         </Text>
       </View>
-
-      <Button
-        title={
-          isRegistered
-            ? 'Unregister BackgroundFetch task'
-            : 'Register BackgroundFetch task'
-        }
-        onPress={toggleFetchTask}
-      />
     </View>
   );
 };

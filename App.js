@@ -93,10 +93,7 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-// const BACKGROUND_FETCH_TASK = 'background-fetcher';
-// 1. Define the task by providing a name and the function that should be executed
-// Note: This needs to be called in the global scope (e.g outside of your React components)
-TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
+const fetchDate = async () => {
   const now = Date.now();
   const result = true;
   console.log(`Got background fetch call`);
@@ -107,7 +104,40 @@ TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
   return result
     ? BackgroundFetch.Result.NewData
     : BackgroundFetch.Result.NoData;
-});
+};
+
+// const BACKGROUND_FETCH_TASK = 'background-fetcher';
+// 1. Define the task by providing a name and the function that should be executed
+// Note: This needs to be called in the global scope (e.g outside of your React components)
+async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  console.log('in initBackgroundFetch', taskName, taskFn, interval);
+  try {
+    if (!TaskManager.isTaskDefined(taskName)) {
+      TaskManager.defineTask(taskName, taskFn);
+    }
+    const options = {
+      minimumInterval: interval, // in seconds
+    };
+    await BackgroundFetch.registerTaskAsync(taskName, options);
+    console.log('registerTaskAsync() worked');
+  } catch (err) {
+    console.log('registerTaskAsync() failed:', err);
+  }
+}
+
+initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
+// TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
+//   const now = Date.now();
+//   const result = true;
+//   console.log(`Got background fetch call`);
+//   console.log(
+//     `Got background fetch call at date: ${new Date(now).toISOString()}`
+//   );
+//   // Be sure to return the successful result type!
+//   return result
+//     ? BackgroundFetch.Result.NewData
+//     : BackgroundFetch.Result.NoData;
+// });
 
 export default function App(props) {
   const windowDim = useWindowDimensions();
