@@ -43,12 +43,12 @@ export default BackgroundFetchBlock = () => {
     // set notifications badge count
     try {
       const count = await Notifications.getBadgeCountAsync();
-      console.log(`app badge number is ${count}`);
+      //   console.log(`app badge number is ${count}`);
       setAppBadgeCount(count);
       setAppBadgeStatus(count ? true : false);
       return count;
     } catch (err) {
-      console.log('did not manage to get app badge count!', err);
+      //   console.log('did not manage to get app badge count!', err);
       return null;
     }
   };
@@ -57,13 +57,13 @@ export default BackgroundFetchBlock = () => {
     // set notifications badge count
     try {
       const count = await Notifications.getBadgeCountAsync();
-      console.log(`app badge number is now  ${count}, setting to ${count + 1}`);
+      //   console.log(`app badge number is now  ${count}, setting to ${count + 1}`);
       await Notifications.setBadgeCountAsync(count + 1);
       setAppBadgeCount(count + 1);
       setAppBadgeStatus(true);
       return count;
     } catch (err) {
-      console.log('did not manage to increment app badge count!', err);
+      //   console.log('did not manage to increment app badge count!', err);
       return null;
     }
   };
@@ -72,10 +72,10 @@ export default BackgroundFetchBlock = () => {
     // set notifications badge count
     try {
       const setCount = await Notifications.setBadgeCountAsync(1);
-      console.log(`setting app badge with number 1 ${setCount}`);
+      //   console.log(`setting app badge with number 1 ${setCount}`);
       setAppBadgeStatus(setCount);
     } catch (err) {
-      console.log('did not manage to set notif app badge count!', err);
+      //   console.log('did not manage to set notif app badge count!', err);
     }
   };
 
@@ -83,11 +83,11 @@ export default BackgroundFetchBlock = () => {
     // set notifications badge count
     try {
       const resetCount = await Notifications.setBadgeCountAsync(0);
-      console.log(`reset app badge count ${resetCount}`);
+      //   console.log(`reset app badge count ${resetCount}`);
       setAppBadgeStatus(!resetCount);
       getBadgeCountAsync();
     } catch (err) {
-      console.log('did not manage to reset notif app badge count!', err);
+      //   console.log('did not manage to reset notif app badge count!', err);
     }
   };
 
@@ -124,7 +124,7 @@ export default BackgroundFetchBlock = () => {
   };
 
   const toggleFetchTaskAsync = async () => {
-    console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
+    // console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
     if (isRegistered) {
       await unregisterBackgroundFetchAsync();
       checkTaskStatusAsync();
@@ -143,7 +143,7 @@ export default BackgroundFetchBlock = () => {
   }, []);
 
   //   console.log('notificationsStatus', notificationsStatus);
-  console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
+  //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
   return (
     <View style={styles.screen}>

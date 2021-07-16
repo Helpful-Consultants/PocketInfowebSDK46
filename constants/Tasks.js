@@ -1,3 +1,4 @@
 export default {
-  BACKGROUND_FETCH_TASK: 'getAlerts',
+  BACKGROUND_FETCH_TASK: 'getLatestDateAndTimeOne',
+  BACKGROUND_FETCH_DATE_TASK: 'getDateAndTime',
 };
