@@ -12,6 +12,13 @@ export default ScaledImageFinder = (props) => {
 
   const { baseImageUrl, item, uri, width } = props;
 
+  const defaultImage = (
+    <Image
+      source={require('../assets/images/no-image-placeholder.png')}
+      width={width}
+    />
+  );
+
   const stripForImage = (toolNumber) => {
     // console.log(toolNumber);
     let retValue = toolNumber.replace(/[^a-z0-9+]+/gi, '');
@@ -35,13 +42,6 @@ export default ScaledImageFinder = (props) => {
     }
     return retValue;
   };
-
-  const defaultImage = (
-    <Image
-      source={require('../assets/images/no-image-placeholder.png')}
-      width={width}
-    />
-  );
 
   const checkImage = async (imageUrl) => {
     // console.log(imageUrl, 'checking ');
