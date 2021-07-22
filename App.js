@@ -4,7 +4,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reducers from './reducers';
 import { Provider, useDispatch } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
@@ -95,30 +95,6 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-const fetchDate = async () => {
-  const now = new Date().toISOString();
-
-  //   const nowStr = (now && now.toISOString()) || 'no date';
-  const result = true;
-  console.log('Got background fetch call to fetch date', now);
-  // Be sure to return the successful result type!
-  return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
-};
-
-const fetchDateTwo = async () => {
-  const now = new Date().toISOString();
-
-  //   const nowStr = (now && now.toISOString()) || 'no date';
-  const result = true;
-  console.log('Got background fetch call to fetch date two', now);
-  // Be sure to return the successful result type!
-  return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
-};
-
 // const fetchOdis = async () => {
 //   console.log(`Got background fetch odis call`);
 
@@ -148,42 +124,64 @@ async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
   }
 }
 
-async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-  console.log('in initBackgroundFetch', taskName, taskFn, interval);
+async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  console.log('in defineBackgroundFetch', taskName, taskFn, interval);
   TaskManager.defineTask(taskName, taskFn);
 
   const status = await BackgroundFetch.getStatusAsync();
   switch (status) {
     case BackgroundFetch.Status.Restricted:
     case BackgroundFetch.Status.Denied:
-      console.log('Background execution is disabled');
+      console.log('in defineBackgroundFetch Background execution is disabled');
       return;
 
     default: {
-      console.log('Background execution allowed');
+      console.log('in defineBackgroundFetch Background execution allowed');
 
       let tasks = await TaskManager.getRegisteredTasksAsync();
       tasks = await TaskManager.getRegisteredTasksAsync();
-      console.log('Registered tasks', tasks);
-      if (tasks.find((f) => f.taskName === taskName) == null) {
-        console.log('Registering task');
-        await BackgroundFetch.registerTaskAsync(taskName, {
-          minimumInterval: 60 * 1, // 1 minutes
-          stopOnTerminate: false, // android only,
-          startOnBoot: true, // android only);
-        });
-      } else {
-        console.log(`Task ${taskName} already registered, skipping`);
-      }
-
-      console.log('Setting interval to', interval);
-      await BackgroundFetch.setMinimumIntervalAsync(interval);
+      console.log('in defineBackgroundFetch Registered tasks', tasks);
     }
   }
 }
 
-initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+
+// async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+//   console.log('in initBackgroundFetch', taskName, taskFn, interval);
+//   TaskManager.defineTask(taskName, taskFn);
+
+//   const status = await BackgroundFetch.getStatusAsync();
+//   switch (status) {
+//     case BackgroundFetch.Status.Restricted:
+//     case BackgroundFetch.Status.Denied:
+//       console.log('Background execution is disabled');
+//       return;
+
+//     default: {
+//       console.log('Background execution allowed');
+
+//       let tasks = await TaskManager.getRegisteredTasksAsync();
+//       tasks = await TaskManager.getRegisteredTasksAsync();
+//       console.log('Registered tasks', tasks);
+//       if (tasks.find((f) => f.taskName === taskName) == null) {
+//         console.log('Registering task');
+//         await BackgroundFetch.registerTaskAsync(taskName, {
+//           minimumInterval: 60 * 1, // 1 minutes
+//           stopOnTerminate: false, // android only,
+//           startOnBoot: true, // android only);
+//         });
+//       } else {
+//         console.log(`Task ${taskName} already registered, skipping`);
+//       }
+
+//       console.log('Setting interval to', interval);
+//       await BackgroundFetch.setMinimumIntervalAsync(interval);
+//     }
+//   }
+// }
+
 // TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
 //   const now = Date.now();
 //   const result = true;
@@ -201,6 +199,30 @@ export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  async function unregisterBackgroundFetch(taskName) {
+    console.log('in unregisterBackgroundFetch', taskName);
+    try {
+      if (!TaskManager.isTaskDefined(taskName)) {
+        await BackgroundFetch.unregisterTaskAsync(taskName);
+        console.log(
+          'in unregisterBackgroundFetch, ',
+          taskName,
+          ' is now unregistered'
+        );
+      } else {
+        console.log(
+          'in unregisterBackgroundFetch, ',
+          taskName,
+          ' was not registered'
+        );
+      }
+    } catch (err) {
+      console.log('unregisterTaskAsync() failed:', err);
+    }
+  }
+
+  //   unregisterBackgroundFetch('getDateAndTime');
   //   const dispatch = useDispatch();
 
   //   persistStore(store).purge();

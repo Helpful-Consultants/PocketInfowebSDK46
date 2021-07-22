@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,6 +10,8 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
 //import { Ionicons } from '@expo/vector-icons';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
@@ -27,6 +29,7 @@ import AppInfo from '../components/AppInfo';
 import DemoSwitch from '../components/DemoSwitch';
 import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 import Colors from '../constants/Colors';
+import Tasks from '../constants/Tasks';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
@@ -158,6 +161,69 @@ export default AppNavigator = (props) => {
   //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+
+  const fetchDate = async () => {
+    const now = new Date().toISOString();
+
+    //   const nowStr = (now && now.toISOString()) || 'no date';
+    const result = true;
+    console.log('Got background fetch call to fetch date', now);
+    // Be sure to return the successful result type!
+    return result
+      ? BackgroundFetch.Result.NewData
+      : BackgroundFetch.Result.NoData;
+  };
+
+  const fetchDateTwo = async () => {
+    const now = new Date().toISOString();
+
+    //   const nowStr = (now && now.toISOString()) || 'no date';
+    const result = true;
+    console.log('Got background fetch call to fetch date two', now);
+    // Be sure to return the successful result type!
+    return result
+      ? BackgroundFetch.Result.NewData
+      : BackgroundFetch.Result.NoData;
+  };
+
+  async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+    console.log('in initBackgroundFetch', taskName, taskFn, interval);
+    TaskManager.defineTask(taskName, taskFn);
+
+    const status = await BackgroundFetch.getStatusAsync();
+    switch (status) {
+      case BackgroundFetch.Status.Restricted:
+      case BackgroundFetch.Status.Denied:
+        console.log('Background execution is disabled');
+        return;
+
+      default: {
+        console.log('Background execution allowed');
+
+        let tasks = await TaskManager.getRegisteredTasksAsync();
+        tasks = await TaskManager.getRegisteredTasksAsync();
+        console.log('Registered tasks', tasks);
+        if (tasks.find((f) => f.taskName === taskName) == null) {
+          console.log('Registering task');
+          await BackgroundFetch.registerTaskAsync(taskName, {
+            minimumInterval: 60 * 1, // 1 minutes
+            stopOnTerminate: false, // android only,
+            startOnBoot: true, // android only);
+          });
+        } else {
+          console.log(`Task ${taskName} already registered, skipping`);
+        }
+
+        console.log('Setting interval to', interval);
+        await BackgroundFetch.setMinimumIntervalAsync(interval);
+      }
+    }
+  }
+
+  useEffect(() => {
+    initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
+    initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+  }, []);
 
   const allOK =
     userIsValidated &&

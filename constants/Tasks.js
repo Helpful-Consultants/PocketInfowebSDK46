@@ -1,4 +1,4 @@
 export default {
   BACKGROUND_FETCH_TASK: 'getLatestDateAndTimeOne',
-  BACKGROUND_FETCH_DATE_TASK: 'getDateAndTime',
+  BACKGROUND_FETCH_DATE_TASK: 'getLatestDateAndTimeTwo',
 };
