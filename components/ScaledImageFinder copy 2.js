@@ -44,9 +44,11 @@ export default ScaledImageFinder = (props) => {
   };
 
   useEffect(() => {
-    // let controller = new AbortController();
+    let controller = new AbortController();
     // const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
-    const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
+    const imageUrl = uri
+      ? uri + 'f'
+      : baseImageUrl + getImageUrl(item) + 'f.png';
     (async () => {
       try {
         Image.getSize(
@@ -59,18 +61,18 @@ export default ScaledImageFinder = (props) => {
             );
           },
           () => {
-            // console.log(imageUrl, 'image was not found');
+            console.log(imageUrl, 'image was not found');
             // setIsImageFound(false);
             setImageToShow(defaultImage);
           }
         );
 
-        // controller = null;
+        controller = null;
       } catch (e) {
         // Handle fetch error
       }
     })();
-    // return () => controller?.abort();
+    return () => controller?.abort();
   }, [uri]);
 
   //   const checkImage = async (imageUrl) => {
