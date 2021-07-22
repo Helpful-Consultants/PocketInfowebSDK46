@@ -135,7 +135,7 @@ export default SignInScreen = (props) => {
       <ScrollView>
         <AppNameWithLogo />
         <Text style={baseStyles.textInstructions}>
-          {userIsValidated
+          {userIsValidated && userIsSignedIn
             ? `Signed in`
             : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
         </Text>
