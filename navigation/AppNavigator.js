@@ -103,15 +103,15 @@ const DrawerNavigator = (props) => {
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'ODIS, News & Catalogue',
-          initialRouteName: 'Odis',
+          drawerLabel: 'News, Catalogue & Stats',
+          initialRouteName: 'News',
         }}
       />
       <Drawer.Screen
         name='RemindersTabs'
         component={RemindersTabNavigator}
         options={{
-          drawerLabel: 'Alerts, S Measures, Loans & Stats',
+          drawerLabel: 'Alerts, S Measures, Loans & ODIS',
           initialRouteName: 'Notifications',
         }}
       />
