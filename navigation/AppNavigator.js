@@ -198,23 +198,23 @@ export default AppNavigator = (props) => {
         return;
 
       default: {
-        console.log('Background execution allowed');
+        // console.log('Background execution allowed');
 
         let tasks = await TaskManager.getRegisteredTasksAsync();
         tasks = await TaskManager.getRegisteredTasksAsync();
-        console.log('Registered tasks', tasks);
+        // console.log('Registered tasks', tasks);
         if (tasks.find((f) => f.taskName === taskName) == null) {
-          console.log('Registering task');
+          //   console.log('Registering task');
           await BackgroundFetch.registerTaskAsync(taskName, {
             minimumInterval: 60 * 1, // 1 minutes
             stopOnTerminate: false, // android only,
             startOnBoot: true, // android only);
           });
         } else {
-          console.log(`Task ${taskName} already registered, skipping`);
+          //   console.log(`Task ${taskName} already registered, skipping`);
         }
 
-        console.log('Setting interval to', interval);
+        // console.log('Setting interval to', interval);
         await BackgroundFetch.setMinimumIntervalAsync(interval);
       }
     }
