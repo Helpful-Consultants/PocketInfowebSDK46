@@ -233,7 +233,7 @@ export default AppNavigator = (props) => {
       ? true
       : false;
 
-  const AppStack = createStackNavigator();
+  //   const AppStack = createStackNavigator();
 
   //   console.log('AppNavigator,allOK ', allOK);
 
