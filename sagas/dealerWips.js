@@ -184,7 +184,7 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  console.log('in create wip saga', payload);
+  //   console.log('in create wip saga', payload);
   //   console.log('in create wip saga', payload.wipObj);
   let statusCode = null;
   let errorText = 'A server error occurred when trying to save the job';
