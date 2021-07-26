@@ -28,7 +28,8 @@
     "expo": "^42.0.0",
     "expo-app-loading": "^1.0.3",
     "expo-application": "~3.2.0",
-    "expo-asset": "~8.3.2",
+    "expo-asset": "~8.3.3",
+    "expo-background-fetch": "~9.2.2",
     "expo-cli": "^4.7.3",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
@@ -38,7 +39,8 @@
     "expo-secure-store": "~10.2.0",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
-    "expo-updates": "~0.8.1",
+    "expo-task-manager": "~9.2.2",
+    "expo-updates": "~0.8.2",
     "expo-web-browser": "~9.2.0",
     "htmlparser2": "^6.1.0",
     "ios": "0.0.1",
@@ -75,6 +77,7 @@
     "sentry-expo": "^4.0.0"
   },
   "devDependencies": {
+    "@babel/code-frame": "^7.14.5",
     "@babel/core": "~7.13.16",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",

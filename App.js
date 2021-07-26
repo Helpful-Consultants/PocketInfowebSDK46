@@ -2,9 +2,11 @@ import AppLoading from 'expo-app-loading';
 // import * as Notifications from 'expo-notifications';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
+import React, { useEffect, useState } from 'react';
 import reducers from './reducers';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -17,6 +19,7 @@ import { Text, TextInput } from 'react-native'; // not react-native-elements, fo
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
+import Tasks from './constants/Tasks';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
@@ -28,6 +31,8 @@ import Constants from 'expo-constants';
 // import { Button, colors, ThemeProvider } from 'react-native-elements';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
+
+import { getOdisRequest } from './actions/odis';
 
 enableScreens();
 
@@ -90,17 +95,135 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-// const [permission, askForPermission, getPermission] = usePermissions(
-//   Permissions.USER_FACING_NOTIFICATIONS,
-//   {
-//     ask: true,
+// const fetchOdis = async () => {
+//   console.log(`Got background fetch odis call`);
+
+//   dispatch(getOdisRequest());
+//   // Be sure to return the successful result type!
+//   return result
+//     ? BackgroundFetch.Result.NewData
+//     : BackgroundFetch.Result.NoData;
+// };
+
+// const BACKGROUND_FETCH_TASK = 'background-fetcher';
+// 1. Define the task by providing a name and the function that should be executed
+// Note: This needs to be called in the global scope (e.g outside of your React components)
+async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  console.log('in zzzzinitBackgroundFetch', taskName, taskFn, interval);
+  try {
+    if (!TaskManager.isTaskDefined(taskName)) {
+      TaskManager.defineTask(taskName, taskFn);
+    }
+    const options = {
+      minimumInterval: interval, // in seconds
+    };
+    await BackgroundFetch.registerTaskAsync(taskName, options);
+    console.log('registerTaskAsync() worked');
+  } catch (err) {
+    console.log('registerTaskAsync() failed:', err);
+  }
+}
+
+async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  console.log('in defineBackgroundFetch', taskName, taskFn, interval);
+  TaskManager.defineTask(taskName, taskFn);
+
+  const status = await BackgroundFetch.getStatusAsync();
+  switch (status) {
+    case BackgroundFetch.Status.Restricted:
+    case BackgroundFetch.Status.Denied:
+      console.log('in defineBackgroundFetch Background execution is disabled');
+      return;
+
+    default: {
+      console.log('in defineBackgroundFetch Background execution allowed');
+
+      let tasks = await TaskManager.getRegisteredTasksAsync();
+      tasks = await TaskManager.getRegisteredTasksAsync();
+      console.log('in defineBackgroundFetch Registered tasks', tasks);
+    }
+  }
+}
+
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+
+// async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+//   console.log('in initBackgroundFetch', taskName, taskFn, interval);
+//   TaskManager.defineTask(taskName, taskFn);
+
+//   const status = await BackgroundFetch.getStatusAsync();
+//   switch (status) {
+//     case BackgroundFetch.Status.Restricted:
+//     case BackgroundFetch.Status.Denied:
+//       console.log('Background execution is disabled');
+//       return;
+
+//     default: {
+//       console.log('Background execution allowed');
+
+//       let tasks = await TaskManager.getRegisteredTasksAsync();
+//       tasks = await TaskManager.getRegisteredTasksAsync();
+//       console.log('Registered tasks', tasks);
+//       if (tasks.find((f) => f.taskName === taskName) == null) {
+//         console.log('Registering task');
+//         await BackgroundFetch.registerTaskAsync(taskName, {
+//           minimumInterval: 60 * 1, // 1 minutes
+//           stopOnTerminate: false, // android only,
+//           startOnBoot: true, // android only);
+//         });
+//       } else {
+//         console.log(`Task ${taskName} already registered, skipping`);
+//       }
+
+//       console.log('Setting interval to', interval);
+//       await BackgroundFetch.setMinimumIntervalAsync(interval);
+//     }
 //   }
-// );
+// }
+
+// TaskManager.defineTask(Tasks.BACKGROUND_FETCH_TASK, async () => {
+//   const now = Date.now();
+//   const result = true;
+//   console.log(`Got background fetch call`);
+//   console.log(
+//     `Got background fetch call at date: ${new Date(now).toISOString()}`
+//   );
+//   // Be sure to return the successful result type!
+//   return result
+//     ? BackgroundFetch.Result.NewData
+//     : BackgroundFetch.Result.NoData;
+// });
 
 export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [isLoadingComplete, setLoadingComplete] = useState(false);
+
+  async function unregisterBackgroundFetch(taskName) {
+    console.log('in unregisterBackgroundFetch', taskName);
+    try {
+      if (!TaskManager.isTaskDefined(taskName)) {
+        await BackgroundFetch.unregisterTaskAsync(taskName);
+        console.log(
+          'in unregisterBackgroundFetch, ',
+          taskName,
+          ' is now unregistered'
+        );
+      } else {
+        console.log(
+          'in unregisterBackgroundFetch, ',
+          taskName,
+          ' was not registered'
+        );
+      }
+    } catch (err) {
+      console.log('unregisterTaskAsync() failed:', err);
+    }
+  }
+
+  //   unregisterBackgroundFetch('getDateAndTime');
+  //   const dispatch = useDispatch();
 
   //   persistStore(store).purge();
   //   const userIsValidated = true;

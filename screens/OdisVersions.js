@@ -1,19 +1,24 @@
 import React from 'react';
 import { useWindowDimensions, ScrollView, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
+import moment from 'moment';
 import vwLogo from '../assets/images/vw-logo.png';
 import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
 
+const getDisplayDate = (rawDate) => {
+  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
+};
+
 export default function OdisVersions(props) {
-  //   console.log(props.items);
+  console.log('props fetchTime', props.fetchTime);
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
   const windowDim = useWindowDimensions();
-  const { itemsObj, userBrand, viewCount } = props;
+  const { fetchTime, itemsObj, userBrand, viewCount } = props;
 
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const logoChooser = {
@@ -142,14 +147,19 @@ export default function OdisVersions(props) {
         </View>
 
         {/* {viewCount && viewCount > 0 ? (
-        <View>
-          <Text>{`Viewed ${viewCount}`}</Text>
-        </View>
-      ) : null} */}
+          <View>
+            <Text>{`Viewed ${viewCount}`}</Text>
+          </View>
+        ) : null} */}
 
         <View>
           {itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}
         </View>
+        {fetchTime ? (
+          <Text
+            style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+          >{`Last checked : ${getDisplayDate(fetchTime)}`}</Text>
+        ) : null}
       </View>
     </ScrollView>
   );

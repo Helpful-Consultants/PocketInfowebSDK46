@@ -10,11 +10,13 @@ const vwgInactiveLinkColor = Platform.OS === 'ios' ? '#00A1D0' : '#0288D1';
 const vwgAndroidNavColor = '#3689b1';
 const vwgAndroidStatusColor = '#196F99';
 const vwgInfoBarColor = '#196F99';
+const vwgAlertColor = '#e2a933';
 
 export default {
   tintColor,
   errorText,
   iosBlue: 'rgba(0, 122, 125, 1)',
+  vwgAlertColor: vwgAlertColor,
   vwgLink: vwgLinkColor,
   vwgHeader: vwgHeaderColor,
   vwgAndroidNav: vwgAndroidNavColor,

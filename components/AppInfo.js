@@ -2,16 +2,22 @@ import React from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
 import Colors from '../constants/Colors';
 
+const getDisplayDate = (rawDate) => {
+  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
+};
+
 export default AppInfo = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const odisFetchTime = useSelector((state) => state.odis.fetchTime);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
 
@@ -44,24 +50,20 @@ export default AppInfo = (props) => {
     >
       <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
       {Constants.manifest.name &&
-      Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-        <Text
-          style={{
-            ...baseStyles.panelTextBrand,
-            color: Colors.vwgCoolOrange,
-            fontFamily: 'the-sans',
-          }}
-        >
-          Showing new features
-        </Text>
-      ) : null}
+      Constants.manifest.name === 'Pocket Infoweb Extra'
+        ? null
+        : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
         </Text>
       ) : null}
       <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
-
+      {odisFetchTime ? (
+        <Text style={baseStyles.panelTextAppInfo}>
+          {`Last data refresh: ${getDisplayDate(odisFetchTime)}`}
+        </Text>
+      ) : null}
       {Platform && Platform.OS === 'ios' ? (
         Constants && Constants.deviceName ? (
           <Text style={baseStyles.panelTextAppInfo}>
@@ -90,7 +92,6 @@ export default AppInfo = (props) => {
           ) : null}
         </Text>
       ) : null}
-
       <Text style={baseStyles.panelTextAppInfo}>
         {`Build `}
         {Constants.manifest.sdkVersion
@@ -121,3 +122,15 @@ export default AppInfo = (props) => {
     </View>
   );
 };
+
+{
+  /* <Text
+  style={{
+    ...baseStyles.panelTextBrand,
+    color: Colors.vwgCoolOrange,
+    fontFamily: 'the-sans',
+  }}
+>
+  Showing new features
+</Text>; */
+}

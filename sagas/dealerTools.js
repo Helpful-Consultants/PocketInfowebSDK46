@@ -21,7 +21,7 @@ function* getDealerTools({ payload }) {
       dealerId: payload.dealerId,
     });
     // console.log('in saga get dealerTools - 200');
-    // console.log(result);
+    // console.log(result.data[0]);
 
     if (
       result.data &&
@@ -30,7 +30,7 @@ function* getDealerTools({ payload }) {
       result.data[0].id &&
       result.data[0].toolType
     ) {
-      //   console.log('in ltp saga - good 200');
+      //   console.log('in dealer tools saga - good 200');
 
       //   console.log('in Tools saga - good 200');
       //   console.log(result.data);
@@ -61,7 +61,7 @@ function* getDealerTools({ payload }) {
         })
       );
     } else {
-      console.log('dealer Tools weird result');
+      //   console.log('dealer Tools weird result');
       //   console.log(result && result);
       yield put(
         actions.dealerToolsError({
@@ -82,7 +82,7 @@ function* getDealerTools({ payload }) {
     // console.log(result);
     // console.log('end results in saga get dealerTools, success');
   } catch (error) {
-    console.log('server error in saga get dealerTools !!!!!!!!!!!!!!');
+    // console.log('server error in saga get dealerTools !!!!!!!!!!!!!!');
     // console.log('whole Error', error);
     // console.log('whole Error ends');
     // console.log(error && error.config);

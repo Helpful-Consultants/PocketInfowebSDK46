@@ -43,38 +43,38 @@ export default ScaledImageFinder = (props) => {
     return retValue;
   };
 
-  let isMounted;
-
   useEffect(() => {
-    isMounted = true;
-
-    const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
+    let controller = new AbortController();
+    // const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
+    const imageUrl = uri
+      ? uri + 'f'
+      : baseImageUrl + getImageUrl(item) + 'f.png';
     (async () => {
       try {
         Image.getSize(
           imageUrl,
           () => {
             // console.log(imageUrl, 'image was found');
-            isMounted &&
-              setImageToShow(
-                <ScalableImage source={{ uri: imageUrl }} width={width} />
-              );
+            // setIsImageFound(true);
+            setImageToShow(
+              <ScalableImage source={{ uri: imageUrl }} width={width} />
+            );
           },
           () => {
-            // console.log(imageUrl, 'image was not found');
-            isMounted && setImageToShow(defaultImage);
+            console.log(imageUrl, 'image was not found');
+            // setIsImageFound(false);
+            setImageToShow(defaultImage);
           }
         );
-        // controller = null;
+
+        controller = null;
       } catch (e) {
-        isMounted && setImageToShow(defaultImage);
+        // Handle fetch error
       }
     })();
-
-    return () => {
-      isMounted = false;
-    };
+    return () => controller?.abort();
   }, [uri]);
+
   //   const checkImage = async (imageUrl) => {
   //     // console.log(imageUrl, 'checking ');
   //     Image.getSize(

@@ -4,7 +4,7 @@ import {
   take,
   call,
   put,
-  fork
+  fork,
 } from 'redux-saga/effects';
 
 import Types from '../constants/Types';
@@ -25,7 +25,7 @@ function* getDealerWips({ payload }) {
     try {
       const result = yield call(api.getDealerWips, {
         dealerId: payload.dealerId,
-        intId: payload.intId
+        intId: payload.intId,
       });
       // console.log('in saga get dealerWips -200');
 
@@ -57,15 +57,15 @@ function* getDealerWips({ payload }) {
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
-              null
+              null,
           })
         );
       } else if (result && result.data && result.data.length > 0) {
-        console.log(
-          'in Wips saga - an empty 200',
-          result.request.status && result.request.status,
-          payload && payload
-        );
+        // console.log(
+        //   'in Wips saga - an empty 200',
+        //   result.request.status && result.request.status,
+        //   payload && payload
+        // );
         //   console.log(result && result);
         yield put(
           actions.getDealerWipsSuccess({
@@ -73,7 +73,7 @@ function* getDealerWips({ payload }) {
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
-              null
+              null,
           })
         );
       } else {
@@ -92,7 +92,7 @@ function* getDealerWips({ payload }) {
                 result.request &&
                 result.request._url &&
                 result.request._url) ||
-              null
+              null,
           })
         );
       }
@@ -167,7 +167,7 @@ function* getDealerWips({ payload }) {
         actions.dealerWipsError({
           error: errorText,
           statusCode: statusCode,
-          dataErrorUrl: dataErrorUrl
+          dataErrorUrl: dataErrorUrl,
         })
       );
     }
@@ -184,7 +184,7 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  console.log('in create wip saga', payload);
+  //   console.log('in create wip saga', payload);
   //   console.log('in create wip saga', payload.wipObj);
   let statusCode = null;
   let errorText = 'A server error occurred when trying to save the job';
@@ -208,7 +208,7 @@ function* createDealerWip({ payload }) {
           statusCode: 409,
           message: 'Some of these tools are unavailable',
           wipNumber: (payload.wipObj && payload.wipObj.wipNumber) || '',
-          wipProcessed: result.data[0]
+          wipProcessed: result.data[0],
         })
       );
     } else {
@@ -216,7 +216,7 @@ function* createDealerWip({ payload }) {
         actions.createDealerWipSuccess({
           statusCode: 201,
           message: 'Job booked OK',
-          wipNumber: (payload.wipObj && payload.wipObj.wipNumber) || ''
+          wipNumber: (payload.wipObj && payload.wipObj.wipNumber) || '',
         })
       );
       //   console.log('createDealerWipSuccess', result);
@@ -299,7 +299,7 @@ function* createDealerWip({ payload }) {
       actions.dealerWipsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
@@ -330,7 +330,7 @@ function* deleteDealerWipTool({ payload }) {
         statusCode:
           (result.status && result.status) ||
           (result.request.status && result.request.status) ||
-          null
+          null,
       })
     );
     // refresh the list
@@ -406,7 +406,7 @@ function* deleteDealerWipTool({ payload }) {
       actions.dealerWipsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
@@ -436,7 +436,7 @@ function* deleteDealerWip(payload) {
       actions.deleteDealerWipSuccess({
         statusCode: 202,
         message: 'Probably successful',
-        wipNumber: payload.wipNumber || ''
+        wipNumber: payload.wipNumber || '',
       })
     );
     console.log('delete wip good result', result && result);
@@ -512,7 +512,7 @@ function* deleteDealerWip(payload) {
       actions.dealerWipsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
@@ -531,7 +531,7 @@ const dealerWipsSagas = [
   fork(watchGetDealerWipsRequest),
   fork(watchDeleteDealerWipRequest),
   fork(watchCreateDealerWipRequest),
-  fork(watchDeleteDealerWipToolRequest)
+  fork(watchDeleteDealerWipToolRequest),
 ];
 
 export default dealerWipsSagas;
