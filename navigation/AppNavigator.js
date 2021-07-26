@@ -221,8 +221,8 @@ export default AppNavigator = (props) => {
   }
 
   useEffect(() => {
-    initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-    initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
+    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
   }, []);
 
   const allOK =
