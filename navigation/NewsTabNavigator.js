@@ -61,6 +61,7 @@ const defaultStackNavOptions = () => {
   //   const baseStyles = windowDim && getBaseStyles(windowDim);
   const navigation = useNavigation();
   return {
+    headerShown: true,
     headerStyle: {
       backgroundColor: Colors.vwgHeader,
       height: headerHeight,
@@ -166,7 +167,8 @@ const NewsTabs =
 export default NewsTabNavigator = () => {
   return Platform.OS === 'ios' ? (
     <NewsTabs.Navigator //iOS
-      screenOptions={defaultStackNavOptions}
+      //screenOptions={defaultStackNavOptions}
+      screenOptions={{ headerShown: true }}
       lazy={true}
       tabBarOptions={{
         showLabel: true,
@@ -195,7 +197,8 @@ export default NewsTabNavigator = () => {
         name='Stats'
         component={StatsScreen}
         options={{
-          headerShown: false,
+          title: 'Stats Time',
+          headerShown: true,
           headerTransparent: true,
           headerBackground: () => <BlurView tint='dark' intensity={100} />,
         }}

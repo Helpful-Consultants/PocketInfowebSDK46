@@ -4,6 +4,7 @@ import { Text, useWindowDimensions, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 // import moment from 'moment';
 import { NavigationContainer } from '@react-navigation/native';
+import { getHeaderTitle } from '@react-navigation/elements';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -73,6 +74,14 @@ const DrawerNavigator = (props) => {
 
   return (
     <Drawer.Navigator
+      screenOptions={{
+        headerShown: true,
+        header: ({ navigation, route, options }) => {
+          const title = getHeaderTitle(options, route.name);
+
+          return <MyHeader title={title} style={options.headerStyle} />;
+        },
+      }}
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
