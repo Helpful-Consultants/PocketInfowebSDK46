@@ -166,6 +166,7 @@ const NewsTabs =
 export default NewsTabNavigator = () => {
   return Platform.OS === 'ios' ? (
     <NewsTabs.Navigator //iOS
+      screenOptions={defaultStackNavOptions}
       lazy={true}
       tabBarOptions={{
         showLabel: true,
@@ -192,8 +193,12 @@ export default NewsTabNavigator = () => {
       />
       <NewsTabs.Screen
         name='Stats'
-        component={StatsStack}
-        options={StatsScreenOptions}
+        component={StatsScreen}
+        options={{
+          headerShown: false,
+          headerTransparent: true,
+          headerBackground: () => <BlurView tint='dark' intensity={100} />,
+        }}
       />
     </NewsTabs.Navigator>
   ) : (

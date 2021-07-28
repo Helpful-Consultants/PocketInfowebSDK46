@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, useWindowDimensions, View } from 'react-native';
+import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 // import { HeaderButtons, Item } from 'react-navigation-header-buttons';
@@ -14,6 +14,7 @@ import { getStatsRequest } from '../actions/stats';
 // import { getDealerWipsRequest } from '../actions/dealerWips';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
+import Colors from '../constants/Colors';
 // import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
@@ -183,6 +184,31 @@ const titleString = 'Stats';
 //     value={0}
 //   />
 // );
+
+const screenWidth = Math.round(Dimensions.get('window').width);
+// const screenHeight = Math.round(Dimensions.get('window').height);
+const baseFontSize = 12;
+let navBarFontSize =
+  screenWidth > 1023
+    ? baseFontSize * 1.3
+    : screenWidth > 767
+    ? baseFontSize * 1.2
+    : screenWidth > 413
+    ? baseFontSize * 1.1
+    : screenWidth > 374
+    ? baseFontSize * 1
+    : baseFontSize * 1;
+
+let headerHeight =
+  screenWidth > 1023
+    ? 90
+    : screenWidth > 767
+    ? 80
+    : screenWidth > 413
+    ? 70
+    : screenWidth > 374
+    ? 60
+    : 60;
 export const screenOptions = (navData) => {
   return {
     headerTitle: () => <TitleWithAppLogo title={titleString} />,
@@ -194,6 +220,36 @@ export const screenOptions = (navData) => {
         name={Platform.OS === 'ios' ? 'stats-chart' : 'stats-chart'}
         size={size}
       />
+    ),
+    headerStyle: {
+      backgroundColor: Colors.vwgHeader,
+      height: headerHeight,
+    },
+    cardStyle: { backgroundColor: 'white' },
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='home'
+          iconName={Platform.OS === 'ios' ? 'home' : 'home'}
+          onPress={() => {
+            {
+              /* console.log('pressed homescreen icon'); */
+            }
+            navigation.navigate('Home');
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='menu'
+          iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
+          onPress={() => {
+            navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
     ),
   };
 };
