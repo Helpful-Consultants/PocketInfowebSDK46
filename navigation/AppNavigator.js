@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
-// import moment from 'moment';
 import { NavigationContainer } from '@react-navigation/native';
-import { getHeaderTitle } from '@react-navigation/elements';
-import { createStackNavigator } from '@react-navigation/stack';
+
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -13,6 +11,7 @@ import {
 } from '@react-navigation/drawer';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
+
 //import { Ionicons } from '@expo/vector-icons';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
@@ -74,19 +73,12 @@ const DrawerNavigator = (props) => {
 
   return (
     <Drawer.Navigator
-      screenOptions={{
-        headerShown: true,
-        header: ({ navigation, route, options }) => {
-          const title = getHeaderTitle(options, route.name);
-
-          return <MyHeader title={title} style={options.headerStyle} />;
-        },
-      }}
+      headerShown={false}
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
       drawerContent={(props) => <CustomDrawerContent {...props} />}
-      drawerContentOptions={{
+      screenOptions={{
         activeBackgroundColor: Colors.vwgActiveLink,
         inactiveBackgroundColor: Colors.vwgInactiveLink,
         labelStyle: baseStyles.panelTextNav,
@@ -97,6 +89,7 @@ const DrawerNavigator = (props) => {
         component={HomeScreen}
         options={{
           drawerLabel: 'Home',
+          headerShown: false,
         }}
       />
 
@@ -124,13 +117,6 @@ const DrawerNavigator = (props) => {
           initialRouteName: 'Notifications',
         }}
       />
-      {/* <Drawer.Screen
-        name='SignedOutStack'
-        component={SignOutScreen}
-        options={{
-          drawerLabel: 'Sign out',
-        }}
-      /> */}
     </Drawer.Navigator>
   );
 };

@@ -1,14 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Dimensions, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
+
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-// import HeaderButton from '../components/HeaderButton';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
 // import { getDealerWipsRequest } from '../actions/dealerWips';
@@ -175,81 +171,4 @@ export default StatsScreen = (props) => {
     </View>
   );
 };
-const titleString = 'Stats';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
 // );
-
-const screenWidth = Math.round(Dimensions.get('window').width);
-// const screenHeight = Math.round(Dimensions.get('window').height);
-const baseFontSize = 12;
-let navBarFontSize =
-  screenWidth > 1023
-    ? baseFontSize * 1.3
-    : screenWidth > 767
-    ? baseFontSize * 1.2
-    : screenWidth > 413
-    ? baseFontSize * 1.1
-    : screenWidth > 374
-    ? baseFontSize * 1
-    : baseFontSize * 1;
-
-let headerHeight =
-  screenWidth > 1023
-    ? 90
-    : screenWidth > 767
-    ? 80
-    : screenWidth > 413
-    ? 70
-    : screenWidth > 374
-    ? 60
-    : 60;
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'stats-chart' : 'stats-chart'}
-        size={size}
-      />
-    ),
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-      height: headerHeight,
-    },
-    cardStyle: { backgroundColor: 'white' },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='home'
-          iconName={Platform.OS === 'ios' ? 'home' : 'home'}
-          onPress={() => {
-            {
-              /* console.log('pressed homescreen icon'); */
-            }
-            navigation.navigate('Home');
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='menu'
-          iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
