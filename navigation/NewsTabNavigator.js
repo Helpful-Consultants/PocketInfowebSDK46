@@ -86,6 +86,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
 
   return (
     <NewsTabs.Navigator //iOS
+      initialRouteName='News' // ios and android
       backBehavior='history' // ios and android
       // for android - start
       activeColor={Colors.vwgActiveLink} // android

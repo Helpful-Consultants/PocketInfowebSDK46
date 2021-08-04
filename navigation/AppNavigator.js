@@ -98,7 +98,6 @@ const DrawerNavigator = (props) => {
         component={WipTabNavigator}
         options={{
           drawerLabel: 'Find Tools, Jobs & LTP List',
-          initialRouteName: 'FindTools',
         }}
       />
       <Drawer.Screen
@@ -106,7 +105,6 @@ const DrawerNavigator = (props) => {
         component={NewsTabNavigator}
         options={{
           drawerLabel: 'News, Catalogue & Stats',
-          initialRouteName: 'News',
         }}
       />
       <Drawer.Screen
@@ -114,7 +112,6 @@ const DrawerNavigator = (props) => {
         component={RemindersTabNavigator}
         options={{
           drawerLabel: 'Alerts, S Measures, Loans & ODIS',
-          initialRouteName: 'Notifications',
         }}
       />
     </Drawer.Navigator>

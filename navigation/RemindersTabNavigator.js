@@ -89,6 +89,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   return (
     <RemindersTabs.Navigator //iOS
+      initialRouteName='Notifications' // ios and android
       backBehavior='history' // ios and android
       // for android - start
       activeColor={Colors.vwgActiveLink} // android

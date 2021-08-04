@@ -87,6 +87,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
 
   return (
     <WipTabs.Navigator //iOS
+      initialRouteName='Find Tools' // ios and android
       backBehavior='history' // ios and android
       // for android - start
       activeColor={Colors.vwgActiveLink} // android
