@@ -11,12 +11,7 @@ import {
 import { Text } from 'react-native-elements';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
-
-// import moment from 'moment';
 import AwesomeAlert from 'react-native-awesome-alerts';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
 import sortObjectList from '../helpers/sortObjectList';
 // import NewJobButton from '../components/NewJobButton';
 // import BookToJobModal from '../components/BookToJobModal';
@@ -371,31 +366,3 @@ export default BookedOutToolsScreen = (props) => {
     </View>
   );
 };
-
-const titleString = 'Booked Tools';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'return-down-back' : 'return-down-back'}
-        size={size}
-      />
-    ),
-  };
-};
-
-// LocatorScreen.navigationOptions = {
-//   headerTitle: <TitleWithAppLogo title='DealerWip Finder' />
-// };

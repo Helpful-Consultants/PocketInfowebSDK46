@@ -1,18 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Platform,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
@@ -320,28 +312,4 @@ export default LtpLoansScreen = (props) => {
       )}
     </View>
   );
-};
-
-const titleString = 'All LTP Loans';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
-        size={size}
-      />
-    ),
-  };
 };

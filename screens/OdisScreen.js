@@ -1,16 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, useWindowDimensions, View } from 'react-native';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
+import { useWindowDimensions, View } from 'react-native';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import HeaderButton from '../components/HeaderButton';
-import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
-import Colors from '../constants/Colors';
 import OdisVersions from './OdisVersions';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
@@ -18,14 +13,13 @@ export default OdisScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisObj = useSelector((state) => state.odis.odisData);
   const isLoading = useSelector((state) => state.odis.isLoading);
   const dataError = useSelector((state) => state.odis.error);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
-  const allOdis = useSelector((state) => state.odis);
+  //   const allOdis = useSelector((state) => state.odis);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
@@ -126,30 +120,4 @@ export default OdisScreen = (props) => {
       ) : null}
     </View>
   );
-};
-
-const titleString = 'ODIS';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'tv' : 'tv'}
-        size={size}
-        alert={odisViewCount ? false : true}
-      />
-    ),
-  };
 };

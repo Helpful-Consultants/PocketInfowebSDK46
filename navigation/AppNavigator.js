@@ -94,7 +94,7 @@ const DrawerNavigator = (props) => {
       />
 
       <Drawer.Screen
-        name='WipsTabs'
+        name='WipTabs'
         component={WipTabNavigator}
         options={{
           drawerLabel: 'Find Tools, Jobs & LTP List',

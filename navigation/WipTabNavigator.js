@@ -1,34 +1,19 @@
-import React from 'react';
-import { Platform, Dimensions } from 'react-native';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
-// import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect } from 'react';
+import { Dimensions, Platform } from 'react-native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
-// import HomeScreen, {
-//   screenOptions as HomeScreenOptions
-// } from '../screens/HomeScreen';
-import FindToolsScreen, {
-  screenOptions as FindToolsScreenOptions,
-} from '../screens/FindToolsScreen';
-import BookedOutToolsScreen, {
-  screenOptions as BookedOutToolsScreenOptions,
-} from '../screens/BookedOutToolsScreen';
-import JobsScreen, {
-  screenOptions as JobsScreenOptions,
-} from '../screens/JobsScreen';
-import LtpScreen, {
-  screenOptions as LtpScreenOptions,
-} from '../screens/LtpScreen';
+import FindToolsScreen from '../screens/FindToolsScreen';
+import BookedOutToolsScreen from '../screens/BookedOutToolsScreen';
+import JobsScreen from '../screens/JobsScreen';
+import LtpScreen from '../screens/LtpScreen';
 
 import Colors from '../constants/Colors';
-
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
@@ -56,189 +41,116 @@ let headerHeight =
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
 
-const defaultStackNavOptions = () => {
-  //   const windowDim = useWindowDimensions();
-  //   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const navigation = useNavigation();
-  return {
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-      height: headerHeight,
-    },
-    cardStyle: { backgroundColor: 'white' },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='home'
-          iconName={Platform.OS === 'ios' ? 'home' : 'home'}
-          onPress={() => {
-            {
-              /* console.log('pressed homescreen icon'); */
-            }
-            navigation.navigate('Home');
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='menu'
-          iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
+// Start tab navigator
 
-// const HomeStack = createStackNavigator();
-// <HomeStack.Navigator screenOptions={defaultStackNavOptions}>
-//   <HomeStack.Screen
-//     name={Home}
-//     component={HomeScreen}
-//     options={HomeScreenOptions}
-//   />
-// </HomeStack.Navigator>;
-
-const FindTools = createStackNavigator();
-
-const FindToolsStack = () => {
-  return (
-    <FindTools.Navigator screenOptions={defaultStackNavOptions}>
-      <FindTools.Screen
-        name={'FindToolsScreen'}
-        component={FindToolsScreen}
-        options={FindToolsScreenOptions}
-      />
-    </FindTools.Navigator>
-  );
-};
-
-const BookedOutTools = createStackNavigator();
-const BookedOutToolsStack = () => {
-  return (
-    <BookedOutTools.Navigator screenOptions={defaultStackNavOptions}>
-      <BookedOutTools.Screen
-        name={'BookedOutToolsScreen'}
-        component={BookedOutToolsScreen}
-        options={BookedOutToolsScreenOptions}
-      />
-    </BookedOutTools.Navigator>
-  );
-};
-
-const Jobs = createStackNavigator();
-const JobsStack = () => {
-  return (
-    <Jobs.Navigator screenOptions={defaultStackNavOptions}>
-      <Jobs.Screen
-        name={'JobsScreen'}
-        component={JobsScreen}
-        options={JobsScreenOptions}
-      />
-    </Jobs.Navigator>
-  );
-};
-
-const Ltp = createStackNavigator();
-const LtpStack = () => {
-  return (
-    <Ltp.Navigator screenOptions={defaultStackNavOptions}>
-      <Ltp.Screen
-        name={'LtpScreen'}
-        component={LtpScreen}
-        options={LtpScreenOptions}
-      />
-    </Ltp.Navigator>
-  );
-};
-
-// Tab navigator
 const WipTabs =
-  Platform.OS === 'ios'
-    ? createBottomTabNavigator()
-    : createMaterialBottomTabNavigator();
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator()
+    : createBottomTabNavigator();
 
-export default WipTabNavigator = () => {
-  return Platform.OS === 'ios' ? (
+export default WipTabNavigator = ({ navigation, route }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
+      },
+      headerTitle: () => (
+        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
+      ),
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='home'
+            iconName={Platform.OS === 'ios' ? 'home' : 'home'}
+            onPress={() => {
+              {
+                /* console.log('pressed homescreen icon'); */
+              }
+              navigation.navigate('Home');
+            }}
+          />
+        </HeaderButtons>
+      ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='menu'
+            iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation, route]);
+
+  return (
     <WipTabs.Navigator //iOS
-      lazy={true}
-      tabBarOptions={{
-        showLabel: true,
-        labelPosition: 'below-icon', // Otherwise weird for landscape
-        labelStyle: {
-          fontSize: navBarFontSize,
-        },
-        activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink,
-        activeBackgroundColor: Colors.vwgWhite,
-        inactiveBackgroundColor: Colors.vwgWhite,
-        adaptive: false,
-      }}
-      //screenOptions={defaultTabNavScreenOptions}
-    >
-      <WipTabs.Screen
-        name='FindTools'
-        component={FindToolsStack}
-        options={FindToolsScreenOptions}
-      />
-      <WipTabs.Screen
-        name='BookedOutTools'
-        component={BookedOutToolsStack}
-        options={BookedOutToolsScreenOptions}
-      />
-      <WipTabs.Screen
-        name='Jobs'
-        component={JobsStack}
-        options={JobsScreenOptions}
-      />
-      <WipTabs.Screen
-        name='Ltp'
-        component={LtpStack}
-        options={LtpScreenOptions}
-      />
-    </WipTabs.Navigator>
-  ) : (
-    <WipTabs.Navigator // Android
-      lazy={true}
-      labeled={true}
-      title='Default Title'
-      shifting={false}
-      backBehavior={'history'}
-      activeColor={Colors.vwgActiveLink}
-      inactiveColor={Colors.vwgInactiveLink}
-      tabBarOptions={{
-        labelStyle: {
-          fontSize: navBarFontSize, // Doesn't seem to work
-        },
-      }}
+      backBehavior='history' // ios and android
+      // for android - start
+      activeColor={Colors.vwgActiveLink} // android
+      inactiveColor={Colors.vwgInactiveLink} // android
+      shifting={false} //android
       barStyle={{
+        // android
         labelPosition: 'below-icon',
         backgroundColor: Colors.vwgVeryVeryLightGray,
       }}
+      // for android - end
+      // for ios - start
+      sceneContainerStyle={{ backgroundColor: 'white' }} // ios
+      screenOptions={{
+        // android and ios
+        headerShown: false, //ios
+        tabBarActiveTintColor: Colors.vwgActiveLink, //ios
+        tabBarInactiveTintColor: Colors.vwgInactiveLink, //ios
+        tabBarActiveBackgroundColor: Colors.vwgWhite, //ios
+        tabBarInactiveBackgroundColor: Colors.vwgWhite, //ios
+        tabBarLabelStyle: {
+          //ios
+          fontSize: navBarFontSize,
+        },
+        tabBarLabelPosition: 'below-icon', //io
+        sceneContainerStyle: { backgroundColor: 'white' }, // ios
+      }}
+      // for ios - end
     >
       <WipTabs.Screen
-        name='FindTools'
-        component={FindToolsStack}
-        options={FindToolsScreenOptions}
+        name='Find Tools'
+        component={FindToolsScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='build' size={size} />
+          ),
+        }}
       />
       <WipTabs.Screen
-        name='BookedOutTools'
-        component={BookedOutToolsStack}
-        options={BookedOutToolsScreenOptions}
+        name='Booked Tools'
+        component={BookedOutToolsScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='return-down-back' size={size} />
+          ),
+        }}
       />
       <WipTabs.Screen
-        name='Jobs'
-        component={JobsStack}
-        options={JobsScreenOptions}
+        name='My Jobs'
+        component={JobsScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='clipboard' size={size} />
+          ),
+        }}
       />
       <WipTabs.Screen
-        name='Ltp'
-        component={LtpStack}
-        options={LtpScreenOptions}
+        name='Loan Tools'
+        component={LtpScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='swap-horizontal' size={size} />
+          ),
+        }}
       />
     </WipTabs.Navigator>
   );

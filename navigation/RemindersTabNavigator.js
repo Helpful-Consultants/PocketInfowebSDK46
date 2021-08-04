@@ -1,28 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
-
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
+import TabBarIcon from '../components/TabBarIcon';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
-// import HomeScreen, {
-//   screenOptions as HomeScreenOptions
-// } from '../screens/HomeScreen';
-import NotificationsScreen, {
-  screenOptions as NotificationsScreenOptions,
-} from '../screens/NotificationsScreen';
-import ServiceMeasuresScreen, {
-  screenOptions as ServiceMeasuresScreenOptions,
-} from '../screens/ServiceMeasuresScreen';
-import LtpLoansScreen, {
-  screenOptions as LtpLoansScreenOptions,
-} from '../screens/LtpLoansScreen';
-import OdisScreen, {
-  screenOptions as OdisScreenOptions,
-} from '../screens/OdisScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
+import LtpLoansScreen from '../screens/LtpLoansScreen';
+import OdisScreen from '../screens/OdisScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -52,189 +42,122 @@ let headerHeight =
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
 
-const defaultStackNavOptions = () => {
-  //   const windowDim = useWindowDimensions();
-  //   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const navigation = useNavigation();
-  return {
-    headerStyle: {
-      backgroundColor: Colors.vwgHeader,
-      height: headerHeight,
-    },
-    cardStyle: { backgroundColor: 'white' },
-    headerLeft: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='home'
-          iconName={Platform.OS === 'ios' ? 'home' : 'home'}
-          onPress={() => {
-            {
-              /* console.log('pressed homescreen icon'); */
-            }
-            navigation.navigate('Home');
-          }}
-        />
-      </HeaderButtons>
-    ),
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item
-          title='menu'
-          iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
-          onPress={() => {
-            navigation.toggleDrawer();
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
-
-// const HomeStack = createStackNavigator();
-// <HomeStack.Navigator screenOptions={defaultStackNavOptions}>
-//   <HomeStack.Screen
-//     name={Home}
-//     component={HomeScreen}
-//     options={HomeScreenOptions}
-//   />
-// </HomeStack.Navigator>;
-
-const Notifications = createStackNavigator();
-
-const NotificationsStack = () => {
-  return (
-    <Notifications.Navigator screenOptions={defaultStackNavOptions}>
-      <Notifications.Screen
-        name={'NotificationsScreen'}
-        component={NotificationsScreen}
-        options={NotificationsScreenOptions}
-      />
-    </Notifications.Navigator>
-  );
-};
-
-const ServiceMeasures = createStackNavigator();
-const ServiceMeasuresStack = () => {
-  return (
-    <ServiceMeasures.Navigator screenOptions={defaultStackNavOptions}>
-      <ServiceMeasures.Screen
-        name={'ServiceMeasuresScreen'}
-        component={ServiceMeasuresScreen}
-        options={ServiceMeasuresScreenOptions}
-      />
-    </ServiceMeasures.Navigator>
-  );
-};
-
-const LtpLoans = createStackNavigator();
-const LtpLoansStack = () => {
-  return (
-    <LtpLoans.Navigator screenOptions={defaultStackNavOptions}>
-      <LtpLoans.Screen
-        name={'LtpLoansScreen'}
-        component={LtpLoansScreen}
-        options={LtpLoansScreenOptions}
-      />
-    </LtpLoans.Navigator>
-  );
-};
-
-const Odis = createStackNavigator();
-const OdisStack = () => {
-  return (
-    <Odis.Navigator screenOptions={defaultStackNavOptions}>
-      <Odis.Screen
-        name={'OdisScreen'}
-        component={OdisScreen}
-        options={OdisScreenOptions}
-      />
-    </Odis.Navigator>
-  );
-};
-
-// Tab navigator
+// Start tab navigator
 
 const RemindersTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-export default RemindersTabNavigator = () => {
-  return Platform.OS === 'ios' ? (
+export default RemindersTabNavigator = ({ navigation, route }) => {
+  const odisViewCount = useSelector((state) => state.odis.viewCount);
+  useEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
+      },
+      headerTitle: () => (
+        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
+      ),
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='home'
+            iconName={Platform.OS === 'ios' ? 'home' : 'home'}
+            onPress={() => {
+              {
+                /* console.log('pressed homescreen icon'); */
+              }
+              navigation.navigate('Home');
+            }}
+          />
+        </HeaderButtons>
+      ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='menu'
+            iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation, route]);
+
+  return (
     <RemindersTabs.Navigator //iOS
-      lazy={true}
-      tabBarOptions={{
-        showLabel: true,
-        labelPosition: 'below-icon', // Otherwise weird for landscape
-        labelStyle: {
-          fontSize: navBarFontSize,
-        },
-        activeTintColor: Colors.vwgActiveLink,
-        inactiveTintColor: Colors.vwgInactiveLink,
-        activeBackgroundColor: Colors.vwgWhite,
-        inactiveBackgroundColor: Colors.vwgWhite,
-        adaptive: false,
-      }}
-    >
-      <RemindersTabs.Screen
-        name='Notifications'
-        component={NotificationsStack}
-        options={NotificationsScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='ServiceMeasures'
-        component={ServiceMeasuresStack}
-        options={ServiceMeasuresScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='LtpLoans'
-        component={LtpLoansStack}
-        options={LtpLoansScreenOptions}
-      />
-      <RemindersTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
-      />
-    </RemindersTabs.Navigator>
-  ) : (
-    <RemindersTabs.Navigator // Android
-      lazy={true}
-      labeled={true}
-      title='Default Title'
-      shifting={false}
-      backBehavior={'history'}
-      activeColor={Colors.vwgActiveLink}
-      inactiveColor={Colors.vwgInactiveLink}
-      tabBarOptions={{
-        labelStyle: {
-          fontSize: navBarFontSize, // Doesn't seem to work
-        },
-      }}
+      backBehavior='history' // ios and android
+      // for android - start
+      activeColor={Colors.vwgActiveLink} // android
+      inactiveColor={Colors.vwgInactiveLink} // android
+      shifting={false} //android
       barStyle={{
+        // android
         labelPosition: 'below-icon',
         backgroundColor: Colors.vwgVeryVeryLightGray,
       }}
+      // for android - end
+      // for ios - start
+      sceneContainerStyle={{ backgroundColor: 'white' }} // ios
+      screenOptions={{
+        // android and ios
+        headerShown: false, //ios
+        tabBarActiveTintColor: Colors.vwgActiveLink, //ios
+        tabBarInactiveTintColor: Colors.vwgInactiveLink, //ios
+        tabBarActiveBackgroundColor: Colors.vwgWhite, //ios
+        tabBarInactiveBackgroundColor: Colors.vwgWhite, //ios
+        tabBarLabelStyle: {
+          //ios
+          fontSize: navBarFontSize,
+        },
+        tabBarLabelPosition: 'below-icon', //io
+        sceneContainerStyle: { backgroundColor: 'white' }, // ios
+      }}
+      // for ios - end
     >
       <RemindersTabs.Screen
-        name='Reminders'
-        component={NotificationsStack}
-        options={NotificationsScreenOptions}
+        name='Notifications'
+        component={NotificationsScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='alert-circle' size={size} />
+          ),
+        }}
       />
       <RemindersTabs.Screen
-        name='ServiceMeasures'
-        component={ServiceMeasuresStack}
-        options={ServiceMeasuresScreenOptions}
+        name='Serv Measures'
+        component={ServiceMeasuresScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='checkbox' size={size} />
+          ),
+        }}
       />
       <RemindersTabs.Screen
-        name='LtpLoans'
-        component={LtpLoansStack}
-        options={LtpLoansScreenOptions}
+        name='All LTP Loans'
+        component={LtpLoansScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name='calendar' size={size} />
+          ),
+        }}
       />
       <RemindersTabs.Screen
-        name='Odis'
-        component={OdisStack}
-        options={OdisScreenOptions}
+        name='ODIS'
+        component={OdisScreen}
+        options={{
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon
+              focused={focused}
+              name='tv'
+              size={size}
+              alert={odisViewCount ? false : true}
+            />
+          ),
+        }}
       />
     </RemindersTabs.Navigator>
   );

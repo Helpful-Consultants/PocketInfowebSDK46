@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -48,7 +48,7 @@ const NewsTabs =
     : createBottomTabNavigator();
 
 export default NewsTabNavigator = ({ navigation, route }) => {
-  useLayoutEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',

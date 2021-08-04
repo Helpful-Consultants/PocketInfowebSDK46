@@ -16,17 +16,11 @@ import { Button, Divider, Input, Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
 import AwesomeAlert from 'react-native-awesome-alerts';
 // import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import BadgedTabBarText from '../components/BadgedTabBarText';
-import TabBarIcon from '../components/TabBarIcon';
-// import HeaderButton from '../components/HeaderButton';
 import sortObjectList from '../helpers/sortObjectList';
 import { revalidateUserCredentials } from '../actions/user';
 import { getDealerToolsRequest } from '../actions/dealerTools';
@@ -1310,30 +1304,6 @@ export default FindToolsScreen = (props) => {
         : null}
     </View>
   );
-};
-
-const titleString = 'Find Tools';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'build' : 'build'}
-        size={size}
-      />
-    ),
-  };
 };
 
 const styles = StyleSheet.create({
