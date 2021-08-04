@@ -245,7 +245,7 @@ function* checkUserCredentials({ payload }) {
           result.data[0].dealerId &&
           result.data[0].dealerId.length > 0
         ) {
-          //   console.log('in user creds saga - good 200', result.data);
+          console.log('in user creds saga - good 200', result.data);
           yield put(
             actions.getUserSuccess({
               items: result.data,
