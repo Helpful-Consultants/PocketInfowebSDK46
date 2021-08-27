@@ -442,7 +442,7 @@ export default NotificationsScreen = (props) => {
       {!odisViewCount ? (
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('RemindersTabs', { screen: 'Odis' })
+            navigation.navigate('RemindersTabs', { screen: 'ODIS' })
           }
         >
           <View style={baseStyles.viewSectionRibbon}>
