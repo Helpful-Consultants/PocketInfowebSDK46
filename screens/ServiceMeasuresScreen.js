@@ -1,28 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Platform,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
-// import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-// import HeaderButton from '../components/HeaderButton';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 // import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
-// import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
@@ -267,27 +254,4 @@ export default ServiceMeasuresScreen = (props) => {
       )}
     </View>
   );
-};
-const titleString = 'Serv Measures';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'checkbox' : 'checkbox'}
-        size={size}
-      />
-    ),
-  };
 };

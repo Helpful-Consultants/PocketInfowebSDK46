@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  Platform,
   ScrollView,
-  SectionList,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -13,14 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import moment from 'moment';
 import Colors from '../constants/Colors';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
 // import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-// import HeaderButton from '../components/HeaderButton';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
-import { revalidateUserCredentials } from '../actions/user';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
@@ -450,7 +442,7 @@ export default NotificationsScreen = (props) => {
       {!odisViewCount ? (
         <TouchableOpacity
           onPress={() =>
-            navigation.navigate('RemindersTabs', { screen: 'Odis' })
+            navigation.navigate('RemindersTabs', { screen: 'ODIS' })
           }
         >
           <View style={baseStyles.viewSectionRibbon}>
@@ -628,27 +620,4 @@ export default NotificationsScreen = (props) => {
       ) : null}
     </ScrollView>
   );
-};
-const titleString = 'Notifications';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'alert-circle' : 'alert-circle'}
-        size={size}
-      />
-    ),
-  };
 };

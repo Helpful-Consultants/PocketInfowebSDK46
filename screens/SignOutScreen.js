@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { signOutUserRequest } from '../actions/user';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';

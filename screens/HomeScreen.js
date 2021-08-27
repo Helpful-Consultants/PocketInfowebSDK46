@@ -640,7 +640,7 @@ export default HomeScreen = (props) => {
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('WipsTabs', { screen: 'FindTools' })
+                      navigation.navigate('WipTabs', { screen: 'Find Tools' })
                     }
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
@@ -659,7 +659,7 @@ export default HomeScreen = (props) => {
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('WipsTabs', { screen: 'Jobs' })
+                      navigation.navigate('WipTabs', { screen: 'My Jobs' })
                     }
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
@@ -684,8 +684,8 @@ export default HomeScreen = (props) => {
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('WipsTabs', {
-                        screen: 'BookedOutTools',
+                      navigation.navigate('WipTabs', {
+                        screen: 'Booked Tools',
                       })
                     }
                   >
@@ -725,7 +725,7 @@ export default HomeScreen = (props) => {
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('WipsTabs', { screen: 'Ltp' })
+                      navigation.navigate('WipTabs', { screen: 'Loan Tools' })
                     }
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
@@ -778,7 +778,7 @@ export default HomeScreen = (props) => {
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
                       navigation.navigate('RemindersTabs', {
-                        screen: 'LtpLoans',
+                        screen: 'All LTP Loans',
                       })
                     }
                   >

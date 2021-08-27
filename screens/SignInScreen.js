@@ -12,13 +12,10 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-
 import Colors from '../constants/Colors';
-// import baseStyles from '../constants/baseStyles';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { checkUserCredentialsRequest } from '../actions/user';
 import getBaseStyles from '../helpers/getBaseStyles';
-// import validation from 'validate';
 
 import Types from '../constants/Types';
 

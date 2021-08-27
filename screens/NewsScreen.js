@@ -1,24 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
-import BadgedTabBarText from '../components/BadgedTabBarText';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import HeaderButton from '../components/HeaderButton';
 import { revalidateUserCredentials } from '../actions/user';
 import { getNewsRequest } from '../actions/news';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
-import Colors from '../constants/Colors';
 // import newsDummyData from '../dummyData/newsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -138,8 +131,6 @@ export default NewsScreen = (props) => {
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
     [];
 
-  //   console.log('rendering News screen');
-
   return (
     <View style={baseStyles.container}>
       <SearchBarWithRefresh
@@ -180,34 +171,3 @@ export default NewsScreen = (props) => {
     </View>
   );
 };
-
-const titleString = 'News';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
-// );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? `document` : 'document'}
-        size={size}
-      />
-    ),
-  };
-};
-
-//  name={
-//           Platform.OS === 'ios'
-//             ? `ios-information-circle${focused ? '' : '-outline'}`
-//             : 'md-information-circle'
-//         } */
-//  }

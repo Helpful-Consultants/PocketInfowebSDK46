@@ -3,22 +3,15 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
-// import { createFilter } from 'react-native-search-filter';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-// import Modal from 'react-native-modal';
+
 import { revalidateUserCredentials } from '../actions/user';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
-// import TabBarText from '../components/TabBarText';
 import sortObjectList from '../helpers/sortObjectList';
 import getBaseStyles from '../helpers/getBaseStyles';
-// import HeaderButton from '../components/HeaderButton';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
-import Colors from '../constants/Colors';
 import searchItems from '../helpers/searchItems';
 // import stringCleaner from '../helpers/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
@@ -199,27 +192,4 @@ export default LtpScreen = (props) => {
       )}
     </View>
   );
-};
-
-const titleString = 'Loan Tools';
-// const tabBarLabelFunction = () => <TabBarText text={titleString} />;
-// const tabBarLabelFunction = () => null;
-
-export const screenOptions = (navData) => {
-  //   console.log('navData', navData);
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => {
-      //   console.log('$$$$$$$$$$$$$$$$ tabBarIcon props size:', size);
-      return (
-        <TabBarIcon
-          focused={focused}
-          name={Platform.OS === 'ios' ? 'swap-horizontal' : 'swap-horizontal'}
-          size={size}
-        />
-      );
-    },
-  };
 };

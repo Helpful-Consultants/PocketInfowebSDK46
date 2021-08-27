@@ -439,7 +439,7 @@ function* deleteDealerWip(payload) {
         wipNumber: payload.wipNumber || '',
       })
     );
-    console.log('delete wip good result', result && result);
+    // console.log('delete wip good result', result && result);
     yield put(actions.getDealerWipsStart());
     yield put(actions.getDealerWipsRequest(payload.userApiFetchParamsObj));
     // yield put(toolsActions.getDealerToolsStart());

@@ -8,13 +8,13 @@ import axios from 'axios';
 //   '?controller=api&action=checkUserId&eMail=' + eMailAddress + '&pin=' + pin;
 
 export const checkUserCredentials = ({ email, pin }) => {
-  console.log('in user api - checkUserCredentials called', email, pin);
   const url =
     '?controller=api&action=checkUserId&eMail=' +
     email.toLowerCase() +
     '&pin=' +
     pin;
-  //   console.log(url);
+
+  //   console.log('in user api - checkUserCredentials called', url, email, pin);
 
   return axios.get(url, {
     params: {

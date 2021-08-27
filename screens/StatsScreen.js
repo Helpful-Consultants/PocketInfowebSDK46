@@ -1,23 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Platform, useWindowDimensions, View } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Dimensions, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-// import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
-import TabBarIcon from '../components/TabBarIcon';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-// import HeaderButton from '../components/HeaderButton';
-// import BadgedTabBarText from '../components/BadgedTabBarText';
 import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
 // import { getDealerWipsRequest } from '../actions/dealerWips';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
-// import Colors from '../constants/Colors';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
-// import statsGrab from '../assets/images/stats.jpg';
 
 export default StatsScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -29,7 +22,7 @@ export default StatsScreen = (props) => {
   const dealerToolsItems = useSelector(
     (state) => state.dealerTools.dealerToolsItems
   );
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
@@ -174,26 +167,4 @@ export default StatsScreen = (props) => {
     </View>
   );
 };
-const titleString = 'Stats';
-// const tabBarLabelFunction = ({ focused }) => (
-//   <BadgedTabBarText
-//     showBadge={false}
-//     text={titleString}
-//     focused={focused}
-//     value={0}
-//   />
 // );
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'stats-chart' : 'stats-chart'}
-        size={size}
-      />
-    ),
-  };
-};
