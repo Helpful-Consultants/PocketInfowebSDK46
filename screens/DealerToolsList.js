@@ -137,10 +137,10 @@ export default function DealerToolsList(props) {
         bottomDivider
         containerStyle={{
           backgroundColor: item.loanToolNo
-            ? Colors.vwgVeryVeryLightGray
+            ? Colors.vwgVeryVeryVeryLightGray
             : (booked && booked === true) ||
               (inToolBasket && inToolBasket === true)
-            ? Colors.vwgVeryLightGray
+            ? Colors.vwgVeryVeryLightGray
             : Colors.vwgWhite,
         }}
       >
@@ -174,10 +174,10 @@ export default function DealerToolsList(props) {
           <ListItem.Subtitle
             style={{
               backgroundColor: item.loanToolNo
-                ? Colors.vwgVeryVeryLightGray
+                ? Colors.vwgVeryVeryVeryLightGray
                 : (booked && booked === true) ||
                   (inToolBasket && inToolBasket === true)
-                ? Colors.vwgVeryLightGray
+                ? Colors.vwgVeryVeryLightGray
                 : Colors.vwgWhite,
               marginTop: 3,
             }}

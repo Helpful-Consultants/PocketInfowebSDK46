@@ -68,21 +68,22 @@ export default function OdisVersions(props) {
             )}
           </Text>
 
-          <Text style={baseStyles.textOdisVersion}>
-            {item.previousMainFeatureVersion &&
-            item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
+          {item.previousMainFeatureVersion &&
+          item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
+            <View style={{ flexDirection: 'column' }}>
               <Text style={baseStyles.textOdisVersionHighlighted}>
                 {`Main feature: ${item.mainFeatureVersion}`}
-                <Text style={baseStyles.textOdisVersionSmaller}>
-                  {` (from ${item.previousMainFeatureVersion})`}
-                </Text>
               </Text>
-            ) : (
-              <Text style={baseStyles.textOdisVersion}>
-                {`Main Feature: ${item.mainFeatureVersion}`}
+              <Text style={baseStyles.textOdisVersionSmaller}>
+                {` (from ${item.previousMainFeatureVersion})`}
               </Text>
-            )}
-          </Text>
+            </View>
+          ) : (
+            <Text style={baseStyles.textOdisVersion}>
+              {`Main Feature: ${item.mainFeatureVersion}`}
+            </Text>
+          )}
+
           <Text style={baseStyles.textOdisVersion}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
@@ -155,12 +156,15 @@ export default function OdisVersions(props) {
         <View>
           {itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}
         </View>
-        {fetchTime ? (
-          <Text
-            style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-          >{`Last checked : ${getDisplayDate(fetchTime)}`}</Text>
-        ) : null}
       </View>
     </ScrollView>
   );
 }
+
+//  {
+//    fetchTime ? (
+//      <Text
+//        style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+//      >{`Last checked : ${getDisplayDate(fetchTime)}`}</Text>
+//    ) : null;
+//  }

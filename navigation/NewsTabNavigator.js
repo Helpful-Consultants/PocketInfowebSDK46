@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Dimensions, Platform } from 'react-native';
+import { useSelector } from 'react-redux';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
@@ -11,6 +12,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
+import OdisScreen from '../screens/OdisScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -48,6 +50,7 @@ const NewsTabs =
     : createBottomTabNavigator();
 
 export default NewsTabNavigator = ({ navigation, route }) => {
+  const showingOldApp = useSelector((state) => state.user.showingOldApp);
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -95,7 +98,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       barStyle={{
         // android
         labelPosition: 'below-icon',
-        backgroundColor: Colors.vwgVeryVeryLightGray,
+        backgroundColor: Colors.vwgVeryLightGray,
       }}
       // for android - end
       // for ios - start
@@ -134,6 +137,17 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           ),
         }}
       />
+      {showingOldApp ? (
+        <NewsTabs.Screen
+          name='ODIS'
+          component={OdisScreen}
+          options={{
+            tabBarIcon: ({ focused, size }) => (
+              <TabBarIcon focused={focused} name='tv' size={size} />
+            ),
+          }}
+        />
+      ) : null}
       <NewsTabs.Screen
         name='Stats'
         component={StatsScreen}

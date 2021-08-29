@@ -27,7 +27,8 @@ export default function OdisLinkWithStatus(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const { itemsObj, navigation, userBrand, viewCount, viewMax } = props;
+  const { itemsObj, navigation, userBrand, viewCount, viewMax, showingOldApp } =
+    props;
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
   //   console.log('in odisstatus userBrand', userBrand && userBrand);
@@ -268,7 +269,11 @@ export default function OdisLinkWithStatus(props) {
 
   return (
     <Touchable
-      onPress={() => navigation.navigate('RemindersTabs', { screen: 'ODIS' })}
+      onPress={() =>
+        showingOldApp
+          ? navigation.navigate('NewsTabs', { screen: 'ODIS' })
+          : navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+      }
       style={{ padding: 5 }}
     >
       <BlinkingView

@@ -220,7 +220,7 @@ export default function DealerToolsList(props) {
                       userIntId &&
                       item.userIntId.toString() == userIntId.toString()
                         ? Colors.vwgWhite
-                        : Colors.vwgveryLightGray,
+                        : Colors.vwgVeryVeryLightGray,
                     marginHorizontal: 10,
                     paddingTop: 10,
                     paddingBottom: 0,

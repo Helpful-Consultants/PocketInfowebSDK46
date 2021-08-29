@@ -30,6 +30,9 @@ export default AppInfo = (props) => {
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
 
+  console.log('AppInfo props', props);
+  const { showingOldApp } = props;
+
   const isTabletOrMobileDevice = useMediaQuery({
     maxDeviceWidth: 1224,
     // alternatively...
@@ -48,7 +51,9 @@ export default AppInfo = (props) => {
         marginHorizontal: 10,
       }}
     >
-      <Text style={baseStyles.panelTextAppName}>{Constants.manifest.name}</Text>
+      <Text style={baseStyles.panelTextAppName}>
+        {showingOldApp ? 'Pocket Infoweb' : 'Pocket Infoweb Extra'}
+      </Text>
       {Constants.manifest.name &&
       Constants.manifest.name === 'Pocket Infoweb Extra'
         ? null
@@ -59,7 +64,7 @@ export default AppInfo = (props) => {
         </Text>
       ) : null}
       <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
-      {odisFetchTime ? (
+      {showingOldApp ? null : odisFetchTime ? (
         <Text style={baseStyles.panelTextAppInfo}>
           {`Last data refresh: ${getDisplayDate(odisFetchTime)}`}
         </Text>

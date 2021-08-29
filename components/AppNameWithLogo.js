@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
 // import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
@@ -8,6 +9,7 @@ import { Image, Text } from 'react-native-elements';
 export default AppNameWithLogo = () => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const showingOldApp = useSelector((state) => state.user.showingOldApp);
   //   console.log(
   //     'in AppNameWithLogo, windowDim:',
   //     windowDim,
@@ -21,7 +23,9 @@ export default AppNameWithLogo = () => {
           source={require('../assets/images/tiw-app-logo-less-whitespace.png')}
           style={baseStyles.imageAppLogo}
         />
-        <Text style={baseStyles.textAppName}>Pocket Infoweb Extra</Text>
+        <Text style={baseStyles.textAppName}>
+          {showingOldApp ? 'Pocket Infoweb' : 'Pocket Infoweb Extra'}
+        </Text>
       </View>
     </View>
   );

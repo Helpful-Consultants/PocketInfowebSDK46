@@ -59,9 +59,9 @@ const CustomDrawerContent = (props) => (
       QUICK LINKS
     </Text>
     <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-    <DemoSwitch />
-    <AppInfo />
-    <BackgroundFetchBlock />
+    {props.showingOldApp ? null : <DemoSwitch />}
+    <AppInfo showingOldApp={props.showingOldApp} />
+    {props.showingOldApp ? null : <BackgroundFetchBlock />}
   </DrawerContentScrollView>
 );
 
@@ -70,6 +70,10 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const { showingOldApp } = props;
+
+  console.log('Dwr Navigator props', props);
+  console.log('showingOldApp', props.showingOldApp && props.showingOldApp);
 
   return (
     <Drawer.Navigator
@@ -77,7 +81,9 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} showingOldApp />
+      )}
       screenOptions={{
         activeBackgroundColor: Colors.vwgActiveLink,
         inactiveBackgroundColor: Colors.vwgInactiveLink,
@@ -107,13 +113,15 @@ const DrawerNavigator = (props) => {
           drawerLabel: 'News, Catalogue & Stats',
         }}
       />
-      <Drawer.Screen
-        name='RemindersTabs'
-        component={RemindersTabNavigator}
-        options={{
-          drawerLabel: 'Alerts, S Measures, Loans & ODIS',
-        }}
-      />
+      {showingOldApp ? (
+        <Drawer.Screen
+          name='RemindersTabs'
+          component={RemindersTabNavigator}
+          options={{
+            drawerLabel: 'Alerts, S Measures, Loans & ODIS',
+          }}
+        />
+      ) : null}
     </Drawer.Navigator>
   );
 };
@@ -122,13 +130,15 @@ export default AppNavigator = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
+  const showingOldApp = useSelector((state) => state.user.showingOldApp);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
   //   return <AuthLoadingScreen />;
 
-  //   console.log('AppNavigator props', props);
+  console.log('AppNavigator props', props);
+  console.log('AppNavigator showingOldApp', showingOldApp && showingOldApp);
 
   //   let now = moment();
   //   const ageOfCredentialsLimit = 3;
@@ -231,7 +241,11 @@ export default AppNavigator = (props) => {
 
   return (
     <NavigationContainer>
-      {allOK === true ? <DrawerNavigator props={props} /> : <SignedOutStack />}
+      {allOK === true ? (
+        <DrawerNavigator props={{ ...props, showingOldApp: showingOldApp }} />
+      ) : (
+        <SignedOutStack />
+      )}
     </NavigationContainer>
   );
 };
