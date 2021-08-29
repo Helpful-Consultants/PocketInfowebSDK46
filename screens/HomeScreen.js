@@ -120,6 +120,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
   const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
+  const showingOldApp = useSelector((state) => state.user.showingOldApp);
 
   //   console.log('IN HOME !!!!! 1g');
   //   const userIntId =
@@ -545,11 +546,13 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
-  const gridRows =
-    Constants.manifest.name &&
-    Constants.manifest.name === 'Pocket Infoweb Extra'
-      ? 8
-      : 6;
+  //   const gridRows =
+  //     Constants.manifest.name &&
+  //     Constants.manifest.name === 'Pocket Infoweb Extra'
+  //       ? 8
+  //       : 6;
+
+  const gridRows = showingOldApp ? 6 : 8;
   //   console.log('home screen gridRows', gridRows);
   //   console.log('Rendering Home screen');
 
@@ -565,7 +568,8 @@ export default HomeScreen = (props) => {
         contentContainerStyle={baseStyles.containerFlexCentredJustfied}
       >
         <AppNameWithLogo />
-        {Constants.manifest.name &&
+        {!showingOldApp &&
+        Constants.manifest.name &&
         Constants.manifest.name === 'Pocket Infoweb Extra' ? (
           <Text
             style={{
@@ -573,7 +577,7 @@ export default HomeScreen = (props) => {
               color: Colors.vwgCoolOrange,
             }}
           >
-            Showing proposed new features
+            'Showing proposed new features'
           </Text>
         ) : null}
 
@@ -746,74 +750,76 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                 </View>
-                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                  <Touchable
-                    style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('RemindersTabs', {
-                        screen: 'Notifications',
-                      })
-                    }
-                  >
-                    <View style={baseStyles.viewColumnFlexCentre}>
-                      <Ionicons
-                        name={
-                          Platform.OS === 'ios'
-                            ? 'alert-circle'
-                            : 'alert-circle'
-                        }
-                        type='ionicon'
-                        color={buttonTextColor}
-                        size={iconSize}
-                      />
-                      <BadgedText
-                        showBadge={false}
-                        focused={false}
-                        text={'Notifications'}
-                        value={'+'}
-                      />
-                    </View>
-                  </Touchable>
-                  <Touchable
-                    style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('RemindersTabs', {
-                        screen: 'All LTP Loans',
-                      })
-                    }
-                  >
-                    <View style={baseStyles.viewColumnFlexCentre}>
-                      <Ionicons
-                        name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
-                        type='ionicon'
-                        color={buttonTextColor}
-                        size={iconSize}
-                      />
-                      {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
-                        <View>
-                          <Text style={baseStyles.textHomeGridCell}>
-                            {`LTP Loans`}
-                            <Text style={baseStyles.textHomeGridCellCount}>
-                              {` (${
-                                userRequestedDemo
-                                  ? ltpLoansDummyData
-                                    ? ltpLoansDummyData.length
+                {showingOldApp ? null : (
+                  <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
+                    <Touchable
+                      style={baseStyles.viewHomeGridCell}
+                      onPress={() =>
+                        navigation.navigate('RemindersTabs', {
+                          screen: 'Notifications',
+                        })
+                      }
+                    >
+                      <View style={baseStyles.viewColumnFlexCentre}>
+                        <Ionicons
+                          name={
+                            Platform.OS === 'ios'
+                              ? 'alert-circle'
+                              : 'alert-circle'
+                          }
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        <BadgedText
+                          showBadge={false}
+                          focused={false}
+                          text={'Notifications'}
+                          value={'+'}
+                        />
+                      </View>
+                    </Touchable>
+                    <Touchable
+                      style={baseStyles.viewHomeGridCell}
+                      onPress={() =>
+                        navigation.navigate('RemindersTabs', {
+                          screen: 'All LTP Loans',
+                        })
+                      }
+                    >
+                      <View style={baseStyles.viewColumnFlexCentre}>
+                        <Ionicons
+                          name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
+                          type='ionicon'
+                          color={buttonTextColor}
+                          size={iconSize}
+                        />
+                        {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
+                          <View>
+                            <Text style={baseStyles.textHomeGridCell}>
+                              {`LTP Loans`}
+                              <Text style={baseStyles.textHomeGridCellCount}>
+                                {` (${
+                                  userRequestedDemo
+                                    ? ltpLoansDummyData
+                                      ? ltpLoansDummyData.length
+                                      : 0
+                                    : ltpLoansItems
+                                    ? ltpLoansItems.length
                                     : 0
-                                  : ltpLoansItems
-                                  ? ltpLoansItems.length
-                                  : 0
-                              })`}
+                                })`}
+                              </Text>
                             </Text>
-                          </Text>
-                        </View>
-                      ) : (
-                        <Text
-                          style={baseStyles.textHomeGridCell}
-                        >{`LTP Loans`}</Text>
-                      )}
-                    </View>
-                  </Touchable>
-                </View>
+                          </View>
+                        ) : (
+                          <Text
+                            style={baseStyles.textHomeGridCell}
+                          >{`LTP Loans`}</Text>
+                        )}
+                      </View>
+                    </Touchable>
+                  </View>
+                )}
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   {Constants.manifest.name &&
                   Constants.manifest.name === 'Pocket Infoweb Extra' ? (
@@ -872,6 +878,7 @@ export default HomeScreen = (props) => {
                 }}
               >
                 <OdisLinkWithStatus
+                  showingOldApp={showingOldApp}
                   navigation={navigation}
                   userBrand={userBrand}
                   itemsObj={odisObj}

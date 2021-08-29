@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
   statusCode: null,
   requestedDemo: false,
+  showingOldApp: true,
 };
 
 export default function user(state = INITIAL_STATE, action) {
