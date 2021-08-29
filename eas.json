@@ -1,6 +1,8 @@
 {
   "build": {
-    "release": {},
+    "release": {
+      "releaseChannel": "ios"
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
