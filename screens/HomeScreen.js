@@ -821,32 +821,30 @@ export default HomeScreen = (props) => {
                   </View>
                 )}
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                  {Constants.manifest.name &&
-                  Constants.manifest.name === 'Pocket Infoweb Extra' ? (
-                    <Touchable
-                      style={baseStyles.viewHomeGridCell}
-                      onPress={() =>
-                        navigation.navigate('NewsTabs', {
-                          screen: 'News',
-                        })
-                      }
-                    >
-                      <View style={baseStyles.viewColumnFlexCentre}>
-                        <Ionicons
-                          name={Platform.OS === 'ios' ? 'document' : 'document'}
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={false}
-                          focused={false}
-                          text={'News'}
-                          value={'+'}
-                        />
-                      </View>
-                    </Touchable>
-                  ) : null}
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('NewsTabs', {
+                        screen: 'News',
+                      })
+                    }
+                  >
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'document' : 'document'}
+                        type='ionicon'
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={false}
+                        focused={false}
+                        text={'News'}
+                        value={'+'}
+                      />
+                    </View>
+                  </Touchable>
+
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
