@@ -20,7 +20,7 @@ const minSearchLength = 1;
 const screenHeight = Math.round(Dimensions.get('window').height);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 
-export default LtpScreen = (props) => {
+export default LtpListScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
@@ -57,7 +57,7 @@ export default LtpScreen = (props) => {
     useCallback(() => {
       //   console.log('ltp - useFocusEffect');
       // don't refresh the every time user visits the page LTP - they don't change too much
-      dispatch(revalidateUserCredentials({ calledBy: 'LtpScreen' }));
+      dispatch(revalidateUserCredentials({ calledBy: 'LtpListScreen' }));
       setSearchInput('');
     }, [])
   );

@@ -11,7 +11,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import FindToolsScreen from '../screens/FindToolsScreen';
 import BookedOutToolsScreen from '../screens/BookedOutToolsScreen';
 import JobsScreen from '../screens/JobsScreen';
-import LtpScreen from '../screens/LtpScreen';
+import LtpListScreen from '../screens/LtpListScreen';
 
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -146,7 +146,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
       />
       <WipTabs.Screen
         name='Loan Tools'
-        component={LtpScreen}
+        component={LtpListScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='swap-horizontal' size={size} />

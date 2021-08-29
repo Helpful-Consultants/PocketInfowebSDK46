@@ -315,7 +315,7 @@ export default getBaseStyles = (props) => {
     containerSignIn: {
       marginHorizontal: paddingSize,
     },
-    // LtpScreen
+    // LtpListScreen
     containerFlexAndMargin: {
       flex: 1,
       // alignItems: 'center',
@@ -662,7 +662,7 @@ export default getBaseStyles = (props) => {
       color: Colors.vwgCoolOrange,
       paddingTop: 5,
     },
-    // LtpScreen JobsScreen BookedOutToolsScreen
+    // LtpListScreen JobsScreen BookedOutToolsScreen
     textPromptRibbon: {
       ...baseTextLarge,
       textAlign: 'center',
@@ -949,7 +949,7 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       marginBottom: 0,
     },
-    // LtpScreen JobsScreen BookedOutToolsScreen
+    // LtpListScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbon: {
       padding: 10,
       backgroundColor: Colors.vwgDarkSkyBlue,
@@ -987,7 +987,7 @@ export default getBaseStyles = (props) => {
       borderRightColor: Colors.vwgWhite,
       borderWidth: 1,
     },
-    // LtpScreen JobsScreen BookedOutToolsScreen
+    // LtpListScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbonNoneFound: {
       padding: 10,
       backgroundColor: Colors.vwgWarmRed,
