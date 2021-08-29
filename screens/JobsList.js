@@ -34,6 +34,8 @@ export default function DealerToolsList(props) {
 
   const limit = 0;
 
+  //   console.log('jobs', items);
+
   //   console.log('dataCount ', dataCount);
 
   const ToolList = ({ job, listOrder }) => {
@@ -259,7 +261,6 @@ export default function DealerToolsList(props) {
                           : `${item.createdBy}'s job ${item.wipNumber}`}
                       </Text>
                     </View>
-
                     <View>
                       <FriendlyDate date={item.createdDate} />
                     </View>

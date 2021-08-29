@@ -7,18 +7,23 @@ export default FriendlyDate = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('in FriendlyDate');
-  //   console.log(props);
+
   //   console.log('FriendlyDate - end props');
 
   const { date } = props;
-
+  //   console.log(
+  //     'IN FRIENDLY DATE',
+  //     date,
+  //     moment(date, 'DD/MM/YYYY hh:mm:ss').toString(),
+  //     moment(date, 'DD/MM/YYYY hh:mm:ss').format('h:mma, dddd Do MMM')
+  //   );
   return true !== false ? (
     <Text
       style={{
         ...baseStyles.textSmallLight,
       }}
     >{`${
-      moment(date, 'YYYY-MM-DD hh:mm:ss').format('h:MMa, Do MMM ') || null
+      moment(date, 'DD/MM/YYYY hh:mm:ss').format('h:mma, dddd Do MMM') || null
     }`}</Text>
   ) : null;
 };
