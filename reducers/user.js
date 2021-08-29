@@ -20,7 +20,7 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
   statusCode: null,
   requestedDemo: false,
-  showingOldApp: true,
+  showingOldApp: false,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -138,6 +138,7 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log('%%% user reducer -userBrand in reducer is ', userBrand);
       return {
         ...state,
+        showingOldApp: false,
         userIsSignedIn: true,
         userIsValidated: true,
         userData: action.payload.items,
