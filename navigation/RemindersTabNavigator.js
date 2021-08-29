@@ -98,7 +98,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       barStyle={{
         // android
         labelPosition: 'below-icon',
-        backgroundColor: Colors.vwgVeryVeryLightGray,
+        backgroundColor: Colors.vwgVeryLightGray,
       }}
       // for android - end
       // for ios - start

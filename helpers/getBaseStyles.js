@@ -465,7 +465,7 @@ export default getBaseStyles = (props) => {
       padding: 10,
     },
     searchBarInputContainer: {
-      backgroundColor: Colors.vwgVeryLightGray,
+      backgroundColor: Colors.vwgVeryVeryLightGray,
       borderColor: Colors.vwgSearchBarInputContainer,
       borderRadius: Platform.OS === 'ios' ? 10 : 20,
       height: 30,
