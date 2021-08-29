@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
 // import * as Permissions from 'expo-permissions';
-import { useDispatch, useSelector } from 'react-redux';
+
 import {
   ActivityIndicator,
   Platform,
@@ -568,9 +569,7 @@ export default HomeScreen = (props) => {
         contentContainerStyle={baseStyles.containerFlexCentredJustfied}
       >
         <AppNameWithLogo />
-        {!showingOldApp &&
-        Constants.manifest.name &&
-        Constants.manifest.name === 'Pocket Infoweb Extra' ? (
+        {showingOldApp ? null : (
           <Text
             style={{
               ...baseStyles.textExtraApp,
@@ -579,7 +578,7 @@ export default HomeScreen = (props) => {
           >
             'Showing proposed new features'
           </Text>
-        ) : null}
+        )}
 
         <View style={baseStyles.containerFlexCentredJustfiedGrow}>
           {showReloadDialogue === true ? (

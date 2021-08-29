@@ -1,7 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { useSelector } from 'react-redux';
 import moment from 'moment';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
@@ -18,6 +18,7 @@ export default AppInfo = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
+  const showingOldApp = useSelector((state) => state.user.showingOldApp);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
 
@@ -29,9 +30,7 @@ export default AppInfo = (props) => {
   //   console.log('AppInfo props, userDataObj', userDataObj && userDataObj);
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
-
   //   console.log('AppInfo props', props);
-  const { showingOldApp } = props;
 
   const isTabletOrMobileDevice = useMediaQuery({
     maxDeviceWidth: 1224,
@@ -54,10 +53,7 @@ export default AppInfo = (props) => {
       <Text style={baseStyles.panelTextAppName}>
         {showingOldApp ? 'Pocket Infoweb' : 'Pocket Infoweb Extra'}
       </Text>
-      {Constants.manifest.name &&
-      Constants.manifest.name === 'Pocket Infoweb Extra'
-        ? null
-        : null}
+      {showingOldApp ? null : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
