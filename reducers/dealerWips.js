@@ -47,8 +47,8 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
-      console.log('action.type is:', action.type);
-      console.log('CREATE_DEALER_WIP_SUCCESS', action);
+      //   console.log('action.type is:', action.type);
+      //   console.log('CREATE_DEALER_WIP_SUCCESS', action);
       return {
         ...state,
         lastWipProcessed: {

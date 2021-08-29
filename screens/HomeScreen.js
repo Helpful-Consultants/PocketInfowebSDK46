@@ -432,7 +432,7 @@ export default HomeScreen = (props) => {
       //   if (searchInput && searchInput.length > 0) {
       //     setSearchInput('');
       //   }
-      console.log('in home useFocusEffect');
+      //   console.log('in home useFocusEffect');
 
       updateItemsAsync();
       checkAppUpdates();

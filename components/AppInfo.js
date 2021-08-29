@@ -30,7 +30,7 @@ export default AppInfo = (props) => {
   //   console.log('Platform', Platform);
   //   console.log('Constants', Constants);
 
-  console.log('AppInfo props', props);
+  //   console.log('AppInfo props', props);
   const { showingOldApp } = props;
 
   const isTabletOrMobileDevice = useMediaQuery({

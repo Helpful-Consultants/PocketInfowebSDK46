@@ -72,8 +72,8 @@ const DrawerNavigator = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const { showingOldApp } = props;
 
-  console.log('Dwr Navigator props', props);
-  console.log('showingOldApp', props.showingOldApp && props.showingOldApp);
+  //   console.log('Dwr Navigator props', props);
+  //   console.log('showingOldApp', props.showingOldApp && props.showingOldApp);
 
   return (
     <Drawer.Navigator
@@ -137,8 +137,8 @@ export default AppNavigator = (props) => {
   const dispatch = useDispatch();
   //   return <AuthLoadingScreen />;
 
-  console.log('AppNavigator props', props);
-  console.log('AppNavigator showingOldApp', showingOldApp && showingOldApp);
+  //   console.log('AppNavigator props', props);
+  //   console.log('AppNavigator showingOldApp', showingOldApp && showingOldApp);
 
   //   let now = moment();
   //   const ageOfCredentialsLimit = 3;

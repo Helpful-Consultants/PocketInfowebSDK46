@@ -137,7 +137,7 @@ export default StatsScreen = (props) => {
           .toString() + '%'
       : 'N/A';
 
-  console.log('rendering Stats screen');
+  //   console.log('rendering Stats screen');
 
   return (
     <View>
