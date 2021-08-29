@@ -155,12 +155,15 @@ export default function OdisVersions(props) {
         <View>
           {itemsObj && Object.keys(itemsObj).length > 0 && odisDetails}
         </View>
-        {fetchTime ? (
-          <Text
-            style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-          >{`Last checked : ${getDisplayDate(fetchTime)}`}</Text>
-        ) : null}
       </View>
     </ScrollView>
   );
 }
+
+//  {
+//    fetchTime ? (
+//      <Text
+//        style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
+//      >{`Last checked : ${getDisplayDate(fetchTime)}`}</Text>
+//    ) : null;
+//  }
