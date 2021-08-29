@@ -7,7 +7,7 @@ import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
 // import { getDealerWipsRequest } from '../actions/dealerWips';
-// import { getDealerToolsRequest } from '../actions/dealerTools';
+import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import statsDummyData from '../dummyData/statsDummyData.js';
@@ -51,7 +51,11 @@ export default StatsScreen = (props) => {
     // console.log('in stats getItems');
     dispatch(getStatsRequest(userApiFetchParamsObj)), [statsObj];
     // dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
-    // dispatch(getDealerToolsRequest(userApiFetchParamsObj)), [dealerToolsItems];
+    if (!dealerToolsItems || dealerToolsItems.length === 0) {
+      console.log('CALLING GET DEALER TOOLS');
+      dispatch(getDealerToolsRequest(userApiFetchParamsObj)),
+        [dealerToolsItems];
+    }
     // dispatch(getLtpRequest()), [ltpItems];
   });
 
@@ -118,7 +122,7 @@ export default StatsScreen = (props) => {
   const activeJobsCount = (userWipsItems && userWipsItems.length) || 0;
   const dealerToolsCount = (dealerToolsItems && dealerToolsItems.length) || 0;
 
-  //   console.log('dealerToolsItems count ', dealerToolsItems.length);
+  console.log('dealerToolsItems count ', dealerToolsItems.length);
   //   console.log('userWipsItems count ', userWipsItems.length);
 
   //   console.log('statsobj', statsObj && statsObj);

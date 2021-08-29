@@ -48,7 +48,7 @@ export default function StatsSummary(props) {
   const dealerToolsCountFormatted =
     (dealerToolsCount &&
       dealerToolsCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) ||
-    '';
+    'Calculating...';
   //   console.log('dealerToolsCountFormatted', dealerToolsCountFormatted);
 
   //   const loggedToolsFormatted =
@@ -68,7 +68,7 @@ export default function StatsSummary(props) {
     (statsObj &&
       statsObj.loggedTools &&
       statsObj.loggedTools.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')) ||
-    '';
+    'Calculating...';
   //   console.log('loggedToolsFormatted', loggedToolsFormatted);
 
   // console.log('start statsDummyData');
