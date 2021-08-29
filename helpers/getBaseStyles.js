@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
 import Constants from 'expo-constants';
 
@@ -11,11 +11,12 @@ export default getBaseStyles = (props) => {
   //   console.log(props && height && 'in getBaseStyles, height:', height);
   //   console.log(props && width && 'in getBaseStyles, width:', width);
 
-  const gridRows =
-    Constants.manifest.name &&
-    Constants.manifest.name === 'Pocket Infoweb Extra'
-      ? 8
-      : 6;
+  //   const gridRows =
+  //     Constants.manifest.name &&
+  //     Constants.manifest.name === 'Pocket Infoweb Extra'
+  //       ? 8
+  //       : 6;
+  const gridRows = 6;
   //   console.log('gridRows', gridRows);
 
   const bottomTabHeight = height && height >= 1333 ? 100 : 80;
