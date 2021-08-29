@@ -1,7 +1,7 @@
 {
   "build": {
     "release": {
-      "releaseChannel": "ios"
+      "releaseChannel": "prod-v2"
     },
     "development": {
       "developmentClient": true,
