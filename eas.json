@@ -2,6 +2,9 @@
   "build": {
     "release": {
       "releaseChannel": "prod-v2"
+    },"ios": {
+    "env": {
+      "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"}
     },
     "development": {
       "developmentClient": true,
