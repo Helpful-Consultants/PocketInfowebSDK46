@@ -1,10 +1,14 @@
 {
   "build": {
     "release": {
+      "workflow": "managed",
+      "distribution": "store",
       "releaseChannel": "prod-v2"
-    },"ios": {
-    "env": {
-      "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"}
+    },
+    "ios": {
+      "env": {
+        "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
+      }
     },
     "development": {
       "developmentClient": true,
