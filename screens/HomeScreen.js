@@ -566,7 +566,10 @@ export default HomeScreen = (props) => {
     >
       <ScrollView
         style={baseStyles.containerFlex}
-        contentContainerStyle={baseStyles.containerFlexCentredJustfied}
+        contentContainerStyle={{
+          ...baseStyles.containerFlexCentredJustfied,
+          height: '100%',
+        }}
       >
         <AppNameWithLogo />
         {showingOldApp ? null : (
