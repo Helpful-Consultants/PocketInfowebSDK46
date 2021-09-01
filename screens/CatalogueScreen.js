@@ -78,20 +78,3 @@ export default CatalogueScreen = (props) => {
     </View>
   );
 };
-
-const titleString = 'Catalogue';
-
-export const screenOptions = (navData) => {
-  return {
-    headerTitle: () => <TitleWithAppLogo title={titleString} />,
-    // tabBarLabel: Platform.OS === 'ios' ? tabBarLabelFunction : titleString,
-    tabBarLabel: titleString,
-    tabBarIcon: ({ focused, size }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'book' : 'book'}
-        size={size}
-      />
-    ),
-  };
-};
