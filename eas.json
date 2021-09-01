@@ -17,6 +17,23 @@
         "buildType": "app-bundle"
       }
     },
+    "extra": {
+      "workflow": "managed",
+      "distribution": "store",
+      "releaseChannel": "extra",
+      "ios": {
+        "env": {
+          "PLATFORM": "ios",
+          "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
+        }
+      },
+      "android": {
+        "env": {
+          "PLATFORM": "android"
+        },
+        "buildType": "app-bundle"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"
