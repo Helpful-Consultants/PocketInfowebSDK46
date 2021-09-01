@@ -269,11 +269,13 @@ export default getBaseStyles = (props) => {
     containerFlexCentred: {
       flex: 1,
       alignItems: 'center',
+      backgroundColor: 'white',
     },
     // OdisVersions
     containerFlexJustfied: {
       flex: 1,
       justifyContent: 'center',
+      backgroundColor: 'white',
     },
     // StatScreen
     containerFlexCentredJustfiedGrow: {
