@@ -39,7 +39,7 @@ export default CatalogueScreen = (props) => {
         marginHorizontal: 10,
       }}
     >
-      <Text>
+      <Text style={baseStyles.textItemMain}>
         The Volkswagen AG Group Aftersales Catalogue is a document on the web.
         The button below will open it on your phone.
       </Text>
@@ -62,7 +62,7 @@ export default CatalogueScreen = (props) => {
           />
         </View>
       </Touchable>
-      <Text>
+      <Text style={baseStyles.textItemMain}>
         You can also see the catalogue on the Tools Infoweb website in the{' '}
         <Text style={{ fontStyle: 'italic' }}>
           Product, Information, Marketing
