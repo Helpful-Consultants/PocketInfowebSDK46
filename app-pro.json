@@ -1,0 +1,58 @@
+{
+  "expo": {
+    "name": "Pocket Infoweb",
+    "slug": "PocketInfoweb-Dev",
+    "description": "Find your tools inventory.",
+    "privacy": "public",
+    "platforms": ["ios", "android"],
+    "version": "1.1.99",
+    "icon": "./assets/images/icon.png",
+    "orientation": "portrait",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
+    "ios": {
+      "supportsTablet": true,
+      "buildNumber": "109",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch"]
+      }
+    },
+    "android": {
+      "package": "com.helpfulconsultants.pocketinfowebpro",
+      "versionCode": 17
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#0b4a76"
+    },
+    "androidNavigationBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#3689b1"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "helpful-consultants",
+            "project": "pocket-infoweb",
+            "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
+          }
+        }
+      ]
+    }
+  }
+}
