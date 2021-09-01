@@ -102,7 +102,7 @@ export default OdisScreen = (props) => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the ODIS dataxxx'}
+          errorSummary={'Error syncing the ODIS data'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
