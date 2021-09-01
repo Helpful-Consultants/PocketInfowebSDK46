@@ -70,6 +70,7 @@ export default CatalogueScreen = (props) => {
         section.
       </Text>
       {browserResult &&
+      browserResult.type !== 'opened' &&
       browserResult.type !== 'cancel' &&
       browserResult.type !== 'dismiss' ? (
         <Text>{JSON.stringify(browserResult)}</Text>
