@@ -103,10 +103,3 @@ export default ForgottenPasswordScreen = (props) => {
     </View>
   );
 };
-
-export const screenOptions = (navData) => {
-  return {
-    title: 'Need your PIN?',
-    headerShown: true,
-  };
-};

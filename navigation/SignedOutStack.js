@@ -1,11 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignInScreen, {
-  screenOptions as SignInScreenOptions,
-} from '../screens/SignInScreen';
-import ForgottenPasswordScreen, {
-  screenOptions as ForgottenPasswordScreenOptions,
-} from '../screens/ForgottenPasswordScreen';
+import SignInScreen from '../screens/SignInScreen';
+import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
 
 const defaultStackNavOptions = {
   headerShown: false,
@@ -20,11 +16,12 @@ export default SignedOutStack = () => {
       <Stack.Screen
         name={'SignIn'}
         component={SignInScreen}
-        options={SignInScreenOptions}
+        options={{ title: 'Sign in', headerShown: false }}
       />
       <Stack.Screen
         name={'ForgottenPassword'}
         component={ForgottenPasswordScreen}
+        options={{ title: 'Back to sign-in', headerShown: true }}
       />
     </Stack.Navigator>
   );
