@@ -924,7 +924,7 @@ export default HomeScreen = (props) => {
                   />
                   <Text
                     style={baseStyles.textLargeColouredCentred}
-                  >{` Sign out`}</Text>
+                  >{` Sign out to change user`}</Text>
                 </View>
               </Touchable>
             </View>
@@ -933,18 +933,4 @@ export default HomeScreen = (props) => {
       </ScrollView>
     </View>
   );
-};
-
-export const screenOptions = (navData) => {
-  return {
-    headerShown: false,
-    tabBarVisible: false,
-    tabBarLabel: ({ focused }) => <Text>Home</Text>,
-    tabBarIcon: ({ focused }) => (
-      <TabBarIcon
-        focused={focused}
-        name={Platform.OS === 'ios' ? 'home' : 'home'}
-      />
-    ),
-  };
 };

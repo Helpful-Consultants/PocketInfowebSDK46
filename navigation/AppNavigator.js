@@ -3,7 +3,6 @@ import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
-
 import {
   createDrawerNavigator,
   DrawerContentScrollView,

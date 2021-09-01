@@ -21,7 +21,7 @@ export default SignedOutStack = () => {
       <Stack.Screen
         name={'ForgottenPassword'}
         component={ForgottenPasswordScreen}
-        options={{ title: 'Back to sign-in', headerShown: true }}
+        options={{ title: 'Need your PIN?', headerShown: true }}
       />
     </Stack.Navigator>
   );
