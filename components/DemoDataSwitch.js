@@ -38,10 +38,10 @@ export default DemoDataSwitch = (props) => {
   };
 
   useEffect(() => {
-    console.log(
-      '@@@@ in demo data switch useEffect. requestedDemoData is ',
-      requestedDemoData
-    );
+    // console.log(
+    //   '@@@@ in demo data switch useEffect. requestedDemoData is ',
+    //   requestedDemoData
+    // );
     setSwitchStatus(
       requestedDemoData && requestedDemoData === true ? true : false
     );

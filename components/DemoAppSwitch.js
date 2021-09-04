@@ -74,11 +74,13 @@ export default DemoAppSwitch = (props) => {
         <Text style={baseStyles.panelTextAppInfo}>
           {switchStatus ? switchedOnText : switchedOffText}
         </Text>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {'(Special option for '}
-          {userDataObj.userName && userDataObj.userName}
-          {')'}
-        </Text>
+        {showingDemoApp ? null : (
+          <Text style={baseStyles.panelTextAppInfo}>
+            {'(Special option for '}
+            {userDataObj.userName && userDataObj.userName}
+            {')'}
+          </Text>
+        )}
       </View>
     </View>
   ) : null;
