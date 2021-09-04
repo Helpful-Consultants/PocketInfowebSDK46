@@ -7,9 +7,12 @@ import { Image, Text } from 'react-native-elements';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
 export default AppNameWithLogo = () => {
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-  const showingOldApp = useSelector((state) => state.user.showingOldApp);
+  const baseStyles =
+    windowDim &&
+    getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
+
   //   console.log(
   //     'in AppNameWithLogo, windowDim:',
   //     windowDim,
@@ -24,7 +27,7 @@ export default AppNameWithLogo = () => {
           style={baseStyles.imageAppLogo}
         />
         <Text style={baseStyles.textAppName}>
-          {showingOldApp ? 'Pocket Infoweb' : 'Pocket Infoweb Extra'}
+          {showingDemoApp ? 'Pocket Infoweb (Demo)' : 'Pocket Infoweb'}
         </Text>
       </View>
     </View>

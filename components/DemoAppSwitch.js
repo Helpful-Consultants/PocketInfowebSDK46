@@ -1,39 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Switch, Text } from 'react-native-elements';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useSelector, useDispatch } from 'react-redux';
-import { setUserRequestedDemo } from '../actions/user';
+import { setUserRequestedDemoApp } from '../actions/user';
 
-export default AppInfo = (props) => {
+export default DemoAppSwitch = (props) => {
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
   const dispatch = useDispatch();
-
-  const switchedOffText =
-    'Turn on to show demo data for LTP bookings, service measures & notifications';
-  const switchedOnText =
-    'Turn off to show live data for LTP bookings, service measures & notifications';
+  const [switchStatus, setSwitchStatus] = useState(false);
+  const switchedOffText = 'Turn ON to show demo app with new features';
+  const switchedOnText = 'Turn OFF to show the old app';
 
   //   console.log(
   //     'in switch reducer switchStatus',
-  //     userRequestedDemo,
+  //     showingDemoApp,
   //     'for ',
   //     userDataObj.userName.toLowerCase()
   //   );
   const toggleSwitch = () => {
-    let switchStatus = userRequestedDemo;
-    if (userRequestedDemo && userRequestedDemo === true) {
-      console.log('in switch switchStatus true', userRequestedDemo);
-    } else if (userRequestedDemo && userRequestedDemo === false) {
-      console.log('in switch switchStatus true', userRequestedDemo);
-    }
-    console.log('in toggle switch switchStatus', switchStatus);
-    dispatch(setUserRequestedDemo({ requestedDemo: !switchStatus }));
-    // setuserRequestedDemo((previousState) => !demoSwitch);
+    let tempSwitchStatus =
+      showingDemoApp && showingDemoApp === true ? true : false;
+    // console.log(
+    //   'in toggle switch switchStatus',
+    //   switchStatus,
+    //   'setting to',
+    //   !switchStatus
+    // );
+    dispatch(setUserRequestedDemoApp({ showDemoApp: !tempSwitchStatus }));
+    setSwitchStatus(!tempSwitchStatus);
+    // setUserRequestedDemoApp((previousState) => !DemoAppSwitch);
   };
+
+  useEffect(() => {
+    console.log(
+      '@@@@ in App switch useEffect. showingDemoApp is ',
+      showingDemoApp
+    );
+    setSwitchStatus(showingDemoApp && showingDemoApp === true ? true : false);
+  }, [showingDemoApp]);
 
   return userDataObj &&
     userDataObj.userName &&
@@ -55,18 +62,20 @@ export default AppInfo = (props) => {
         }}
       >
         <Switch
-          value={userRequestedDemo}
+          value={switchStatus}
           trackColor={{ false: 'gray', true: 'green' }}
           onValueChange={toggleSwitch}
         />
-        <Text style={baseStyles.panelTextAppInfo}>{` Use demo data?`}</Text>
+        <Text style={baseStyles.panelTextAppInfo}>
+          {switchStatus ? `  Showing demo app` : `  Show demo app?`}
+        </Text>
       </View>
       <View>
         <Text style={baseStyles.panelTextAppInfo}>
-          {userRequestedDemo ? switchedOnText : switchedOffText}
+          {switchStatus ? switchedOnText : switchedOffText}
         </Text>
         <Text style={baseStyles.panelTextAppInfo}>
-          {'(Special feature for '}
+          {'(Special option for '}
           {userDataObj.userName && userDataObj.userName}
           {')'}
         </Text>

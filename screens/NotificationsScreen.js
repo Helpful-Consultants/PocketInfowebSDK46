@@ -54,7 +54,9 @@ export default NotificationsScreen = (props) => {
   );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
+  const userRequestedDemoData = useSelector(
+    (state) => state.user.requestedDemoData
+  );
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
@@ -374,21 +376,21 @@ export default NotificationsScreen = (props) => {
   //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
   let calibrationExpiryItemsToShow =
     !isLoadingCalibrationExpiry && !dataErrorCalibrationExpiry
-      ? userRequestedDemo
+      ? userRequestedDemoData
         ? filterCalibrationExpiryItems(calibrationExpiryDummyData)
         : filterCalibrationExpiryItems(calibrationExpiryItems)
       : [];
 
   let ltpLoansItemsToShow =
     !isLoadingLtpLoans && !dataErrorLtpLoans
-      ? userRequestedDemo
+      ? userRequestedDemoData
         ? filterLtpLoansItems(ltpLoansDummyData)
         : filterLtpLoansItems(ltpLoansItems)
       : [];
 
   let serviceMeasuresItemsToShow =
     !isLoadingServiceMeasures && !dataErrorServiceMeasures
-      ? userRequestedDemo
+      ? userRequestedDemoData
         ? filterServiceMeasuresItems(serviceMeasuresDummyData)
         : filterServiceMeasuresItems(serviceMeasuresItems)
       : [];
@@ -430,7 +432,7 @@ export default NotificationsScreen = (props) => {
           Your Important Notifications
         </Text>
       </View>
-      {userRequestedDemo && userRequestedDemo === true ? (
+      {userRequestedDemoData && userRequestedDemoData === true ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.

@@ -122,7 +122,7 @@ export default StatsScreen = (props) => {
   const activeJobsCount = (userWipsItems && userWipsItems.length) || 0;
   const dealerToolsCount = (dealerToolsItems && dealerToolsItems.length) || 0;
 
-  console.log('dealerToolsItems count ', dealerToolsItems.length);
+  //   console.log('dealerToolsItems count ', dealerToolsItems.length);
   //   console.log('userWipsItems count ', userWipsItems.length);
 
   //   console.log('statsobj', statsObj && statsObj);

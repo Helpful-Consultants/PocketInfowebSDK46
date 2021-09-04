@@ -19,8 +19,8 @@ const INITIAL_STATE = {
   error: null,
   dataErrorUrl: null,
   statusCode: null,
-  requestedDemo: false,
-  showingOldApp: true,
+  requestedDemoData: false,
+  showingDemoApp: false,
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -138,7 +138,7 @@ export default function user(state = INITIAL_STATE, action) {
       //   console.log('%%% user reducer -userBrand in reducer is ', userBrand);
       return {
         ...state,
-        showingOldApp: true,
+        // showingDemoApp: false,
         userIsSignedIn: true,
         userIsValidated: true,
         userData: action.payload.items,
@@ -186,17 +186,30 @@ export default function user(state = INITIAL_STATE, action) {
         userIsValidated: true,
       };
     }
-    case Types.SET_USER_REQUESTED_DEMO: {
-      console.log('action.payload is:', action.payload.requestedDemo);
-      console.log(
-        'in reducer switch switchStatus',
-        action.payload.requestedDemo && action.payload.requestedDemo
-      );
+    case Types.SET_USER_REQUESTED_DEMO_DATA: {
+      //   console.log('action.payload is:', action.payload.requestedDemoData);
+      //   console.log(
+      //     'in reducer switch switchStatus',
+      //     action.payload.requestedDemoData && action.payload.requestedDemoData
+      //   );
       return {
         ...state,
-        requestedDemo:
-          (action.payload.requestedDemo && action.payload.requestedDemo) ||
+        requestedDemoData:
+          (action.payload.requestedDemoData &&
+            action.payload.requestedDemoData) ||
           false,
+      };
+    }
+
+    case Types.SET_USER_REQUESTED_DEMO_APP: {
+      //   console.log('app switch action.payload is:', action.payload);
+      //   console.log(
+      //     'in reducer app switch switchStatus',
+      //     action.payload.showDemoApp && action.payload.showDemoApp
+      //   );
+      return {
+        ...state,
+        showingDemoApp: action.payload.showDemoApp ? true : false,
       };
     }
 

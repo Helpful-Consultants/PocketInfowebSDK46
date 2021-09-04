@@ -26,7 +26,9 @@ export default ServiceMeasuresScreen = (props) => {
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
+  const userRequestedDemoData = useSelector(
+    (state) => state.user.requestedDemoData
+  );
   const isLoading = useSelector((state) => state.stats.isLoading);
   const dataError = useSelector((state) => state.stats.error);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
@@ -175,7 +177,7 @@ export default ServiceMeasuresScreen = (props) => {
 
   const items =
     !isLoading && !dataError
-      ? userRequestedDemo
+      ? userRequestedDemoData
         ? serviceMeasuresDummyData
         : serviceMeasuresItems
       : [];
@@ -232,7 +234,7 @@ export default ServiceMeasuresScreen = (props) => {
           </Text>
         </View>
       )}
-      {userRequestedDemo ? (
+      {userRequestedDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.

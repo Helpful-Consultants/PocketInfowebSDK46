@@ -43,10 +43,18 @@ export const setUserOutdatedCredentials = () => ({
   type: Types.SET_USER_OUTDATED_CREDENTIALS,
 });
 
-export const setUserRequestedDemo = ({ requestedDemo }) => ({
-  type: Types.SET_USER_REQUESTED_DEMO,
+export const setUserRequestedDemoData = ({ requestedDemoData }) => ({
+  type: Types.SET_USER_REQUESTED_DEMO_DATA,
   payload: {
-    requestedDemo: requestedDemo || null,
+    requestedDemoData: requestedDemoData || null,
+  },
+});
+
+export const setUserRequestedDemoApp = ({ showDemoApp }) => ({
+  type: Types.SET_USER_REQUESTED_DEMO_APP,
+  payload: {
+    showDemoApp: showDemoApp,
+    fish: 'cake',
   },
 });
 

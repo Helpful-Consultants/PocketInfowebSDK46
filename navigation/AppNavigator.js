@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +10,6 @@ import {
 } from '@react-navigation/drawer';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-
 //import { Ionicons } from '@expo/vector-icons';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
@@ -25,10 +24,11 @@ import { revalidateUserCredentials } from '../actions/user';
 
 import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
-import DemoSwitch from '../components/DemoSwitch';
-import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
+import DemoAppSwitch from '../components/DemoAppSwitch';
+import DemoDataSwitch from '../components/DemoDataSwitch';
+// import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
+// import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
-import Tasks from '../constants/Tasks';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
@@ -37,42 +37,55 @@ import SignedOutStack from './SignedOutStack';
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
 
-const CustomDrawerContent = (props) => (
-  <DrawerContentScrollView
-    {...props}
-    contentContainerStyle={{
-      flex: 1,
-      flexDirection: 'column',
-      alignContents: 'space-between',
-      paddingBottom: 20,
-    }}
-  >
-    <Text
-      style={{
-        marginLeft: 10,
-        marginTop: 10,
-        marginBottom: 5,
-        fontFamily: 'the-sans-bold',
+const CustomDrawerContent = (props) => {
+  //   const { showDataSwitch, showingDemoApp } = props;
+  //   console.log('CustomDrawerContent props.showingDemoApp', showingDemoApp);
+  //   console.log('CustomDrawerContent props.showDataSwitch', showDataSwitch);
+  return (
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={{
+        flex: 1,
+        flexDirection: 'column',
+        alignContents: 'space-between',
+        paddingBottom: 20,
       }}
     >
-      QUICK LINKS
-    </Text>
-    <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-    {props.showingOldApp ? null : <DemoSwitch />}
-    <AppInfo showingOldApp={props.showingOldApp} />
-    {props.showingOldApp ? null : <BackgroundFetchBlock />}
-  </DrawerContentScrollView>
-);
+      <Text
+        style={{
+          marginLeft: 10,
+          marginTop: 10,
+          marginBottom: 5,
+          fontFamily: 'the-sans-bold',
+        }}
+      >
+        QUICK LINKS
+      </Text>
+      <DrawerItemList {...props} style={{ marginBottom: 20 }} />
+      <DemoAppSwitch />
+      <DemoDataSwitch />
+      <AppInfo />
+      {/* {props.showingDemoApp ? <BackgroundFetchBlock /> : null} */}
+    </DrawerContentScrollView>
+  );
+};
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const { showingOldApp } = props;
+  const { showDemoApp } = props;
+  let showDataSwitch = true;
+
+  useEffect(() => {
+    // console.log('Dwr Navigator useEffect', showDemoApp);
+    showDataSwitch = showDemoApp;
+  }, [showDemoApp]);
 
   //   console.log('Dwr Navigator props', props);
-  //   console.log('showingOldApp', props.showingOldApp && props.showingOldApp);
+  //   console.log('Dwr Navigator showDemoApp', showDemoApp);
+  //   console.log('showingDemoApp', props.showingDemoApp && props.showingDemoApp);
 
   return (
     <Drawer.Navigator
@@ -80,8 +93,8 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props) => (
-        <CustomDrawerContent {...props} showingOldApp />
+      drawerContent={(props, showDemoApp) => (
+        <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
       )}
       screenOptions={{
         activeBackgroundColor: Colors.vwgActiveLink,
@@ -97,7 +110,6 @@ const DrawerNavigator = (props) => {
           headerShown: false,
         }}
       />
-
       <Drawer.Screen
         name='WipTabs'
         component={WipTabNavigator}
@@ -112,7 +124,7 @@ const DrawerNavigator = (props) => {
           drawerLabel: 'News, Catalogue & Stats',
         }}
       />
-      {showingOldApp ? (
+      {showDemoApp ? (
         <Drawer.Screen
           name='RemindersTabs'
           component={RemindersTabNavigator}
@@ -129,15 +141,16 @@ export default AppNavigator = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
-  const showingOldApp = useSelector((state) => state.user.showingOldApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
+  const [showDemoApp, setShowDemoApp] = useState(false);
   //   return <AuthLoadingScreen />;
 
-  //   console.log('AppNavigator props', props);
-  //   console.log('AppNavigator showingOldApp', showingOldApp && showingOldApp);
+  //   console.log('AppNavigator props', props && props);
+  //   console.log('AppNavigator showingDemoApp', showingDemoApp && showingDemoApp);
 
   //   let now = moment();
   //   const ageOfCredentialsLimit = 3;
@@ -224,7 +237,15 @@ export default AppNavigator = (props) => {
   useEffect(() => {
     // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
     // initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
-  }, []);
+    console.log(
+      '!!!! in AppNavigator useEffect. showingDemoApp is ',
+      showingDemoApp
+    );
+    setShowDemoApp(showingDemoApp);
+  }, [showingDemoApp]);
+
+  //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
+  //   console.log('ssssss in AppNavigator showDemoApp ', showDemoApp);
 
   const allOK =
     userIsValidated &&
@@ -236,15 +257,39 @@ export default AppNavigator = (props) => {
 
   //   const AppStack = createStackNavigator();
 
-  //   console.log('AppNavigator,allOK ', allOK);
+  //   console.log(
+  //     'AppNavigator, showingDemoApp is: ',
+  //     showingDemoApp && showingDemoApp
+  //   );
 
-  return (
-    <NavigationContainer>
-      {allOK === true ? (
-        <DrawerNavigator props={{ ...props, showingOldApp: showingOldApp }} />
-      ) : (
-        <SignedOutStack />
-      )}
-    </NavigationContainer>
-  );
+  //   console.log('AppNavigator, props are: ', props);
+
+  //   const newPropsObj = { ...props, showingDemoApp: true };
+  //   console.log('AppNavigator, newPropsObj is: ', newPropsObj);
+  //   console.log(
+  //     '?????? in AppNavigator showingDemoApp is ',
+  //     showingDemoApp,
+  //     showDemoApp
+  //   );
+  if (showDemoApp) {
+    return (
+      <NavigationContainer>
+        {allOK === true ? (
+          <DrawerNavigator showDemoApp={true} />
+        ) : (
+          <SignedOutStack />
+        )}
+      </NavigationContainer>
+    );
+  } else {
+    return (
+      <NavigationContainer>
+        {allOK === true ? (
+          <DrawerNavigator showDemoApp={false} />
+        ) : (
+          <SignedOutStack />
+        )}
+      </NavigationContainer>
+    );
+  }
 };

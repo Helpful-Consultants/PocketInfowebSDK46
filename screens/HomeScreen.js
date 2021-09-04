@@ -103,11 +103,6 @@ export async function requestPermissionsAsync() {
 }
 
 export default HomeScreen = (props) => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-
-  //   console.log('IN HOME !!!!!');
-  //   console.log(props);
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
 
@@ -120,8 +115,10 @@ export default HomeScreen = (props) => {
   const userId = useSelector((state) => state.user.userId);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
-  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
-  const showingOldApp = useSelector((state) => state.user.showingOldApp);
+  const userRequestedDemoData = useSelector(
+    (state) => state.user.requestedDemoData
+  );
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
 
   //   console.log('IN HOME !!!!! 1g');
   //   const userIntId =
@@ -171,6 +168,15 @@ export default HomeScreen = (props) => {
   const [ageOfProducts, setAgeOfProducts] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+
+  const windowDim = useWindowDimensions();
+  const baseStyles =
+    windowDim &&
+    getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
+
+  //   console.log('IN HOME !!!!! showingDemoApp', showingDemoApp);
+  //   console.log('windowDim', windowDim);
+
   //   console.log('IN HOME !!!!!  2');
   const getLtpItems = useCallback(async () => {
     dispatch(getLtpRequest());
@@ -553,7 +559,7 @@ export default HomeScreen = (props) => {
   //       ? 8
   //       : 6;
 
-  const gridRows = showingOldApp ? 6 : 8;
+  const gridRows = showingDemoApp ? 8 : 6;
   //   console.log('home screen gridRows', gridRows);
   //   console.log('Rendering Home screen');
 
@@ -572,16 +578,16 @@ export default HomeScreen = (props) => {
         }}
       >
         <AppNameWithLogo />
-        {showingOldApp ? null : (
+        {showingDemoApp ? (
           <Text
             style={{
               ...baseStyles.textExtraApp,
               color: Colors.vwgCoolOrange,
             }}
           >
-            'Showing proposed new features'
+            Showing proposed new features
           </Text>
-        )}
+        ) : null}
 
         <View style={baseStyles.containerFlexCentredJustfiedGrow}>
           {showReloadDialogue === true ? (
@@ -752,7 +758,7 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                 </View>
-                {showingOldApp ? null : (
+                {showingDemoApp ? (
                   <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                     <Touchable
                       style={baseStyles.viewHomeGridCell}
@@ -802,7 +808,7 @@ export default HomeScreen = (props) => {
                               {`LTP Loans`}
                               <Text style={baseStyles.textHomeGridCellCount}>
                                 {` (${
-                                  userRequestedDemo
+                                  userRequestedDemoData
                                     ? ltpLoansDummyData
                                       ? ltpLoansDummyData.length
                                       : 0
@@ -821,7 +827,7 @@ export default HomeScreen = (props) => {
                       </View>
                     </Touchable>
                   </View>
-                )}
+                ) : null}
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
@@ -878,7 +884,7 @@ export default HomeScreen = (props) => {
                 }}
               >
                 <OdisLinkWithStatus
-                  showingOldApp={showingOldApp}
+                  showingDemoApp={showingDemoApp}
                   navigation={navigation}
                   userBrand={userBrand}
                   itemsObj={odisObj}

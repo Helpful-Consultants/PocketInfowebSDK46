@@ -4,19 +4,21 @@ import Colors from '../constants/Colors';
 import Constants from 'expo-constants';
 
 export default getBaseStyles = (props) => {
-  const { fontScale, height, scale, width } = props;
+  const { fontScale, height, scale, width, showingDemoApp = false } = props;
 
   //   console.log(props && fontScale && 'in getBaseStyles, fontScale:', fontScale);
   //   console.log(props && scale && 'in getBaseStyles, scale:', scale);
   //   console.log(props && height && 'in getBaseStyles, height:', height);
   //   console.log(props && width && 'in getBaseStyles, width:', width);
+  //   console.log('in getBaseStyles, props :', props);
+  //   console.log('in getBaseStyles, showingDemoApp :', showingDemoApp);
 
   //   const gridRows =
   //     Constants.manifest.name &&
   //     Constants.manifest.name === 'Pocket Infoweb Extra'
   //       ? 8
   //       : 6;
-  const gridRows = 6;
+  const gridRows = showingDemoApp ? 8 : 6;
   //   console.log('gridRows', gridRows);
 
   const bottomTabHeight = height && height >= 1333 ? 100 : 80;

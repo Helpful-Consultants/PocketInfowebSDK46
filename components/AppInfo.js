@@ -18,7 +18,7 @@ export default AppInfo = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
-  const showingOldApp = useSelector((state) => state.user.showingOldApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
 
@@ -51,19 +51,21 @@ export default AppInfo = (props) => {
       }}
     >
       <Text style={baseStyles.panelTextAppName}>
-        {showingOldApp ? 'Pocket Infoweb' : 'Pocket Infoweb Extra'}
+        {showingDemoApp ? 'Pocket Infoweb Demo' : 'Pocket Infoweb'}
       </Text>
-      {showingOldApp ? null : null}
+      {showingDemoApp ? null : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
         </Text>
       ) : null}
       <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
-      {showingOldApp ? null : odisFetchTime ? (
-        <Text style={baseStyles.panelTextAppInfo}>
-          {`Last data refresh: ${getDisplayDate(odisFetchTime)}`}
-        </Text>
+      {showingDemoApp ? (
+        odisFetchTime ? (
+          <Text style={baseStyles.panelTextAppInfo}>
+            {`Last ODIS check: ${getDisplayDate(odisFetchTime)}`}
+          </Text>
+        ) : null
       ) : null}
       {Platform && Platform.OS === 'ios' ? (
         Constants && Constants.deviceName ? (

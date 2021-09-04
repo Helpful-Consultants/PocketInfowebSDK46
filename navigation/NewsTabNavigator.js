@@ -50,7 +50,7 @@ const NewsTabs =
     : createBottomTabNavigator();
 
 export default NewsTabNavigator = ({ navigation, route }) => {
-  const showingOldApp = useSelector((state) => state.user.showingOldApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -137,7 +137,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           ),
         }}
       />
-      {showingOldApp ? (
+      {showingDemoApp ? null : (
         <NewsTabs.Screen
           name='ODIS'
           component={OdisScreen}
@@ -147,7 +147,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
             ),
           }}
         />
-      ) : null}
+      )}
       <NewsTabs.Screen
         name='Stats'
         component={StatsScreen}

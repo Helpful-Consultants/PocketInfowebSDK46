@@ -21,7 +21,9 @@ export default LtpLoansScreen = (props) => {
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const [searchInput, setSearchInput] = useState('');
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemo = useSelector((state) => state.user.requestedDemo);
+  const requestedDemoData = useSelector(
+    (state) => state.user.requestedDemoData
+  );
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
@@ -236,7 +238,7 @@ export default LtpLoansScreen = (props) => {
   //   console.log('in ltpLoans screen - point 8');
   const items =
     !isLoading && !dataError
-      ? userRequestedDemo
+      ? requestedDemoData
         ? ltpLoansDummyData
         : ltpLoansItems
       : [];
@@ -272,7 +274,7 @@ export default LtpLoansScreen = (props) => {
         isLoading={isLoading}
         dataCount={ltpLoansItems.length}
       />
-      {userRequestedDemo ? (
+      {requestedDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.

@@ -30,6 +30,7 @@ import BookedOutToolsList from './BookedOutToolsList';
 const minSearchLength = 1;
 
 export default BookedOutToolsScreen = (props) => {
+  //   console.log('BookedOutToolsScreen props', props);
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const userApiFetchParamsObj = useSelector(
