@@ -26,9 +26,9 @@ export default function NewsLinks(props) {
   const { items, userIntId } = props;
 
   //   console.log('windowDim', windowDim && windowDim);
-  //   console.log('in products link, windowDim:', windowDim);
+  //   console.log('in newslinks, windowDim:', windowDim);
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  //   console.log('in products link, baseStyles:', baseStyles);
+  //   console.log('in newslinks, baseStyles:', baseStyles);
   let now = moment();
   let intId = (userIntId && userIntId) || '';
 
