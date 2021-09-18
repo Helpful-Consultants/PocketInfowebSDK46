@@ -64,13 +64,6 @@ export default {
   RESET_ODIS_VIEW_COUNT: 'odis/resetOdisViewCount',
   ODIS_ERROR: 'odis/odis_error',
 
-  GET_PRODUCTS_START: 'products/get_products_start',
-  GET_PRODUCTS_REQUEST: 'products/get_products_request',
-  GET_PRODUCTS_SUCCESS: 'products/get_products_success',
-  INCREMENT_PRODUCTS_VIEW_COUNT: 'odis/incrementProductsViewCount',
-  RESET_PRODUCTS_VIEW_COUNT: 'odis/resetProductsViewCount',
-  PRODUCTS_ERROR: 'products/products_error',
-
   GET_STATS_START: 'stats/get_stats_start',
   GET_STATS_REQUEST: 'stats/get_stats_request',
   GET_STATS_SUCCESS: 'stats/get_stats_success',
