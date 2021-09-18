@@ -1,6 +1,5 @@
 import userSagas from './user';
 import newsSagas from './news';
-import productsSagas from './products';
 import ltpSagas from './ltp';
 import ltpLoansSagas from './ltpLoans';
 import odisSagas from './odis';
@@ -15,7 +14,6 @@ export default function* rootSaga() {
   yield all([
     ...userSagas,
     ...newsSagas,
-    ...productsSagas,
     ...ltpSagas,
     ...ltpLoansSagas,
     ...statsSagas,

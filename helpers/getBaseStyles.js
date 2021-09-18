@@ -327,7 +327,6 @@ export default getBaseStyles = (props) => {
       // justifyContent: 'center',
       marginBottom: bottomTabHeight,
     },
-    // ProductsScreen
     containerFlexAndReducedMargin: {
       flex: 1,
       marginBottom: -5,
@@ -689,7 +688,6 @@ export default getBaseStyles = (props) => {
       color: Colors.vwgBlack,
       fontSize: appNameFontSize,
     },
-    // ProductsLinks
     textItemTitle: {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
@@ -704,7 +702,6 @@ export default getBaseStyles = (props) => {
           ? fontFactor * 0.9
           : fontFactor * 0.9,
     },
-    // ProductsLinks
     textItemMain: {
       ...baseText,
       textAlign: 'justify',
@@ -1018,7 +1015,6 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       marginBottom: 0,
     },
-    // ProductsScreen
     viewItem: {
       marginTop: 10,
       marginHorizontal: 10,
@@ -1034,7 +1030,6 @@ export default getBaseStyles = (props) => {
       paddingLeft: 15,
       paddingRight: 25,
     },
-    // ProductsLinks
     viewItemTopRow: {
       flexDirection: 'row',
       marginHorizontal: 0,

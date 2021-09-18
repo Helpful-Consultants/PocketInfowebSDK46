@@ -34,7 +34,6 @@ import {
   emptyDealerWipsRequest,
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
-import { getProductsRequest } from '../actions/products';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
@@ -135,7 +134,6 @@ export default HomeScreen = (props) => {
   const odisViewCount = useSelector((state) => state.odis.viewCount);
 
   const lastUpdateNews = useSelector((state) => state.news.lastUpdate);
-  const lastUpdateProducts = useSelector((state) => state.products.lastUpdate);
   const newsObj = useSelector((state) => state.news);
   const previousUpdateNews = useSelector((state) => state.news.previousUpdate);
 
@@ -148,7 +146,6 @@ export default HomeScreen = (props) => {
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isLoadingOdis = useSelector((state) => state.odis.isLoading);
   const isLoadingNews = useSelector((state) => state.news.isLoading);
-  const isLoadingProducts = useSelector((state) => state.products.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
   const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
   const isLoadingCalibrationExpiry = useSelector(
@@ -165,7 +162,6 @@ export default HomeScreen = (props) => {
   const [wipsCount, setWipsCount] = useState(0);
   const [bookedOutToolsCount, setBookedOutToolsCount] = useState(0);
   const [ageOfNews, setAgeOfNews] = useState(0);
-  const [ageOfProducts, setAgeOfProducts] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
 
@@ -197,7 +193,6 @@ export default HomeScreen = (props) => {
     dispatch(getLtpLoansRequest(userApiFetchParamsObj));
     dispatch(getOdisRequest());
     dispatch(getNewsRequest());
-    dispatch(getProductsRequest());
     dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
   });
 
@@ -266,7 +261,6 @@ export default HomeScreen = (props) => {
       isLoadingOdis ||
       isLoadingNews ||
       isLoadingWips ||
-      isLoadingProducts ||
       isLoadingCalibrationExpiry ||
       isLoadingLtpLoans ||
       isLoadingLtp
@@ -280,7 +274,6 @@ export default HomeScreen = (props) => {
     isLoadingOdis,
     isLoadingNews,
     isLoadingWips,
-    isLoadingProducts,
     isLoadingCalibrationExpiry,
     isLoadingLtpLoans,
     isLoadingLtp,
@@ -487,27 +480,6 @@ export default HomeScreen = (props) => {
       setAgeOfNews(newAgeOfNews);
     }
   }, [lastUpdateNews]);
-
-  useEffect(() => {
-    // console.log('news useEffect', lastUpdateNews);
-    if (lastUpdateProducts && lastUpdateProducts !== null) {
-      const lastUpdateString = lastUpdateProducts.toString();
-      //   console.log('lastUpdateProducts', lastUpdateString);
-      const last = moment(lastUpdateString, 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment(lastUpdateProducts.toString(), 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment('31/01/2020 12:31:19', 'DD/MM/YYYY HH:mm:ss');
-      //   console.log('now', now);
-      //   console.log('last', last);
-
-      let newAgeOfProducts = now.diff(moment(last), 'hours');
-      //   let fromNow = moment(last).fromNow();
-      //   console.log('news fromNow', fromNow);
-
-      // setAgeOfNews(newAgeOfNews);
-      //   console.log('Products useEffect', last, now, newAgeOfProducts);
-      setAgeOfProducts(newAgeOfProducts);
-    }
-  }, [lastUpdateProducts]);
 
   useEffect(() => {
     const userWipsItems =
