@@ -17,7 +17,6 @@
     },
     "release": {
       "extends": "base",
-      "workflow": "managed",
       "ios": {
         "releaseChannel": "ios-prod"
       },
@@ -27,7 +26,6 @@
     },
     "extra": {
       "extends": "base",
-      "workflow": "managed",
       "ios": {
         "releaseChannel": "ios"
       },
