@@ -49,8 +49,21 @@ axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 //   }
 // };
 
+let sentryDSN =
+  'https://753764f4208a4f429c2c21d20a45adf0@o359939.ingest.sentry.io/3578989';
+
+if (
+  Constants &&
+  Constants.manifest &&
+  Constants.manifest.name &&
+  Constants.manifest.name === 'Pocket Infoweb Extra'
+) {
+  sentryDSN =
+    'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
+}
+
 Sentry.init({
-  dsn: 'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088',
+  dsn: sentryDSN,
   enableInExpoDevelopment: true,
   debug: true,
   release: Constants.manifest.revisionId,
