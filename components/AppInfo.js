@@ -107,7 +107,10 @@ export default AppInfo = (props) => {
         {Constants.manifest.releaseChannel
           ? Constants.manifest.releaseChannel === 'default' ||
             Constants.manifest.releaseChannel === 'ios' ||
-            Constants.manifest.releaseChannel === 'android'
+            Constants.manifest.releaseChannel === 'android' ||
+            Constants.manifest.releaseChannel === 'ios-prod' ||
+            Constants.manifest.releaseChannel === 'android-prod' ||
+            Constants.manifest.releaseChannel === 'prod-v2'
             ? ' (Prod)'
             : Constants.manifest.releaseChannel === 'ios-staging' ||
               Constants.manifest.releaseChannel === 'android-staging' ||
