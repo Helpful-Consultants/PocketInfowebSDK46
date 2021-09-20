@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useWindowDimensions, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
+import Constants from 'expo-constants';
 // import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
@@ -12,7 +13,7 @@ export default AppNameWithLogo = () => {
   const baseStyles =
     windowDim &&
     getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
-
+  //   console.log('name', Constants.manifest);
   //   console.log(
   //     'in AppNameWithLogo, windowDim:',
   //     windowDim,
@@ -27,7 +28,14 @@ export default AppNameWithLogo = () => {
           style={baseStyles.imageAppLogo}
         />
         <Text style={baseStyles.textAppName}>
-          {showingDemoApp ? 'Pocket Infoweb (Demo)' : 'Pocket Infoweb'}
+          {Constants &&
+          Constants.manifest &&
+          Constants.manifest.name &&
+          Constants.manifest.name === 'Pocket Infoweb Extra'
+            ? 'Pocket Infoweb Extra'
+            : showingDemoApp
+            ? 'Pocket Infoweb (Demo)'
+            : 'Pocket Infoweb'}
         </Text>
       </View>
     </View>

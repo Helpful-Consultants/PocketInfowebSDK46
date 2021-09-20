@@ -50,7 +50,14 @@ export default AppInfo = (props) => {
       }}
     >
       <Text style={baseStyles.panelTextAppName}>
-        {showingDemoApp ? 'Pocket Infoweb Demo' : 'Pocket Infoweb'}
+        {Constants &&
+        Constants.manifest &&
+        Constants.manifest.name &&
+        Constants.manifest.name === 'Pocket Infoweb Extra'
+          ? 'Pocket Infoweb Extra'
+          : showingDemoApp
+          ? 'Pocket Infoweb (Demo)'
+          : 'Pocket Infoweb'}
       </Text>
       {showingDemoApp ? null : null}
       {userDataObj && userDataObj.userName ? (
