@@ -108,6 +108,9 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeArea();
 
+  // force a crash
+  //const crashMe = CrashObj;
+
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
