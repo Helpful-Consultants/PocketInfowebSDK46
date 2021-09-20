@@ -15,7 +15,7 @@
         "buildType": "app-bundle"
       }
     },
-    "release": {
+    "PROD": {
       "extends": "base",
       "ios": {
         "releaseChannel": "ios-prod"
@@ -36,6 +36,30 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal"
+    }
+  },
+  "submit": {
+    "PROD": {
+      "ios": {
+        "appleId": "alanupstone@mac.com",
+        "ascAppId": "1488802249",
+        "appleTeamId": "8DEN7TYFE5",
+        "sku": "PocketInfowebPro",
+        "language": "en-GB",
+        "appName": "Pocket Infoweb",
+        "companyName": "Volkswagen Group UK Limited"
+      }
+    },
+    "EXTRA": {
+       "ios": {
+        "appleId": "alanupstone@mac.com",
+        "ascAppId": "1552850825",
+        "appleTeamId": "8DEN7TYFE5",
+        "sku": "PocketInfowebExtra",
+        "language": "en-GB",
+        "appName": "Pocket Infoweb Extra",
+        "companyName": "Volkswagen Group UK Limited"
+      }
     }
   }
   
