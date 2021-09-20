@@ -27,7 +27,7 @@
     "extra": {
       "extends": "base",
       "ios": {
-        "releaseChannel": "ios"
+        "releaseChannel": "ios-staging"
       },
       "android": {
         "releaseChannel": "android-staging"
