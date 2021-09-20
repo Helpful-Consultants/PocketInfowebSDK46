@@ -24,7 +24,7 @@
         "releaseChannel": "android-prod"
       }
     },
-    "extra": {
+    "EXTRA": {
       "extends": "base",
       "ios": {
         "releaseChannel": "ios-staging"
@@ -46,12 +46,12 @@
         "appleTeamId": "8DEN7TYFE5",
         "releaseChannel": "ios-prod",
         "sku": "PocketInfowebPro",
-        "languuge": "en-GB",
+        "language": "en-GB",
         "appName": "Pocket Infoweb",
         "companyName": "Volkswagen Group UK Limited"
       }
     },
-    "extra": {
+    "EXTRA": {
        "ios": {
         "appleId": "alanupstone@mac.com",
         "ascAppId": "1552850825",
