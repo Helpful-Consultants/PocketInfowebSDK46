@@ -7,7 +7,6 @@ import moment from 'moment';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
-import Colors from '../constants/Colors';
 
 const getDisplayDate = (rawDate) => {
   return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
