@@ -1,9 +1,8 @@
 {
   "build": {
-    "release": {
+    "base": {
       "workflow": "managed",
       "distribution": "store",
-      "releaseChannel": "prod-v2",
       "ios": {
         "env": {
           "PLATFORM": "ios",
@@ -17,21 +16,22 @@
         "buildType": "app-bundle"
       }
     },
-    "extra": {
-      "workflow": "managed",
-      "distribution": "store",
-      "releaseChannel": "extra",
+    "release": {
+      "extends": "base",
       "ios": {
-        "env": {
-          "PLATFORM": "ios",
-          "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
-        }
+        "releaseChannel": "ios-prod"
       },
       "android": {
-        "env": {
-          "PLATFORM": "android"
-        },
-        "buildType": "app-bundle"
+        "releaseChannel": "android-prod"
+      }
+    },
+    "extra": {
+      "extends": "base",
+      "ios": {
+        "releaseChannel": "ios"
+      },
+      "android": {
+        "releaseChannel": "android-staging"
       }
     },
     "development": {
