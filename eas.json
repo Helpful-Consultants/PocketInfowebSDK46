@@ -46,8 +46,8 @@
         "sku": "PocketInfowebPro",
         "language": "en-GB",
         "appName": "Pocket Infoweb",
-        "companyName": "Volkswagen Group UK Limited",
-        "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
+        "companyName": "Volkswagen Group UK Limited"
+       
       }
     },
     "EXTRA": {
@@ -58,8 +58,7 @@
         "sku": "PocketInfowebExtra",
         "language": "en-GB",
         "appName": "Pocket Infoweb Extra",
-        "companyName": "Volkswagen Group UK Limited",
-        "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
+        "companyName": "Volkswagen Group UK Limited"
       }
     }
   }
