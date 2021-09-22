@@ -4,8 +4,7 @@
       "distribution": "store",
       "ios": {
         "env": {
-          "PLATFORM": "ios",
-          "EXPO_APPLE_APP_SPECIFIC_PASSWORD": "nuyc-khtc-liqu-anmx"
+          "PLATFORM": "ios"
         }
       },
       "android": {
