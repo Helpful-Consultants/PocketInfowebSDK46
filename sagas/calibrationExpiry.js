@@ -153,7 +153,7 @@ function* getCalibrationExpiry({ payload }) {
 
 function* watchGetCalibrationExpiryRequest() {
   //   console.log('in saga watch for calibrationExpiry');
-  yield takeLatest(Types.GET_SERVICE_MEASURES_REQUEST, getCalibrationExpiry);
+  yield takeLatest(Types.GET_CALIBRATION_EXPIRY_REQUEST, getCalibrationExpiry);
 }
 
 const calibrationExpirySagas = [fork(watchGetCalibrationExpiryRequest)];
