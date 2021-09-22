@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
@@ -15,7 +16,7 @@ import Tasks from '../constants/Tasks';
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
-  return BackgroundFetch.registerTaskAsync(Tasks.BACKGROUND_FETCH_TASK, {
+  return BackgroundFetch.registerTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK, {
     minimumInterval: 60 * 1, // 1 minutes
     stopOnTerminate: false, // android only,
     startOnBoot: true, // android only
@@ -26,10 +27,12 @@ const registerBackgroundFetchAsync = async () => {
 // This will cancel any future background fetch calls that match the given name
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const unregisterBackgroundFetchAsync = async () => {
-  return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_TASK);
+  return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK);
 };
 
 export default BackgroundFetchBlock = () => {
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [taskStatus, setTaskStatus] = useState(null);
   const [appBadgeCount, setAppBadgeCount] = useState(0);
@@ -117,7 +120,7 @@ export default BackgroundFetchBlock = () => {
   const checkTaskStatusAsync = async () => {
     const status = await BackgroundFetch.getStatusAsync();
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
-      Tasks.BACKGROUND_FETCH_TASK
+      Tasks.BACKGROUND_FETCH_DATE_TASK
     );
     setTaskStatus(status);
     setIsRegistered(isRegistered);
@@ -145,7 +148,10 @@ export default BackgroundFetchBlock = () => {
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
-  return (
+  return showingDemoApp &&
+    userDataObj &&
+    userDataObj.userName &&
+    userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
     <View style={styles.screen}>
       <View style={styles.textContainer}>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -180,14 +186,16 @@ export default BackgroundFetchBlock = () => {
         </TouchableOpacity>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Task{' '}
-          <Text style={styles.boldText}>{Tasks.BACKGROUND_FETCH_TASK}</Text>
+          <Text style={styles.boldText}>
+            {Tasks.BACKGROUND_FETCH_DATE_TASK}
+          </Text>
           <Text style={styles.boldText}>
             {isRegistered ? ' is registered' : ' is not registered yet'}
           </Text>
         </Text>
       </View>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

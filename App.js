@@ -108,6 +108,18 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
+const fetchDate = async () => {
+  const now = new Date().toISOString();
+
+  //   const nowStr = (now && now.toISOString()) || 'no date';
+  const result = true;
+  console.log('Got background fetch call to fetch date', now);
+  // Be sure to return the successful result type!
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
+};
+
 // const fetchOdis = async () => {
 //   console.log(`Got background fetch odis call`);
 
@@ -121,21 +133,21 @@ sagaMiddleware.run(rootSaga);
 // const BACKGROUND_FETCH_TASK = 'background-fetcher';
 // 1. Define the task by providing a name and the function that should be executed
 // Note: This needs to be called in the global scope (e.g outside of your React components)
-async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-  console.log('in zzzzinitBackgroundFetch', taskName, taskFn, interval);
-  try {
-    if (!TaskManager.isTaskDefined(taskName)) {
-      TaskManager.defineTask(taskName, taskFn);
-    }
-    const options = {
-      minimumInterval: interval, // in seconds
-    };
-    await BackgroundFetch.registerTaskAsync(taskName, options);
-    console.log('registerTaskAsync() worked');
-  } catch (err) {
-    console.log('registerTaskAsync() failed:', err);
-  }
-}
+// async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+//   console.log('in zzzzinitBackgroundFetch', taskName, taskFn, interval);
+//   try {
+//     if (!TaskManager.isTaskDefined(taskName)) {
+//       TaskManager.defineTask(taskName, taskFn);
+//     }
+//     const options = {
+//       minimumInterval: interval, // in seconds
+//     };
+//     await BackgroundFetch.registerTaskAsync(taskName, options);
+//     console.log('registerTaskAsync() worked');
+//   } catch (err) {
+//     console.log('registerTaskAsync() failed:', err);
+//   }
+// }
 
 async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
   console.log('in defineBackgroundFetch', taskName, taskFn, interval);
@@ -159,7 +171,7 @@ async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 }
 
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate, 5);
 
 // async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 //   console.log('in initBackgroundFetch', taskName, taskFn, interval);

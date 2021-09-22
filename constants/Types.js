@@ -2,6 +2,11 @@ export default {
   BACKGROUND_SUCCESS: 'appStatus/get_background_success',
   BACKGROUND_ERROR: 'appStatus/get_background_error',
 
+  GET_BACKGROUND_DATA_START: 'backgroundData/get_background_data_start',
+  GET_BACKGROUND_DATA_REQUEST: 'backgroundData/get_request_background_request',
+  GET_BACKGROUND_DATA_SUCCESS: 'backgroundData/get_background_data_success',
+  BACKGROUND_DATA_ERROR: 'backgroundData/background_data_error',
+
   GET_USER_START: 'user/get_user_start',
   GET_USER_REQUEST: 'user/get_user_request',
   GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',

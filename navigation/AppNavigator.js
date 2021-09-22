@@ -26,7 +26,7 @@ import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
 import DemoAppSwitch from '../components/DemoAppSwitch';
 import DemoDataSwitch from '../components/DemoDataSwitch';
-// import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
+import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 // import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
@@ -64,8 +64,8 @@ const CustomDrawerContent = (props) => {
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
       <DemoAppSwitch />
       <DemoDataSwitch />
+      <BackgroundFetchBlock />
       <AppInfo />
-      {/* {props.showingDemoApp ? <BackgroundFetchBlock /> : null} */}
     </DrawerContentScrollView>
   );
 };
@@ -176,29 +176,29 @@ export default AppNavigator = (props) => {
   //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
 
-  const fetchDate = async () => {
-    const now = new Date().toISOString();
+  //   const fetchDate = async () => {
+  //     const now = new Date().toISOString();
 
-    //   const nowStr = (now && now.toISOString()) || 'no date';
-    const result = true;
-    console.log('Got background fetch call to fetch date', now);
-    // Be sure to return the successful result type!
-    return result
-      ? BackgroundFetch.Result.NewData
-      : BackgroundFetch.Result.NoData;
-  };
+  //     //   const nowStr = (now && now.toISOString()) || 'no date';
+  //     const result = true;
+  //     console.log('Got background fetch call to fetch date', now);
+  //     // Be sure to return the successful result type!
+  //     return result
+  //       ? BackgroundFetch.Result.NewData
+  //       : BackgroundFetch.Result.NoData;
+  //   };
 
-  const fetchDateTwo = async () => {
-    const now = new Date().toISOString();
+  //   const fetchDateTwo = async () => {
+  //     const now = new Date().toISOString();
 
-    //   const nowStr = (now && now.toISOString()) || 'no date';
-    const result = true;
-    console.log('Got background fetch call to fetch date two', now);
-    // Be sure to return the successful result type!
-    return result
-      ? BackgroundFetch.Result.NewData
-      : BackgroundFetch.Result.NoData;
-  };
+  //     //   const nowStr = (now && now.toISOString()) || 'no date';
+  //     const result = true;
+  //     console.log('Got background fetch call to fetch date two', now);
+  //     // Be sure to return the successful result type!
+  //     return result
+  //       ? BackgroundFetch.Result.NewData
+  //       : BackgroundFetch.Result.NoData;
+  //   };
 
   async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
     console.log('in initBackgroundFetch', taskName, taskFn, interval);
