@@ -16,6 +16,7 @@ import Tasks from '../constants/Tasks';
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
+  console.log('in registerBackgroundFetchAsync');
   return BackgroundFetch.registerTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK, {
     minimumInterval: 60 * 1, // 1 minutes
     stopOnTerminate: false, // android only,
@@ -27,6 +28,7 @@ const registerBackgroundFetchAsync = async () => {
 // This will cancel any future background fetch calls that match the given name
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const unregisterBackgroundFetchAsync = async () => {
+  console.log('in UNregisterBackgroundFetchAsync');
   return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK);
 };
 
@@ -96,7 +98,7 @@ export default BackgroundFetchBlock = () => {
 
   const checkNotificationsStatusAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
-    // console.log(`notif status`, settings);
+    console.log(`notif status`, settings);
     setNotificationsStatus(settings);
     return (
       settings.granted ||
@@ -122,17 +124,29 @@ export default BackgroundFetchBlock = () => {
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_DATE_TASK
     );
+    console.log(
+      'in checkTaskStatusAsync status: ',
+      status,
+      'isRegistered',
+      isRegistered
+    );
     setTaskStatus(status);
     setIsRegistered(isRegistered);
   };
 
   const toggleFetchTaskAsync = async () => {
-    // console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
+    console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
     if (isRegistered) {
       await unregisterBackgroundFetchAsync();
+      console.log(
+        'in toggleFetchTaskAsync, unregisterBackgroundFetchAsync finished '
+      );
       checkTaskStatusAsync();
     } else {
       await registerBackgroundFetchAsync();
+      console.log(
+        'in toggleFetchTaskAsync, registerBackgroundFetchAsync finished '
+      );
       checkTaskStatusAsync();
     }
   };

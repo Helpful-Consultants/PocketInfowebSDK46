@@ -114,6 +114,19 @@ const fetchDate = async () => {
   //   const nowStr = (now && now.toISOString()) || 'no date';
   const result = true;
   console.log('Got background fetch call to fetch date', now);
+  alert('Got background fetch call to fetch date: ' + now);
+  // Be sure to return the successful result type!
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
+};
+
+const fetchData = async () => {
+  const now = new Date().toISOString();
+
+  //   const nowStr = (now && now.toISOString()) || 'no date';
+  const result = true;
+  console.log('Got background fetch call to fetch datA', now);
   // Be sure to return the successful result type!
   return result
     ? BackgroundFetch.Result.NewData
@@ -172,6 +185,7 @@ async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
 defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData, 5);
 
 // async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 //   console.log('in initBackgroundFetch', taskName, taskFn, interval);
