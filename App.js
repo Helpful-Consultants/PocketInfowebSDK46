@@ -20,6 +20,13 @@ import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Colors from './constants/Colors';
 import Tasks from './constants/Tasks';
+import { getNewsRequest } from './actions/news';
+import { getBackgroundDataRequest } from './actions/backgroundData';
+import {
+  defineBackgroundTask,
+  //   fetchDate,
+  //   fetchData,
+} from './helpers/backgroundTasks';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
@@ -32,7 +39,18 @@ import Constants from 'expo-constants';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 
-import { getOdisRequest } from './actions/odis';
+// Here so it can use the Redux store
+const fetchDate = async () => {
+  //   const now = new Date().toISOString();
+  console.log('background fetchDate running!!!!!');
+  const result = true;
+  store && store.dispatch && (await store.dispatch(getBackgroundDataRequest()));
+  console.log('background fetchDate finished!!!!!');
+  //alert('Got background fetch call to fetch date: ' + now);
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
+};
 
 enableScreens();
 
@@ -108,84 +126,9 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
-const fetchDate = async () => {
-  const now = new Date().toISOString();
-
-  //   const nowStr = (now && now.toISOString()) || 'no date';
-  const result = true;
-  console.log('Got background fetch call to fetch date', now);
-  alert('Got background fetch call to fetch date: ' + now);
-  // Be sure to return the successful result type!
-  return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
-};
-
-const fetchData = async () => {
-  const now = new Date().toISOString();
-
-  //   const nowStr = (now && now.toISOString()) || 'no date';
-  const result = true;
-  console.log('Got background fetch call to fetch datA', now);
-  // Be sure to return the successful result type!
-  return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
-};
-
-// const fetchOdis = async () => {
-//   console.log(`Got background fetch odis call`);
-
-//   dispatch(getOdisRequest());
-//   // Be sure to return the successful result type!
-//   return result
-//     ? BackgroundFetch.Result.NewData
-//     : BackgroundFetch.Result.NoData;
-// };
-
-// const BACKGROUND_FETCH_TASK = 'background-fetcher';
-// 1. Define the task by providing a name and the function that should be executed
-// Note: This needs to be called in the global scope (e.g outside of your React components)
-// async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-//   console.log('in zzzzinitBackgroundFetch', taskName, taskFn, interval);
-//   try {
-//     if (!TaskManager.isTaskDefined(taskName)) {
-//       TaskManager.defineTask(taskName, taskFn);
-//     }
-//     const options = {
-//       minimumInterval: interval, // in seconds
-//     };
-//     await BackgroundFetch.registerTaskAsync(taskName, options);
-//     console.log('registerTaskAsync() worked');
-//   } catch (err) {
-//     console.log('registerTaskAsync() failed:', err);
-//   }
-// }
-
-async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-  console.log('in defineBackgroundFetch', taskName, taskFn, interval);
-  TaskManager.defineTask(taskName, taskFn);
-
-  const status = await BackgroundFetch.getStatusAsync();
-  switch (status) {
-    case BackgroundFetch.Status.Restricted:
-    case BackgroundFetch.Status.Denied:
-      console.log('in defineBackgroundFetch Background execution is disabled');
-      return;
-
-    default: {
-      console.log('in defineBackgroundFetch Background execution allowed');
-
-      let tasks = await TaskManager.getRegisteredTasksAsync();
-      tasks = await TaskManager.getRegisteredTasksAsync();
-      console.log('in defineBackgroundFetch Registered tasks', tasks);
-    }
-  }
-}
-
-// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate, 5);
-// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate);
+defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData);
 
 // async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 //   console.log('in initBackgroundFetch', taskName, taskFn, interval);
@@ -233,6 +176,8 @@ defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate, 5);
 //     ? BackgroundFetch.Result.NewData
 //     : BackgroundFetch.Result.NoData;
 // });
+
+// console.log('store', store);
 
 export default function App(props) {
   const windowDim = useWindowDimensions();

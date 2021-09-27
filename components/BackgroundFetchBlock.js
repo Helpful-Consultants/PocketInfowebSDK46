@@ -9,19 +9,60 @@ import { useSelector } from 'react-redux';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
+import moment from 'moment';
 import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
+
+const getDisplayDate = (rawDate) => {
+  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
+};
 
 // 2. Register the task at some point in your app by providing the same name, and some configuration
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
   console.log('in registerBackgroundFetchAsync');
-  return BackgroundFetch.registerTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK, {
-    minimumInterval: 60 * 1, // 1 minutes
-    stopOnTerminate: false, // android only,
-    startOnBoot: true, // android only
-  });
+  const status = await BackgroundFetch.getStatusAsync();
+  switch (status) {
+    case BackgroundFetch.Status.Restricted:
+    case BackgroundFetch.Status.Denied:
+      console.log('Background execution is disabled');
+      return;
+
+    default: {
+      console.log('Background execution allowed');
+
+      let tasks = await TaskManager.getRegisteredTasksAsync();
+      if (
+        tasks.find((f) => f.taskName === Tasks.BACKGROUND_FETCH_DATE_TASK) ==
+        null
+      ) {
+        console.log('Registering task');
+        await BackgroundFetch.registerTaskAsync(
+          Tasks.BACKGROUND_FETCH_DATE_TASK,
+          {
+            minimumInterval: 15, // 15 minutes in the minimum for iOS
+            stopOnTerminate: false, // android only,
+            startOnBoot: true, // android only
+          }
+        );
+
+        tasks = await TaskManager.getRegisteredTasksAsync();
+        console.log('Registered tasks', tasks);
+      } else {
+        console.log(
+          `Task ${Tasks.BACKGROUND_FETCH_DATE_TASK} already registered, skipping`
+        );
+      }
+
+      console.log('Setting interval to', 15);
+      await BackgroundFetch.setMinimumIntervalAsync(15);
+    }
+  }
+};
+const resetBackgroundTaskInterval = async () => {
+  console.log('in resetBackgroundTaskInterval');
+  return BackgroundFetch.setMinimumIntervalAsync(15);
 };
 
 // 3. (Optional) Unregister tasks by specifying the task name
@@ -34,6 +75,12 @@ const unregisterBackgroundFetchAsync = async () => {
 
 export default BackgroundFetchBlock = () => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const backgroundDataItems = useSelector(
+    (state) => state.backgroundData.backgroundDataItems
+  );
+  const backgroundDataFetchTime = useSelector(
+    (state) => state.backgroundData.fetchTime
+  );
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [taskStatus, setTaskStatus] = useState(null);
@@ -144,6 +191,7 @@ export default BackgroundFetchBlock = () => {
       checkTaskStatusAsync();
     } else {
       await registerBackgroundFetchAsync();
+      await resetBackgroundTaskInterval();
       console.log(
         'in toggleFetchTaskAsync, registerBackgroundFetchAsync finished '
       );
@@ -158,6 +206,11 @@ export default BackgroundFetchBlock = () => {
     getBadgeCountAsync();
     // console.log('in useEffect appBadgeCount is', appBadgeCount);
   }, []);
+  console.log(
+    'backgroundDataItems fetched at ',
+    backgroundDataFetchTime && getDisplayDate(backgroundDataFetchTime)
+  );
+  console.log('backgroundDataItems from store', backgroundDataItems);
 
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
@@ -205,6 +258,21 @@ export default BackgroundFetchBlock = () => {
           </Text>
           <Text style={styles.boldText}>
             {isRegistered ? ' is registered' : ' is not registered yet'}
+          </Text>
+        </Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          Last background fetch at:{' '}
+          {(backgroundDataFetchTime &&
+            getDisplayDate(backgroundDataFetchTime)) ||
+            'not called yet'}{' '}
+          <Text style={styles.boldText}>
+            {' '}
+            Result:{' '}
+            {(backgroundDataItems &&
+              backgroundDataItems.datetime &&
+              getDisplayDate(backgroundDataItems.datetime)) ||
+              'n/a'}{' '}
+            {backgroundDataItems && backgroundDataItems.abbreviation}
           </Text>
         </Text>
       </View>

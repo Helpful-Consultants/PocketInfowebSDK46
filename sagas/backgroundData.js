@@ -4,20 +4,24 @@ import * as api from '../api/backgroundData';
 import Types from '../constants/Types';
 
 function* getBackgroundData({ payload }) {
-  //   console.log(
-  //     '%%%%%%%%%%%%%%in saga get backgroundData, payload',
-  //     payload && payload
-  //   );
+  console.log(
+    '%%%%%%%%%%%%%%in saga get backgroundData, payload',
+    payload && payload
+  );
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the BackgroundData';
   let dataErrorUrl = null;
   yield put(actions.getBackgroundDataStart());
   try {
     const result = yield call(api.getBackgroundData);
-    // console.log('in saga get backgroundData - 200');
+    console.log('in saga get backgroundData - 200!');
     // console.log(result);
-    if (result.data && result.data.length > 0 && result.data) {
-      //   console.log('in BackgroundData saga - good 200');
+    if (
+      result.data &&
+      result.data.abbreviation &&
+      result.data.abbreviation.length > 0
+    ) {
+      console.log('in BackgroundData saga - good 200');
       //   console.log(result.data);
       yield put(
         actions.getBackgroundDataSuccess({
@@ -29,15 +33,15 @@ function* getBackgroundData({ payload }) {
         })
       );
     } else if (result && result.data) {
-      //   console.log('in BackgroundData saga - empty 200');
-      //   console.log(
-      //     'in BackgroundData saga - empty 200',
-      //     result.request.status && result.request.status
-      //   );
-      //   console.log(result && result);
+      console.log('in BackgroundData saga - empty 200');
+      console.log(
+        'in BackgroundData saga - empty 200',
+        result.request.status && result.request.status
+      );
+      console.log(result && result);
       yield put(
         actions.getBackgroundDataSuccess({
-          items: [],
+          items: {},
           statusCode:
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||

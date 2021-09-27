@@ -3,7 +3,7 @@
 import Types from '../constants/Types';
 
 const INITIAL_STATE = {
-  backgroundData: {},
+  backgroundDataItems: {},
   viewCount: 0,
   isLoading: false,
   error: null,
@@ -16,9 +16,14 @@ export default function backgroundData(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
   switch (action.type) {
+    //   console.log('state', state && state);
+
     case Types.GET_BACKGROUND_DATA_START: {
+      const fetchTime = Date.now();
+      console.log('action.type is:', action.type, 'fetchTime', fetchTime);
       return {
         ...state,
+        fetchTime: fetchTime,
         isLoading: true,
         error: null,
         dataErrorUrl: null,
@@ -27,12 +32,13 @@ export default function backgroundData(state = INITIAL_STATE, action) {
     }
 
     case Types.GET_BACKGROUND_DATA_SUCCESS: {
-      //   console.log('state', state && state);
+      console.log('state', state && state);
       console.log('from API', action.payload.items && action.payload.items);
       const fetchTime = Date.now();
       return {
         ...state,
-        backgroundData: (action.payload.items && action.payload.items) || {},
+        backgroundDataItems:
+          (action.payload.items && action.payload.items) || {},
         fetchTime: fetchTime,
         // odisData: {},
         isLoading: false,

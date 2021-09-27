@@ -1,9 +1,25 @@
 import axios from 'axios';
 
-const url = 'https://dummy.restapiexample.com/api/v1/employee/1';
+const url = '/api/timezone/Europe/London';
+
+// this.$axios({ url: 'items', baseURL: 'https://worldtimeapi.org' });
 
 export const getBackgroundData = () => {
-  //   console.log('here in getServiceMeasures API ');
+  //   console.log('here');
+
+  //   const url = '?controller=api&action=listSoftwareVersionsAsJSON&appName=ODIS';
+  //   console.log('in get Odis, url', url);
+  console.log('in getBackgroundData API ', url);
+  return axios.get('https://worldtimeapi.org/api/timezone/Europe/London', {
+    params: {
+      //   limit: 1000
+      //   baseURL: 'https://worldtimeapi.org',
+    },
+  });
+};
+
+export const zzzgetBackgroundData = () => {
+  console.log('in getBackgroundData API ', url);
   //   console.log('here in getServiceMeasures API ', wipObj);
   //   const { dealerId } = wipObj;
   //   const dealerId = 'helpful';
