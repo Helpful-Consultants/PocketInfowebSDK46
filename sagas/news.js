@@ -4,7 +4,7 @@ import {
   take,
   call,
   put,
-  fork
+  fork,
 } from 'redux-saga/effects';
 import * as actions from '../actions/news';
 // import * as actions from '../constants/Types'
@@ -13,6 +13,7 @@ import * as api from '../api/news';
 
 // console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);
 function* getNews() {
+  console.log('getnews called');
   yield put(actions.getNewsStart());
   try {
     const result = yield call(api.getNews);
@@ -44,14 +45,14 @@ function* getNews() {
       //   console.log('in news saga - good 200');
       yield put(
         actions.getNewsSuccess({
-          items: result.data
+          items: result.data,
         })
       );
     } else {
       console.log('in news saga - bad 200');
       yield put(
         actions.newsError({
-          error: 'An error occurred when trying to update the news'
+          error: 'An error occurred when trying to update the news',
         })
       );
     }
@@ -125,7 +126,7 @@ function* getNews() {
       actions.newsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
