@@ -145,7 +145,7 @@ export default BackgroundFetchBlock = () => {
 
   const checkNotificationsStatusAsync = async () => {
     const settings = await Notifications.getPermissionsAsync();
-    console.log(`notif status`, settings);
+    // console.log(`notif status`, settings);
     setNotificationsStatus(settings);
     return (
       settings.granted ||
@@ -206,11 +206,11 @@ export default BackgroundFetchBlock = () => {
     getBadgeCountAsync();
     // console.log('in useEffect appBadgeCount is', appBadgeCount);
   }, []);
-  console.log(
-    'backgroundDataItems fetched at ',
-    backgroundDataFetchTime && getDisplayDate(backgroundDataFetchTime)
-  );
-  console.log('backgroundDataItems from store', backgroundDataItems);
+  //   console.log(
+  //     'backgroundDataItems fetched at ',
+  //     backgroundDataFetchTime && getDisplayDate(backgroundDataFetchTime)
+  //   );
+  //   console.log('backgroundDataItems from store', backgroundDataItems);
 
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
