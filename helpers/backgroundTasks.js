@@ -50,14 +50,13 @@ export const fetchNews = async (props) => {
 };
 
 export const fetchDate = async (store) => {
-  console.log('store', store ? store : 'nought');
+  //   console.log('store', store ? store : 'nought');
   const now = new Date().toISOString();
   const result = true;
-  console.log('store', store ? store : 'nought');
-  //   store.dispatch(getBackgroundDataRequest());
-  console.log('Got background fetch call to fetch date', now);
-
-  console.log('background fetchDate running!!!!!');
+  //   console.log('store', store ? store : 'nought');
+  //   console.log('Got background fetch call to fetch date', now);
+  store.dispatch(getBackgroundDataStart());
+  //   console.log('background fetchDate running!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
 
   return result

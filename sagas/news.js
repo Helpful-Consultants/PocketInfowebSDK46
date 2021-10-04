@@ -13,7 +13,7 @@ import * as api from '../api/news';
 
 // console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);
 function* getNews() {
-  console.log('getnews called');
+  //   console.log('getnews called');
   yield put(actions.getNewsStart());
   try {
     const result = yield call(api.getNews);
