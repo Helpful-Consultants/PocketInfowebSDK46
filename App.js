@@ -4,9 +4,9 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import reducers from './reducers';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -18,10 +18,11 @@ import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Colors from './constants/Colors';
 import Tasks from './constants/Tasks';
-import { getNewsRequest } from './actions/news';
-import { getBackgroundDataRequest } from './actions/backgroundData';
+import {
+  //   getBackgroundDataRequest,
+  getBackgroundDataStart,
+} from './actions/backgroundData';
 import {
   defineBackgroundTask,
   //   fetchDate,
@@ -42,11 +43,31 @@ import Loading from './components/Loading';
 // Here so it can use the Redux store
 const fetchDate = async () => {
   //   const now = new Date().toISOString();
-  console.log('background fetchDate running!!!!!');
+  console.log('background fetchDate running!');
+  console.log('the store contains', store ? store : 'nought');
   const result = true;
-  store && store.dispatch && (await store.dispatch(getBackgroundDataRequest()));
+  store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
+  console.log('the store now contains', store ? store : 'nought');
   console.log('background fetchDate finished!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
+};
+
+export const zzzzfetchDate = async (store) => {
+  //   console.log('store', store ? store : 'nought');
+  //   const now = new Date().toISOString();
+  const result = true;
+  console.log('the store contains', store ? store : 'nought');
+  //   store.dispatch(getBackgroundDataRequest());
+  console.log('Got background fetch call to fetch date');
+  //   store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
+  store && store.dispatch && store.dispatch(getBackgroundDataStart());
+  //   store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
+  console.log('background fetchDate running!!!!!');
+  //alert('Got background fetch call to fetch date: ' + now);
+
   return result
     ? BackgroundFetch.Result.NewData
     : BackgroundFetch.Result.NoData;

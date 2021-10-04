@@ -14,7 +14,6 @@ const vwgAlertColor = '#e2a933';
 
 export default {
   tintColor,
-  errorText,
   iosBlue: 'rgba(0, 122, 125, 1)',
   vwgAlertColor: vwgAlertColor,
   vwgLink: vwgLinkColor,

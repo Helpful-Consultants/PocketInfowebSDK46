@@ -6,8 +6,9 @@
 
 // const { height, width } = Dimensions.get('window');
 
-export default getActiveDimensions = (props) => {
+const getActiveDimensions = (props) => {
   //   const windowWidth = useWindowDimensions().width;
   //   const windowHeight = useWindowDimensions().height;
   console.log(props && 'in getActiveDimensions', props && props);
 };
+export default getActiveDimensions

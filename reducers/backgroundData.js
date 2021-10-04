@@ -1,6 +1,7 @@
 // import { Types } from '../actions/odis';
 // import odisDummyData from '../dummyData/odisDummyData';
 import Types from '../constants/Types';
+// import moment from 'moment';
 
 const INITIAL_STATE = {
   backgroundDataItems: {},
@@ -19,8 +20,13 @@ export default function backgroundData(state = INITIAL_STATE, action) {
     //   console.log('state', state && state);
 
     case Types.GET_BACKGROUND_DATA_START: {
+      console.log(
+        'state in reducer; GET_BACKGROUND_DATA_START',
+        state && state
+      );
       const fetchTime = Date.now();
-      console.log('action.type is:', action.type, 'fetchTime', fetchTime);
+      //   console.log('action.type is:', action.type, 'fetchTime', fetchTime);
+
       return {
         ...state,
         fetchTime: fetchTime,
@@ -32,7 +38,10 @@ export default function backgroundData(state = INITIAL_STATE, action) {
     }
 
     case Types.GET_BACKGROUND_DATA_SUCCESS: {
-      console.log('state', state && state);
+      console.log(
+        'state in reducer; GET_BACKGROUND_DATA_SUCCESS',
+        state && state
+      );
       console.log('from API', action.payload.items && action.payload.items);
       const fetchTime = Date.now();
       return {

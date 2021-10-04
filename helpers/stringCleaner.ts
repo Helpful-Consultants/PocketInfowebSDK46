@@ -1,4 +1,4 @@
-export default stringCleaner = (rawString = '') => {
+const stringCleaner = (rawString: string = '') => {
   if (rawString && rawString.length > 0) {
     const rawStringLowerCase = rawString.toLowerCase();
 
@@ -35,3 +35,5 @@ export default stringCleaner = (rawString = '') => {
 
   return rawString;
 };
+
+export default stringCleaner
