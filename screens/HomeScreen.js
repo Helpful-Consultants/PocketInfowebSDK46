@@ -101,6 +101,12 @@ export async function requestPermissionsAsync() {
   });
 }
 
+const showBadgeNews = true;
+const showBadgeNotifications = true;
+const showBadgeServiceMeasures = true;
+const showBadgeLtpLoans = true;
+const showBadgeOdis = true;
+
 export default HomeScreen = (props) => {
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
@@ -755,10 +761,11 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={false}
+                          showBadge={showBadgeNotifications}
                           focused={false}
                           text={'Notifications'}
                           value={'+'}
+                          showingDemoApp={showingDemoApp}
                         />
                       </View>
                     </Touchable>
@@ -777,28 +784,14 @@ export default HomeScreen = (props) => {
                           color={buttonTextColor}
                           size={iconSize}
                         />
-                        {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
-                          <View>
-                            <Text style={baseStyles.textHomeGridCell}>
-                              {`LTP Loans`}
-                              <Text style={baseStyles.textHomeGridCellCount}>
-                                {` (${
-                                  userRequestedDemoData
-                                    ? ltpLoansDummyData
-                                      ? ltpLoansDummyData.length
-                                      : 0
-                                    : ltpLoansItems
-                                    ? ltpLoansItems.length
-                                    : 0
-                                })`}
-                              </Text>
-                            </Text>
-                          </View>
-                        ) : (
-                          <Text
-                            style={baseStyles.textHomeGridCell}
-                          >{`LTP Loans`}</Text>
-                        )}
+
+                        <BadgedText
+                          showBadge={showBadgeLtpLoans}
+                          focused={false}
+                          text={'LTP Loans'}
+                          value={'+'}
+                          showingDemoApp={showingDemoApp}
+                        />
                       </View>
                     </Touchable>
                   </View>
@@ -820,10 +813,11 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={false}
+                        showBadge={showBadgeNews}
                         focused={false}
                         text={'News'}
                         value={'+'}
+                        showingDemoApp={showingDemoApp}
                       />
                     </View>
                   </Touchable>
@@ -846,6 +840,7 @@ export default HomeScreen = (props) => {
                         focused={false}
                         text={'Catalogue'}
                         value={'+'}
+                        showingDemoApp={showingDemoApp}
                       />
                     </View>
                   </Touchable>

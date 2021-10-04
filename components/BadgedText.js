@@ -43,9 +43,11 @@ const textBadgeRightMargin =
 //  badgeStyle={styles.badge}
 //               textStyle={styles.badgeText}
 export default function BadgedText(props) {
+  const { value, status, showBadge, text, showingDemoApp } = props;
   const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-  const { value, status, showBadge, text } = props;
+  const baseStyles =
+    windowDim &&
+    getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
 
   const valueA = '+';
   const statusA = 'warning';
@@ -58,6 +60,8 @@ export default function BadgedText(props) {
   //   console.log('textBadgeTopMargin', textBadgeTopMargin);
   //   console.log('tempTextBadgeRightMargin', tempTextBadgeRightMargin);
   //   console.log('textBadgeRightMargin', textBadgeRightMargin);
+
+  console.log('IN BADGED TEXT!!!!!!!!!!!!!!!!', props);
 
   return (
     <View
@@ -124,17 +128,10 @@ const styles = StyleSheet.create({
     minWidth: 0,
     width: RFPercentage(1.6),
     // backgroundColor: Colors.vwgDeepBlue
-    backgroundColor: Colors.vwgCoolOrange,
-    borderColor: Colors.vwgCoolOrange,
+    backgroundColor: Colors.vwgBadgeAlertColor,
+    borderColor: Colors.vwgBadgeAlertColor,
   },
-  text: {
-    color: Colors.vwgWhite,
-    // fontSize: 14,
-    fontFamily: 'the-sans',
-    fontSize: Platform.OS === 'ios' ? RFPercentage(1.8) : RFPercentage(4),
-    zIndex: +10,
-    textAlign: 'center',
-  },
+
   containerNumberBadge: {
     position: 'absolute',
     top: numberBadgeTopMargin,
@@ -158,8 +155,8 @@ const styles = StyleSheet.create({
     // top: 1,
     // right: -8,
     // zIndex: -10,
-    top: textBadgeTopMargin,
-    right: textBadgeRightMargin,
+    top: 2,
+    left: textBadgeRightMargin,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: Colors.vwgDeepBlue,
@@ -182,6 +179,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     marginTop: -5,
     marginRight: 0,
-    color: Colors.vwgCoolOrange,
+    color: Colors.vwgBadgeAlertColor,
   },
 });
