@@ -32,6 +32,8 @@ export default {
   EMPTY_SERVICE_MEASURES_REQUEST:
     'serviceMeasures/empty_service_measures_request',
   SERVICE_MEASURES_ERROR: 'serviceMeasures/service_measures_error',
+  SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP:
+    'serviceMeasures/SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP',
 
   GET_CALIBRATION_EXPIRY_START:
     'calibrationExpiry/get_calibration_expiry_start',
