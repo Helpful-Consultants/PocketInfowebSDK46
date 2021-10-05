@@ -49,6 +49,11 @@ const RemindersTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
+const showBadgeNotifications = true;
+const showBadgeServiceMeasures = true;
+const showBadgeLtpLoans = false;
+const showBadgeOdis = true;
+
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const odisViewCount = useSelector((state) => state.odis.viewCount);
   useEffect(() => {
@@ -126,6 +131,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
+          tabBarBadge: showBadgeNotifications ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeAlertColor,
+          },
         }}
       />
       <RemindersTabs.Screen
@@ -135,6 +144,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='checkbox' size={size} />
           ),
+          tabBarBadge: showBadgeServiceMeasures ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeAlertColor,
+          },
         }}
       />
       <RemindersTabs.Screen
@@ -144,6 +157,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='calendar' size={size} />
           ),
+          tabBarBadge: showBadgeLtpLoans ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeAlertColor,
+          },
         }}
       />
       <RemindersTabs.Screen
@@ -158,6 +175,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               alert={odisViewCount ? false : true}
             />
           ),
+          tabBarBadge: showBadgeOdis ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeAlertColor,
+          },
         }}
       />
     </RemindersTabs.Navigator>

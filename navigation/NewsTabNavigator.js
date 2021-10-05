@@ -48,6 +48,7 @@ const NewsTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
+const showBadgeNews = true;
 
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -126,6 +127,10 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
+          tabBarBadge: showBadgeNews ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeAlertColor,
+          },
         }}
       />
       <NewsTabs.Screen
