@@ -4,6 +4,10 @@ export const getServiceMeasuresStart = () => ({
   type: Types.GET_SERVICE_MEASURES_START,
 });
 
+export const setServiceMeasuresDisplayTimestamp = () => ({
+  type: Types.SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP,
+});
+
 export const getServiceMeasuresRequest = ({ dealerId, intId }) => ({
   type: Types.GET_SERVICE_MEASURES_REQUEST,
   payload: {

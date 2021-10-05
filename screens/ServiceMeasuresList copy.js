@@ -6,10 +6,6 @@ import moment from 'moment';
 import InlineIcon from '../components/InlineIcon';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {
-  checkDisplayStatus,
-  checkDisplayStatuses,
-} from '../helpers/checkDisplayHistory';
 
 const now = moment();
 
@@ -48,6 +44,35 @@ const getItemStatus = (startDate, expiryDate) => {
   return false;
 };
 
+const checkIfUnseen = (dateCreated, displayTimestamp) => {
+  console.log(
+    'in check if Unseen',
+    dateCreated,
+    moment(dateCreated, 'DD/MM/YYYY HH:mm:ss'),
+    displayTimestamp,
+    new Date(displayTimestamp)
+  );
+  if (
+    dateCreated &&
+    dateCreated.length > 0 &&
+    displayTimestamp &&
+    displayTimestamp.length > 0
+  ) {
+    // whenCreated = moment(dateCreated, 'DD/MM/YYYY HH:mm:ss');
+    if (moment(dateCreated, 'DD/MM/YYYY HH:mm:ss').isAfter(displayTimestamp)) {
+      // if (makeDate(dateCreated) > new Date(displayTimestamp)) {
+      console.log('in check if Unseen new');
+      return true;
+    } else {
+      console.log('in check if Unseen old');
+      return false;
+    }
+  } else {
+    console.log('in check if Unseen bad dates');
+    return false;
+  }
+};
+
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
@@ -56,18 +81,10 @@ export default function ServiceMeasuresList(props) {
 
   const serviceMeasures = items || [];
   //   const serviceMeasures = serviceMeasuresDummyData;
-  //   let now = moment();
-
-  console.log('displayTimestamp passed in is ', displayTimestamp);
-
-  checkDisplayStatuses(items);
+  //   let now = moment()
 
   const getFormattedServiceMeasure = (item) => {
     let measureIsLive = false;
-    const isUnseen = checkDisplayStatus(item.dateCreated, displayTimestamp);
-    if (item && item.dateCreated && item.expiryDate) {
-      measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
-    }
 
     return (
       <View style={baseStyles.containerNoMargin}>
@@ -98,15 +115,6 @@ export default function ServiceMeasuresList(props) {
               //item.status && item.status.toLowerCase() === 'c'
               measureIsLive ? 'still open' : 'closed'
             }`}</Text>
-
-            {!isUnseen ? (
-              <Text
-                style={{
-                  ...baseStyles.textLeftAlignedBoldLarge,
-                  color: Colors.vwgCoolOrange,
-                }}
-              >{` NEW! `}</Text>
-            ) : null}
           </View>
         ) : null}
         <View style={baseStyles.viewRowFlexCentreAligned}>
@@ -163,6 +171,7 @@ export default function ServiceMeasuresList(props) {
   };
 
   //   console.log(serviceMeasures && serviceMeasures);
+  //   console.log('displayTimestamp', displayTimestamp && displayTimestamp);
 
   return (
     <View style={baseStyles.viewDataList}>

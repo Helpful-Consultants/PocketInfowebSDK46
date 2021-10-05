@@ -6,7 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import {
+  getServiceMeasuresRequest,
+  setServiceMeasuresDisplayTimestamp,
+} from '../actions/serviceMeasures';
 // import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
@@ -22,6 +25,9 @@ export default ServiceMeasuresScreen = (props) => {
   const dispatch = useDispatch();
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
+  );
+  const displayTimestamp = useSelector(
+    (state) => state.serviceMeasures.displayTimestamp
   );
   const [searchInput, setSearchInput] = useState('');
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
@@ -82,6 +88,10 @@ export default ServiceMeasuresScreen = (props) => {
       getItems(userApiFetchParamsObj);
     }
   };
+  const storeDisplayTimestampAsync = async () => {
+    console.log('istoreDisplayTimestampAsync:');
+    dispatch(setServiceMeasuresDisplayTimestamp());
+  };
   //   useEffect(() => {
   //     // runs only once
   //     // console.log('in stats use effect');
@@ -116,6 +126,7 @@ export default ServiceMeasuresScreen = (props) => {
       console.log('in serviceMeasures focusffect ');
       setSearchInput('');
       getItemsAsync();
+      storeDisplayTimestampAsync();
     }, [])
   );
 
@@ -251,7 +262,11 @@ export default ServiceMeasuresScreen = (props) => {
         />
       ) : (
         <ScrollView>
-          <ServiceMeasuresList items={itemsToShow} showFullDetails={true} />
+          <ServiceMeasuresList
+            items={itemsToShow}
+            showFullDetails={true}
+            displayTimestamp={displayTimestamp}
+          />
         </ScrollView>
       )}
     </View>
