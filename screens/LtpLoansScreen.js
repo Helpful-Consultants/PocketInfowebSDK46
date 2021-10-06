@@ -264,7 +264,7 @@ export default LtpLoansScreen = (props) => {
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'LtpLoans items'}
+        dataName={'LTP Loans'}
         someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
