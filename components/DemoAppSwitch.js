@@ -35,17 +35,17 @@ export default DemoAppSwitch = (props) => {
   };
 
   useEffect(() => {
-    console.log(
-      '@@@@ in App switch useEffect. showingDemoApp is ',
-      showingDemoApp
-    );
+    //console.log(
+    //   '@@@@ in App switch useEffect. showingDemoApp is ',
+    //   showingDemoApp
+    // );
     setSwitchStatus(showingDemoApp && showingDemoApp === true ? true : false);
   }, [showingDemoApp]);
 
   return userDataObj &&
     userDataObj.userName &&
     (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
+      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
       (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
         userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
     <View
