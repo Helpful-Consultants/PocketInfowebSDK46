@@ -237,10 +237,10 @@ export default AppNavigator = (props) => {
   useEffect(() => {
     // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
     // initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
-    console.log(
-      '!!!! in AppNavigator useEffect. showingDemoApp is ',
-      showingDemoApp
-    );
+    // console.log(
+    //   '!!!! in AppNavigator useEffect. showingDemoApp is ',
+    //   showingDemoApp
+    // );
     setShowDemoApp(showingDemoApp);
   }, [showingDemoApp]);
 

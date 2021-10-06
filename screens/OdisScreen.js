@@ -92,11 +92,11 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  console.log(
-    'rendering Odis screen, odisViewCount',
-    odisViewCount,
-    odisFetchTime
-  );
+  //   console.log(
+  //     'rendering Odis screen, odisViewCount',
+  //     odisViewCount,
+  //     odisFetchTime
+  //   );
 
   return (
     <View style={baseStyles.containerFlexCentred}>

@@ -339,7 +339,7 @@ export default NotificationsScreen = (props) => {
   useFocusEffect(
     useCallback(() => {
       //   dispatch(revalidateUserCredentials({ calledBy: 'NotificationsScreen' }));
-      console.log('in Notifications focusEffect ');
+      //   console.log('in Notifications focusEffect ');
 
       getItemsAsync();
     }, [])

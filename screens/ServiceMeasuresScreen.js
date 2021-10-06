@@ -123,7 +123,7 @@ export default ServiceMeasuresScreen = (props) => {
           calledBy: 'ServiceMeasures Screen',
         })
       );
-      console.log('in serviceMeasures focusffect ');
+      //   console.log('in serviceMeasures focusffect ');
       setSearchInput('');
       getItemsAsync();
       storeDisplayTimestampAsync();

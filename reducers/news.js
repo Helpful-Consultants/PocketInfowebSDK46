@@ -27,7 +27,7 @@ export default function news(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_NEWS_DISPLAY_TIMESTAMP: {
-      console.log('date in state is', state.displayTimestamp);
+      //   console.log('date in state is', state.displayTimestamp);
       return {
         ...state,
         displayTimestamp: new Date(),

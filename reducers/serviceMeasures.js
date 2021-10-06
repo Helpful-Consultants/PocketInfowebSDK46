@@ -23,7 +23,7 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP: {
-      console.log('date in state is', state.displayTimestamp);
+      //   console.log('date in state is', state.displayTimestamp);
       return {
         ...state,
         displayTimestamp: new Date(),

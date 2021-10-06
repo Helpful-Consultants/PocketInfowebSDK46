@@ -27,7 +27,7 @@ export default function odis(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_ODIS_DISPLAY_TIMESTAMP: {
-      console.log('date in state is', state.displayTimestamp);
+      //   console.log('date in state is', state.displayTimestamp);
       return {
         ...state,
         displayTimestamp: new Date(),
@@ -35,10 +35,10 @@ export default function odis(state = INITIAL_STATE, action) {
     }
     case Types.INCREMENT_ODIS_VIEW_COUNT: {
       let oldViewCount = (state && state.viewCount) || 0;
-      console.log(
-        'in odis reducer, INCREMENT_ODIS_VIEW_COUNT, oldViewCount is ',
-        oldViewCount
-      );
+      //   console.log(
+      //     'in odis reducer, INCREMENT_ODIS_VIEW_COUNT, oldViewCount is ',
+      //     oldViewCount
+      //   );
 
       return {
         ...state,
