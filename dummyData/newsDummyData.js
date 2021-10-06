@@ -13,12 +13,12 @@ export default newsDummyData = [
     updatedBy: 'Lyndon Evans',
   },
   {
-    createdDate: '10/12/2019 09:35:55',
+    createdDate: '06/10/2021 09:35:55',
     headline: 'Diagnostic Equipment Windows 10 Upgrade',
     id: '31',
     imageName: 'windows10Logo.png',
     ipAddress: '165.225.80.226',
-    lastUpdated: '10/12/2019 09:37:08',
+    lastUpdated: '06/10/2021 09:35:55',
     linkTo:
       'https://toolsinfoweb.co.uk/Content/Documents/desktopBulletins/Windows 10/Windows_10_Upgrade_comms.pdf',
     newsType: 'News',
