@@ -15,7 +15,7 @@ import Tasks from '../constants/Tasks';
 
 import { store } from '../helpers/store';
 
-console.log('in backgroundfetchblock', store);
+// console.log('in backgroundfetchblock', store);
 
 const getDisplayDate = (rawDate) => {
   return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
@@ -25,7 +25,7 @@ const getDisplayDate = (rawDate) => {
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
-  console.log('in registerBackgroundFetchAsync');
+  //   console.log('in registerBackgroundFetchAsync');
   const status = await BackgroundFetch.getStatusAsync();
   switch (status) {
     case BackgroundFetch.Status.Restricted:
@@ -34,7 +34,7 @@ const registerBackgroundFetchAsync = async () => {
       return;
 
     default: {
-      console.log('Background execution allowed');
+      //   console.log('Background execution allowed');
 
       let tasks = await TaskManager.getRegisteredTasksAsync();
       if (
