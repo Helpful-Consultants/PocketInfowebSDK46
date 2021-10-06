@@ -65,7 +65,7 @@ export default function ServiceMeasuresList(props) {
       'days',
       5
     );
-    console.log('in getFormattedServiceMeasure, insUnseen:', isUnseen);
+    // console.log('in getFormattedServiceMeasure, insUnseen:', isUnseen);
     if (item && item.dateCreated && item.expiryDate) {
       measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
     }
