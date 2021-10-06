@@ -5,7 +5,11 @@ import { useWindowDimensions, View } from 'react-native';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
+import {
+  getOdisRequest,
+  incrementOdisViewCount,
+  setOdisDisplayTimestamp,
+} from '../actions/odis';
 import OdisVersions from './OdisVersions';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 

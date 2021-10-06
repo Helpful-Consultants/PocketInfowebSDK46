@@ -13,7 +13,7 @@ const getDisplayDate = (rawDate) => {
 };
 
 export default function OdisVersions(props) {
-  console.log('props fetchTime', props.fetchTime);
+  //   console.log('props fetchTime', props.fetchTime);
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];

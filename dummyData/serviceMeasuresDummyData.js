@@ -8,8 +8,8 @@ export default serviceMeasuresDummyData = [
     dateCreated: '05/10/2021 08:12:00',
     lastUpdated: '05/10/2021 14:26:21',
     updatedBy: 'Simon Groves',
-    expiryDate: '23/07/2021',
-    startDate: '08/06/2021',
+    expiryDate: '23/11/2021',
+    startDate: '01/10/2021',
     actionSteps: 'YYNNNNNY',
     actionText:
       'Please do not mark the service measure as complete until you have received all of your wrenches back from Stahlwille. Thank you',
@@ -33,7 +33,7 @@ export default serviceMeasuresDummyData = [
     status: 'C',
     qMeasure_id: '',
     retailerUpdate: '',
-    retailerStatus: 'c',
+    retailerStatus: '',
     retailerResponses: '472',
   },
   {
