@@ -7,7 +7,10 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getLtpLoansRequest } from '../actions/ltpLoans';
+import {
+  getLtpLoansRequest,
+  setLtpLoansDisplayTimestamp,
+} from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
@@ -130,6 +133,10 @@ export default LtpLoansScreen = (props) => {
       getItems(userApiFetchParamsObj);
     }
   };
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setLtpLoansDisplayTimestamp());
+  };
 
   //   console.log('in ltpLoans screen - point 3');
   //   useEffect(() => {
@@ -166,6 +173,7 @@ export default LtpLoansScreen = (props) => {
       //   console.log('in ltpLoans focusffect ');
       setSearchInput('');
       getItemsAsync();
+      storeDisplayTimestampAsync();
     }, [])
   );
   //   console.log('in ltpLoans screen - point 5');

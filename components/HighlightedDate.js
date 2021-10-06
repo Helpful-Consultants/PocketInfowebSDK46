@@ -49,6 +49,6 @@ export default HighlightedText = (props) => {
   return ageOfChange && ageOfChange <= 7 ? (
     <Text style={baseStyles.textDateHighlighted}>{displayDate}</Text>
   ) : (
-    <Text style={baseStyles.textDateHighlighted}>{displayDate}</Text>
+    <Text style={baseStyles.textDate}>{displayDate}</Text>
   );
 };

@@ -9,7 +9,7 @@ import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getNewsRequest } from '../actions/news';
+import { getNewsRequest, setNewsDisplayTimestamp } from '../actions/news';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
 // import newsDummyData from '../dummyData/newsDummyData.js';
@@ -57,6 +57,10 @@ export default NewsScreen = (props) => {
     async () => dispatch(getNewsRequest()),
     [newsItems]
   );
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setNewsDisplayTimestamp());
+  };
 
   //   const { navigation } = props;
 
@@ -91,6 +95,7 @@ export default NewsScreen = (props) => {
       );
       setSearchInput('');
       getItemsAsync();
+      storeDisplayTimestampAsync();
     }, [])
   );
 

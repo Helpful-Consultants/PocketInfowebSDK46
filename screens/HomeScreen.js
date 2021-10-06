@@ -38,10 +38,8 @@ import { getNewsRequest } from '../actions/news';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import Constants from 'expo-constants';
-
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
-
+// import Constants from 'expo-constants';
+// import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
@@ -174,6 +172,12 @@ export default HomeScreen = (props) => {
   const [ageOfNews, setAgeOfNews] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+
+  const [newsAlertCount, setNewsAlertCount] = useState(0);
+  const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
+  const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
+  const [odisAlertCount, setOdisAlertCount] = useState(0);
+  const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
 
   const windowDim = useWindowDimensions();
   const baseStyles =
@@ -457,6 +461,14 @@ export default HomeScreen = (props) => {
       }
     }, [])
   );
+
+  useEffect(() => {
+    setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+    setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
+    setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
+    setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
+    setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+  }, []);
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
@@ -765,7 +777,7 @@ export default HomeScreen = (props) => {
                           showBadge={showBadgeNotifications}
                           focused={false}
                           text={'Notifications'}
-                          value={'+'}
+                          value={notificationsAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                         />
                       </View>
@@ -785,12 +797,11 @@ export default HomeScreen = (props) => {
                           color={buttonTextColor}
                           size={iconSize}
                         />
-
                         <BadgedText
                           showBadge={showBadgeLtpLoans}
                           focused={false}
                           text={'LTP Loans'}
-                          value={'+'}
+                          value={ltpLoansAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                         />
                       </View>
@@ -817,7 +828,7 @@ export default HomeScreen = (props) => {
                         showBadge={showBadgeNews}
                         focused={false}
                         text={'News'}
-                        value={'+'}
+                        value={newsAlertCount ? '+' : null}
                         showingDemoApp={showingDemoApp}
                       />
                     </View>

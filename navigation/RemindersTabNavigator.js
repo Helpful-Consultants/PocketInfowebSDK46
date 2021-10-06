@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -51,14 +51,35 @@ const RemindersTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
-const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
-const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
-const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
+// const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
+// const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
+// const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
+// const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
+
+// console.log(
+//   'in navigator, showBadgeLtpLoans ',
+//   showBadgeLtpLoans && showBadgeLtpLoans,
+
+//   ', showBadgeNotifications',
+//   showBadgeNotifications && showBadgeNotifications,
+//   'showBadgeOdis ',
+//   showBadgeOdis && showBadgeOdis,
+//   'showBadgeServiceMeasures ',
+//   showBadgeServiceMeasures && showBadgeServiceMeasures
+// );
 
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
+  const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
+  const [odisAlertCount, setOdisAlertCount] = useState(0);
+  const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
+
   useEffect(() => {
+    setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
+    setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
+    setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
+    setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
@@ -93,6 +114,18 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
+
+  console.log(
+    '$$$$$$$$$$$$$$ in reminders  navigator,',
+    'notificationsAlertCount:',
+    notificationsAlertCount,
+    'serviceMeasuresAlertCount:',
+    serviceMeasuresAlertCount,
+    'ltpLoansAlertCount: ',
+    ltpLoansAlertCount,
+    'odisAlertCount:',
+    odisAlertCount
+  );
 
   return (
     <RemindersTabs.Navigator //iOS
@@ -133,7 +166,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
-          tabBarBadge: showBadgeNotifications ? '' : null,
+          tabBarBadge: notificationsAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeAlertColor,
           },
@@ -146,7 +179,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='checkbox' size={size} />
           ),
-          tabBarBadge: showBadgeServiceMeasures ? '' : null,
+          tabBarBadge: serviceMeasuresAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeAlertColor,
           },
@@ -159,7 +192,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='calendar' size={size} />
           ),
-          tabBarBadge: showBadgeLtpLoans ? '' : null,
+          tabBarBadge: ltpLoansAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeAlertColor,
           },
@@ -174,10 +207,11 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               focused={focused}
               name='tv'
               size={size}
-              alert={odisViewCount ? false : true}
+              // alert={odisAlertCount ? false : true}
+              alert={false}
             />
           ),
-          tabBarBadge: showBadgeOdis ? '' : null,
+          tabBarBadge: odisAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeAlertColor,
           },

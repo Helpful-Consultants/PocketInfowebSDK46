@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
@@ -51,11 +51,21 @@ const NewsTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-const showBadgeNews = checkForAlerts(InfoTypes.NEWS);
+// const newsAlertCount = checkForAlerts(InfoTypes.NEWS);
+// console.log(
+//   'in news navigator, newsAlertCount ',
+//   newsAlertCount && newsAlertCount
+// );
 
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const [newsAlertCount, setNewsAlertCount] = useState(0);
+
   useEffect(() => {
+    // const alerts = checkForAlerts(InfoTypes.NEWS);
+    // console.log('alerts:', alerts);
+    setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
@@ -90,6 +100,11 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
+
+  console.log(
+    '$$$$$$$$$$$$$$ in news navigator, newsAlertCount ',
+    newsAlertCount
+  );
 
   return (
     <NewsTabs.Navigator //iOS
@@ -130,9 +145,13 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: showBadgeNews ? '' : null,
+          tabBarBadge: newsAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeAlertColor,
+            // width: 5,
+            //height: 5,
+            // right: 10,
+            // borderRadius: 2,
           },
         }}
       />

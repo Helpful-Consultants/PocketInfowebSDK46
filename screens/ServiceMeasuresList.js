@@ -6,10 +6,7 @@ import moment from 'moment';
 import InlineIcon from '../components/InlineIcon';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import {
-  checkDisplayStatus,
-  checkDisplayStatuses,
-} from '../helpers/checkDisplayHistory';
+import { checkDisplayStatus } from '../helpers/checkDisplayHistory';
 
 const now = moment();
 
@@ -62,7 +59,13 @@ export default function ServiceMeasuresList(props) {
 
   const getFormattedServiceMeasure = (item) => {
     let measureIsLive = false;
-    const isUnseen = checkDisplayStatus(item.dateCreated, displayTimestamp);
+    const isUnseen = checkDisplayStatus(
+      item.dateCreated,
+      displayTimestamp,
+      'days',
+      5
+    );
+    console.log('in getFormattedServiceMeasure, insUnseen:', isUnseen);
     if (item && item.dateCreated && item.expiryDate) {
       measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
     }

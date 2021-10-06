@@ -32,6 +32,10 @@ export default OdisScreen = (props) => {
     async () => dispatch(getOdisRequest()),
     [odisObj]
   );
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setOdisDisplayTimestamp());
+  };
 
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
@@ -73,6 +77,7 @@ export default OdisScreen = (props) => {
       dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
       incrementViewCount();
+      storeDisplayTimestampAsync();
     }, [])
   );
 

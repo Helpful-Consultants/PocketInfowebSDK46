@@ -1,9 +1,10 @@
 import moment from 'moment';
+import InfoTypes from '../constants/InfoTypes';
 
 export const checkDisplayStatus = (
   itemDate,
   displayTimestamp,
-  unit = 'seconds',
+  unit = 'days',
   maxAge = 0
 ) => {
   //   console.log(
@@ -15,11 +16,11 @@ export const checkDisplayStatus = (
   //     typeof displayTimestamp,
   //     moment(displayTimestamp)
   //   );
-  if (itemDate && itemDate.length > 0) {
-    if (displayTimestamp) {
+  if (displayTimestamp) {
+    if (itemDate && itemDate.length > 0) {
       const lastDisplayed = moment(displayTimestamp);
       const itemDateToCompare = moment(itemDate, 'DD/MM/YYYY HH:mm:ss');
-      const timeGap = lastDisplayed.diff(itemDateToCompare, 'days'); // 1
+      const timeGap = lastDisplayed.diff(itemDateToCompare, unit); // 1
       //   console.log('timeGap', lastDisplayed, itemDateToCompare, timeGap);
       // if (moment(itemDate, 'DD/MM/YYYY HH:mm:ss').isAfter(displayTimestamp)) {
       if (timeGap <= (maxAge || 8)) {
@@ -33,30 +34,46 @@ export const checkDisplayStatus = (
         return false;
       }
     } else {
-      console.log('in check if Unseen bad displayTimestamp', displayTimestamp);
+      console.log('in check if Unseen bad itemDate', itemDate);
       return false;
     }
   } else {
-    // console.log('in check if Unseen bad itemDate', itemDate);
+    console.log('in check if Unseen bad displayTimestamp', displayTimestamp);
     return false;
   }
 };
 
 export const checkDisplayStatuses = (
+  scope,
   items,
   displayTimestamp,
   unit = 'seconds',
   maxAge = 0
 ) => {
-  console.log('checkDisplayStatuses');
+  //   console.log('in checkDisplayStatuses', scope, items.length);
+
   let displayStatuses = 0;
 
   if (displayTimestamp && items && items.length > 0) {
     items.map((item) => {
-      if (
-        checkDisplayStatus(item.dateCreated, displayTimestamp, unit, maxAge)
-      ) {
-        console.log('TRUE!!!!!');
+      let dateToCheck = null;
+      switch (scope) {
+        case InfoTypes.LTP_LOANS: {
+          dateToCheck = item.createdDate || item.dateCreated;
+        }
+        case InfoTypes.NEWS: {
+          dateToCheck = item.createdDate || item.dateCreated;
+        }
+        case InfoTypes.ODIS: {
+          dateToCheck = item.createdDate || item.dateCreated;
+        }
+        case InfoTypes.SERVICE_MEASURES: {
+          dateToCheck = item.createdDate || item.dateCreated;
+        }
+      }
+      //   console.log('checkDisplayStatuses date to check', dateToCheck);
+      if (checkDisplayStatus(dateToCheck, displayTimestamp, unit, maxAge)) {
+        // console.log('TRUE!!!!!');
         ++displayStatuses;
       }
     });
