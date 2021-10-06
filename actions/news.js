@@ -13,6 +13,10 @@ export const getNewsStart = () => ({
   type: Types.GET_NEWS_START,
 });
 
+export const setNewsDisplayTimestamp = () => ({
+  type: Types.SET_NEWS_DISPLAY_TIMESTAMP,
+});
+
 export const getNewsRequest = () => ({
   type: Types.GET_NEWS_REQUEST,
 });

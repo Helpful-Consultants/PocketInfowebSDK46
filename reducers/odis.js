@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   fetchTime: null,
+  displayTimestamp: null,
 };
 
 export default function odis(state = INITIAL_STATE, action) {
@@ -23,6 +24,13 @@ export default function odis(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode: null,
+      };
+    }
+    case Types.SET_ODIS_DISPLAY_TIMESTAMP: {
+      console.log('date in state is', state.displayTimestamp);
+      return {
+        ...state,
+        displayTimestamp: new Date(),
       };
     }
     case Types.INCREMENT_ODIS_VIEW_COUNT: {

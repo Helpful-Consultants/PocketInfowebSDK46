@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  displayTimestamp: null,
 };
 
 export default function news(state = INITIAL_STATE, action) {
@@ -23,6 +24,13 @@ export default function news(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode: null,
+      };
+    }
+    case Types.SET_NEWS_DISPLAY_TIMESTAMP: {
+      console.log('date in state is', state.displayTimestamp);
+      return {
+        ...state,
+        displayTimestamp: new Date(),
       };
     }
     case Types.GET_NEWS_SUCCESS: {
