@@ -16,6 +16,7 @@ import OdisScreen from '../screens/OdisScreen';
 import checkForAlerts from '../helpers/checkForAlerts';
 import InfoTypes from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
