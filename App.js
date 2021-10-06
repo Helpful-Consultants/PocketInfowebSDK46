@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { store, sagaMiddleware } from './helpers/store';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
