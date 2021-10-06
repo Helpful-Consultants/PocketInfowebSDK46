@@ -89,7 +89,7 @@ export default ServiceMeasuresScreen = (props) => {
     }
   };
   const storeDisplayTimestampAsync = async () => {
-    console.log('istoreDisplayTimestampAsync:');
+    // console.log('istoreDisplayTimestampAsync:');
     dispatch(setServiceMeasuresDisplayTimestamp());
   };
   //   useEffect(() => {

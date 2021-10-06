@@ -516,6 +516,9 @@ export default getBaseStyles = (props) => {
     textColoured: {
       ...baseTextColoured,
     },
+    textColouredBold: {
+      ...baseTextColouredBold,
+    },
     textSmallColoured: {
       ...baseTextSmallColoured,
     },

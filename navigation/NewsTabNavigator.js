@@ -13,7 +13,8 @@ import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
 import OdisScreen from '../screens/OdisScreen';
-
+import checkForAlerts from '../helpers/checkForAlerts';
+import InfoTypes from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
@@ -48,7 +49,8 @@ const NewsTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
-const showBadgeNews = true;
+
+const showBadgeNews = checkForAlerts(InfoTypes.NEWS);
 
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);

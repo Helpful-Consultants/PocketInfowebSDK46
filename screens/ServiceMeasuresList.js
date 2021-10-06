@@ -58,9 +58,7 @@ export default function ServiceMeasuresList(props) {
   //   const serviceMeasures = serviceMeasuresDummyData;
   //   let now = moment();
 
-  console.log('displayTimestamp passed in is ', displayTimestamp);
-
-  checkDisplayStatuses(items);
+  //   console.log('displayTimestamp passed in is ', displayTimestamp);
 
   const getFormattedServiceMeasure = (item) => {
     let measureIsLive = false;
@@ -99,7 +97,7 @@ export default function ServiceMeasuresList(props) {
               measureIsLive ? 'still open' : 'closed'
             }`}</Text>
 
-            {!isUnseen ? (
+            {isUnseen ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBoldLarge,

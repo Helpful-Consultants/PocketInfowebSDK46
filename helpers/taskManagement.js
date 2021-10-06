@@ -1,16 +1,22 @@
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
+import { store } from './store';
+import {
+  //   getBackgroundDataRequest,
+  getBackgroundDataStart,
+} from '../actions/backgroundData';
 
-export const defineBackgroundTask = async (taskName, taskFn) => {
+export const defineBackgroundTask = async (taskName, taskExecutor) => {
   console.log('INSIDE TASKMANAGER.defineTASK');
   console.log(
     'in defineBackgroundFetch',
     'task:',
     taskName,
     'taskName:',
-    taskFn
+    taskExecutor
   );
-  TaskManager.defineTask(taskName, taskFn);
+
+  TaskManager.defineTask(taskName, taskExecutor);
 
   const status = await BackgroundFetch.getStatusAsync();
   switch (status) {
@@ -24,7 +30,7 @@ export const defineBackgroundTask = async (taskName, taskFn) => {
 
       let tasks = await TaskManager.getRegisteredTasksAsync();
       tasks = await TaskManager.getRegisteredTasksAsync();
-      console.log('in defineBackgroundFetch Registered tasks', tasks);
+      //   console.log('in defineBackgroundFetch Registered tasks', tasks);
     }
   }
 };
@@ -49,7 +55,21 @@ export const fetchNews = async (props) => {
     : BackgroundFetch.Result.NoData;
 };
 
-export const fetchDate = async (store) => {
+export const fetchDate = async () => {
+  //   const now = new Date().toISOString();
+  console.log('background fetchDate running!');
+  console.log('the store contains', store ? store : 'nought');
+  const result = true;
+  store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
+  console.log('the store now contains', store ? store : 'nought');
+  console.log('background fetchDate finished!!!!!');
+  //alert('Got background fetch call to fetch date: ' + now);
+  return result
+    ? BackgroundFetch.Result.NewData
+    : BackgroundFetch.Result.NoData;
+};
+
+export const zzzzfetchDate = async (store) => {
   //   console.log('store', store ? store : 'nought');
   const now = new Date().toISOString();
   const result = true;
@@ -73,4 +93,10 @@ export const fetchData = async () => {
   return result
     ? BackgroundFetch.Result.NewData
     : BackgroundFetch.Result.NoData;
+};
+
+export const showAppBadgeCount = (props) => {
+  //   const nowStr = (now && now.toISOString()) || 'no date';
+  const result = true;
+  console.log('showAppBadgeCount', props);
 };

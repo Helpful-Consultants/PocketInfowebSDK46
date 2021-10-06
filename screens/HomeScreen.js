@@ -21,6 +21,8 @@ import moment from 'moment';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
+import checkForAlerts from '../helpers/checkForAlerts';
+import InfoTypes from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
   getUserRequest,
@@ -101,11 +103,11 @@ export async function requestPermissionsAsync() {
   });
 }
 
-const showBadgeNews = true;
-const showBadgeNotifications = true;
-const showBadgeServiceMeasures = true;
-const showBadgeLtpLoans = true;
-const showBadgeOdis = true;
+const showBadgeNews = checkForAlerts(InfoTypes.NEWS);
+const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
+const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
+const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
+const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
 
 export default HomeScreen = (props) => {
   const dispatch = useDispatch();
@@ -856,10 +858,7 @@ export default HomeScreen = (props) => {
                 <OdisLinkWithStatus
                   showingDemoApp={showingDemoApp}
                   navigation={navigation}
-                  userBrand={userBrand}
-                  itemsObj={odisObj}
-                  viewCount={odisViewCount}
-                  viewMax={5}
+                  showOdisAlert={showBadgeOdis}
                 />
               </View>
 

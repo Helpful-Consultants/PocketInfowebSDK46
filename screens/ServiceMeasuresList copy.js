@@ -61,10 +61,10 @@ const checkIfUnseen = (dateCreated, displayTimestamp) => {
     // whenCreated = moment(dateCreated, 'DD/MM/YYYY HH:mm:ss');
     if (moment(dateCreated, 'DD/MM/YYYY HH:mm:ss').isAfter(displayTimestamp)) {
       // if (makeDate(dateCreated) > new Date(displayTimestamp)) {
-      console.log('in check if Unseen new');
+      //   console.log('in check if Unseen new');
       return true;
     } else {
-      console.log('in check if Unseen old');
+      //   console.log('in check if Unseen old');
       return false;
     }
   } else {

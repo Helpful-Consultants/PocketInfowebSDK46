@@ -61,7 +61,7 @@ export default function BadgedText(props) {
   //   console.log('tempTextBadgeRightMargin', tempTextBadgeRightMargin);
   //   console.log('textBadgeRightMargin', textBadgeRightMargin);
 
-  console.log('IN BADGED TEXT!!!!!!!!!!!!!!!!', props);
+  //   console.log('IN BADGED TEXT!!!!!!!!!!!!!!!!', props);
 
   return (
     <View

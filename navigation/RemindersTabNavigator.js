@@ -13,7 +13,8 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
-
+import checkForAlerts from '../helpers/checkForAlerts';
+import InfoTypes from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
@@ -49,10 +50,10 @@ const RemindersTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-const showBadgeNotifications = true;
-const showBadgeServiceMeasures = true;
-const showBadgeLtpLoans = false;
-const showBadgeOdis = true;
+const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
+const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
+const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
+const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
 
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const odisViewCount = useSelector((state) => state.odis.viewCount);

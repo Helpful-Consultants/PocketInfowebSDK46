@@ -12,69 +12,64 @@ import * as Notifications from 'expo-notifications';
 import moment from 'moment';
 import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
+import { store } from './helpers/store';
 
-import { store } from '../helpers/store';
-
-console.log('in backgroundfetchblock', store);
+console.log('in appbadgeStatus', store);
 
 const getDisplayDate = (rawDate) => {
   return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
 };
 
-// 2. Register the task at some point in your app by providing the same name, and some configuration
-// options for how the background fetch should behave
-// Note: This does NOT need to be in the global scope and CAN be used in your React components!
-const registerBackgroundFetchAsync = async () => {
-  console.log('in registerBackgroundFetchAsync');
-  const status = await BackgroundFetch.getStatusAsync();
-  switch (status) {
-    case BackgroundFetch.Status.Restricted:
-    case BackgroundFetch.Status.Denied:
-      console.log('Background execution is disabled');
-      return;
-
-    default: {
-      console.log('Background execution allowed');
-
-      let tasks = await TaskManager.getRegisteredTasksAsync();
-      if (
-        tasks.find((f) => f.taskName === Tasks.BACKGROUND_FETCH_DATE_TASK) ==
-        null
-      ) {
-        console.log('Registering task');
-        await BackgroundFetch.registerTaskAsync(
-          Tasks.BACKGROUND_FETCH_DATE_TASK,
-          {
-            minimumInterval: 15, // 15 minutes in the minimum for iOS
-            stopOnTerminate: false, // android only,
-            startOnBoot: true, // android only
-          }
-        );
-
-        tasks = await TaskManager.getRegisteredTasksAsync();
-        console.log('Registered tasks', tasks);
-      } else {
-        console.log(
-          `Task ${Tasks.BACKGROUND_FETCH_DATE_TASK} already registered, skipping`
-        );
-      }
-
-      console.log('Setting interval to', 15);
-      await BackgroundFetch.setMinimumIntervalAsync(15);
-    }
+const getBadgeCountAsync = async () => {
+  // set notifications badge count
+  try {
+    const count = await Notifications.getBadgeCountAsync();
+    //   console.log(`app badge number is ${count}`);
+    setAppBadgeCount(count);
+    setAppBadgeStatus(count ? true : false);
+    return count;
+  } catch (err) {
+    //   console.log('did not manage to get app badge count!', err);
+    return null;
   }
 };
-const resetBackgroundTaskInterval = async () => {
-  console.log('in resetBackgroundTaskInterval');
-  return BackgroundFetch.setMinimumIntervalAsync(15);
+
+const incrementBadgeCountAsync = async () => {
+  // set notifications badge count
+  try {
+    const count = await Notifications.getBadgeCountAsync();
+    //   console.log(`app badge number is now  ${count}, setting to ${count + 1}`);
+    await Notifications.setBadgeCountAsync(count + 1);
+    setAppBadgeCount(count + 1);
+    setAppBadgeStatus(true);
+    return count;
+  } catch (err) {
+    //   console.log('did not manage to increment app badge count!', err);
+    return null;
+  }
 };
 
-// 3. (Optional) Unregister tasks by specifying the task name
-// This will cancel any future background fetch calls that match the given name
-// Note: This does NOT need to be in the global scope and CAN be used in your React components!
-const unregisterBackgroundFetchAsync = async () => {
-  console.log('in UNregisterBackgroundFetchAsync');
-  return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK);
+const setBadgeCountAsync = async () => {
+  // set notifications badge count
+  try {
+    const setCount = await Notifications.setBadgeCountAsync(1);
+    //   console.log(`setting app badge with number 1 ${setCount}`);
+    setAppBadgeStatus(setCount);
+  } catch (err) {
+    //   console.log('did not manage to set notif app badge count!', err);
+  }
+};
+
+const resetBadgeCountAsync = async () => {
+  // set notifications badge count
+  try {
+    const resetCount = await Notifications.setBadgeCountAsync(0);
+    //   console.log(`reset app badge count ${resetCount}`);
+    setAppBadgeStatus(!resetCount);
+    getBadgeCountAsync();
+  } catch (err) {
+    //   console.log('did not manage to reset notif app badge count!', err);
+  }
 };
 
 export default BackgroundFetchBlock = () => {

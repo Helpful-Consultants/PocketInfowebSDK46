@@ -4,9 +4,11 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
+import { store, sagaMiddleware } from './helpers/store';
+import logger from 'redux-logger';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -25,9 +27,12 @@ import {
 } from './actions/backgroundData';
 import {
   defineBackgroundTask,
-  //   fetchDate,
+  showAppBadgeCount,
+  fetchDate,
   //   fetchData,
-} from './helpers/backgroundTasks';
+} from './helpers/taskManagement';
+
+import checkForAlerts from './helpers/checkForAlerts';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
@@ -40,8 +45,10 @@ import Constants from 'expo-constants';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 
+// showAppBadgeCount(store);
+
 // Here so it can use the Redux store
-const fetchDate = async () => {
+const zzzzzzzfetchDate = async () => {
   //   const now = new Date().toISOString();
   console.log('background fetchDate running!');
   console.log('the store contains', store ? store : 'nought');
@@ -50,24 +57,6 @@ const fetchDate = async () => {
   console.log('the store now contains', store ? store : 'nought');
   console.log('background fetchDate finished!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
-  return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
-};
-
-export const zzzzfetchDate = async (store) => {
-  //   console.log('store', store ? store : 'nought');
-  //   const now = new Date().toISOString();
-  const result = true;
-  console.log('the store contains', store ? store : 'nought');
-  //   store.dispatch(getBackgroundDataRequest());
-  console.log('Got background fetch call to fetch date');
-  //   store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
-  store && store.dispatch && store.dispatch(getBackgroundDataStart());
-  //   store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
-  console.log('background fetchDate running!!!!!');
-  //alert('Got background fetch call to fetch date: ' + now);
-
   return result
     ? BackgroundFetch.Result.NewData
     : BackgroundFetch.Result.NoData;
@@ -111,12 +100,12 @@ Sentry.init({
 // deprecated so moved above
 // Sentry.setRelease(Constants.manifest.revisionId);
 
-const sagaMiddleware = createSagaMiddleware();
+// const sagaMiddleware = createSagaMiddleware();
 
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage: AsyncStorage,
+// };
 
 // if (Platform.OS !== 'android') {
 //   Notifications.setNotificationHandler({
@@ -135,15 +124,28 @@ const persistConfig = {
 // }, {
 //   time: ...
 // })
+// const myMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My first middleware ran');
+//   return next(action);
+// };
+// const mySecondMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My second middleware ran');
+//   return next(action);
+// };
+// const myThirdMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My third middleware ran');
+//   return next(action);
+// };
+// const persistedReducer = persistReducer(persistConfig, reducers);
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+// console.log('creating store');
 
-// const store = compose(persistedReducer, {}, applyMiddleware(sagaMiddleware));
-const store = createStore(
-  persistedReducer,
-  {},
-  compose(applyMiddleware(sagaMiddleware))
-);
+// // const store = compose(persistedReducer, {}, applyMiddleware(sagaMiddleware));
+// const store = createStore(
+//   persistedReducer,
+//   {},
+//   compose(applyMiddleware(sagaMiddleware))
+// );
 
 sagaMiddleware.run(rootSaga);
 
