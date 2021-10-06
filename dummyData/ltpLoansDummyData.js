@@ -14,7 +14,7 @@ export default ltpLoansDummyData = [
     rcptCondition: '',
     conditionComment: '',
     conditionMgrComment: '',
-    createdDate: '18/03/2021 13:30:14',
+    createdDate: '05/10/2021 13:30:14',
     createdBy: 'Charles Bucket',
     sapOrderNumber: '35906283',
     sapOrderNumberDate: '19/03/2021 14:35:40',
