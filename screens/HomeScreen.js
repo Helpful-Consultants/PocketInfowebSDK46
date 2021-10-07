@@ -100,12 +100,6 @@ export async function requestPermissionsAsync() {
   });
 }
 
-const showBadgeNews = checkForAlerts(InfoTypes.NEWS);
-const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
-const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
-const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
-const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
-
 export default HomeScreen = (props) => {
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
@@ -776,7 +770,7 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={showBadgeNotifications}
+                          showBadge={notificationsAlertCount}
                           focused={false}
                           text={'Notifications'}
                           value={notificationsAlertCount ? '+' : null}
@@ -800,7 +794,7 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={showBadgeLtpLoans}
+                          showBadge={ltpLoansAlertCount}
                           focused={false}
                           text={'LTP Loans'}
                           value={ltpLoansAlertCount ? '+' : null}
@@ -827,7 +821,7 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={showBadgeNews}
+                        showBadge={newsAlertCount}
                         focused={false}
                         text={'News'}
                         value={newsAlertCount ? '+' : null}
@@ -870,7 +864,7 @@ export default HomeScreen = (props) => {
                 <OdisLinkWithStatus
                   showingDemoApp={showingDemoApp}
                   navigation={navigation}
-                  showOdisAlert={showBadgeOdis}
+                  showOdisAlert={odisAlertCount}
                 />
               </View>
 
