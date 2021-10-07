@@ -14,7 +14,7 @@ import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
 import checkForAlerts from '../helpers/checkForAlerts';
-import InfoTypes from '../constants/InfoTypes';
+import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);

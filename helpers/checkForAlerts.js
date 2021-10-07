@@ -10,56 +10,29 @@ import {
   checkDisplayStatuses,
 } from './checkDisplayHistory';
 import getOdisAlertCount from './getOdisAlertCount';
-import InfoTypes from '../constants/InfoTypes';
+import {
+  InfoTypes,
+  InfoTypesAlertUnits,
+  InfoTypesAlertAges,
+} from '../constants/InfoTypes';
 
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData';
 import newsDummyData from '../dummyData/newsDummyData';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 
-const unseenServiceMeasuresUnit = 'days';
-const unseenServiceMeasuresMaxAge = 3;
-const unseenLtpLoansUnit = 'days';
-const unseenLtpLoansMaxAge = 3;
-const unseenNewsUnit = 'days';
-const unseenNewsMaxAge = 7;
-const unseenOdisMaxAge = 3;
-
-const countUnseenItems = (
-  scope,
-  items,
-  displayTimestamp,
-  unseenItemsUnit,
-  unseenItemsMaxAge
-) => {
+const countUnseenItems = (scope, items, displayTimestamp) => {
   console.log(
     'in countUnseenItems for',
     scope,
     'there are ',
     items && items.length,
     ' items;',
-
-    ' max age is ',
-    unseenItemsUnit,
-    ' ',
-    unseenItemsMaxAge,
     ' ; displayTimestamp is ',
     displayTimestamp
   );
   if (displayTimestamp) {
-    if (
-      unseenItemsUnit &&
-      unseenItemsMaxAge &&
-      displayTimestamp &&
-      items &&
-      items.length
-    ) {
-      return checkDisplayStatuses(
-        scope,
-        items,
-        displayTimestamp,
-        unseenItemsUnit,
-        unseenItemsMaxAge
-      );
+    if (displayTimestamp && items && items.length) {
+      return checkDisplayStatuses(scope, items, displayTimestamp);
     } else {
       return 0;
     }
@@ -79,13 +52,7 @@ const checkForAlerts = (scope) => {
         : store.getState().ltpLoans.ltpLoansItems;
       let displayTimestamp = store.getState().ltpLoans.displayTimestamp;
       if (displayTimestamp) {
-        unseenItemsCount = countUnseenItems(
-          scope,
-          items,
-          displayTimestamp,
-          unseenLtpLoansUnit,
-          unseenLtpLoansMaxAge
-        );
+        unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
         //   'in checkForAlerts for:',
         //   scope,
@@ -106,13 +73,7 @@ const checkForAlerts = (scope) => {
       //   console.log('in checkForAlerts', scope, items.length);
       let displayTimestamp = store.getState().news.displayTimestamp;
       if (displayTimestamp) {
-        unseenItemsCount = countUnseenItems(
-          scope,
-          items,
-          displayTimestamp,
-          unseenNewsUnit,
-          unseenNewsMaxAge
-        );
+        unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
         //   'in checkForAlerts for:',
         //   scope,
@@ -129,7 +90,7 @@ const checkForAlerts = (scope) => {
       let unseenItemsCount = 0;
       let displayTimestamp = store.getState().odis.displayTimestamp;
       if (displayTimestamp) {
-        unseenItemsCount = getOdisAlertCount(unseenOdisMaxAge);
+        unseenItemsCount = getOdisAlertCount(InfoTypesAlertAges.ODIS);
       }
       //   console.log('in checkfor alerts, odisAlertCount is ', unseenItemsCount);
       return unseenItemsCount;
@@ -151,13 +112,7 @@ const checkForAlerts = (scope) => {
 
       let displayTimestamp = store.getState().serviceMeasures.displayTimestamp;
       if (displayTimestamp) {
-        unseenItemsCount = countUnseenItems(
-          scope,
-          items,
-          displayTimestamp,
-          unseenServiceMeasuresUnit,
-          unseenServiceMeasuresMaxAge
-        );
+        unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
         //   'in checkForAlerts for:',
         //   scope,

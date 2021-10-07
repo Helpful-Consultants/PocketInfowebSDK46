@@ -21,7 +21,7 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import checkForAlerts from '../helpers/checkForAlerts';
-import InfoTypes from '../constants/InfoTypes';
+import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
   getUserRequest,

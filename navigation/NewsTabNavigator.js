@@ -14,7 +14,7 @@ import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
 import OdisScreen from '../screens/OdisScreen';
 import checkForAlerts from '../helpers/checkForAlerts';
-import InfoTypes from '../constants/InfoTypes';
+import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);

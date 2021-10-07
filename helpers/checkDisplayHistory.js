@@ -1,5 +1,9 @@
 import moment from 'moment';
-import InfoTypes from '../constants/InfoTypes';
+import {
+  InfoTypes,
+  InfoTypesAlertUnits,
+  InfoTypesAlertAges,
+} from '../constants/InfoTypes';
 
 export const checkDisplayStatus = (
   itemDate,
@@ -43,13 +47,7 @@ export const checkDisplayStatus = (
   }
 };
 
-export const checkDisplayStatuses = (
-  scope,
-  items,
-  displayTimestamp,
-  unit = 'seconds',
-  maxAge = 0
-) => {
+export const checkDisplayStatuses = (scope, items, displayTimestamp) => {
   //   console.log('in checkDisplayStatuses', scope, items.length);
 
   let displayStatuses = 0;
@@ -57,18 +55,28 @@ export const checkDisplayStatuses = (
   if (displayTimestamp && items && items.length > 0) {
     items.map((item) => {
       let dateToCheck = null;
+      let unit = 0;
+      let maxAge = 0;
       switch (scope) {
         case InfoTypes.LTP_LOANS: {
           dateToCheck = item.createdDate || item.dateCreated;
+          unit = InfoTypesAlertUnits.LTP_LOANS || 0;
+          maxAge = InfoTypesAlertAges.LTP_LOANS || 0;
         }
         case InfoTypes.NEWS: {
           dateToCheck = item.createdDate || item.dateCreated;
+          unit = InfoTypesAlertUnits.NEWS || 0;
+          maxAge = InfoTypesAlertAges.NEWS || 0;
         }
         case InfoTypes.ODIS: {
           dateToCheck = item.createdDate || item.dateCreated;
+          unit = InfoTypesAlertUnits.ODIS || 0;
+          maxAge = InfoTypesAlertAges.ODIS || 0;
         }
         case InfoTypes.SERVICE_MEASURES: {
           dateToCheck = item.createdDate || item.dateCreated;
+          unit = InfoTypesAlertUnits.SERVICE_MEASURES || 0;
+          maxAge = InfoTypesAlertAges.SERVICE_MEASURES || 0;
         }
       }
       //   console.log('checkDisplayStatuses date to check', dateToCheck);
