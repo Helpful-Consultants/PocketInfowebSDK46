@@ -69,6 +69,7 @@ const RemindersTabs =
 // );
 
 export default RemindersTabNavigator = ({ navigation, route }) => {
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
   const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
@@ -76,10 +77,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
 
   useEffect(() => {
-    setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
-    setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
-    setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
-    setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+    if (showingDemoApp) {
+      setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
+      setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
+      setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
+      setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+    }
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',

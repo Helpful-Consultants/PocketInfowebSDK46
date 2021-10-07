@@ -64,7 +64,9 @@ export default NewsTabNavigator = ({ navigation, route }) => {
   useEffect(() => {
     // const alerts = checkForAlerts(InfoTypes.NEWS);
     // console.log('alerts:', alerts);
-    setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+    if (showingDemoApp) {
+      setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+    }
 
     navigation.setOptions({
       headerStyle: {
