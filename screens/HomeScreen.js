@@ -463,12 +463,14 @@ export default HomeScreen = (props) => {
   );
 
   useEffect(() => {
-    setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
-    setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
-    setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
-    setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
-    setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
-  }, []);
+    if (showingDemoApp) {
+      setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+      setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
+      setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
+      setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
+      setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+    }
+  }, [showingDemoApp]);
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
