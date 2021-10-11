@@ -5,7 +5,7 @@ import {
   InfoTypesAlertAges,
 } from '../constants/InfoTypes';
 
-export const checkDisplayStatus = (
+export const checkDisplayAge = (
   itemDate,
   displayTimestamp,
   unit = 'days',
@@ -38,17 +38,17 @@ export const checkDisplayStatus = (
         return false;
       }
     } else {
-      console.log('in check if Unseen bad itemDate', itemDate);
+      //   console.log('in check if Unseen bad itemDate', itemDate);
       return false;
     }
   } else {
-    console.log('in check if Unseen bad displayTimestamp', displayTimestamp);
+    // console.log('in check if Unseen bad displayTimestamp', displayTimestamp);
     return false;
   }
 };
 
-export const checkDisplayStatuses = (scope, items, displayTimestamp) => {
-  //   console.log('in checkDisplayStatuses', scope, items.length);
+export const checkDisplayAges = (scope, items, displayTimestamp) => {
+  //   console.log('in checkDisplayAges', scope, items.length);
 
   let displayStatuses = 0;
 
@@ -79,8 +79,8 @@ export const checkDisplayStatuses = (scope, items, displayTimestamp) => {
           maxAge = InfoTypesAlertAges.SERVICE_MEASURES || 0;
         }
       }
-      //   console.log('checkDisplayStatuses date to check', dateToCheck);
-      if (checkDisplayStatus(dateToCheck, displayTimestamp, unit, maxAge)) {
+      //   console.log('checkDisplayAges date to check', dateToCheck);
+      if (checkDisplayAge(dateToCheck, displayTimestamp, unit, maxAge)) {
         // console.log('TRUE!!!!!');
         ++displayStatuses;
       }

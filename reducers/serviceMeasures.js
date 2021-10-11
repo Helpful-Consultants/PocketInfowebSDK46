@@ -1,5 +1,7 @@
 // import { Types } from '../actions/serviceMeasures';
+import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
+
 const INITIAL_STATE = {
   serviceMeasuresItems: [],
   isLoading: false,
@@ -7,6 +9,55 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   displayTimestamp: null,
+};
+
+const getTimeToExpiry = (nowDateObj, expiryDate) => {
+  let theToDate = expiryDate && parse(expiryDate, 'dd/MM/yyyy', new Date());
+  let timeToExpiry = 0;
+
+  //   console.log(
+  //     '***************in getTimeToExpiry reducer nowDateObj',
+  //     nowDateObj,
+  //     'to',
+  //     theToDate
+  //   );
+
+  if (expiryDate) {
+    timeToExpiry = differenceInCalendarDays(theToDate, nowDateObj);
+  }
+  //   console.log('expiryDate', expiryDate);
+  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+
+  return timeToExpiry;
+};
+
+const filterExpiredItems = (serviceMeasures) => {
+  const nowDateObj = new Date();
+  let filteredServiceMeasuresArr = [];
+  //   console.log('nowDateObj', nowDateObj);
+  if (serviceMeasures && serviceMeasures.length > 0) {
+    serviceMeasures.map((serviceMeasure) => {
+      //   console.log(
+      //     'in filterExpiredItems',
+      //     serviceMeasure.menuText,
+      //     serviceMeasure.expiryDate,
+      //     getTimeToExpiry(fromDate, serviceMeasure.expiryDate)
+      //   );
+      if (
+        serviceMeasure.expiryDate &&
+        getTimeToExpiry(nowDateObj, serviceMeasure.expiryDate) >= 0
+      ) {
+        filteredServiceMeasuresArr.push(serviceMeasure);
+      }
+    });
+  }
+  //   console.log(
+  //     'reducertime;filterExpiredItems',
+  //     serviceMeasures.length,
+  //     'down to',
+  //     filteredServiceMeasuresArr.length
+  //   );
+  return filteredServiceMeasuresArr;
 };
 
 export default function serviceMeasures(state = INITIAL_STATE, action) {
@@ -32,12 +83,15 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
     case Types.GET_SERVICE_MEASURES_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
+      //   console.log('STATE', state);
 
       return {
         ...state,
         // newsItems: [],
         serviceMeasuresItems:
-          (action.payload.items && action.payload.items) || [],
+          (action.payload.items && filterExpiredItems(action.payload.items)) ||
+          [],
+        // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
         isLoading: false,
         error: null,
         dataErrorUrl: null,

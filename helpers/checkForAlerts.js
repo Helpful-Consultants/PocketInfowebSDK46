@@ -5,10 +5,7 @@ import {
   resetBadgeCountAsync,
   incrementBadgeCountAsync,
 } from './setAppBadge';
-import {
-  checkDisplayStatus,
-  checkDisplayStatuses,
-} from './checkDisplayHistory';
+import { checkDisplayAge, checkDisplayAges } from './checkDisplayHistory';
 import getOdisAlertCount from './getOdisAlertCount';
 import {
   InfoTypes,
@@ -32,7 +29,7 @@ const countUnseenItems = (scope, items, displayTimestamp) => {
   );
   if (displayTimestamp) {
     if (displayTimestamp && items && items.length) {
-      return checkDisplayStatuses(scope, items, displayTimestamp);
+      return checkDisplayAges(scope, items, displayTimestamp);
     } else {
       return 0;
     }

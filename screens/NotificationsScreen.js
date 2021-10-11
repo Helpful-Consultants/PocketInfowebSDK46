@@ -598,6 +598,10 @@ export default NotificationsScreen = (props) => {
                     <Text style={baseStyles.textLeftAligned}>
                       No Service Measures to show.
                     </Text>
+                    <Text style={baseStyles.textLeftAligned}>
+                      You can view your expired Service Measures at Tools
+                      Infoweb.
+                    </Text>
                   </View>
                 </View>
               )

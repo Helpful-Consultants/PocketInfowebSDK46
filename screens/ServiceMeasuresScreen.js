@@ -15,7 +15,7 @@ import {
 import ServiceMeasuresList from './ServiceMeasuresList';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+// import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
@@ -29,22 +29,21 @@ export default ServiceMeasuresScreen = (props) => {
   const displayTimestamp = useSelector(
     (state) => state.serviceMeasures.displayTimestamp
   );
-  const [searchInput, setSearchInput] = useState('');
+  const isLoading = useSelector((state) => state.serviceMeasures.isLoading);
+  const dataError = useSelector((state) => state.serviceMeasures.error);
+  const dataStatusCode = useSelector(
+    (state) => state.serviceMeasures.statusCode
+  );
+  const dataErrorUrl = useSelector(
+    (state) => state.serviceMeasures.dataErrorUrl
+  );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemoData = useSelector(
-    (state) => state.user.requestedDemoData
-  );
-  const isLoading = useSelector((state) => state.stats.isLoading);
-  const dataError = useSelector((state) => state.stats.error);
-  const dataStatusCode = useSelector((state) => state.odis.statusCode);
-  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const [searchInput, setSearchInput] = useState('');
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
-
-  //   console.log('in serviceMeasures screen - userDataObj is set to ', userDataObj);
-
   const userApiFetchParamsObj = {
     dealerId: (userDataObj && userDataObj.dealerId) || null,
     intId: (userDataObj && userDataObj.intId.toString()) || null,
@@ -186,12 +185,7 @@ export default ServiceMeasuresScreen = (props) => {
 
   //   const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
 
-  const items =
-    !isLoading && !dataError
-      ? userRequestedDemoData
-        ? serviceMeasuresDummyData
-        : serviceMeasuresItems
-      : [];
+  const items = !isLoading && !dataError ? serviceMeasuresItems : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
@@ -202,19 +196,19 @@ export default ServiceMeasuresScreen = (props) => {
       : items
     : [];
 
-  //   console.log(
-  //     'rendering ServiceMeasures screen, dataError:',
-  //     dataError,
-  //     'filteredItems',
-  //     filteredItems && filteredItems.length,
-  //     ' itemsToShow length',
-  //     (itemsToShow && itemsToShow.length) || '0'
-  //   );
+  console.log(
+    'rendering ServiceMeasures screen, dataError:',
+    dataError,
+    'filteredItems',
+    filteredItems && filteredItems.length,
+    ' itemsToShow length',
+    (itemsToShow && itemsToShow.length) || '0'
+  );
 
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'ServiceMeasures items'}
+        dataName={'Service Measures'}
         someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -233,8 +227,11 @@ export default ServiceMeasuresScreen = (props) => {
           </View>
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
-            <Text style={baseStyles.textPromptRibbon}>
-              No service measures to show.
+            <Text style={baseStyles.textLeftAligned}>
+              No Service Measures to show.
+            </Text>
+            <Text style={baseStyles.textLeftAligned}>
+              You can view your expired Service Measures at Tools Infoweb.
             </Text>
           </View>
         )
@@ -245,7 +242,7 @@ export default ServiceMeasuresScreen = (props) => {
           </Text>
         </View>
       )}
-      {userRequestedDemoData ? (
+      {showingDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
