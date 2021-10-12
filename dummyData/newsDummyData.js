@@ -8,8 +8,8 @@ export default newsDummyData = [
     imageName: 'Domino.jpg',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/New Wheel Alignment Software Notification.pdf',
-    createdDate: '31/08/2018 11:26:05',
-    lastUpdated: '05/10/2021 12:42:03',
+    createdDate: '12/10/2021 11:26:05',
+    lastUpdated: '10/10/2021 12:42:03',
     updatedBy: 'Beth Clarke',
     ipAddress: '147.161.169.75',
   },
