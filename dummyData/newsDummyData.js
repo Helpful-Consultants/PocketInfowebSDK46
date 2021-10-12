@@ -1,5 +1,19 @@
 export default newsDummyData = [
   {
+    id: '7',
+    newsType: 'News',
+    headline: '*NEW* Wheel Alignment Software',
+    newstext:
+      'Click here to see a summary regarding affected models in the new Wheel alignment software for each approved manufacturer.',
+    imageName: 'Domino.jpg',
+    linkTo:
+      'https://toolsinfoweb.co.uk/content/documents/New Wheel Alignment Software Notification.pdf',
+    createdDate: '31/08/2018 11:26:05',
+    lastUpdated: '05/10/2021 12:42:03',
+    updatedBy: 'Beth Clarke',
+    ipAddress: '147.161.169.75',
+  },
+  {
     createdDate: '31/08/2018 11:20:33',
     headline: 'Tools & Equipment: Blocked & Back Orders December 2019',
     id: '4',

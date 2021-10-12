@@ -2,73 +2,78 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import moment from 'moment';
+import { differenceInCalendarDays, format, parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
-import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import { checkDisplayStatus } from '../helpers/checkDisplayHistory';
 
-const now = moment();
+const nowDateObj = new Date();
+// const momentNow = moment();
 
-const getDisplayDate = (rawDate) => {
-  return (
-    (rawDate && moment(rawDate, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')) ||
-    ''
-  );
-};
-
-const getItemStatus = (startDate, expiryDate) => {
-  let theFromDate = null;
-  let theToDate = null;
-  let ageOfExpiry = 0;
-  let ageOfStart = 0;
-
-  if (expiryDate && expiryDate.length > 0) {
-    theToDate = moment(expiryDate, 'DD/MM/YYYY HH:mm:ss');
-    ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-  }
-  //   console.log('ageOfExpiry', ageOfExpiry);
-
-  if (ageOfExpiry >= 1) {
-    return false;
-  } else {
-    if (startDate && startDate.length > 0) {
-      theFromDate = moment(startDate, 'DD/MM/YYYY HH:mm:ss');
-      ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-      //   console.log('ageOfStart', ageOfStart);
-    }
-
-    if (ageOfStart >= 0) {
-      return true;
-    }
-  }
-  return false;
+const getDisplayDateFromDDMMYYY = (rawDate) => {
+  const parsedDate =
+    (rawDate && parse(rawDate, 'dd/MM/yyyy', new Date())) || null;
+  //   console.log('rrrrrrrrrrrrrrrawDate', rawDate, parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy');
+  //   console.log('ddddddddddddddisplayDate', displayDate);
+  return displayDate;
 };
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-
   const { showFullDetails, items, displayTimestamp } = props;
-
   const serviceMeasures = items || [];
-  //   const serviceMeasures = serviceMeasuresDummyData;
-  //   let now = moment();
 
-  //   console.log('displayTimestamp passed in is ', displayTimestamp);
+  const getDateDifference = (dateOne, dateTwo) => {
+    let timeToExpiry = 0;
+    // console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
+
+    if (dateOne && dateTwo) {
+      timeToExpiry = differenceInCalendarDays(dateTwo, dateOne);
+    }
+    //   console.log('expiryDate', expiryDate);
+    //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+
+    return timeToExpiry;
+  };
 
   const getFormattedServiceMeasure = (item) => {
-    let measureIsLive = false;
-    const isUnseen = checkDisplayStatus(
-      item.dateCreated,
-      displayTimestamp,
-      'days',
-      5
-    );
-    // console.log('in getFormattedServiceMeasure, insUnseen:', isUnseen);
-    if (item && item.dateCreated && item.expiryDate) {
-      measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
-    }
+    // console.log('nowDateObj', nowDateObj);
+    // console.log('item', item);
+
+    let measureIsLive = true;
+    let itemIsNew = false;
+    const parsedExpiryDate =
+      (item.expiryDate && parse(item.expiryDate, 'dd/MM/yyyy', new Date())) ||
+      null;
+    const parsedStartDate =
+      (item.startDate && parse(item.startDate, 'dd/MM/yyyy', new Date())) ||
+      null;
+    // console.log('parsedExpiryDate', parsedExpiryDate, 'from', item.expiryDate);
+    const parsedDateCreated =
+      (item.dateCreated &&
+        parse(item.dateCreated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+      null;
+
+    // console.log(
+    //   'parsedDateCreated',
+    //   parsedDateCreated,
+    //   'from',
+    //   item.dateCreated
+    // );
+    const daysLeft = getDateDifference(nowDateObj, parsedExpiryDate) + 1;
+    // console.log('ddddddaysLeft', daysLeft);
+    const daysOld = getDateDifference(parsedDateCreated, nowDateObj);
+    // console.log('ddddddaysOld', daysOld);
+
+    // console.log('in getFormattedServiceMeasure, insUnseen:', itemIsNew);
+    // if (item && item.dateCreated && item.expiryDate) {
+    //   measureIsLive = getItemStatus(parsedStartDate, parsedExpiryDate);
+    // }
+    // console.log(
+    //   'dateCreated sliced',
+    //   item && item.dateCreated && item.dateCreated.slice(0, 10)
+    // );
 
     return (
       <View style={baseStyles.containerNoMargin}>
@@ -100,13 +105,13 @@ export default function ServiceMeasuresList(props) {
               measureIsLive ? 'still open' : 'closed'
             }`}</Text>
 
-            {isUnseen ? (
+            {item.dateCreated && daysOld === 0 ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBoldLarge,
-                  color: Colors.vwgCoolOrange,
+                  color: Colors.vwgWarmLightBlue,
                 }}
-              >{` NEW! `}</Text>
+              >{`  NEW TODAY!`}</Text>
             ) : null}
           </View>
         ) : null}
@@ -149,41 +154,63 @@ export default function ServiceMeasuresList(props) {
         )}
         {showFullDetails && showFullDetails === true ? (
           item.retailerStatus ? null : (
-            <Text
-              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-            >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+            <Text style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}>
+              {`Start date: ${getDisplayDateFromDDMMYYY(item.startDate)}`}{' '}
+            </Text>
           )
         ) : null}
         {item.retailerStatus ? null : (
-          <Text
-            style={baseStyles.textLeftAligned}
-          >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
+          <Text style={baseStyles.textLeftAligned}>
+            {`To be completed by: ${getDisplayDateFromDDMMYYY(
+              item.expiryDate
+            )}`}
+            {daysLeft === 1 ? (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAlignedBoldLarge,
+                  color: Colors.vwgWarmRed,
+                }}
+              >
+                {` LAST DAY!`}
+              </Text>
+            ) : daysLeft <= 8 ? (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAlignedBoldLarge,
+                  color: Colors.vwgWarmOrange,
+                }}
+              >
+                {`   ${daysLeft} ${daysLeft === 1 ? `day` : `days`} left`}
+              </Text>
+            ) : null}
+          </Text>
         )}
       </View>
     );
   };
 
   //   console.log(serviceMeasures && serviceMeasures);
+  //   console.log('displayDate', displayDate);
 
   return (
     <View style={baseStyles.viewDataList}>
       {serviceMeasures && serviceMeasures.length > 0
-        ? serviceMeasures.map((item, i) =>
-            item.retailerStatus &&
-            item.retailerStatus.toLowerCase() === 'c' ? null : (
-              <View
-                style={
-                  i === serviceMeasures.length - 1
-                    ? baseStyles.viewDataListItemNoBorder
-                    : baseStyles.viewDataListItemWithBorder
-                }
-                key={i}
-              >
-                {getFormattedServiceMeasure(item)}
-              </View>
-            )
-          )
-        : null}
+        ? serviceMeasures.map((item, i) => (
+            //  item.retailerStatus &&
+            //  item.retailerStatus.toLowerCase() === 'c' ? null : (
+            <View
+              style={
+                i === serviceMeasures.length - 1
+                  ? baseStyles.viewDataListItemNoBorder
+                  : baseStyles.viewDataListItemWithBorder
+              }
+              key={i}
+            >
+              {getFormattedServiceMeasure(item)}
+            </View>
+          ))
+        : //   )
+          null}
     </View>
   );
 }

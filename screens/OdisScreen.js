@@ -1,7 +1,9 @@
 import React, { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useWindowDimensions, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, useWindowDimensions, View } from 'react-native';
+import Colors from '../constants/Colors';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
@@ -27,6 +29,7 @@ export default OdisScreen = (props) => {
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
 
   const getItems = useCallback(
     async () => dispatch(getOdisRequest()),
@@ -109,6 +112,26 @@ export default OdisScreen = (props) => {
         dataStatusCode={dataStatusCode}
         dataCount={1}
       />
+      {showingDemoData ? (
+        <View
+          style={{
+            ...baseStyles.viewDummyDataRibbon,
+            backgroundColor: Colors.vwgWhite,
+            color: Colors.vwgWarmOrange,
+          }}
+        >
+          <Text
+            style={{
+              ...baseStyles.textPromptRibbon,
+              backgroundColor: Colors.vwgWhite,
+              color: Colors.vwgWarmOrange,
+            }}
+          >
+            Showing sample data - change in menu.
+          </Text>
+          <Ionicons name='arrow-up' size={20} color={Colors.vwgWarmOrange} />
+        </View>
+      ) : null}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing the ODIS data'}

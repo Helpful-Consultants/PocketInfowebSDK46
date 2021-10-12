@@ -13,9 +13,6 @@ function* getLtpLoans({ payload }) {
   //     payload && payload
   //   );
   yield put(actions.getLtpLoansStart());
-  let statusCode = null;
-  let errorText = 'An error occurred when trying to get the dealer tools';
-  let dataErrorUrl = null;
   let showingDummyData = yield select(showingDemoData);
   let showThisDummyData = yield shouldWeUseDummyData(InfoTypes.LTP_LOANS);
   //   console.log(

@@ -3,6 +3,10 @@ import { useWindowDimensions, View } from 'react-native';
 import { Switch, Text } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserRequestedDemoData } from '../actions/user';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import { getLtpLoansRequest } from '../actions/ltpLoans';
+import { getNewsRequest } from '../actions/news';
+import { getOdisRequest } from '../actions/odis';
 
 export default DemoDataSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -18,7 +22,10 @@ export default DemoDataSwitch = (props) => {
     'Turn ON to show demo data for LTP bookings, service measures & notifications';
   const switchedOnText =
     'Turn OFF to show live data for LTP bookings, service measures & notifications';
-
+  const userApiFetchParamsObj = {
+    dealerId: (userDataObj && userDataObj.dealerId) || null,
+    intId: (userDataObj && userDataObj.intId.toString()) || null,
+  };
   //   console.log(
   //     'in switch reducer switchStatus',
   //     requestedDemoData,
@@ -33,6 +40,18 @@ export default DemoDataSwitch = (props) => {
     dispatch(
       setUserRequestedDemoData({ requestedDemoData: !tempSwitchStatus })
     );
+    // Update state to hold the dummy data or live data
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
+      dispatch(getNewsRequest(userApiFetchParamsObj));
+      dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+      dispatch(getOdisRequest(userApiFetchParamsObj));
+    }
+
     setSwitchStatus(!tempSwitchStatus);
     // setRequestedDemoData((previousState) => !DemoDataSwitch);
   };
@@ -51,7 +70,7 @@ export default DemoDataSwitch = (props) => {
     userDataObj &&
     userDataObj.userName &&
     (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ||
+      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
       (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
         userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
     <View

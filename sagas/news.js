@@ -5,7 +5,7 @@ import Types from '../constants/Types';
 import * as api from '../api/news';
 import { InfoTypes } from '../constants/InfoTypes';
 import shouldWeUseDummyData from '../helpers/checkDummyData';
-import newsDummyData from '../dummyData/serviceMeasuresDummyData.js';
+import newsDummyData from '../dummyData/newsDummyData.js';
 export const showingDemoData = (state) => state.user.requestedDemoData;
 
 // console.log('in actions Types.GET_NEWS_START is ', Types.GET_NEWS_START);

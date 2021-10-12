@@ -13,6 +13,7 @@ import {
 // import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
+import sortObjectList from '../helpers/sortObjectList';
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
@@ -155,12 +156,24 @@ export default ServiceMeasuresScreen = (props) => {
 
   //   setUniqueserviceMeasureItems(serviceMeasuresItems);
 
-  const serviceMeasuresItemsDataCount = 0;
+  //   console.log(
+  //     'serviceMeasures NOT Sorted',
+  //     serviceMeasuresItems && serviceMeasuresItems
+  //   );
+  let serviceMeasuresSorted = sortObjectList(
+    serviceMeasuresItems,
+    'dateCreated',
+    'asc'
+  );
+  //   console.log(
+  //     'serviceMeasuresSorted',
+  //     serviceMeasuresSorted && serviceMeasuresSorted
+  //   );
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(serviceMeasuresItems, searchInput);
+      let newFilteredItems = searchItems(serviceMeasuresSorted, searchInput);
       //   console.log(
       //     'ServiceMeasures Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -177,33 +190,21 @@ export default ServiceMeasuresScreen = (props) => {
     }
   };
 
-  //   let itemsToShow = !isLoading
-  //     ? searchInput && searchInput.length > minSearchLength
-  //       ? filteredItems
-  //       : uniqueserviceMeasureItems
-  //     : [];
+  let itemsToShow =
+    !isLoading && !dataError
+      ? searchInput && searchInput.length > minSearchLength
+        ? filteredItems
+        : serviceMeasuresSorted
+      : [];
 
-  //   const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
-
-  const items = !isLoading && !dataError ? serviceMeasuresItems : [];
-
-  //   let itemsToShow =
-  //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
-
-  let itemsToShow = !isLoading
-    ? searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : items
-    : [];
-
-  console.log(
-    'rendering ServiceMeasures screen, dataError:',
-    dataError,
-    'filteredItems',
-    filteredItems && filteredItems.length,
-    ' itemsToShow length',
-    (itemsToShow && itemsToShow.length) || '0'
-  );
+  //   console.log(
+  //     'rendering ServiceMeasures screen, dataError:',
+  //     dataError,
+  //     'filteredItems',
+  //     filteredItems && filteredItems.length,
+  //     ' itemsToShow length',
+  //     (itemsToShow && itemsToShow.length) || '0'
+  //   );
 
   return (
     <View style={baseStyles.containerFlex}>

@@ -3,16 +3,16 @@ import InfoTypes from '../constants/InfoTypes';
 const dummyDataTypes = {
   ltpLoans: true,
   news: true,
-  odis: false,
+  odis: true,
   serviceMeasures: true,
 };
 
 const shouldWeUseDummyData = (infoType) => {
-  console.log(
-    '^^^^^^^^^^^^^^^props:',
-    infoType,
-    dummyDataTypes.serviceMeasures
-  );
+  //   console.log(
+  //     '^^^^^^^^^^^^^^^props:',
+  //     infoType,
+  //     dummyDataTypes.serviceMeasures
+  //   );
   if (dummyDataTypes[infoType]) {
     return true;
   } else {
