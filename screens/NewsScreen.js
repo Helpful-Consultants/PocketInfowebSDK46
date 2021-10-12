@@ -133,7 +133,7 @@ export default NewsScreen = (props) => {
   const items = (!isLoading && !dataError && newsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
-  console.log(items);
+  //   console.log(items);
 
   const filteredItems =
     (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||

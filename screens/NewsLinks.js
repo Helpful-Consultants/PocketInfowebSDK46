@@ -1,24 +1,18 @@
-// import React, { useEffect } from 'react';
 import React from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import moment from 'moment';
+import { isAfter, parse } from 'date-fns';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
-import HighlightedDate from '../components/HighlightedDate';
 import amendLink from '../helpers/amendLink';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { getDisplayDateFromDate, getDateDifference } from '../helpers/dates';
 import Colors from '../constants/Colors';
 
 const appCode = Base64.encode(moment().format('MMMM'));
 // console.log('appCode is ', appCode);
 const notificationLimit = 7;
+const nowDateObj = new Date();
 
 export default function NewsLinks(props) {
   // console.log(props.items);
@@ -29,8 +23,85 @@ export default function NewsLinks(props) {
   //   console.log('in newslinks, windowDim:', windowDim);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   console.log('in newslinks, baseStyles:', baseStyles);
-  let now = moment();
   let intId = (userIntId && userIntId) || '';
+
+  const getFormattedNewsItem = (item) => {
+    const parsedUpdatedDate =
+      (item &&
+        item.lastUpdated &&
+        item.lastUpdated.length > 0 &&
+        parse(item.lastUpdated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+      null;
+
+    const parsedCreatedDate =
+      (item &&
+        item.createdDate &&
+        item.createdDate.length > 0 &&
+        parse(item.createdDate, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+      null;
+
+    // console.log(
+    //   'parsedUpdatedDate',
+    //   item.headline,
+    //   parsedUpdatedDate,
+    //   'from',
+    //   item.lastUpdated
+    // );
+    // console.log(
+    //   'parsedCreatedDate',
+    //   parsedCreatedDate,
+    //   'from',
+    //   item.createdDate
+    // );
+
+    const isRevised =
+      parsedCreatedDate &&
+      parsedUpdatedDate &&
+      isAfter(parsedUpdatedDate, parsedCreatedDate);
+    const daysOld = getDateDifference(
+      isRevised ? parsedUpdatedDate : parsedCreatedDate,
+      nowDateObj
+    );
+
+    // console.log('isRevised', parsedUpdatedDate, parsedCreatedDate);
+
+    const displayDate = isRevised
+      ? getDisplayDateFromDate(parsedUpdatedDate)
+      : getDisplayDateFromDate(parsedCreatedDate);
+
+    // console.log('displayDate is', displayDate);
+
+    return (
+      <View style={baseStyles.viewItem}>
+        <View style={baseStyles.viewItemTopRow}>
+          <ScaledImageFinder
+            width={70}
+            uri={`${props.baseImageUrl}${item.imageName}`}
+          />
+          <View style={baseStyles.viewItemTitle}>
+            <Text style={baseStyles.textItemTitle}>{item.headline}</Text>
+            <Text style={baseStyles.textDate}>
+              {isRevised ? `Updated ` : null}
+              {displayDate}
+              {daysOld === 0 ? (
+                <Text
+                  style={{
+                    ...baseStyles.textLeftAlignedBold,
+                    color: Colors.vwgWarmMidBlue,
+                  }}
+                >
+                  {isRevised ? `  UPDATED TODAY!` : `  NEW TODAY!`}
+                </Text>
+              ) : null}
+            </Text>
+          </View>
+        </View>
+        <View style={baseStyles.itemMainRow}>
+          <Text style={baseStyles.textItemMain}>{item.newstext}</Text>
+        </View>
+      </View>
+    );
+  };
 
   return (
     <View>
@@ -43,27 +114,7 @@ export default function NewsLinks(props) {
               }
               key={i}
             >
-              <View style={baseStyles.viewItem}>
-                <View style={baseStyles.viewItemTopRow}>
-                  <ScaledImageFinder
-                    width={70}
-                    uri={`${props.baseImageUrl}${item.imageName}`}
-                  />
-                  <View style={baseStyles.viewItemTitle}>
-                    <Text style={baseStyles.textItemTitle}>
-                      {item.headline}
-                    </Text>
-                    <HighlightedDate
-                      item={item}
-                      now={now}
-                      notificationLimit={notificationLimit}
-                    />
-                  </View>
-                </View>
-                <View style={baseStyles.itemMainRow}>
-                  <Text style={baseStyles.textItemMain}>{item.newstext}</Text>
-                </View>
-              </View>
+              {getFormattedNewsItem(item)}
             </Touchable>
           ))}
         </ScrollView>
