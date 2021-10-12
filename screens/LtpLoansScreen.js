@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
@@ -13,10 +13,12 @@ import {
 } from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
+import { getDisplayDateFromDate, getDateDifference } from '../helpers/dates';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
-const now = moment();
+
+const nowDateObj = new Date();
 
 export default LtpLoansScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -75,44 +77,72 @@ export default LtpLoansScreen = (props) => {
     // );
     let theFromDate = null;
     let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
+    let daysFromStart = 0;
+    let daysFromExpiry = 0;
 
-    if (item.collectedDate && item.collectionNumber) {
+    if (
+      item.collectedDate &&
+      item.collectedDate.length > 0 &&
+      item.collectionNumber &&
+      item.collectionNumber.length > 0
+    ) {
+      //   console.log(item.loanToolNo, 'returned');
       return false;
     }
+    // console.log(item.loanToolNo, 'not returned');
 
-    if (item.endDateDue && item.endDateDue.length > 0) {
-      theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
+    console.log(item.loanToolNo, 'endDueDate', item.endDateDue);
 
-    if (ageOfExpiry >= -2) {
-      return false;
+    const parsedStartDate =
+      (item &&
+        item.startDate &&
+        item.startDate.length > 0 &&
+        parse(item.startDate, 'dd/MM/yyyy', new Date())) ||
+      null;
+    const parsedDueDate =
+      (item &&
+        item.endDateDue &&
+        item.endDateDue.length > 0 &&
+        parse(item.endDateDue, 'dd/MM/yyyy', new Date())) ||
+      null;
+
+    console.log(
+      item.loanToolNo,
+      'parsedStartDate',
+      parsedStartDate,
+      'parsedDueDate',
+      parsedDueDate,
+      nowDateObj
+    );
+    daysFromStart = getDateDifference(nowDateObj, parsedStartDate);
+    daysFromExpiry = getDateDifference(nowDateObj, parsedDueDate);
+
+    console.log('daysFromStart', daysFromStart);
+    console.log('daysFromExpiry', daysFromExpiry);
+
+    if (daysFromStart > 0 && daysFromStart <= 2) {
+      return true;
     } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= -3) {
+      if (daysFromExpiry >= -3) {
         return true;
       }
     }
     return false;
   };
 
-  const filterLtpLoansItems = (ltpLoansItems) => {
-    let ltpLoansItemsFiltered = [];
+  const getOpenLtpLoansItems = (ltpLoansItems) => {
+    console.log(
+      'in getOpenLtpLoansItems ltpLoansItems',
+      ltpLoansItems && ltpLoansItems.length
+    );
+    let openLtpLoansItems = [];
     if (ltpLoansItems && ltpLoansItems.length > 0) {
-      ltpLoansItemsFiltered = ltpLoansItems.filter(
+      openLtpLoansItems = ltpLoansItems.filter(
         (item) => item.startDate && item.endDateDue && getItemStatus(item)
       );
     }
-    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
-    return ltpLoansItemsFiltered;
+    // console.log('LtpLoansItemsFiltered', openLtpLoansItems);
+    return openLtpLoansItems;
   };
 
   //   console.log('in ltpLoans screen - point 2');
@@ -190,6 +220,8 @@ export default LtpLoansScreen = (props) => {
     getItemsAsync();
   };
 
+  const items =
+    !isLoading && !dataError ? getOpenLtpLoansItems(ltpLoansItems) : [];
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
@@ -211,14 +243,15 @@ export default LtpLoansScreen = (props) => {
 
   //   setUniqueserviceMeasureItems(ltpLoansItems);
 
-  const ltpLoansItemsDataCount = 0;
-
   //   console.log('in ltpLoans screen - point 7');
+
+  console.log('ltpLoansItems', ltpLoansItems && ltpLoansItems.length);
+  console.log('items', items && items.length);
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(ltpLoansItems, searchInput);
+      let newFilteredItems = searchItems(items, searchInput);
       //   console.log(
       //     'LtpLoans Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -242,7 +275,6 @@ export default LtpLoansScreen = (props) => {
   //     : [];
 
   //   console.log('in ltpLoans screen - point 8');
-  const items = !isLoading && !dataError ? ltpLoansItems : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
