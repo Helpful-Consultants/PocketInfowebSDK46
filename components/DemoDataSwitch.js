@@ -7,6 +7,7 @@ import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { getNewsRequest } from '../actions/news';
 import { getOdisRequest } from '../actions/odis';
+import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 
 export default DemoDataSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -50,6 +51,7 @@ export default DemoDataSwitch = (props) => {
       dispatch(getNewsRequest(userApiFetchParamsObj));
       dispatch(getLtpLoansRequest(userApiFetchParamsObj));
       dispatch(getOdisRequest(userApiFetchParamsObj));
+      dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
     }
 
     setSwitchStatus(!tempSwitchStatus);

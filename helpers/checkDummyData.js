@@ -1,6 +1,7 @@
 import InfoTypes from '../constants/InfoTypes';
 
 const dummyDataTypes = {
+  calibrationExpiry: true,
   ltpLoans: true,
   news: true,
   odis: true,

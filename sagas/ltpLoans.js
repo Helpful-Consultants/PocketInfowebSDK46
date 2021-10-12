@@ -22,7 +22,7 @@ function* getLtpLoans({ payload }) {
   //     showThisDummyData
   //   );
   if (showingDummyData && showThisDummyData) {
-    // console.log('in saga showingDummyData is the way');
+    // console.log('in ltpLoans saga showingDummyData is the way');
     yield put(
       actions.getLtpLoansSuccess({
         items: ltpLoansDummyData,
@@ -31,7 +31,6 @@ function* getLtpLoans({ payload }) {
     );
   } else {
     // console.log('in saga showing real data');
-    yield put(actions.getLtpLoansStart());
     try {
       const result = yield call(api.getLtpLoans, {
         intId: payload.intId,

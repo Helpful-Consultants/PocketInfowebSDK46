@@ -13,8 +13,12 @@ import {
 } from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
-import getLtpLoanStatus from '../helpers/ltpLoanStatus';
-import { getDisplayDateFromDate, getDateDifference } from '../helpers/dates';
+import {
+  getOpenLtpLoansItems,
+  getLtpLoanStatus,
+} from '../helpers/ltpLoanStatus';
+import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
+
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
@@ -64,24 +68,6 @@ export default LtpLoansScreen = (props) => {
     // );
     dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [ltpLoansItems];
   });
-
-  const getOpenLtpLoansItems = (ltpLoansItems) => {
-    console.log(
-      'in getOpenLtpLoansItems ltpLoansItems',
-      ltpLoansItems && ltpLoansItems.length
-    );
-    let openLtpLoansItems = [];
-    if (ltpLoansItems && ltpLoansItems.length > 0) {
-      openLtpLoansItems = ltpLoansItems.filter(
-        (item) =>
-          item.startDate &&
-          item.endDateDue &&
-          getLtpLoanStatus(nowDateObj, item)
-      );
-    }
-    // console.log('LtpLoansItemsFiltered', openLtpLoansItems);
-    return openLtpLoansItems;
-  };
 
   //   console.log('in ltpLoans screen - point 2');
 
@@ -159,7 +145,9 @@ export default LtpLoansScreen = (props) => {
   };
 
   const items =
-    !isLoading && !dataError ? getOpenLtpLoansItems(ltpLoansItems) : [];
+    !isLoading && !dataError
+      ? getOpenLtpLoansItems(nowDateObj, ltpLoansItems)
+      : [];
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }

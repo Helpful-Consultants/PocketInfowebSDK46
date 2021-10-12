@@ -4,7 +4,7 @@ import * as api from '../api/serviceMeasures';
 import Types from '../constants/Types';
 import { InfoTypes } from '../constants/InfoTypes';
 import shouldWeUseDummyData from '../helpers/checkDummyData';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 export const showingDemoData = (state) => state.user.requestedDemoData;
 
 function* getServiceMeasures({ payload }) {
@@ -13,9 +13,7 @@ function* getServiceMeasures({ payload }) {
   //     payload && payload
   //   );
   yield put(actions.getServiceMeasuresStart());
-  let statusCode = null;
-  let errorText = 'An error occurred when trying to get the service measures';
-  let dataErrorUrl = null;
+
   let showingDummyData = yield select(showingDemoData); // <-- get getShowingDemoData
   let showThisDummyData = yield shouldWeUseDummyData(
     InfoTypes.SERVICE_MEASURES
@@ -28,16 +26,18 @@ function* getServiceMeasures({ payload }) {
   //     showThisDummyData
   //   );
   if (showingDummyData && showThisDummyData) {
-    // console.log('in saga showingDummyData is the way');
+    // console.log(
+    //   'in s measures saga showingDummyData is the way',
+    //   serviceMeasuresDummyData[0]
+    // );
     yield put(
       actions.getServiceMeasuresSuccess({
-        items: serviceMeasuresDummyData,
+        items: serviceMeasuresDummyData[0],
         statusCode: 200,
       })
     );
   } else {
     // console.log('in saga showing real data');
-    yield put(actions.getServiceMeasuresStart());
     try {
       const result = yield call(api.getServiceMeasures, {
         dealerId: payload.dealerId,

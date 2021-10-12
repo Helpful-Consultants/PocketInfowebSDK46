@@ -30,11 +30,6 @@ function* getOdis() {
       // console.log('in saga, getOdis success');
       // console.log(result.data && result.data);
       // console.log(result.data[0] && result.data[0].brandVersions);
-      let showingDummyData = yield select(showingDemoData); // <-- get getShowingDemoData
-      let showThisDummyData = yield shouldWeUseDummyData(
-        InfoTypes.SERVICE_MEASURES
-      );
-
       if (
         result &&
         result.data &&

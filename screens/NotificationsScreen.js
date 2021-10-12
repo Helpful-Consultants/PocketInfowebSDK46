@@ -16,14 +16,16 @@ import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
+import {
+  getOpenLtpLoansItems,
+  getLtpLoanStatus,
+} from '../helpers/ltpLoanStatus';
 import CalibrationExpiryList from './CalibrationExpiryList';
-import calibrationExpiryDummyData from '../dummyData/calibrationExpiryDummyData.js';
 import LtpLoansList from './LtpLoansList';
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 import ServiceMeasuresList from './ServiceMeasuresList';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 
 const now = moment();
+const nowDateObj = new Date();
 
 const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
   let retSum = 0;
@@ -158,48 +160,6 @@ export default NotificationsScreen = (props) => {
   //     setIsRefreshNeeded(true);
   //   });
 
-  const getLtpLoanStatus = (item) => {
-    // console.log(
-    //   'tool',
-    //   item.toolNr,
-    //   'now',
-    //   now,
-    //   'startDate',
-    //   item.startDate,
-    //   'expiryDate',
-    //   item.endDateDue
-    // );
-    let theFromDate = null;
-    let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
-
-    if (item.collectedDate && item.collectionNumber) {
-      return false;
-    }
-
-    if (item.endDateDue && item.endDateDue.length > 0) {
-      theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
-
-    if (ageOfExpiry >= -2) {
-      return false;
-    } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= -3) {
-        return true;
-      }
-    }
-    return false;
-  };
-
   const getServiceMeasureStatus = (item) => {
     // console.log(
     //   'menuText',
@@ -260,7 +220,10 @@ export default NotificationsScreen = (props) => {
     let ltpLoansItemsFiltered = [];
     if (ltpLoansItems && ltpLoansItems.length > 0) {
       ltpLoansItemsFiltered = ltpLoansItems.filter(
-        (item) => item.startDate && item.endDateDue && getLtpLoanStatus(item)
+        (item) =>
+          item.startDate &&
+          item.endDateDue &&
+          getLtpLoanStatus(nowDateObj, item)
       );
     }
     // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
@@ -361,23 +324,17 @@ export default NotificationsScreen = (props) => {
   //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
   let calibrationExpiryItemsToShow =
     !isLoadingCalibrationExpiry && !dataErrorCalibrationExpiry
-      ? userRequestedDemoData
-        ? filterCalibrationExpiryItems(calibrationExpiryDummyData)
-        : filterCalibrationExpiryItems(calibrationExpiryItems)
+      ? filterCalibrationExpiryItems(calibrationExpiryItems)
       : [];
 
   let ltpLoansItemsToShow =
     !isLoadingLtpLoans && !dataErrorLtpLoans
-      ? userRequestedDemoData
-        ? filterLtpLoansItems(ltpLoansDummyData)
-        : filterLtpLoansItems(ltpLoansItems)
+      ? filterLtpLoansItems(ltpLoansItems)
       : [];
 
   let serviceMeasuresItemsToShow =
     !isLoadingServiceMeasures && !dataErrorServiceMeasures
-      ? userRequestedDemoData
-        ? filterServiceMeasuresItems(serviceMeasuresDummyData)
-        : filterServiceMeasuresItems(serviceMeasuresItems)
+      ? filterServiceMeasuresItems(serviceMeasuresItems)
       : [];
 
   let calibrationExpiryCount = getCalibrationExpiryCount(
@@ -524,13 +481,13 @@ export default NotificationsScreen = (props) => {
                   size={20}
                   color={Colors.vwgVeryDarkGray}
                 />
-                <Text style={baseStyles.textSectionRibbon}> </Text>
+                <Text style={baseStyles.textSectionRibbon}></Text>
                 <Text style={baseStyles.textSectionRibbon}>
-                  {ltpLoansItemsToShow.length > 1
-                    ? ` ${ltpLoansItemsToShow.length} LTP Actions`
-                    : ltpLoansItemsToShow.length > 0
-                    ? ` ${ltpLoansItemsToShow.length} LTP Action`
-                    : ' No LTP Actions'}
+                  {ltpLoansItemsToShow.length > 0
+                    ? ltpLoansItemsToShow.length > 1
+                      ? ` ${ltpLoansItemsToShow.length} LTP Loans`
+                      : ` 1 LTP Loan`
+                    : ' No imminent LTP Loans'}
                 </Text>
               </View>
             </TouchableOpacity>

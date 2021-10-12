@@ -60,6 +60,7 @@ function* getNews() {
         yield put(
           actions.getNewsSuccess({
             items: result.data,
+            statusCode: 200,
           })
         );
       } else {
