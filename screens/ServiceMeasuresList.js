@@ -5,18 +5,9 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import { differenceInCalendarDays, format, parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
+import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
 
 const nowDateObj = new Date();
-// const momentNow = moment();
-
-const getDisplayDateFromDDMMYYY = (rawDate) => {
-  const parsedDate =
-    (rawDate && parse(rawDate, 'dd/MM/yyyy', new Date())) || null;
-  //   console.log('rrrrrrrrrrrrrrrawDate', rawDate, parsedDate);
-  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy');
-  //   console.log('ddddddddddddddisplayDate', displayDate);
-  return displayDate;
-};
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
@@ -24,32 +15,14 @@ export default function ServiceMeasuresList(props) {
   const { showFullDetails, items, displayTimestamp } = props;
   const serviceMeasures = items || [];
 
-  const getDateDifference = (dateOne, dateTwo) => {
-    let timeToExpiry = 0;
-    // console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
-
-    if (dateOne && dateTwo) {
-      timeToExpiry = differenceInCalendarDays(dateTwo, dateOne);
-    }
-    //   console.log('expiryDate', expiryDate);
-    //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
-
-    return timeToExpiry;
-  };
-
   const getFormattedServiceMeasure = (item) => {
     // console.log('nowDateObj', nowDateObj);
     // console.log('item', item);
 
     let measureIsLive = true;
-    let itemIsNew = false;
     const parsedExpiryDate =
       (item.expiryDate && parse(item.expiryDate, 'dd/MM/yyyy', new Date())) ||
       null;
-    const parsedStartDate =
-      (item.startDate && parse(item.startDate, 'dd/MM/yyyy', new Date())) ||
-      null;
-    // console.log('parsedExpiryDate', parsedExpiryDate, 'from', item.expiryDate);
     const parsedDateCreated =
       (item.dateCreated &&
         parse(item.dateCreated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
