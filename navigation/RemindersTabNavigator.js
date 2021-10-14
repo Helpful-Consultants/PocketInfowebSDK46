@@ -178,7 +178,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         }}
       />
       <RemindersTabs.Screen
-        name='Serv Measures'
+        name='Service Measures'
         component={ServiceMeasuresScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
