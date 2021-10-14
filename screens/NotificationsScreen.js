@@ -160,62 +160,6 @@ export default NotificationsScreen = (props) => {
   //     setIsRefreshNeeded(true);
   //   });
 
-  const getServiceMeasureStatus = (item) => {
-    // console.log(
-    //   'menuText',
-    //   item.menuText,
-    //   'now',
-    //   now,
-    //   'startDate',
-    //   item.startDate,
-    //   'expiryDate',
-    //   item.expiryDate
-    // );
-    let theFromDate = null;
-    let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
-
-    if (item.expiryDate && item.expiryDate.length > 0) {
-      theToDate = moment(item.expiryDate, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
-
-    if (ageOfExpiry >= 0) {
-      return false;
-    } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= 0) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const filterServiceMeasuresItems = (serviceMeasuresItems) => {
-    let serviceMeasuresItemsFiltered = [];
-    if (serviceMeasuresItems && serviceMeasuresItems.length > 0) {
-      serviceMeasuresItemsFiltered = serviceMeasuresItems.filter(
-        (item) =>
-          (!item.retailerStatus || item.retailerStatus.toLowerCase() !== 'c') &&
-          item.startDate &&
-          item.expiryDate &&
-          getServiceMeasureStatus(item)
-      );
-    }
-    // console.log(
-    //   'serviceMeasuresItemsFiltered',
-    //   serviceMeasuresItemsFiltered.length
-    // );
-    return serviceMeasuresItemsFiltered;
-  };
-
   const filterLtpLoansItems = (ltpLoansItems) => {
     let ltpLoansItemsFiltered = [];
     if (ltpLoansItems && ltpLoansItems.length > 0) {
@@ -331,11 +275,7 @@ export default NotificationsScreen = (props) => {
     !isLoadingLtpLoans && !dataErrorLtpLoans
       ? filterLtpLoansItems(ltpLoansItems)
       : [];
-
-  let serviceMeasuresItemsToShow =
-    !isLoadingServiceMeasures && !dataErrorServiceMeasures
-      ? filterServiceMeasuresItems(serviceMeasuresItems)
-      : [];
+  console.log('serviceMeasuresItems', serviceMeasuresItems);
 
   let calibrationExpiryCount = getCalibrationExpiryCount(
     calibrationExpiryItemsToShow
@@ -392,7 +332,7 @@ export default NotificationsScreen = (props) => {
           <View style={baseStyles.viewSectionRibbon}>
             <Ionicons name='tv' size={20} color={Colors.vwgWarmOrange} />
             <Text style={baseStyles.textSectionRibbon}>
-              {`  Please see the `}
+              {`  See the `}
               <Text
                 style={{
                   ...baseStyles.textSectionRibbon,
