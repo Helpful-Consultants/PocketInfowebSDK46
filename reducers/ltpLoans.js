@@ -9,6 +9,37 @@ const INITIAL_STATE = {
   displayTimestamp: null,
 };
 
+const filterReturnedItems = (items) => {
+  const nowDateObj = new Date();
+  let filteredLtpLoansArr = [];
+  //   console.log('nowDateObj', nowDateObj);
+
+  if (items && items.length > 0) {
+    items.map((item) => {
+      //   console.log(
+      //     'in filterExpiredItems',
+      //     item.menuText,
+      //     item.expiryDate,
+      //     getTimeToExpiry(fromDate, item.expiryDate)
+      //   );
+      if (
+        !(item.collectedDate && item.collectedDate.length > 0) &&
+        !(item.collectionNumber && item.collectionNumber.length > 0)
+      ) {
+        filteredLtpLoansArr.push(item);
+      }
+    });
+  }
+
+  //   console.log(
+  //     'reducertime;filterExpiredItems',
+  //     items.length,
+  //     'down to',
+  //     filteredLtpLoansArr.length
+  //   );
+  return filteredLtpLoansArr;
+};
+
 export default function ltpLoans(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
@@ -36,7 +67,9 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
       return {
         ...state,
         // newsItems: [],
-        ltpLoansItems: (action.payload.items && action.payload.items) || [],
+        ltpLoansItems:
+          (action.payload.items && filterReturnedItems(action.payload.items)) ||
+          [],
         isLoading: false,
         error: null,
         dataErrorUrl: null,
