@@ -9,7 +9,6 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
 import Colors from '../constants/Colors';
 // import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
@@ -24,7 +23,6 @@ import CalibrationExpiryList from './CalibrationExpiryList';
 import LtpLoansList from './LtpLoansList';
 import ServiceMeasuresList from './ServiceMeasuresList';
 
-const now = moment();
 const nowDateObj = new Date();
 
 const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
