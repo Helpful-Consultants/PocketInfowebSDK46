@@ -19,7 +19,7 @@ function* getCalibrationExpiry({ payload }) {
     InfoTypes.CALIBRATION_EXPIRY
   );
   if (showingDummyData && showThisDummyData) {
-    console.log('in calibration saga showingDummyData is the way');
+    // console.log('in calibration saga showingDummyData is the way');
     yield put(
       actions.getCalibrationExpirySuccess({
         items: calibrationExpiryDummyData,

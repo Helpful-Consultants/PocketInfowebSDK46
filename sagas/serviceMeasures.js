@@ -32,7 +32,7 @@ function* getServiceMeasures({ payload }) {
     // );
     yield put(
       actions.getServiceMeasuresSuccess({
-        items: serviceMeasuresDummyData[0],
+        items: serviceMeasuresDummyData,
         statusCode: 200,
       })
     );
