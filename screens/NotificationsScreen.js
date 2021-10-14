@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 // import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
@@ -16,12 +17,12 @@ import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { getLtpLoanStatus } from '../helpers/ltpLoanStatus';
-import CalibrationExpiryList from './CalibrationExpiryList';
-import ServiceMeasuresList from './ServiceMeasuresList';
+import InlineIcon from '../components/InlineIcon';
 
 const nowDateObj = new Date();
 
 const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
+  let retCountsObj = { red: 0, orange: 0, green: 0 };
   let retSum = 0;
 
   calibrationExpiryItemsToShow.map((item) => {
@@ -56,9 +57,13 @@ export default NotificationsScreen = (props) => {
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
-  const [isOpenLtpLoans, setIsOpenLtpLoans] = useState(false);
-  const [isOpenServiceMeasures, setIsOpenServiceMeasures] = useState(false);
+  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(true);
+  //   const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
+  //   const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
+  //     useState(0);
+  //   const [calibrationExpiryGreenCount, setCalibrationExpiryGreenCount] =
+  //     useState(0);
+  //   const [calibrationExpiryCount, setCalibrationExpiryCount] = useState(0);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
@@ -167,23 +172,45 @@ export default NotificationsScreen = (props) => {
     // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
     return ltpLoansItemsFiltered;
   };
+  let calibrationExpiryRedCount = 0;
+  let calibrationExpiryAmberCount = 0;
+  let calibrationExpiryGreenCount = 0;
+  let calibrationExpiryCount = 0;
+  const countCalibrationExpiryItems = () => {
+    // let redCount = 0;
+    // let amberCount = 0;
+    // let greenCount = 0;
 
-  const filterCalibrationExpiryItems = (calibrationExpiryItems) => {
-    let calibrationExpiryItemsFiltered = [];
     if (calibrationExpiryItems && calibrationExpiryItems.length > 0) {
-      calibrationExpiryItemsFiltered = calibrationExpiryItems.filter(
-        (item) =>
-          (item.expiry && item.expiry.indexOf('1.') !== -1) ||
-          item.expiry.indexOf('2.') !== -1 ||
-          item.expiry.indexOf('3.') !== -1
-      );
+      calibrationExpiryItems.map((item) => {
+        if (item.expiry && item.expiry.length > 0) {
+          if (item.expiry.indexOf('1.') !== -1) {
+            if (!isNaN(parseInt(item.howMany))) {
+              calibrationExpiryRedCount = parseInt(item.howMany);
+            }
+          } else if (item.expiry.indexOf('2.') !== -1) {
+            if (!isNaN(parseInt(item.howMany))) {
+              calibrationExpiryAmberCount = parseInt(item.howMany);
+            }
+          } else if (item.expiry.indexOf('3.') !== -1) {
+            if (!isNaN(parseInt(item.howMany))) {
+              calibrationExpiryGreenCount = parseInt(item.howMany);
+            }
+          }
+        }
+      });
     }
+    calibrationExpiryCount =
+      calibrationExpiryRedCount +
+      calibrationExpiryAmberCount +
+      calibrationExpiryGreenCount;
 
-    // console.log(
-    //   'calibrationExpiryItemsFiltered',
-    //   calibrationExpiryItemsFiltered
-    // );
-    return calibrationExpiryItemsFiltered;
+    // console.log('calibrationExpiryCount in function', calibrationExpiryCount);
+
+    // setCalibrationExpiryRedCount(redCount);
+    // setCalibrationExpiryAmberCount(amberCount);
+    // setCalibrationExpiryGreenCount(greenCount);
+    // setCalibrationExpiryCount(redCount + amberCount + greenCount);
   };
 
   useEffect(() => {
@@ -243,8 +270,17 @@ export default NotificationsScreen = (props) => {
       //   console.log('in Notifications focusEffect ');
 
       getItemsAsync();
+
+      //   console.log(
+      //     'in Notifications focusEffect, calling countCalibrationExpiryItems'
+      //   );
     }, [])
   );
+  //   useEffect(() => {
+  //     !isLoadingCalibrationExpiry &&
+  //       !dataErrorCalibrationExpiry &&
+  //       countCalibrationExpiryItems();
+  //   }, []);
 
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
@@ -259,20 +295,7 @@ export default NotificationsScreen = (props) => {
   //     getItems();
   //   }
 
-  //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
-  let calibrationExpiryItemsToShow =
-    !isLoadingCalibrationExpiry && !dataErrorCalibrationExpiry
-      ? filterCalibrationExpiryItems(calibrationExpiryItems)
-      : [];
-
-  let ltpLoansItemsToShow =
-    !isLoadingLtpLoans && !dataErrorLtpLoans
-      ? filterLtpLoansItems(ltpLoansItems)
-      : [];
-
-  let calibrationExpiryCount = getCalibrationExpiryCount(
-    calibrationExpiryItemsToShow
-  );
+  //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? countCalibrationExpiryItems(calibrationExpiryItems) : [];
 
   //   console.log(
   //     'rendering Notifications screen',
@@ -298,6 +321,18 @@ export default NotificationsScreen = (props) => {
   //     isLoadingLtpLoans,
   //     'dataErrorLtpLoansItems',
   //     dataErrorLtpLoans
+  //   );
+  countCalibrationExpiryItems();
+
+  //   console.log(
+  //     'rendering notifications',
+  //     calibrationExpiryItems,
+  //     'calibrationExpiryRedCount',
+  //     calibrationExpiryRedCount,
+  //     'calibrationExpiryAmberCount',
+  //     calibrationExpiryAmberCount,
+  //     'calibrationExpiryGreenCount',
+  //     calibrationExpiryGreenCount
   //   );
 
   return (
@@ -457,33 +492,127 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
-                setIsOpenLtpLoans(false);
-                setIsOpenServiceMeasures(false);
-              }}
-            >
+            {calibrationExpiryCount > 0 ? (
+              <TouchableOpacity
+                onPress={() => {
+                  setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                }}
+              >
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons
+                    name='timer'
+                    size={20}
+                    color={
+                      calibrationExpiryRedCount && calibrationExpiryRedCount > 0
+                        ? Colors.vwgWarmRed
+                        : calibrationExpiryRedCount &&
+                          calibrationExpiryAmberCount > 0
+                        ? Colors.vwgWarmOrange
+                        : Colors.vwgMintGreen
+                    }
+                  />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {calibrationExpiryCount > 1
+                      ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
+                      : calibrationExpiryCount > 0
+                      ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
+                      : ' No Calibration Expiry Actions  '}
+                  </Text>
+                  <Ionicons
+                    name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
+                    size={20}
+                    color={Colors.vwgVeryDarkGray}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : (
               <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
-
-                <Text style={baseStyles.textSectionRibbon}> </Text>
+                <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
                   {calibrationExpiryCount > 1
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
                     : calibrationExpiryCount > 0
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
-                    : ' No Calibration Expiry Actions'}
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
+                    : ' No Calibration Expiry Actions  '}
                 </Text>
               </View>
-            </TouchableOpacity>
+            )}
             {isOpenCalibrationExpiry ? (
-              calibrationExpiryItemsToShow.length > 0 ? (
-                <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
+              calibrationExpiryCount > 0 ? (
+                <View>
+                  {calibrationExpiryRedCount > 0 ? (
+                    <View
+                      style={{
+                        ...baseStyles.viewRowFlexCentreAligned,
+                        marginHorizontal: 33,
+                        marginTop: 10,
+                      }}
+                    >
+                      <InlineIcon
+                        itemType='font-awesome'
+                        iconName={'thumbs-down'}
+                        iconSize={RFPercentage(2.4)}
+                        iconColor={
+                          //item.status && item.status.toLowerCase() === 'c'
+                          Colors.vwgWarmRed
+                        }
+                      />
+                      <Text style={baseStyles.textLeftAligned}>
+                        {calibrationExpiryRedCount === 1
+                          ? `  ${calibrationExpiryRedCount} item's calibration has expired.`
+                          : `  ${calibrationExpiryRedCount} items' calibrations have expired.`}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {calibrationExpiryAmberCount > 0 ? (
+                    <View
+                      style={{
+                        ...baseStyles.viewRowFlexCentreAligned,
+                        marginHorizontal: 33,
+                        marginTop: 10,
+                      }}
+                    >
+                      <InlineIcon
+                        itemType='font-awesome'
+                        iconName={'thumbs-up'}
+                        iconSize={RFPercentage(2.4)}
+                        iconColor={
+                          //item.status && item.status.toLowerCase() === 'c'
+                          Colors.vwgCoolOrange
+                        }
+                      />
+                      <Text style={baseStyles.textLeftAligned}>
+                        {calibrationExpiryAmberCount === 1
+                          ? `  ${calibrationExpiryAmberCount} item's calibration expires within 30 days.`
+                          : `  ${calibrationExpiryAmberCount} items' calibrations expire within 30 days.`}
+                      </Text>
+                    </View>
+                  ) : null}
+                  {calibrationExpiryGreenCount > 0 ? (
+                    <View
+                      style={{
+                        ...baseStyles.viewRowFlexCentreAligned,
+                        marginHorizontal: 33,
+                        marginTop: 10,
+                      }}
+                    >
+                      <InlineIcon
+                        itemType='font-awesome'
+                        iconName={'thumbs-up'}
+                        iconSize={RFPercentage(2.4)}
+                        iconColor={
+                          //item.status && item.status.toLowerCase() === 'c'
+                          Colors.vwgMintGreen
+                        }
+                      />
+                      <Text style={baseStyles.textLeftAligned}>
+                        {calibrationExpiryGreenCount === 1
+                          ? `  ${calibrationExpiryGreenCount} item's calibration expires within 60 days.`
+                          : `  ${calibrationExpiryGreenCount} items' calibrations expire within 60 days.`}
+                      </Text>
+                    </View>
+                  ) : null}
+                </View>
               ) : (
                 <View style={baseStyles.viewDataList}>
                   <View style={baseStyles.textDataListItem}>

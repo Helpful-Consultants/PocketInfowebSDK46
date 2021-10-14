@@ -32,7 +32,7 @@ function* getCalibrationExpiry({ payload }) {
         dealerId: payload.dealerId,
       });
       // console.log('in saga get calibrationExpiry - 200');
-      // console.log(result);
+      //   console.log(result && result.data && result.data);
       if (
         result.data &&
         result.data.length > 0 &&
