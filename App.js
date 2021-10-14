@@ -32,7 +32,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 
-import checkForAlerts from './helpers/checkForAlerts';
+import checkUnseenItems from './helpers/alertStatus';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated

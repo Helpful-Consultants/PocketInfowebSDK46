@@ -20,7 +20,7 @@ import moment from 'moment';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
-import checkForAlerts from '../helpers/checkForAlerts';
+import checkUnseenItems from '../helpers/alertStatus';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
@@ -458,11 +458,13 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
-      setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
-      setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
-      setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
-      setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+      setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
+      setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
+      setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
+      setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
+      setServiceMeasuresAlertCount(
+        checkUnseenItems(InfoTypes.SERVICE_MEASURES)
+      );
     }
   }, [showingDemoApp]);
 

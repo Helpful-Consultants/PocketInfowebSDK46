@@ -13,7 +13,7 @@ import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
 import OdisScreen from '../screens/OdisScreen';
-import checkForAlerts from '../helpers/checkForAlerts';
+import checkUnseenItems from '../helpers/alertStatus';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 
@@ -51,7 +51,7 @@ const NewsTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-// const newsAlertCount = checkForAlerts(InfoTypes.NEWS);
+// const newsAlertCount = checkUnseenItems(InfoTypes.NEWS);
 // console.log(
 //   'in news navigator, newsAlertCount ',
 //   newsAlertCount && newsAlertCount
@@ -62,10 +62,10 @@ export default NewsTabNavigator = ({ navigation, route }) => {
   const [newsAlertCount, setNewsAlertCount] = useState(0);
 
   useEffect(() => {
-    // const alerts = checkForAlerts(InfoTypes.NEWS);
+    // const alerts = checkUnseenItems(InfoTypes.NEWS);
     // console.log('alerts:', alerts);
     if (showingDemoApp) {
-      setNewsAlertCount(checkForAlerts(InfoTypes.NEWS));
+      setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
     }
 
     navigation.setOptions({

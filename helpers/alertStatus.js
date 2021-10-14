@@ -38,9 +38,9 @@ const countUnseenItems = (scope, items, displayTimestamp) => {
   }
 };
 
-const checkForAlerts = (scope) => {
+const checkUnseenItems = (scope) => {
   const requestedDemoData = store.getState().user.requestedDemoData;
-  //   console.log('in checkForAlerts, scope is', scope);
+  //   console.log('in checkUnseenItems, scope is', scope);
   switch (scope) {
     case InfoTypes.LTP_LOANS: {
       let unseenItemsCount = 0;
@@ -51,7 +51,7 @@ const checkForAlerts = (scope) => {
       if (displayTimestamp) {
         unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
-        //   'in checkForAlerts for:',
+        //   'in checkUnseenItems for:',
         //   scope,
         //   items.length,
         //   'items; displayTimestamp:',
@@ -67,12 +67,12 @@ const checkForAlerts = (scope) => {
       const items = requestedDemoData
         ? newsDummyData
         : store.getState().news.newsItems;
-      //   console.log('in checkForAlerts', scope, items.length);
+      //   console.log('in checkUnseenItems', scope, items.length);
       let displayTimestamp = store.getState().news.displayTimestamp;
       if (displayTimestamp) {
         unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
-        //   'in checkForAlerts for:',
+        //   'in checkUnseenItems for:',
         //   scope,
         //   items.length,
         //   'items; displayTimestamp:',
@@ -111,7 +111,7 @@ const checkForAlerts = (scope) => {
       if (displayTimestamp) {
         unseenItemsCount = countUnseenItems(scope, items, displayTimestamp);
         // console.log(
-        //   'in checkForAlerts for:',
+        //   'in checkUnseenItems for:',
         //   scope,
         //   items.length,
         //   'items; displayTimestamp:',
@@ -123,10 +123,10 @@ const checkForAlerts = (scope) => {
       return unseenItemsCount;
     }
     default: {
-      console.log('in checkForAlerts, scope', scope);
+      console.log('in checkUnseenItems, scope', scope);
       return 0;
     }
   }
 };
 
-export default checkForAlerts;
+export default checkUnseenItems;
