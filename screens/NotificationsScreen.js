@@ -15,12 +15,8 @@ import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import {
-  getOpenLtpLoansItems,
-  getLtpLoanStatus,
-} from '../helpers/ltpLoanStatus';
+import { getLtpLoanStatus } from '../helpers/ltpLoanStatus';
 import CalibrationExpiryList from './CalibrationExpiryList';
-import LtpLoansList from './LtpLoansList';
 import ServiceMeasuresList from './ServiceMeasuresList';
 
 const nowDateObj = new Date();
@@ -343,59 +339,6 @@ export default NotificationsScreen = (props) => {
             <Ionicons name='open-outline' size={20} />
           </View>
         </TouchableOpacity>
-      ) : null}
-
-      {1 === 2 && !isLoadingLtpLoans ? (
-        dataErrorLtpLoans ? (
-          <ErrorDetails
-            errorSummary={'Error syncing LTP loans'}
-            dataStatusCode={dataStatusCodeLtpLoans}
-            errorHtml={dataErrorLtpLoans}
-            dataErrorUrl={dataErrorUrlLtpLoans}
-          />
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(false);
-                setIsOpenLtpLoans(!isOpenLtpLoans);
-                setIsOpenServiceMeasures(false);
-              }}
-            >
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenLtpLoans ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
-                <Text style={baseStyles.textSectionRibbon}></Text>
-                <Text style={baseStyles.textSectionRibbon}>
-                  {ltpLoansItemsToShow.length > 0
-                    ? ltpLoansItemsToShow.length > 1
-                      ? ` ${ltpLoansItemsToShow.length} LTP Loans`
-                      : ` 1 LTP Loan`
-                    : ' No imminent LTP Loans'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {isOpenLtpLoans ? (
-              ltpLoansItemsToShow.length > 0 ? (
-                <LtpLoansList
-                  items={ltpLoansItemsToShow}
-                  showFullDetails={false}
-                />
-              ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No LTP loans to show.
-                    </Text>
-                  </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        )
       ) : null}
       {!isLoadingLtpLoans ? (
         dataErrorLtpLoans ? (
