@@ -44,10 +44,15 @@ const filterExpiredItems = (serviceMeasures) => {
       //     getTimeToExpiry(fromDate, serviceMeasure.expiryDate)
       //   );
       if (
-        serviceMeasure.expiryDate &&
-        getTimeToExpiry(nowDateObj, serviceMeasure.expiryDate) >= 0
+        !serviceMeasure.retailerStatus ||
+        serviceMeasure.retailerStatus !== 'c'
       ) {
-        filteredServiceMeasuresArr.push(serviceMeasure);
+        if (
+          serviceMeasure.expiryDate &&
+          getTimeToExpiry(nowDateObj, serviceMeasure.expiryDate) >= 0
+        ) {
+          filteredServiceMeasuresArr.push(serviceMeasure);
+        }
       }
     });
   }
