@@ -45,6 +45,8 @@ export const getLtpLoanStatus = (nowDateObj, item) => {
   //   console.log('daysFromStart', daysFromStart);
   //   console.log('daysFromExpiry', daysFromExpiry);
 
+  return true; //@!@!!!!!!!!!!!!!! TODO
+
   if (daysFromExpiry >= -2) {
     return true;
   } else {

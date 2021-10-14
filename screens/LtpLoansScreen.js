@@ -13,11 +13,7 @@ import {
 } from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
-import {
-  getOpenLtpLoansItems,
-  getLtpLoanStatus,
-} from '../helpers/ltpLoanStatus';
-import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
+// import { getOpenLtpLoansItems } from '../helpers/ltpLoanStatus';
 
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
@@ -144,10 +140,9 @@ export default LtpLoansScreen = (props) => {
     getItemsAsync();
   };
 
-  const items =
-    !isLoading && !dataError
-      ? getOpenLtpLoansItems(nowDateObj, ltpLoansItems)
-      : [];
+  const items = !isLoading && !dataError ? ltpLoansItems : [];
+  // let ltpLoansSorted = sortObjectList(items, 'endDateDue', 'asc');
+  let ltpLoansSorted = items;
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
@@ -167,17 +162,14 @@ export default LtpLoansScreen = (props) => {
   //     'asc'
   //   );
 
-  //   setUniqueserviceMeasureItems(ltpLoansItems);
-
   //   console.log('in ltpLoans screen - point 7');
 
-  console.log('ltpLoansItems', ltpLoansItems && ltpLoansItems.length);
-  console.log('items', items && items.length);
+  //   console.log('ltpLoansItems', items && items.length);
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(items, searchInput);
+      let newFilteredItems = searchItems(ltpLoansSorted, searchInput);
       //   console.log(
       //     'LtpLoans Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -185,7 +177,7 @@ export default LtpLoansScreen = (props) => {
       //     ltpLoansItems && ltpLoansItems.length,
       //     'itemsToShow: ',
       //     itemsToShow && itemsToShow.length,
-      //     'uniqueserviceMeasureItems: ',
+      //     'uniqueLitpLoansItems: ',
       //     'newFilteredItems:',
       //     newFilteredItems && newFilteredItems.length,
       //     newFilteredItems
@@ -197,7 +189,7 @@ export default LtpLoansScreen = (props) => {
   //   let itemsToShow = !isLoading
   //     ? searchInput && searchInput.length > minSearchLength
   //       ? filteredItems
-  //       : uniqueserviceMeasureItems
+  //       : uniqueLitpLoansItems
   //     : [];
 
   //   console.log('in ltpLoans screen - point 8');
@@ -208,9 +200,9 @@ export default LtpLoansScreen = (props) => {
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
-      : items
+      : ltpLoansSorted
     : [];
-
+  //   console.log('itemsToShow', itemsToShow && itemsToShow);
   //   console.log(
   //     'rendering LtpLoans screen, dataError:',
   //     dataError,
