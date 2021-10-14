@@ -275,7 +275,6 @@ export default NotificationsScreen = (props) => {
     !isLoadingLtpLoans && !dataErrorLtpLoans
       ? filterLtpLoansItems(ltpLoansItems)
       : [];
-  console.log('serviceMeasuresItems', serviceMeasuresItems);
 
   let calibrationExpiryCount = getCalibrationExpiryCount(
     calibrationExpiryItemsToShow
@@ -348,57 +347,7 @@ export default NotificationsScreen = (props) => {
         </TouchableOpacity>
       ) : null}
 
-      {!isLoadingCalibrationExpiry ? (
-        dataErrorCalibrationExpiry ? (
-          <ErrorDetails
-            errorSummary={'Error syncing calibration expiry'}
-            dataStatusCode={dataStatusCodeCalibrationExpiry}
-            errorHtml={dataErrorCalibrationExpiry}
-            dataErrorUrl={dataErrorUrlCalibrationExpiry}
-          />
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
-                setIsOpenLtpLoans(false);
-                setIsOpenServiceMeasures(false);
-              }}
-            >
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
-
-                <Text style={baseStyles.textSectionRibbon}> </Text>
-                <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCount > 1
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
-                    : calibrationExpiryCount > 0
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
-                    : ' No Calibration Expiry Actions'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {isOpenCalibrationExpiry ? (
-              calibrationExpiryItemsToShow.length > 0 ? (
-                <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
-              ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No calibration expirations to show.
-                    </Text>
-                  </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        )
-      ) : null}
-      {!isLoadingLtpLoans ? (
+      {1 === 2 && !isLoadingLtpLoans ? (
         dataErrorLtpLoans ? (
           <ErrorDetails
             errorSummary={'Error syncing LTP loans'}
@@ -450,6 +399,59 @@ export default NotificationsScreen = (props) => {
           </View>
         )
       ) : null}
+      {!isLoadingLtpLoans ? (
+        dataErrorLtpLoans ? (
+          <ErrorDetails
+            errorSummary={'Error syncing LTP Loans'}
+            dataStatusCode={dataStatusCodeLtpLoans}
+            errorHtml={dataErrorLtpLoans}
+            dataErrorUrl={dataErrorUrlLtpLoans}
+          />
+        ) : (
+          <View>
+            {ltpLoansItems.length > 0 ? (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('RemindersTabs', {
+                    screen: 'All LTP Loans',
+                  })
+                }
+              >
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons
+                    name='calendar'
+                    size={20}
+                    color={Colors.vwgWarmOrange}
+                  />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`  See your `}
+                    <Text
+                      style={{
+                        ...baseStyles.textSectionRibbon,
+                        fontFamily: 'the-sans-bold',
+                      }}
+                    >
+                      {ltpLoansItems.length > 1
+                        ? `${ltpLoansItems.length} LTP Loans `
+                        : ltpLoansItems.length > 0
+                        ? ` LTP Loan `
+                        : `  No LTP Loans`}
+                    </Text>
+                  </Text>
+                  <Ionicons name='open-outline' size={20} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons name='calendar' size={20} color={Colors.vwgBlack} />
+                <Text style={baseStyles.textSectionRibbon}>
+                  {`   No LTP Loans`}
+                </Text>
+              </View>
+            )}
+          </View>
+        )
+      ) : null}
       {!isLoadingServiceMeasures ? (
         dataErrorServiceMeasures ? (
           <ErrorDetails
@@ -460,44 +462,92 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
+            {serviceMeasuresItems.length > 0 ? (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('RemindersTabs', {
+                    screen: 'Service Measures',
+                  })
+                }
+              >
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons
+                    name='checkbox'
+                    size={20}
+                    color={Colors.vwgWarmOrange}
+                  />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`  See your `}
+                    <Text
+                      style={{
+                        ...baseStyles.textSectionRibbon,
+
+                        fontFamily: 'the-sans-bold',
+                      }}
+                    >
+                      {serviceMeasuresItems.length > 1
+                        ? `${serviceMeasuresItems.length} Outstanding Service Measures `
+                        : serviceMeasuresItems.length > 0
+                        ? `Outstanding Service Measure `
+                        : ' No Outstanding Service Measures'}
+                    </Text>
+                  </Text>
+                  <Ionicons name='open-outline' size={20} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                <Text style={baseStyles.textSectionRibbon}>
+                  {` No Outstanding Service Measures`}
+                </Text>
+              </View>
+            )}
+          </View>
+        )
+      ) : null}
+      {!isLoadingCalibrationExpiry ? (
+        dataErrorCalibrationExpiry ? (
+          <ErrorDetails
+            errorSummary={'Error syncing calibration expiry'}
+            dataStatusCode={dataStatusCodeCalibrationExpiry}
+            errorHtml={dataErrorCalibrationExpiry}
+            dataErrorUrl={dataErrorUrlCalibrationExpiry}
+          />
+        ) : (
+          <View>
             <TouchableOpacity
               onPress={() => {
-                setIsOpenCalibrationExpiry(false);
+                setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
                 setIsOpenLtpLoans(false);
-                setIsOpenServiceMeasures(!isOpenServiceMeasures);
+                setIsOpenServiceMeasures(false);
               }}
             >
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons
-                  name={isOpenServiceMeasures ? 'caret-up' : 'caret-down'}
+                  name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
                   size={20}
                   color={Colors.vwgVeryDarkGray}
                 />
+
                 <Text style={baseStyles.textSectionRibbon}> </Text>
                 <Text style={baseStyles.textSectionRibbon}>
-                  {serviceMeasuresItemsToShow.length > 1
-                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
-                    : serviceMeasuresItemsToShow.length > 0
-                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
-                    : ' No Outstanding Service Measures'}
+                  {calibrationExpiryCount > 1
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
+                    : calibrationExpiryCount > 0
+                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
+                    : ' No Calibration Expiry Actions'}
                 </Text>
               </View>
             </TouchableOpacity>
-            {isOpenServiceMeasures ? (
-              serviceMeasuresItemsToShow.length > 0 ? (
-                <ServiceMeasuresList
-                  items={serviceMeasuresItemsToShow}
-                  showFullDetails={false}
-                />
+            {isOpenCalibrationExpiry ? (
+              calibrationExpiryItemsToShow.length > 0 ? (
+                <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
               ) : (
                 <View style={baseStyles.viewDataList}>
                   <View style={baseStyles.textDataListItem}>
                     <Text style={baseStyles.textLeftAligned}>
-                      No Service Measures to show.
-                    </Text>
-                    <Text style={baseStyles.textLeftAligned}>
-                      You can view your expired Service Measures at Tools
-                      Infoweb.
+                      No calibration expirations to show.
                     </Text>
                   </View>
                 </View>
