@@ -2,7 +2,7 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import { differenceInCalendarDays, format, parse } from 'date-fns';
+import { parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
@@ -150,10 +150,10 @@ export default function ServiceMeasuresList(props) {
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBoldLarge,
-                  color: Colors.vwgWarmOrange,
+                  color: Colors.vwgWarmRed,
                 }}
               >
-                {`   ${daysLeft} ${daysLeft === 1 ? `day` : `days`} left`}
+                {`   ${daysLeft} ${daysLeft === 1 ? `day` : `days`} left!`}
               </Text>
             ) : null}
           </Text>

@@ -163,7 +163,7 @@ export default ServiceMeasuresScreen = (props) => {
   let serviceMeasuresSorted = sortObjectList(
     serviceMeasuresItems,
     'dateCreated',
-    'asc'
+    'desc'
   );
   //   console.log(
   //     'serviceMeasuresSorted',
@@ -239,7 +239,7 @@ export default ServiceMeasuresScreen = (props) => {
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Complete these on Tools Infoweb.
+            Visit Tools Infoweb to complete these, and view ended measures.
           </Text>
         </View>
       )}
