@@ -51,10 +51,10 @@ const RemindersTabs =
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
-// const showBadgeLtpLoans = checkForAlerts(InfoTypes.LTP_LOANS);
-// const showBadgeNotifications = checkForAlerts(InfoTypes.NOTIFICATIONS);
-// const showBadgeOdis = checkForAlerts(InfoTypes.ODIS);
-// const showBadgeServiceMeasures = checkForAlerts(InfoTypes.SERVICE_MEASURES);
+// const showBadgeLtpLoans = checkUnseenItems(InfoTypes.LTP_LOANS);
+// const showBadgeNotifications = checkUnseenItems(InfoTypes.NOTIFICATIONS);
+// const showBadgeOdis = checkUnseenItems(InfoTypes.ODIS);
+// const showBadgeServiceMeasures = checkUnseenItems(InfoTypes.SERVICE_MEASURES);
 
 // console.log(
 //   'in navigator, showBadgeLtpLoans ',
@@ -78,10 +78,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      setLtpLoansAlertCount(checkForAlerts(InfoTypes.LTP_LOANS));
-      setNotificationsAlertCount(checkForAlerts(InfoTypes.NOTIFICATIONS));
-      setOdisAlertCount(checkForAlerts(InfoTypes.ODIS));
-      setServiceMeasuresAlertCount(checkForAlerts(InfoTypes.SERVICE_MEASURES));
+      setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
+      setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
+      setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
+      setServiceMeasuresAlertCount(
+        checkUnseenItems(InfoTypes.SERVICE_MEASURES)
+      );
     }
     navigation.setOptions({
       headerStyle: {
