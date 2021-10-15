@@ -1,9 +1,11 @@
 // import { Types } from '../actions/serviceMeasures';
 import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
+import { getServiceMeasuresCountsObj } from '../helpers/serviceMeasures';
 
 const INITIAL_STATE = {
   serviceMeasuresItems: [],
+  serviceMeasuresCounts: null,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -34,6 +36,7 @@ const getTimeToExpiry = (nowDateObj, expiryDate) => {
 const filterExpiredItems = (serviceMeasures) => {
   const nowDateObj = new Date();
   let filteredServiceMeasuresArr = [];
+
   //   console.log('nowDateObj', nowDateObj);
   if (serviceMeasures && serviceMeasures.length > 0) {
     serviceMeasures.map((serviceMeasure) => {
@@ -89,13 +92,17 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
       //   console.log('STATE', state);
+      const filteredServiceMeasuresArr =
+        (action.payload.items && filterExpiredItems(action.payload.items)) ||
+        [];
 
       return {
         ...state,
         // newsItems: [],
-        serviceMeasuresItems:
-          (action.payload.items && filterExpiredItems(action.payload.items)) ||
-          [],
+        serviceMeasuresItems: filteredServiceMeasuresArr,
+        serviceMeasuresCounts: getServiceMeasuresCountsObj(
+          filteredServiceMeasuresArr
+        ),
         // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
         isLoading: false,
         error: null,

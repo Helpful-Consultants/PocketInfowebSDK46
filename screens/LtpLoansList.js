@@ -2,7 +2,7 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { parse } from 'date-fns';
-import { getLtpLoanStatus } from '../helpers/ltpLoanStatus';
+import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
 import Colors from '../constants/Colors';
 

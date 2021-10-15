@@ -153,6 +153,15 @@ export default HomeScreen = (props) => {
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
+  const calibrationExpiryCountsObj = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryCounts
+  );
+  const stateCalibrationAmberExpiryCount = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryCounts.amberCount
+  );
+  const stateCalibrationRedExpiryCount = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryCounts.redCount
+  );
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);

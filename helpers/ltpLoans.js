@@ -1,5 +1,5 @@
 import { parse } from 'date-fns';
-import { getDateDifference } from '../helpers/dates';
+import { getDateDifference } from './dates';
 
 export const getLtpLoanStatus = (nowDateObj, item) => {
   let daysFromStart = 0;

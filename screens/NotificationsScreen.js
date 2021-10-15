@@ -11,39 +11,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-// import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import { getLtpLoanStatus } from '../helpers/ltpLoanStatus';
+import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import InlineIcon from '../components/InlineIcon';
 
 const nowDateObj = new Date();
 
-const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
-  let retCountsObj = { red: 0, orange: 0, green: 0 };
-  let retSum = 0;
-
-  calibrationExpiryItemsToShow.map((item) => {
-    if (!isNaN(parseInt(item.howMany))) {
-      //   console.log('Not NaN', item.howMany);
-      retSum = retSum + parseInt(item.howMany);
-    } else {
-      //   console.log('NaN', item.howMany);
-    }
-  });
-  //   console.log('retSum', retSum);
-  return retSum;
-};
-
 export default NotificationsScreen = (props) => {
+  //   console.log('NotificationsScreen props', props);
   const { navigation } = props;
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const odisViewCount = useSelector((state) => state.odis.viewCount);
   const calibrationExpiryItems = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryItems
+  );
+  const calibrationExpiryCountsObj = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryCounts
   );
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const serviceMeasuresItems = useSelector(
@@ -58,12 +45,6 @@ export default NotificationsScreen = (props) => {
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(true);
-  //   const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
-  //   const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
-  //     useState(0);
-  //   const [calibrationExpiryGreenCount, setCalibrationExpiryGreenCount] =
-  //     useState(0);
-  //   const [calibrationExpiryCount, setCalibrationExpiryCount] = useState(0);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
@@ -108,13 +89,6 @@ export default NotificationsScreen = (props) => {
     dealerId: dealerId,
     intId: userIntId,
   };
-  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
-
-  //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
-  //   ]);
-
-  //   console.log('getAlertsData', getAlertsData);
 
   //   const { navigation } = props;
   const getItems = useCallback(async (userApiFetchParamsObj) => {
@@ -129,7 +103,7 @@ export default NotificationsScreen = (props) => {
 
   const getItemsAsync = async () => {
     // console.log(
-    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
+    //   'rendering Notifications screen, userApiFetchParamsObj:',
     //   userApiFetchParamsObj
     // );
 
@@ -171,46 +145,6 @@ export default NotificationsScreen = (props) => {
     }
     // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
     return ltpLoansItemsFiltered;
-  };
-  let calibrationExpiryRedCount = 0;
-  let calibrationExpiryAmberCount = 0;
-  let calibrationExpiryGreenCount = 0;
-  let calibrationExpiryCount = 0;
-  const countCalibrationExpiryItems = () => {
-    // let redCount = 0;
-    // let amberCount = 0;
-    // let greenCount = 0;
-
-    if (calibrationExpiryItems && calibrationExpiryItems.length > 0) {
-      calibrationExpiryItems.map((item) => {
-        if (item.expiry && item.expiry.length > 0) {
-          if (item.expiry.indexOf('1.') !== -1) {
-            if (!isNaN(parseInt(item.howMany))) {
-              calibrationExpiryRedCount = parseInt(item.howMany);
-            }
-          } else if (item.expiry.indexOf('2.') !== -1) {
-            if (!isNaN(parseInt(item.howMany))) {
-              calibrationExpiryAmberCount = parseInt(item.howMany);
-            }
-          } else if (item.expiry.indexOf('3.') !== -1) {
-            if (!isNaN(parseInt(item.howMany))) {
-              calibrationExpiryGreenCount = parseInt(item.howMany);
-            }
-          }
-        }
-      });
-    }
-    calibrationExpiryCount =
-      calibrationExpiryRedCount +
-      calibrationExpiryAmberCount +
-      calibrationExpiryGreenCount;
-
-    // console.log('calibrationExpiryCount in function', calibrationExpiryCount);
-
-    // setCalibrationExpiryRedCount(redCount);
-    // setCalibrationExpiryAmberCount(amberCount);
-    // setCalibrationExpiryGreenCount(greenCount);
-    // setCalibrationExpiryCount(redCount + amberCount + greenCount);
   };
 
   useEffect(() => {
@@ -276,11 +210,6 @@ export default NotificationsScreen = (props) => {
       //   );
     }, [])
   );
-  //   useEffect(() => {
-  //     !isLoadingCalibrationExpiry &&
-  //       !dataErrorCalibrationExpiry &&
-  //       countCalibrationExpiryItems();
-  //   }, []);
 
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
@@ -294,8 +223,6 @@ export default NotificationsScreen = (props) => {
   //     // console.log('in notifications screen, no userDataObj');
   //     getItems();
   //   }
-
-  //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? countCalibrationExpiryItems(calibrationExpiryItems) : [];
 
   //   console.log(
   //     'rendering Notifications screen',
@@ -322,17 +249,16 @@ export default NotificationsScreen = (props) => {
   //     'dataErrorLtpLoansItems',
   //     dataErrorLtpLoans
   //   );
-  countCalibrationExpiryItems();
 
   //   console.log(
   //     'rendering notifications',
-  //     calibrationExpiryItems,
-  //     'calibrationExpiryRedCount',
-  //     calibrationExpiryRedCount,
-  //     'calibrationExpiryAmberCount',
-  //     calibrationExpiryAmberCount,
-  //     'calibrationExpiryGreenCount',
-  //     calibrationExpiryGreenCount
+  //     calibrationExpiryCountsObj,
+  //     'calibrationExpiryCountsObj.redCount',
+  //     calibrationExpiryCountsObj.redCount,
+  //     'calibrationExpiryCountsObj.amberCount',
+  //     calibrationExpiryCountsObj.amberCount,
+  //     'calibrationExpiryCountsObj.greenCount',
+  //     calibrationExpiryCountsObj.greenCount
   //   );
 
   return (
@@ -492,7 +418,7 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            {calibrationExpiryCount > 0 ? (
+            {calibrationExpiryCountsObj.expiryCount > 0 ? (
               <TouchableOpacity
                 onPress={() => {
                   setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
@@ -503,19 +429,20 @@ export default NotificationsScreen = (props) => {
                     name='timer'
                     size={20}
                     color={
-                      calibrationExpiryRedCount && calibrationExpiryRedCount > 0
+                      calibrationExpiryCountsObj.redCount &&
+                      calibrationExpiryCountsObj.redCount > 0
                         ? Colors.vwgWarmRed
-                        : calibrationExpiryRedCount &&
-                          calibrationExpiryAmberCount > 0
+                        : calibrationExpiryCountsObj.amberCount &&
+                          calibrationExpiryCountsObj.amberCount > 0
                         ? Colors.vwgWarmOrange
                         : Colors.vwgMintGreen
                     }
                   />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {calibrationExpiryCount > 1
-                      ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
-                      : calibrationExpiryCount > 0
-                      ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
+                    {calibrationExpiryCountsObj.expiryCount > 1
+                      ? ` Active Calibration Expiry Actions  `
+                      : calibrationExpiryCountsObj.expiryCount > 0
+                      ? ` Active Calibration Expiry Action  `
                       : ' No Calibration Expiry Actions  '}
                   </Text>
                   <Ionicons
@@ -529,18 +456,18 @@ export default NotificationsScreen = (props) => {
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCount > 1
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
-                    : calibrationExpiryCount > 0
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions  `
+                  {calibrationExpiryCountsObj.expiryCount > 1
+                    ? ` ${calibrationExpiryCountsObj.expiryCount} Calibration Expiry Actions `
+                    : calibrationExpiryCountsObj.expiryCount > 0
+                    ? ` ${calibrationExpiryCountsObj.expiryCount} Calibration Expiry Action  `
                     : ' No Calibration Expiry Actions  '}
                 </Text>
               </View>
             )}
             {isOpenCalibrationExpiry ? (
-              calibrationExpiryCount > 0 ? (
+              calibrationExpiryCountsObj.expiryCount > 0 ? (
                 <View>
-                  {calibrationExpiryRedCount > 0 ? (
+                  {calibrationExpiryCountsObj.redCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -558,13 +485,13 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryRedCount === 1
-                          ? `  ${calibrationExpiryRedCount} item's calibration has expired.`
-                          : `  ${calibrationExpiryRedCount} items' calibrations have expired.`}
+                        {calibrationExpiryCountsObj.redCount === 1
+                          ? `  ${calibrationExpiryCountsObj.redCount} item's calibration has expired.`
+                          : `  ${calibrationExpiryCountsObj.redCount} items' calibrations have expired.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryAmberCount > 0 ? (
+                  {calibrationExpiryCountsObj.amberCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -582,13 +509,13 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryAmberCount === 1
-                          ? `  ${calibrationExpiryAmberCount} item's calibration expires within 30 days.`
-                          : `  ${calibrationExpiryAmberCount} items' calibrations expire within 30 days.`}
+                        {calibrationExpiryCountsObj.amberCount === 1
+                          ? `  ${calibrationExpiryCountsObj.amberCount} item's calibration expires within 30 days.`
+                          : `  ${calibrationExpiryCountsObj.amberCount} items' calibrations expire within 30 days.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryGreenCount > 0 ? (
+                  {calibrationExpiryCountsObj.greenCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -606,9 +533,9 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryGreenCount === 1
-                          ? `  ${calibrationExpiryGreenCount} item's calibration expires within 60 days.`
-                          : `  ${calibrationExpiryGreenCount} items' calibrations expire within 60 days.`}
+                        {calibrationExpiryCountsObj.greenCount === 1
+                          ? `  ${calibrationExpiryCountsObj.greenCount} item's calibration expires within 60 days.`
+                          : `  ${calibrationExpiryCountsObj.greenCount} items' calibrations expire within 60 days.`}
                       </Text>
                     </View>
                   ) : null}

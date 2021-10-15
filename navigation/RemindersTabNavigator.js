@@ -71,19 +71,52 @@ const RemindersTabs =
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const calibrationExpiryCountsObj = useSelector(
+    (state) => state.calibrationExpiry.calibrationExpiryCounts
+  );
+  const serviceMeasuresCountsObj = useSelector(
+    (state) => state.serviceMeasures.serviceMeasuresCounts
+  );
+  //   const serviceMeasuresRedCount = useSelector(
+  //     (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
+  //   );
+  //   const serviceMeasuresAmberCount = useSelector(
+  //     (state) => state.serviceMeasures.serviceMeasuresCounts.amberCount
+  //   );
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
   const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
   const [odisAlertCount, setOdisAlertCount] = useState(0);
   const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
+  //   const [calibrationAmberExpiryCount, setCalibrationAmberExpiryCount] =
+  //     useState(0);
+  //   const [calibrationRedExpiryCount, setCalibrationRedExpiryCount] = useState(0);
 
   useEffect(() => {
+    // console.log(
+    //   'in navvvvvvvv calibrationExpiryCountsObj',
+    //   calibrationExpiryCountsObj
+    // );
+    const notifiableCalibrationAlertsCount =
+      (calibrationExpiryCountsObj &&
+        calibrationExpiryCountsObj.redCount &&
+        calibrationExpiryCountsObj.amberCount &&
+        calibrationExpiryCountsObj.redCount +
+          calibrationExpiryCountsObj.amberCount) ||
+      0;
+
+    console.log(
+      'in navvvvvvvv useEffect',
+      //   'calibrationExpiryCountsObj',
+      //   calibrationExpiryCountsObj,
+      'serviceMeasuresCountsObj',
+      serviceMeasuresCountsObj,
+      'calibrationAlertsCount',
+      notifiableCalibrationAlertsCount
+    );
     if (showingDemoApp) {
       setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
-      setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
+      //   setNotificationsAlertCount(notifiableCalibrationAlertsCount);
       setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
-      setServiceMeasuresAlertCount(
-        checkUnseenItems(InfoTypes.SERVICE_MEASURES)
-      );
     }
     navigation.setOptions({
       headerStyle: {
@@ -120,17 +153,71 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     });
   }, [navigation, route]);
 
-  console.log(
-    '$$$$$$$$$$$$$$ in reminders  navigator,',
-    'notificationsAlertCount:',
-    notificationsAlertCount,
-    'serviceMeasuresAlertCount:',
-    serviceMeasuresAlertCount,
-    'ltpLoansAlertCount: ',
-    ltpLoansAlertCount,
-    'odisAlertCount:',
-    odisAlertCount
-  );
+  useEffect(() => {
+    if (showingDemoApp) {
+      const notifiableCalibrationAlertsCount =
+        (calibrationExpiryCountsObj &&
+          calibrationExpiryCountsObj.redCount &&
+          calibrationExpiryCountsObj.amberCount &&
+          calibrationExpiryCountsObj.redCount +
+            calibrationExpiryCountsObj.amberCount) ||
+        0;
+
+      //   console.log(
+      //     'in nav useeffect calibrationExpiryCountsObj',
+      //     calibrationExpiryCountsObj,
+      //     'calibrationAlertsCount',
+      //     notifiableCalibrationAlertsCount,
+      //     calibrationExpiryCountsObj.redCount,
+      //     calibrationExpiryCountsObj.amberCount
+      //   );
+
+      setNotificationsAlertCount(notifiableCalibrationAlertsCount);
+    }
+  }, [
+    calibrationExpiryCountsObj.redCount,
+    calibrationExpiryCountsObj.amberCount,
+  ]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      console.log(
+        'in nav useeffect serviceMeasuresCountsObj',
+        serviceMeasuresCountsObj.amberCount,
+        serviceMeasuresCountsObj.redCount
+      );
+      const notifiableServiceMeasureCount =
+        serviceMeasuresCountsObj &&
+        serviceMeasuresCountsObj.redCount &&
+        serviceMeasuresCountsObj.amberCount
+          ? serviceMeasuresCountsObj.amberCount +
+            serviceMeasuresCountsObj.redCount
+          : 0;
+
+      //   console.log(
+      //     'in nav useeffect serviceMeasuresCountsObj',
+      //     serviceMeasuresCountsObj,
+      //     'ServiceMeasureCount',
+      //     notifiableServiceMeasureCount,
+      //     serviceMeasuresCountsObj.redCount,
+      //     serviceMeasuresCountsObj.amberCount
+      //   );
+
+      setServiceMeasuresAlertCount(notifiableServiceMeasureCount);
+    }
+  }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
+
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in reminders  navigator,',
+  //     'notificationsAlertCount:',
+  //     notificationsAlertCount,
+  //     'serviceMeasuresAlertCount:',
+  //     serviceMeasuresAlertCount,
+  //     'ltpLoansAlertCount: ',
+  //     ltpLoansAlertCount,
+  //     'odisAlertCount:',
+  //     odisAlertCount
+  //   );
 
   return (
     <RemindersTabs.Navigator //iOS
@@ -171,9 +258,17 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
-          tabBarBadge: notificationsAlertCount ? '' : null,
+          tabBarBadge: notificationsAlertCount ? notificationsAlertCount : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeAlertColor,
+            backgroundColor:
+              calibrationExpiryCountsObj &&
+              calibrationExpiryCountsObj.redCount &&
+              calibrationExpiryCountsObj.redCount > 0
+                ? Colors.vwgWarmRed
+                : calibrationExpiryCountsObj.amberCount &&
+                  calibrationExpiryCountsObj.amberCount > 0
+                ? Colors.vwgWarmOrange
+                : Colors.vwgMintGreen,
           },
         }}
       />
@@ -184,9 +279,16 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='checkbox' size={size} />
           ),
-          tabBarBadge: serviceMeasuresAlertCount ? '' : null,
+          tabBarBadge: serviceMeasuresAlertCount
+            ? serviceMeasuresAlertCount
+            : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeAlertColor,
+            backgroundColor:
+              serviceMeasuresCountsObj &&
+              serviceMeasuresCountsObj.redCount &&
+              serviceMeasuresCountsObj.redCount > 0
+                ? Colors.vwgWarmRed
+                : Colors.vwgWarmOrange,
           },
         }}
       />

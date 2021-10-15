@@ -1,16 +1,20 @@
 // import { Types } from '../actions/calibrationExpiry';
 import Types from '../constants/Types';
+import { getCalibrationExpiryCountsObj } from '../helpers/calibrationExpiry';
+
 const INITIAL_STATE = {
   calibrationExpiryItems: [],
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  calibrationExpiryCounts: null,
 };
 
 export default function calibrationExpiry(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
+
   switch (action.type) {
     case Types.GET_CALIBRATION_EXPIRY_START: {
       return {
@@ -24,12 +28,17 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
     case Types.GET_CALIBRATION_EXPIRY_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
+      const calibrationExpiryItemsArr =
+        (action.payload && action.payload.items && action.payload.items) || [];
 
       return {
         ...state,
         // newsItems: [],
-        calibrationExpiryItems:
-          (action.payload.items && action.payload.items) || [],
+        calibrationExpiryItems: calibrationExpiryItemsArr,
+        calibrationExpiryCounts: getCalibrationExpiryCountsObj(
+          calibrationExpiryItemsArr
+        ),
+
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -43,6 +52,7 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
       return {
         ...state,
         calibrationExpiryItems: [],
+        calibrationExpiryCounts: null,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
