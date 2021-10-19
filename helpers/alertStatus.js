@@ -4,7 +4,7 @@ import {
   setBadgeCountAsync,
   resetBadgeCountAsync,
   incrementBadgeCountAsync,
-} from './setAppBadge';
+} from '../helpers/appBadge';
 import { checkDisplayAge, checkDisplayAges } from './checkDisplayHistory';
 import getOdisAlertCount from './getOdisAlertCount';
 import {
@@ -17,7 +17,25 @@ import ltpLoansDummyData from '../dummyData/ltpLoansDummyData';
 import newsDummyData from '../dummyData/newsDummyData';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 
-const countUnseenItems = (scope, items, displayTimestamp) => {
+export const countNotifiableItems = () => {
+  let serviceMeasuresCountsObj =
+    store.getState().serviceMeasures.serviceMeasuresCounts;
+
+  console.log('in countNotifiableItems', serviceMeasuresCountsObj);
+  if (
+    serviceMeasuresCountsObj &&
+    serviceMeasuresCountsObj.redCount &&
+    serviceMeasuresCountsObj.redCount > 0
+  ) {
+    console.log(
+      'in countNotifiableItems >0',
+      serviceMeasuresCountsObj.redCount
+    );
+    setBadgeCountAsync(44);
+  }
+};
+
+export const countUnseenItems = (scope, items, displayTimestamp) => {
   //   console.log(
   //     'in countUnseenItems for',
   //     scope,
@@ -38,7 +56,7 @@ const countUnseenItems = (scope, items, displayTimestamp) => {
   }
 };
 
-const checkUnseenItems = (scope) => {
+export const checkUnseenItems = (scope) => {
   const requestedDemoData = store.getState().user.requestedDemoData;
   //   console.log('in checkUnseenItems, scope is', scope);
   switch (scope) {
@@ -128,5 +146,3 @@ const checkUnseenItems = (scope) => {
     }
   }
 };
-
-export default checkUnseenItems;

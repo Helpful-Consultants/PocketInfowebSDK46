@@ -3,9 +3,16 @@ import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
 import { getServiceMeasuresCountsObj } from '../helpers/serviceMeasures';
 
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   serviceMeasuresItems: [],
-  serviceMeasuresCounts: null,
+  serviceMeasuresCounts: defaultCounts,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -117,6 +124,7 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       return {
         ...state,
         serviceMeasuresItems: [],
+        serviceMeasuresCounts: defaultCounts,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

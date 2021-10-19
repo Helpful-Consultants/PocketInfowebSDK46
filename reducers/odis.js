@@ -65,15 +65,15 @@ export default function odis(state = INITIAL_STATE, action) {
           ? action.payload.userBrand
           : null;
 
-      console.log(
-        'GET_ODIS_SUCCESS from API payload brand',
-        action.payload &&
-          action.payload &&
-          action.payload.userBrand &&
-          action.payload.userBrand,
-        'userBrand variable is ',
-        userBrand
-      );
+      //   console.log(
+      //     'GET_ODIS_SUCCESS from API payload brand',
+      //     action.payload &&
+      //       action.payload &&
+      //       action.payload.userBrand &&
+      //       action.payload.userBrand,
+      //     'userBrand variable is ',
+      //     userBrand
+      //   );
 
       let odisDataObj = {};
       let endPointChangedObj = {};
@@ -92,7 +92,7 @@ export default function odis(state = INITIAL_STATE, action) {
         // console.log('newDataObjArr[3]', newDataObjArr[3]);
 
         newDataObjArr.map((item) => {
-          console.log('building newDataObjArr', item && item.brandCode);
+          //   console.log('building newDataObjArr', item && item.brandCode);
           let brandCode =
             item && item.brandCode ? item.brandCode.toLowerCase() : null;
 

@@ -13,7 +13,7 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
-import checkUnseenItems from '../helpers/alertStatus';
+import { checkUnseenItems } from '../helpers/alertStatus';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 
@@ -81,10 +81,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     (state) => state.ltpLoans.ltpLoansCounts
   );
   //   const serviceMeasuresRedCount = useSelector(
-  //     (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
+  //     (state) => state.serviceMeasures.serviceMeasuresCountsObj.redCount
   //   );
   //   const serviceMeasuresAmberCount = useSelector(
-  //     (state) => state.serviceMeasures.serviceMeasuresCounts.amberCount
+  //     (state) => state.serviceMeasures.serviceMeasuresCountsObj.amberCount
   //   );
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
   const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
@@ -96,8 +96,8 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   useEffect(() => {
     // console.log(
-    //   'in navvvvvvvv calibrationExpiryCountsObj',
-    //   calibrationExpiryCountsObj
+    //   'in navvvvvvvv calibrationExpiryCounts',
+    //   calibrationExpiryCounts
     // );
     // const notifiableCalibrationAlertsCount =
     //   (calibrationExpiryCountsObj &&
@@ -109,8 +109,8 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
     // console.log(
     //   'in navvvvvvvv useEffect',
-    //   //   'calibrationExpiryCountsObj',
-    //   //   calibrationExpiryCountsObj,
+    //   //   'calibrationExpiryCounts',
+    //   //   calibrationExpiryCounts,
     //   'serviceMeasuresCountsObj',
     //   serviceMeasuresCountsObj,
     //   'calibrationAlertsCount',
@@ -167,8 +167,8 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         0;
 
       //   console.log(
-      //     'in nav useeffect calibrationExpiryCountsObj',
-      //     calibrationExpiryCountsObj,
+      //     'in nav useeffect calibrationExpiryCounts',
+      //     calibrationExpiryCounts,
       //     'calibrationAlertsCount',
       //     notifiableCalibrationAlertsCount,
       //     calibrationExpiryCountsObj.redCount,
@@ -186,8 +186,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     if (showingDemoApp) {
       console.log(
         'in nav useEffect serviceMeasuresCountsObj',
-        serviceMeasuresCountsObj.amberCount,
-        serviceMeasuresCountsObj.redCount
+        serviceMeasuresCountsObj && serviceMeasuresCountsObj
       );
       const tempNotifiableServiceMeasureCount =
         serviceMeasuresCountsObj &&
@@ -210,6 +209,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
       setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
     }
+    //   }, []);
   }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
 
   useEffect(() => {

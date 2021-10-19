@@ -123,7 +123,7 @@ export default function OdisVersions(props) {
   };
 
   const getOdisForBrands = (itemsObj) => {
-    console.log('getOdisForBrands', userBrand && userBrand);
+    // console.log('getOdisForBrands', userBrand && userBrand);
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');

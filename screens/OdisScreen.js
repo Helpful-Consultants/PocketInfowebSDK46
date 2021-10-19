@@ -40,7 +40,7 @@ export default OdisScreen = (props) => {
     dispatch(setOdisDisplayTimestamp());
   };
 
-  console.log('OdisScreen,userBrand:', userBrand, odisObj);
+  //   console.log('OdisScreen,userBrand:', userBrand, odisObj);
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
   //   const { navigation } = props;

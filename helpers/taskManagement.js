@@ -1,6 +1,6 @@
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import { store } from './store';
+import { store } from '../helpers/store';
 import {
   //   getBackgroundDataRequest,
   getBackgroundDataStart,

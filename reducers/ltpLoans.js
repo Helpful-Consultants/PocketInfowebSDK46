@@ -2,9 +2,16 @@ import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
 import { getLtpLoansCountsObj } from '../helpers/ltpLoans';
 
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   ltpLoansItems: [],
-  ltpLoansCounts: null,
+  ltpLoansCounts: defaultCounts,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -87,6 +94,7 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
       return {
         ...state,
         ltpLoansItems: [],
+        ltpLoansCounts: defaultCounts,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

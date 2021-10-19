@@ -1,4 +1,10 @@
 import { getDateDifference } from '../helpers/dates';
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
 
 export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
   let redCount = 0;
@@ -38,6 +44,11 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
     greenCount,
     totalCount: redCount + amberCount + greenCount,
   };
+
+  console.log(
+    'calibrationExpiryCount in getCalibrationExpiryCountsObj',
+    calibrationExpiryCountObj
+  );
 
   return calibrationExpiryCountObj;
 

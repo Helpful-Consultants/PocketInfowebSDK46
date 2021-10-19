@@ -29,7 +29,7 @@ export default NotificationsScreen = (props) => {
   const calibrationExpiryItems = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryItems
   );
-  const calibrationExpiryCountsObj = useSelector(
+  const calibrationExpiryCounts = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryCounts
   );
   const serviceMeasuresCountsObj = useSelector(
@@ -255,13 +255,13 @@ export default NotificationsScreen = (props) => {
 
   //   console.log(
   //     'rendering notifications',
-  //     calibrationExpiryCountsObj,
-  //     'calibrationExpiryCountsObj.redCount',
-  //     calibrationExpiryCountsObj.redCount,
-  //     'calibrationExpiryCountsObj.amberCount',
-  //     calibrationExpiryCountsObj.amberCount,
-  //     'calibrationExpiryCountsObj.greenCount',
-  //     calibrationExpiryCountsObj.greenCount
+  //     calibrationExpiryCounts,
+  //     'calibrationExpiryCounts.redCount',
+  //     calibrationExpiryCounts.redCount,
+  //     'calibrationExpiryCounts.amberCount',
+  //     calibrationExpiryCounts.amberCount,
+  //     'calibrationExpiryCounts.greenCount',
+  //     calibrationExpiryCounts.greenCount
   //   );
 
   return (
@@ -375,7 +375,8 @@ export default NotificationsScreen = (props) => {
                   })
                 }
               >
-                {serviceMeasuresCountsObj.redCount &&
+                {serviceMeasuresCountsObj &&
+                serviceMeasuresCountsObj.redCount &&
                 serviceMeasuresCountsObj.redCount > 0 ? (
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
@@ -394,14 +395,17 @@ export default NotificationsScreen = (props) => {
                       >
                         {` urgent `}
 
-                        {serviceMeasuresCountsObj.redCount > 1
+                        {serviceMeasuresCountsObj &&
+                        serviceMeasuresCountsObj.redCount &&
+                        serviceMeasuresCountsObj.redCount > 1
                           ? `Service Measures  `
                           : `Service Measure  `}
                       </Text>
                     </Text>
                     <Ionicons name='open-outline' size={20} />
                   </View>
-                ) : serviceMeasuresCountsObj.amberCount &&
+                ) : serviceMeasuresCountsObj &&
+                  serviceMeasuresCountsObj.amberCount &&
                   serviceMeasuresCountsObj.amberCount > 0 ? (
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
@@ -419,7 +423,9 @@ export default NotificationsScreen = (props) => {
                       >
                         {` expiring `}
 
-                        {serviceMeasuresCountsObj.amberCount > 1
+                        {serviceMeasuresCountsObj &&
+                        serviceMeasuresCountsObj.amberCount &&
+                        serviceMeasuresCountsObj.amberCount > 1
                           ? `Service Measures  `
                           : `Service Measure `}
                       </Text>
@@ -463,7 +469,7 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            {calibrationExpiryCountsObj.totalCount > 0 ? (
+            {calibrationExpiryCounts.totalCount > 0 ? (
               <TouchableOpacity
                 onPress={() => {
                   setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
@@ -474,19 +480,19 @@ export default NotificationsScreen = (props) => {
                     name='timer'
                     size={20}
                     color={
-                      calibrationExpiryCountsObj.redCount &&
-                      calibrationExpiryCountsObj.redCount > 0
+                      calibrationExpiryCounts.redCount &&
+                      calibrationExpiryCounts.redCount > 0
                         ? Colors.vwgBadgeSevereAlertColor
-                        : calibrationExpiryCountsObj.amberCount &&
-                          calibrationExpiryCountsObj.amberCount > 0
+                        : calibrationExpiryCounts.amberCount &&
+                          calibrationExpiryCounts.amberCount > 0
                         ? Colors.vwgWarmOrange
                         : Colors.vwgBadgeOKColor
                     }
                   />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {calibrationExpiryCountsObj.totalCount > 1
+                    {calibrationExpiryCounts.totalCount > 1
                       ? ` Active Calibration Expiry Actions  `
-                      : calibrationExpiryCountsObj.totalCount > 0
+                      : calibrationExpiryCounts.totalCount > 0
                       ? ` Active Calibration Expiry Action  `
                       : ' No Calibration Expiry Actions  '}
                   </Text>
@@ -501,18 +507,18 @@ export default NotificationsScreen = (props) => {
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCountsObj.totalCount > 1
-                    ? ` ${calibrationExpiryCountsObj.totalCount} Calibration Expiry Actions `
-                    : calibrationExpiryCountsObj.totalCount > 0
-                    ? ` ${calibrationExpiryCountsObj.totalCount} Calibration Expiry Action  `
+                  {calibrationExpiryCounts.totalCount > 1
+                    ? ` ${calibrationExpiryCounts.totalCount} Calibration Expiry Actions `
+                    : calibrationExpiryCounts.totalCount > 0
+                    ? ` ${calibrationExpiryCounts.totalCount} Calibration Expiry Action  `
                     : ' No Calibration Expiry Actions  '}
                 </Text>
               </View>
             )}
             {isOpenCalibrationExpiry ? (
-              calibrationExpiryCountsObj.totalCount > 0 ? (
+              calibrationExpiryCounts.totalCount > 0 ? (
                 <View>
-                  {calibrationExpiryCountsObj.redCount > 0 ? (
+                  {calibrationExpiryCounts.redCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -530,13 +536,13 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCountsObj.redCount === 1
-                          ? `  ${calibrationExpiryCountsObj.redCount} item's calibration has expired.`
-                          : `  ${calibrationExpiryCountsObj.redCount} items' calibrations have expired.`}
+                        {calibrationExpiryCounts.redCount === 1
+                          ? `  ${calibrationExpiryCounts.redCount} item's calibration has expired.`
+                          : `  ${calibrationExpiryCounts.redCount} items' calibrations have expired.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryCountsObj.amberCount > 0 ? (
+                  {calibrationExpiryCounts.amberCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -554,13 +560,13 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCountsObj.amberCount === 1
-                          ? `  ${calibrationExpiryCountsObj.amberCount} item's calibration expires within 30 days.`
-                          : `  ${calibrationExpiryCountsObj.amberCount} items' calibrations expire within 30 days.`}
+                        {calibrationExpiryCounts.amberCount === 1
+                          ? `  ${calibrationExpiryCounts.amberCount} item's calibration expires within 30 days.`
+                          : `  ${calibrationExpiryCounts.amberCount} items' calibrations expire within 30 days.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryCountsObj.greenCount > 0 ? (
+                  {calibrationExpiryCounts.greenCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
@@ -578,9 +584,9 @@ export default NotificationsScreen = (props) => {
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCountsObj.greenCount === 1
-                          ? `  ${calibrationExpiryCountsObj.greenCount} item's calibration expires within 60 days.`
-                          : `  ${calibrationExpiryCountsObj.greenCount} items' calibrations expire within 60 days.`}
+                        {calibrationExpiryCounts.greenCount === 1
+                          ? `  ${calibrationExpiryCounts.greenCount} item's calibration expires within 60 days.`
+                          : `  ${calibrationExpiryCounts.greenCount} items' calibrations expire within 60 days.`}
                       </Text>
                     </View>
                   ) : null}

@@ -13,7 +13,7 @@ import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
 import OdisScreen from '../screens/OdisScreen';
-import checkUnseenItems from '../helpers/alertStatus';
+import { checkUnseenItems } from '../helpers/alertStatus';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 

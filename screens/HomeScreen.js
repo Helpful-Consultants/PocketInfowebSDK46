@@ -20,7 +20,7 @@ import moment from 'moment';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
-import checkUnseenItems from '../helpers/alertStatus';
+import { countNotifiableItems, checkUnseenItems } from '../helpers/alertStatus';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
@@ -234,7 +234,7 @@ export default HomeScreen = (props) => {
     getLtpItems();
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
-  const notificationLimit = 168;
+  //   const notificationLimit = 168;
   const now = moment();
 
   //   console.log('IN HOME !!!!! 3');
@@ -462,6 +462,7 @@ export default HomeScreen = (props) => {
         setShouldCheckAppVersion(true);
         checkAppUpdates();
       }
+      countNotifiableItems();
     }, [])
   );
 
@@ -574,8 +575,8 @@ export default HomeScreen = (props) => {
         0;
 
       //   console.log(
-      //     'in nav useeffect calibrationExpiryCountsObj',
-      //     calibrationExpiryCountsObj,
+      //     'in nav useeffect calibrationExpiryCounts',
+      //     calibrationExpiryCounts,
       //     'calibrationAlertsCount',
       //     notifiableCalibrationAlertsCount,
       //     calibrationExpiryCountsObj.redCount,
@@ -584,17 +585,14 @@ export default HomeScreen = (props) => {
 
       setNotificationsAlertCount(notifiableCalibrationAlertsCount);
     }
-  }, [
-    calibrationExpiryCountsObj.redCount,
-    calibrationExpiryCountsObj.amberCount,
-  ]);
+  }, []);
+  //  }, [calibrationExpiryCountsObj.redCount, calibrationExpiryCountsObj.amberCount]);
 
   useEffect(() => {
     if (showingDemoApp) {
       console.log(
-        'in nav useeffect serviceMeasuresCountsObj',
-        serviceMeasuresCountsObj.amberCount,
-        serviceMeasuresCountsObj.redCount
+        'in nav useEffect serviceMeasuresCountsObj',
+        serviceMeasuresCountsObj && serviceMeasuresCountsObj
       );
       const tempNotifiableServiceMeasureCount =
         serviceMeasuresCountsObj &&
@@ -617,6 +615,7 @@ export default HomeScreen = (props) => {
 
       setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
     }
+    //   }, []);
   }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
 
   useEffect(() => {
@@ -648,6 +647,7 @@ export default HomeScreen = (props) => {
 
       setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
     }
+    //   }, []);
   }, [ltpLoansCountsObj.amberCount, ltpLoansCountsObj.redCount]);
 
   //   console.log(

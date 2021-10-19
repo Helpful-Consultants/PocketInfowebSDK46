@@ -2,7 +2,7 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
 import Tasks from '../constants/Tasks';
-import { store } from './helpers/store';
+import { store } from './store';
 
 console.log('in appbadgeStatus', store);
 
@@ -21,7 +21,7 @@ export const getBadgeCountAsync = async () => {
   }
 };
 
-const incrementBadgeCountAsync = async () => {
+export const incrementBadgeCountAsync = async () => {
   // set notifications badge count
   try {
     const count = await Notifications.getBadgeCountAsync();

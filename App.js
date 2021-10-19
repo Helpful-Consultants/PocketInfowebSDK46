@@ -32,7 +32,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 
-import checkUnseenItems from './helpers/alertStatus';
+// import { countNotifiableItems } from './helpers/alertStatus';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
@@ -228,6 +228,8 @@ export default function App(props) {
       console.log('unregisterTaskAsync() failed:', err);
     }
   }
+
+  //   countNotifiableItems();
 
   //   unregisterBackgroundFetch('getDateAndTime');
   //   const dispatch = useDispatch();

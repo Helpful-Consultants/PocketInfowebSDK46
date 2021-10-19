@@ -2,13 +2,20 @@
 import Types from '../constants/Types';
 import { getCalibrationExpiryCountsObj } from '../helpers/calibrationExpiry';
 
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   calibrationExpiryItems: [],
+  calibrationExpiryCounts: defaultCounts,
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
-  calibrationExpiryCounts: null,
 };
 
 export default function calibrationExpiry(state = INITIAL_STATE, action) {
@@ -38,7 +45,6 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
         calibrationExpiryCounts: getCalibrationExpiryCountsObj(
           calibrationExpiryItemsArr
         ),
-
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -52,7 +58,7 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
       return {
         ...state,
         calibrationExpiryItems: [],
-        calibrationExpiryCounts: null,
+        calibrationExpiryCounts: defaultCounts,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
