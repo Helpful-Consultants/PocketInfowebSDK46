@@ -12,12 +12,16 @@ const vwgAndroidStatusColor = '#196F99';
 const vwgInfoBarColor = '#196F99';
 const vwgAlertColor = '#e2a933';
 const vwgBadgeAlertColor = '#e2a933';
+const vwgBadgeOKColor = '#95a844';
+const vwgBadgeSevereAlertColor = '#d13032';
 
 export default {
   tintColor,
   iosBlue: 'rgba(0, 122, 125, 1)',
   vwgAlertColor: vwgAlertColor,
+  vwgBadgeOKColor: vwgBadgeOKColor,
   vwgBadgeAlertColor: vwgBadgeAlertColor,
+  vwgBadgeSevereAlertColor: vwgBadgeSevereAlertColor,
   vwgLink: vwgLinkColor,
   vwgHeader: vwgHeaderColor,
   vwgAndroidNav: vwgAndroidNavColor,
