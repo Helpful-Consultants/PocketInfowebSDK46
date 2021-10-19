@@ -7,7 +7,7 @@ export default serviceMeasuresDummyData = [
     dateCreated: '13/10/2021 17:05:08',
     lastUpdated: '25/11/2020 14:14:08',
     updatedBy: 'Lyndon Evans',
-    expiryDate: '16/10/2021',
+    expiryDate: '26/10/2021',
     startDate: '19/10/2021',
     actionSteps: 'YNNNNNNN',
     actionText: '',

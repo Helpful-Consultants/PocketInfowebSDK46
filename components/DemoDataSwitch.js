@@ -17,6 +17,7 @@ export default DemoDataSwitch = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userBrand = useSelector((state) => state.user.userBrand);
   const dispatch = useDispatch();
   const [switchStatus, setSwitchStatus] = useState(false);
   const switchedOffText =
@@ -50,7 +51,7 @@ export default DemoDataSwitch = (props) => {
       dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
       dispatch(getNewsRequest(userApiFetchParamsObj));
       dispatch(getLtpLoansRequest(userApiFetchParamsObj));
-      dispatch(getOdisRequest(userApiFetchParamsObj));
+      dispatch(getOdisRequest({ userBrand: userBrand }));
       dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
     }
 

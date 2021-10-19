@@ -5,13 +5,23 @@ import Types from '../constants/Types';
 import { InfoTypes } from '../constants/InfoTypes';
 import shouldWeUseDummyData from '../helpers/checkDummyData';
 import odisDummyData from '../dummyData/odisDummyData.js';
+import { BaseNavigationContainer } from '@react-navigation/native';
 export const showingDemoData = (state) => state.user.requestedDemoData;
+// export const userBrand = 'pup';
 
-function* getOdis() {
-  //   console.log('in saga, getOdis');
+function* getOdis({ payload }) {
+  //   console.log(
+  //     'in saga get odis, payload userBrand',
+  //     payload && payload.userBrand && payload.userBrand
+  //   );
   yield put(actions.getOdisStart());
   let showingDummyData = yield select(showingDemoData); // <-- get getShowingDemoData
   let showThisDummyData = yield shouldWeUseDummyData(InfoTypes.ODIS);
+  //   console.log(
+  //     '*************in saga, showingDummyData ',
+  //     showingDummyData && showingDummyData
+  //   );
+
   if (showingDummyData && showThisDummyData) {
     // console.log(
     //   'in odis saga showingDummyData is the way',
@@ -21,6 +31,7 @@ function* getOdis() {
       actions.getOdisSuccess({
         items: odisDummyData[0].brandVersions,
         statusCode: 200,
+        userBrand: payload.userBrand ? payload.userBrand : null,
       })
     );
   } else {
@@ -43,6 +54,8 @@ function* getOdis() {
         yield put(
           actions.getOdisSuccess({
             items: result.data[0].brandVersions,
+            statusCode: 200,
+            userBrand: payload.userBrand ? payload.userBrand : null,
           })
         );
       } else {

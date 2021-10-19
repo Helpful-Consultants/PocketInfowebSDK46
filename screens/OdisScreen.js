@@ -32,7 +32,7 @@ export default OdisScreen = (props) => {
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
 
   const getItems = useCallback(
-    async () => dispatch(getOdisRequest()),
+    async () => dispatch(getOdisRequest({ userBrand: userBrand })),
     [odisObj]
   );
   const storeDisplayTimestampAsync = async () => {
@@ -40,6 +40,7 @@ export default OdisScreen = (props) => {
     dispatch(setOdisDisplayTimestamp());
   };
 
+  console.log('OdisScreen,userBrand:', userBrand, odisObj);
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
   //   const { navigation } = props;
@@ -85,7 +86,7 @@ export default OdisScreen = (props) => {
   );
 
   //   if (odisObj) {
-  //     console.log('in odis screen,odisObj');
+  //     console.log('in odis screen,odisObj', odisObj);
   //   } else {
   //     console.log('in odis screen, no odisObj');
   //   }

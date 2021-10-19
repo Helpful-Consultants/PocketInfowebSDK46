@@ -1,16 +1,17 @@
 import React from 'react';
 import { useWindowDimensions, ScrollView, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import vwLogo from '../assets/images/vw-logo.png';
 import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
-
-const getDisplayDate = (rawDate) => {
-  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
-};
+import {
+  getDateDifference,
+  getDisplayDateFromDDMMYYYHHMMSS,
+  getDisplayDateTimeFromDDMMYYYHHMMSS,
+} from '../helpers/dates';
 
 export default function OdisVersions(props) {
   //   console.log('props fetchTime', props.fetchTime);
@@ -43,6 +44,16 @@ export default function OdisVersions(props) {
     // if (brand === 'sk') {
     // console.log('getOdisForBrand', item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
+    // const parsedUpdatedDate =
+    //   (item.lastUpdated &&
+    //     parse(item.lastUpdated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+    //   null;
+    // console.log(
+    //   'parsedUpdatedDate =',
+    //   parsedUpdatedDate,
+    //   'from',
+    //   item.lastUpdated
+    // );
     return (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
@@ -67,7 +78,6 @@ export default function OdisVersions(props) {
               </Text>
             )}
           </Text>
-
           {item.previousMainFeatureVersion &&
           item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
             <View style={{ flexDirection: 'column' }}>
@@ -83,7 +93,6 @@ export default function OdisVersions(props) {
               {`Main Feature: ${item.mainFeatureVersion}`}
             </Text>
           )}
-
           <Text style={baseStyles.textOdisVersion}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
@@ -99,6 +108,14 @@ export default function OdisVersions(props) {
               </Text>
             )}
           </Text>
+
+          {item.lastUpdated && item.lastUpdated.length > 0 ? (
+            <Text style={baseStyles.textOdisVersionSmaller}>
+              {`Last changed ${getDisplayDateTimeFromDDMMYYYHHMMSS(
+                item.lastUpdated
+              )}`}
+            </Text>
+          ) : null}
         </View>
       </View>
     );
@@ -106,6 +123,7 @@ export default function OdisVersions(props) {
   };
 
   const getOdisForBrands = (itemsObj) => {
+    console.log('getOdisForBrands', userBrand && userBrand);
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');

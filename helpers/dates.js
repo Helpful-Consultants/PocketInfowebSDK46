@@ -10,9 +10,17 @@ export const getDisplayDateFromDDMMYYY = (rawDate) => {
 };
 export const getDisplayDateFromDDMMYYYHHMMSS = (rawDate) => {
   const parsedDate =
-    (rawDate && parse(rawDate, 'dd/MM/yyyy', new Date())) || null;
+    (rawDate && parse(rawDate, 'dd/MM/yyyy HH:mm:ss', new Date())) || null;
   //   console.log('rrrrrrrrrrrrrrrawDate', rawDate, parsedDate);
   const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy');
+  //   console.log('ddddddddddddddisplayDate', displayDate);
+  return displayDate;
+};
+export const getDisplayDateTimeFromDDMMYYYHHMMSS = (rawDate) => {
+  const parsedDate =
+    (rawDate && parse(rawDate, 'dd/MM/yyyy HH:mm:ss', new Date())) || null;
+  //   console.log('rrrrrrrrrrrrrrrawDate', rawDate, parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy hh:mm a');
   //   console.log('ddddddddddddddisplayDate', displayDate);
   return displayDate;
 };
