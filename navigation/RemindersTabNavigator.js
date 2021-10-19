@@ -77,6 +77,9 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const serviceMeasuresCountsObj = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresCounts
   );
+  const ltpLoansCountsObj = useSelector(
+    (state) => state.ltpLoans.ltpLoansCounts
+  );
   //   const serviceMeasuresRedCount = useSelector(
   //     (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
   //   );
@@ -96,25 +99,25 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     //   'in navvvvvvvv calibrationExpiryCountsObj',
     //   calibrationExpiryCountsObj
     // );
-    const notifiableCalibrationAlertsCount =
-      (calibrationExpiryCountsObj &&
-        calibrationExpiryCountsObj.redCount &&
-        calibrationExpiryCountsObj.amberCount &&
-        calibrationExpiryCountsObj.redCount +
-          calibrationExpiryCountsObj.amberCount) ||
-      0;
+    // const notifiableCalibrationAlertsCount =
+    //   (calibrationExpiryCountsObj &&
+    //     calibrationExpiryCountsObj.redCount &&
+    //     calibrationExpiryCountsObj.amberCount &&
+    //     calibrationExpiryCountsObj.redCount +
+    //       calibrationExpiryCountsObj.amberCount) ||
+    //   0;
 
-    console.log(
-      'in navvvvvvvv useEffect',
-      //   'calibrationExpiryCountsObj',
-      //   calibrationExpiryCountsObj,
-      'serviceMeasuresCountsObj',
-      serviceMeasuresCountsObj,
-      'calibrationAlertsCount',
-      notifiableCalibrationAlertsCount
-    );
+    // console.log(
+    //   'in navvvvvvvv useEffect',
+    //   //   'calibrationExpiryCountsObj',
+    //   //   calibrationExpiryCountsObj,
+    //   'serviceMeasuresCountsObj',
+    //   serviceMeasuresCountsObj,
+    //   'calibrationAlertsCount',
+    //   notifiableCalibrationAlertsCount
+    // );
     if (showingDemoApp) {
-      setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
+      //   setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
       //   setNotificationsAlertCount(notifiableCalibrationAlertsCount);
       setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
     }
@@ -186,10 +189,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         serviceMeasuresCountsObj.amberCount,
         serviceMeasuresCountsObj.redCount
       );
-      const notifiableServiceMeasureCount =
+      const tempNotifiableServiceMeasureCount =
         serviceMeasuresCountsObj &&
-        serviceMeasuresCountsObj.redCount &&
-        serviceMeasuresCountsObj.amberCount
+        (serviceMeasuresCountsObj.redCount ||
+          serviceMeasuresCountsObj.redCount === 0) &&
+        (serviceMeasuresCountsObj.amberCount ||
+          serviceMeasuresCountsObj.amberCount === 0)
           ? serviceMeasuresCountsObj.amberCount +
             serviceMeasuresCountsObj.redCount
           : 0;
@@ -203,21 +208,58 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //     serviceMeasuresCountsObj.amberCount
       //   );
 
-      setServiceMeasuresAlertCount(notifiableServiceMeasureCount);
+      setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
     }
   }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
 
-  //   console.log(
-  //     '$$$$$$$$$$$$$$ in reminders  navigator,',
-  //     'notificationsAlertCount:',
-  //     notificationsAlertCount,
-  //     'serviceMeasuresAlertCount:',
-  //     serviceMeasuresAlertCount,
-  //     'ltpLoansAlertCount: ',
-  //     ltpLoansAlertCount,
-  //     'odisAlertCount:',
-  //     odisAlertCount
-  //   );
+  useEffect(() => {
+    if (showingDemoApp) {
+      console.log(
+        'in nav useeffect ltpLoansCountsObj',
+        ' ltpLoansCountsObj.redCount',
+        ltpLoansCountsObj.redCount,
+        'ltpLoansCountsObj.amberCount',
+        ltpLoansCountsObj.amberCount
+      );
+      const tempNotifiableLtpLoansCount =
+        ltpLoansCountsObj &&
+        (ltpLoansCountsObj.redCount || ltpLoansCountsObj.redCount === 0) &&
+        (ltpLoansCountsObj.amberCount || ltpLoansCountsObj.amberCount === 0)
+          ? ltpLoansCountsObj.amberCount + ltpLoansCountsObj.redCount
+          : 0;
+
+      //   const tempNotifiableLtpLoansCount = 5;
+
+      console.log(
+        'in nav useeffect ltpLoansCountsObj',
+        ltpLoansCountsObj,
+        'LtpLoansCount',
+        tempNotifiableLtpLoansCount,
+        ltpLoansCountsObj.redCount,
+        ltpLoansCountsObj.amberCount
+      );
+
+      setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
+    }
+  }, [ltpLoansCountsObj.amberCount, ltpLoansCountsObj.redCount]);
+
+  console.log(
+    '$$$$$$$$$$$$$$ in reminders  navigator,',
+    'notificationsAlertCount:',
+    notificationsAlertCount,
+    'serviceMeasuresAlertCount:',
+    serviceMeasuresAlertCount,
+    serviceMeasuresCountsObj,
+    serviceMeasuresCountsObj.redCount,
+    serviceMeasuresCountsObj.amberCount,
+    'ltpLoansAlertCount: ',
+    ltpLoansAlertCount,
+    ltpLoansCountsObj,
+    ltpLoansCountsObj.redCount,
+    ltpLoansCountsObj.amberCount,
+    'odisAlertCount:',
+    odisAlertCount
+  );
 
   return (
     <RemindersTabs.Navigator //iOS
@@ -264,7 +306,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               calibrationExpiryCountsObj &&
               calibrationExpiryCountsObj.redCount &&
               calibrationExpiryCountsObj.redCount > 0
-                ? Colors.vwgWarmRed
+                ? Colors.vwgBadgeSevereAlertColor
                 : calibrationExpiryCountsObj.amberCount &&
                   calibrationExpiryCountsObj.amberCount > 0
                 ? Colors.vwgWarmOrange
@@ -287,21 +329,26 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               serviceMeasuresCountsObj &&
               serviceMeasuresCountsObj.redCount &&
               serviceMeasuresCountsObj.redCount > 0
-                ? Colors.vwgWarmRed
+                ? Colors.vwgBadgeSevereAlertColor
                 : Colors.vwgWarmOrange,
           },
         }}
       />
       <RemindersTabs.Screen
-        name='All LTP Loans'
+        name='LTP Loans'
         component={LtpLoansScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='calendar' size={size} />
           ),
-          tabBarBadge: ltpLoansAlertCount ? '' : null,
+          tabBarBadge: ltpLoansAlertCount ? ltpLoansAlertCount : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeAlertColor,
+            backgroundColor:
+              ltpLoansCountsObj &&
+              ltpLoansCountsObj.redCount &&
+              ltpLoansCountsObj.redCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
           },
         }}
       />
