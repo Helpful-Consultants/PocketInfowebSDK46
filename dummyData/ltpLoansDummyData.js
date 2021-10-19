@@ -120,7 +120,7 @@ export default ltpLoansDummyData = [
     tools_id: '293',
     dealerContacts_id: '903',
     startDate: '02/10/2021',
-    endDateDue: '17/10/2021',
+    endDateDue: '18/10/2021',
     endDateActual: '',
     receivedBy: '',
     rcptCondition: '',
