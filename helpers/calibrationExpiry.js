@@ -36,7 +36,7 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
     redCount,
     amberCount,
     greenCount,
-    expiryCount: redCount + amberCount + greenCount,
+    totalCount: redCount + amberCount + greenCount,
   };
 
   return calibrationExpiryCountObj;

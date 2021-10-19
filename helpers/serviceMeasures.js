@@ -54,13 +54,13 @@ export const getServiceMeasuresCountsObj = (serviceMeasuresItems) => {
     redCount,
     amberCount,
     greenCount,
-    expiryCount: redCount + amberCount + greenCount,
+    totalCount: redCount + amberCount + greenCount,
   };
-  console.log(
-    '%%%%%% in getServiceMeasuresCountsObj; serviceMeasuresItems length',
-    serviceMeasuresItems.length,
-    serviceMeasuresCountsObj
-  );
+  //   console.log(
+  //     '%%%%%% in getServiceMeasuresCountsObj; serviceMeasuresItems length',
+  //     serviceMeasuresItems.length,
+  //     serviceMeasuresCountsObj
+  //   );
 
   return serviceMeasuresCountsObj;
 

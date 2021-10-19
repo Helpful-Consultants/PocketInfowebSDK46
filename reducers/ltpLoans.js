@@ -1,9 +1,10 @@
 import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
-import { getServiceMeasuresCountsObj } from '../helpers/serviceMeasures';
+import { getLtpLoansCountsObj } from '../helpers/ltpLoans';
 
 const INITIAL_STATE = {
   ltpLoansItems: [],
+  ltpLoansCounts: null,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -65,13 +66,14 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
     case Types.GET_LTP_LOANS_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
-
+      const filteredLtpLoansArr =
+        (action.payload.items && filterReturnedItems(action.payload.items)) ||
+        [];
       return {
         ...state,
         // newsItems: [],
-        ltpLoansItems:
-          (action.payload.items && filterReturnedItems(action.payload.items)) ||
-          [],
+        ltpLoansItems: filteredLtpLoansArr,
+        ltpLoansCounts: getLtpLoansCountsObj(filteredLtpLoansArr),
         isLoading: false,
         error: null,
         dataErrorUrl: null,
