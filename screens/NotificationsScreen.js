@@ -32,6 +32,9 @@ export default NotificationsScreen = (props) => {
   const calibrationExpiryCountsObj = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryCounts
   );
+  const serviceMeasuresCountsObj = useSelector(
+    (state) => state.serviceMeasures.serviceMeasuresCounts
+  );
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
@@ -372,36 +375,78 @@ export default NotificationsScreen = (props) => {
                   })
                 }
               >
-                <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons
-                    name='checkbox'
-                    size={20}
-                    color={Colors.vwgWarmOrange}
-                  />
-                  <Text style={baseStyles.textSectionRibbon}>
-                    {`  See your `}
-                    <Text
-                      style={{
-                        ...baseStyles.textSectionRibbon,
+                {serviceMeasuresCountsObj.redCount &&
+                serviceMeasuresCountsObj.redCount > 0 ? (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='checkbox'
+                      size={20}
+                      color={Colors.vwgBadgeSevereAlertColor}
+                    />
 
-                        fontFamily: 'the-sans-bold',
-                      }}
-                    >
-                      {serviceMeasuresItems.length > 1
-                        ? `${serviceMeasuresItems.length} Outstanding Service Measures `
-                        : serviceMeasuresItems.length > 0
-                        ? `Outstanding Service Measure `
-                        : ' No Outstanding Service Measures'}
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {`  See your`}
+                      <Text
+                        style={{
+                          ...baseStyles.textSectionRibbon,
+                          fontFamily: 'the-sans-bold',
+                        }}
+                      >
+                        {` urgent `}
+
+                        {serviceMeasuresCountsObj.redCount > 1
+                          ? `Service Measures  `
+                          : `Service Measure  `}
+                      </Text>
                     </Text>
-                  </Text>
-                  <Ionicons name='open-outline' size={20} />
-                </View>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                ) : serviceMeasuresCountsObj.amberCount &&
+                  serviceMeasuresCountsObj.amberCount > 0 ? (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='checkbox'
+                      size={20}
+                      color={Colors.vwgBadgeAlertColor}
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {`  See your`}
+                      <Text
+                        style={{
+                          ...baseStyles.textSectionRibbon,
+                          fontFamily: 'the-sans-bold',
+                        }}
+                      >
+                        {` expiring `}
+
+                        {serviceMeasuresCountsObj.amberCount > 1
+                          ? `Service Measures  `
+                          : `Service Measure `}
+                      </Text>
+                    </Text>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                ) : (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='checkbox'
+                      size={20}
+                      color={Colors.vwgBadgeOKColor}
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {serviceMeasuresItems.length > 1
+                        ? `  See your open Service Measures  `
+                        : `  See your open Service Measure `}
+                    </Text>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                )}
               </TouchableOpacity>
             ) : (
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
-                  {` No Outstanding Service Measures`}
+                  {` No expiring Service Measures`}
                 </Text>
               </View>
             )}
@@ -418,7 +463,7 @@ export default NotificationsScreen = (props) => {
           />
         ) : (
           <View>
-            {calibrationExpiryCountsObj.expiryCount > 0 ? (
+            {calibrationExpiryCountsObj.totalCount > 0 ? (
               <TouchableOpacity
                 onPress={() => {
                   setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
@@ -431,17 +476,17 @@ export default NotificationsScreen = (props) => {
                     color={
                       calibrationExpiryCountsObj.redCount &&
                       calibrationExpiryCountsObj.redCount > 0
-                        ? Colors.vwgWarmRed
+                        ? Colors.vwgBadgeSevereAlertColor
                         : calibrationExpiryCountsObj.amberCount &&
                           calibrationExpiryCountsObj.amberCount > 0
                         ? Colors.vwgWarmOrange
-                        : Colors.vwgMintGreen
+                        : Colors.vwgBadgeOKColor
                     }
                   />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {calibrationExpiryCountsObj.expiryCount > 1
+                    {calibrationExpiryCountsObj.totalCount > 1
                       ? ` Active Calibration Expiry Actions  `
-                      : calibrationExpiryCountsObj.expiryCount > 0
+                      : calibrationExpiryCountsObj.totalCount > 0
                       ? ` Active Calibration Expiry Action  `
                       : ' No Calibration Expiry Actions  '}
                   </Text>
@@ -456,16 +501,16 @@ export default NotificationsScreen = (props) => {
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCountsObj.expiryCount > 1
-                    ? ` ${calibrationExpiryCountsObj.expiryCount} Calibration Expiry Actions `
-                    : calibrationExpiryCountsObj.expiryCount > 0
-                    ? ` ${calibrationExpiryCountsObj.expiryCount} Calibration Expiry Action  `
+                  {calibrationExpiryCountsObj.totalCount > 1
+                    ? ` ${calibrationExpiryCountsObj.totalCount} Calibration Expiry Actions `
+                    : calibrationExpiryCountsObj.totalCount > 0
+                    ? ` ${calibrationExpiryCountsObj.totalCount} Calibration Expiry Action  `
                     : ' No Calibration Expiry Actions  '}
                 </Text>
               </View>
             )}
             {isOpenCalibrationExpiry ? (
-              calibrationExpiryCountsObj.expiryCount > 0 ? (
+              calibrationExpiryCountsObj.totalCount > 0 ? (
                 <View>
                   {calibrationExpiryCountsObj.redCount > 0 ? (
                     <View
@@ -481,7 +526,7 @@ export default NotificationsScreen = (props) => {
                         iconSize={RFPercentage(2.4)}
                         iconColor={
                           //item.status && item.status.toLowerCase() === 'c'
-                          Colors.vwgWarmRed
+                          Colors.vwgBadgeSevereAlertColor
                         }
                       />
                       <Text style={baseStyles.textLeftAligned}>
