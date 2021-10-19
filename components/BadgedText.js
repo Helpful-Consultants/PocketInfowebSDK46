@@ -43,7 +43,9 @@ const textBadgeRightMargin =
 //  badgeStyle={styles.badge}
 //               textStyle={styles.badgeText}
 export default function BadgedText(props) {
-  const { value, status, showBadge, text, showingDemoApp } = props;
+  console.log(props);
+  const { value, status, showBadge, text, showingDemoApp, showSevereAlert } =
+    props;
   const windowDim = useWindowDimensions();
   const baseStyles =
     windowDim &&
@@ -73,7 +75,7 @@ export default function BadgedText(props) {
           : styles.view
       }
     >
-      <Text style={baseStyles.textHomeGridCell}>{text}</Text>
+      <Text style={baseStyles.textHomeGridCell}>{` ${text}`}</Text>
       {showBadge ? (
         <Badge
           value={value}
@@ -90,6 +92,8 @@ export default function BadgedText(props) {
               ? value > 9
                 ? styles.badgeStyleForLargeNumber
                 : styles.badgeStyleForNumber
+              : showSevereAlert
+              ? styles.badgeStyleForTextSevere
               : styles.badgeStyleForText
           }
           textStyle={
@@ -130,6 +134,15 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.vwgDeepBlue
     backgroundColor: Colors.vwgBadgeAlertColor,
     borderColor: Colors.vwgBadgeAlertColor,
+  },
+  badgeStyleForTextSevere: {
+    // borderRadius: 0,
+    height: RFPercentage(1.6),
+    minWidth: 0,
+    width: RFPercentage(1.6),
+    // backgroundColor: Colors.vwgDeepBlue
+    backgroundColor: Colors.vwgBadgeSevereAlertColor,
+    borderColor: Colors.vwgBadgeSevereAlertColor,
   },
 
   containerNumberBadge: {
