@@ -156,11 +156,11 @@ export default HomeScreen = (props) => {
   const calibrationExpiryCountsObj = useSelector(
     (state) => state.calibrationExpiry.calibrationExpiryCounts
   );
-  const stateCalibrationAmberExpiryCount = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryCounts.amberCount
+  const serviceMeasuresCountsObj = useSelector(
+    (state) => state.serviceMeasures.serviceMeasuresCounts
   );
-  const stateCalibrationRedExpiryCount = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryCounts.redCount
+  const ltpLoansCountsObj = useSelector(
+    (state) => state.ltpLoans.ltpLoansCounts
   );
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
@@ -563,6 +563,110 @@ export default HomeScreen = (props) => {
   const gridRows = showingDemoApp ? 8 : 6;
   //   console.log('home screen gridRows', gridRows);
   //   console.log('Rendering Home screen');
+  useEffect(() => {
+    if (showingDemoApp) {
+      const notifiableCalibrationAlertsCount =
+        (calibrationExpiryCountsObj &&
+          calibrationExpiryCountsObj.redCount &&
+          calibrationExpiryCountsObj.amberCount &&
+          calibrationExpiryCountsObj.redCount +
+            calibrationExpiryCountsObj.amberCount) ||
+        0;
+
+      //   console.log(
+      //     'in nav useeffect calibrationExpiryCountsObj',
+      //     calibrationExpiryCountsObj,
+      //     'calibrationAlertsCount',
+      //     notifiableCalibrationAlertsCount,
+      //     calibrationExpiryCountsObj.redCount,
+      //     calibrationExpiryCountsObj.amberCount
+      //   );
+
+      setNotificationsAlertCount(notifiableCalibrationAlertsCount);
+    }
+  }, [
+    calibrationExpiryCountsObj.redCount,
+    calibrationExpiryCountsObj.amberCount,
+  ]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      console.log(
+        'in nav useeffect serviceMeasuresCountsObj',
+        serviceMeasuresCountsObj.amberCount,
+        serviceMeasuresCountsObj.redCount
+      );
+      const tempNotifiableServiceMeasureCount =
+        serviceMeasuresCountsObj &&
+        (serviceMeasuresCountsObj.redCount ||
+          serviceMeasuresCountsObj.redCount === 0) &&
+        (serviceMeasuresCountsObj.amberCount ||
+          serviceMeasuresCountsObj.amberCount === 0)
+          ? serviceMeasuresCountsObj.amberCount +
+            serviceMeasuresCountsObj.redCount
+          : 0;
+
+      //   console.log(
+      //     'in nav useeffect serviceMeasuresCountsObj',
+      //     serviceMeasuresCountsObj,
+      //     'ServiceMeasureCount',
+      //     notifiableServiceMeasureCount,
+      //     serviceMeasuresCountsObj.redCount,
+      //     serviceMeasuresCountsObj.amberCount
+      //   );
+
+      setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
+    }
+  }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in nav useeffect ltpLoansCountsObj',
+      //     ' ltpLoansCountsObj.redCount',
+      //     ltpLoansCountsObj.redCount,
+      //     'ltpLoansCountsObj.amberCount',
+      //     ltpLoansCountsObj.amberCount
+      //   );
+      const tempNotifiableLtpLoansCount =
+        ltpLoansCountsObj &&
+        (ltpLoansCountsObj.redCount || ltpLoansCountsObj.redCount === 0) &&
+        (ltpLoansCountsObj.amberCount || ltpLoansCountsObj.amberCount === 0)
+          ? ltpLoansCountsObj.amberCount + ltpLoansCountsObj.redCount
+          : 0;
+
+      //   const tempNotifiableLtpLoansCount = 5;
+
+      //   console.log(
+      //     'in nav useeffect ltpLoansCountsObj',
+      //     ltpLoansCountsObj,
+      //     'LtpLoansCount',
+      //     tempNotifiableLtpLoansCount,
+      //     ltpLoansCountsObj.redCount,
+      //     ltpLoansCountsObj.amberCount
+      //   );
+
+      setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
+    }
+  }, [ltpLoansCountsObj.amberCount, ltpLoansCountsObj.redCount]);
+
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in home screen,',
+  //     'notificationsAlertCount:',
+  //     notificationsAlertCount,
+  //     'serviceMeasuresAlertCount:',
+  //     serviceMeasuresAlertCount,
+  //     serviceMeasuresCountsObj,
+  //     serviceMeasuresCountsObj.redCount,
+  //     serviceMeasuresCountsObj.amberCount,
+  //     'ltpLoansAlertCount: ',
+  //     ltpLoansAlertCount,
+  //     ltpLoansCountsObj,
+  //     ltpLoansCountsObj.redCount,
+  //     ltpLoansCountsObj.amberCount,
+  //     'odisAlertCount:',
+  //     odisAlertCount
+  //   );
 
   return (
     <View
@@ -786,6 +890,13 @@ export default HomeScreen = (props) => {
                           text={'Notifications'}
                           value={notificationsAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
+                          showSevereAlert={
+                            calibrationExpiryCountsObj &&
+                            calibrationExpiryCountsObj.redCount &&
+                            calibrationExpiryCountsObj.redCount > 0
+                              ? true
+                              : false
+                          }
                         />
                       </View>
                     </Touchable>
@@ -810,6 +921,13 @@ export default HomeScreen = (props) => {
                           text={'LTP Loans'}
                           value={ltpLoansAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
+                          showSevereAlert={
+                            ltpLoansCountsObj &&
+                            ltpLoansCountsObj.redCount &&
+                            ltpLoansCountsObj.redCount > 0
+                              ? true
+                              : false
+                          }
                         />
                       </View>
                     </Touchable>
