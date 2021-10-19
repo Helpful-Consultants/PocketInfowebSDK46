@@ -61,7 +61,7 @@ export default function LtpLoansList(props) {
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,
-                  color: Colors.vwgWarmRed,
+                  color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
                 {`This loan item is late back and may incur a penalty charge`}
@@ -70,12 +70,12 @@ export default function LtpLoansList(props) {
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,
-                  color: Colors.vwgWarmRed,
+                  color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
                 {`LAST DAY! Please return this today to avoid a late penalty charge.`}
               </Text>
-            ) : daysLeft > 4 ? (
+            ) : daysLeft >= 5 ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAligned,
@@ -90,7 +90,7 @@ export default function LtpLoansList(props) {
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,
-                  color: Colors.vwgWarmRed,
+                  color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
                 {`${daysLeft} ${

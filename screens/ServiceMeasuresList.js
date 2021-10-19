@@ -68,7 +68,9 @@ export default function ServiceMeasuresList(props) {
               iconSize={RFPercentage(2.4)}
               iconColor={
                 //item.status && item.status.toLowerCase() === 'c'
-                measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
+                measureIsLive
+                  ? Colors.vwgBadgeOKColor
+                  : Colors.vwgBadgeSevereAlertColor
               }
             />
             <Text
@@ -94,7 +96,9 @@ export default function ServiceMeasuresList(props) {
             iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
             iconSize={RFPercentage(2)}
             iconColor={
-              item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
+              item.retailerStatus
+                ? Colors.vwgBadgeOKColor
+                : Colors.vwgBadgeSevereAlertColor
             }
           />
           <Text
@@ -141,7 +145,7 @@ export default function ServiceMeasuresList(props) {
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBoldLarge,
-                  color: Colors.vwgWarmRed,
+                  color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
                 {` LAST DAY!`}
@@ -151,7 +155,9 @@ export default function ServiceMeasuresList(props) {
                 style={{
                   ...baseStyles.textLeftAlignedBoldLarge,
                   color:
-                    daysLeft <= 3 ? Colors.vwgWarmRed : Colors.vwgWarmOrange,
+                    daysLeft <= 3
+                      ? Colors.vwgBadgeSevereAlertColor
+                      : Colors.vwgBadgeAlertColor,
                 }}
               >
                 {`   ${daysLeft} ${daysLeft === 1 ? `day` : `days`} left!`}
