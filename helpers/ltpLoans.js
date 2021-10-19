@@ -12,13 +12,13 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
     const parsedEndDate =
       (endDate && parse(endDate, 'dd/MM/yyyy', new Date())) || null;
     const daysLeft = 1 + getDateDifference(nowDateObj, parsedEndDate);
-    console.log(
-      '£££ in getLtpLoansCountsObj, checkTimeToExpiry ',
-      endDate,
-      'parsedEndDate',
-      parsedEndDate,
-      daysLeft
-    );
+    // console.log(
+    //   '£££ in getLtpLoansCountsObj, checkTimeToExpiry ',
+    //   endDate,
+    //   'parsedEndDate',
+    //   parsedEndDate,
+    //   daysLeft
+    // );
     return daysLeft;
   };
 
@@ -55,11 +55,11 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
     greenCount,
     totalCount: redCount + amberCount + greenCount,
   };
-  console.log(
-    '%%%%%% in getLtpLoansCountsObj; ltpLoansItems length',
-    ltpLoansItems.length,
-    ltpLoansCountsObj
-  );
+  //   console.log(
+  //     '%%%%%% in getLtpLoansCountsObj; ltpLoansItems length',
+  //     ltpLoansItems.length,
+  //     ltpLoansCountsObj
+  //   );
 
   return ltpLoansCountsObj;
 };

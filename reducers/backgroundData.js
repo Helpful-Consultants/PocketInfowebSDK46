@@ -42,7 +42,7 @@ export default function backgroundData(state = INITIAL_STATE, action) {
         'state in reducer; GET_BACKGROUND_DATA_SUCCESS',
         state && state
       );
-      console.log('from API', action.payload.items && action.payload.items);
+      //   console.log('from API', action.payload.items && action.payload.items);
       const fetchTime = Date.now();
       return {
         ...state,

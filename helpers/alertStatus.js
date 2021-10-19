@@ -18,15 +18,15 @@ import newsDummyData from '../dummyData/newsDummyData';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 
 const countUnseenItems = (scope, items, displayTimestamp) => {
-  console.log(
-    'in countUnseenItems for',
-    scope,
-    'there are ',
-    items && items.length,
-    ' items;',
-    ' ; displayTimestamp is ',
-    displayTimestamp
-  );
+  //   console.log(
+  //     'in countUnseenItems for',
+  //     scope,
+  //     'there are ',
+  //     items && items.length,
+  //     ' items;',
+  //     ' ; displayTimestamp is ',
+  //     displayTimestamp
+  //   );
   if (displayTimestamp) {
     if (displayTimestamp && items && items.length) {
       return checkDisplayAges(scope, items, displayTimestamp);

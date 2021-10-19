@@ -185,7 +185,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   useEffect(() => {
     if (showingDemoApp) {
       console.log(
-        'in nav useeffect serviceMeasuresCountsObj',
+        'in nav useEffect serviceMeasuresCountsObj',
         serviceMeasuresCountsObj.amberCount,
         serviceMeasuresCountsObj.redCount
       );
@@ -214,13 +214,13 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      console.log(
-        'in nav useeffect ltpLoansCountsObj',
-        ' ltpLoansCountsObj.redCount',
-        ltpLoansCountsObj.redCount,
-        'ltpLoansCountsObj.amberCount',
-        ltpLoansCountsObj.amberCount
-      );
+      //   console.log(
+      //     'in nav useeffect ltpLoansCountsObj',
+      //     ' ltpLoansCountsObj.redCount',
+      //     ltpLoansCountsObj.redCount,
+      //     'ltpLoansCountsObj.amberCount',
+      //     ltpLoansCountsObj.amberCount
+      //   );
       const tempNotifiableLtpLoansCount =
         ltpLoansCountsObj &&
         (ltpLoansCountsObj.redCount || ltpLoansCountsObj.redCount === 0) &&
@@ -230,36 +230,36 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
       //   const tempNotifiableLtpLoansCount = 5;
 
-      console.log(
-        'in nav useeffect ltpLoansCountsObj',
-        ltpLoansCountsObj,
-        'LtpLoansCount',
-        tempNotifiableLtpLoansCount,
-        ltpLoansCountsObj.redCount,
-        ltpLoansCountsObj.amberCount
-      );
+      //   console.log(
+      //     'in nav useeffect ltpLoansCountsObj',
+      //     ltpLoansCountsObj,
+      //     'LtpLoansCount',
+      //     tempNotifiableLtpLoansCount,
+      //     ltpLoansCountsObj.redCount,
+      //     ltpLoansCountsObj.amberCount
+      //   );
 
       setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
     }
   }, [ltpLoansCountsObj.amberCount, ltpLoansCountsObj.redCount]);
 
-  console.log(
-    '$$$$$$$$$$$$$$ in reminders  navigator,',
-    'notificationsAlertCount:',
-    notificationsAlertCount,
-    'serviceMeasuresAlertCount:',
-    serviceMeasuresAlertCount,
-    serviceMeasuresCountsObj,
-    serviceMeasuresCountsObj.redCount,
-    serviceMeasuresCountsObj.amberCount,
-    'ltpLoansAlertCount: ',
-    ltpLoansAlertCount,
-    ltpLoansCountsObj,
-    ltpLoansCountsObj.redCount,
-    ltpLoansCountsObj.amberCount,
-    'odisAlertCount:',
-    odisAlertCount
-  );
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in reminders  navigator,',
+  //     'notificationsAlertCount:',
+  //     notificationsAlertCount,
+  //     'serviceMeasuresAlertCount:',
+  //     serviceMeasuresAlertCount,
+  //     serviceMeasuresCountsObj,
+  //     serviceMeasuresCountsObj.redCount,
+  //     serviceMeasuresCountsObj.amberCount,
+  //     'ltpLoansAlertCount: ',
+  //     ltpLoansAlertCount,
+  //     ltpLoansCountsObj,
+  //     ltpLoansCountsObj.redCount,
+  //     ltpLoansCountsObj.amberCount,
+  //     'odisAlertCount:',
+  //     odisAlertCount
+  //   );
 
   return (
     <RemindersTabs.Navigator //iOS

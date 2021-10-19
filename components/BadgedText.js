@@ -43,7 +43,7 @@ const textBadgeRightMargin =
 //  badgeStyle={styles.badge}
 //               textStyle={styles.badgeText}
 export default function BadgedText(props) {
-  console.log(props);
+  //   console.log(props);
   const { value, status, showBadge, text, showingDemoApp, showSevereAlert } =
     props;
   const windowDim = useWindowDimensions();
