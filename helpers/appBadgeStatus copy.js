@@ -229,7 +229,7 @@ export default BackgroundFetchBlock = () => {
           </Text>
         </Text>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
+          rBadge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
           <TouchableOpacity onPress={resetBadgeCountAsync}>
             <Text>{` Reset`}</Text>
           </TouchableOpacity>
