@@ -123,7 +123,7 @@ const checkUnseenItems = (scope) => {
       return unseenItemsCount;
     }
     default: {
-      console.log('in checkUnseenItems, scope', scope);
+      //   console.log('in checkUnseenItems, scope', scope);
       return 0;
     }
   }
