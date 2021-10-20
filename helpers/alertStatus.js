@@ -29,7 +29,9 @@ export const countNotifiableItems = () => {
   ) {
     console.log(
       'in countNotifiableItems >0',
-      serviceMeasuresCountsObj.redCount
+      serviceMeasuresCountsObj &&
+        serviceMeasuresCountsObj.redCount &&
+        serviceMeasuresCountsObj.redCount
     );
     setBadgeCountAsync(44);
   }

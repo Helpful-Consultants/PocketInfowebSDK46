@@ -153,15 +153,27 @@ export default HomeScreen = (props) => {
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
-  const calibrationExpiryCountsObj = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryCounts
-  );
-  const serviceMeasuresCountsObj = useSelector(
-    (state) => state.serviceMeasures.serviceMeasuresCounts
-  );
-  const ltpLoansCountsObj = useSelector(
-    (state) => state.ltpLoans.ltpLoansCounts
-  );
+  const serviceMeasuresRedCount =
+    useSelector(
+      (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
+    ) || 0;
+  const serviceMeasuresAmberCount =
+    useSelector(
+      (state) => state.serviceMeasures.serviceMeasuresCounts.amberCount
+    ) || 0;
+  const calibrationExpiryRedCount =
+    useSelector(
+      (state) => state.calibrationExpiry.calibrationExpiryCounts.redCount
+    ) || 0;
+  const calibrationExpiryAmberCount =
+    useSelector(
+      (state) => state.calibrationExpiry.calibrationExpiryCounts.amberCount
+    ) || 0;
+
+  const ltpLoansRedCount =
+    useSelector((state) => state.ltpLoans.ltpLoansCounts.redCount) || 0;
+  const ltpLoansAmberCount =
+    useSelector((state) => state.ltpLoans.ltpLoansCounts.amberCount) || 0;
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
@@ -566,107 +578,54 @@ export default HomeScreen = (props) => {
   //   console.log('Rendering Home screen');
   useEffect(() => {
     if (showingDemoApp) {
+      console.log(
+        'in nav useEffect calibrationExpiryCounts',
+        calibrationExpiryRedCount && calibrationExpiryRedCount,
+        calibrationExpiryAmberCount && calibrationExpiryAmberCount
+      );
       const notifiableCalibrationAlertsCount =
-        (calibrationExpiryCountsObj &&
-          calibrationExpiryCountsObj.redCount &&
-          calibrationExpiryCountsObj.amberCount &&
-          calibrationExpiryCountsObj.redCount +
-            calibrationExpiryCountsObj.amberCount) ||
-        0;
-
-      //   console.log(
-      //     'in nav useeffect calibrationExpiryCounts',
-      //     calibrationExpiryCounts,
-      //     'calibrationAlertsCount',
-      //     notifiableCalibrationAlertsCount,
-      //     calibrationExpiryCountsObj.redCount,
-      //     calibrationExpiryCountsObj.amberCount
-      //   );
+        (calibrationExpiryRedCount || calibrationExpiryRedCount === 0) &&
+        (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0)
+          ? calibrationExpiryRedCount + calibrationExpiryAmberCount
+          : 0;
 
       setNotificationsAlertCount(notifiableCalibrationAlertsCount);
     }
-  }, []);
-  //  }, [calibrationExpiryCountsObj.redCount, calibrationExpiryCountsObj.amberCount]);
+  }, [calibrationExpiryAmberCount, calibrationExpiryRedCount]);
 
   useEffect(() => {
     if (showingDemoApp) {
       console.log(
-        'in nav useEffect serviceMeasuresCountsObj',
-        serviceMeasuresCountsObj && serviceMeasuresCountsObj
+        'in nav useEffect serviceMeasuresCounts',
+        serviceMeasuresRedCount && serviceMeasuresRedCount,
+        serviceMeasuresAmberCount && serviceMeasuresAmberCount
       );
       const tempNotifiableServiceMeasureCount =
-        serviceMeasuresCountsObj &&
-        (serviceMeasuresCountsObj.redCount ||
-          serviceMeasuresCountsObj.redCount === 0) &&
-        (serviceMeasuresCountsObj.amberCount ||
-          serviceMeasuresCountsObj.amberCount === 0)
-          ? serviceMeasuresCountsObj.amberCount +
-            serviceMeasuresCountsObj.redCount
+        (serviceMeasuresRedCount || serviceMeasuresRedCount === 0) &&
+        (serviceMeasuresAmberCount || serviceMeasuresAmberCount === 0)
+          ? serviceMeasuresRedCount + serviceMeasuresAmberCount
           : 0;
-
-      //   console.log(
-      //     'in nav useeffect serviceMeasuresCountsObj',
-      //     serviceMeasuresCountsObj,
-      //     'ServiceMeasureCount',
-      //     notifiableServiceMeasureCount,
-      //     serviceMeasuresCountsObj.redCount,
-      //     serviceMeasuresCountsObj.amberCount
-      //   );
 
       setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
     }
-    //   }, []);
-  }, [serviceMeasuresCountsObj.amberCount, serviceMeasuresCountsObj.redCount]);
+  }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]);
 
   useEffect(() => {
     if (showingDemoApp) {
-      //   console.log(
-      //     'in nav useeffect ltpLoansCountsObj',
-      //     ' ltpLoansCountsObj.redCount',
-      //     ltpLoansCountsObj.redCount,
-      //     'ltpLoansCountsObj.amberCount',
-      //     ltpLoansCountsObj.amberCount
-      //   );
+      console.log(
+        'in nav useEffect ltpLoansCounts',
+        ltpLoansRedCount && ltpLoansRedCount,
+        ltpLoansAmberCount && ltpLoansAmberCount
+      );
       const tempNotifiableLtpLoansCount =
-        ltpLoansCountsObj &&
-        (ltpLoansCountsObj.redCount || ltpLoansCountsObj.redCount === 0) &&
-        (ltpLoansCountsObj.amberCount || ltpLoansCountsObj.amberCount === 0)
-          ? ltpLoansCountsObj.amberCount + ltpLoansCountsObj.redCount
+        (ltpLoansRedCount || ltpLoansRedCount === 0) &&
+        (ltpLoansAmberCount || ltpLoansAmberCount === 0)
+          ? ltpLoansAmberCount + ltpLoansRedCount
           : 0;
-
-      //   const tempNotifiableLtpLoansCount = 5;
-
-      //   console.log(
-      //     'in nav useeffect ltpLoansCountsObj',
-      //     ltpLoansCountsObj,
-      //     'LtpLoansCount',
-      //     tempNotifiableLtpLoansCount,
-      //     ltpLoansCountsObj.redCount,
-      //     ltpLoansCountsObj.amberCount
-      //   );
 
       setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
     }
-    //   }, []);
-  }, [ltpLoansCountsObj.amberCount, ltpLoansCountsObj.redCount]);
-
-  //   console.log(
-  //     '$$$$$$$$$$$$$$ in home screen,',
-  //     'notificationsAlertCount:',
-  //     notificationsAlertCount,
-  //     'serviceMeasuresAlertCount:',
-  //     serviceMeasuresAlertCount,
-  //     serviceMeasuresCountsObj,
-  //     serviceMeasuresCountsObj.redCount,
-  //     serviceMeasuresCountsObj.amberCount,
-  //     'ltpLoansAlertCount: ',
-  //     ltpLoansAlertCount,
-  //     ltpLoansCountsObj,
-  //     ltpLoansCountsObj.redCount,
-  //     ltpLoansCountsObj.amberCount,
-  //     'odisAlertCount:',
-  //     odisAlertCount
-  //   );
+  }, [ltpLoansAmberCount, ltpLoansRedCount]);
 
   return (
     <View
@@ -891,9 +850,8 @@ export default HomeScreen = (props) => {
                           value={notificationsAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            calibrationExpiryCountsObj &&
-                            calibrationExpiryCountsObj.redCount &&
-                            calibrationExpiryCountsObj.redCount > 0
+                            calibrationExpiryRedCount &&
+                            calibrationExpiryRedCount > 0
                               ? true
                               : false
                           }
@@ -922,9 +880,7 @@ export default HomeScreen = (props) => {
                           value={ltpLoansAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            ltpLoansCountsObj &&
-                            ltpLoansCountsObj.redCount &&
-                            ltpLoansCountsObj.redCount > 0
+                            ltpLoansRedCount && ltpLoansRedCount > 0
                               ? true
                               : false
                           }
