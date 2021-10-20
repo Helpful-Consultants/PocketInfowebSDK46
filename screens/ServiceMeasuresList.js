@@ -144,7 +144,7 @@ export default function ServiceMeasuresList(props) {
             {daysLeft === 1 ? (
               <Text
                 style={{
-                  ...baseStyles.textLeftAlignedBoldLarge,
+                  ...baseStyles.textLeftAlignedBold,
                   color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
@@ -153,7 +153,7 @@ export default function ServiceMeasuresList(props) {
             ) : daysLeft <= 8 ? (
               <Text
                 style={{
-                  ...baseStyles.textLeftAlignedBoldLarge,
+                  ...baseStyles.textLeftAlignedBold,
                   color:
                     daysLeft <= 3
                       ? Colors.vwgBadgeSevereAlertColor
