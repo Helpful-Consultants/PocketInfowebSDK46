@@ -80,12 +80,6 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const ltpLoansCountsObj = useSelector(
     (state) => state.ltpLoans.ltpLoansCounts
   );
-  //   const serviceMeasuresRedCount = useSelector(
-  //     (state) => state.serviceMeasures.serviceMeasuresCountsObj.redCount
-  //   );
-  //   const serviceMeasuresAmberCount = useSelector(
-  //     (state) => state.serviceMeasures.serviceMeasuresCountsObj.amberCount
-  //   );
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
   const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
   const [odisAlertCount, setOdisAlertCount] = useState(0);
@@ -95,27 +89,6 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   //   const [calibrationRedExpiryCount, setCalibrationRedExpiryCount] = useState(0);
 
   useEffect(() => {
-    // console.log(
-    //   'in navvvvvvvv calibrationExpiryCounts',
-    //   calibrationExpiryCounts
-    // );
-    // const notifiableCalibrationAlertsCount =
-    //   (calibrationExpiryCountsObj &&
-    //     calibrationExpiryCountsObj.redCount &&
-    //     calibrationExpiryCountsObj.amberCount &&
-    //     calibrationExpiryCountsObj.redCount +
-    //       calibrationExpiryCountsObj.amberCount) ||
-    //   0;
-
-    // console.log(
-    //   'in navvvvvvvv useEffect',
-    //   //   'calibrationExpiryCounts',
-    //   //   calibrationExpiryCounts,
-    //   'serviceMeasuresCountsObj',
-    //   serviceMeasuresCountsObj,
-    //   'calibrationAlertsCount',
-    //   notifiableCalibrationAlertsCount
-    // );
     if (showingDemoApp) {
       //   setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
       //   setNotificationsAlertCount(notifiableCalibrationAlertsCount);
