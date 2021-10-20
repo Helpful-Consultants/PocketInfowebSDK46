@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "Pocket Infoweb",
-    "slug": "PocketInfoweb-Dev",
+    "name": "Pocket Infoweb Extra",
+    "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.20",
-    "icon": "./assets/images/icon.png",
+    "version": "1.2.21",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -22,7 +22,7 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "113",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -48,7 +48,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb",
+            "project": "pocket-infoweb-extra",
             "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
           }
         }
