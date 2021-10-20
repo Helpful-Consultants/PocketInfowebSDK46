@@ -45,10 +45,10 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
     totalCount: redCount + amberCount + greenCount,
   };
 
-  console.log(
-    'calibrationExpiryCount in getCalibrationExpiryCountsObj',
-    calibrationExpiryCountObj
-  );
+  //   console.log(
+  //     'calibrationExpiryCount in getCalibrationExpiryCountsObj',
+  //     calibrationExpiryCountObj
+  //   );
 
   return calibrationExpiryCountObj;
 
