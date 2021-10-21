@@ -144,6 +144,9 @@ export default AppNavigator = (props) => {
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
   const calibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
@@ -255,15 +258,15 @@ export default AppNavigator = (props) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      console.log(
-        'in appnav useEffect serviceMeasuresCounts',
-        'serviceMeasuresRedCount',
-        serviceMeasuresRedCount,
-        'ltpLoansRedCount',
-        ltpLoansRedCount
-      );
-
       let tempNotifiableAlertsCount = 0;
+
+      if (
+        typeof calibrationExpiryOverdueCount !== 'undefined' &&
+        calibrationExpiryOverdueCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + calibrationExpiryRedCount;
+      }
       if (
         typeof calibrationExpiryRedCount !== 'undefined' &&
         calibrationExpiryRedCount !== null
@@ -290,6 +293,8 @@ export default AppNavigator = (props) => {
 
       console.log(
         'in appnav useEffect tempNotifiableAlertsCount',
+        'calibrationExpiryOverdueCount',
+        calibrationExpiryOverdueCount,
         'calibrationExpiryRedCount',
         calibrationExpiryRedCount,
         'serviceMeasuresRedCount',
