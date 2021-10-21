@@ -3,6 +3,7 @@ import { useWindowDimensions, View } from 'react-native';
 import { Switch, Text } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserRequestedDemoApp } from '../actions/user';
+import { setUserRequestedDemoData } from '../actions/user';
 
 export default DemoAppSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -29,6 +30,10 @@ export default DemoAppSwitch = (props) => {
     //   'setting to',
     //   !switchStatus
     // );
+
+    if (tempSwitchStatus) {
+      dispatch(setUserRequestedDemoData({ requestedDemoData: false }));
+    }
     dispatch(setUserRequestedDemoApp({ showDemoApp: !tempSwitchStatus }));
     setSwitchStatus(!tempSwitchStatus);
     // setUserRequestedDemoApp((previousState) => !DemoAppSwitch);
