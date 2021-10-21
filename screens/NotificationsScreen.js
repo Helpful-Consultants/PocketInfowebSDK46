@@ -481,10 +481,8 @@ export default NotificationsScreen = (props) => {
                   />
                   <Text style={baseStyles.textSectionRibbon}>
                     {calibrationExpiryTotalCount > 1
-                      ? `  Active Calibration Expiry Actions  `
-                      : calibrationExpiryTotalCount > 0
-                      ? `  Active Calibration Expiry Action  `
-                      : '  No pending Calibration Expiry Actions  '}
+                      ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
+                      : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
                   </Text>
                   <Ionicons
                     name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
