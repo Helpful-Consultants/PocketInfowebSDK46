@@ -26,16 +26,30 @@ export default NotificationsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const odisViewCount = useSelector((state) => state.odis.viewCount);
-  const calibrationExpiryItems = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryItems
+  const calibrationExpiryTotalCount = useSelector(
+    (state) => state.calibrationExpiry.totalCount
   );
-  const calibrationExpiryCounts = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryCounts
+  const calibrationExpiryGreenCount = useSelector(
+    (state) => state.calibrationExpiry.greenCount
   );
-  const serviceMeasuresCountsObj = useSelector(
-    (state) => state.serviceMeasures.serviceMeasuresCounts
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
   );
-  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const ltpLoansTotalCount = useSelector((state) => state.ltpLoans.totalCount);
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
+  const serviceMeasuresTotalCount = useSelector(
+    (state) => state.serviceMeasures.totalCount
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
   );
@@ -136,20 +150,6 @@ export default NotificationsScreen = (props) => {
   //     setIsRefreshNeeded(true);
   //   });
 
-  const filterLtpLoansItems = (ltpLoansItems) => {
-    let ltpLoansItemsFiltered = [];
-    if (ltpLoansItems && ltpLoansItems.length > 0) {
-      ltpLoansItemsFiltered = ltpLoansItems.filter(
-        (item) =>
-          item.startDate &&
-          item.endDateDue &&
-          getLtpLoanStatus(nowDateObj, item)
-      );
-    }
-    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
-    return ltpLoansItemsFiltered;
-  };
-
   useEffect(() => {
     if (
       isLoadingCalibrationExpiry ||
@@ -193,9 +193,8 @@ export default NotificationsScreen = (props) => {
     dataErrorLtpLoans,
     dataErrorServiceMeasures,
     dataErrorCalibrationExpiry,
-    ltpLoansItems,
+
     serviceMeasuresItems,
-    calibrationExpiryItems,
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
     isLoadingCalibrationExpiry,
@@ -214,55 +213,7 @@ export default NotificationsScreen = (props) => {
     }, [])
   );
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   const userDataPresent =
-  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
-
-  //   if (userDataPresent === true) {
-  //     // console.log('in notifications screen,userDataObj OK', userDataPresent);
-  //   } else {
-  //     // console.log('in notifications screen, no userDataObj');
-  //     getItems();
-  //   }
-
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     calibrationExpiryItemsToShow,
-  //     'isLoadingCalibrationExpiry',
-  //     isLoadingCalibrationExpiry,
-  //     'dataErrorCalibrationExpiry',
-  //     dataErrorCalibrationExpiry
-  //   );
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     serviceMeasuresItemsToShow.length,
-  //     'isLoadingServiceMeasures',
-  //     isLoadingServiceMeasures,
-  //     'dataErrorServiceMeasures',
-  //     dataErrorServiceMeasures
-  //   );
-
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     ltpLoansItemsToShow.length,
-  //     'isLoadingLtpLoans',
-  //     isLoadingLtpLoans,
-  //     'dataErrorLtpLoansItems',
-  //     dataErrorLtpLoans
-  //   );
-
-  //   console.log(
-  //     'rendering notifications',
-  //     calibrationExpiryCounts,
-  //     'calibrationExpiryCounts.redCount',
-  //     calibrationExpiryCounts.redCount,
-  //     'calibrationExpiryCounts.amberCount',
-  //     calibrationExpiryCounts.amberCount,
-  //     'calibrationExpiryCounts.greenCount',
-  //     calibrationExpiryCounts.greenCount
-  //   );
+  console.log('calib exp red count', calibrationExpiryRedCount);
 
   return (
     <ScrollView>
@@ -287,7 +238,11 @@ export default NotificationsScreen = (props) => {
           }
         >
           <View style={baseStyles.viewSectionRibbon}>
-            <Ionicons name='tv' size={20} color={Colors.vwgWarmOrange} />
+            <Ionicons
+              name='tv'
+              size={20}
+              color={Colors.vwgBadgeSevereAlertColor}
+            />
             <Text style={baseStyles.textSectionRibbon}>
               {`  See the `}
               <Text
@@ -304,59 +259,7 @@ export default NotificationsScreen = (props) => {
           </View>
         </TouchableOpacity>
       ) : null}
-      {!isLoadingLtpLoans ? (
-        dataErrorLtpLoans ? (
-          <ErrorDetails
-            errorSummary={'Error syncing LTP Loans'}
-            dataStatusCode={dataStatusCodeLtpLoans}
-            errorHtml={dataErrorLtpLoans}
-            dataErrorUrl={dataErrorUrlLtpLoans}
-          />
-        ) : (
-          <View>
-            {ltpLoansItems.length > 0 ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('RemindersTabs', {
-                    screen: 'All LTP Loans',
-                  })
-                }
-              >
-                <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons
-                    name='calendar'
-                    size={20}
-                    color={Colors.vwgWarmOrange}
-                  />
-                  <Text style={baseStyles.textSectionRibbon}>
-                    {`  See your `}
-                    <Text
-                      style={{
-                        ...baseStyles.textSectionRibbon,
-                        fontFamily: 'the-sans-bold',
-                      }}
-                    >
-                      {ltpLoansItems.length > 1
-                        ? `${ltpLoansItems.length} LTP Loans `
-                        : ltpLoansItems.length > 0
-                        ? ` LTP Loan `
-                        : `  No LTP Loans`}
-                    </Text>
-                  </Text>
-                  <Ionicons name='open-outline' size={20} />
-                </View>
-              </TouchableOpacity>
-            ) : (
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons name='calendar' size={20} color={Colors.vwgBlack} />
-                <Text style={baseStyles.textSectionRibbon}>
-                  {`   No LTP Loans`}
-                </Text>
-              </View>
-            )}
-          </View>
-        )
-      ) : null}
+
       {!isLoadingServiceMeasures ? (
         dataErrorServiceMeasures ? (
           <ErrorDetails
@@ -365,9 +268,11 @@ export default NotificationsScreen = (props) => {
             errorHtml={dataErrorServiceMeasures}
             dataErrorUrl={dataErrorUrlServiceMeasures}
           />
-        ) : (
+        ) : serviceMeasuresTotalCount !== 'undefined' &&
+          serviceMeasuresRedCount !== 'undefined' &&
+          serviceMeasuresAmberCount !== 'undefined' ? (
           <View>
-            {serviceMeasuresItems.length > 0 ? (
+            {serviceMeasuresTotalCount > 0 ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate('RemindersTabs', {
@@ -375,9 +280,7 @@ export default NotificationsScreen = (props) => {
                   })
                 }
               >
-                {serviceMeasuresCountsObj &&
-                serviceMeasuresCountsObj.redCount &&
-                serviceMeasuresCountsObj.redCount > 0 ? (
+                {serviceMeasuresRedCount > 0 ? (
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
                       name='checkbox'
@@ -395,18 +298,14 @@ export default NotificationsScreen = (props) => {
                       >
                         {` urgent `}
 
-                        {serviceMeasuresCountsObj &&
-                        serviceMeasuresCountsObj.redCount &&
-                        serviceMeasuresCountsObj.redCount > 1
+                        {serviceMeasuresRedCount > 1
                           ? `Service Measures  `
                           : `Service Measure  `}
                       </Text>
                     </Text>
                     <Ionicons name='open-outline' size={20} />
                   </View>
-                ) : serviceMeasuresCountsObj &&
-                  serviceMeasuresCountsObj.amberCount &&
-                  serviceMeasuresCountsObj.amberCount > 0 ? (
+                ) : serviceMeasuresAmberCount > 0 ? (
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
                       name='checkbox'
@@ -423,9 +322,7 @@ export default NotificationsScreen = (props) => {
                       >
                         {` expiring `}
 
-                        {serviceMeasuresCountsObj &&
-                        serviceMeasuresCountsObj.amberCount &&
-                        serviceMeasuresCountsObj.amberCount > 1
+                        {serviceMeasuresAmberCount > 1
                           ? `Service Measures  `
                           : `Service Measure `}
                       </Text>
@@ -457,7 +354,101 @@ export default NotificationsScreen = (props) => {
               </View>
             )}
           </View>
-        )
+        ) : null
+      ) : null}
+      {!isLoadingLtpLoans ? (
+        dataErrorLtpLoans ? (
+          <ErrorDetails
+            errorSummary={'Error syncing LTP Loans'}
+            dataStatusCode={dataStatusCodeLtpLoans}
+            errorHtml={dataErrorLtpLoans}
+            dataErrorUrl={dataErrorUrlLtpLoans}
+          />
+        ) : ltpLoansTotalCount !== 'undefined' &&
+          ltpLoansRedCount !== 'undefined' &&
+          ltpLoansAmberCount !== 'undefined' ? (
+          <View>
+            {ltpLoansTotalCount > 0 ? (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('RemindersTabs', {
+                    screen: 'LTP Loans',
+                  })
+                }
+              >
+                {ltpLoansRedCount > 0 ? (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='calendar'
+                      size={20}
+                      color={Colors.vwgBadgeSevereAlertColor}
+                    />
+
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {`  See your`}
+                      <Text
+                        style={{
+                          ...baseStyles.textSectionRibbon,
+                          fontFamily: 'the-sans-bold',
+                        }}
+                      >
+                        {` urgent `}
+
+                        {ltpLoansTotalCount > 1
+                          ? `LTP Loan returns  `
+                          : `LTP Loan return  `}
+                      </Text>
+                    </Text>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                ) : ltpLoansAmberCount > 0 ? (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='calendar'
+                      size={20}
+                      color={Colors.vwgBadgeAlertColor}
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {`  See your`}
+                      <Text
+                        style={{
+                          ...baseStyles.textSectionRibbon,
+                          fontFamily: 'the-sans-bold',
+                        }}
+                      >
+                        {` expiring `}
+
+                        {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
+                      </Text>
+                    </Text>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                ) : (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='checkbox'
+                      size={20}
+                      color={Colors.vwgBadgeOKColor}
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {ltpLoansTotalCount > 1
+                        ? `  See your open LTP Loans  `
+                        : `  See your open LTP Loan `}
+                    </Text>
+                    <Ionicons name='open-outline' size={20} />
+                  </View>
+                )}
+              </TouchableOpacity>
+            ) : (
+              <View style={baseStyles.viewSectionRibbon}>
+                <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                <Text style={baseStyles.textSectionRibbon}>
+                  {`   No LTP Loans`}
+                </Text>
+              </View>
+            )}
+          </View>
+        ) : null
       ) : null}
       {!isLoadingCalibrationExpiry ? (
         dataErrorCalibrationExpiry ? (
@@ -467,9 +458,11 @@ export default NotificationsScreen = (props) => {
             errorHtml={dataErrorCalibrationExpiry}
             dataErrorUrl={dataErrorUrlCalibrationExpiry}
           />
-        ) : (
+        ) : calibrationExpiryTotalCount !== 'undefined' &&
+          calibrationExpiryRedCount !== 'undefined' &&
+          calibrationExpiryAmberCount !== 'undefined' ? (
           <View>
-            {calibrationExpiryCounts.totalCount > 0 ? (
+            {calibrationExpiryTotalCount > 0 ? (
               <TouchableOpacity
                 onPress={() => {
                   setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
@@ -480,21 +473,20 @@ export default NotificationsScreen = (props) => {
                     name='timer'
                     size={20}
                     color={
-                      calibrationExpiryCounts.redCount &&
-                      calibrationExpiryCounts.redCount > 0
+                      calibrationExpiryRedCount > 0
                         ? Colors.vwgBadgeSevereAlertColor
-                        : calibrationExpiryCounts.amberCount &&
-                          calibrationExpiryCounts.amberCount > 0
-                        ? Colors.vwgWarmOrange
+                        : calibrationExpiryAmberCount !== 'undefined' &&
+                          calibrationExpiryAmberCount > 0
+                        ? Colors.vwgBadgeAlertColor
                         : Colors.vwgBadgeOKColor
                     }
                   />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {calibrationExpiryCounts.totalCount > 1
-                      ? ` Active Calibration Expiry Actions  `
-                      : calibrationExpiryCounts.totalCount > 0
-                      ? ` Active Calibration Expiry Action  `
-                      : ' No Calibration Expiry Actions  '}
+                    {calibrationExpiryTotalCount > 1
+                      ? `  Active Calibration Expiry Actions  `
+                      : calibrationExpiryTotalCount > 0
+                      ? `  Active Calibration Expiry Action  `
+                      : '  No pending Calibration Expiry Actions  '}
                   </Text>
                   <Ionicons
                     name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
@@ -507,22 +499,22 @@ export default NotificationsScreen = (props) => {
               <View style={baseStyles.viewSectionRibbon}>
                 <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                 <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCounts.totalCount > 1
-                    ? ` ${calibrationExpiryCounts.totalCount} Calibration Expiry Actions `
-                    : calibrationExpiryCounts.totalCount > 0
-                    ? ` ${calibrationExpiryCounts.totalCount} Calibration Expiry Action  `
-                    : ' No Calibration Expiry Actions  '}
+                  {calibrationExpiryTotalCount > 1
+                    ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
+                    : calibrationExpiryTotalCount > 0
+                    ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                    : '  No pending Calibration Expiry Actions  '}
                 </Text>
               </View>
             )}
             {isOpenCalibrationExpiry ? (
-              calibrationExpiryCounts.totalCount > 0 ? (
+              calibrationExpiryTotalCount > 0 ? (
                 <View>
-                  {calibrationExpiryCounts.redCount > 0 ? (
+                  {calibrationExpiryRedCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
-                        marginHorizontal: 33,
+                        marginHorizontal: 8,
                         marginTop: 10,
                       }}
                     >
@@ -530,23 +522,20 @@ export default NotificationsScreen = (props) => {
                         itemType='font-awesome'
                         iconName={'thumbs-down'}
                         iconSize={RFPercentage(2.4)}
-                        iconColor={
-                          //item.status && item.status.toLowerCase() === 'c'
-                          Colors.vwgBadgeSevereAlertColor
-                        }
+                        iconColor={Colors.vwgBadgeSevereAlertColor}
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCounts.redCount === 1
-                          ? `  ${calibrationExpiryCounts.redCount} item's calibration has expired.`
-                          : `  ${calibrationExpiryCounts.redCount} items' calibrations have expired.`}
+                        {calibrationExpiryRedCount === 1
+                          ? `  ${calibrationExpiryRedCount} item's calibration has expired.`
+                          : `  ${calibrationExpiryRedCount} items' calibrations have expired.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryCounts.amberCount > 0 ? (
+                  {calibrationExpiryAmberCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
-                        marginHorizontal: 33,
+                        marginHorizontal: 8,
                         marginTop: 10,
                       }}
                     >
@@ -554,23 +543,20 @@ export default NotificationsScreen = (props) => {
                         itemType='font-awesome'
                         iconName={'thumbs-up'}
                         iconSize={RFPercentage(2.4)}
-                        iconColor={
-                          //item.status && item.status.toLowerCase() === 'c'
-                          Colors.vwgCoolOrange
-                        }
+                        iconColor={Colors.vwgCoolOrange}
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCounts.amberCount === 1
-                          ? `  ${calibrationExpiryCounts.amberCount} item's calibration expires within 30 days.`
-                          : `  ${calibrationExpiryCounts.amberCount} items' calibrations expire within 30 days.`}
+                        {calibrationExpiryAmberCount === 1
+                          ? `  ${calibrationExpiryAmberCount} item's calibration expires within 30 days.`
+                          : `  ${calibrationExpiryAmberCount} items' calibrations expire within 30 days.`}
                       </Text>
                     </View>
                   ) : null}
-                  {calibrationExpiryCounts.greenCount > 0 ? (
+                  {calibrationExpiryGreenCount > 0 ? (
                     <View
                       style={{
                         ...baseStyles.viewRowFlexCentreAligned,
-                        marginHorizontal: 33,
+                        marginHorizontal: 8,
                         marginTop: 10,
                       }}
                     >
@@ -578,15 +564,12 @@ export default NotificationsScreen = (props) => {
                         itemType='font-awesome'
                         iconName={'thumbs-up'}
                         iconSize={RFPercentage(2.4)}
-                        iconColor={
-                          //item.status && item.status.toLowerCase() === 'c'
-                          Colors.vwgMintGreen
-                        }
+                        iconColor={Colors.vwgBadgeOKColor}
                       />
                       <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryCounts.greenCount === 1
-                          ? `  ${calibrationExpiryCounts.greenCount} item's calibration expires within 60 days.`
-                          : `  ${calibrationExpiryCounts.greenCount} items' calibrations expire within 60 days.`}
+                        {calibrationExpiryGreenCount === 1
+                          ? `  ${calibrationExpiryGreenCount} item's calibration expires within 60 days.`
+                          : `  ${calibrationExpiryGreenCount} items' calibrations expire within 60 days.`}
                       </Text>
                     </View>
                   ) : null}
@@ -595,14 +578,14 @@ export default NotificationsScreen = (props) => {
                 <View style={baseStyles.viewDataList}>
                   <View style={baseStyles.textDataListItem}>
                     <Text style={baseStyles.textLeftAligned}>
-                      No calibration expirations to show.
+                      No calibration expirations in the next 60 days.
                     </Text>
                   </View>
                 </View>
               )
             ) : null}
           </View>
-        )
+        ) : null
       ) : null}
     </ScrollView>
   );
