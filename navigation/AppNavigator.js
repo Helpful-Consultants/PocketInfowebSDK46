@@ -300,6 +300,8 @@ export default AppNavigator = (props) => {
         tempNotifiableAlertsCount
       );
       setBadgeCountAsync(tempNotifiableAlertsCount);
+    } else {
+      setBadgeCountAsync(0);
     }
   }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]); //testing objects
 

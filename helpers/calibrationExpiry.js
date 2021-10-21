@@ -1,15 +1,15 @@
 import { getDateDifference } from '../helpers/dates';
 const defaultCounts = {
+  overdueCount: 0,
   redCount: 0,
   amberCount: 0,
-  greenCount: 0,
   totalCount: 0,
 };
 
 export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
+  let overdueCount = 0;
   let redCount = 0;
   let amberCount = 0;
-  let greenCount = 0;
 
   const nowDateObj = new Date();
 
@@ -23,15 +23,15 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
       if (item.expiry && item.expiry.length > 0) {
         if (item.expiry.indexOf('1.') !== -1) {
           if (!isNaN(parseInt(item.howMany))) {
-            redCount = parseInt(item.howMany);
+            overdueCount = parseInt(item.howMany);
           }
         } else if (item.expiry.indexOf('2.') !== -1) {
           if (!isNaN(parseInt(item.howMany))) {
-            amberCount = parseInt(item.howMany);
+            redCount = parseInt(item.howMany);
           }
         } else if (item.expiry.indexOf('3.') !== -1) {
           if (!isNaN(parseInt(item.howMany))) {
-            greenCount = parseInt(item.howMany);
+            amberCount = parseInt(item.howMany);
           }
         }
       }
@@ -39,10 +39,10 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
   }
 
   const calibrationExpiryCountObj = {
+    overdueCount,
     redCount,
     amberCount,
-    greenCount,
-    totalCount: redCount + amberCount + greenCount,
+    totalCount: overdueCount + redCount + amberCount,
   };
 
   //   console.log(

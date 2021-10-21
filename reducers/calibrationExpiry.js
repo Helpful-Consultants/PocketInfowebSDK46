@@ -3,9 +3,9 @@ import Types from '../constants/Types';
 import { getCalibrationExpiryCountsObj } from '../helpers/calibrationExpiry';
 
 const defaultCounts = {
+  overdueCount: 0,
   redCount: 0,
   amberCount: 0,
-  greenCount: 0,
   totalCount: 0,
 };
 
@@ -53,9 +53,9 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
           calibrationExpiryItemsArr
         ),
         calibrationExpiryCounts: calibrationExpiryCountsObj,
+        overdueCount: calibrationExpiryCountsObj.overdueCount,
         redCount: calibrationExpiryCountsObj.redCount,
         amberCount: calibrationExpiryCountsObj.amberCount,
-        greenCount: calibrationExpiryCountsObj.greenCount,
         totalCount: calibrationExpiryCountsObj.totalCount,
         isLoading: false,
         error: null,

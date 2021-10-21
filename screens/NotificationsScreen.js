@@ -25,15 +25,16 @@ export default NotificationsScreen = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
 
+  const storedCalibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
   const storedCalibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
   const storedCalibrationExpiryAmberCount = useSelector(
     (state) => state.calibrationExpiry.amberCount
   );
-  const storedCalibrationExpiryGreenCount = useSelector(
-    (state) => state.calibrationExpiry.greenCount
-  );
+
   const storedCalibrationExpiryTotalCount = useSelector(
     (state) => state.calibrationExpiry.totalCount
   );
@@ -64,7 +65,7 @@ export default NotificationsScreen = (props) => {
   const dealerId = userDataObj && userDataObj.dealerId;
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(true);
+  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
@@ -73,7 +74,7 @@ export default NotificationsScreen = (props) => {
   const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
   const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
     useState(0);
-  const [calibrationExpiryGreenCount, setCalibrationExpiryGreenCount] =
+  const [calibrationExpiryOverdueCount, setCalibrationExpiryOverdueCount] =
     useState(0);
   const [calibrationExpiryTotalCount, setCalibrationExpiryTotalCount] =
     useState(0);
@@ -252,16 +253,15 @@ export default NotificationsScreen = (props) => {
       //     ltpLoansRedCount,
       //     ltpLoansAmberCount
       //   );
-
+      setCalibrationExpiryOverdueCount(storedCalibrationExpiryOverdueCount);
       setCalibrationExpiryRedCount(storedCalibrationExpiryRedCount);
       setCalibrationExpiryAmberCount(storedCalibrationExpiryAmberCount);
-      setCalibrationExpiryGreenCount(storedCalibrationExpiryGreenCount);
       setCalibrationExpiryTotalCount(storedCalibrationExpiryTotalCount);
     }
   }, [
+    storedCalibrationExpiryOverdueCount,
     storedCalibrationExpiryRedCount,
     storedCalibrationExpiryAmberCount,
-    storedCalibrationExpiryGreenCount,
     storedCalibrationExpiryTotalCount,
   ]);
 
@@ -284,27 +284,27 @@ export default NotificationsScreen = (props) => {
   ]);
   //   console.log('calib exp red count', calibrationExpiryRedCount);
 
-  console.log(
-    'in notifications  calibrationExpiry Counts',
-    calibrationExpiryRedCount,
-    calibrationExpiryAmberCount,
-    calibrationExpiryGreenCount,
-    calibrationExpiryTotalCount
-  );
-  console.log(
-    'in notifications  ltpLoans Counts',
-    ltpLoansRedCount,
-    ltpLoansAmberCount,
-    'n/a',
-    ltpLoansTotalCount
-  );
-  console.log(
-    'in notifications  SM  Counts',
-    serviceMeasuresRedCount,
-    serviceMeasuresAmberCount,
-    serviceMeasuresGreenCount,
-    serviceMeasuresTotalCount
-  );
+  //   console.log(
+  //     'in notifications  calibrationExpiry Counts',
+  //     calibrationExpiryOverdueCount,
+  //     calibrationExpiryRedCount,
+  //     calibrationExpiryAmberCount,
+  //     calibrationExpiryTotalCount
+  //   );
+  //   console.log(
+  //     'in notifications  ltpLoans Counts',
+  //     ltpLoansRedCount,
+  //     ltpLoansAmberCount,
+  //     'n/a',
+  //     ltpLoansTotalCount
+  //   );
+  //   console.log(
+  //     'in notifications  SM  Counts',
+  //     serviceMeasuresRedCount,
+  //     serviceMeasuresAmberCount,
+  //     serviceMeasuresGreenCount,
+  //     serviceMeasuresTotalCount
+  //   );
 
   return (
     <ScrollView>
@@ -541,141 +541,146 @@ export default NotificationsScreen = (props) => {
           </View>
         ) : null
       ) : null}
-      {!isLoadingCalibrationExpiry ? (
-        dataErrorCalibrationExpiry ? (
-          <ErrorDetails
-            errorSummary={'Error syncing calibration expiry'}
-            dataStatusCode={dataStatusCodeCalibrationExpiry}
-            errorHtml={dataErrorCalibrationExpiry}
-            dataErrorUrl={dataErrorUrlCalibrationExpiry}
-          />
-        ) : calibrationExpiryTotalCount !== 'undefined' &&
-          calibrationExpiryRedCount !== 'undefined' &&
-          calibrationExpiryAmberCount !== 'undefined' ? (
-          <View>
-            {calibrationExpiryTotalCount > 0 ? (
-              <TouchableOpacity
-                onPress={() => {
-                  setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
-                }}
-              >
+      {!isLoadingCalibrationExpiry
+        ? ((dataErrorCalibrationExpiry ? (
+            <ErrorDetails
+              errorSummary={'Error syncing calibration expiry'}
+              dataStatusCode={dataStatusCodeCalibrationExpiry}
+              errorHtml={dataErrorCalibrationExpiry}
+              dataErrorUrl={dataErrorUrlCalibrationExpiry}
+            />
+          ) : (
+            <View>
+              {calibrationExpiryTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                  }}
+                >
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='timer'
+                      size={20}
+                      color={
+                        calibrationExpiryOverdueCount > 0 ||
+                        calibrationExpiryRedCount > 0
+                          ? Colors.vwgBadgeSevereAlertColor
+                          : Colors.vwgBadgeAlertColor
+                      }
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {calibrationExpiryTotalCount > 1
+                        ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
+                        : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
+                    </Text>
+                    <Ionicons
+                      name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
+                      size={20}
+                      color={Colors.vwgVeryDarkGray}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons
-                    name='timer'
-                    size={20}
-                    color={
-                      calibrationExpiryRedCount > 0
-                        ? Colors.vwgBadgeSevereAlertColor
-                        : calibrationExpiryAmberCount !== 'undefined' &&
-                          calibrationExpiryAmberCount > 0
-                        ? Colors.vwgBadgeAlertColor
-                        : Colors.vwgBadgeOKColor
-                    }
-                  />
+                  <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
                     {calibrationExpiryTotalCount > 1
-                      ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
-                      : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
+                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
+                      : calibrationExpiryTotalCount > 0
+                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                      : '  No pending Calibration Expiry Actions  '}
                   </Text>
-                  <Ionicons
-                    name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
-                    size={20}
-                    color={Colors.vwgVeryDarkGray}
-                  />
                 </View>
-              </TouchableOpacity>
-            ) : (
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
-                <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryTotalCount > 1
-                    ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
-                    : calibrationExpiryTotalCount > 0
-                    ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
-                    : '  No pending Calibration Expiry Actions  '}
-                </Text>
-              </View>
-            )}
-            {isOpenCalibrationExpiry ? (
-              calibrationExpiryTotalCount > 0 ? (
-                <View>
-                  {calibrationExpiryRedCount > 0 ? (
-                    <View
+              )}
+              {isOpenCalibrationExpiry ? (
+                calibrationExpiryTotalCount > 0 ? (
+                  <View>
+                    {calibrationExpiryOverdueCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-down'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeSevereAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryOverdueCount === 1
+                            ? `  ${calibrationExpiryOverdueCount} item's calibration has expired.`
+                            : `  ${calibrationExpiryOverdueCount} items' calibrations have expired.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {calibrationExpiryRedCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeSevereAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryRedCount === 1
+                            ? `  ${calibrationExpiryRedCount} item's calibration expires within 30 days.`
+                            : `  ${calibrationExpiryRedCount} items' calibrations expire within 30 days.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {calibrationExpiryAmberCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryAmberCount === 1
+                            ? `  ${calibrationExpiryAmberCount} item's calibration expires within 60 days.`
+                            : `  ${calibrationExpiryAmberCount} items' calibrations expire within 60 days.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    <Text
                       style={{
-                        ...baseStyles.viewRowFlexCentreAligned,
+                        ...baseStyles.textLeftAligned,
                         marginHorizontal: 8,
                         marginTop: 10,
                       }}
                     >
-                      <InlineIcon
-                        itemType='font-awesome'
-                        iconName={'thumbs-down'}
-                        iconSize={RFPercentage(2.4)}
-                        iconColor={Colors.vwgBadgeSevereAlertColor}
-                      />
-                      <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryRedCount === 1
-                          ? `  ${calibrationExpiryRedCount} item's calibration has expired.`
-                          : `  ${calibrationExpiryRedCount} items' calibrations have expired.`}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {calibrationExpiryAmberCount > 0 ? (
-                    <View
-                      style={{
-                        ...baseStyles.viewRowFlexCentreAligned,
-                        marginHorizontal: 8,
-                        marginTop: 10,
-                      }}
-                    >
-                      <InlineIcon
-                        itemType='font-awesome'
-                        iconName={'thumbs-up'}
-                        iconSize={RFPercentage(2.4)}
-                        iconColor={Colors.vwgCoolOrange}
-                      />
-                      <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryAmberCount === 1
-                          ? `  ${calibrationExpiryAmberCount} item's calibration expires within 30 days.`
-                          : `  ${calibrationExpiryAmberCount} items' calibrations expire within 30 days.`}
-                      </Text>
-                    </View>
-                  ) : null}
-                  {calibrationExpiryGreenCount > 0 ? (
-                    <View
-                      style={{
-                        ...baseStyles.viewRowFlexCentreAligned,
-                        marginHorizontal: 8,
-                        marginTop: 10,
-                      }}
-                    >
-                      <InlineIcon
-                        itemType='font-awesome'
-                        iconName={'thumbs-up'}
-                        iconSize={RFPercentage(2.4)}
-                        iconColor={Colors.vwgBadgeOKColor}
-                      />
-                      <Text style={baseStyles.textLeftAligned}>
-                        {calibrationExpiryGreenCount === 1
-                          ? `  ${calibrationExpiryGreenCount} item's calibration expires within 60 days.`
-                          : `  ${calibrationExpiryGreenCount} items' calibrations expire within 60 days.`}
-                      </Text>
-                    </View>
-                  ) : null}
-                </View>
-              ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No calibration expirations in the next 60 days.
+                      See these calibration records at Tools Infoweb.
                     </Text>
                   </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        ) : null
-      ) : null}
+                ) : (
+                  <View style={baseStyles.viewDataList}>
+                    <View style={baseStyles.textDataListItem}>
+                      <Text style={baseStyles.textLeftAligned}>
+                        No calibration expirations in the next 60 days.
+                      </Text>
+                    </View>
+                  </View>
+                )
+              ) : null}
+            </View>
+          )): null)
+        : null}
     </ScrollView>
   );
 };

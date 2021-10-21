@@ -71,6 +71,9 @@ const RemindersTabs =
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const storedCalibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
   const storedCalibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
@@ -104,7 +107,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
   const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
     useState(0);
-  const [calibrationExpiryGreenCount, setCalibrationExpiryGreenCount] =
+  const [calibrationExpiryOverdueCount, setCalibrationExpiryOverdueCount] =
     useState(0);
   const [calibrationExpiryTotalCount, setCalibrationExpiryTotalCount] =
     useState(0);
@@ -176,17 +179,21 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //     calibrationExpiryRedCount,
       //     calibrationExpiryAmberCount
       //   );
+      setCalibrationExpiryOverdueCount(storedCalibrationExpiryOverdueCount);
       setCalibrationExpiryRedCount(storedCalibrationExpiryRedCount);
       setCalibrationExpiryAmberCount(storedCalibrationExpiryAmberCount);
-      setCalibrationExpiryAmberCount(storedCalibrationExpiryGreenCount);
       setCalibrationExpiryTotalCount(storedCalibrationExpiryTotalCount);
 
       const tempNotifiableCalibrationExpiryCount =
+        (typeof storedCalibrationExpiryOverdueCount !== 'undefined' ||
+          storedCalibrationExpiryOverdueCount !== null) &&
         (typeof storedCalibrationExpiryRedCount !== 'undefined' ||
           storedCalibrationExpiryRedCount !== null) &&
         (typeof storedCalibrationExpiryAmberCount !== 'undefined' ||
           storedCalibrationExpiryAmberCount !== null)
-          ? storedCalibrationExpiryRedCount + storedCalibrationExpiryAmberCount
+          ? storedCalibrationExpiryOverdueCount +
+            storedCalibrationExpiryRedCount +
+            storedCalibrationExpiryAmberCount
           : 0;
       setCalibrationExpiryAlertCount(tempNotifiableCalibrationExpiryCount);
       //   console.log(
@@ -198,9 +205,9 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //   );
     }
   }, [
+    storedCalibrationExpiryOverdueCount,
     storedCalibrationExpiryRedCount,
     storedCalibrationExpiryAmberCount,
-    storedCalibrationExpiryGreenCount,
     storedCalibrationExpiryTotalCount,
   ]);
 
@@ -281,6 +288,13 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       let tempNotifiableAlertsRedCount = 0;
 
       if (
+        typeof calibrationExpiryOverdueCount !== 'undefined' ||
+        calibrationExpiryOverdueCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
+      }
+      if (
         typeof calibrationExpiryRedCount !== 'undefined' ||
         calibrationExpiryRedCount !== null
       ) {
@@ -316,7 +330,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
       setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
     }
-  }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]);
+  }, [
+    calibrationExpiryOverdueCount,
+    calibrationExpiryRedCount,
+    ltpLoansRedCount,
+    serviceMeasuresRedCount,
+  ]);
 
   useEffect(() => {
     if (showingDemoApp) {
