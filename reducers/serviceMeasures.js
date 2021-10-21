@@ -13,6 +13,10 @@ const defaultCounts = {
 const INITIAL_STATE = {
   serviceMeasuresItems: [],
   serviceMeasuresCounts: defaultCounts,
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -102,14 +106,23 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       const filteredServiceMeasuresArr =
         (action.payload.items && filterExpiredItems(action.payload.items)) ||
         [];
+      const serviceMeasuresCountsObj = getServiceMeasuresCountsObj(
+        filteredServiceMeasuresArr
+      );
+      //   console.log(
+      //     'in reducer serviceMeasuresCountsObj',
+      //     serviceMeasuresCountsObj
+      //   );
 
       return {
         ...state,
         // newsItems: [],
         serviceMeasuresItems: filteredServiceMeasuresArr,
-        serviceMeasuresCounts: getServiceMeasuresCountsObj(
-          filteredServiceMeasuresArr
-        ),
+        serviceMeasuresCounts: serviceMeasuresCountsObj,
+        redCount: serviceMeasuresCountsObj.redCount,
+        amberCount: serviceMeasuresCountsObj.amberCount,
+        greenCount: serviceMeasuresCountsObj.greenCount,
+        totalCount: serviceMeasuresCountsObj.totalCount,
         // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
         isLoading: false,
         error: null,
@@ -125,6 +138,10 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         ...state,
         serviceMeasuresItems: [],
         serviceMeasuresCounts: defaultCounts,
+        redCount: 0,
+        amberCount: 0,
+        greenCount: 0,
+        totalCount: 0,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

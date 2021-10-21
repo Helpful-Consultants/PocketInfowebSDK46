@@ -71,29 +71,27 @@ const RemindersTabs =
 export default RemindersTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
-  const serviceMeasuresRedCount =
-    useSelector(
-      (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
-    ) || 0;
-  const serviceMeasuresAmberCount =
-    useSelector(
-      (state) => state.serviceMeasures.serviceMeasuresCounts.amberCount
-    ) || 0;
-  const ltpLoansRedCount =
-    useSelector((state) => state.ltpLoans.ltpLoansCounts.redCount) || 0;
-  const ltpLoansAmberCount =
-    useSelector((state) => state.ltpLoans.ltpLoansCounts.amberCount) || 0;
-  const calibrationExpiryRedCount =
-    useSelector(
-      (state) => state.calibrationExpiry.calibrationExpiryCounts.redCount
-    ) || 0;
-  const calibrationExpiryAmberCount =
-    useSelector(
-      (state) => state.calibrationExpiry.calibrationExpiryCounts.amberCount
-    ) || 0;
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
 
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
-  const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
+  const [calibrationExpiryAlertCount, setCalibrationExpiryAlertCount] =
+    useState(0);
+  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] =
+    useState(0);
+  const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
   const [odisAlertCount, setOdisAlertCount] = useState(0);
   const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
   //   const [calibrationAmberExpiryCount, setCalibrationAmberExpiryCount] =
@@ -143,76 +141,178 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   useEffect(() => {
     if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect calibrationExpiryCounts',
+      //     calibrationExpiryRedCount,
+      //     calibrationExpiryAmberCount
+      //   );
       const tempNotifiableCalibrationExpiryAlertCount =
         (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0) &&
         (calibrationExpiryRedCount || calibrationExpiryRedCount === 0)
           ? calibrationExpiryRedCount + calibrationExpiryAmberCount
           : 0;
 
-      console.log(
-        'in nav useEffect calibrationExpiryCounts',
-        'calibrationExpiryRedCount:',
-        calibrationExpiryRedCount,
-        'calibrationExpiryAmberCount:',
-        calibrationExpiryAmberCount,
-        'tempNotifiableCalibrationExpiryAlertCount:',
-        tempNotifiableCalibrationExpiryAlertCount
-      );
+      //   console.log(
+      //     'in nav useEffect calibrationExpiryCounts',
+      //     'calibrationExpiryRedCount:',
+      //     calibrationExpiryRedCount,
+      //     'calibrationExpiryAmberCount:',
+      //     calibrationExpiryAmberCount,
+      //     'tempNotifiableCalibrationExpiryAlertCount:',
+      //     tempNotifiableCalibrationExpiryAlertCount
+      //   );
 
-      setNotificationsAlertCount(tempNotifiableCalibrationExpiryAlertCount);
+      setCalibrationExpiryAlertCount(tempNotifiableCalibrationExpiryAlertCount);
     }
   }, [calibrationExpiryRedCount, calibrationExpiryAmberCount]);
 
   useEffect(() => {
     if (showingDemoApp) {
-      const tempNotifiableServiceMeasuresAlertCount =
-        (serviceMeasuresRedCount || serviceMeasuresRedCount === 0) &&
-        (serviceMeasuresAmberCount || serviceMeasuresAmberCount === 0)
-          ? serviceMeasuresRedCount + serviceMeasuresAmberCount
-          : 0;
-      console.log(
-        'in nav useEffect serviceMeasuresCounts',
-        'serviceMeasuresRedCount:',
-        serviceMeasuresRedCount,
-        'serviceMeasuresAmberCount:',
-        serviceMeasuresAmberCount,
-        'tempNotifiableServiceMeasuresAlertCount:',
-        tempNotifiableServiceMeasuresAlertCount
-      );
-
       //   console.log(
-      //     'in nav useEffect',
-      //     'ServiceMeasureCount',
-      //     notifiableServiceMeasureCount,
-      //     serviceMeasuresAmberCount,
+      //     'in reminders nav useEffect serviceMeasuresCounts',
+      //     serviceMeasuresRedCount,
       //     serviceMeasuresAmberCount
       //   );
+      const tempNotifiableServiceMeasuresCount =
+        (typeof serviceMeasuresRedCount !== 'undefined' ||
+          serviceMeasuresRedCount !== null) &&
+        (typeof serviceMeasuresAmberCount !== 'undefined' ||
+          serviceMeasuresAmberCount !== null)
+          ? serviceMeasuresRedCount + serviceMeasuresAmberCount
+          : 0;
 
-      setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresAlertCount);
+      //   console.log(
+      //     'in reminders nav useEffect serviceMeasuresCounts',
+      //     serviceMeasuresRedCount,
+      //     serviceMeasuresAmberCount,
+      //     'tempNotifiableServiceMeasuresCount',
+      //     tempNotifiableServiceMeasuresCount
+      //   );
+
+      setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresCount);
     }
-    //   }, []);
-  }, [serviceMeasuresRedCount, serviceMeasuresAmberCount]);
+  }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]); //testing objects
 
   useEffect(() => {
     if (showingDemoApp) {
-      const tempNotifiableLtpLoansAlertCount =
-        (ltpLoansRedCount || ltpLoansRedCount === 0) &&
-        (ltpLoansAmberCount || ltpLoansAmberCount === 0)
-          ? ltpLoansAmberCount + ltpLoansRedCount
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+      const tempNotifiableLtpLoansCount =
+        (typeof ltpLoansRedCount !== 'undefined' ||
+          ltpLoansRedCount !== null) &&
+        (typeof ltpLoansAmberCount !== 'undefined' ||
+          ltpLoansAmberCount !== null)
+          ? ltpLoansRedCount + ltpLoansAmberCount
           : 0;
-      console.log(
-        'in nav useEffect ltpLoansCounts',
-        'ltpLoansRedCount:',
-        ltpLoansRedCount,
-        'ltpLoansAmberCount:',
-        ltpLoansAmberCount,
-        'tempNotifiableLtpLoansAlertCount:',
-        tempNotifiableLtpLoansAlertCount
-      );
 
-      setLtpLoansAlertCount(tempNotifiableLtpLoansAlertCount);
+      //   console.log(
+      //     'in reminders nav useEffect ltpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount,
+      //     'tempNotifiableLtpLoansCount',
+      //     tempNotifiableLtpLoansCount
+      //   );
+
+      setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
     }
-  }, [ltpLoansRedCount, ltpLoansAmberCount]);
+  }, [ltpLoansAmberCount, ltpLoansRedCount]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+      let tempNotifiableAlertsRedCount = 0;
+
+      if (
+        typeof calibrationExpiryRedCount !== 'undefined' ||
+        calibrationExpiryRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
+      }
+      if (
+        typeof serviceMeasuresRedCount !== 'undefined' ||
+        serviceMeasuresRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
+      }
+      if (
+        typeof ltpLoansRedCount !== 'undefined' ||
+        ltpLoansRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + ltpLoansRedCount;
+      }
+
+      //   console.log(
+      //     'in reminders nav useEffect - Red alerts ',
+      //     'calibrationExpiryRedCount',
+      //     calibrationExpiryRedCount,
+      //     'ltpLoansRedCount',
+      //     ltpLoansRedCount,
+      //     'serviceMeasuresRedCount',
+      //     serviceMeasuresRedCount,
+      //     'tempNotifiableAlertsRedCount',
+      //     tempNotifiableAlertsRedCount
+      //   );
+
+      setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
+    }
+  }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+      let tempNotifiableAlertsAmberCount = 0;
+
+      if (
+        typeof calibrationExpiryAmberCount !== 'undefined' ||
+        calibrationExpiryAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
+      }
+      if (
+        typeof serviceMeasuresAmberCount !== 'undefined' ||
+        serviceMeasuresAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
+      }
+      if (
+        typeof ltpLoansAmberCount !== 'undefined' ||
+        ltpLoansAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
+      }
+
+      //   console.log(
+      //     'in reminders nav useEffect - Amber Alerts ',
+      //     'calibrationExpiryAmberCount',
+      //     calibrationExpiryAmberCount,
+      //     'ltpLoansAmberCount',
+      //     ltpLoansAmberCount,
+      //     'serviceMeasuresAmberCount',
+      //     serviceMeasuresAmberCount,
+      //     'tempNotifiableAlertsAmberCount',
+      //     tempNotifiableAlertsAmberCount
+      //   );
+
+      setNotifiableAlertsAmberCount(tempNotifiableAlertsAmberCount);
+    }
+  }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]);
 
   //   console.log(
   //     '$$$$$$$$$$$$$$ in reminders  navigator,',
@@ -269,14 +369,20 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
-          tabBarBadge: notificationsAlertCount ? notificationsAlertCount : null,
+          tabBarBadge: notifiableAlertsRedCount
+            ? notifiableAlertsRedCount
+            : notifiableAlertsAmberCount
+            ? notifiableAlertsAmberCount
+            : null,
           tabBarBadgeStyle: {
-            backgroundColor:
-              calibrationExpiryRedCount && calibrationExpiryRedCount > 0
+            color:
+              notifiableAlertsRedCount > 0
                 ? Colors.vwgBadgeSevereAlertColor
-                : calibrationExpiryAmberCount && calibrationExpiryAmberCount > 0
-                ? Colors.vwgWarmOrange
-                : Colors.vwgMintGreen,
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              notifiableAlertsRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
           },
         }}
       />
@@ -291,8 +397,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
             ? serviceMeasuresAlertCount
             : null,
           tabBarBadgeStyle: {
+            color:
+              serviceMeasuresRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
             backgroundColor:
-              serviceMeasuresRedCount && serviceMeasuresRedCount > 0
+              serviceMeasuresRedCount > 0
                 ? Colors.vwgBadgeSevereAlertColor
                 : Colors.vwgWarmOrange,
           },
@@ -307,8 +417,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           ),
           tabBarBadge: ltpLoansAlertCount ? ltpLoansAlertCount : null,
           tabBarBadgeStyle: {
+            color:
+              ltpLoansRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
             backgroundColor:
-              ltpLoansRedCount && ltpLoansRedCount > 0
+              ltpLoansRedCount > 0
                 ? Colors.vwgBadgeSevereAlertColor
                 : Colors.vwgWarmOrange,
           },

@@ -38,7 +38,12 @@ export default DemoDataSwitch = (props) => {
     let tempSwitchStatus =
       requestedDemoData && requestedDemoData === true ? true : false;
 
-    // console.log('in toggle switch switchStatus', switchStatus);
+    // console.log(
+    //   '@@@@@@@@in toggle switch switchStatus',
+    //   switchStatus,
+    //   'changing to ',
+    //   !switchStatus
+    // );
     dispatch(
       setUserRequestedDemoData({ requestedDemoData: !tempSwitchStatus })
     );
@@ -48,6 +53,7 @@ export default DemoDataSwitch = (props) => {
       userApiFetchParamsObj.intId &&
       userApiFetchParamsObj.dealerId
     ) {
+      //   console.log('@@@@@@@@in toggle switch switchStatus calling apis');
       dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
       dispatch(getNewsRequest(userApiFetchParamsObj));
       dispatch(getLtpLoansRequest(userApiFetchParamsObj));

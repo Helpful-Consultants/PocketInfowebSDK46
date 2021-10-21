@@ -239,7 +239,7 @@ export default ServiceMeasuresScreen = (props) => {
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Visit Tools Infoweb to complete these, and view ended measures.
+            Visit Tools Infoweb to complete these, or view ended measures.
           </Text>
         </View>
       )}

@@ -18,8 +18,6 @@ import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import InlineIcon from '../components/InlineIcon';
 
-const nowDateObj = new Date();
-
 export default NotificationsScreen = (props) => {
   //   console.log('NotificationsScreen props', props);
   const { navigation } = props;

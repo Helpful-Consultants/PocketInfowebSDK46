@@ -153,27 +153,20 @@ export default HomeScreen = (props) => {
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
-  const serviceMeasuresRedCount =
-    useSelector(
-      (state) => state.serviceMeasures.serviceMeasuresCounts.redCount
-    ) || 0;
-  const serviceMeasuresAmberCount =
-    useSelector(
-      (state) => state.serviceMeasures.serviceMeasuresCounts.amberCount
-    ) || 0;
-  const calibrationExpiryRedCount =
-    useSelector(
-      (state) => state.calibrationExpiry.calibrationExpiryCounts.redCount
-    ) || 0;
-  const calibrationExpiryAmberCount =
-    useSelector(
-      (state) => state.calibrationExpiry.calibrationExpiryCounts.amberCount
-    ) || 0;
-
-  const ltpLoansRedCount =
-    useSelector((state) => state.ltpLoans.ltpLoansCounts.redCount) || 0;
-  const ltpLoansAmberCount =
-    useSelector((state) => state.ltpLoans.ltpLoansCounts.amberCount) || 0;
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
 
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
@@ -474,7 +467,6 @@ export default HomeScreen = (props) => {
         setShouldCheckAppVersion(true);
         checkAppUpdates();
       }
-      countNotifiableItems();
     }, [])
   );
 
@@ -578,50 +570,79 @@ export default HomeScreen = (props) => {
   //   console.log('Rendering Home screen');
   useEffect(() => {
     if (showingDemoApp) {
-      console.log(
-        'in nav useEffect calibrationExpiryCounts',
-        calibrationExpiryRedCount && calibrationExpiryRedCount,
-        calibrationExpiryAmberCount && calibrationExpiryAmberCount
-      );
-      const notifiableCalibrationAlertsCount =
+      //   console.log(
+      //     'in home useEffect calibrationExpiryCounts',
+      //     calibrationExpiryRedCount,
+      //     calibrationExpiryAmberCount
+      //   );
+      const tempNotifiableCalibrationAlertsCount =
         (calibrationExpiryRedCount || calibrationExpiryRedCount === 0) &&
         (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0)
           ? calibrationExpiryRedCount + calibrationExpiryAmberCount
           : 0;
 
-      setNotificationsAlertCount(notifiableCalibrationAlertsCount);
+      //   console.log(
+      //     'in home useEffect calibrationExpiryCounts',
+      //     calibrationExpiryRedCount,
+      //     calibrationExpiryAmberCount,
+      //     'tempNotifiableCalibrationExpiryCount',
+      //     tempNotifiableCalibrationAlertsCount
+      //   );
+
+      setNotificationsAlertCount(tempNotifiableCalibrationAlertsCount);
     }
   }, [calibrationExpiryAmberCount, calibrationExpiryRedCount]);
 
   useEffect(() => {
     if (showingDemoApp) {
-      console.log(
-        'in nav useEffect serviceMeasuresCounts',
-        serviceMeasuresRedCount && serviceMeasuresRedCount,
-        serviceMeasuresAmberCount && serviceMeasuresAmberCount
-      );
-      const tempNotifiableServiceMeasureCount =
-        (serviceMeasuresRedCount || serviceMeasuresRedCount === 0) &&
-        (serviceMeasuresAmberCount || serviceMeasuresAmberCount === 0)
+      //   console.log(
+      //     'in home useEffect serviceMeasuresCounts',
+      //     serviceMeasuresRedCount,
+      //     serviceMeasuresAmberCount
+      //   );
+      const tempNotifiableServiceMeasuresCount =
+        (typeof serviceMeasuresRedCount !== 'undefined' ||
+          serviceMeasuresRedCount !== null) &&
+        (typeof serviceMeasuresAmberCount !== 'undefined' ||
+          serviceMeasuresAmberCount !== null)
           ? serviceMeasuresRedCount + serviceMeasuresAmberCount
           : 0;
 
-      setServiceMeasuresAlertCount(tempNotifiableServiceMeasureCount);
+      //   console.log(
+      //     'in home useEffect serviceMeasuresCounts',
+      //     serviceMeasuresRedCount,
+      //     serviceMeasuresAmberCount,
+      //     'tempNotifiableServiceMeasuresCount',
+      //     tempNotifiableServiceMeasuresCount
+      //   );
+
+      setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresCount);
+      //   countNotifiableItems();
     }
-  }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]);
+  }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]); //testing objects
 
   useEffect(() => {
     if (showingDemoApp) {
-      console.log(
-        'in nav useEffect ltpLoansCounts',
-        ltpLoansRedCount && ltpLoansRedCount,
-        ltpLoansAmberCount && ltpLoansAmberCount
-      );
+      //   console.log(
+      //     'in home useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
       const tempNotifiableLtpLoansCount =
-        (ltpLoansRedCount || ltpLoansRedCount === 0) &&
-        (ltpLoansAmberCount || ltpLoansAmberCount === 0)
-          ? ltpLoansAmberCount + ltpLoansRedCount
+        (typeof ltpLoansRedCount !== 'undefined' ||
+          ltpLoansRedCount !== null) &&
+        (typeof ltpLoansAmberCount !== 'undefined' ||
+          ltpLoansAmberCount !== null)
+          ? ltpLoansRedCount + ltpLoansAmberCount
           : 0;
+
+      //   console.log(
+      //     'in home useEffect ltpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount,
+      //     'tempNotifiableLtpLoansCount',
+      //     tempNotifiableLtpLoansCount
+      //   );
 
       setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
     }

@@ -12,8 +12,8 @@ export const getBadgeCountAsync = async () => {
   try {
     const count = await Notifications.getBadgeCountAsync();
     //   console.log(`app badge number is ${count}`);
-    setAppBadgeCount(count);
-    setAppBadgeStatus(count ? true : false);
+    // setAppBadgeCount(count);
+    // setAppBadgeStatus(count ? true : false);
     return count;
   } catch (err) {
     //   console.log('did not manage to get app badge count!', err);
@@ -27,8 +27,8 @@ export const incrementBadgeCountAsync = async () => {
     const count = await Notifications.getBadgeCountAsync();
     //   console.log(`app badge number is now  ${count}, setting to ${count + 1}`);
     await Notifications.setBadgeCountAsync(count + 1);
-    setAppBadgeCount(count + 1);
-    setAppBadgeStatus(true);
+    // setAppBadgeCount(count + 1);
+    // setAppBadgeStatus(true);
     return count;
   } catch (err) {
     //   console.log('did not manage to increment app badge count!', err);
@@ -36,12 +36,13 @@ export const incrementBadgeCountAsync = async () => {
   }
 };
 
-export const setBadgeCountAsync = async () => {
+export const setBadgeCountAsync = async (count = 0) => {
   // set notifications badge count
+  console.log(`setting the app badge with number ${count}`);
   try {
-    const setCount = await Notifications.setBadgeCountAsync(99);
-    //   console.log(`setting app badge with number 1 ${setCount}`);
-    setAppBadgeStatus(setCount);
+    const setCount = await Notifications.setBadgeCountAsync(count);
+    console.log('successfully set app badge to', count);
+    // setAppBadgeStatus(setCount);
   } catch (err) {
     //   console.log('did not manage to set notif app badge count!', err);
   }
@@ -52,7 +53,7 @@ export const resetBadgeCountAsync = async () => {
   try {
     const resetCount = await Notifications.setBadgeCountAsync(0);
     //   console.log(`reset app badge count ${resetCount}`);
-    setAppBadgeStatus(!resetCount);
+    // setAppBadgeStatus(!resetCount);
     getBadgeCountAsync();
   } catch (err) {
     //   console.log('did not manage to reset notif app badge count!', err);

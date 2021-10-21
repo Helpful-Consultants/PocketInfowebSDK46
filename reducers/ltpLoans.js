@@ -12,6 +12,10 @@ const defaultCounts = {
 const INITIAL_STATE = {
   ltpLoansItems: [],
   ltpLoansCounts: defaultCounts,
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -76,11 +80,17 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
       const filteredLtpLoansArr =
         (action.payload.items && filterReturnedItems(action.payload.items)) ||
         [];
+      const ltpLoansCountsObj = getLtpLoansCountsObj(filteredLtpLoansArr);
+      //   console.log('in reducer ltpLoansCountsObj', ltpLoansCountsObj);
       return {
         ...state,
         // newsItems: [],
         ltpLoansItems: filteredLtpLoansArr,
-        ltpLoansCounts: getLtpLoansCountsObj(filteredLtpLoansArr),
+        ltpLoansCounts: ltpLoansCountsObj,
+        redCount: ltpLoansCountsObj.redCount,
+        amberCount: ltpLoansCountsObj.amberCount,
+        greenCount: ltpLoansCountsObj.greenCount,
+        totalCount: ltpLoansCountsObj.totalCount,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -95,6 +105,10 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
         ...state,
         ltpLoansItems: [],
         ltpLoansCounts: defaultCounts,
+        redCount: 0,
+        amberCount: 0,
+        greenCount: 0,
+        totalCount: 0,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

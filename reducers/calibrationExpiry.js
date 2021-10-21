@@ -37,6 +37,13 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
       //   console.log(action.payload.items && action.payload.items);
       const calibrationExpiryItemsArr =
         (action.payload && action.payload.items && action.payload.items) || [];
+      const calibrationExpiryCountsObj = getCalibrationExpiryCountsObj(
+        calibrationExpiryItemsArr
+      );
+      //   console.log(
+      //     'in reducer calibrationExpiryCountsObj',
+      //     calibrationExpiryCountsObj
+      //   );
 
       return {
         ...state,
@@ -45,6 +52,11 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
         calibrationExpiryCounts: getCalibrationExpiryCountsObj(
           calibrationExpiryItemsArr
         ),
+        calibrationExpiryCounts: calibrationExpiryCountsObj,
+        redCount: calibrationExpiryCountsObj.redCount,
+        amberCount: calibrationExpiryCountsObj.amberCount,
+        greenCount: calibrationExpiryCountsObj.greenCount,
+        totalCount: calibrationExpiryCountsObj.totalCount,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

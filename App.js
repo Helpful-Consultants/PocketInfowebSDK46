@@ -262,7 +262,6 @@ export default function App(props) {
       />
     );
   } else {
-    // console.log('in App');
     return (
       <SafeAreaProvider>
         <Provider store={store}>

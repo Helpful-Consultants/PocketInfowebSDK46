@@ -33,6 +33,8 @@ import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
+// import { checkNotifiableItems } from '../helpers/alertStatus';
+import { setBadgeCountAsync } from '../helpers/appBadge';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
@@ -142,6 +144,13 @@ export default AppNavigator = (props) => {
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
@@ -243,6 +252,56 @@ export default AppNavigator = (props) => {
     // );
     setShowDemoApp(showingDemoApp);
   }, [showingDemoApp]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      console.log(
+        'in appnav useEffect serviceMeasuresCounts',
+        'serviceMeasuresRedCount',
+        serviceMeasuresRedCount,
+        'ltpLoansRedCount',
+        ltpLoansRedCount
+      );
+
+      let tempNotifiableAlertsCount = 0;
+      if (
+        typeof calibrationExpiryRedCount !== 'undefined' &&
+        calibrationExpiryRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + calibrationExpiryRedCount;
+      }
+
+      if (
+        typeof ltpLoansRedCount !== 'undefined' &&
+        ltpLoansRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + ltpLoansRedCount;
+      }
+
+      if (
+        typeof serviceMeasuresRedCount !== 'undefined' &&
+        serviceMeasuresRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + serviceMeasuresRedCount;
+      }
+
+      console.log(
+        'in appnav useEffect tempNotifiableAlertsCount',
+        'calibrationExpiryRedCount',
+        calibrationExpiryRedCount,
+        'serviceMeasuresRedCount',
+        serviceMeasuresRedCount,
+        'ltpLoansRedCount',
+        ltpLoansRedCount,
+        'tempNotifiableAlertsCount',
+        tempNotifiableAlertsCount
+      );
+      setBadgeCountAsync(tempNotifiableAlertsCount);
+    }
+  }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]); //testing objects
 
   //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
   //   console.log('ssssss in AppNavigator showDemoApp ', showDemoApp);

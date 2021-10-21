@@ -18,22 +18,31 @@ import newsDummyData from '../dummyData/newsDummyData';
 import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData';
 
 export const countNotifiableItems = () => {
+  let alertsCount = 0;
   let serviceMeasuresCountsObj =
     store.getState().serviceMeasures.serviceMeasuresCounts;
 
-  console.log('in countNotifiableItems', serviceMeasuresCountsObj);
+  //   console.log(
+  //     'A in countNotifiableItems',
+  //     serviceMeasuresCountsObj,
+  //     'alertsCount',
+  //     alertsCount
+  //   );
   if (
     serviceMeasuresCountsObj &&
-    serviceMeasuresCountsObj.redCount &&
-    serviceMeasuresCountsObj.redCount > 0
+    (serviceMeasuresCountsObj.redCount ||
+      serviceMeasuresCountsObj.redCount === 0)
   ) {
+    alertsCount = serviceMeasuresCountsObj.redCount;
+
     console.log(
-      'in countNotifiableItems >0',
-      serviceMeasuresCountsObj &&
-        serviceMeasuresCountsObj.redCount &&
-        serviceMeasuresCountsObj.redCount
+      'B in countNotifiableItems',
+      serviceMeasuresCountsObj,
+      'alertsCount',
+      alertsCount
     );
-    setBadgeCountAsync(44);
+
+    setBadgeCountAsync(alertsCount);
   }
 };
 
