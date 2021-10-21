@@ -153,21 +153,33 @@ export default HomeScreen = (props) => {
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
-  const serviceMeasuresRedCount = useSelector(
+  const storedServiceMeasuresRedCount = useSelector(
     (state) => state.serviceMeasures.redCount
   );
-  const serviceMeasuresAmberCount = useSelector(
+  const storedServiceMeasuresAmberCount = useSelector(
     (state) => state.serviceMeasures.amberCount
   );
-  const calibrationExpiryRedCount = useSelector(
+  const storedCalibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
-  const calibrationExpiryAmberCount = useSelector(
+  const storedCalibrationExpiryAmberCount = useSelector(
     (state) => state.calibrationExpiry.amberCount
   );
-  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-
+  const storedLtpLoansRedCount = useSelector(
+    (state) => state.ltpLoans.redCount
+  );
+  const storedLtpLoansAmberCount = useSelector(
+    (state) => state.ltpLoans.amberCount
+  );
+  const [ltpLoansRedAlertCount, setLtpLoansRedAlertCount] = useState(0);
+  const [ltpLoansAmberAlertCount, setLtpLoansAmberAlertCount] = useState(0);
+  const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
+  const [notificationsRedAlertCount, setNotificationsRedAlertCount] =
+    useState(0);
+  const [notificationsAmberAlertCount, setNotificationsAmberAlertCount] =
+    useState(0);
+  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] =
+    useState(0);
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
   const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
@@ -473,12 +485,12 @@ export default HomeScreen = (props) => {
   useEffect(() => {
     if (showingDemoApp) {
       setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
-      setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
-      setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
+      //   setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
+      //   setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
       setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
-      setServiceMeasuresAlertCount(
-        checkUnseenItems(InfoTypes.SERVICE_MEASURES)
-      );
+      //   setServiceMeasuresAlertCount(
+      //     checkUnseenItems(InfoTypes.SERVICE_MEASURES)
+      //   );
     }
   }, [showingDemoApp]);
 
@@ -568,85 +580,122 @@ export default HomeScreen = (props) => {
   const gridRows = showingDemoApp ? 8 : 6;
   //   console.log('home screen gridRows', gridRows);
   //   console.log('Rendering Home screen');
-  useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in home useEffect calibrationExpiryCounts',
-      //     calibrationExpiryRedCount,
-      //     calibrationExpiryAmberCount
-      //   );
-      const tempNotifiableCalibrationAlertsCount =
-        (calibrationExpiryRedCount || calibrationExpiryRedCount === 0) &&
-        (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0)
-          ? calibrationExpiryRedCount + calibrationExpiryAmberCount
-          : 0;
+  //   useEffect(() => {
+  //     if (showingDemoApp) {
+  //       //   console.log(
+  //       //     'in home useEffect calibrationExpiryCounts',
+  //       //     calibrationExpiryRedCount,
+  //       //     calibrationExpiryAmberCount
+  //       //   );
+  //       const tempNotifiableCalibrationAlertsCount =
+  //         (calibrationExpiryRedCount || calibrationExpiryRedCount === 0) &&
+  //         (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0)
+  //           ? calibrationExpiryRedCount + calibrationExpiryAmberCount
+  //           : 0;
 
-      //   console.log(
-      //     'in home useEffect calibrationExpiryCounts',
-      //     calibrationExpiryRedCount,
-      //     calibrationExpiryAmberCount,
-      //     'tempNotifiableCalibrationExpiryCount',
-      //     tempNotifiableCalibrationAlertsCount
-      //   );
+  //       //   console.log(
+  //       //     'in home useEffect calibrationExpiryCounts',
+  //       //     calibrationExpiryRedCount,
+  //       //     calibrationExpiryAmberCount,
+  //       //     'tempNotifiableCalibrationExpiryCount',
+  //       //     tempNotifiableCalibrationAlertsCount
+  //       //   );
 
-      setNotificationsAlertCount(tempNotifiableCalibrationAlertsCount);
-    }
-  }, [calibrationExpiryAmberCount, calibrationExpiryRedCount]);
+  //       setNotificationsAlertCount(tempNotifiableCalibrationAlertsCount);
+  //     }
+  //   }, [calibrationExpiryAmberCount, calibrationExpiryRedCount]);
 
-  useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in home useEffect serviceMeasuresCounts',
-      //     serviceMeasuresRedCount,
-      //     serviceMeasuresAmberCount
-      //   );
-      const tempNotifiableServiceMeasuresCount =
-        (typeof serviceMeasuresRedCount !== 'undefined' ||
-          serviceMeasuresRedCount !== null) &&
-        (typeof serviceMeasuresAmberCount !== 'undefined' ||
-          serviceMeasuresAmberCount !== null)
-          ? serviceMeasuresRedCount + serviceMeasuresAmberCount
-          : 0;
+  //   useEffect(() => {
+  //     if (showingDemoApp) {
+  //       //   console.log(
+  //       //     'in home useEffect serviceMeasuresCounts',
+  //       //     serviceMeasuresRedCount,
+  //       //     serviceMeasuresAmberCount
+  //       //   );
+  //       const tempNotifiableServiceMeasuresCount =
+  //         (typeof serviceMeasuresRedCount !== 'undefined' ||
+  //           serviceMeasuresRedCount !== null) &&
+  //         (typeof serviceMeasuresAmberCount !== 'undefined' ||
+  //           serviceMeasuresAmberCount !== null)
+  //           ? serviceMeasuresRedCount + serviceMeasuresAmberCount
+  //           : 0;
 
-      //   console.log(
-      //     'in home useEffect serviceMeasuresCounts',
-      //     serviceMeasuresRedCount,
-      //     serviceMeasuresAmberCount,
-      //     'tempNotifiableServiceMeasuresCount',
-      //     tempNotifiableServiceMeasuresCount
-      //   );
-
-      setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresCount);
-      //   countNotifiableItems();
-    }
-  }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]); //testing objects
+  //       setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresCount);
+  //       //   countNotifiableItems();
+  //     }
+  //   }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]); //testing objects
 
   useEffect(() => {
     if (showingDemoApp) {
       //   console.log(
       //     'in home useEffect LtpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount
+      //     storedLtpLoansAmberCount,
+      //     storedLtpLoansRedCount
       //   );
-      const tempNotifiableLtpLoansCount =
-        (typeof ltpLoansRedCount !== 'undefined' ||
-          ltpLoansRedCount !== null) &&
-        (typeof ltpLoansAmberCount !== 'undefined' ||
-          ltpLoansAmberCount !== null)
-          ? ltpLoansRedCount + ltpLoansAmberCount
+      const tempNotifiableCalibrationExpiryRedCount =
+        typeof storedCalibrationExpiryRedCount !== 'undefined' &&
+        storedCalibrationExpiryRedCount !== null
+          ? storedCalibrationExpiryRedCount
+          : 0;
+      const tempNotifiableCalibrationExpiryAmberCount =
+        typeof storedCalibrationExpiryAmberCount !== 'undefined' &&
+        storedCalibrationExpiryAmberCount !== null
+          ? storedCalibrationExpiryAmberCount
+          : 0;
+      const tempNotifiableLtpLoansRedCount =
+        typeof storedLtpLoansRedCount !== 'undefined' &&
+        storedLtpLoansRedCount !== null
+          ? storedLtpLoansRedCount
+          : 0;
+      const tempNotifiableLtpLoansAmberCount =
+        typeof storedLtpLoansAmberCount !== 'undefined' &&
+        storedLtpLoansAmberCount !== null
+          ? storedLtpLoansAmberCount
           : 0;
 
-      //   console.log(
-      //     'in home useEffect ltpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount,
-      //     'tempNotifiableLtpLoansCount',
-      //     tempNotifiableLtpLoansCount
-      //   );
+      const tempNotifiableServiceMeasuresRedCount =
+        typeof storedServiceMeasuresRedCount !== 'undefined' &&
+        storedServiceMeasuresRedCount !== null
+          ? storedServiceMeasuresRedCount
+          : 0;
+      const tempNotifiableServiceMeasuresAmberCount =
+        typeof storedServiceMeasuresAmberCount !== 'undefined' &&
+        storedServiceMeasuresAmberCount !== null
+          ? storedServiceMeasuresAmberCount
+          : 0;
 
-      setLtpLoansAlertCount(tempNotifiableLtpLoansCount);
+      setNotificationsRedAlertCount(
+        tempNotifiableCalibrationExpiryRedCount +
+          tempNotifiableLtpLoansRedCount +
+          tempNotifiableServiceMeasuresRedCount
+      );
+      setNotificationsAmberAlertCount(
+        tempNotifiableCalibrationExpiryAmberCount +
+          tempNotifiableLtpLoansAmberCount +
+          tempNotifiableServiceMeasuresAmberCount
+      );
+      setNotificationsTotalAlertCount(
+        tempNotifiableCalibrationExpiryRedCount +
+          tempNotifiableLtpLoansRedCount +
+          tempNotifiableServiceMeasuresRedCount +
+          tempNotifiableCalibrationExpiryAmberCount +
+          tempNotifiableLtpLoansAmberCount +
+          tempNotifiableServiceMeasuresAmberCount
+      );
+      setLtpLoansRedAlertCount(tempNotifiableLtpLoansRedCount);
+      setLtpLoansAmberAlertCount(tempNotifiableLtpLoansAmberCount);
+      setLtpLoansTotalAlertCount(
+        tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
+      );
     }
-  }, [ltpLoansAmberCount, ltpLoansRedCount]);
+  }, [
+    storedCalibrationExpiryRedCount,
+    storedCalibrationExpiryAmberCount,
+    storedLtpLoansRedCount,
+    storedLtpLoansAmberCount,
+    storedServiceMeasuresRedCount,
+    storedServiceMeasuresAmberCount,
+  ]);
 
   return (
     <View
@@ -865,16 +914,13 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={notificationsAlertCount}
+                          showBadge={notificationsTotalAlertCount}
                           focused={false}
                           text={'Notifications'}
-                          value={notificationsAlertCount ? '+' : null}
+                          value={notificationsTotalAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            calibrationExpiryRedCount &&
-                            calibrationExpiryRedCount > 0
-                              ? true
-                              : false
+                            notificationsRedAlertCount > 0 ? true : false
                           }
                         />
                       </View>
@@ -895,15 +941,13 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={ltpLoansAlertCount}
+                          showBadge={ltpLoansTotalAlertCount}
                           focused={false}
                           text={'LTP Loans'}
-                          value={ltpLoansAlertCount ? '+' : null}
+                          value={ltpLoansTotalAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            ltpLoansRedCount && ltpLoansRedCount > 0
-                              ? true
-                              : false
+                            ltpLoansRedAlertCount > 0 ? true : false
                           }
                         />
                       </View>
