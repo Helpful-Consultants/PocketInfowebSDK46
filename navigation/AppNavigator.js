@@ -308,7 +308,13 @@ export default AppNavigator = (props) => {
     } else {
       setBadgeCountAsync(0);
     }
-  }, [calibrationExpiryRedCount, ltpLoansRedCount, serviceMeasuresRedCount]); //testing objects
+  }, [
+    calibrationExpiryOverdueCount,
+    calibrationExpiryRedCount,
+    ltpLoansRedCount,
+    serviceMeasuresRedCount,
+    showingDemoApp,
+  ]); //testing objects
 
   //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
   //   console.log('ssssss in AppNavigator showDemoApp ', showDemoApp);
