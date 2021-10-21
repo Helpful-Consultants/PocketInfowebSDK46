@@ -7,6 +7,16 @@ Reformatting jobs screen
 Speeded up the revised tools basket
 Lightened text on news & Products
 
+AppBadge blob reasons
+____________________________________
+
+ODIS - new version
+News - item flagged as business critical
+LTP - red
+Ltp loan - red
+Calib Exp - red or overdue
+S M - red
+
 
 SDK 41
 
