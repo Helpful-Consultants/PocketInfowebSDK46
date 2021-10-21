@@ -15,7 +15,6 @@ import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import InlineIcon from '../components/InlineIcon';
 
 export default NotificationsScreen = (props) => {
@@ -23,34 +22,40 @@ export default NotificationsScreen = (props) => {
   const { navigation } = props;
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
-  const calibrationExpiryTotalCount = useSelector(
-    (state) => state.calibrationExpiry.totalCount
-  );
-  const calibrationExpiryGreenCount = useSelector(
-    (state) => state.calibrationExpiry.greenCount
-  );
-  const calibrationExpiryRedCount = useSelector(
+
+  const storedCalibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
-  const calibrationExpiryAmberCount = useSelector(
+  const storedCalibrationExpiryAmberCount = useSelector(
     (state) => state.calibrationExpiry.amberCount
   );
-  const ltpLoansTotalCount = useSelector((state) => state.ltpLoans.totalCount);
-  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const serviceMeasuresTotalCount = useSelector(
-    (state) => state.serviceMeasures.totalCount
+  const storedCalibrationExpiryGreenCount = useSelector(
+    (state) => state.calibrationExpiry.greenCount
   );
-  const serviceMeasuresRedCount = useSelector(
+  const storedCalibrationExpiryTotalCount = useSelector(
+    (state) => state.calibrationExpiry.totalCount
+  );
+  const storedLtpLoansTotalCount = useSelector(
+    (state) => state.ltpLoans.totalCount
+  );
+  const storedLtpLoansRedCount = useSelector(
+    (state) => state.ltpLoans.redCount
+  );
+  const storedLtpLoansAmberCount = useSelector(
+    (state) => state.ltpLoans.amberCount
+  );
+  const storedServiceMeasuresRedCount = useSelector(
     (state) => state.serviceMeasures.redCount
   );
-  const serviceMeasuresAmberCount = useSelector(
+  const storedServiceMeasuresAmberCount = useSelector(
     (state) => state.serviceMeasures.amberCount
   );
-  const serviceMeasuresItems = useSelector(
-    (state) => state.serviceMeasures.serviceMeasuresItems
+  const storedServiceMeasuresTotalCount = useSelector(
+    (state) => state.serviceMeasures.totalCount
   );
+
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const userRequestedDemoData = useSelector(
@@ -65,6 +70,20 @@ export default NotificationsScreen = (props) => {
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
+  const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
+  const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
+    useState(0);
+  const [calibrationExpiryGreenCount, setCalibrationExpiryGreenCount] =
+    useState(0);
+  const [calibrationExpiryTotalCount, setCalibrationExpiryTotalCount] =
+    useState(0);
+  const [ltpLoansRedCount, setLtpLoansRedCount] = useState(0);
+  const [ltpLoansAmberCount, setLtpLoansAmberCount] = useState(0);
+  const [ltpLoansTotalCount, setLtpLoansTotalCount] = useState(0);
+  const [serviceMeasuresRedCount, setServiceMeasuresRedCount] = useState(0);
+  const [serviceMeasuresAmberCount, setServiceMeasuresAmberCount] = useState(0);
+  const [serviceMeasuresGreenCount, setServiceMeasuresGreenCount] = useState(0);
+  const [serviceMeasuresTotalCount, setServiceMeasuresTotalCount] = useState(0);
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
@@ -161,7 +180,6 @@ export default NotificationsScreen = (props) => {
   }, [isLoadingCalibrationExpiry, isLoadingLtpLoans, isLoadingServiceMeasures]);
 
   useEffect(() => {
-    // runs only once
     if (dataErrorLtpLoans) {
       setDataErrorAny(dataErrorLtpLoans);
       setDataStatusCodeAny(dataStatusCodeLtpLoans);
@@ -191,8 +209,6 @@ export default NotificationsScreen = (props) => {
     dataErrorLtpLoans,
     dataErrorServiceMeasures,
     dataErrorCalibrationExpiry,
-
-    serviceMeasuresItems,
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
     isLoadingCalibrationExpiry,
@@ -211,7 +227,84 @@ export default NotificationsScreen = (props) => {
     }, [])
   );
 
-  console.log('calib exp red count', calibrationExpiryRedCount);
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+
+      setLtpLoansRedCount(storedLtpLoansRedCount);
+      setLtpLoansAmberCount(storedLtpLoansAmberCount);
+      setLtpLoansTotalCount(storedLtpLoansTotalCount);
+    }
+  }, [
+    storedLtpLoansRedCount,
+    storedLtpLoansAmberCount,
+    storedLtpLoansTotalCount,
+  ]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+
+      setCalibrationExpiryRedCount(storedCalibrationExpiryRedCount);
+      setCalibrationExpiryAmberCount(storedCalibrationExpiryAmberCount);
+      setCalibrationExpiryGreenCount(storedCalibrationExpiryGreenCount);
+      setCalibrationExpiryTotalCount(storedCalibrationExpiryTotalCount);
+    }
+  }, [
+    storedCalibrationExpiryRedCount,
+    storedCalibrationExpiryAmberCount,
+    storedCalibrationExpiryGreenCount,
+    storedCalibrationExpiryTotalCount,
+  ]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+
+      setServiceMeasuresRedCount(storedServiceMeasuresRedCount);
+      setServiceMeasuresAmberCount(storedServiceMeasuresAmberCount);
+      setServiceMeasuresTotalCount(storedServiceMeasuresTotalCount);
+    }
+  }, [
+    storedServiceMeasuresRedCount,
+    storedServiceMeasuresAmberCount,
+    storedServiceMeasuresTotalCount,
+  ]);
+  //   console.log('calib exp red count', calibrationExpiryRedCount);
+
+  console.log(
+    'in notifications  calibrationExpiry Counts',
+    calibrationExpiryRedCount,
+    calibrationExpiryAmberCount,
+    calibrationExpiryGreenCount,
+    calibrationExpiryTotalCount
+  );
+  console.log(
+    'in notifications  ltpLoans Counts',
+    ltpLoansRedCount,
+    ltpLoansAmberCount,
+    'n/a',
+    ltpLoansTotalCount
+  );
+  console.log(
+    'in notifications  SM  Counts',
+    serviceMeasuresRedCount,
+    serviceMeasuresAmberCount,
+    serviceMeasuresGreenCount,
+    serviceMeasuresTotalCount
+  );
 
   return (
     <ScrollView>
@@ -335,7 +428,7 @@ export default NotificationsScreen = (props) => {
                       color={Colors.vwgBadgeOKColor}
                     />
                     <Text style={baseStyles.textSectionRibbon}>
-                      {serviceMeasuresItems.length > 1
+                      {serviceMeasuresTotalCount > 1
                         ? `  See your open Service Measures  `
                         : `  See your open Service Measure `}
                     </Text>
