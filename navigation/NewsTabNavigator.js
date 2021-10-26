@@ -103,10 +103,10 @@ export default NewsTabNavigator = ({ navigation, route }) => {
     });
   }, [navigation, route]);
 
-  console.log(
-    '$$$$$$$$$$$$$$ in news navigator, newsAlertCount ',
-    newsAlertCount
-  );
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in news navigator, newsAlertCount ',
+  //     newsAlertCount
+  //   );
 
   return (
     <NewsTabs.Navigator //iOS
