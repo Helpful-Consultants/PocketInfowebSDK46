@@ -20,8 +20,8 @@ export const defineBackgroundTask = async (taskName, taskExecutor) => {
 
   const status = await BackgroundFetch.getStatusAsync();
   switch (status) {
-    case BackgroundFetch.Status.Restricted:
-    case BackgroundFetch.Status.Denied:
+    case BackgroundFetchStatus.Restricted:
+    case BackgroundFetchStatus.Denied:
       console.log('in defineBackgroundFetch Background execution is disabled');
       return;
 
