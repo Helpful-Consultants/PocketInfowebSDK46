@@ -37,7 +37,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
-import '@expo/match-media';
+// import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
 import Constants from 'expo-constants';
 // import { Ionicons } from '@expo/vector-icons';
