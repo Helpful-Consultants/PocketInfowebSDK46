@@ -705,6 +705,21 @@ export default getBaseStyles = (props) => {
           ? fontFactor * 0.9
           : fontFactor * 0.9,
     },
+    textItemTitleHighlighted: {
+      flexWrap: 'wrap',
+      ...baseLinkTextBold,
+      color: Colors.vwgWarmRed,
+      fontSize:
+        width >= 1024
+          ? fontFactor * 1
+          : width >= 768
+          ? fontFactor * 1
+          : width >= 411
+          ? fontFactor * 0.9
+          : width >= 375
+          ? fontFactor * 0.9
+          : fontFactor * 0.9,
+    },
     textItemMain: {
       ...baseText,
       textAlign: 'justify',

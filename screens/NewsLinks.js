@@ -15,7 +15,7 @@ const notificationLimit = 7;
 const nowDateObj = new Date();
 
 export default function NewsLinks(props) {
-  // console.log(props.items);
+  //   console.log(props.items);
   const windowDim = useWindowDimensions();
   const { items, userIntId } = props;
 
@@ -39,6 +39,21 @@ export default function NewsLinks(props) {
         item.createdDate.length > 0 &&
         parse(item.createdDate, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
       null;
+
+    const isBusinessCritical =
+      item &&
+      item.businessCritical &&
+      item.businessCritical.length > 0 &&
+      (item.businessCritical.toLowerCase() === 'y' ||
+        item.businessCritical.toLowerCase() === 'yes' ||
+        item.businessCritical.toLowerCase() === 'true')
+        ? true
+        : false;
+
+    console.log(
+      item.businessCritical && item.businessCritical,
+      isBusinessCritical
+    );
 
     // console.log(
     //   'parsedUpdatedDate',
@@ -79,17 +94,18 @@ export default function NewsLinks(props) {
             uri={`${props.baseImageUrl}${item.imageName}`}
           />
           <View style={baseStyles.viewItemTitle}>
-            <Text style={baseStyles.textItemTitle}>{item.headline}</Text>
+            {isBusinessCritical ? (
+              <Text style={baseStyles.textItemTitleHighlighted}>
+                {`Important:  ${item.headline}`}
+              </Text>
+            ) : (
+              <Text style={baseStyles.textItemTitle}>{item.headline}</Text>
+            )}
             <Text style={baseStyles.textDate}>
               {isRevised ? `Updated ` : null}
               {displayDate}
               {daysOld === 0 ? (
-                <Text
-                  style={{
-                    ...baseStyles.textLeftAlignedBold,
-                    color: Colors.vwgWarmMidBlue,
-                  }}
-                >
+                <Text style={baseStyles.textLeftAlignedBold}>
                   {isRevised ? `  UPDATED TODAY!` : `  NEW TODAY!`}
                 </Text>
               ) : null}
