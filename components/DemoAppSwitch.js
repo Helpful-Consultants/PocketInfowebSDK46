@@ -50,7 +50,7 @@ export default DemoAppSwitch = (props) => {
   return userDataObj &&
     userDataObj.userName &&
     (userDataObj.userName.toLowerCase().indexOf('zzlyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ||
+      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
       (userDataObj.userName.toLowerCase().indexOf('zzsimon') > -1 &&
         userDataObj.userName.toLowerCase().indexOf('zzgroves') > -1)) ? (
     <View
