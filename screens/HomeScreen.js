@@ -171,7 +171,9 @@ export default HomeScreen = (props) => {
   const storedLtpLoansAmberCount = useSelector(
     (state) => state.ltpLoans.amberCount
   );
+  const storedNewsRedAlertCount = useSelector((state) => state.news.redCount);
   const [ltpLoansRedAlertCount, setLtpLoansRedAlertCount] = useState(0);
+  const [newsRedAlertCount, setNewsRedAlertCount] = useState(0);
   const [ltpLoansAmberAlertCount, setLtpLoansAmberAlertCount] = useState(0);
   const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
   const [notificationsRedAlertCount, setNotificationsRedAlertCount] =
@@ -687,6 +689,7 @@ export default HomeScreen = (props) => {
       setLtpLoansTotalAlertCount(
         tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
       );
+      setNewsRedAlertCount(storedNewsRedAlertCount);
     }
   }, [
     storedCalibrationExpiryRedCount,
@@ -695,6 +698,7 @@ export default HomeScreen = (props) => {
     storedLtpLoansAmberCount,
     storedServiceMeasuresRedCount,
     storedServiceMeasuresAmberCount,
+    storedNewsRedAlertCount,
   ]);
 
   return (
@@ -971,11 +975,12 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={newsAlertCount}
+                        showBadge={newsRedAlertCount}
                         focused={false}
                         text={'News'}
-                        value={newsAlertCount ? '+' : null}
+                        value={newsRedAlertCount ? '+' : null}
                         showingDemoApp={showingDemoApp}
+                        showSevereAlert={newsRedAlertCount > 0 ? true : false}
                       />
                     </View>
                   </Touchable>

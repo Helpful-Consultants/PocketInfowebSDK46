@@ -59,14 +59,13 @@ const NewsTabs =
 
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const storedNewsRedCount = useSelector((state) => state.news.redCount);
   const [newsAlertCount, setNewsAlertCount] = useState(0);
+  const [newsRedCount, setNewsRedCount] = useState(0);
 
   useEffect(() => {
     // const alerts = checkUnseenItems(InfoTypes.NEWS);
     // console.log('alerts:', alerts);
-    if (showingDemoApp) {
-      setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
-    }
 
     navigation.setOptions({
       headerStyle: {
@@ -102,6 +101,15 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      setNewsRedCount(storedNewsRedCount);
+    }
+    //   if (showingDemoApp) {
+    //     setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
+    //   }
+  }, [storedNewsRedCount]);
 
   //   console.log(
   //     '$$$$$$$$$$$$$$ in news navigator, newsAlertCount ',
@@ -147,9 +155,9 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: newsAlertCount ? '' : null,
+          tabBarBadge: newsRedCount ? '' : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeAlertColor,
+            backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,
             //height: 5,
             // right: 10,

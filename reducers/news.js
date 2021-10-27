@@ -4,6 +4,7 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   newsItems: [],
   viewCount: 0,
+  redCount: 0,
   lastUpdate: null,
   previousUpdate: null,
   isLoading: false,
@@ -11,6 +12,26 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   displayTimestamp: null,
+};
+
+const countCriticalItems = (items) => {
+  let count = 0;
+
+  if (items && items.length > 0) {
+    items.map((item) => {
+      if (
+        item.businessCritical &&
+        item.businessCritical.length > 0 &&
+        (item.businessCritical.toLowerCase() === 'y' ||
+          item.businessCritical.toLowerCase() === 'yes' ||
+          item.businessCritical.toLowerCase() === 'true')
+      ) {
+        count++;
+      }
+    });
+  }
+
+  return count;
 };
 
 export default function news(state = INITIAL_STATE, action) {
@@ -47,10 +68,12 @@ export default function news(state = INITIAL_STATE, action) {
       //       state.previousUpdated !== newlastUpdated &&
       //       state.lastUpdated) ||
       //     null;
+      const itemsList = (action.payload.items && action.payload.items) || [];
       return {
         ...state,
         // newsItems: [],
-        newsItems: (action.payload.items && action.payload.items) || [],
+        newsItems: itemsList,
+        redCount: countCriticalItems(itemsList),
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,
         isLoading: false,
