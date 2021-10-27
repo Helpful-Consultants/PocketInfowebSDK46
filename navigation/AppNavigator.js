@@ -218,8 +218,8 @@ export default AppNavigator = (props) => {
 
     const status = await BackgroundFetch.getStatusAsync();
     switch (status) {
-      case BackgroundFetchStatus.Restricted:
-      case BackgroundFetchStatus.Denied:
+      case BackgroundFetch.BackgroundFetchStatus.Restricted:
+      case BackgroundFetch.BackgroundFetchStatus.Denied:
         console.log('Background execution is disabled');
         return;
 

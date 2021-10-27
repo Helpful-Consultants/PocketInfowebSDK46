@@ -25,11 +25,13 @@ const getDisplayDate = (rawDate) => {
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
-  //   console.log('in registerBackgroundFetchAsync');
-  const status = await BackgroundFetch.getStatusAsync();
-  switch (status) {
-    case BackgroundFetchStatus.Restricted:
-    case BackgroundFetchStatus.Denied:
+  const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+
+  console.log('in registerBackgroundFetchAsync', BackgroundFetchStatus);
+
+  switch (backgroundFetchStatus) {
+    case BackgroundFetch.BackgroundFetchStatus.Restricted:
+    case BackgroundFetch.BackgroundFetchStatus.Denied:
       console.log('Background execution is disabled');
       return;
 
@@ -171,17 +173,17 @@ export default BackgroundFetchBlock = () => {
   };
 
   const checkTaskStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync();
+    const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_DATE_TASK
     );
     console.log(
-      'in checkTaskStatusAsync status: ',
-      status,
+      'in checkTaskStatusAsync backgroundFetchStatus: ',
+      backgroundFetchStatus,
       'isRegistered',
       isRegistered
     );
-    setTaskStatus(status);
+    setTaskStatus(backgroundFetchStatus);
     setIsRegistered(isRegistered);
   };
 

@@ -150,6 +150,7 @@ Sentry.init({
 sagaMiddleware.run(rootSaga);
 
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate);
+// console.log('%%%%%%%%% in app.js calling defineBackgroundTask');
 defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData);
 
@@ -159,8 +160,8 @@ defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
 
 //   const status = await BackgroundFetch.getStatusAsync();
 //   switch (status) {
-//     case BackgroundFetchStatus.Restricted:
-//     case BackgroundFetchStatus.Denied:
+//     case BackgroundFetch.BackgroundFetchStatus.Restricted:
+//     case BackgroundFetch.BackgroundFetchStatus.Denied:
 //       console.log('Background execution is disabled');
 //       return;
 

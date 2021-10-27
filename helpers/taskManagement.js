@@ -7,26 +7,38 @@ import {
 } from '../actions/backgroundData';
 
 export const defineBackgroundTask = async (taskName, taskExecutor) => {
-  //   console.log('INSIDE TASKMANAGER.defineTASK');
-  //   console.log(
-  //     'in defineBackgroundFetch',
-  //     'task:',
-  //     taskName,
-  //     'taskName:',
-  //     taskExecutor
-  //   );
+  console.log('INSIDE TASKMANAGER.defineTASK');
+  console.log(
+    'in defineBackgroundFetch',
+    'task:',
+    taskName,
+    'taskName:',
+    taskExecutor
+  );
 
   TaskManager.defineTask(taskName, taskExecutor);
 
-  const status = await BackgroundFetch.getStatusAsync();
-  switch (status) {
-    case BackgroundFetchStatus.Restricted:
-    case BackgroundFetchStatus.Denied:
-      console.log('in defineBackgroundFetch Background execution is disabled');
+  console.log(
+    '%%%%%%%%% in defineBackgroundTask, BackgroundFetch',
+    BackgroundFetch && BackgroundFetch
+  );
+
+  const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+
+  console.log(
+    '%%%%%%%%% in registerBackgroundFetchAsync, BackgroundFetchStatus',
+    backgroundFetchStatus
+  );
+  switch (backgroundFetchStatus) {
+    case BackgroundFetch.BackgroundFetchStatus.Restricted:
+    case BackgroundFetch.BackgroundFetchStatus.Denied:
+      console.log(
+        '%%%%%%%%%%%%%%% in defineBackgroundFetch Background execution is disabled'
+      );
       return;
 
     default: {
-      //   console.log('in defineBackgroundFetch Background execution allowed');
+      console.log('in defineBackgroundFetch Background execution allowed');
 
       let tasks = await TaskManager.getRegisteredTasksAsync();
       tasks = await TaskManager.getRegisteredTasksAsync();
