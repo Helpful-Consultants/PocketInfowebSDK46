@@ -314,7 +314,7 @@ export default NotificationsScreen = (props) => {
       source={require('../assets/images/connectivity-smaller.png')}
       style={baseStyles.backgroundImage}
     >
-      <ScrollView>
+      <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 0 }}>
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Your Important Notifications
@@ -688,7 +688,7 @@ export default NotificationsScreen = (props) => {
             </View>
           )
         ) : null}
-      </ScrollView>
+      </View>
     </ImageBackground>
   );
 };
