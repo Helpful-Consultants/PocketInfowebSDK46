@@ -175,8 +175,8 @@ export default AppNavigator = (props) => {
   //     console.log('Got background fetch call to fetch date', now);
   //     // Be sure to return the successful result type!
   //     return result
-  //       ? BackgroundFetch.Result.NewData
-  //       : BackgroundFetch.Result.NoData;
+  //       ? BackgroundFetch.BackgroundFetchResult.NewData
+  //       : BackgroundFetch.BackgroundFetchResult.NoData;
   //   };
 
   //   const fetchDateTwo = async () => {
@@ -187,8 +187,8 @@ export default AppNavigator = (props) => {
   //     console.log('Got background fetch call to fetch date two', now);
   //     // Be sure to return the successful result type!
   //     return result
-  //       ? BackgroundFetch.Result.NewData
-  //       : BackgroundFetch.Result.NoData;
+  //       ? BackgroundFetch.BackgroundFetchResult.NewData
+  //       : BackgroundFetch.BackgroundFetchResult.NoData;
   //   };
 
   async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {

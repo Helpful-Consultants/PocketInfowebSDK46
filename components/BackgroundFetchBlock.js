@@ -27,7 +27,10 @@ const getDisplayDate = (rawDate) => {
 const registerBackgroundFetchAsync = async () => {
   const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
 
-  console.log('in registerBackgroundFetchAsync', BackgroundFetchStatus);
+  console.log(
+    'in registerBackgroundFetchAsync',
+    BackgroundFetch.BackgroundFetchStatus
+  );
 
   switch (backgroundFetchStatus) {
     case BackgroundFetch.BackgroundFetchStatus.Restricted:
@@ -174,6 +177,7 @@ export default BackgroundFetchBlock = () => {
 
   const checkTaskStatusAsync = async () => {
     const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_DATE_TASK
     );
@@ -246,9 +250,7 @@ export default BackgroundFetchBlock = () => {
         </Text>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Background permitted:{' '}
-          <Text style={styles.boldText}>
-            {taskStatus ? BackgroundFetch.Status[taskStatus] : null}
-          </Text>
+          <Text style={styles.boldText}>{taskStatus ? taskStatus : null}</Text>
         </Text>
         <TouchableOpacity onPress={toggleFetchTaskAsync}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>

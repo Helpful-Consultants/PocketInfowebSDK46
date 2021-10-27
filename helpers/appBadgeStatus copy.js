@@ -239,9 +239,7 @@ export default BackgroundFetchBlock = () => {
         </Text>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Background permitted:{' '}
-          <Text style={styles.boldText}>
-            {taskStatus ? BackgroundFetch.Status[taskStatus] : null}
-          </Text>
+          <Text style={styles.boldText}>{taskStatus ? taskStatus : null}</Text>
         </Text>
         <TouchableOpacity onPress={toggleFetchTaskAsync}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>

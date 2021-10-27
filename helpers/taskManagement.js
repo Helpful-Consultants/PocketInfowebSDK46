@@ -63,13 +63,13 @@ export const fetchNews = async (props) => {
   //   await store.dispatch(getNewsRequest());
   //   alert('Got background fetch call to fetch date: ' + now);
   return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
 export const fetchDate = async () => {
   //   const now = new Date().toISOString();
-  console.log('background fetchDate running!');
+  console.log('task management background fetchDate running!');
   console.log('the store contains', store ? store : 'nought');
   const result = true;
   store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
@@ -77,8 +77,8 @@ export const fetchDate = async () => {
   console.log('background fetchDate finished!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
   return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
 export const zzzzfetchDate = async (store) => {
@@ -92,8 +92,8 @@ export const zzzzfetchDate = async (store) => {
   //alert('Got background fetch call to fetch date: ' + now);
 
   return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
 export const fetchData = async () => {
@@ -103,8 +103,8 @@ export const fetchData = async () => {
   const result = true;
   console.log('Got background fetch call to fetch datA', now);
   return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
 export const showAppBadgeCount = (props) => {

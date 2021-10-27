@@ -58,8 +58,8 @@ const zzzzzzzfetchDate = async () => {
   console.log('background fetchDate finished!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
   return result
-    ? BackgroundFetch.Result.NewData
-    : BackgroundFetch.Result.NoData;
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
 enableScreens();
@@ -197,8 +197,8 @@ defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
 //   );
 //   // Be sure to return the successful result type!
 //   return result
-//     ? BackgroundFetch.Result.NewData
-//     : BackgroundFetch.Result.NoData;
+//     ? BackgroundFetch.BackgroundFetchResult.NewData
+//     : BackgroundFetch.BackgroundFetchResult.NoData;
 // });
 
 // console.log('store', store);
