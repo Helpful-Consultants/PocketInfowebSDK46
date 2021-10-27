@@ -198,6 +198,12 @@ export default getBaseStyles = (props) => {
   const baseStyles = StyleSheet.create({
     // BUTTON - START
     //SignInScreen
+    backgroundImage: {
+      flex: 1,
+      justifyContent: 'center',
+      resizeMode: 'contain',
+      // resizeMode: 'cover',
+    },
     buttonClose: {
       backgroundColor: Colors.vwgDeepBlue,
       borderRadius: Platform.OS === 'ios' ? 3 : 2,

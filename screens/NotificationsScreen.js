@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ImageBackground,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -16,6 +17,8 @@ import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import InlineIcon from '../components/InlineIcon';
+
+// const backgroundImage = { uri: 'https://reactjs.org/logo-og.png' };
 
 export default NotificationsScreen = (props) => {
   //   console.log('NotificationsScreen props', props);
@@ -307,380 +310,387 @@ export default NotificationsScreen = (props) => {
   //   );
 
   return (
-    <ScrollView>
-      <View style={baseStyles.viewPromptRibbon}>
-        <Text style={baseStyles.textPromptRibbon}>
-          Your Important Notifications
-        </Text>
-      </View>
-      {userRequestedDemoData && userRequestedDemoData === true ? (
-        <View style={baseStyles.viewDummyDataRibbon}>
+    <ImageBackground
+      source={require('../assets/images/connectivity-smaller.png')}
+      style={baseStyles.backgroundImage}
+    >
+      <ScrollView>
+        <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data - change in menu.
+            Your Important Notifications
           </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
         </View>
-      ) : null}
-
-      {!odisViewCount ? (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('RemindersTabs', { screen: 'ODIS' })
-          }
-        >
-          <View style={baseStyles.viewSectionRibbon}>
-            <Ionicons
-              name='tv'
-              size={20}
-              color={Colors.vwgBadgeSevereAlertColor}
-            />
-            <Text style={baseStyles.textSectionRibbon}>
-              {`  See the `}
-              <Text
-                style={{
-                  ...baseStyles.textSectionRibbon,
-
-                  fontFamily: 'the-sans-bold',
-                }}
-              >
-                {`new ODIS versions  `}
-              </Text>
+        {userRequestedDemoData && userRequestedDemoData === true ? (
+          <View style={baseStyles.viewDummyDataRibbon}>
+            <Text style={baseStyles.textPromptRibbon}>
+              Showing sample data - change in menu.
             </Text>
-            <Ionicons name='open-outline' size={20} />
+            <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
           </View>
-        </TouchableOpacity>
-      ) : null}
+        ) : null}
 
-      {!isLoadingServiceMeasures ? (
-        dataErrorServiceMeasures ? (
-          <ErrorDetails
-            errorSummary={'Error syncing Service Measures'}
-            dataStatusCode={dataStatusCodeServiceMeasures}
-            errorHtml={dataErrorServiceMeasures}
-            dataErrorUrl={dataErrorUrlServiceMeasures}
-          />
-        ) : serviceMeasuresTotalCount !== 'undefined' &&
-          serviceMeasuresRedCount !== 'undefined' &&
-          serviceMeasuresAmberCount !== 'undefined' ? (
-          <View>
-            {serviceMeasuresTotalCount > 0 ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('RemindersTabs', {
-                    screen: 'Service Measures',
-                  })
-                }
-              >
-                {serviceMeasuresRedCount > 0 ? (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='checkbox'
-                      size={20}
-                      color={Colors.vwgBadgeSevereAlertColor}
-                    />
+        {!odisViewCount ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+            }
+          >
+            <View style={baseStyles.viewSectionRibbon}>
+              <Ionicons
+                name='tv'
+                size={20}
+                color={Colors.vwgBadgeSevereAlertColor}
+              />
+              <Text style={baseStyles.textSectionRibbon}>
+                {`  See the `}
+                <Text
+                  style={{
+                    ...baseStyles.textSectionRibbon,
 
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {`  See your`}
-                      <Text
-                        style={{
-                          ...baseStyles.textSectionRibbon,
-                          fontFamily: 'the-sans-bold',
-                        }}
-                      >
-                        {` urgent `}
-
-                        {serviceMeasuresRedCount > 1
-                          ? `Service Measures  `
-                          : `Service Measure  `}
-                      </Text>
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                ) : serviceMeasuresAmberCount > 0 ? (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='checkbox'
-                      size={20}
-                      color={Colors.vwgBadgeAlertColor}
-                    />
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {`  See your`}
-                      <Text
-                        style={{
-                          ...baseStyles.textSectionRibbon,
-                          fontFamily: 'the-sans-bold',
-                        }}
-                      >
-                        {` expiring `}
-
-                        {serviceMeasuresAmberCount > 1
-                          ? `Service Measures  `
-                          : `Service Measure `}
-                      </Text>
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                ) : (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='checkbox'
-                      size={20}
-                      color={Colors.vwgBadgeOKColor}
-                    />
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {serviceMeasuresTotalCount > 1
-                        ? `  See your open Service Measures  `
-                        : `  See your open Service Measure `}
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
-                <Text style={baseStyles.textSectionRibbon}>
-                  {` No expiring Service Measures`}
-                </Text>
-              </View>
-            )}
-          </View>
-        ) : null
-      ) : null}
-      {!isLoadingLtpLoans ? (
-        dataErrorLtpLoans ? (
-          <ErrorDetails
-            errorSummary={'Error syncing LTP Loans'}
-            dataStatusCode={dataStatusCodeLtpLoans}
-            errorHtml={dataErrorLtpLoans}
-            dataErrorUrl={dataErrorUrlLtpLoans}
-          />
-        ) : ltpLoansTotalCount !== 'undefined' &&
-          ltpLoansRedCount !== 'undefined' &&
-          ltpLoansAmberCount !== 'undefined' ? (
-          <View>
-            {ltpLoansTotalCount > 0 ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('RemindersTabs', {
-                    screen: 'LTP Loans',
-                  })
-                }
-              >
-                {ltpLoansRedCount > 0 ? (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='calendar'
-                      size={20}
-                      color={Colors.vwgBadgeSevereAlertColor}
-                    />
-
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {`  See your`}
-                      <Text
-                        style={{
-                          ...baseStyles.textSectionRibbon,
-                          fontFamily: 'the-sans-bold',
-                        }}
-                      >
-                        {` urgent `}
-
-                        {ltpLoansTotalCount > 1
-                          ? `LTP Loan returns  `
-                          : `LTP Loan return  `}
-                      </Text>
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                ) : ltpLoansAmberCount > 0 ? (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='calendar'
-                      size={20}
-                      color={Colors.vwgBadgeAlertColor}
-                    />
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {`  See your`}
-                      <Text
-                        style={{
-                          ...baseStyles.textSectionRibbon,
-                          fontFamily: 'the-sans-bold',
-                        }}
-                      >
-                        {` expiring `}
-
-                        {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
-                      </Text>
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                ) : (
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='checkbox'
-                      size={20}
-                      color={Colors.vwgBadgeOKColor}
-                    />
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {ltpLoansTotalCount > 1
-                        ? `  See your open LTP Loans  `
-                        : `  See your open LTP Loan `}
-                    </Text>
-                    <Ionicons name='open-outline' size={20} />
-                  </View>
-                )}
-              </TouchableOpacity>
-            ) : (
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
-                <Text style={baseStyles.textSectionRibbon}>
-                  {`   No LTP Loans`}
-                </Text>
-              </View>
-            )}
-          </View>
-        ) : null
-      ) : null}
-      {!isLoadingCalibrationExpiry
-        ? ((dataErrorCalibrationExpiry ? (
-            <ErrorDetails
-              errorSummary={'Error syncing calibration expiry'}
-              dataStatusCode={dataStatusCodeCalibrationExpiry}
-              errorHtml={dataErrorCalibrationExpiry}
-              dataErrorUrl={dataErrorUrlCalibrationExpiry}
-            />
-          ) : (
-            <View>
-              {calibrationExpiryTotalCount > 0 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                    fontFamily: 'the-sans-bold',
                   }}
                 >
-                  <View style={baseStyles.viewSectionRibbon}>
-                    <Ionicons
-                      name='timer'
-                      size={20}
-                      color={
-                        calibrationExpiryOverdueCount > 0 ||
-                        calibrationExpiryRedCount > 0
-                          ? Colors.vwgBadgeSevereAlertColor
-                          : Colors.vwgBadgeAlertColor
-                      }
-                    />
-                    <Text style={baseStyles.textSectionRibbon}>
-                      {calibrationExpiryTotalCount > 1
-                        ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
-                        : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
-                    </Text>
-                    <Ionicons
-                      name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
-                      size={20}
-                      color={Colors.vwgVeryDarkGray}
-                    />
-                  </View>
+                  {`new ODIS versions  `}
+                </Text>
+              </Text>
+              <Ionicons name='open-outline' size={20} />
+            </View>
+          </TouchableOpacity>
+        ) : null}
+
+        {!isLoadingServiceMeasures ? (
+          dataErrorServiceMeasures ? (
+            <ErrorDetails
+              errorSummary={'Error syncing Service Measures'}
+              dataStatusCode={dataStatusCodeServiceMeasures}
+              errorHtml={dataErrorServiceMeasures}
+              dataErrorUrl={dataErrorUrlServiceMeasures}
+            />
+          ) : serviceMeasuresTotalCount !== 'undefined' &&
+            serviceMeasuresRedCount !== 'undefined' &&
+            serviceMeasuresAmberCount !== 'undefined' ? (
+            <View>
+              {serviceMeasuresTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('RemindersTabs', {
+                      screen: 'Service Measures',
+                    })
+                  }
+                >
+                  {serviceMeasuresRedCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
+
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` urgent `}
+
+                          {serviceMeasuresRedCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure  `}
+                        </Text>
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  ) : serviceMeasuresAmberCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` expiring `}
+
+                          {serviceMeasuresAmberCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure `}
+                        </Text>
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  ) : (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {serviceMeasuresTotalCount > 1
+                          ? `  See your open Service Measures  `
+                          : `  See your open Service Measure `}
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  )}
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {calibrationExpiryTotalCount > 1
-                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
-                      : calibrationExpiryTotalCount > 0
-                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
-                      : '  No pending Calibration Expiry Actions  '}
+                    {` No expiring Service Measures`}
                   </Text>
                 </View>
               )}
-              {isOpenCalibrationExpiry ? (
-                calibrationExpiryTotalCount > 0 ? (
-                  <View>
-                    {calibrationExpiryOverdueCount > 0 ? (
-                      <View
-                        style={{
-                          ...baseStyles.viewRowFlexCentreAligned,
-                          marginHorizontal: 8,
-                          marginTop: 10,
-                        }}
-                      >
-                        <InlineIcon
-                          itemType='font-awesome'
-                          iconName={'thumbs-down'}
-                          iconSize={RFPercentage(2.4)}
-                          iconColor={Colors.vwgBadgeSevereAlertColor}
-                        />
-                        <Text style={baseStyles.textLeftAligned}>
-                          {calibrationExpiryOverdueCount === 1
-                            ? `  ${calibrationExpiryOverdueCount} item's calibration has expired.`
-                            : `  ${calibrationExpiryOverdueCount} items' calibrations have expired.`}
+            </View>
+          ) : null
+        ) : null}
+        {!isLoadingLtpLoans ? (
+          dataErrorLtpLoans ? (
+            <ErrorDetails
+              errorSummary={'Error syncing LTP Loans'}
+              dataStatusCode={dataStatusCodeLtpLoans}
+              errorHtml={dataErrorLtpLoans}
+              dataErrorUrl={dataErrorUrlLtpLoans}
+            />
+          ) : ltpLoansTotalCount !== 'undefined' &&
+            ltpLoansRedCount !== 'undefined' &&
+            ltpLoansAmberCount !== 'undefined' ? (
+            <View>
+              {ltpLoansTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('RemindersTabs', {
+                      screen: 'LTP Loans',
+                    })
+                  }
+                >
+                  {ltpLoansRedCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
+
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` urgent `}
+
+                          {ltpLoansTotalCount > 1
+                            ? `LTP Loan returns  `
+                            : `LTP Loan return  `}
                         </Text>
-                      </View>
-                    ) : null}
-                    {calibrationExpiryRedCount > 0 ? (
-                      <View
-                        style={{
-                          ...baseStyles.viewRowFlexCentreAligned,
-                          marginHorizontal: 8,
-                          marginTop: 10,
-                        }}
-                      >
-                        <InlineIcon
-                          itemType='font-awesome'
-                          iconName={'thumbs-up'}
-                          iconSize={RFPercentage(2.4)}
-                          iconColor={Colors.vwgBadgeSevereAlertColor}
-                        />
-                        <Text style={baseStyles.textLeftAligned}>
-                          {calibrationExpiryRedCount === 1
-                            ? `  ${calibrationExpiryRedCount} item's calibration expires within 30 days.`
-                            : `  ${calibrationExpiryRedCount} items' calibrations expire within 30 days.`}
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  ) : ltpLoansAmberCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` expiring `}
+
+                          {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
                         </Text>
-                      </View>
-                    ) : null}
-                    {calibrationExpiryAmberCount > 0 ? (
-                      <View
-                        style={{
-                          ...baseStyles.viewRowFlexCentreAligned,
-                          marginHorizontal: 8,
-                          marginTop: 10,
-                        }}
-                      >
-                        <InlineIcon
-                          itemType='font-awesome'
-                          iconName={'thumbs-up'}
-                          iconSize={RFPercentage(2.4)}
-                          iconColor={Colors.vwgBadgeAlertColor}
-                        />
-                        <Text style={baseStyles.textLeftAligned}>
-                          {calibrationExpiryAmberCount === 1
-                            ? `  ${calibrationExpiryAmberCount} item's calibration expires within 60 days.`
-                            : `  ${calibrationExpiryAmberCount} items' calibrations expire within 60 days.`}
-                        </Text>
-                      </View>
-                    ) : null}
-                    <Text
-                      style={{
-                        ...baseStyles.textLeftAligned,
-                        marginHorizontal: 8,
-                        marginTop: 10,
-                      }}
-                    >
-                      See these calibration records at Tools Infoweb.
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  ) : (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {ltpLoansTotalCount > 1
+                          ? `  See your open LTP Loans  `
+                          : `  See your open LTP Loan `}
+                      </Text>
+                      <Ionicons name='open-outline' size={20} />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ) : (
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`   No LTP Loans`}
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : null
+        ) : null}
+        {!isLoadingCalibrationExpiry
+          ? ((dataErrorCalibrationExpiry ? (
+              <ErrorDetails
+                errorSummary={'Error syncing calibration expiry'}
+                dataStatusCode={dataStatusCodeCalibrationExpiry}
+                errorHtml={dataErrorCalibrationExpiry}
+                dataErrorUrl={dataErrorUrlCalibrationExpiry}
+              />
+            ) : (
+              <View>
+                {calibrationExpiryTotalCount > 0 ? (
+                  <TouchableOpacity
+                    onPress={() => {
+                      setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                    }}
+                  >
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='timer'
+                        size={20}
+                        color={
+                          calibrationExpiryOverdueCount > 0 ||
+                          calibrationExpiryRedCount > 0
+                            ? Colors.vwgBadgeSevereAlertColor
+                            : Colors.vwgBadgeAlertColor
+                        }
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {calibrationExpiryTotalCount > 1
+                          ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
+                          : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
+                      </Text>
+                      <Ionicons
+                        name={
+                          isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'
+                        }
+                        size={20}
+                        color={Colors.vwgVeryDarkGray}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {calibrationExpiryTotalCount > 1
+                        ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
+                        : calibrationExpiryTotalCount > 0
+                        ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                        : '  No pending Calibration Expiry Actions  '}
                     </Text>
                   </View>
-                ) : (
-                  <View style={baseStyles.viewDataList}>
-                    <View style={baseStyles.textDataListItem}>
-                      <Text style={baseStyles.textLeftAligned}>
-                        No calibration expirations in the next 60 days.
+                )}
+                {isOpenCalibrationExpiry ? (
+                  calibrationExpiryTotalCount > 0 ? (
+                    <View style={{ backgroundColor: Colors.vwgWhite }}>
+                      {calibrationExpiryOverdueCount > 0 ? (
+                        <View
+                          style={{
+                            ...baseStyles.viewRowFlexCentreAligned,
+                            marginHorizontal: 8,
+                            marginTop: 10,
+                          }}
+                        >
+                          <InlineIcon
+                            itemType='font-awesome'
+                            iconName={'thumbs-down'}
+                            iconSize={RFPercentage(2.4)}
+                            iconColor={Colors.vwgBadgeSevereAlertColor}
+                          />
+                          <Text style={baseStyles.textLeftAligned}>
+                            {calibrationExpiryOverdueCount === 1
+                              ? `  ${calibrationExpiryOverdueCount} item's calibration has expired.`
+                              : `  ${calibrationExpiryOverdueCount} items' calibrations have expired.`}
+                          </Text>
+                        </View>
+                      ) : null}
+                      {calibrationExpiryRedCount > 0 ? (
+                        <View
+                          style={{
+                            ...baseStyles.viewRowFlexCentreAligned,
+                            marginHorizontal: 8,
+                            marginTop: 10,
+                          }}
+                        >
+                          <InlineIcon
+                            itemType='font-awesome'
+                            iconName={'thumbs-up'}
+                            iconSize={RFPercentage(2.4)}
+                            iconColor={Colors.vwgBadgeSevereAlertColor}
+                          />
+                          <Text style={baseStyles.textLeftAligned}>
+                            {calibrationExpiryRedCount === 1
+                              ? `  ${calibrationExpiryRedCount} item's calibration expires within 30 days.`
+                              : `  ${calibrationExpiryRedCount} items' calibrations expire within 30 days.`}
+                          </Text>
+                        </View>
+                      ) : null}
+                      {calibrationExpiryAmberCount > 0 ? (
+                        <View
+                          style={{
+                            ...baseStyles.viewRowFlexCentreAligned,
+                            marginHorizontal: 8,
+                            marginTop: 10,
+                          }}
+                        >
+                          <InlineIcon
+                            itemType='font-awesome'
+                            iconName={'thumbs-up'}
+                            iconSize={RFPercentage(2.4)}
+                            iconColor={Colors.vwgBadgeAlertColor}
+                          />
+                          <Text style={baseStyles.textLeftAligned}>
+                            {calibrationExpiryAmberCount === 1
+                              ? `  ${calibrationExpiryAmberCount} item's calibration expires within 60 days.`
+                              : `  ${calibrationExpiryAmberCount} items' calibrations expire within 60 days.`}
+                          </Text>
+                        </View>
+                      ) : null}
+                      <Text
+                        style={{
+                          ...baseStyles.textLeftAligned,
+                          marginHorizontal: 8,
+                          marginVertical: 10,
+                        }}
+                      >
+                        See these calibration records at Tools Infoweb.
                       </Text>
                     </View>
-                  </View>
-                )
-              ) : null}
-            </View>
-          )): null)
-        : null}
-    </ScrollView>
+                  ) : (
+                    <View style={baseStyles.viewDataList}>
+                      <View style={baseStyles.textDataListItem}>
+                        <Text style={baseStyles.textLeftAligned}>
+                          No calibration expirations in the next 60 days.
+                        </Text>
+                      </View>
+                    </View>
+                  )
+                ) : null}
+              </View>
+            )): null)
+          : null}
+      </ScrollView>
+    </ImageBackground>
   );
 };
