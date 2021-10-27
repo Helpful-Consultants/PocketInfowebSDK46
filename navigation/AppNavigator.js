@@ -159,34 +159,13 @@ export default AppNavigator = (props) => {
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
   const [showDemoApp, setShowDemoApp] = useState(false);
+  //   const ageOfCredentialsLimit = 3;
   //   return <AuthLoadingScreen />;
 
   //   console.log('AppNavigator props', props && props);
   //   console.log('AppNavigator showingDemoApp', showingDemoApp && showingDemoApp);
 
   //   let now = moment();
-  //   const ageOfCredentialsLimit = 3;
-
-  //   if (userIsSignedIn && userIsSignedIn === true) {
-  //     if (userCredsLastChecked) {
-  //       console.log('now:', now);
-  //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
-  //       console.log('ageOfCredentials:', ageOfCredentials);
-  //       if (ageOfCredentials <= ageOfCredentialsLimit) {
-  //         dispatch(setUserValidated());
-  //         console.log('ageOfCredentials good', ageOfCredentials);
-  //       } else {
-  //         console.log('ageOfCredentials bad', ageOfCredentials);
-  //         dispatch(setUserOutdatedCredentials());
-  //       }
-  //     }
-  //   }
-
-  //   revalidateUser();
-  dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
-  //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
-  //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
-  //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
 
   //   const fetchDate = async () => {
   //     const now = new Date().toISOString();
@@ -245,6 +224,28 @@ export default AppNavigator = (props) => {
       }
     }
   }
+
+  useEffect(() => {
+    //   if (userIsSignedIn && userIsSignedIn === true) {
+    //     if (userCredsLastChecked) {
+    //       console.log('now:', now);
+    //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
+    //       console.log('ageOfCredentials:', ageOfCredentials);
+    //       if (ageOfCredentials <= ageOfCredentialsLimit) {
+    //         dispatch(setUserValidated());
+    //         console.log('ageOfCredentials good', ageOfCredentials);
+    //       } else {
+    //         console.log('ageOfCredentials bad', ageOfCredentials);
+    //         dispatch(setUserOutdatedCredentials());
+    //       }
+    //     }
+    //   }
+    //   revalidateUser();
+    dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+    //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
+    //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
+    //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+  }, []);
 
   useEffect(() => {
     // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
