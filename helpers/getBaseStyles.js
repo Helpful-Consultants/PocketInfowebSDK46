@@ -957,7 +957,8 @@ export default getBaseStyles = (props) => {
     // LtpListScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbon: {
       padding: 10,
-      backgroundColor: Colors.vwgDarkSkyBlue,
+      backgroundColor:
+        Platform.OS === 'ios' ? Colors.vwgDarkSkyBlue : Colors.vwgInfoBar,
     },
     viewSectionRibbon: {
       padding: 5,

@@ -228,10 +228,10 @@ export default ServiceMeasuresScreen = (props) => {
           </View>
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
-            <Text style={baseStyles.textLeftAligned}>
+            <Text style={baseStyles.textPromptRibbon}>
               No Service Measures to show.
             </Text>
-            <Text style={baseStyles.textLeftAligned}>
+            <Text style={baseStyles.textPromptRibbon}>
               You can view your expired Service Measures at Tools Infoweb.
             </Text>
           </View>
