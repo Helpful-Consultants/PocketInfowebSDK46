@@ -330,11 +330,15 @@ export default NotificationsScreen = (props) => {
       style={baseStyles.backgroundImage}
     >
       <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 0 }}>
-        <View style={{ ...baseStyles.viewPromptRibbon, flexDirection: 'row' }}>
-          <Text style={baseStyles.textPromptRibbon}>
-            {isLoadingAny
-              ? `Checking Notifications  `
-              : `Your Important Notifications`}
+        <View
+          style={{
+            ...baseStyles.viewPromptRibbon,
+            flexDirection: 'row',
+          }}
+        >
+          <Text style={{ ...baseStyles.textPromptRibbon, textAlign: 'left' }}>
+            {`Your Important Notifications`}
+            {isLoadingAny ? <Text>{` - Checking   `}</Text> : null}
           </Text>
           {isLoadingAny ? (
             <ActivityIndicator size={'small'} color={'white'} />
