@@ -918,7 +918,9 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={notificationsTotalAlertCount}
+                          showBadge={
+                            showingDemoApp ? notificationsTotalAlertCount : 0
+                          }
                           focused={false}
                           text={'Notifications'}
                           value={notificationsTotalAlertCount ? '+' : null}
@@ -945,7 +947,9 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={ltpLoansTotalAlertCount}
+                          showBadge={
+                            showingDemoApp ? ltpLoansTotalAlertCount : 0
+                          }
                           focused={false}
                           text={'LTP Loans'}
                           value={ltpLoansTotalAlertCount ? '+' : null}
@@ -975,7 +979,7 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={newsRedAlertCount}
+                        showBadge={showingDemoApp ? newsRedAlertCount : 0}
                         focused={false}
                         text={'News'}
                         value={newsRedAlertCount ? '+' : null}

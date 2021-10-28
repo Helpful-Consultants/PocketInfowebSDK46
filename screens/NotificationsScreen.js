@@ -26,6 +26,7 @@ export default NotificationsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.showingDemoData);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
 
   const storedCalibrationExpiryOverdueCount = useSelector(
@@ -37,7 +38,6 @@ export default NotificationsScreen = (props) => {
   const storedCalibrationExpiryAmberCount = useSelector(
     (state) => state.calibrationExpiry.amberCount
   );
-
   const storedCalibrationExpiryTotalCount = useSelector(
     (state) => state.calibrationExpiry.totalCount
   );
@@ -181,7 +181,13 @@ export default NotificationsScreen = (props) => {
     } else {
       setIsLoadingAny(false);
     }
-  }, [isLoadingCalibrationExpiry, isLoadingLtpLoans, isLoadingServiceMeasures]);
+  }, [
+    isLoadingCalibrationExpiry,
+    isLoadingLtpLoans,
+    isLoadingServiceMeasures,
+    showingDemoApp,
+    showingDemoData,
+  ]);
 
   useEffect(() => {
     if (dataErrorLtpLoans) {
@@ -216,6 +222,8 @@ export default NotificationsScreen = (props) => {
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
     isLoadingCalibrationExpiry,
+    showingDemoApp,
+    showingDemoData,
   ]);
 
   useFocusEffect(
@@ -247,6 +255,8 @@ export default NotificationsScreen = (props) => {
     storedLtpLoansRedCount,
     storedLtpLoansAmberCount,
     storedLtpLoansTotalCount,
+    showingDemoApp,
+    showingDemoData,
   ]);
 
   useEffect(() => {
@@ -266,6 +276,8 @@ export default NotificationsScreen = (props) => {
     storedCalibrationExpiryRedCount,
     storedCalibrationExpiryAmberCount,
     storedCalibrationExpiryTotalCount,
+    showingDemoApp,
+    showingDemoData,
   ]);
 
   useEffect(() => {
@@ -278,12 +290,12 @@ export default NotificationsScreen = (props) => {
 
       setServiceMeasuresRedCount(storedServiceMeasuresRedCount);
       setServiceMeasuresAmberCount(storedServiceMeasuresAmberCount);
-      setServiceMeasuresTotalCount(storedServiceMeasuresTotalCount);
     }
   }, [
     storedServiceMeasuresRedCount,
     storedServiceMeasuresAmberCount,
-    storedServiceMeasuresTotalCount,
+    showingDemoApp,
+    showingDemoData,
   ]);
   //   console.log('calib exp red count', calibrationExpiryRedCount);
 
@@ -311,7 +323,9 @@ export default NotificationsScreen = (props) => {
 
   return (
     <ImageBackground
-      source={require('../assets/images/connectivity-smaller.png')}
+      source={require('../assets/images/connectivity-narrow.jpg')}
+      // source={require('../assets/images/connectivity-smaller.png')}
+      //source={require('../assets/images/connectivity-wider.jpg')}
       style={baseStyles.backgroundImage}
     >
       <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 0 }}>
@@ -557,7 +571,7 @@ export default NotificationsScreen = (props) => {
               dataErrorUrl={dataErrorUrlCalibrationExpiry}
             />
           ) : (
-            <View>
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
               {calibrationExpiryTotalCount > 0 ? (
                 <TouchableOpacity
                   onPress={() => {

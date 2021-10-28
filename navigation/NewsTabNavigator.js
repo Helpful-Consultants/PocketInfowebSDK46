@@ -58,9 +58,12 @@ const NewsTabs =
 // );
 
 export default NewsTabNavigator = ({ navigation, route }) => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const storedShowingDemoApp = useSelector(
+    (state) => state.user.showingDemoApp
+  );
   const storedNewsRedCount = useSelector((state) => state.news.redCount);
   const [newsAlertCount, setNewsAlertCount] = useState(0);
+  const [showingDemoApp, setShowingDemoApp] = useState(false);
   const [newsRedCount, setNewsRedCount] = useState(0);
 
   useEffect(() => {
@@ -103,18 +106,26 @@ export default NewsTabNavigator = ({ navigation, route }) => {
   }, [navigation, route]);
 
   useEffect(() => {
-    if (showingDemoApp) {
+    if (storedShowingDemoApp) {
       setNewsRedCount(storedNewsRedCount);
     }
     //   if (showingDemoApp) {
     //     setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
     //   }
-  }, [storedNewsRedCount]);
+  }, [storedNewsRedCount, storedShowingDemoApp]);
 
-  //   console.log(
-  //     '$$$$$$$$$$$$$$ in news navigator, newsAlertCount ',
-  //     newsAlertCount
-  //   );
+  useEffect(() => {
+    console.log(
+      '$$$$$$$$$$$$$$ in news  ban useEffect, storedShowingDemoApp',
+      storedShowingDemoApp
+    );
+    setShowingDemoApp(storedShowingDemoApp);
+  }, [storedShowingDemoApp]);
+
+  console.log(
+    '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
+    showingDemoApp
+  );
 
   return (
     <NewsTabs.Navigator //iOS
@@ -155,7 +166,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: newsRedCount ? '' : null,
+          tabBarBadge: showingDemoApp && newsRedCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,
