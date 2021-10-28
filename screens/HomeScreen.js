@@ -935,7 +935,7 @@ export default HomeScreen = (props) => {
                       style={baseStyles.viewHomeGridCell}
                       onPress={() =>
                         navigation.navigate('RemindersTabs', {
-                          screen: 'All LTP Loans',
+                          screen: 'LTP Loans',
                         })
                       }
                     >
