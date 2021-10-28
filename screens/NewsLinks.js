@@ -18,6 +18,7 @@ export default function NewsLinks(props) {
   //   console.log(props.items);
   const windowDim = useWindowDimensions();
   const { items, userIntId } = props;
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
 
   //   console.log('windowDim', windowDim && windowDim);
   //   console.log('in newslinks, windowDim:', windowDim);
@@ -41,6 +42,7 @@ export default function NewsLinks(props) {
       null;
 
     const isBusinessCritical =
+      showingDemoApp &&
       item &&
       item.businessCritical &&
       item.businessCritical.length > 0 &&
