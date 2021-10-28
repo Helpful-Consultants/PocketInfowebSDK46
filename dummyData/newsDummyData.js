@@ -8,8 +8,8 @@ export default newsDummyData = [
     imageName: 'Scales.png',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/Workshop_Support/How_important_is_a_Service_Measure.pdf',
-    createdDate: '13/12/2018 20:51:33',
-    lastUpdated: '26/10/2021 09:35:29',
+    createdDate: '28/10/2021 20:51:33',
+    lastUpdated: '15/10/2021 11:44:03',
     updatedBy: 'Lyndon Evans',
     ipAddress: '165.225.17.25',
     businessCritical: 'Y',

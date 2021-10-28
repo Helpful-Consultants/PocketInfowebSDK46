@@ -291,10 +291,12 @@ export default NotificationsScreen = (props) => {
 
       setServiceMeasuresRedCount(storedServiceMeasuresRedCount);
       setServiceMeasuresAmberCount(storedServiceMeasuresAmberCount);
+      setServiceMeasuresTotalCount(storedServiceMeasuresTotalCount);
     }
   }, [
     storedServiceMeasuresRedCount,
     storedServiceMeasuresAmberCount,
+    storedServiceMeasuresTotalCount,
     showingDemoApp,
     showingDemoData,
   ]);
@@ -463,7 +465,7 @@ export default NotificationsScreen = (props) => {
                       <Text style={baseStyles.textSectionRibbon}>
                         {serviceMeasuresTotalCount > 1
                           ? `  See your open Service Measures  `
-                          : `  See your open Service Measure `}
+                          : `  See your open Service Measure  `}
                       </Text>
                       <Ionicons name='open-outline' size={20} />
                     </View>

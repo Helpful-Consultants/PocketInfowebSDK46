@@ -151,13 +151,13 @@ export default serviceMeasuresDummyData = [
   {
     id: '253',
     menuText:
-      'T40093/5 Service Measure Part One:  part of engine support bracket',
+      'T40093/5 Service Measure Part One:  part of engine support bracket...',
     toolsAffected: 'T40093/5 bracket',
     toolBrief: 'Service Measure _T40093-5_2020-05_eng.pdf',
     dateCreated: '09/09/2021 11:45:58',
     lastUpdated: '16/07/2020 16:55:53',
     updatedBy: 'Lyndon Evans',
-    expiryDate: '31/10/2021',
+    expiryDate: '04/11/2021',
     startDate: '09/06/2021',
     actionSteps: 'NNNNNNNN',
     actionText: '',

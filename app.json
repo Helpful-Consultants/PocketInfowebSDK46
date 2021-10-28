@@ -1,15 +1,12 @@
 {
   "expo": {
-    "name": "Pocket Infoweb Extra",
-    "slug": "PocketInfoweb-Extra",
+    "name": "Pocket Infoweb",
+    "slug": "PocketInfoweb-Dev",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.2.29",
-    "icon": "./assets/images/icon-extra.png",
+    "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -21,27 +18,20 @@
       "checkAutomatically": "ON_ERROR_RECOVERY",
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "assets/images/*",
-      "assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "114",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch"
-        ]
+        "UIBackgroundModes": ["fetch"]
       }
     },
     "android": {
-      "versionCode": 20,
-      "package": "com.helpfulconsultants.pocketinfowebextra",
-      "permissions": ["NOTIFICATIONS","com.anddoes.launcher.permission.UPDATE_COUNT"]
+      "versionCode": 20
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -51,16 +41,14 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": [
-      "sentry-expo"
-    ],
+    "plugins": ["sentry-expo"],
     "hooks": {
       "postPublish": [
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb-extra",
+            "project": "pocket-infoweb",
             "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
           }
         }
@@ -68,3 +56,4 @@
     }
   }
 }
+

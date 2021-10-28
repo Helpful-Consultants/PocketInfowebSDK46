@@ -164,10 +164,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     setShowingDemoApp(storedShowingDemoApp);
   }, [storedShowingDemoApp]);
 
-  console.log(
-    '$$$$$$$$$$$$$$ in rimnders navigator, showingDemoApp',
-    showingDemoApp
-  );
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in reminders navigator, showingDemoApp',
+  //     showingDemoApp
+  //   );
 
   useEffect(() => {
     if (showingDemoApp) {

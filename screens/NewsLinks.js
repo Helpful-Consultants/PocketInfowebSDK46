@@ -103,13 +103,15 @@ export default function NewsLinks(props) {
               <Text style={baseStyles.textItemTitle}>{item.headline}</Text>
             )}
             <Text style={baseStyles.textDate}>
-              {isRevised ? `Updated ` : null}
-              {displayDate}
               {daysOld === 0 ? (
-                <Text style={baseStyles.textLeftAlignedBold}>
-                  {isRevised ? `  UPDATED TODAY!` : `  NEW TODAY!`}
+                <Text style={baseStyles.textLeftAlignedBoldSmall}>
+                  {isRevised ? `UPDATED TODAY!` : `NEW TODAY!`}
                 </Text>
-              ) : null}
+              ) : isRevised ? (
+                `Updated ${displayDate}`
+              ) : (
+                displayDate
+              )}
             </Text>
           </View>
         </View>

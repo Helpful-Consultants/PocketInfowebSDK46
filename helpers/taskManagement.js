@@ -18,17 +18,17 @@ export const defineBackgroundTask = async (taskName, taskExecutor) => {
 
   TaskManager.defineTask(taskName, taskExecutor);
 
-  console.log(
-    '%%%%%%%%% in defineBackgroundTask, BackgroundFetch',
-    BackgroundFetch && BackgroundFetch
-  );
+  //   console.log(
+  //     '%%%%%%%%% in defineBackgroundTask, BackgroundFetch',
+  //     BackgroundFetch && BackgroundFetch
+  //   );
 
   const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
 
-  console.log(
-    '%%%%%%%%% in registerBackgroundFetchAsync, BackgroundFetchStatus',
-    backgroundFetchStatus
-  );
+  //   console.log(
+  //     '%%%%%%%%% in registerBackgroundFetchAsync, BackgroundFetchStatus',
+  //     backgroundFetchStatus
+  //   );
   switch (backgroundFetchStatus) {
     case BackgroundFetch.BackgroundFetchStatus.Restricted:
     case BackgroundFetch.BackgroundFetchStatus.Denied:

@@ -581,6 +581,10 @@ export default getBaseStyles = (props) => {
       ...baseTextBold,
       textAlign: 'left',
     },
+    textLeftAlignedBoldSmall: {
+      ...baseTextSmallBold,
+      textAlign: 'left',
+    },
     textLeftAlignedBoldLarge: {
       ...baseTextLargeBold,
       textAlign: 'left',
