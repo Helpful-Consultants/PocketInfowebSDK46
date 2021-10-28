@@ -362,6 +362,7 @@ export default NotificationsScreen = (props) => {
             onPress={() =>
               navigation.navigate('RemindersTabs', { screen: 'ODIS' })
             }
+            style={{ backgroundColor: Colors.vwgWhite }}
           >
             <View style={baseStyles.viewSectionRibbon}>
               <Ionicons
@@ -397,7 +398,7 @@ export default NotificationsScreen = (props) => {
           ) : serviceMeasuresTotalCount !== 'undefined' &&
             serviceMeasuresRedCount !== 'undefined' &&
             serviceMeasuresAmberCount !== 'undefined' ? (
-            <View>
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
               {serviceMeasuresTotalCount > 0 ? (
                 <TouchableOpacity
                   onPress={() =>
@@ -493,7 +494,7 @@ export default NotificationsScreen = (props) => {
           ) : ltpLoansTotalCount !== 'undefined' &&
             ltpLoansRedCount !== 'undefined' &&
             ltpLoansAmberCount !== 'undefined' ? (
-            <View>
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
               {ltpLoansTotalCount > 0 ? (
                 <TouchableOpacity
                   onPress={() =>
