@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   ImageBackground,
   ScrollView,
   Text,
@@ -329,12 +330,19 @@ export default NotificationsScreen = (props) => {
       style={baseStyles.backgroundImage}
     >
       <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 0 }}>
-        <View style={baseStyles.viewPromptRibbon}>
+        <View style={{ ...baseStyles.viewPromptRibbon, flexDirection: 'row' }}>
           <Text style={baseStyles.textPromptRibbon}>
-            Your Important Notifications
+            {isLoadingAny
+              ? `Checking Notifications  `
+              : `Your Important Notifications`}
           </Text>
+          {isLoadingAny ? (
+            <ActivityIndicator size={'small'} color={'white'} />
+          ) : null}
         </View>
-        {userRequestedDemoData && userRequestedDemoData === true ? (
+        {!setIsLoadingAny &&
+        userRequestedDemoData &&
+        userRequestedDemoData === true ? (
           <View style={baseStyles.viewDummyDataRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
               Showing sample data - change in menu.
@@ -461,7 +469,7 @@ export default NotificationsScreen = (props) => {
                 <View style={baseStyles.viewSectionRibbon}>
                   <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
-                    {` No expiring Service Measures`}
+                    {`   No expiring Service Measures`}
                   </Text>
                 </View>
               )}
