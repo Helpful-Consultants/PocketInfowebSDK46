@@ -157,10 +157,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   }, [navigation, route]);
 
   useEffect(() => {
-    console.log(
-      '$$$$$$$$$$$$$$ in reminders nav useEffect, storedShowingDemoApp',
-      storedShowingDemoApp
-    );
+    // console.log(
+    //   '$$$$$$$$$$$$$$ in reminders nav useEffect, storedShowingDemoApp',
+    //   storedShowingDemoApp
+    // );
     setShowingDemoApp(storedShowingDemoApp);
   }, [storedShowingDemoApp]);
 
