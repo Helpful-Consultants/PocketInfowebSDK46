@@ -13,7 +13,8 @@ import {
 // import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
-import sortObjectList from '../helpers/sortObjectList';
+import { sortObjListByDate } from '../helpers/dates';
+
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
 // import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
@@ -76,7 +77,7 @@ export default ServiceMeasuresScreen = (props) => {
 
   const getItemsAsync = async () => {
     // console.log(
-    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
+    //   'ServiceMeasures screen getItemsAsync, userApiFetchParamsObj:',
     //   userApiFetchParamsObj
     // );
 
@@ -135,38 +136,15 @@ export default ServiceMeasuresScreen = (props) => {
     getItemsAsync();
   };
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   const userDataPresent =
-  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
-
-  //   if (userDataPresent === true) {
-  //     // console.log('in stats screen,userDataObj OK', userDataPresent);
-  //   } else {
-  //     // console.log('in stats screen, no userDataObj');
-  //     getItems();
-  //   }
-
-  //   let uniqueServiceMeasuresSorted = sortObjectList(
-  //     unsortedUniqueServiceMeasures,
-  //     'loanToolNo',
-  //     'asc'
-  //   );
-
-  //   setUniqueserviceMeasureItems(serviceMeasuresItems);
-
-  //   console.log(
-  //     'serviceMeasures NOT Sorted',
-  //     serviceMeasuresItems && serviceMeasuresItems
-  //   );
-  let serviceMeasuresSorted = sortObjectList(
+  let serviceMeasuresSorted = sortObjListByDate(
     serviceMeasuresItems,
-    'dateCreated',
-    'desc'
+    'expiryDate',
+    'asc'
   );
+
   //   console.log(
   //     'serviceMeasuresSorted',
+  //     serviceMeasuresItems && serviceMeasuresItems,
   //     serviceMeasuresSorted && serviceMeasuresSorted
   //   );
 

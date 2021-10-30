@@ -1,52 +1,68 @@
-import { differenceInCalendarDays, format, parse, toDate } from 'date-fns';
+import {
+  compareAsc,
+  compareDesc,
+  differenceInCalendarDays,
+  format,
+  isAfter,
+  isBefore,
+  parse,
+  toDate,
+} from 'date-fns';
 
 const parseDateFromMilliseconds = (rawDate) => {
   const parsedDate = (rawDate && toDate(rawDate)) || null;
-  console.log('parseDateFromMilliseconds', rawDate, parsedDate);
+  //   console.log('parseDateFromMilliseconds', rawDate, parsedDate);
   return parsedDate;
 };
 const parseDateFromDDMMYYY = (rawDate) => {
   const parsedDate =
     (rawDate && parse(rawDate, 'dd/MM/yyyy', new Date())) || null;
-  console.log('parseDateFromDDMMYYY', rawDate, parsedDate);
+  //   console.log('parseDateFromDDMMYYY', rawDate, parsedDate);
   return parsedDate;
 };
 const parseDateFromDDMMYYYHHMMSS = (rawDate) => {
   const parsedDate =
     (rawDate && parse(rawDate, 'dd/MM/yyyy HH:mm:ss', new Date())) || null;
-  console.log('parseDateFromDDMMYYYHHMMSS', rawDate, parsedDate);
+  //   console.log('parseDateFromDDMMYYYHHMMSS', rawDate, parsedDate);
   return parsedDate;
 };
 const parseAnyDate = (rawDate) => {
   let parsedDate = null;
   let length = 0;
-  console.log('$$$$ in parseAnyDate', rawDate);
+  //   console.log('$$$$ in parseAnyDate', rawDate);
   if (typeof rawDate !== 'undefined' && rawDate) {
     if (typeof rawDate === 'object') {
       parsedDate = rawDate;
-      console.log(
-        '-----------date object ',
-        typeof rawDate,
-        rawDate,
-        parsedDate
-      );
+      //   console.log(
+      //     '-----------date object ',
+      //     typeof rawDate,
+      //     rawDate,
+      //     parsedDate
+      //   );
     } else {
       if (typeof rawDate === 'number') {
         parsedDate = parseDateFromMilliseconds(rawDate);
-        console.log('millisecs', rawDate, parsedDate);
-      } else length = (rawDate && rawDate.length) || 0;
-      if (length === 10 && rawDate.substr(5, 3) === '/20') {
-        parsedDate = parseDateFromDDMMYYY(rawDate);
-        console.log('-------dd/MM/yyy', rawDate, parsedDate);
-      } else if (length === 19 && rawDate.substr(5, 3) === '/20') {
-        parsedDate = parseDateFromDDMMYYYHHMMSS(rawDate);
-        console.log('-----------do MMM yyyy HH:mm:ss', rawDate, parsedDate);
-      } else if (length === 24 && rawDate.substr(10, 1) === 'T') {
-        parsedDate = rawDate;
-        console.log('-----------javascript ', rawDate, parsedDate);
+        // console.log('millisecs', rawDate, parsedDate);
       } else {
-        parsedDate = rawDate;
-        console.log('-----------unknown ', typeof rawDate, rawDate, parsedDate);
+        length = rawDate.length || 0;
+        if (length === 10 && rawDate.substr(5, 3) === '/20') {
+          parsedDate = parseDateFromDDMMYYY(rawDate);
+          //   console.log('-------dd/MM/yyy', rawDate, parsedDate);
+        } else if (length === 19 && rawDate.substr(5, 3) === '/20') {
+          parsedDate = parseDateFromDDMMYYYHHMMSS(rawDate);
+          //   console.log('-----------do MMM yyyy HH:mm:ss', rawDate, parsedDate);
+        } else if (length === 24 && rawDate.substr(10, 1) === 'T') {
+          parsedDate = rawDate;
+          //   console.log('-----------javascript ', rawDate, parsedDate);
+        } else {
+          parsedDate = rawDate;
+          //   console.log(
+          //     '-----------unknown ',
+          //     typeof rawDate,
+          //     rawDate,
+          //     parsedDate
+          //   );
+        }
       }
     }
   }
@@ -67,7 +83,7 @@ const formatShortDisplayDate = (parsedDate) => {
 const formatFriendlyDisplayDateAndTime = (parsedDate) => {
   //   console.log('formatFriendlyDisplayDate input', parsedDate);
   const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy HH:mm:ss');
-  console.log('formatFriendlyDisplayDate output', displayDate);
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
   return displayDate;
 };
 const formatShortDisplayDateAndTime = (parsedDate) => {
@@ -129,7 +145,7 @@ export const getFriendlyDisplayDateAndTime = (rawDate) => {
 
 export const getDateDifference = (dateOne, dateTwo) => {
   let timeToExpiry = 0;
-  console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
+  //   console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
 
   if (dateOne && dateTwo) {
     const parsedDateOne = parseAnyDate(dateOne);
@@ -139,4 +155,44 @@ export const getDateDifference = (dateOne, dateTwo) => {
   //   console.log('expiryDate', expiryDate);
   //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
   return timeToExpiry;
+};
+
+const zzzzcompareObjectValues = (key, order = 'asc') => {
+  return function innerSort(a, b) {
+    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) return 0;
+    const comparison = a[key].localeCompare(b[key]);
+
+    return order === 'desc' ? comparison * -1 : comparison;
+  };
+};
+
+const compareObjectValues = (key, order = 'asc') => {
+  //   console.log('compareObjectValues', key, order);
+  return function innerSort(a, b) {
+    if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) return 0;
+    const parsedDateA = parseAnyDate(a[key]);
+    const parsedDateB = parseAnyDate(b[key]);
+
+    const comparisonTrueFalse =
+      order === 'asc'
+        ? isBefore(parsedDateA, parsedDateB)
+        : isAfter(parsedDateA, parsedDateB);
+
+    // const comparison = a[key].localeCompare(b[key]);
+    const comparisonNumber = comparisonTrueFalse ? 1 : 0;
+    // console.log(
+    //   '^^^^^^^^^^^^in compareObjectValues',
+    //   parsedDateA,
+    //   parsedDateB,
+    //   comparisonTrueFalse,
+    //   comparisonNumber
+    // );
+
+    return comparisonNumber * -1;
+  };
+};
+
+export const sortObjListByDate = (objArr = [], key = '', order = 'asc') => {
+  //   console.log(objArr.length, key, order);
+  return objArr.sort(compareObjectValues(key, order));
 };

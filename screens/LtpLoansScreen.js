@@ -13,6 +13,7 @@ import {
 } from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
+import { sortObjListByDate } from '../helpers/dates';
 // import { getOpenLtpLoansItems } from '../helpers/ltpLoanStatus';
 
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
@@ -141,8 +142,8 @@ export default LtpLoansScreen = (props) => {
   };
 
   const items = !isLoading && !dataError ? ltpLoansItems : [];
-  // let ltpLoansSorted = sortObjectList(items, 'endDateDue', 'asc');
-  let ltpLoansSorted = items;
+  let ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
+
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
@@ -155,12 +156,6 @@ export default LtpLoansScreen = (props) => {
   //     // console.log('in ltpLoans screen, no userDataObj');
   //     getItems();
   //   }
-
-  //   let uniqueLtpLoansSorted = sortObjectList(
-  //     unsortedUniqueLtpLoans,
-  //     'loanToolNo',
-  //     'asc'
-  //   );
 
   //   console.log('in ltpLoans screen - point 7');
 
