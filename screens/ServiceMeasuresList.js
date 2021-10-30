@@ -5,7 +5,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import { parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
-import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
+import { getDateDifference, getShortDisplayDate } from '../helpers/dates';
 
 const nowDateObj = new Date();
 
@@ -132,15 +132,13 @@ export default function ServiceMeasuresList(props) {
         {showFullDetails && showFullDetails === true ? (
           item.retailerStatus ? null : (
             <Text style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}>
-              {`Start date: ${getDisplayDateFromDDMMYYY(item.startDate)}`}{' '}
+              {`Start date: ${getShortDisplayDate(item.startDate)}`}{' '}
             </Text>
           )
         ) : null}
         {item.retailerStatus ? null : (
           <Text style={baseStyles.textLeftAligned}>
-            {`To be completed by: ${getDisplayDateFromDDMMYYY(
-              item.expiryDate
-            )}`}
+            {`To be completed by: ${getShortDisplayDate(item.expiryDate)}`}
             {daysLeft === 1 ? (
               <Text
                 style={{

@@ -3,7 +3,7 @@ import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { parse } from 'date-fns';
 import { getLtpLoanStatus } from '../helpers/ltpLoans';
-import { getDateDifference, getDisplayDateFromDDMMYYY } from '../helpers/dates';
+import { getDateDifference, getShortDisplayDate } from '../helpers/dates';
 import Colors from '../constants/Colors';
 
 const nowDateObj = new Date();
@@ -48,10 +48,10 @@ export default function LtpLoansList(props) {
               <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
                 Your loan period is
                 {item.startDate
-                  ? ` ${getDisplayDateFromDDMMYYY(item.startDate)}`
+                  ? ` ${getShortDisplayDate(item.startDate)}`
                   : null}
                 {item.endDateDue
-                  ? ` to ${getDisplayDateFromDDMMYYY(item.endDateDue)}`
+                  ? ` to ${getShortDisplayDate(item.endDateDue)}`
                   : null}
               </Text>
             </View>

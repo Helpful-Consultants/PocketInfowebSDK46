@@ -6,7 +6,7 @@ import { isAfter, parse } from 'date-fns';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import amendLink from '../helpers/amendLink';
-import { getDisplayDateFromDate, getDateDifference } from '../helpers/dates';
+import { getFriendlyDisplayDate, getDateDifference } from '../helpers/dates';
 import Colors from '../constants/Colors';
 
 const appCode = Base64.encode(moment().format('MMMM'));
@@ -82,8 +82,8 @@ export default function NewsLinks(props) {
     // console.log('isRevised', parsedUpdatedDate, parsedCreatedDate);
 
     const displayDate = isRevised
-      ? getDisplayDateFromDate(parsedUpdatedDate)
-      : getDisplayDateFromDate(parsedCreatedDate);
+      ? getFriendlyDisplayDate(parsedUpdatedDate)
+      : getFriendlyDisplayDate(parsedCreatedDate);
 
     // console.log('displayDate is', displayDate);
 

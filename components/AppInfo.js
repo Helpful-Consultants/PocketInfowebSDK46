@@ -7,10 +7,7 @@ import moment from 'moment';
 import Constants from 'expo-constants';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
-
-const getDisplayDate = (rawDate) => {
-  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
-};
+import { getShortDisplayDateAndTime } from '../helpers/dates';
 
 export default AppInfo = (props) => {
   const windowDim = useWindowDimensions();
@@ -18,6 +15,7 @@ export default AppInfo = (props) => {
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  //   console.log('8888888888888 odisFetchTime', odisFetchTime);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
 
@@ -69,7 +67,7 @@ export default AppInfo = (props) => {
       {showingDemoApp ? (
         odisFetchTime ? (
           <Text style={baseStyles.panelTextAppInfo}>
-            {`Last ODIS check: ${getDisplayDate(odisFetchTime)}`}
+            {`Last ODIS check: ${getShortDisplayDateAndTime(odisFetchTime)}`}
           </Text>
         ) : null
       ) : null}

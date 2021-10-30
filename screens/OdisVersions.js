@@ -7,11 +7,7 @@ import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
-import {
-  getDateDifference,
-  getDisplayDateFromDDMMYYYHHMMSS,
-  getDisplayDateTimeFromDDMMYYYHHMMSS,
-} from '../helpers/dates';
+import { getShortDisplayDateAndTime } from '../helpers/dates';
 
 export default function OdisVersions(props) {
   //   console.log('props fetchTime', props.fetchTime);
@@ -111,9 +107,7 @@ export default function OdisVersions(props) {
 
           {item.lastUpdated && item.lastUpdated.length > 0 ? (
             <Text style={baseStyles.textOdisVersionSmaller}>
-              {`Last changed ${getDisplayDateTimeFromDDMMYYYHHMMSS(
-                item.lastUpdated
-              )}`}
+              {`Last changed ${getShortDisplayDateAndTime(item.lastUpdated)}`}
             </Text>
           ) : null}
         </View>
