@@ -5,6 +5,7 @@ import {
   format,
   isAfter,
   isBefore,
+  isThisYear,
   parse,
   toDate,
 } from 'date-fns';
@@ -68,27 +69,75 @@ const parseAnyDate = (rawDate) => {
   }
   return parsedDate;
 };
-const formatFriendlyDisplayDate = (parsedDate) => {
-  //   console.log('formatFriendlyDisplayDate input', parsedDate);
-  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy');
-  //   console.log('formatFriendlyDisplayDate output', displayDate);
-  return displayDate;
-};
 const formatShortDisplayDate = (parsedDate) => {
   //   console.log('formatShortDisplayDate input', parsedDate);
   const displayDate = parsedDate && format(parsedDate, 'dd/MM/yy');
   //   console.log('formatShortDisplayDate output', displayDate);
   return displayDate;
 };
-const formatFriendlyDisplayDateAndTime = (parsedDate) => {
+const formatShortDisplayDateAndShortTime = (parsedDate) => {
   //   console.log('formatFriendlyDisplayDate input', parsedDate);
-  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy HH:mm:ss');
+  const displayDate = parsedDate && format(parsedDate, 'dd/MM/yy HH:mm');
   //   console.log('formatFriendlyDisplayDate output', displayDate);
   return displayDate;
 };
-const formatShortDisplayDateAndTime = (parsedDate) => {
+const formatShortDisplayDateAndLongTime = (parsedDate) => {
   //   console.log('formatFriendlyDisplayDate input', parsedDate);
   const displayDate = parsedDate && format(parsedDate, 'dd/MM/yy HH:mm:ss');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayDate = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayShortDate = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yy');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayDayMonth = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayDateAndShortTime = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy h:mma');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayDateAndLongTime = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'do MMM yyyy h:mm:ssa');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayShortTimeAndShortDate = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'h:mma, do MMM yy');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayShortTimeAndLongDate = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'h:mmbbb, eeee do MMM');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayLongDateNoYear = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'eee do MMM');
+  //   console.log('formatFriendlyDisplayDate output', displayDate);
+  return displayDate;
+};
+const formatFriendlyDisplayLongDate = (parsedDate) => {
+  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  const displayDate = parsedDate && format(parsedDate, 'eee do MMM yy');
   //   console.log('formatFriendlyDisplayDate output', displayDate);
   return displayDate;
 };
@@ -108,7 +157,7 @@ export const getShortDisplayDate = (rawDate) => {
 export const getShortDisplayDateAndTime = (rawDate) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
-  displayDate = formatShortDisplayDateAndTime(parsedDate) || null;
+  displayDate = formatShortDisplayDateAndShortTime(parsedDate) || null;
   //   console.log(
   //     '$$$$ in getShortDisplayDate',
   //     rawDate,
@@ -117,6 +166,19 @@ export const getShortDisplayDateAndTime = (rawDate) => {
   //   );
   return displayDate;
 };
+export const getShortDisplayDateAndLongTime = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatShortDisplayDateAndLongTime(parsedDate) || null;
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+
 export const getFriendlyDisplayDate = (rawDate) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
@@ -130,10 +192,94 @@ export const getFriendlyDisplayDate = (rawDate) => {
   return displayDate;
 };
 
-export const getFriendlyDisplayDateAndTime = (rawDate) => {
+export const getFriendlyDisplayShortDate = (rawDate) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
-  displayDate = formatFriendlyDisplayDateAndTime(parsedDate) || null;
+
+  displayDate = parsedDate
+    ? isThisYear(parsedDate)
+      ? formatFriendlyDisplayDayMonth(parsedDate)
+      : formatFriendlyDisplayShortDate(parsedDate)
+    : '';
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+export const getFriendlyDisplayLongDate = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+
+  displayDate = parsedDate
+    ? isThisYear(parsedDate)
+      ? formatFriendlyDisplayLongDateNoYear(parsedDate)
+      : formatFriendlyDisplayLongDate(parsedDate)
+    : '';
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+
+export const getFriendlyDisplayDateAndShortTime = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatFriendlyDisplayShortTimeAndDate(parsedDate) || null;
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+
+export const getFriendlyDisplayDateAndLongTime = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatFriendlyDisplayDateAndLongTime(parsedDate) || null;
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+export const getFriendlyDisplayLongTimeAndShortDate = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatFriendlyDisplayLongTimeAndShortDate(parsedDate) || null;
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+export const getFriendlyDisplayShortTimeAndShortDate = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatFriendlyDisplayShortTimeAndShortDate(parsedDate) || null;
+  //   console.log(
+  //     '$$$$ in getFriendlyDisplayDate',
+  //     rawDate,
+  //     'changed to',
+  //     displayDate
+  //   );
+  return displayDate;
+};
+export const getFriendlyDisplayShortTimeAndLongDate = (rawDate) => {
+  let displayDate = '';
+  let parsedDate = parseAnyDate(rawDate);
+  displayDate = formatFriendlyDisplayShortTimeAndLongDate(parsedDate) || null;
   //   console.log(
   //     '$$$$ in getFriendlyDisplayDate',
   //     rawDate,
@@ -164,6 +310,17 @@ const zzzzcompareObjectValues = (key, order = 'asc') => {
 
     return order === 'desc' ? comparison * -1 : comparison;
   };
+};
+
+const dateThisYear = (parsedDate) => {
+  let dateIsThisYear = true;
+
+  if (parsedDate) {
+    dateIsThisYear = isThisYear(parsedDate);
+  }
+  //   console.log('expiryDate', expiryDate);
+  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+  return dateIsThisYear;
 };
 
 const compareObjectValues = (key, order = 'asc') => {

@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 // import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
 import Colors from '../constants/Colors';
-import FriendlyDate from '../components/FriendlyDate';
+import { getFriendlyDisplayShortTimeAndLongDate } from '../helpers/dates';
 
 const minSearchLength = 1;
 
@@ -262,7 +262,15 @@ export default function DealerToolsList(props) {
                       </Text>
                     </View>
                     <View>
-                      <FriendlyDate date={item.createdDate} />
+                      <Text
+                        style={{
+                          ...baseStyles.textSmallLight,
+                        }}
+                      >
+                        {getFriendlyDisplayShortTimeAndLongDate(
+                          item.createdDate
+                        )}
+                      </Text>
                     </View>
                     <ToolList job={item} listOrder={i} />
                   </View>
