@@ -1,18 +1,18 @@
 import React from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
-import moment from 'moment';
-import { isAfter, parse } from 'date-fns';
+import { format, isAfter, parse } from 'date-fns';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import amendLink from '../helpers/amendLink';
 import { getFriendlyDisplayDate, getDateDifference } from '../helpers/dates';
-import Colors from '../constants/Colors';
 
-const appCode = Base64.encode(moment().format('MMMM'));
-// console.log('appCode is ', appCode);
-const notificationLimit = 7;
 const nowDateObj = new Date();
+const month = format(nowDateObj, 'MMMM');
+const appCode = Base64.encode(month);
+
+// console.log('month is', month, 'appCode is ', appCode);
+const notificationLimit = 7;
 
 export default function NewsLinks(props) {
   //   console.log(props.items);

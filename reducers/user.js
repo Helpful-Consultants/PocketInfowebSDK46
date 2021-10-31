@@ -1,6 +1,5 @@
 // import { Types } from '../actions/user';
 import Types from '../constants/Types';
-import moment from 'moment';
 
 const INITIAL_STATE = {
   userData: [],
@@ -136,6 +135,9 @@ export default function user(state = INITIAL_STATE, action) {
       }
       //   userBrand = 'se';
       //   console.log('%%% user reducer -userBrand in reducer is ', userBrand);
+      const now = new Date();
+      const nowString = now.toISOString();
+
       return {
         ...state,
         // showingDemoApp: false,
@@ -150,7 +152,7 @@ export default function user(state = INITIAL_STATE, action) {
         dealerName: dealerName,
         userBrand: userBrand,
         userApiFetchParamsObj: userApiFetchParamsObj,
-        lastUpdate: moment(),
+        lastUpdate: nowString,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

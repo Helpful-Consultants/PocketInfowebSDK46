@@ -5,7 +5,6 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 // import Touchable from 'react-native-platform-touchable';
-// import moment from 'moment';
 // import ltpDummyData from '../dummyData/ltpDummyData';
 
 export default function CalibrationExpiryList(props) {

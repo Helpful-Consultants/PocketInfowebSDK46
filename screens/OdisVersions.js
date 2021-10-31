@@ -1,7 +1,6 @@
 import React from 'react';
 import { useWindowDimensions, ScrollView, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import { parse } from 'date-fns';
 import vwLogo from '../assets/images/vw-logo.png';
 import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';

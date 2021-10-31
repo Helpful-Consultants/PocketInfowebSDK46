@@ -9,17 +9,24 @@ import { useSelector } from 'react-redux';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
-import moment from 'moment';
 import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
+import { getShortDisplayDateAndLongTime } from '../helpers/dates';
 
 import { store } from '../helpers/store';
 
-// console.log('in backgroundfetchblock', store);
+const now = new Date();
+const nowString = now.toISOString();
+console.log(
+  'in BackgroundFetchBlock',
 
-const getDisplayDate = (rawDate) => {
-  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
-};
+  'now',
+  now,
+  'nowStr',
+  nowString
+);
+
+// console.log('in backgroundfetchblock', store);
 
 // 2. Register the task at some point in your app by providing the same name, and some configuration
 // options for how the background fetch should behave
@@ -218,7 +225,7 @@ export default BackgroundFetchBlock = () => {
   }, []);
   //   console.log(
   //     'backgroundDataItems fetched at ',
-  //     backgroundDataFetchTime && getDisplayDate(backgroundDataFetchTime)
+  //     backgroundDataFetchTime && getShortDisplayDateAndLongTime(backgroundDataFetchTime)
   //   );
   //   console.log('backgroundDataItems from store', backgroundDataItems);
 
@@ -271,14 +278,14 @@ export default BackgroundFetchBlock = () => {
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Last background fetch at:{' '}
           {(backgroundDataFetchTime &&
-            getDisplayDate(backgroundDataFetchTime)) ||
+            getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
             'not called yet'}{' '}
           <Text style={styles.boldText}>
             {' '}
             Result:{' '}
             {(backgroundDataItems &&
               backgroundDataItems.datetime &&
-              getDisplayDate(backgroundDataItems.datetime)) ||
+              getShortDisplayDateAndLongTime(backgroundDataItems.datetime)) ||
               'n/a'}{' '}
             {backgroundDataItems && backgroundDataItems.abbreviation}
           </Text>

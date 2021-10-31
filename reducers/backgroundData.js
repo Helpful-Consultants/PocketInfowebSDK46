@@ -1,7 +1,6 @@
 // import { Types } from '../actions/odis';
 // import odisDummyData from '../dummyData/odisDummyData';
 import Types from '../constants/Types';
-// import moment from 'moment';
 
 const INITIAL_STATE = {
   backgroundDataItems: {},
