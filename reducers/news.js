@@ -1,11 +1,13 @@
 // import { Types } from '../actions/news';
 import Types from '../constants/Types';
+import { getDateOfLatestCriticalNewsItem } from '../helpers/news';
 
 const INITIAL_STATE = {
   newsItems: [],
   viewCount: 0,
   redCount: 0,
   lastUpdate: null,
+  latestCriticalItemDate: null,
   previousUpdate: null,
   isLoading: false,
   error: null,
@@ -48,10 +50,15 @@ export default function news(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_NEWS_DISPLAY_TIMESTAMP: {
-      //   console.log('date in state is', state.displayTimestamp);
+      console.log(
+        'date in state is',
+        state.displayTimestamp,
+        'setting to',
+        Date.now()
+      );
       return {
         ...state,
-        displayTimestamp: new Date(),
+        displayTimestamp: Date.now(),
       };
     }
     case Types.GET_NEWS_SUCCESS: {
@@ -62,6 +69,7 @@ export default function news(state = INITIAL_STATE, action) {
           action.payload.items[0].lastUpdated &&
           action.payload.items[0].lastUpdated) ||
         null;
+
       //   const newPreviousUpdated =
       //     (state.previousUpdated &&
       //       state.lastUpdated &&
@@ -69,10 +77,17 @@ export default function news(state = INITIAL_STATE, action) {
       //       state.lastUpdated) ||
       //     null;
       const itemsList = (action.payload.items && action.payload.items) || [];
+      const dateOfLatestCriticalNewsItem =
+        getDateOfLatestCriticalNewsItem(itemsList);
+      console.log(
+        'in news reducer dateOfLatestCriticalNewsItem',
+        dateOfLatestCriticalNewsItem
+      );
       return {
         ...state,
         // newsItems: [],
         newsItems: itemsList,
+        latestCriticalItemDate: dateOfLatestCriticalNewsItem,
         redCount: countCriticalItems(itemsList),
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,

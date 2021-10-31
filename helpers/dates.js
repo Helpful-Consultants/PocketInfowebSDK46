@@ -303,6 +303,26 @@ export const getDateDifference = (dateOne, dateTwo) => {
   return timeToExpiry;
 };
 
+export const isDateAfter = (dateOne, dateTwo) => {
+  let isItAfter = 0;
+  console.log('***************in isDateAfter', dateOne, 'to', dateTwo);
+
+  if (dateOne && dateTwo) {
+    const parsedDateOne = parseAnyDate(dateOne);
+    const parsedDateTwo = parseAnyDate(dateTwo);
+    isItAfter = isAfter(parsedDateOne, parsedDateTwo);
+  }
+  console.log(
+    '@@@@@@@@@firstDate',
+    dateOne,
+    'parsedDateTwo',
+    dateTwo,
+    isItAfter
+  );
+  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+  return isItAfter;
+};
+
 const zzzzcompareObjectValues = (key, order = 'asc') => {
   return function innerSort(a, b) {
     if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) return 0;

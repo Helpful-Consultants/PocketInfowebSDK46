@@ -62,7 +62,7 @@ export default NewsScreen = (props) => {
     [newsItems]
   );
   const storeDisplayTimestampAsync = async () => {
-    // console.log('istoreDisplayTimestampAsync:');
+    console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
     dispatch(setNewsDisplayTimestamp());
   };
 
