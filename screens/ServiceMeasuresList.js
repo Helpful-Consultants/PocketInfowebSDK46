@@ -5,6 +5,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize';
 import { parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
+import Periods from '../constants/Periods';
 import { getDateDifference, getFriendlyDisplayDate } from '../helpers/dates';
 
 const nowDateObj = new Date();
@@ -148,12 +149,12 @@ export default function ServiceMeasuresList(props) {
               >
                 {` LAST DAY!`}
               </Text>
-            ) : daysLeft <= 8 ? (
+            ) : daysLeft <= Periods.SERVICE_MEASURES_AMBER_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,
                   color:
-                    daysLeft <= 3
+                    daysLeft <= Periods.SERVICE_MEASURES_RED_PERIOD
                       ? Colors.vwgBadgeSevereAlertColor
                       : Colors.vwgBadgeAlertColor,
                 }}
