@@ -1,35 +1,19 @@
 import { parse } from 'date-fns';
 import { getDateDifference } from './dates';
+import Periods from '../constants/Periods';
 
 export const getLtpLoansCountsObj = (ltpLoansItems) => {
   let redCount = 0;
   let amberCount = 0;
   let greenCount = 0;
 
-  const nowDateObj = new Date();
-
-  const checkTimeToExpiry = (endDate) => {
-    const parsedEndDate =
-      (endDate && parse(endDate, 'dd/MM/yyyy', new Date())) || null;
-    const daysLeft = 1 + getDateDifference(nowDateObj, parsedEndDate);
-    // console.log(
-    //   '£££ in getLtpLoansCountsObj, checkTimeToExpiry ',
-    //   endDate,
-    //   'parsedEndDate',
-    //   parsedEndDate,
-    //   daysLeft
-    // );
-    return daysLeft;
-  };
-
-  //   console.log(
-  //     'in getLtpLoansCountsObj; ltpLoansItems length',
-  //     ltpLoansItems.length
-  //   );
+  const nowDate = Date.now();
 
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     ltpLoansItems.map((item) => {
-      const timeToEnd = item.endDateDue && checkTimeToExpiry(item.endDateDue);
+      const timeToEnd = item.endDateDue
+        ? item.endDateDue && getDateDifference(nowDate, item.endDateDue)
+        : null;
       //   console.log(
       //     'in getLtpLoansCountsObj; ',
       //     'item.endDate',
@@ -38,12 +22,12 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
       //     timeToEnd
       //   );
       if (timeToEnd !== null) {
-        if (timeToEnd <= 2) {
+        if (timeToEnd <= Periods.LTP_LOANS_RED_PERIOD) {
           redCount++;
-        } else if (timeToEnd >= 5) {
-          greenCount++;
-        } else {
+        } else if (timeToEnd <= Periods.LTP_LOANS_AMBER_PERIOD) {
           amberCount++;
+        } else {
+          greenCount++;
         }
       }
     });
@@ -109,15 +93,6 @@ export const getLtpLoanStatus = (nowDateObj, item) => {
   //   console.log('daysFromExpiry', daysFromExpiry);
 
   return true; //@!@!!!!!!!!!!!!!! TODO
-
-  if (daysFromExpiry >= -2) {
-    return true;
-  } else {
-    if (daysFromStart >= -3) {
-      return true;
-    }
-  }
-  return false;
 };
 
 export const getOpenLtpLoansItems = (nowDateObj, ltpLoansItems) => {

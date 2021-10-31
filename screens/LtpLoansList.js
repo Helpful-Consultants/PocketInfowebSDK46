@@ -1,5 +1,9 @@
 import React from 'react';
-import { useWindowDimensions, View } from 'react-native';
+import {
+  ProgressBarAndroidBase,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { Text } from 'react-native-elements';
 import { parse } from 'date-fns';
 import { getLtpLoanStatus } from '../helpers/ltpLoans';
@@ -8,6 +12,7 @@ import {
   getFriendlyDisplayLongDate,
 } from '../helpers/dates';
 import Colors from '../constants/Colors';
+import Periods from '../constants/Periods';
 
 const nowDateObj = new Date();
 
@@ -49,7 +54,7 @@ export default function LtpLoansList(props) {
               }}
             >
               <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
-                Your loan period is
+                Your loan period {daysLeft >= 0 ? 'is' : 'was'}
                 {item.startDate
                   ? ` ${getFriendlyDisplayLongDate(item.startDate)}`
                   : null}
@@ -78,18 +83,18 @@ export default function LtpLoansList(props) {
               >
                 {`LAST DAY! Please return this today to avoid a late penalty charge.`}
               </Text>
-            ) : daysLeft >= 5 ? (
+            ) : daysLeft >= Periods.LTP_LOANS_AMBER_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAligned,
                   color: Colors.vwgBlack,
                 }}
               >
-                {`${daysLeft} ${
-                  daysLeft === 1 ? `day` : `days`
-                } left of this loan`}
+                {daysLeft === 1
+                  ? `There is 1 day left of this loan`
+                  : `There are ${daysLeft} days left of this loan`}
               </Text>
-            ) : daysLeft <= 2 ? (
+            ) : daysLeft <= Periods.LTP_LOANS_RED_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,

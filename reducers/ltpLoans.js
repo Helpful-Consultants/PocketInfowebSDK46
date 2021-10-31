@@ -1,7 +1,6 @@
 import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
 import { getLtpLoansCountsObj } from '../helpers/ltpLoans';
-
 const defaultCounts = {
   redCount: 0,
   amberCount: 0,
