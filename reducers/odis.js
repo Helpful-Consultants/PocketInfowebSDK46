@@ -69,7 +69,7 @@ export default function odis(state = INITIAL_STATE, action) {
       //     userBrand,
       //     action.payload && action.payload
       //   );
-      console.log('action is:', action);
+      //   console.log('action is:', action);
       let userBrand =
         action.payload && action.payload.userBrand
           ? action.payload.userBrand

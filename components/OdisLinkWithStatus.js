@@ -26,12 +26,12 @@ export default function OdisLinkWithStatus(props) {
   //   console.log('in odisstatus odisData', itemsObj);
   //   console.log(logoChooser);
   //   console.log('odisDummyData', odisDummyData);
-  console.log(
-    'OdisLinkWithStatusshowOdisAlert',
-    showOdisAlert,
-    'showingDemoApp',
-    showingDemoApp
-  );
+  //   console.log(
+  //     'OdisLinkWithStatus showOdisAlert',
+  //     showOdisAlert,
+  //     'showingDemoApp',
+  //     showingDemoApp
+  //   );
 
   return (
     <Touchable

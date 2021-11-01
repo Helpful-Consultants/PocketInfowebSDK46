@@ -114,7 +114,7 @@ export const checkUnseenItems = (scope) => {
       if (displayTimestamp) {
         unseenItemsCount = getOdisAlertCount(InfoTypesAlertAges.ODIS);
       }
-      //   console.log('in checkfor alerts, odisAlertCount is ', unseenItemsCount);
+      //   console.log('in checkfor alerts, odisChangesToHighlight is ', odisChangesToHighlight);
       return unseenItemsCount;
     }
     case InfoTypes.NOTIFICATIONS: {
