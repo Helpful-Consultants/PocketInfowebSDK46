@@ -61,10 +61,11 @@ export default NewsTabNavigator = ({ navigation, route }) => {
   const storedShowingDemoApp = useSelector(
     (state) => state.user.showingDemoApp
   );
-  const storedNewsRedCount = useSelector((state) => state.news.redCount);
-  const [newsAlertCount, setNewsAlertCount] = useState(0);
+  const storedUnseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
+  const [newsRedAlertCount, setNewsRedAlertCount] = useState(0);
   const [showingDemoApp, setShowingDemoApp] = useState(false);
-  const [newsRedCount, setNewsRedCount] = useState(0);
 
   useEffect(() => {
     // const alerts = checkUnseenItems(InfoTypes.NEWS);
@@ -106,26 +107,23 @@ export default NewsTabNavigator = ({ navigation, route }) => {
   }, [navigation, route]);
 
   useEffect(() => {
-    if (storedShowingDemoApp) {
-      setNewsRedCount(storedNewsRedCount);
+    if (showingDemoApp) {
+      setNewsRedAlertCount(storedUnseenCriticalItems ? 1 : 0);
     }
-    //   if (showingDemoApp) {
-    //     setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
-    //   }
-  }, [storedNewsRedCount, storedShowingDemoApp]);
+  }, [storedUnseenCriticalItems, showingDemoApp]);
 
   useEffect(() => {
-    console.log(
-      '$$$$$$$$$$$$$$ in news  ban useEffect, storedShowingDemoApp',
-      storedShowingDemoApp
-    );
+    // console.log(
+    //   '$$$$$$$$$$$$$$ in news  ban useEffect, storedShowingDemoApp',
+    //   storedShowingDemoApp
+    // );
     setShowingDemoApp(storedShowingDemoApp);
   }, [storedShowingDemoApp]);
 
-  console.log(
-    '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
-    showingDemoApp
-  );
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
+  //     showingDemoApp
+  //   );
 
   return (
     <NewsTabs.Navigator //iOS
@@ -166,7 +164,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: showingDemoApp && newsRedCount ? '' : null,
+          tabBarBadge: showingDemoApp && newsRedAlertCount ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,

@@ -21,6 +21,7 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import { countNotifiableItems, checkUnseenItems } from '../helpers/alertStatus';
+import { getDateDifference } from '../helpers/dates';
 import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
@@ -136,8 +137,13 @@ export default HomeScreen = (props) => {
   const odisViewCount = useSelector((state) => state.odis.viewCount);
 
   const lastUpdateNews = useSelector((state) => state.news.lastUpdate);
+  const storedLatestCriticalNewsItemDate = useSelector(
+    (state) => state.news.latestCriticalItemDate
+  );
   const newsObj = useSelector((state) => state.news);
-  const previousUpdateNews = useSelector((state) => state.news.previousUpdate);
+  const storedUnseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
 
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
@@ -171,7 +177,9 @@ export default HomeScreen = (props) => {
   const storedLtpLoansAmberCount = useSelector(
     (state) => state.ltpLoans.amberCount
   );
-  const storedNewsRedAlertCount = useSelector((state) => state.news.redCount);
+  const storedNewsDisplayTimestamp = useSelector(
+    (state) => state.news.displayTimestamp
+  );
   const [ltpLoansRedAlertCount, setLtpLoansRedAlertCount] = useState(0);
   const [newsRedAlertCount, setNewsRedAlertCount] = useState(0);
   const [ltpLoansAmberAlertCount, setLtpLoansAmberAlertCount] = useState(0);
@@ -194,8 +202,6 @@ export default HomeScreen = (props) => {
   const [ageOfNews, setAgeOfNews] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-
-  const [newsAlertCount, setNewsAlertCount] = useState(0);
   const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
   const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
   const [odisAlertCount, setOdisAlertCount] = useState(0);
@@ -486,15 +492,9 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      setNewsAlertCount(checkUnseenItems(InfoTypes.NEWS));
-      //   setLtpLoansAlertCount(checkUnseenItems(InfoTypes.LTP_LOANS));
-      //   setNotificationsAlertCount(checkUnseenItems(InfoTypes.NOTIFICATIONS));
-      setOdisAlertCount(checkUnseenItems(InfoTypes.ODIS));
-      //   setServiceMeasuresAlertCount(
-      //     checkUnseenItems(InfoTypes.SERVICE_MEASURES)
-      //   );
+      setNewsRedAlertCount(storedUnseenCriticalItems ? 1 : 0);
     }
-  }, [showingDemoApp]);
+  }, [storedUnseenCriticalItems, showingDemoApp]);
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
@@ -508,26 +508,28 @@ export default HomeScreen = (props) => {
   });
 
   //   console.log('IN HOME !!!!!  5');
-  useEffect(() => {
-    // console.log('news useEffect', lastUpdateNews);
-    if (lastUpdateNews && lastUpdateNews !== null) {
-      const lastUpdateString = lastUpdateNews.toString();
-      //   console.log('lastUpdateNews', lastUpdateString);
-      const last = moment(lastUpdateString, 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment(lastUpdateNews.toString(), 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment('31/01/2020 12:31:19', 'DD/MM/YYYY HH:mm:ss');
-      //   console.log('now', now);
-      //   console.log('last', last);
+  //   useEffect(() => {
+  //     const latestCriticalNewsItemDate = storedLatestCriticalNewsItemDate;
+  //     const lastViewed = storedNewsDisplayTimestamp;
+  //     if (latestCriticalNewsItemDate && latestCriticalNewsItemDate.length > 0) {
+  //       if (lastUpdateNews && lastUpdateNews.length > 0) {
+  //         const freshness = getDateDifference(
+  //           lastViewed,
+  //           storedLatestCriticalNewsItemDate
+  //         );
+  //         //   let fromNow = moment(last).fromNow();
+  //         //   console.log('news fromNow', fromNow);
 
-      let newAgeOfNews = now.diff(moment(last), 'hours');
-      //   let fromNow = moment(last).fromNow();
-      //   console.log('news fromNow', fromNow);
-
-      // setAgeOfNews(newAgeOfNews);
-      //   console.log('news useEffect', last, now, newAgeOfNews);
-      setAgeOfNews(newAgeOfNews);
-    }
-  }, [lastUpdateNews]);
+  //         // setAgeOfNews(newAgeOfNews);
+  //         //   console.log('news useEffect', last, now, newAgeOfNews);
+  //         console.log('news freshness', freshness);
+  //       } else {
+  //         setNewsAlertRedCount(1);
+  //       }
+  //     } else {
+  //       setNewsAlertRedCount(0);
+  //     }
+  //   }, [storedLatestCriticalNewsItemDate]);
 
   useEffect(() => {
     const userWipsItems =
@@ -573,59 +575,7 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
-  //   const gridRows =
-  //     Constants.manifest.name &&
-  //     Constants.manifest.name === 'Pocket Infoweb Extra'
-  //       ? 8
-  //       : 6;
-
   const gridRows = showingDemoApp ? 8 : 6;
-  //   console.log('home screen gridRows', gridRows);
-  //   console.log('Rendering Home screen');
-  //   useEffect(() => {
-  //     if (showingDemoApp) {
-  //       //   console.log(
-  //       //     'in home useEffect calibrationExpiryCounts',
-  //       //     calibrationExpiryRedCount,
-  //       //     calibrationExpiryAmberCount
-  //       //   );
-  //       const tempNotifiableCalibrationAlertsCount =
-  //         (calibrationExpiryRedCount || calibrationExpiryRedCount === 0) &&
-  //         (calibrationExpiryAmberCount || calibrationExpiryAmberCount === 0)
-  //           ? calibrationExpiryRedCount + calibrationExpiryAmberCount
-  //           : 0;
-
-  //       //   console.log(
-  //       //     'in home useEffect calibrationExpiryCounts',
-  //       //     calibrationExpiryRedCount,
-  //       //     calibrationExpiryAmberCount,
-  //       //     'tempNotifiableCalibrationExpiryCount',
-  //       //     tempNotifiableCalibrationAlertsCount
-  //       //   );
-
-  //       setNotificationsAlertCount(tempNotifiableCalibrationAlertsCount);
-  //     }
-  //   }, [calibrationExpiryAmberCount, calibrationExpiryRedCount]);
-
-  //   useEffect(() => {
-  //     if (showingDemoApp) {
-  //       //   console.log(
-  //       //     'in home useEffect serviceMeasuresCounts',
-  //       //     serviceMeasuresRedCount,
-  //       //     serviceMeasuresAmberCount
-  //       //   );
-  //       const tempNotifiableServiceMeasuresCount =
-  //         (typeof serviceMeasuresRedCount !== 'undefined' ||
-  //           serviceMeasuresRedCount !== null) &&
-  //         (typeof serviceMeasuresAmberCount !== 'undefined' ||
-  //           serviceMeasuresAmberCount !== null)
-  //           ? serviceMeasuresRedCount + serviceMeasuresAmberCount
-  //           : 0;
-
-  //       setServiceMeasuresAlertCount(tempNotifiableServiceMeasuresCount);
-  //       //   countNotifiableItems();
-  //     }
-  //   }, [serviceMeasuresAmberCount, serviceMeasuresRedCount]); //testing objects
 
   useEffect(() => {
     if (showingDemoApp) {
@@ -689,7 +639,6 @@ export default HomeScreen = (props) => {
       setLtpLoansTotalAlertCount(
         tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
       );
-      setNewsRedAlertCount(storedNewsRedAlertCount);
     }
   }, [
     storedCalibrationExpiryRedCount,
@@ -698,7 +647,6 @@ export default HomeScreen = (props) => {
     storedLtpLoansAmberCount,
     storedServiceMeasuresRedCount,
     storedServiceMeasuresAmberCount,
-    storedNewsRedAlertCount,
   ]);
 
   return (
