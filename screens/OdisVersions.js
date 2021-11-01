@@ -34,10 +34,15 @@ export default function OdisVersions(props) {
   //   console.log('viewCount', viewCount && viewCount);
 
   let odisDetails = null;
+  //   console.log(
+  //     '$$$$$$$getOdisForBrands',
+  //     itemsObj && itemsObj,
+  //     userBrand && userBrand
+  //   );
 
   const getOdisForBrand = (item) => {
     // if (brand === 'sk') {
-    // console.log('getOdisForBrand', item);
+    // console.log('getOdisForBrand', item && item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
     // const parsedUpdatedDate =
     //   (item.lastUpdated &&
@@ -49,7 +54,7 @@ export default function OdisVersions(props) {
     //   'from',
     //   item.lastUpdated
     // );
-    return (
+    return item ? (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
           <Image
@@ -111,12 +116,12 @@ export default function OdisVersions(props) {
           ) : null}
         </View>
       </View>
-    );
+    ) : null;
     // }
   };
 
   const getOdisForBrands = (itemsObj) => {
-    // console.log('getOdisForBrands', userBrand && userBrand);
+    // console.log('getOdisForBrands', itemsObj, userBrand && userBrand);
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');
@@ -137,11 +142,11 @@ export default function OdisVersions(props) {
     } else {
       odisDetails = (
         <View>
-          {getOdisForBrand(itemsObj.vw)}
-          {getOdisForBrand(itemsObj.au)}
-          {getOdisForBrand(itemsObj.se)}
-          {getOdisForBrand(itemsObj.sk)}
-          {getOdisForBrand(itemsObj.cv)}
+          {itemsObj && itemsObj.vw ? getOdisForBrand(itemsObj.vw) : null}
+          {itemsObj && itemsObj.au ? getOdisForBrand(itemsObj.au) : null}
+          {itemsObj && itemsObj.se ? getOdisForBrand(itemsObj.se) : null}
+          {itemsObj && itemsObj.sk ? getOdisForBrand(itemsObj.sk) : null}
+          {itemsObj && itemsObj.cv ? getOdisForBrand(itemsObj.cv) : null}
         </View>
       );
     }
