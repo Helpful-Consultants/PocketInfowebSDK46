@@ -61,6 +61,9 @@ export default NewsScreen = (props) => {
     async () => dispatch(getNewsRequest()),
     [newsItems]
   );
+  const getItemsAsync = async () => {
+    getItems();
+  };
   const storeDisplayTimestampAsync = async () => {
     console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
     dispatch(setNewsDisplayTimestamp());
@@ -89,9 +92,7 @@ export default NewsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
-      };
+      storeDisplayTimestampAsync();
       dispatch(
         revalidateUserCredentials({
           calledBy: 'NewsScreen',
@@ -99,7 +100,6 @@ export default NewsScreen = (props) => {
       );
       setSearchInput('');
       getItemsAsync();
-      storeDisplayTimestampAsync();
     }, [])
   );
 
