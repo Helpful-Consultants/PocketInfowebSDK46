@@ -32,8 +32,6 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 
-// import { countNotifiableItems } from './helpers/alertStatus';
-
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
