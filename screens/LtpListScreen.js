@@ -38,10 +38,6 @@ export default LtpListScreen = (props) => {
     async () => dispatch(getLtpRequest()),
     [ltpItems]
   );
-
-  //   const [isDrawerVisible, setIsDrawerVisible] = useState(true);
-  //   console.log('in ltp screen');
-
   const getItemsAsync = async () => {
     // console.log('ltp - getItemsAsync');
     getItems();
