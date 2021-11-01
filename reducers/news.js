@@ -1,6 +1,8 @@
 // import { Types } from '../actions/news';
 import Types from '../constants/Types';
 import { getDateOfLatestCriticalNewsItem } from '../helpers/news';
+import { getDateDifference } from '../helpers/dates';
+import Periods from '../constants/Periods';
 
 const INITIAL_STATE = {
   newsItems: [],
@@ -8,6 +10,7 @@ const INITIAL_STATE = {
   redCount: 0,
   lastUpdate: null,
   latestCriticalItemDate: null,
+  unseenCriticalItems: false,
   previousUpdate: null,
   isLoading: false,
   error: null,
@@ -35,6 +38,28 @@ const countCriticalItems = (items) => {
 
   return count;
 };
+const checkUnseenCriticalItems = (
+  latestCriticalItemDate = null,
+  displayTimestamp = null
+) => {
+  const ageOfView = getDateDifference(
+    (latestCriticalItemDate, displayTimestamp, true)
+  );
+
+  console.log(
+    'in checkUnseenCriticalItems',
+    'ageOfView',
+    ageOfView,
+    'latestCriticalItemDate',
+    latestCriticalItemDate,
+    'displayTimestamp',
+    displayTimestamp
+  );
+
+  const unseenCriticalItems = ageOfView > Periods.NEWS_RED_PERIOD ? 0 : 1;
+
+  return unseenCriticalItems;
+};
 
 export default function news(state = INITIAL_STATE, action) {
   //   console.log(Types);
@@ -56,8 +81,36 @@ export default function news(state = INITIAL_STATE, action) {
         'setting to',
         Date.now()
       );
+      const itemsList = state.newsItems;
+
+      const dateOfLatestCriticalNewsItem =
+        getDateOfLatestCriticalNewsItem(itemsList);
+      const redCount = countCriticalItems(itemsList);
+      const unseenCriticalItems = state.displayTimestamp
+        ? redCount
+          ? dateOfLatestCriticalNewsItem
+            ? checkUnseenCriticalItems(
+                dateOfLatestCriticalNewsItem,
+                state.displayTimestamp
+              )
+            : 0
+          : 0
+        : 1;
+
+      console.log(
+        'in news reducer setting timestamp',
+        'redCount',
+        redCount,
+        'dateOfLatestCriticalNewsItem',
+        dateOfLatestCriticalNewsItem,
+        'state.displayTimestamp',
+        state.displayTimestamp,
+        'unseenCriticalItems',
+        unseenCriticalItems
+      );
       return {
         ...state,
+        unseenCriticalItems: unseenCriticalItems,
         displayTimestamp: Date.now(),
       };
     }
@@ -79,16 +132,36 @@ export default function news(state = INITIAL_STATE, action) {
       const itemsList = (action.payload.items && action.payload.items) || [];
       const dateOfLatestCriticalNewsItem =
         getDateOfLatestCriticalNewsItem(itemsList);
+      const redCount = countCriticalItems(itemsList);
+      const unseenCriticalItems = state.displayTimestamp
+        ? redCount
+          ? dateOfLatestCriticalNewsItem
+            ? checkUnseenCriticalItems(
+                dateOfLatestCriticalNewsItem,
+                state.displayTimestamp
+              )
+            : 0
+          : 0
+        : 1;
+
       console.log(
-        'in news reducer dateOfLatestCriticalNewsItem',
-        dateOfLatestCriticalNewsItem
+        'in news reducer, saving news',
+        'redCount',
+        redCount,
+        'dateOfLatestCriticalNewsItem',
+        dateOfLatestCriticalNewsItem,
+        'state.displayTimestamp',
+        state.displayTimestamp,
+        'unseenCriticalItems',
+        unseenCriticalItems
       );
       return {
         ...state,
         // newsItems: [],
         newsItems: itemsList,
         latestCriticalItemDate: dateOfLatestCriticalNewsItem,
-        redCount: countCriticalItems(itemsList),
+        redCount: redCount,
+        unseenCriticalItems: unseenCriticalItems,
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,
         isLoading: false,
