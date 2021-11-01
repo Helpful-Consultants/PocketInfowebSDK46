@@ -1,6 +1,8 @@
 // import { Types } from '../actions/odis';
 // import odisDummyData from '../dummyData/odisDummyData';
 import Types from '../constants/Types';
+import { getDateDifference } from '../helpers/dates';
+import { getOdisAlertCount } from '../helpers/odis';
 
 const INITIAL_STATE = {
   odisData: {},
@@ -11,6 +13,7 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
   fetchTime: null,
   displayTimestamp: null,
+  userBrand: null,
 };
 
 export default function odis(state = INITIAL_STATE, action) {
@@ -28,8 +31,15 @@ export default function odis(state = INITIAL_STATE, action) {
     }
     case Types.SET_ODIS_DISPLAY_TIMESTAMP: {
       //   console.log('date in state is', state.displayTimestamp);
+      const changesToHighlight = getOdisAlertCount(
+        state.odisData,
+        state.userBrand
+      );
+
       return {
         ...state,
+        changesToHighlight:
+          changesToHighlight && changesToHighlight > 0 ? 1 : 0,
         displayTimestamp: new Date(),
       };
     }
@@ -59,7 +69,7 @@ export default function odis(state = INITIAL_STATE, action) {
       //     userBrand,
       //     action.payload && action.payload
       //   );
-      //   console.log('action is:', action);
+      console.log('action is:', action);
       let userBrand =
         action.payload && action.payload.userBrand
           ? action.payload.userBrand
@@ -188,11 +198,16 @@ export default function odis(state = INITIAL_STATE, action) {
       //   );
 
       const fetchTime = Date.now();
+      const changesToHighlight = getOdisAlertCount(odisDataObj, userBrand);
+
       return {
         odisData: odisDataObj,
         fetchTime: fetchTime,
+        userBrand: userBrand,
         // odisData: {},
         viewCount: newViewCount,
+        changesToHighlight:
+          changesToHighlight && changesToHighlight > 0 ? 1 : 0,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
