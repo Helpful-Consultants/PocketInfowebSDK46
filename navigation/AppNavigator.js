@@ -154,7 +154,9 @@ export default AppNavigator = (props) => {
     (state) => state.serviceMeasures.redCount
   );
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const newsRedCount = useSelector((state) => state.news.redCount);
+  const unseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
@@ -293,8 +295,12 @@ export default AppNavigator = (props) => {
           tempNotifiableAlertsCount + serviceMeasuresRedCount;
       }
 
-      if (typeof newsRedCount !== 'undefined' && newsRedCount !== null) {
-        tempNotifiableAlertsCount = tempNotifiableAlertsCount + newsRedCount;
+      if (
+        typeof unseenCriticalItems !== 'undefined' &&
+        unseenCriticalItems !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + unseenCriticalItems;
       }
 
       console.log(
@@ -307,8 +313,8 @@ export default AppNavigator = (props) => {
         serviceMeasuresRedCount,
         'ltpLoansRedCount',
         ltpLoansRedCount,
-        'newsRedCount',
-        newsRedCount,
+        'unseenCriticalItems',
+        unseenCriticalItems,
         'tempNotifiableAlertsCount',
         tempNotifiableAlertsCount
       );
@@ -321,7 +327,7 @@ export default AppNavigator = (props) => {
     calibrationExpiryRedCount,
     ltpLoansRedCount,
     serviceMeasuresRedCount,
-    newsRedCount,
+    unseenCriticalItems,
     showingDemoApp,
   ]); //testing objects
 
