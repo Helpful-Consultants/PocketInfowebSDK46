@@ -13,8 +13,6 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
-import { checkUnseenItems } from '../helpers/alertStatus';
-import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -50,11 +48,6 @@ const RemindersTabs =
   Platform.OS === 'android'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
-
-// const showBadgeLtpLoans = checkUnseenItems(InfoTypes.LTP_LOANS);
-// const showBadgeNotifications = checkUnseenItems(InfoTypes.NOTIFICATIONS);
-// const showBadgeOdis = checkUnseenItems(InfoTypes.ODIS);
-// const showBadgeServiceMeasures = checkUnseenItems(InfoTypes.SERVICE_MEASURES);
 
 // console.log(
 //   'in navigator, showBadgeLtpLoans ',
