@@ -6,12 +6,8 @@ import {
   incrementBadgeCountAsync,
 } from '../helpers/appBadge';
 import { checkDisplayAge, checkDisplayAges } from './checkDisplayHistory';
-import getOdisAlertCount from './getOdisAlertCount';
-import {
-  InfoTypes,
-  InfoTypesAlertUnits,
-  InfoTypesAlertAges,
-} from '../constants/InfoTypes';
+import { getOdisAlertCount } from './odis';
+import { InfoTypes, InfoTypesAlertAges } from '../constants/InfoTypes';
 
 import ltpLoansDummyData from '../dummyData/ltpLoansDummyData';
 import newsDummyData from '../dummyData/newsDummyData';

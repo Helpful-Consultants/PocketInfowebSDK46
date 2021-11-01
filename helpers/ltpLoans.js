@@ -1,6 +1,6 @@
 import { parse } from 'date-fns';
 import { getDateDifference } from './dates';
-import Periods from '../constants/Periods';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
 export const getLtpLoansCountsObj = (ltpLoansItems) => {
   let redCount = 0;
@@ -22,9 +22,9 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
       //     timeToEnd
       //   );
       if (timeToEnd !== null) {
-        if (timeToEnd <= Periods.LTP_LOANS_RED_PERIOD) {
+        if (timeToEnd <= InfoTypesAlertAges.LTP_LOANS_RED_PERIOD) {
           redCount++;
-        } else if (timeToEnd <= Periods.LTP_LOANS_AMBER_PERIOD) {
+        } else if (timeToEnd <= InfoTypesAlertAges.LTP_LOANS_AMBER_PERIOD) {
           amberCount++;
         } else {
           greenCount++;

@@ -12,7 +12,7 @@ import {
   getFriendlyDisplayLongDate,
 } from '../helpers/dates';
 import Colors from '../constants/Colors';
-import Periods from '../constants/Periods';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
 const nowDateObj = new Date();
 
@@ -83,7 +83,7 @@ export default function LtpLoansList(props) {
               >
                 {`LAST DAY! Please return this today to avoid a late penalty charge.`}
               </Text>
-            ) : daysLeft >= Periods.LTP_LOANS_AMBER_PERIOD ? (
+            ) : daysLeft >= InfoTypesAlertAges.LTP_LOANS_AMBER_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAligned,
@@ -94,7 +94,7 @@ export default function LtpLoansList(props) {
                   ? `There is 1 day left of this loan`
                   : `There are ${daysLeft} days left of this loan`}
               </Text>
-            ) : daysLeft <= Periods.LTP_LOANS_RED_PERIOD ? (
+            ) : daysLeft <= InfoTypesAlertAges.LTP_LOANS_RED_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,

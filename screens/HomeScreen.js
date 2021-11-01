@@ -20,9 +20,6 @@ import moment from 'moment';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
-import { countNotifiableItems, checkUnseenItems } from '../helpers/alertStatus';
-import { getDateDifference } from '../helpers/dates';
-import { InfoTypes } from '../constants/InfoTypes';
 import Colors from '../constants/Colors';
 import {
   getUserRequest,
@@ -117,9 +114,7 @@ export default HomeScreen = (props) => {
   const userId = useSelector((state) => state.user.userId);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
-  const userRequestedDemoData = useSelector(
-    (state) => state.user.requestedDemoData
-  );
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
 
   //   console.log('IN HOME !!!!! 1g');
@@ -132,24 +127,12 @@ export default HomeScreen = (props) => {
   const userApiFetchParamsObj = useSelector(
     (state) => state.user.userApiFetchParamsObj
   );
-
-  const odisObj = useSelector((state) => state.odis.odisData);
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
-
-  const lastUpdateNews = useSelector((state) => state.news.lastUpdate);
-  const storedLatestCriticalNewsItemDate = useSelector(
-    (state) => state.news.latestCriticalItemDate
-  );
-  const newsObj = useSelector((state) => state.news);
   const storedUnseenCriticalItems = useSelector(
     (state) => state.news.unseenCriticalItems
   );
-
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
-
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isLoadingOdis = useSelector((state) => state.odis.isLoading);
@@ -179,6 +162,9 @@ export default HomeScreen = (props) => {
   );
   const storedNewsDisplayTimestamp = useSelector(
     (state) => state.news.displayTimestamp
+  );
+  const storedOdisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
   );
   const [ltpLoansRedAlertCount, setLtpLoansRedAlertCount] = useState(0);
   const [newsRedAlertCount, setNewsRedAlertCount] = useState(0);
@@ -615,11 +601,17 @@ export default HomeScreen = (props) => {
         storedServiceMeasuresAmberCount !== null
           ? storedServiceMeasuresAmberCount
           : 0;
+      const tempOdisRedAlertCount =
+        typeof storedOdisChangesToHighlight !== 'undefined' &&
+        storedOdisChangesToHighlight !== null
+          ? storedOdisChangesToHighlight
+          : 0;
 
       setNotificationsRedAlertCount(
         tempNotifiableCalibrationExpiryRedCount +
           tempNotifiableLtpLoansRedCount +
-          tempNotifiableServiceMeasuresRedCount
+          tempNotifiableServiceMeasuresRedCount +
+          tempOdisRedAlertCount
       );
       setNotificationsAmberAlertCount(
         tempNotifiableCalibrationExpiryAmberCount +
@@ -632,13 +624,15 @@ export default HomeScreen = (props) => {
           tempNotifiableServiceMeasuresRedCount +
           tempNotifiableCalibrationExpiryAmberCount +
           tempNotifiableLtpLoansAmberCount +
-          tempNotifiableServiceMeasuresAmberCount
+          tempNotifiableServiceMeasuresAmberCount +
+          tempOdisRedAlertCount
       );
       setLtpLoansRedAlertCount(tempNotifiableLtpLoansRedCount);
       setLtpLoansAmberAlertCount(tempNotifiableLtpLoansAmberCount);
       setLtpLoansTotalAlertCount(
         tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
       );
+      setOdisAlertCount(storedOdisChangesToHighlight);
     }
   }, [
     storedCalibrationExpiryRedCount,
@@ -647,6 +641,9 @@ export default HomeScreen = (props) => {
     storedLtpLoansAmberCount,
     storedServiceMeasuresRedCount,
     storedServiceMeasuresAmberCount,
+    storedOdisChangesToHighlight,
+    showingDemoApp,
+    showingDemoData,
   ]);
 
   return (

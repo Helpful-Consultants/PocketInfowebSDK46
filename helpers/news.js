@@ -1,6 +1,3 @@
-import { parse } from 'date-fns';
-import { getDateDifference } from './dates';
-import Periods from '../constants/Periods';
 import { isDateAfter } from '../helpers/dates';
 
 export const getDateOfLatestCriticalNewsItem = (newsItems) => {

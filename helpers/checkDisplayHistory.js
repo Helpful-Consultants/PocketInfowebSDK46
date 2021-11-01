@@ -61,22 +61,22 @@ export const checkDisplayAges = (scope, items, displayTimestamp) => {
         case InfoTypes.LTP_LOANS: {
           dateToCheck = item.createdDate || item.dateCreated;
           unit = InfoTypesAlertUnits.LTP_LOANS || 0;
-          maxAge = InfoTypesAlertAges.LTP_LOANS || 0;
+          maxAge = InfoTypesAlertAges.LTP_LOANS_RED_PERIOD || 0;
         }
         case InfoTypes.NEWS: {
           dateToCheck = item.createdDate || item.dateCreated;
           unit = InfoTypesAlertUnits.NEWS || 0;
-          maxAge = InfoTypesAlertAges.NEWS || 0;
+          maxAge = InfoTypesAlertAges.NEWS_RED_PERIOD || 0;
         }
         case InfoTypes.ODIS: {
           dateToCheck = item.createdDate || item.dateCreated;
           unit = InfoTypesAlertUnits.ODIS || 0;
-          maxAge = InfoTypesAlertAges.ODIS || 0;
+          maxAge = InfoTypesAlertAges.ODIS_RED_PERIOD || 0;
         }
         case InfoTypes.SERVICE_MEASURES: {
           dateToCheck = item.createdDate || item.dateCreated;
           unit = InfoTypesAlertUnits.SERVICE_MEASURES || 0;
-          maxAge = InfoTypesAlertAges.SERVICE_MEASURES || 0;
+          maxAge = InfoTypesAlertAges.SERVICE_MEASURES_RED_PERIOD || 0;
         }
       }
       //   console.log('checkDisplayAges date to check', dateToCheck);

@@ -2,7 +2,7 @@
 import Types from '../constants/Types';
 import { getDateOfLatestCriticalNewsItem } from '../helpers/news';
 import { getDateDifference } from '../helpers/dates';
-import Periods from '../constants/Periods';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
 const INITIAL_STATE = {
   newsItems: [],
@@ -45,6 +45,7 @@ const checkUnseenCriticalItems = (
   const ageOfView = getDateDifference(
     (latestCriticalItemDate, displayTimestamp, true)
   );
+  const minAge = InfoTypesAlertAges.ODIS;
 
   console.log(
     'in checkUnseenCriticalItems',
@@ -56,7 +57,7 @@ const checkUnseenCriticalItems = (
     displayTimestamp
   );
 
-  const unseenCriticalItems = ageOfView > Periods.NEWS_RED_PERIOD ? 0 : 1;
+  const unseenCriticalItems = ageOfView > minAge ? 0 : 1;
 
   return unseenCriticalItems;
 };
