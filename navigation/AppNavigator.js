@@ -33,7 +33,6 @@ import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
-// import { checkNotifiableItems } from '../helpers/alertStatus';
 import { setBadgeCountAsync } from '../helpers/appBadge';
 
 // console.log(Constants && Constants);
