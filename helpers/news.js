@@ -17,12 +17,12 @@ export const getDateOfLatestCriticalNewsItem = (newsItems) => {
           item.businessCritical.toLowerCase() === 'true')
       ) {
         if (item.lastUpdated && item.lastUpdated.length > 0) {
-          console.log(
-            'news updated',
-            item.headline,
-            item.businessCritical,
-            item.lastUpdated
-          );
+          //   console.log(
+          //     'news updated',
+          //     item.headline,
+          //     item.businessCritical,
+          //     item.lastUpdated
+          //   );
           if (latestDate && latestDate.length > 0) {
             if (isDateAfter(item.lastUpdated, latestDate)) {
               latestDate = item.lastUpdated;
@@ -31,12 +31,12 @@ export const getDateOfLatestCriticalNewsItem = (newsItems) => {
             latestDate = item.lastUpdated;
           }
         } else if (item.createdDate && item.createdDate.length > 0) {
-          console.log(
-            'news created',
-            item.headline,
-            item.businessCritical,
-            item.createdDate
-          );
+          //   console.log(
+          //     'news created',
+          //     item.headline,
+          //     item.businessCritical,
+          //     item.createdDate
+          //   );
           if (latestDate && latestDate.length > 0) {
             if (isDateAfter(item.createdDate, latestDate)) {
               latestDate = item.createdDate;

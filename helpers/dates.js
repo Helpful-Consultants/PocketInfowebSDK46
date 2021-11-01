@@ -289,36 +289,37 @@ export const getFriendlyDisplayShortTimeAndLongDate = (rawDate) => {
   return displayDate;
 };
 
-export const getDateDifference = (dateOne, dateTwo) => {
+export const getDateDifference = (dateOne, dateTwo, log = false) => {
   let timeToExpiry = 0;
-  //   console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
+  log &&
+    console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
 
   if (dateOne && dateTwo) {
     const parsedDateOne = parseAnyDate(dateOne);
     const parsedDateTwo = parseAnyDate(dateTwo);
     timeToExpiry = differenceInCalendarDays(parsedDateTwo, parsedDateOne);
   }
-  //   console.log('expiryDate', expiryDate);
-  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+
+  log && console.log('££££££££ getDateDifference result', timeToExpiry);
   return timeToExpiry;
 };
 
 export const isDateAfter = (dateOne, dateTwo) => {
   let isItAfter = 0;
-  console.log('***************in isDateAfter', dateOne, 'to', dateTwo);
+  //   console.log('***************in isDateAfter', dateOne, 'to', dateTwo);
 
   if (dateOne && dateTwo) {
     const parsedDateOne = parseAnyDate(dateOne);
     const parsedDateTwo = parseAnyDate(dateTwo);
     isItAfter = isAfter(parsedDateOne, parsedDateTwo);
   }
-  console.log(
-    '@@@@@@@@@firstDate',
-    dateOne,
-    'parsedDateTwo',
-    dateTwo,
-    isItAfter
-  );
+  //   console.log(
+  //     '@@@@@@@@@firstDate',
+  //     dateOne,
+  //     'parsedDateTwo',
+  //     dateTwo,
+  //     isItAfter
+  //   );
   //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
   return isItAfter;
 };
