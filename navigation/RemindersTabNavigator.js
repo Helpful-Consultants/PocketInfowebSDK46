@@ -304,11 +304,11 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
-          tabBarBadge: notifiableAlertsRedCount
-            ? notifiableAlertsRedCount
-            : notifiableAlertsAmberCount
-            ? notifiableAlertsAmberCount
-            : null,
+          tabBarBadge:
+            (notifiableAlertsRedCount && notifiableAlertsRedCount > 0) ||
+            (notifiableAlertsAmberCount && notifiableAlertsAmberCount > 0)
+              ? ''
+              : null,
           tabBarBadgeStyle: {
             color:
               notifiableAlertsRedCount > 0
@@ -331,7 +331,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarBadge: showingDemoApp
             ? (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
               (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
-              ? '+'
+              ? ''
               : null
             : null,
           tabBarBadgeStyle: {
@@ -356,7 +356,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarBadge: showingDemoApp
             ? (ltpLoansRedCount && ltpLoansRedCount > 0) ||
               (ltpLoansAmberCount && ltpLoansAmberCount > 0)
-              ? '+'
+              ? ''
               : null
             : null,
           tabBarBadgeStyle: {
@@ -384,7 +384,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               alert={false}
             />
           ),
-          tabBarBadge: odisChangesToHighlight ? odisChangesToHighlight : null,
+          tabBarBadge: odisChangesToHighlight ? '' : null,
           tabBarBadgeStyle: {
             color:
               odisChangesToHighlight > 0
