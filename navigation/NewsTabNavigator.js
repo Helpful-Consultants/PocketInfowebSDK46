@@ -55,14 +55,11 @@ const NewsTabs =
 // );
 
 export default NewsTabNavigator = ({ navigation, route }) => {
-  const storedShowingDemoApp = useSelector(
-    (state) => state.user.showingDemoApp
-  );
-  const storedUnseenCriticalItems = useSelector(
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const unseenCriticalItems = useSelector(
     (state) => state.news.unseenCriticalItems
   );
-  const [newsRedAlertCount, setNewsRedAlertCount] = useState(0);
-  const [showingDemoApp, setShowingDemoApp] = useState(false);
 
   useEffect(() => {
     // console.log('alerts:', alerts);
@@ -101,20 +98,6 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
-
-  useEffect(() => {
-    if (showingDemoApp) {
-      setNewsRedAlertCount(storedUnseenCriticalItems ? 1 : 0);
-    }
-  }, [storedUnseenCriticalItems, showingDemoApp]);
-
-  useEffect(() => {
-    // console.log(
-    //   '$$$$$$$$$$$$$$ in news  ban useEffect, storedShowingDemoApp',
-    //   storedShowingDemoApp
-    // );
-    setShowingDemoApp(storedShowingDemoApp);
-  }, [storedShowingDemoApp]);
 
   //   console.log(
   //     '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
@@ -160,9 +143,9 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: showingDemoApp && newsRedAlertCount ? '' : null,
+          tabBarBadge: showingDemoApp && unseenCriticalItems ? '' : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeSevereAlertColor,
+            backgroundColor: Colors.vwgBadgeAlertColor,
             // width: 5,
             //height: 5,
             // right: 10,

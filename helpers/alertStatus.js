@@ -112,7 +112,9 @@ export const checkUnseenItems = (scope) => {
       let unseenItemsCount = 0;
       let displayTimestamp = store.getState().odis.displayTimestamp;
       if (displayTimestamp) {
-        unseenItemsCount = getOdisAlertCount(InfoTypesAlertAges.ODIS);
+        unseenItemsCount = getOdisAlertCount(
+          InfoTypesAlertAges.ODIS_RED_PERIOD
+        );
       }
       //   console.log('in checkfor alerts, odisChangesToHighlight is ', odisChangesToHighlight);
       return unseenItemsCount;

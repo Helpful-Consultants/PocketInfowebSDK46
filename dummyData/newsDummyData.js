@@ -8,8 +8,8 @@ export default newsDummyData = [
     imageName: 'Scales.png',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/Workshop_Support/How_important_is_a_Service_Measure.pdf',
-    createdDate: '28/10/2021 20:51:33',
-    lastUpdated: '15/10/2021 11:44:03',
+    createdDate: '28/09/2021 20:51:33',
+    lastUpdated: '16/10/2021 11:44:03',
     updatedBy: 'Lyndon Evans',
     ipAddress: '165.225.17.25',
     businessCritical: 'Y',
@@ -23,7 +23,7 @@ export default newsDummyData = [
     imageName: 'highVoltgeCables.png',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/Workshop_Support/High-voltage_test_adapters_VAS_6558_9-6_and_VAS_6558_9-6A.pdf',
-    createdDate: '15/10/2021 11:44:03',
+    createdDate: '23/10/2021 11:44:03',
     lastUpdated: '',
     updatedBy: 'Simon Groves',
     ipAddress: '109.150.236.17',

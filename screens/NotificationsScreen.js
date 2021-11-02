@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   ImageBackground,
-  ScrollView,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -17,7 +16,10 @@ import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
+import { getOdisRequest } from '../actions/odis';
+import { getNewsRequest } from '../actions/news';
 import InlineIcon from '../components/InlineIcon';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
 // const backgroundImage = { uri: 'https://reactjs.org/logo-og.png' };
 
@@ -28,36 +30,33 @@ export default NotificationsScreen = (props) => {
   const dispatch = useDispatch();
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.showingDemoData);
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const userBrand = useSelector((state) => state.user.userBrand);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
 
-  const storedCalibrationExpiryOverdueCount = useSelector(
+  const calibrationExpiryOverdueCount = useSelector(
     (state) => state.calibrationExpiry.overdueCount
   );
-  const storedCalibrationExpiryRedCount = useSelector(
+  const calibrationExpiryRedCount = useSelector(
     (state) => state.calibrationExpiry.redCount
   );
-  const storedCalibrationExpiryAmberCount = useSelector(
+  const calibrationExpiryAmberCount = useSelector(
     (state) => state.calibrationExpiry.amberCount
   );
-  const storedCalibrationExpiryTotalCount = useSelector(
+  const calibrationExpiryTotalCount = useSelector(
     (state) => state.calibrationExpiry.totalCount
   );
-  const storedLtpLoansTotalCount = useSelector(
-    (state) => state.ltpLoans.totalCount
-  );
-  const storedLtpLoansRedCount = useSelector(
-    (state) => state.ltpLoans.redCount
-  );
-  const storedLtpLoansAmberCount = useSelector(
-    (state) => state.ltpLoans.amberCount
-  );
-  const storedServiceMeasuresRedCount = useSelector(
+  const ltpLoansTotalCount = useSelector((state) => state.ltpLoans.totalCount);
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
+  const serviceMeasuresRedCount = useSelector(
     (state) => state.serviceMeasures.redCount
   );
-  const storedServiceMeasuresAmberCount = useSelector(
+  const serviceMeasuresAmberCount = useSelector(
     (state) => state.serviceMeasures.amberCount
   );
-  const storedServiceMeasuresTotalCount = useSelector(
+  const serviceMeasuresTotalCount = useSelector(
     (state) => state.serviceMeasures.totalCount
   );
 
@@ -75,20 +74,7 @@ export default NotificationsScreen = (props) => {
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
-  const [calibrationExpiryRedCount, setCalibrationExpiryRedCount] = useState(0);
-  const [calibrationExpiryAmberCount, setCalibrationExpiryAmberCount] =
-    useState(0);
-  const [calibrationExpiryOverdueCount, setCalibrationExpiryOverdueCount] =
-    useState(0);
-  const [calibrationExpiryTotalCount, setCalibrationExpiryTotalCount] =
-    useState(0);
-  const [ltpLoansRedCount, setLtpLoansRedCount] = useState(0);
-  const [ltpLoansAmberCount, setLtpLoansAmberCount] = useState(0);
-  const [ltpLoansTotalCount, setLtpLoansTotalCount] = useState(0);
-  const [serviceMeasuresRedCount, setServiceMeasuresRedCount] = useState(0);
-  const [serviceMeasuresAmberCount, setServiceMeasuresAmberCount] = useState(0);
-  const [serviceMeasuresGreenCount, setServiceMeasuresGreenCount] = useState(0);
-  const [serviceMeasuresTotalCount, setServiceMeasuresTotalCount] = useState(0);
+
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
@@ -135,9 +121,11 @@ export default NotificationsScreen = (props) => {
     //   'in calibrationExpiry getItems userApiFetchParamsObj',
     //   userApiFetchParamsObj
     // );
-    dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [];
-    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj)), [];
-    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj)), [];
+    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
+    dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+    dispatch(getOdisRequest({ userBrand: userBrand }));
+    dispatch(getNewsRequest());
+    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
   });
 
   const getItemsAsync = async () => {
@@ -154,23 +142,6 @@ export default NotificationsScreen = (props) => {
       getItems(userApiFetchParamsObj);
     }
   };
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in notifications use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
 
   useEffect(() => {
     if (
@@ -223,8 +194,6 @@ export default NotificationsScreen = (props) => {
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
     isLoadingCalibrationExpiry,
-    showingDemoApp,
-    showingDemoData,
   ]);
 
   useFocusEffect(
@@ -242,87 +211,9 @@ export default NotificationsScreen = (props) => {
 
   useEffect(() => {
     if (showingDemoApp) {
-      //   console.log(
-      //     'in reminders nav useEffect LtpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount
-      //   );
-
-      setLtpLoansRedCount(storedLtpLoansRedCount);
-      setLtpLoansAmberCount(storedLtpLoansAmberCount);
-      setLtpLoansTotalCount(storedLtpLoansTotalCount);
+      getItemsAsync();
     }
-  }, [
-    storedLtpLoansRedCount,
-    storedLtpLoansAmberCount,
-    storedLtpLoansTotalCount,
-    showingDemoApp,
-    showingDemoData,
-  ]);
-
-  useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in reminders nav useEffect LtpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount
-      //   );
-      setCalibrationExpiryOverdueCount(storedCalibrationExpiryOverdueCount);
-      setCalibrationExpiryRedCount(storedCalibrationExpiryRedCount);
-      setCalibrationExpiryAmberCount(storedCalibrationExpiryAmberCount);
-      setCalibrationExpiryTotalCount(storedCalibrationExpiryTotalCount);
-    }
-  }, [
-    storedCalibrationExpiryOverdueCount,
-    storedCalibrationExpiryRedCount,
-    storedCalibrationExpiryAmberCount,
-    storedCalibrationExpiryTotalCount,
-    showingDemoApp,
-    showingDemoData,
-  ]);
-
-  useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in reminders nav useEffect LtpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount
-      //   );
-
-      setServiceMeasuresRedCount(storedServiceMeasuresRedCount);
-      setServiceMeasuresAmberCount(storedServiceMeasuresAmberCount);
-      setServiceMeasuresTotalCount(storedServiceMeasuresTotalCount);
-    }
-  }, [
-    storedServiceMeasuresRedCount,
-    storedServiceMeasuresAmberCount,
-    storedServiceMeasuresTotalCount,
-    showingDemoApp,
-    showingDemoData,
-  ]);
-  //   console.log('calib exp red count', calibrationExpiryRedCount);
-
-  //   console.log(
-  //     'in notifications  calibrationExpiry Counts',
-  //     calibrationExpiryOverdueCount,
-  //     calibrationExpiryRedCount,
-  //     calibrationExpiryAmberCount,
-  //     calibrationExpiryTotalCount
-  //   );
-  //   console.log(
-  //     'in notifications  ltpLoans Counts',
-  //     ltpLoansRedCount,
-  //     ltpLoansAmberCount,
-  //     'n/a',
-  //     ltpLoansTotalCount
-  //   );
-  //   console.log(
-  //     'in notifications  SM  Counts',
-  //     serviceMeasuresRedCount,
-  //     serviceMeasuresAmberCount,
-  //     serviceMeasuresGreenCount,
-  //     serviceMeasuresTotalCount
-  //   );
+  }, [showingDemoApp, showingDemoData]);
 
   return (
     <ImageBackground
@@ -357,7 +248,7 @@ export default NotificationsScreen = (props) => {
           </View>
         ) : null}
 
-        {!odisViewCount ? (
+        {odisChangesToHighlight ? (
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('RemindersTabs', { screen: 'ODIS' })
@@ -365,13 +256,9 @@ export default NotificationsScreen = (props) => {
             style={{ backgroundColor: Colors.vwgWhite }}
           >
             <View style={baseStyles.viewSectionRibbon}>
-              <Ionicons
-                name='tv'
-                size={20}
-                color={Colors.vwgBadgeSevereAlertColor}
-              />
+              <Ionicons name='tv' size={20} color={Colors.vwgBadgeAlertColor} />
               <Text style={baseStyles.textSectionRibbon}>
-                {`  See the `}
+                {`  See `}
                 <Text
                   style={{
                     ...baseStyles.textSectionRibbon,
@@ -379,10 +266,14 @@ export default NotificationsScreen = (props) => {
                     fontFamily: 'the-sans-bold',
                   }}
                 >
-                  {`new ODIS versions  `}
+                  {`ODIS version changes in the last ${InfoTypesAlertAges.ODIS_RED_PERIOD} days  `}
                 </Text>
               </Text>
-              <Ionicons name='open-outline' size={20} />
+              <Ionicons
+                name='open-outline'
+                size={16}
+                style={{ marginTop: 2 }}
+              />
             </View>
           </TouchableOpacity>
         ) : null}
@@ -430,7 +321,11 @@ export default NotificationsScreen = (props) => {
                             : `Service Measure  `}
                         </Text>
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : serviceMeasuresAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
@@ -454,7 +349,11 @@ export default NotificationsScreen = (props) => {
                             : `Service Measure `}
                         </Text>
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
@@ -468,7 +367,11 @@ export default NotificationsScreen = (props) => {
                           ? `  See your open Service Measures  `
                           : `  See your open Service Measure  `}
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   )}
                 </TouchableOpacity>
@@ -526,7 +429,11 @@ export default NotificationsScreen = (props) => {
                             : `LTP Loan return  `}
                         </Text>
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : ltpLoansAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
@@ -548,7 +455,11 @@ export default NotificationsScreen = (props) => {
                           {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
                         </Text>
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
@@ -562,7 +473,11 @@ export default NotificationsScreen = (props) => {
                           ? `  See your open LTP Loans  `
                           : `  See your open LTP Loan `}
                       </Text>
-                      <Ionicons name='open-outline' size={20} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   )}
                 </TouchableOpacity>
@@ -606,8 +521,8 @@ export default NotificationsScreen = (props) => {
                     />
                     <Text style={baseStyles.textSectionRibbon}>
                       {calibrationExpiryTotalCount > 1
-                        ? `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
-                        : `  You have ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
+                        ? `  ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
+                        : `  ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
                     </Text>
                     <Ionicons
                       name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}

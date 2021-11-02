@@ -307,7 +307,7 @@ export default ltpLoansDummyData = [
     despatchRef: 'B802209',
     despatchUpdated: '13/04/2021 17:35:01',
     endDateActual: '',
-    endDateDue: '26/11/2021',
+    endDateDue: '01/11/2021',
     extendedBy: '',
     extendedFrom: '',
     extendedOn: '',

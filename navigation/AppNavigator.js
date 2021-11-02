@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Text, useWindowDimensions, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, useWindowDimensions } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -76,16 +76,11 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const { showDemoApp } = props;
+  const { showingDemoApp } = props;
   let showDataSwitch = true;
 
-  useEffect(() => {
-    // console.log('Dwr Navigator useEffect', showDemoApp);
-    showDataSwitch = showDemoApp;
-  }, [showDemoApp]);
-
   //   console.log('Dwr Navigator props', props);
-  //   console.log('Dwr Navigator showDemoApp', showDemoApp);
+  //   console.log('Dwr Navigator showingDemoApp', showingDemoApp);
   //   console.log('showingDemoApp', props.showingDemoApp && props.showingDemoApp);
 
   return (
@@ -94,7 +89,7 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props, showDemoApp) => (
+      drawerContent={(props, showingDemoApp) => (
         <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
       )}
       screenOptions={{
@@ -125,7 +120,7 @@ const DrawerNavigator = (props) => {
           drawerLabel: 'News, Catalogue & Stats',
         }}
       />
-      {showDemoApp ? (
+      {showingDemoApp ? (
         <Drawer.Screen
           name='RemindersTabs'
           component={RemindersTabNavigator}
@@ -143,6 +138,7 @@ export default AppNavigator = (props) => {
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const calibrationExpiryOverdueCount = useSelector(
     (state) => state.calibrationExpiry.overdueCount
   );
@@ -156,11 +152,13 @@ export default AppNavigator = (props) => {
   const unseenCriticalItems = useSelector(
     (state) => state.news.unseenCriticalItems
   );
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
-  const [showDemoApp, setShowDemoApp] = useState(false);
   //   const ageOfCredentialsLimit = 3;
   //   return <AuthLoadingScreen />;
 
@@ -250,16 +248,6 @@ export default AppNavigator = (props) => {
   }, []);
 
   useEffect(() => {
-    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
-    // console.log(
-    //   '!!!! in AppNavigator useEffect. showingDemoApp is ',
-    //   showingDemoApp
-    // );
-    setShowDemoApp(showingDemoApp);
-  }, [showingDemoApp]);
-
-  useEffect(() => {
     if (showingDemoApp) {
       let tempNotifiableAlertsCount = 0;
 
@@ -302,8 +290,20 @@ export default AppNavigator = (props) => {
           tempNotifiableAlertsCount + unseenCriticalItems;
       }
 
+      if (
+        typeof odisChangesToHighlight !== 'undefined' &&
+        odisChangesToHighlight !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + odisChangesToHighlight;
+      }
+
       console.log(
-        'in appnav useEffect tempNotifiableAlertsCount',
+        'in appnav useEffect nefore setting badge',
+        'showingDemoApp',
+        showingDemoApp,
+        'showingDemoData',
+        showingDemoData,
         'calibrationExpiryOverdueCount',
         calibrationExpiryOverdueCount,
         'calibrationExpiryRedCount',
@@ -314,6 +314,8 @@ export default AppNavigator = (props) => {
         ltpLoansRedCount,
         'unseenCriticalItems',
         unseenCriticalItems,
+        'odisChangesToHighlight',
+        odisChangesToHighlight,
         'tempNotifiableAlertsCount',
         tempNotifiableAlertsCount
       );
@@ -327,11 +329,13 @@ export default AppNavigator = (props) => {
     ltpLoansRedCount,
     serviceMeasuresRedCount,
     unseenCriticalItems,
+    odisChangesToHighlight,
     showingDemoApp,
+    showingDemoData,
   ]); //testing objects
 
   //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
-  //   console.log('ssssss in AppNavigator showDemoApp ', showDemoApp);
+  //   console.log('ssssss in AppNavigator showingDemoApp ', showingDemoApp);
 
   const allOK =
     userIsValidated &&
@@ -355,13 +359,13 @@ export default AppNavigator = (props) => {
   //   console.log(
   //     '?????? in AppNavigator showingDemoApp is ',
   //     showingDemoApp,
-  //     showDemoApp
+  //     showingDemoApp
   //   );
-  if (showDemoApp) {
+  if (showingDemoApp) {
     return (
       <NavigationContainer>
         {allOK === true ? (
-          <DrawerNavigator showDemoApp={true} />
+          <DrawerNavigator showingDemoApp={true} />
         ) : (
           <SignedOutStack />
         )}
@@ -371,7 +375,7 @@ export default AppNavigator = (props) => {
     return (
       <NavigationContainer>
         {allOK === true ? (
-          <DrawerNavigator showDemoApp={false} />
+          <DrawerNavigator showingDemoApp={false} />
         ) : (
           <SignedOutStack />
         )}

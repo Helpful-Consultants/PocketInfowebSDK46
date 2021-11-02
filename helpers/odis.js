@@ -1,50 +1,42 @@
-import moment from 'moment';
 // import { store } from './store';
-import {
-  InfoTypesAlertUnits,
-  InfoTypesAlertAges,
-} from '../constants/InfoTypes';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { getDateDifference, isDateAfter } from '../helpers/dates';
 
 const getOdisAlertCountForBrand = (
   brandOdisDataObj,
   now,
-  unit = InfoTypesAlertUnits.ODIS,
-  minAge = InfoTypesAlertAges.ODIS
+  minAge = InfoTypesAlertAges.ODIS_RED_PERIOD
 ) => {
   // console.log(
   //   'brand brandOdisDataObj date ',
-  //   brandOdisDataObj.dateChanged && brandOdisDataObj.dateChanged
+  //   odisDataObj.dateChanged && odisDataObj.dateChanged
   // );
   let alertsNeeded = 0;
 
   // console.log('in getOdisAlertCountForBrand', brandOdisDataObj);
 
-  // console.log('alertNeeded', brandOdisDataObj.brandCode, alertNeeded);
+  // console.log('alertNeeded', odisDataObj.brandCode, alertNeeded);
 
-  if (brandOdisDataObj && brandOdisDataObj.lastUpdated) {
-    //   auFromNow = moment(brandOdisDataObj.dateChanged).fromNow();
-    //   console.log('in getOdisAlertCountForBrand', brandOdisDataObj.lastUpdated);
+  if (brandOdisDataObj && odisDataObj.lastUpdated) {
+    //   auFromNow = moment(odisDataObj.dateChanged).fromNow();
+    //   console.log('in getOdisAlertCountForBrand', odisDataObj.lastUpdated);
 
     if (
-      (brandOdisDataObj.previousProductVersion &&
-        brandOdisDataObj.previousProductVersion !==
-          brandOdisDataObj.productVersion) ||
-      (brandOdisDataObj.previousMainFeatureVersion &&
-        brandOdisDataObj.previousMainFeatureVersion !==
-          brandOdisDataObj.mainFeatureVersion) ||
-      (brandOdisDataObj.previousDataVersion &&
-        brandOdisDataObj.previousDataVersion !== brandOdisDataObj.dataVersion)
+      (odisDataObj.previousProductVersion &&
+        odisDataObj.previousProductVersion !== odisDataObj.productVersion) ||
+      (odisDataObj.previousMainFeatureVersion &&
+        odisDataObj.previousMainFeatureVersion !==
+          odisDataObj.mainFeatureVersion) ||
+      (odisDataObj.previousDataVersion &&
+        odisDataObj.previousDataVersion !== odisDataObj.dataVersion)
     ) {
       // console.log(
       //   'in getOdisAlertCountForBrand comparing dates',
-      //   brandOdisDataObj.lastUpdated
+      //   odisDataObj.lastUpdated
       // );
-      let dateOfChange = moment(
-        brandOdisDataObj.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
+
       // console.log('!!!!! dateOfChange', dateOfChange);
-      let ageOfChange = now.diff(moment(dateOfChange), unit) || 0;
+      const ageOfChange = getDateDifference(odisDataObj.lastUpdated, now);
       // console.log('!!!!! diff', ageOfChange);
       if (ageOfChange <= minAge) {
         ++alertsNeeded;
@@ -52,14 +44,17 @@ const getOdisAlertCountForBrand = (
       }
     }
   }
-  return alertsNeeded;
+  return {
+    alertsNeeded,
+    latestChangeDate: odisDataObj.lastUpdated,
+    oldestChangeDate: odisDataObj.lastUpdated,
+  };
 };
 
 const getOdisAlertCountForAllBrands = (
   odisDataObj,
   now,
-  unit = InfoTypesAlertUnits.ODIS,
-  minAge = InfoTypesAlertAges.ODIS
+  minAge = InfoTypesAlertAges.ODIS_RED_PERIOD
 ) => {
   // console.log('odisDataObj', odisDataObj);
   // let auFromNow = 0;
@@ -69,11 +64,15 @@ const getOdisAlertCountForAllBrands = (
   // let vwFromNow = 0;
 
   let alertsNeeded = 0;
+  let latestChangeDate = null;
+  let oldestChangeDate = null;
+  let brandCode = null;
 
-  // console.log('in getOdisAlertCountForAllBrands odisDataObj', odisDataObj);
+  //   console.log('in getOdisAlertCountForAllBrands odisDataObj', now, minAge);
 
   if (odisDataObj.au && odisDataObj.au.lastUpdated) {
     //   auFromNow = moment(odisDataObj.au.dateChanged).fromNow();
+    // console.log('here@@@@@@@@@@@@@@@@@ 1111');
 
     if (
       (odisDataObj.au.previousProductVersion &&
@@ -85,18 +84,32 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.au.previousDataVersion &&
         odisDataObj.au.previousDataVersion !== odisDataObj.au.dataVersion)
     ) {
-      let auDateOfChange = moment(
-        odisDataObj.au.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
       //   console.log('!!!!! auDateOfChange', auDateOfChange);
-      let auAgeOfChange = now.diff(moment(auDateOfChange), unit) || 0;
-      //   console.log('!!!!! au diff', auAgeOfChange);
+
+      const auAgeOfChange = getDateDifference(odisDataObj.au.lastUpdated, now);
+
       if (auAgeOfChange <= minAge) {
         ++alertsNeeded;
+        latestChangeDate = odisDataObj.au.lastUpdated;
+        oldestChangeDate = odisDataObj.au.lastUpdated;
       }
+      //   console.log(
+      //     '!!!!! au diff',
+      //     auAgeOfChange,
+      //     odisDataObj.au.lastUpdated,
+      //     now,
+      //     'alertsNeeded',
+      //     alertsNeeded
+      //   );
     }
   }
+  console.log(
+    'au',
+    'latestChangeDate',
+    latestChangeDate,
+    'oldestChangeDate',
+    oldestChangeDate
+  );
   if (odisDataObj.cv && odisDataObj.cv.lastUpdated) {
     //   cvFromNow = moment(odisDataObj.cv.dateChanged).fromNow();
 
@@ -110,16 +123,30 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.cv.previousDataVersion &&
         odisDataObj.cv.previousDataVersion !== odisDataObj.cv.dataVersion)
     ) {
-      let cvDateOfChange = moment(
-        odisDataObj.cv.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
-      //   console.log('!!!!! cvDateOfChange', cvDateOfChange);
-      let cvAgeOfChange = now.diff(moment(cvDateOfChange), unit) || 0;
-      //   console.log('!!!!! cv diff', cvAgeOfChange);
+      const cvAgeOfChange = getDateDifference(odisDataObj.cv.lastUpdated, now);
       if (cvAgeOfChange <= minAge) {
         ++alertsNeeded;
+
+        latestChangeDate = latestChangeDate
+          ? isDateAfter(odisDataObj.cv.lastUpdated, latestChangeDate)
+            ? odisDataObj.cv.lastUpdated
+            : latestChangeDate
+          : odisDataObj.cv.lastUpdated;
+
+        oldestChangeDate = oldestChangeDate
+          ? isDateAfter(odisDataObj.cv.lastUpdated, oldestChangeDate)
+            ? odisDataObj.cv.lastUpdated
+            : oldestChangeDate
+          : odisDataObj.cv.lastUpdated;
       }
+      //   console.log(
+      //     '!!!!! cv diff',
+      //     cvAgeOfChange,
+      //     odisDataObj.cv.lastUpdated,
+      //     now,
+      //     'alertsNeeded',
+      //     alertsNeeded
+      //   );
     }
   }
   if (odisDataObj.se && odisDataObj.se.lastUpdated) {
@@ -135,16 +162,30 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.se.previousDataVersion &&
         odisDataObj.se.previousDataVersion !== odisDataObj.se.dataVersion)
     ) {
-      let seDateOfChange = moment(
-        odisDataObj.se.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
-      //   console.log('!!!!! seDateOfChange', seDateOfChange);
-      let seAgeOfChange = now.diff(moment(seDateOfChange), unit) || 0;
+      const seAgeOfChange = getDateDifference(odisDataObj.se.lastUpdated, now);
       //   console.log('!!!!! se diff', seAgeOfChange);
       if (seAgeOfChange <= minAge) {
         ++alertsNeeded;
+        latestChangeDate = latestChangeDate
+          ? isDateAfter(odisDataObj.se.lastUpdated, latestChangeDate)
+            ? odisDataObj.se.lastUpdated
+            : latestChangeDate
+          : odisDataObj.se.lastUpdated;
+
+        oldestChangeDate = oldestChangeDate
+          ? isDateAfter(odisDataObj.se.lastUpdated, oldestChangeDate)
+            ? odisDataObj.se.lastUpdated
+            : oldestChangeDate
+          : odisDataObj.se.lastUpdated;
       }
+      //   console.log(
+      //     '!!!!! se diff',
+      //     seAgeOfChange,
+      //     odisDataObj.se.lastUpdated,
+      //     now,
+      //     'alertsNeeded',
+      //     alertsNeeded
+      //   );
     }
   }
   if (odisDataObj.sk && odisDataObj.sk.lastUpdated) {
@@ -160,16 +201,30 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.sk.previousDataVersion &&
         odisDataObj.sk.previousDataVersion !== odisDataObj.sk.dataVersion)
     ) {
-      let skDateOfChange = moment(
-        odisDataObj.sk.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
-      //   console.log('!!!!! skDateOfChange', skDateOfChange);
-      let skAgeOfChange = now.diff(moment(skDateOfChange), unit) || 0;
+      const skAgeOfChange = getDateDifference(odisDataObj.sk.lastUpdated, now);
       //   console.log('!!!!! sk diff', skAgeOfChange);
       if (skAgeOfChange <= minAge) {
         ++alertsNeeded;
+        latestChangeDate = latestChangeDate
+          ? isDateAfter(odisDataObj.sk.lastUpdated, latestChangeDate)
+            ? odisDataObj.sk.lastUpdated
+            : latestChangeDate
+          : odisDataObj.sk.lastUpdated;
+
+        oldestChangeDate = oldestChangeDate
+          ? isDateAfter(odisDataObj.sk.lastUpdated, oldestChangeDate)
+            ? odisDataObj.sk.lastUpdated
+            : oldestChangeDate
+          : odisDataObj.sk.lastUpdated;
       }
+      //   console.log(
+      //     '!!!!! sk diff',
+      //     skAgeOfChange,
+      //     odisDataObj.sk.lastUpdated,
+      //     now,
+      //     'alertsNeeded',
+      //     alertsNeeded
+      //   );
     }
   }
   if (odisDataObj.vw && odisDataObj.vw.lastUpdated) {
@@ -185,63 +240,74 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.vw.previousDataVersion &&
         odisDataObj.vw.previousDataVersion !== odisDataObj.vw.dataVersion)
     ) {
-      let vwDateOfChange = moment(
-        odisDataObj.vw.lastUpdated,
-        'DD/MM/YYYY HH:mm:ss'
-      );
-      //   console.log('!!!!! vwDateOfChange', vwDateOfChange);
-      let vwAgeOfChange = now.diff(moment(vwDateOfChange), unit) || 0;
+      const vwAgeOfChange = getDateDifference(odisDataObj.vw.lastUpdated, now);
       //   console.log('!!!!! vw diff', vwAgeOfChange);
       if (vwAgeOfChange <= minAge) {
         ++alertsNeeded;
+        latestChangeDate = latestChangeDate
+          ? isDateAfter(odisDataObj.vw.lastUpdated, latestChangeDate)
+            ? odisDataObj.vw.lastUpdated
+            : latestChangeDate
+          : odisDataObj.vw.lastUpdated;
+
+        oldestChangeDate = oldestChangeDate
+          ? isDateAfter(odisDataObj.vw.lastUpdated, oldestChangeDate)
+            ? odisDataObj.vw.lastUpdated
+            : oldestChangeDate
+          : odisDataObj.vw.lastUpdated;
       }
+      //   console.log(
+      //     '!!!!! vw diff',
+      //     vwAgeOfChange,
+      //     odisDataObj.vw.lastUpdated,
+      //     now,
+      //     'alertsNeeded',
+      //     alertsNeeded
+      //   );
     }
   }
-  // if (odisDataObj.vw && odisDataObj.vw.lastUpdated) {
-  //   //   vwFromNow = moment(odisDataObj.vw.dateChanged).fromNow();
-  //   let vwDateOfChange = moment(
-  //     odisDataObj.vw.lastUpdated,
-  //     'DD/MM/YYYY HH:mm:ss'
-  //   );
-  //   //   console.log('!!!!! vwDateOfChange', vwDateOfChange);
-  //   let vwAgeOfChange = now.diff(moment(vwDateOfChange), unit) || 0;
-  //   //   console.log('!!!!! vw diff', vwAgeOfChange);
-  //   if (vwAgeOfChange <= minAge) {
-  //     alertNeeded = true;
-  //   }
-  // }
 
-  // console.log('alertNeeded', alertNeeded);
-
-  return alertsNeeded;
+  //   console.log('alertNeeded', alertsNeeded);
+  return {
+    alertsNeeded,
+    latestChangeDate,
+    oldestChangeDate,
+    brandCode: 'vw',
+  };
 };
 
-export const getOdisAlertCount = (odisDataObj, userBrand = null) => {
+export const getOdisAlertCount = (odisDataObj, now, userBrand = null) => {
   //   const userBrand = store.getState().user.userBrand;
-  let alertsNeeded = 0;
-  const minAge = InfoTypesAlertAges.ODIS;
-  const now = moment();
+  let changeObj = null;
+  const minAge = InfoTypesAlertAges.ODIS_RED_PERIOD;
+
+  //   console.log('in getOdisAlertCount', now, userBrand);
+
   if (odisDataObj) {
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');
-        alertsNeeded = getOdisAlertCountForBrand(odisDataObj.au, now, minAge);
+        changeObj = getOdisAlertCountForBrand(odisDataObj.au, now, minAge);
       } else if (userBrand === 'cv') {
         // console.log('cv');
-        alertsNeeded = getOdisAlertCountForBrand(odisDataObj.cv, now, minAge);
+        changeObj = getOdisAlertCountForBrand(odisDataObj.cv, now, minAge);
       } else if (userBrand === 'se') {
         // console.log('se');
-        alertsNeeded = getOdisAlertCountForBrand(odisDataObj.se, now, minAge);
+        changeObj = getOdisAlertCountForBrand(odisDataObj.se, now, minAge);
       } else if (userBrand === 'sk') {
         // console.log('sk');
-        alertsNeeded = getOdisAlertCountForBrand(odisDataObj.sk, now, minAge);
+        changeObj = getOdisAlertCountForBrand(odisDataObj.sk, now, minAge);
       } else if (userBrand === 'vw') {
         // console.log('vw');
-        alertsNeeded = getOdisAlertCountForBrand(odisDataObj.vw, now, minAge);
+        changeObj = getOdisAlertCountForBrand(odisDataObj.vw, now, minAge);
       }
     } else {
-      alertsNeeded = getOdisAlertCountForAllBrands(odisDataObj, now, minAge);
+      //   console.log('getOdisAlertCount all brands');
+      changeObj = getOdisAlertCountForAllBrands(odisDataObj, now, minAge);
     }
   }
-  return 1;
+  if (userBrand) {
+    changeObj = { ...changeObj, userBrand: userBrand };
+  }
+  return changeObj;
 };

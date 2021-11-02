@@ -96,8 +96,11 @@ export default function NewsLinks(props) {
           />
           <View style={baseStyles.viewItemTitle}>
             {isBusinessCritical ? (
-              <Text style={baseStyles.textItemTitleHighlighted}>
-                {`Important:  ${item.headline}`}
+              <Text style={baseStyles.textItemTitle}>
+                <Text style={baseStyles.textItemTitleHighlighted}>
+                  {`IMPORTANT!  `}
+                </Text>
+                {item.headline}
               </Text>
             ) : (
               <Text style={baseStyles.textItemTitle}>{item.headline}</Text>

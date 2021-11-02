@@ -45,17 +45,17 @@ const checkUnseenCriticalItems = (
   const ageOfView = getDateDifference(
     (latestCriticalItemDate, displayTimestamp, true)
   );
-  const minAge = InfoTypesAlertAges.ODIS;
+  const minAge = InfoTypesAlertAges.ODIS_RED_PERIOD;
 
-  console.log(
-    'in checkUnseenCriticalItems',
-    'ageOfView',
-    ageOfView,
-    'latestCriticalItemDate',
-    latestCriticalItemDate,
-    'displayTimestamp',
-    displayTimestamp
-  );
+  //   console.log(
+  //     'in checkUnseenCriticalItems',
+  //     'ageOfView',
+  //     ageOfView,
+  //     'latestCriticalItemDate',
+  //     latestCriticalItemDate,
+  //     'displayTimestamp',
+  //     displayTimestamp
+  //   );
 
   const unseenCriticalItems = ageOfView > minAge ? 0 : 1;
 
@@ -76,12 +76,12 @@ export default function news(state = INITIAL_STATE, action) {
       };
     }
     case Types.SET_NEWS_DISPLAY_TIMESTAMP: {
-      console.log(
-        'date in state is',
-        state.displayTimestamp,
-        'setting to',
-        Date.now()
-      );
+      //   console.log(
+      //     'date in state is',
+      //     state.displayTimestamp,
+      //     'setting to',
+      //     Date.now()
+      //   );
       const itemsList = state.newsItems;
 
       const dateOfLatestCriticalNewsItem =
@@ -98,17 +98,17 @@ export default function news(state = INITIAL_STATE, action) {
           : 0
         : 1;
 
-      console.log(
-        'in news reducer setting timestamp',
-        'redCount',
-        redCount,
-        'dateOfLatestCriticalNewsItem',
-        dateOfLatestCriticalNewsItem,
-        'state.displayTimestamp',
-        state.displayTimestamp,
-        'unseenCriticalItems',
-        unseenCriticalItems
-      );
+      //   console.log(
+      //     'in news reducer setting timestamp',
+      //     'redCount',
+      //     redCount,
+      //     'dateOfLatestCriticalNewsItem',
+      //     dateOfLatestCriticalNewsItem,
+      //     'state.displayTimestamp',in appnav useEffect
+      //     state.displayTimestamp,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems
+      //   );
       return {
         ...state,
         unseenCriticalItems: unseenCriticalItems,
@@ -145,17 +145,17 @@ export default function news(state = INITIAL_STATE, action) {
           : 0
         : 1;
 
-      console.log(
-        'in news reducer, saving news',
-        'redCount',
-        redCount,
-        'dateOfLatestCriticalNewsItem',
-        dateOfLatestCriticalNewsItem,
-        'state.displayTimestamp',
-        state.displayTimestamp,
-        'unseenCriticalItems',
-        unseenCriticalItems
-      );
+      //   console.log(
+      //     'in news reducer, saving news',
+      //     'redCount',
+      //     redCount,
+      //     'dateOfLatestCriticalNewsItem',
+      //     dateOfLatestCriticalNewsItem,
+      //     'state.displayTimestamp',
+      //     state.displayTimestamp,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems
+      //   );
       return {
         ...state,
         // newsItems: [],
