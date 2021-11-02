@@ -559,46 +559,41 @@ export default HomeScreen = (props) => {
         calibrationExpiryRedCount !== null
           ? calibrationExpiryRedCount
           : 0;
-      const tempNotifiableCalibrationExpiryAmberCount =
-        typeof calibrationExpiryAmberCount !== 'undefined' &&
-        calibrationExpiryAmberCount !== null
-          ? calibrationExpiryAmberCount
+      const tempNotifiableServiceMeasuresRedCount =
+        typeof serviceMeasuresRedCount !== 'undefined' &&
+        serviceMeasuresRedCount !== null
+          ? serviceMeasuresRedCount
           : 0;
       const tempNotifiableLtpLoansRedCount =
         typeof ltpLoansRedCount !== 'undefined' && ltpLoansRedCount !== null
           ? ltpLoansRedCount
+          : 0;
+      setNotificationsRedCount(
+        tempNotifiableCalibrationExpiryRedCount +
+          tempNotifiableLtpLoansRedCount +
+          tempNotifiableServiceMeasuresRedCount
+      );
+
+      const tempNotifiableCalibrationExpiryAmberCount =
+        typeof calibrationExpiryAmberCount !== 'undefined' &&
+        calibrationExpiryAmberCount !== null
+          ? calibrationExpiryAmberCount
           : 0;
       const tempNotifiableLtpLoansAmberCount =
         typeof ltpLoansAmberCount !== 'undefined' && ltpLoansAmberCount !== null
           ? ltpLoansAmberCount
           : 0;
 
-      const tempNotifiableServiceMeasuresRedCount =
-        typeof serviceMeasuresRedCount !== 'undefined' &&
-        serviceMeasuresRedCount !== null
-          ? serviceMeasuresRedCount
-          : 0;
       const tempNotifiableServiceMeasuresAmberCount =
         typeof serviceMeasuresAmberCount !== 'undefined' &&
         serviceMeasuresAmberCount !== null
           ? serviceMeasuresAmberCount
           : 0;
-      const tempOdisRedCount =
-        typeof odisChangesToHighlight !== 'undefined' &&
-        odisChangesToHighlight !== null
-          ? odisChangesToHighlight
-          : 0;
-
-      setNotificationsRedCount(
-        tempNotifiableCalibrationExpiryRedCount +
-          tempNotifiableLtpLoansRedCount +
-          tempNotifiableServiceMeasuresRedCount +
-          tempOdisRedCount
-      );
       setNotificationsAmberCount(
         tempNotifiableCalibrationExpiryAmberCount +
           tempNotifiableLtpLoansAmberCount +
-          tempNotifiableServiceMeasuresAmberCount
+          tempNotifiableServiceMeasuresAmberCount +
+          odisChangesToHighlight
       );
       setNotificationsTotalAlertCount(
         tempNotifiableCalibrationExpiryRedCount +
@@ -606,8 +601,7 @@ export default HomeScreen = (props) => {
           tempNotifiableServiceMeasuresRedCount +
           tempNotifiableCalibrationExpiryAmberCount +
           tempNotifiableLtpLoansAmberCount +
-          tempNotifiableServiceMeasuresAmberCount +
-          tempOdisRedCount
+          tempNotifiableServiceMeasuresAmberCount
       );
       setLtpLoansTotalAlertCount(
         tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
@@ -843,14 +837,21 @@ export default HomeScreen = (props) => {
                         />
                         <BadgedText
                           showBadge={
-                            showingDemoApp ? notificationsTotalAlertCount : 0
+                            showingDemoApp
+                              ? (notificationsRedCount &&
+                                  notificationsRedCount > 0) ||
+                                (notificationsAmberCount &&
+                                  notificationsAmberCount > 0)
+                              : 0
                           }
                           focused={false}
                           text={'Notifications'}
                           value={notificationsTotalAlertCount ? '+' : null}
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            notificationsRedCount > 0 ? true : false
+                            notificationsRedCount && notificationsRedCount > 0
+                              ? true
+                              : false
                           }
                         />
                       </View>
@@ -916,7 +917,7 @@ export default HomeScreen = (props) => {
                         text={'News'}
                         value={unseenCriticalItems ? '+' : null}
                         showingDemoApp={showingDemoApp}
-                        showSevereAlert={false}
+                        showSevereAlert={true}
                       />
                     </View>
                   </Touchable>

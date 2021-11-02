@@ -17,8 +17,8 @@ export const InfoTypesAlertUnits = {
 };
 
 export const InfoTypesAlertAges = {
-  LTP_LOANS_RED_PERIOD: 2,
-  LTP_LOANS_AMBER_PERIOD: 4,
+  LTP_LOANS_RED_PERIOD: 2, // today plus 1 day
+  LTP_LOANS_AMBER_PERIOD: 4, // 4 days including today
   NEWS_RED_PERIOD: 7,
   ODIS_RED_PERIOD: 7,
   SERVICE_MEASURES_RED_PERIOD: 3,

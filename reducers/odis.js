@@ -39,7 +39,6 @@ export default function odis(state = INITIAL_STATE, action) {
       //     changesToHighlight
       //   );
       const changeObj = getOdisAlertCount(state.odisData, now, state.userBrand);
-
       const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
 
       return {
@@ -206,8 +205,7 @@ export default function odis(state = INITIAL_STATE, action) {
       const fetchTime = Date.now();
 
       const changeObj = getOdisAlertCount(odisDataObj, fetchTime, userBrand);
-      console.log('changeObj', changeObj);
-
+      //   console.log('changeObj', changeObj);
       const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
 
       const latestChangeDate =

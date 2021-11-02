@@ -83,17 +83,6 @@ export default function LtpLoansList(props) {
               >
                 {`LAST DAY! Please return this today to avoid a late penalty charge.`}
               </Text>
-            ) : daysLeft >= InfoTypesAlertAges.LTP_LOANS_AMBER_PERIOD ? (
-              <Text
-                style={{
-                  ...baseStyles.textLeftAligned,
-                  color: Colors.vwgBlack,
-                }}
-              >
-                {daysLeft === 1
-                  ? `There is 1 day left of this loan`
-                  : `There are ${daysLeft} days left of this loan`}
-              </Text>
             ) : daysLeft <= InfoTypesAlertAges.LTP_LOANS_RED_PERIOD ? (
               <Text
                 style={{
@@ -101,15 +90,25 @@ export default function LtpLoansList(props) {
                   color: Colors.vwgBadgeSevereAlertColor,
                 }}
               >
-                {`${daysLeft} ${
-                  daysLeft === 1 ? `day` : `days`
+                {`${
+                  daysLeft === 1 ? `1 day` : `${daysLeft} days`
                 } left, please repare your loan for return. The return policy can be viewed on the LTP website.`}
               </Text>
-            ) : (
+            ) : daysLeft <= InfoTypesAlertAges.LTP_LOANS_AMBER_PERIOD ? (
               <Text
                 style={{
                   ...baseStyles.textLeftAlignedBold,
                   color: Colors.vwgWarmOrange,
+                }}
+              >
+                {`There are ${daysLeft} days left of this loan`}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAligned,
+
+                  color: Colors.vwgBlack,
                 }}
               >
                 {`${daysLeft} ${

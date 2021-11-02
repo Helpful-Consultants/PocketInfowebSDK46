@@ -262,7 +262,6 @@ export default NotificationsScreen = (props) => {
                 <Text
                   style={{
                     ...baseStyles.textSectionRibbon,
-
                     fontFamily: 'the-sans-bold',
                   }}
                 >

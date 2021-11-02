@@ -12,7 +12,7 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     ltpLoansItems.map((item) => {
       const timeToEnd = item.endDateDue
-        ? item.endDateDue && getDateDifference(nowDate, item.endDateDue)
+        ? item.endDateDue && getDateDifference(nowDate, item.endDateDue) + 1 // add 1 for today
         : null;
       //   console.log(
       //     'in getLtpLoansCountsObj; ',

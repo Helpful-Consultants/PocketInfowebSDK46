@@ -718,7 +718,7 @@ export default getBaseStyles = (props) => {
     textItemTitleHighlighted: {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
-      color: Colors.vwgWarmOrange,
+      color: Colors.vwgWarmRed,
       fontSize:
         width >= 1024
           ? fontFactor * 1

@@ -298,27 +298,28 @@ export default AppNavigator = (props) => {
           tempNotifiableAlertsCount + odisChangesToHighlight;
       }
 
-      console.log(
-        'in appnav useEffect nefore setting badge',
-        'showingDemoApp',
-        showingDemoApp,
-        'showingDemoData',
-        showingDemoData,
-        'calibrationExpiryOverdueCount',
-        calibrationExpiryOverdueCount,
-        'calibrationExpiryRedCount',
-        calibrationExpiryRedCount,
-        'serviceMeasuresRedCount',
-        serviceMeasuresRedCount,
-        'ltpLoansRedCount',
-        ltpLoansRedCount,
-        'unseenCriticalItems',
-        unseenCriticalItems,
-        'odisChangesToHighlight',
-        odisChangesToHighlight,
-        'tempNotifiableAlertsCount',
-        tempNotifiableAlertsCount
-      );
+      //   console.log(
+      //     'in appnav useEffect before setting badge',
+      //     'showingDemoApp',
+      //     showingDemoApp,
+      //     'showingDemoData',
+      //     showingDemoData,
+      //     'calibrationExpiryOverdueCount',
+      //     calibrationExpiryOverdueCount,
+      //     'calibrationExpiryRedCount',
+      //     calibrationExpiryRedCount,
+      //     'serviceMeasuresRedCount',
+      //     serviceMeasuresRedCount,
+      //     'ltpLoansRedCount',
+      //     ltpLoansRedCount,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems,
+      //     'odisChangesToHighlight',
+      //     odisChangesToHighlight,
+      //     'tempNotifiableAlertsCount',
+      //     tempNotifiableAlertsCount
+      //   );
+
       setBadgeCountAsync(tempNotifiableAlertsCount);
     } else {
       setBadgeCountAsync(0);

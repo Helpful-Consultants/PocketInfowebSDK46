@@ -103,13 +103,13 @@ const getOdisAlertCountForAllBrands = (
       //   );
     }
   }
-  console.log(
-    'au',
-    'latestChangeDate',
-    latestChangeDate,
-    'oldestChangeDate',
-    oldestChangeDate
-  );
+  //   console.log(
+  //     'au',
+  //     'latestChangeDate',
+  //     latestChangeDate,
+  //     'oldestChangeDate',
+  //     oldestChangeDate
+  //   );
   if (odisDataObj.cv && odisDataObj.cv.lastUpdated) {
     //   cvFromNow = moment(odisDataObj.cv.dateChanged).fromNow();
 

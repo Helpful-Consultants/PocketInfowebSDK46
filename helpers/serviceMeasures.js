@@ -11,7 +11,7 @@ export const getServiceMeasuresCountsObj = (serviceMeasuresItems) => {
   const checkTimeToExpiry = (expiryDate) => {
     const parsedExpiryDate =
       (expiryDate && parse(expiryDate, 'dd/MM/yyyy', new Date())) || null;
-    const daysLeft = 1 + getDateDifference(nowDateObj, parsedExpiryDate);
+    const daysLeft = getDateDifference(nowDateObj, parsedExpiryDate) + 1; // add 1 for today;
     // console.log(
     //   '£££ in getServiceMeasuresCountsObj, checkTimeToExpiry ',
     //   expiryDate,

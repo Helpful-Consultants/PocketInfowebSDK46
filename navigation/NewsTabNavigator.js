@@ -45,7 +45,7 @@ let headerHeight =
 // Start tab navigator
 
 const NewsTabs =
-  Platform.OS === 'android'
+  Platform.OS === 'androidzzz'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
@@ -145,7 +145,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           ),
           tabBarBadge: showingDemoApp && unseenCriticalItems ? '' : null,
           tabBarBadgeStyle: {
-            backgroundColor: Colors.vwgBadgeAlertColor,
+            backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,
             //height: 5,
             // right: 10,
