@@ -45,7 +45,7 @@ let headerHeight =
 // Start tab navigator
 
 const RemindersTabs =
-  Platform.OS === 'android'
+  Platform.OS === 'androidzzz'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
