@@ -39,7 +39,7 @@
     "expo-splash-screen": "~0.13.4",
     "expo-status-bar": "~1.1.0",
     "expo-task-manager": "~10.0.3",
-    "expo-updates": "~0.10.5",
+    "expo-updates": "~0.10.10",
     "expo-web-browser": "~10.0.3",
     "htmlparser2": "^6.1.0",
     "ios": "0.0.1",
