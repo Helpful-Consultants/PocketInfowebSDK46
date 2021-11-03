@@ -304,23 +304,30 @@ export const getDateDifference = (dateOne, dateTwo, log = false) => {
   return timeToExpiry;
 };
 
-export const isDateAfter = (dateOne, dateTwo) => {
+export const isDateAfter = (
+  dateOne = null,
+  dateTwo = null
+  //   calledBy = 'unknown'
+) => {
   let isItAfter = 0;
   //   console.log('***************in isDateAfter', dateOne, 'to', dateTwo);
+  const parsedDateOne = parseAnyDate(dateOne);
+  const parsedDateTwo = parseAnyDate(dateTwo);
 
   if (dateOne && dateTwo) {
-    const parsedDateOne = parseAnyDate(dateOne);
-    const parsedDateTwo = parseAnyDate(dateTwo);
     isItAfter = isAfter(parsedDateOne, parsedDateTwo);
   }
   //   console.log(
-  //     '@@@@@@@@@firstDate',
-  //     dateOne,
+  //     '@@@@@@@@@ isDateAfter called by ',
+  //     calledBy,
+  //     'firstDate',
+  //     dateOne && dateOne,
+  //     parsedDateOne && parsedDateOne,
   //     'parsedDateTwo',
-  //     dateTwo,
+  //     dateTwo && dateTwo,
+  //     parsedDateTwo && parsedDateTwo,
   //     isItAfter
   //   );
-  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
   return isItAfter;
 };
 

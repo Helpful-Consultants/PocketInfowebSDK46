@@ -23,7 +23,7 @@ export default newsDummyData = [
     imageName: 'highVoltgeCables.png',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/Workshop_Support/High-voltage_test_adapters_VAS_6558_9-6_and_VAS_6558_9-6A.pdf',
-    createdDate: '23/10/2021 11:44:03',
+    createdDate: '03/11/2021 11:14:59',
     lastUpdated: '',
     updatedBy: 'Simon Groves',
     ipAddress: '109.150.236.17',

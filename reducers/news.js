@@ -1,8 +1,7 @@
 // import { Types } from '../actions/news';
 import Types from '../constants/Types';
 import { getDateOfLatestCriticalNewsItem } from '../helpers/news';
-import { getDateDifference } from '../helpers/dates';
-import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { isDateAfter } from '../helpers/dates';
 
 const INITIAL_STATE = {
   newsItems: [],
@@ -38,26 +37,34 @@ const countCriticalItems = (items) => {
 
   return count;
 };
+
 const checkUnseenCriticalItems = (
   latestCriticalItemDate = null,
   displayTimestamp = null
 ) => {
-  const ageOfView = getDateDifference(
-    (latestCriticalItemDate, displayTimestamp, true)
-  );
-  const minAge = InfoTypesAlertAges.NEWS_RED_PERIOD;
-
   //   console.log(
   //     'in checkUnseenCriticalItems',
-  //     'ageOfView',
-  //     ageOfView,
+  //     'latestCriticalItemDate',
+  //     latestCriticalItemDate,
+  //     'displayTimestamp',
+  //     displayTimestamp
+  //   );
+  const isSeen = isDateAfter(
+    displayTimestamp,
+    latestCriticalItemDate,
+    'news reducer'
+  );
+  //   console.log(
+  //     'in checkUnseenCriticalItems',
+  //     'isSeen',
+  //     isSeen,
   //     'latestCriticalItemDate',
   //     latestCriticalItemDate,
   //     'displayTimestamp',
   //     displayTimestamp
   //   );
 
-  const unseenCriticalItems = ageOfView > minAge ? 0 : 1;
+  const unseenCriticalItems = isSeen ? 0 : 1;
 
   return unseenCriticalItems;
 };
