@@ -45,7 +45,7 @@ const checkUnseenCriticalItems = (
   const ageOfView = getDateDifference(
     (latestCriticalItemDate, displayTimestamp, true)
   );
-  const minAge = InfoTypesAlertAges.ODIS_RED_PERIOD;
+  const minAge = InfoTypesAlertAges.NEWS_RED_PERIOD;
 
   //   console.log(
   //     'in checkUnseenCriticalItems',
