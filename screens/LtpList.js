@@ -29,14 +29,6 @@ export default function LtpList(props) {
   //     );
   //   };
 
-  //   const orderAs = () => (
-  //     // not wanted yet
-  //     <Text>{`Order as ${item.orderPartNo}, from ${moment(
-  //       item.nextAvailableDate,
-  //       'YYYY-MM-DD'
-  //     ).format('Do MMM') || null}`}</Text>
-  //   );
-
   const FlatListItem = (props) => {
     const { item } = props;
     // const { onSelectItem } = props;

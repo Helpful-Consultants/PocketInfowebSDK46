@@ -32,14 +32,6 @@ export default function CalibrationExpiryList(props) {
   //     );
   //   };
 
-  //   const orderAs = () => (
-  //     // not wanted yet
-  //     <Text>{`Order as ${item.orderPartNo}, from ${moment(
-  //       item.nextAvailableDate,
-  //       'YYYY-MM-DD'
-  //     ).format('Do MMM') || null}`}</Text>
-  //   );
-
   const getFormattedNotification = (item) => {
     const expiryText = item.expiry ? item.expiry.toLowerCase() : '';
     if (item) {

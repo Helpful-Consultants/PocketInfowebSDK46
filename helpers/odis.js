@@ -18,7 +18,6 @@ const getOdisAlertCountForBrand = (
   // console.log('alertNeeded', odisDataObj.brandCode, alertNeeded);
 
   if (brandOdisDataObj && odisDataObj.lastUpdated) {
-    //   auFromNow = moment(odisDataObj.dateChanged).fromNow();
     //   console.log('in getOdisAlertCountForBrand', odisDataObj.lastUpdated);
 
     if (
@@ -71,7 +70,6 @@ const getOdisAlertCountForAllBrands = (
   //   console.log('in getOdisAlertCountForAllBrands odisDataObj', now, minAge);
 
   if (odisDataObj.au && odisDataObj.au.lastUpdated) {
-    //   auFromNow = moment(odisDataObj.au.dateChanged).fromNow();
     // console.log('here@@@@@@@@@@@@@@@@@ 1111');
 
     if (
@@ -111,8 +109,6 @@ const getOdisAlertCountForAllBrands = (
   //     oldestChangeDate
   //   );
   if (odisDataObj.cv && odisDataObj.cv.lastUpdated) {
-    //   cvFromNow = moment(odisDataObj.cv.dateChanged).fromNow();
-
     if (
       (odisDataObj.cv.previousProductVersion &&
         odisDataObj.cv.previousProductVersion !==
@@ -150,8 +146,6 @@ const getOdisAlertCountForAllBrands = (
     }
   }
   if (odisDataObj.se && odisDataObj.se.lastUpdated) {
-    //   seFromNow = moment(odisDataObj.se.dateChanged).fromNow();
-
     if (
       (odisDataObj.se.previousProductVersion &&
         odisDataObj.se.previousProductVersion !==
@@ -189,8 +183,6 @@ const getOdisAlertCountForAllBrands = (
     }
   }
   if (odisDataObj.sk && odisDataObj.sk.lastUpdated) {
-    //   skFromNow = moment(odisDataObj.sk.dateChanged).fromNow();
-
     if (
       (odisDataObj.sk.previousProductVersion &&
         odisDataObj.sk.previousProductVersion !==
@@ -228,8 +220,6 @@ const getOdisAlertCountForAllBrands = (
     }
   }
   if (odisDataObj.vw && odisDataObj.vw.lastUpdated) {
-    //   vwFromNow = moment(odisDataObj.vw.dateChanged).fromNow();
-
     if (
       (odisDataObj.vw.previousProductVersion &&
         odisDataObj.vw.previousProductVersion !==

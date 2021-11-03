@@ -165,8 +165,6 @@ export default AppNavigator = (props) => {
   //   console.log('AppNavigator props', props && props);
   //   console.log('AppNavigator showingDemoApp', showingDemoApp && showingDemoApp);
 
-  //   let now = moment();
-
   //   const fetchDate = async () => {
   //     const now = new Date().toISOString();
 

@@ -16,7 +16,7 @@ import { Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import moment from 'moment';
+import { differenceInMinutes } from 'date-fns';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
@@ -236,8 +236,6 @@ export default HomeScreen = (props) => {
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
   //   const notificationLimit = 168;
-  const now = moment();
-
   //   console.log('IN HOME !!!!! 3');
 
   //   useEffect(() => {
@@ -362,7 +360,6 @@ export default HomeScreen = (props) => {
   //         'timeCheckedAppVersion diff',
   //         now.diff(moment(timeCheckedAppVersion))
   //       );
-
   //       if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
   //         setTimeCheckedAppVersion(now);
   //         setIsCheckingAppVersion(true);
@@ -414,16 +411,19 @@ export default HomeScreen = (props) => {
   };
 
   const checkAppUpdates = () => {
+    const now = Date.now();
     // console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-    // console.log('timeCheckedAppVersion now', now);
+    // console.log(
+    //   'in checkAppUpdates now',
+    //   now,
+    //   'time checked',
+    //   timeCheckedAppVersion,
+    //   differenceInMinutes(now, timeCheckedAppVersion)
+    // );
     if (timeCheckedAppVersion) {
       setShouldCheckAppVersion(true);
-      //   console.log(
-      //     'timeCheckedAppVersion diff',
-      //     now.diff(moment(timeCheckedAppVersion))
-      //   );
 
-      if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
+      if (differenceInMinutes(now, timeCheckedAppVersion) > 10) {
         setTimeCheckedAppVersion(now);
         setIsCheckingAppVersion(true);
         getUpdatesAsync();
@@ -438,7 +438,6 @@ export default HomeScreen = (props) => {
       setTimeCheckedAppVersion(now);
       //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
       setIsCheckingAppVersion(true);
-
       //   console.log('isCheckingAppVersion', isCheckingAppVersion);
       //   console.log('calling getUpdatesAsync');
       getUpdatesAsync();
@@ -478,28 +477,6 @@ export default HomeScreen = (props) => {
   });
 
   //   console.log('IN HOME !!!!!  5');
-  //   useEffect(() => {
-  //     const latestCriticalNewsItemDate = latestCriticalNewsItemDate;
-  //     const lastViewed = newsDisplayTimestamp;
-  //     if (latestCriticalNewsItemDate && latestCriticalNewsItemDate.length > 0) {
-  //       if (lastUpdateNews && lastUpdateNews.length > 0) {
-  //         const freshness = getDateDifference(
-  //           lastViewed,
-  //           latestCriticalNewsItemDate
-  //         );
-  //         //   let fromNow = moment(last).fromNow();
-  //         //   console.log('news fromNow', fromNow);
-
-  //         // setAgeOfNews(newAgeOfNews);
-  //         //   console.log('news useEffect', last, now, newAgeOfNews);
-  //         console.log('news freshness', freshness);
-  //       } else {
-  //         setNewsAlertRedCount(1);
-  //       }
-  //     } else {
-  //       setNewsAlertRedCount(0);
-  //     }
-  //   }, [latestCriticalNewsItemDate]);
 
   useEffect(() => {
     const userWipsItems =

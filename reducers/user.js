@@ -216,24 +216,7 @@ export default function user(state = INITIAL_STATE, action) {
     }
 
     case Types.REVALIDATE_USER_CREDENTIALS: {
-      //   const ageOfCredentialsLimit = 90;
-      //   let now = moment();
       let revalidatedUser = true;
-      //   console.log(
-      //     'in revalidateUserCredentials reducer, called by',
-      //     action.payload && action.payload.calledBy && action.payload.calledBy
-      //   );
-      //   if (state.userIsSignedIn && state.userIsSignedIn === true) {
-      //     if (state.lastUpdate) {
-      //       console.log('now:', now);
-      //       let ageOfCredentials = now.diff(state.lastUpdate, 'days');
-      //       console.log('ageOfCredentials:', ageOfCredentials);
-      //       if (ageOfCredentials <= ageOfCredentialsLimit) {
-      //         revalidatedUser = true;
-      //         console.log('ageOfCredentials good', ageOfCredentials);
-      //       }
-      //     }
-      //   }
 
       if (state.userIsSignedIn && state.userIsSignedIn === true) {
         revalidatedUser = true;

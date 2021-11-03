@@ -1,9 +1,9 @@
-import moment from 'moment';
 import {
   InfoTypes,
   InfoTypesAlertUnits,
   InfoTypesAlertAges,
 } from '../constants/InfoTypes';
+import { getDateDifference } from '../helpers/dates';
 
 export const checkDisplayAge = (
   itemDate,
@@ -11,26 +11,11 @@ export const checkDisplayAge = (
   unit = 'days',
   maxAge = 0
 ) => {
-  //   console.log(
-  //     'in check if Unseen, params',
-  //     itemDate,
-  //     typeof itemDate,
-  //     moment(itemDate, 'DD/MM/YYYY HH:mm:ss'),
-  //     displayTimestamp,
-  //     typeof displayTimestamp,
-  //     moment(displayTimestamp)
-  //   );
   if (displayTimestamp) {
     if (itemDate && itemDate.length > 0) {
-      const lastDisplayed = moment(displayTimestamp);
-      const itemDateToCompare = moment(itemDate, 'DD/MM/YYYY HH:mm:ss');
-      const timeGap = lastDisplayed.diff(itemDateToCompare, unit); // 1
+      const timeGap = getDateDifference(lastDisplayed, itemDateToCompare);
       //   console.log('timeGap', lastDisplayed, itemDateToCompare, timeGap);
-      // if (moment(itemDate, 'DD/MM/YYYY HH:mm:ss').isAfter(displayTimestamp)) {
       if (timeGap <= (maxAge || 8)) {
-        // whenCreated = moment(itemDate, 'DD/MM/YYYY HH:mm:ss');
-        // if (makeDate(itemDate) > new Date(displayTimestamp)) {
-
         // console.log('in check if Unseen new');
         return true;
       } else {
