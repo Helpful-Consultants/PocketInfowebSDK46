@@ -47,46 +47,70 @@ export default DemoAppSwitch = (props) => {
     setSwitchStatus(showingDemoApp && showingDemoApp === true ? true : false);
   }, [showingDemoApp]);
 
-  return userDataObj &&
-    userDataObj.userName &&
-    (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
-      (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
-        userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
-    <View
-      style={{
-        ...baseStyles.container,
-        marginTop: 'auto',
-        marginHorizontal: 10,
-      }}
-    >
+  return userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
+    (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
+      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
       <View
         style={{
-          ...baseStyles.viewRowFlex,
+          ...baseStyles.container,
           marginTop: 'auto',
+          marginHorizontal: 10,
         }}
       >
-        <Switch
-          value={switchStatus}
-          trackColor={{ false: 'gray', true: 'green' }}
-          onValueChange={toggleSwitch}
-        />
-        <Text style={baseStyles.panelTextAppInfo}>
-          {switchStatus ? `  Showing demo app` : `  Show demo app?`}
-        </Text>
-      </View>
-      <View>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {switchStatus ? switchedOnText : switchedOffText}
-        </Text>
-        {showingDemoApp ? null : (
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={switchStatus}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
           <Text style={baseStyles.panelTextAppInfo}>
-            {'(Special option for '}
-            {userDataObj.userName && userDataObj.userName}
-            {')'}
+            {switchStatus ? `  Showing demo app` : `  Show demo app?`}
           </Text>
-        )}
+        </View>
+        <View>
+          <Text style={baseStyles.panelTextAppInfo}>
+            {switchStatus ? switchedOnText : switchedOffText}
+          </Text>
+          {showingDemoApp ? null : (
+            <Text style={baseStyles.panelTextAppInfo}>
+              {'(Special option for '}
+              {userDataObj.userName && userDataObj.userName}
+              {')'}
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
+    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+      <View
+        style={{
+          ...baseStyles.container,
+          marginTop: 'auto',
+          marginHorizontal: 10,
+        }}
+      >
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={switchStatus}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
+          <Text style={baseStyles.panelTextAppInfo}>
+            {switchStatus ? ` Demo app` : ` Show demo?`}
+          </Text>
+        </View>
+      </View>
+    ) : null
   ) : null;
 };

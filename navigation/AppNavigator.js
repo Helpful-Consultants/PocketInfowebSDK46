@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, useWindowDimensions } from 'react-native';
+import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -42,6 +42,8 @@ const CustomDrawerContent = (props) => {
   //   const { showDataSwitch, showingDemoApp } = props;
   //   console.log('CustomDrawerContent props.showingDemoApp', showingDemoApp);
   //   console.log('CustomDrawerContent props.showDataSwitch', showDataSwitch);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -63,8 +65,17 @@ const CustomDrawerContent = (props) => {
         QUICK LINKS
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-      <DemoAppSwitch />
-      <DemoDataSwitch />
+      {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+        <View style={{ flexDirection: 'row' }}>
+          <DemoDataSwitch />
+          <DemoAppSwitch />
+        </View>
+      ) : (
+        <View>
+          <DemoDataSwitch />
+          <DemoAppSwitch />
+        </View>
+      )}
       <BackgroundFetchBlock />
       <AppInfo />
     </DrawerContentScrollView>

@@ -246,15 +246,17 @@ export default BackgroundFetchBlock = () => {
               : 'not granted'}
           </Text>
         </Text>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
-          <TouchableOpacity onPress={resetBadgeCountAsync}>
-            <Text>{` Reset`}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={incrementBadgeCountAsync}>
-            <Text>{` Increment`}</Text>
-          </TouchableOpacity>
-        </Text>
+        {1 === 1 ? null : (
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
+            <TouchableOpacity onPress={resetBadgeCountAsync}>
+              <Text>{` Reset`}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={incrementBadgeCountAsync}>
+              <Text>{` Increment`}</Text>
+            </TouchableOpacity>
+          </Text>
+        )}
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Background permitted:{' '}
           <Text style={styles.boldText}>{taskStatus ? taskStatus : null}</Text>

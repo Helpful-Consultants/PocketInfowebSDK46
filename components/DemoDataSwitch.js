@@ -75,43 +75,67 @@ export default DemoDataSwitch = (props) => {
     );
   }, [requestedDemoData]);
 
-  return showingDemoApp &&
-    userDataObj &&
-    userDataObj.userName &&
-    (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
-      (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
-        userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
-    <View
-      style={{
-        ...baseStyles.container,
-        marginTop: 'auto',
-        marginHorizontal: 10,
-      }}
-    >
+  return showingDemoApp && userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
+    (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
+      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
       <View
         style={{
-          ...baseStyles.viewRowFlex,
+          ...baseStyles.container,
           marginTop: 'auto',
+          marginHorizontal: 10,
         }}
       >
-        <Switch
-          value={requestedDemoData}
-          trackColor={{ false: 'gray', true: 'green' }}
-          onValueChange={toggleSwitch}
-        />
-        <Text style={baseStyles.panelTextAppInfo}>{` Use demo data?`}</Text>
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={requestedDemoData}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
+          <Text style={baseStyles.panelTextAppInfo}>{` Use demo data?`}</Text>
+        </View>
+        <View>
+          <Text style={baseStyles.panelTextAppInfo}>
+            {requestedDemoData ? switchedOnText : switchedOffText}
+          </Text>
+          <Text style={baseStyles.panelTextAppInfo}>
+            {'(Special feature for '}
+            {userDataObj.userName && userDataObj.userName}
+            {')'}
+          </Text>
+        </View>
       </View>
-      <View>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {requestedDemoData ? switchedOnText : switchedOffText}
-        </Text>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {'(Special feature for '}
-          {userDataObj.userName && userDataObj.userName}
-          {')'}
-        </Text>
+    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+      <View
+        style={{
+          ...baseStyles.container,
+          marginTop: 5,
+          marginHorizontal: 10,
+        }}
+      >
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={requestedDemoData}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
+
+          <Text style={baseStyles.panelTextAppInfo}>
+            {switchStatus ? ` Demo data` : ` Demo data?`}
+          </Text>
+        </View>
       </View>
-    </View>
+    ) : null
   ) : null;
 };
