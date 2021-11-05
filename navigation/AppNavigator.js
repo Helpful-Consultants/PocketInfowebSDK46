@@ -67,13 +67,13 @@ const CustomDrawerContent = (props) => {
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
       {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
         <View style={{ flexDirection: 'row' }}>
-          <DemoDataSwitch />
           <DemoAppSwitch />
+          <DemoDataSwitch />
         </View>
       ) : (
         <View>
-          <DemoDataSwitch />
           <DemoAppSwitch />
+          <DemoDataSwitch />
         </View>
       )}
       <BackgroundFetchBlock />
