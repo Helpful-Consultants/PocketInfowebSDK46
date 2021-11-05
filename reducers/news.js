@@ -1,15 +1,72 @@
 // import { Types } from '../actions/news';
 import Types from '../constants/Types';
+import { getDateOfLatestCriticalNewsItem } from '../helpers/news';
+import { isDateAfter } from '../helpers/dates';
 
 const INITIAL_STATE = {
   newsItems: [],
   viewCount: 0,
+  redCount: 0,
   lastUpdate: null,
+  latestCriticalItemDate: null,
+  unseenCriticalItems: false,
   previousUpdate: null,
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  displayTimestamp: null,
+};
+
+const countCriticalItems = (items) => {
+  let count = 0;
+
+  if (items && items.length > 0) {
+    items.map((item) => {
+      if (
+        item.businessCritical &&
+        item.businessCritical.length > 0 &&
+        (item.businessCritical.toLowerCase() === 'y' ||
+          item.businessCritical.toLowerCase() === 'yes' ||
+          item.businessCritical.toLowerCase() === 'true')
+      ) {
+        count++;
+      }
+    });
+  }
+
+  return count;
+};
+
+const checkUnseenCriticalItems = (
+  latestCriticalItemDate = null,
+  displayTimestamp = null
+) => {
+  //   console.log(
+  //     'in checkUnseenCriticalItems',
+  //     'latestCriticalItemDate',
+  //     latestCriticalItemDate,
+  //     'displayTimestamp',
+  //     displayTimestamp
+  //   );
+  const isSeen = isDateAfter(
+    displayTimestamp,
+    latestCriticalItemDate,
+    'news reducer'
+  );
+  //   console.log(
+  //     'in checkUnseenCriticalItems',
+  //     'isSeen',
+  //     isSeen,
+  //     'latestCriticalItemDate',
+  //     latestCriticalItemDate,
+  //     'displayTimestamp',
+  //     displayTimestamp
+  //   );
+
+  const unseenCriticalItems = isSeen ? 0 : 1;
+
+  return unseenCriticalItems;
 };
 
 export default function news(state = INITIAL_STATE, action) {
@@ -25,6 +82,46 @@ export default function news(state = INITIAL_STATE, action) {
         statusCode: null,
       };
     }
+    case Types.SET_NEWS_DISPLAY_TIMESTAMP: {
+      //   console.log(
+      //     'date in state is',
+      //     state.displayTimestamp,
+      //     'setting to',
+      //     Date.now()
+      //   );
+      const itemsList = state.newsItems;
+
+      const dateOfLatestCriticalNewsItem =
+        getDateOfLatestCriticalNewsItem(itemsList);
+      const redCount = countCriticalItems(itemsList);
+      const unseenCriticalItems = state.displayTimestamp
+        ? redCount
+          ? dateOfLatestCriticalNewsItem
+            ? checkUnseenCriticalItems(
+                dateOfLatestCriticalNewsItem,
+                state.displayTimestamp
+              )
+            : 0
+          : 0
+        : 1;
+
+      //   console.log(
+      //     'in news reducer setting timestamp',
+      //     'redCount',
+      //     redCount,
+      //     'dateOfLatestCriticalNewsItem',
+      //     dateOfLatestCriticalNewsItem,
+      //     'state.displayTimestamp',in appnav useEffect
+      //     state.displayTimestamp,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems
+      //   );
+      return {
+        ...state,
+        unseenCriticalItems: unseenCriticalItems,
+        displayTimestamp: Date.now(),
+      };
+    }
     case Types.GET_NEWS_SUCCESS: {
       //   console.log(action.payload.items && action.payload.items);
       const newlastUpdate =
@@ -33,16 +130,46 @@ export default function news(state = INITIAL_STATE, action) {
           action.payload.items[0].lastUpdated &&
           action.payload.items[0].lastUpdated) ||
         null;
+
       //   const newPreviousUpdated =
       //     (state.previousUpdated &&
       //       state.lastUpdated &&
       //       state.previousUpdated !== newlastUpdated &&
       //       state.lastUpdated) ||
       //     null;
+      const itemsList = (action.payload.items && action.payload.items) || [];
+      const dateOfLatestCriticalNewsItem =
+        getDateOfLatestCriticalNewsItem(itemsList);
+      const redCount = countCriticalItems(itemsList);
+      const unseenCriticalItems = state.displayTimestamp
+        ? redCount
+          ? dateOfLatestCriticalNewsItem
+            ? checkUnseenCriticalItems(
+                dateOfLatestCriticalNewsItem,
+                state.displayTimestamp
+              )
+            : 0
+          : 0
+        : 1;
+
+      //   console.log(
+      //     'in news reducer, saving news',
+      //     'redCount',
+      //     redCount,
+      //     'dateOfLatestCriticalNewsItem',
+      //     dateOfLatestCriticalNewsItem,
+      //     'state.displayTimestamp',
+      //     state.displayTimestamp,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems
+      //   );
       return {
         ...state,
         // newsItems: [],
-        newsItems: (action.payload.items && action.payload.items) || [],
+        newsItems: itemsList,
+        latestCriticalItemDate: dateOfLatestCriticalNewsItem,
+        redCount: redCount,
+        unseenCriticalItems: unseenCriticalItems,
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,
         isLoading: false,

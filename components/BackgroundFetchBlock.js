@@ -5,31 +5,99 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
 import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
+import { getShortDisplayDateAndLongTime } from '../helpers/dates';
+
+import { store } from '../helpers/store';
+
+const now = new Date();
+const nowString = now.toISOString();
+console.log(
+  'in BackgroundFetchBlock',
+
+  'now',
+  now,
+  'nowStr',
+  nowString
+);
+
+// console.log('in backgroundfetchblock', store);
 
 // 2. Register the task at some point in your app by providing the same name, and some configuration
 // options for how the background fetch should behave
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchAsync = async () => {
-  return BackgroundFetch.registerTaskAsync(Tasks.BACKGROUND_FETCH_TASK, {
-    minimumInterval: 60 * 1, // 1 minutes
-    stopOnTerminate: false, // android only,
-    startOnBoot: true, // android only
-  });
+  const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+
+  console.log(
+    'in registerBackgroundFetchAsync',
+    BackgroundFetch.BackgroundFetchStatus
+  );
+
+  switch (backgroundFetchStatus) {
+    case BackgroundFetch.BackgroundFetchStatus.Restricted:
+    case BackgroundFetch.BackgroundFetchStatus.Denied:
+      console.log('Background execution is disabled');
+      return;
+
+    default: {
+      //   console.log('Background execution allowed');
+
+      let tasks = await TaskManager.getRegisteredTasksAsync();
+      if (
+        tasks.find((f) => f.taskName === Tasks.BACKGROUND_FETCH_DATE_TASK) ==
+        null
+      ) {
+        console.log('Registering task');
+        await BackgroundFetch.registerTaskAsync(
+          Tasks.BACKGROUND_FETCH_DATE_TASK,
+          {
+            minimumInterval: 15, // 15 minutes in the minimum for iOS
+            stopOnTerminate: false, // android only,
+            startOnBoot: true, // android only
+          }
+        );
+
+        tasks = await TaskManager.getRegisteredTasksAsync();
+        console.log('Registered tasks', tasks);
+      } else {
+        console.log(
+          `Task ${Tasks.BACKGROUND_FETCH_DATE_TASK} already registered, skipping`
+        );
+      }
+
+      console.log('Setting interval to', 15);
+      await BackgroundFetch.setMinimumIntervalAsync(15);
+    }
+  }
+};
+const resetBackgroundTaskInterval = async () => {
+  console.log('in resetBackgroundTaskInterval');
+  return BackgroundFetch.setMinimumIntervalAsync(15);
 };
 
 // 3. (Optional) Unregister tasks by specifying the task name
 // This will cancel any future background fetch calls that match the given name
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const unregisterBackgroundFetchAsync = async () => {
-  return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_TASK);
+  console.log('in UNregisterBackgroundFetchAsync');
+  return BackgroundFetch.unregisterTaskAsync(Tasks.BACKGROUND_FETCH_DATE_TASK);
 };
 
 export default BackgroundFetchBlock = () => {
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const backgroundDataItems = useSelector(
+    (state) => state.backgroundData.backgroundDataItems
+  );
+  const backgroundDataFetchTime = useSelector(
+    (state) => state.backgroundData.fetchTime
+  );
+  const userDataObj = useSelector((state) => state.user.userData[0]);
   const [isRegistered, setIsRegistered] = useState(false);
   const [taskStatus, setTaskStatus] = useState(null);
   const [appBadgeCount, setAppBadgeCount] = useState(0);
@@ -115,21 +183,35 @@ export default BackgroundFetchBlock = () => {
   };
 
   const checkTaskStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync();
+    const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
-      Tasks.BACKGROUND_FETCH_TASK
+      Tasks.BACKGROUND_FETCH_DATE_TASK
     );
-    setTaskStatus(status);
+    console.log(
+      'in checkTaskStatusAsync backgroundFetchStatus: ',
+      backgroundFetchStatus,
+      'isRegistered',
+      isRegistered
+    );
+    setTaskStatus(backgroundFetchStatus);
     setIsRegistered(isRegistered);
   };
 
   const toggleFetchTaskAsync = async () => {
-    // console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
+    console.log('in toggleFetchTaskAsync, isRegistered: ', isRegistered);
     if (isRegistered) {
       await unregisterBackgroundFetchAsync();
+      console.log(
+        'in toggleFetchTaskAsync, unregisterBackgroundFetchAsync finished '
+      );
       checkTaskStatusAsync();
     } else {
       await registerBackgroundFetchAsync();
+      await resetBackgroundTaskInterval();
+      console.log(
+        'in toggleFetchTaskAsync, registerBackgroundFetchAsync finished '
+      );
       checkTaskStatusAsync();
     }
   };
@@ -141,11 +223,19 @@ export default BackgroundFetchBlock = () => {
     getBadgeCountAsync();
     // console.log('in useEffect appBadgeCount is', appBadgeCount);
   }, []);
+  //   console.log(
+  //     'backgroundDataItems fetched at ',
+  //     backgroundDataFetchTime && getShortDisplayDateAndLongTime(backgroundDataFetchTime)
+  //   );
+  //   console.log('backgroundDataItems from store', backgroundDataItems);
 
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
-  return (
+  return showingDemoApp &&
+    userDataObj &&
+    userDataObj.userName &&
+    userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
     <View style={styles.screen}>
       <View style={styles.textContainer}>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -156,20 +246,20 @@ export default BackgroundFetchBlock = () => {
               : 'not granted'}
           </Text>
         </Text>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
-          <TouchableOpacity onPress={resetBadgeCountAsync}>
-            <Text>{` Reset`}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={incrementBadgeCountAsync}>
-            <Text>{` Increment`}</Text>
-          </TouchableOpacity>
-        </Text>
+        {1 === 1 ? null : (
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
+            <TouchableOpacity onPress={resetBadgeCountAsync}>
+              <Text>{` Reset`}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={incrementBadgeCountAsync}>
+              <Text>{` Increment`}</Text>
+            </TouchableOpacity>
+          </Text>
+        )}
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Background permitted:{' '}
-          <Text style={styles.boldText}>
-            {taskStatus ? BackgroundFetch.Status[taskStatus] : null}
-          </Text>
+          <Text style={styles.boldText}>{taskStatus ? taskStatus : null}</Text>
         </Text>
         <TouchableOpacity onPress={toggleFetchTaskAsync}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -180,14 +270,31 @@ export default BackgroundFetchBlock = () => {
         </TouchableOpacity>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Task{' '}
-          <Text style={styles.boldText}>{Tasks.BACKGROUND_FETCH_TASK}</Text>
+          <Text style={styles.boldText}>
+            {Tasks.BACKGROUND_FETCH_DATE_TASK}
+          </Text>
           <Text style={styles.boldText}>
             {isRegistered ? ' is registered' : ' is not registered yet'}
           </Text>
         </Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          Last background fetch at:{' '}
+          {(backgroundDataFetchTime &&
+            getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
+            'not called yet'}{' '}
+          <Text style={styles.boldText}>
+            {' '}
+            Result:{' '}
+            {(backgroundDataItems &&
+              backgroundDataItems.datetime &&
+              getShortDisplayDateAndLongTime(backgroundDataItems.datetime)) ||
+              'n/a'}{' '}
+            {backgroundDataItems && backgroundDataItems.abbreviation}
+          </Text>
+        </Text>
       </View>
     </View>
-  );
+  ) : null;
 };
 
 const styles = StyleSheet.create({

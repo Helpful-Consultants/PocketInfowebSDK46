@@ -4,9 +4,11 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import reducers from './reducers';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
+import { store, sagaMiddleware } from './helpers/store';
+// import logger from 'redux-logger';
 import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -18,13 +20,22 @@ import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Colors from './constants/Colors';
 import Tasks from './constants/Tasks';
+import {
+  //   getBackgroundDataRequest,
+  getBackgroundDataStart,
+} from './actions/backgroundData';
+import {
+  defineBackgroundTask,
+  showAppBadgeCount,
+  fetchDate,
+  //   fetchData,
+} from './helpers/taskManagement';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'; //breaks
 // import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
-import '@expo/match-media';
+// import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
 import Constants from 'expo-constants';
 // import { Ionicons } from '@expo/vector-icons';
@@ -32,7 +43,22 @@ import Constants from 'expo-constants';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 
-import { getOdisRequest } from './actions/odis';
+// showAppBadgeCount(store);
+
+// Here so it can use the Redux store
+const zzzzzzzfetchDate = async () => {
+  //   const now = new Date().toISOString();
+  console.log('background fetchDate running!');
+  console.log('the store contains', store ? store : 'nought');
+  const result = true;
+  store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
+  console.log('the store now contains', store ? store : 'nought');
+  console.log('background fetchDate finished!!!!!');
+  //alert('Got background fetch call to fetch date: ' + now);
+  return result
+    ? BackgroundFetch.BackgroundFetchResult.NewData
+    : BackgroundFetch.BackgroundFetchResult.NoData;
+};
 
 enableScreens();
 
@@ -72,12 +98,12 @@ Sentry.init({
 // deprecated so moved above
 // Sentry.setRelease(Constants.manifest.revisionId);
 
-const sagaMiddleware = createSagaMiddleware();
+// const sagaMiddleware = createSagaMiddleware();
 
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-};
+// const persistConfig = {
+//   key: 'root',
+//   storage: AsyncStorage,
+// };
 
 // if (Platform.OS !== 'android') {
 //   Notifications.setNotificationHandler({
@@ -96,70 +122,35 @@ const persistConfig = {
 // }, {
 //   time: ...
 // })
+// const myMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My first middleware ran');
+//   return next(action);
+// };
+// const mySecondMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My second middleware ran');
+//   return next(action);
+// };
+// const myThirdMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My third middleware ran');
+//   return next(action);
+// };
+// const persistedReducer = persistReducer(persistConfig, reducers);
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+// console.log('creating store');
 
-// const store = compose(persistedReducer, {}, applyMiddleware(sagaMiddleware));
-const store = createStore(
-  persistedReducer,
-  {},
-  compose(applyMiddleware(sagaMiddleware))
-);
+// // const store = compose(persistedReducer, {}, applyMiddleware(sagaMiddleware));
+// const store = createStore(
+//   persistedReducer,
+//   {},
+//   compose(applyMiddleware(sagaMiddleware))
+// );
 
 sagaMiddleware.run(rootSaga);
 
-// const fetchOdis = async () => {
-//   console.log(`Got background fetch odis call`);
-
-//   dispatch(getOdisRequest());
-//   // Be sure to return the successful result type!
-//   return result
-//     ? BackgroundFetch.Result.NewData
-//     : BackgroundFetch.Result.NoData;
-// };
-
-// const BACKGROUND_FETCH_TASK = 'background-fetcher';
-// 1. Define the task by providing a name and the function that should be executed
-// Note: This needs to be called in the global scope (e.g outside of your React components)
-async function zzzzzinitBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-  console.log('in zzzzinitBackgroundFetch', taskName, taskFn, interval);
-  try {
-    if (!TaskManager.isTaskDefined(taskName)) {
-      TaskManager.defineTask(taskName, taskFn);
-    }
-    const options = {
-      minimumInterval: interval, // in seconds
-    };
-    await BackgroundFetch.registerTaskAsync(taskName, options);
-    console.log('registerTaskAsync() worked');
-  } catch (err) {
-    console.log('registerTaskAsync() failed:', err);
-  }
-}
-
-async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-  console.log('in defineBackgroundFetch', taskName, taskFn, interval);
-  TaskManager.defineTask(taskName, taskFn);
-
-  const status = await BackgroundFetch.getStatusAsync();
-  switch (status) {
-    case BackgroundFetch.Status.Restricted:
-    case BackgroundFetch.Status.Denied:
-      console.log('in defineBackgroundFetch Background execution is disabled');
-      return;
-
-    default: {
-      console.log('in defineBackgroundFetch Background execution allowed');
-
-      let tasks = await TaskManager.getRegisteredTasksAsync();
-      tasks = await TaskManager.getRegisteredTasksAsync();
-      console.log('in defineBackgroundFetch Registered tasks', tasks);
-    }
-  }
-}
-
-// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate);
+// console.log('%%%%%%%%% in app.js calling defineBackgroundTask');
+defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
+// defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData);
 
 // async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 //   console.log('in initBackgroundFetch', taskName, taskFn, interval);
@@ -167,8 +158,8 @@ async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 
 //   const status = await BackgroundFetch.getStatusAsync();
 //   switch (status) {
-//     case BackgroundFetch.Status.Restricted:
-//     case BackgroundFetch.Status.Denied:
+//     case BackgroundFetch.BackgroundFetchStatus.Restricted:
+//     case BackgroundFetch.BackgroundFetchStatus.Denied:
 //       console.log('Background execution is disabled');
 //       return;
 
@@ -204,9 +195,11 @@ async function defineBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
 //   );
 //   // Be sure to return the successful result type!
 //   return result
-//     ? BackgroundFetch.Result.NewData
-//     : BackgroundFetch.Result.NoData;
+//     ? BackgroundFetch.BackgroundFetchResult.NewData
+//     : BackgroundFetch.BackgroundFetchResult.NoData;
 // });
+
+// console.log('store', store);
 
 export default function App(props) {
   const windowDim = useWindowDimensions();
@@ -234,6 +227,8 @@ export default function App(props) {
       console.log('unregisterTaskAsync() failed:', err);
     }
   }
+
+  //   countNotifiableItems();
 
   //   unregisterBackgroundFetch('getDateAndTime');
   //   const dispatch = useDispatch();
@@ -266,7 +261,6 @@ export default function App(props) {
       />
     );
   } else {
-    // console.log('in App');
     return (
       <SafeAreaProvider>
         <Provider store={store}>

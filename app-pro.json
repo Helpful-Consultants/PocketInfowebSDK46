@@ -5,7 +5,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.02",
+    "version": "1.2.33",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -21,7 +21,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "109",
+      "buildNumber": "114",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
@@ -31,8 +31,9 @@
       }
     },
     "android": {
+      "versionCode": 21,
       "package": "com.helpfulconsultants.pocketinfowebpro",
-      "versionCode": 17
+       "permissions":["CHANGE_BADGE","com.huawei.android.launcher.permission.CHANGE_BADGE","com.sec.android.provider.badge.permission.WRITE","me.everything.badger.permission.BADGE_COUNT_WRITE", "com.majeur.launcher.permission.UPDATE_BADGE"]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -57,3 +58,4 @@
     }
   }
 }
+

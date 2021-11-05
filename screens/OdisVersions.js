@@ -1,19 +1,15 @@
 import React from 'react';
 import { useWindowDimensions, ScrollView, View } from 'react-native';
 import { Image, Text } from 'react-native-elements';
-import moment from 'moment';
 import vwLogo from '../assets/images/vw-logo.png';
 import audiLogo from '../assets/images/audi-logo.png';
 import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
-
-const getDisplayDate = (rawDate) => {
-  return (rawDate && moment(rawDate).format('Do MMM YYYY h:mm:ss a')) || '';
-};
+import { getShortDisplayDateAndTime } from '../helpers/dates';
 
 export default function OdisVersions(props) {
-  console.log('props fetchTime', props.fetchTime);
+  //   console.log('props fetchTime', props.fetchTime);
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
@@ -38,12 +34,27 @@ export default function OdisVersions(props) {
   //   console.log('viewCount', viewCount && viewCount);
 
   let odisDetails = null;
+  //   console.log(
+  //     '$$$$$$$getOdisForBrands',
+  //     itemsObj && itemsObj,
+  //     userBrand && userBrand
+  //   );
 
   const getOdisForBrand = (item) => {
     // if (brand === 'sk') {
-    // console.log('getOdisForBrand', item);
+    // console.log('getOdisForBrand', item && item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
-    return (
+    // const parsedUpdatedDate =
+    //   (item.lastUpdated &&
+    //     parse(item.lastUpdated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+    //   null;
+    // console.log(
+    //   'parsedUpdatedDate =',
+    //   parsedUpdatedDate,
+    //   'from',
+    //   item.lastUpdated
+    // );
+    return item ? (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
           <Image
@@ -67,7 +78,6 @@ export default function OdisVersions(props) {
               </Text>
             )}
           </Text>
-
           {item.previousMainFeatureVersion &&
           item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
             <View style={{ flexDirection: 'column' }}>
@@ -83,7 +93,6 @@ export default function OdisVersions(props) {
               {`Main Feature: ${item.mainFeatureVersion}`}
             </Text>
           )}
-
           <Text style={baseStyles.textOdisVersion}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
@@ -99,13 +108,20 @@ export default function OdisVersions(props) {
               </Text>
             )}
           </Text>
+
+          {item.lastUpdated && item.lastUpdated.length > 0 ? (
+            <Text style={baseStyles.textOdisVersionSmaller}>
+              {`Last changed ${getShortDisplayDateAndTime(item.lastUpdated)}`}
+            </Text>
+          ) : null}
         </View>
       </View>
-    );
+    ) : null;
     // }
   };
 
   const getOdisForBrands = (itemsObj) => {
+    // console.log('getOdisForBrands', itemsObj, userBrand && userBrand);
     if (userBrand) {
       if (userBrand === 'au') {
         // console.log('au');
@@ -126,11 +142,11 @@ export default function OdisVersions(props) {
     } else {
       odisDetails = (
         <View>
-          {getOdisForBrand(itemsObj.vw)}
-          {getOdisForBrand(itemsObj.au)}
-          {getOdisForBrand(itemsObj.se)}
-          {getOdisForBrand(itemsObj.sk)}
-          {getOdisForBrand(itemsObj.cv)}
+          {itemsObj && itemsObj.vw ? getOdisForBrand(itemsObj.vw) : null}
+          {itemsObj && itemsObj.au ? getOdisForBrand(itemsObj.au) : null}
+          {itemsObj && itemsObj.se ? getOdisForBrand(itemsObj.se) : null}
+          {itemsObj && itemsObj.sk ? getOdisForBrand(itemsObj.sk) : null}
+          {itemsObj && itemsObj.cv ? getOdisForBrand(itemsObj.cv) : null}
         </View>
       );
     }

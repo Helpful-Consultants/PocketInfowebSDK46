@@ -52,10 +52,17 @@ export default BlinkingView = (props) => {
       />
       <Text> </Text>
       <Text
-        style={{
-          ...baseStyles.textColoured,
-          color: blink ? (showItem ? colorOne : colorTwo) : colorOne,
-        }}
+        style={
+          blink
+            ? {
+                ...baseStyles.textColouredBold,
+                color: fallbackColor,
+              }
+            : {
+                ...baseStyles.textColoured,
+                color: showItem ? colorOne : colorTwo,
+              }
+        }
       >
         {text}
       </Text>

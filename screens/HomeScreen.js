@@ -4,7 +4,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
 // import * as Permissions from 'expo-permissions';
-
 import {
   ActivityIndicator,
   Platform,
@@ -17,7 +16,7 @@ import { Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
-import moment from 'moment';
+import { differenceInMinutes } from 'date-fns';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
@@ -35,12 +34,11 @@ import {
 } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import Constants from 'expo-constants';
-
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
-
+// import Constants from 'expo-constants';
+// import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
@@ -117,9 +115,7 @@ export default HomeScreen = (props) => {
   const userId = useSelector((state) => state.user.userId);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
-  const userRequestedDemoData = useSelector(
-    (state) => state.user.requestedDemoData
-  );
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
 
   //   console.log('IN HOME !!!!! 1g');
@@ -132,19 +128,12 @@ export default HomeScreen = (props) => {
   const userApiFetchParamsObj = useSelector(
     (state) => state.user.userApiFetchParamsObj
   );
-
-  const odisObj = useSelector((state) => state.odis.odisData);
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
-
-  const lastUpdateNews = useSelector((state) => state.news.lastUpdate);
-  const newsObj = useSelector((state) => state.news);
-  const previousUpdateNews = useSelector((state) => state.news.previousUpdate);
-
+  const unseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
   );
-  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
-
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isLoadingOdis = useSelector((state) => state.odis.isLoading);
@@ -154,7 +143,29 @@ export default HomeScreen = (props) => {
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
 
+  const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
+  const [notificationsRedCount, setNotificationsRedCount] = useState(0);
+  const [notificationsAmberCount, setNotificationsAmberCount] = useState(0);
+  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] =
+    useState(0);
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
   const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
@@ -167,6 +178,9 @@ export default HomeScreen = (props) => {
   const [ageOfNews, setAgeOfNews] = useState(0);
 
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
+  const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
+  const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
 
   const windowDim = useWindowDimensions();
   const baseStyles =
@@ -193,8 +207,9 @@ export default HomeScreen = (props) => {
       })
     );
     dispatch(getDealerWipsRequest(userApiFetchParamsObj));
+    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
     dispatch(getLtpLoansRequest(userApiFetchParamsObj));
-    dispatch(getOdisRequest());
+    dispatch(getOdisRequest({ userBrand: userBrand }));
     dispatch(getNewsRequest());
     dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
   });
@@ -220,9 +235,7 @@ export default HomeScreen = (props) => {
     getLtpItems();
   };
   //   console.log('IN HOME !!!!! brand', userBrand);
-  const notificationLimit = 168;
-  const now = moment();
-
+  //   const notificationLimit = 168;
   //   console.log('IN HOME !!!!! 3');
 
   //   useEffect(() => {
@@ -347,7 +360,6 @@ export default HomeScreen = (props) => {
   //         'timeCheckedAppVersion diff',
   //         now.diff(moment(timeCheckedAppVersion))
   //       );
-
   //       if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
   //         setTimeCheckedAppVersion(now);
   //         setIsCheckingAppVersion(true);
@@ -399,16 +411,19 @@ export default HomeScreen = (props) => {
   };
 
   const checkAppUpdates = () => {
+    const now = Date.now();
     // console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-    // console.log('timeCheckedAppVersion now', now);
+    // console.log(
+    //   'in checkAppUpdates now',
+    //   now,
+    //   'time checked',
+    //   timeCheckedAppVersion,
+    //   differenceInMinutes(now, timeCheckedAppVersion)
+    // );
     if (timeCheckedAppVersion) {
       setShouldCheckAppVersion(true);
-      //   console.log(
-      //     'timeCheckedAppVersion diff',
-      //     now.diff(moment(timeCheckedAppVersion))
-      //   );
 
-      if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
+      if (differenceInMinutes(now, timeCheckedAppVersion) > 10) {
         setTimeCheckedAppVersion(now);
         setIsCheckingAppVersion(true);
         getUpdatesAsync();
@@ -423,7 +438,6 @@ export default HomeScreen = (props) => {
       setTimeCheckedAppVersion(now);
       //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
       setIsCheckingAppVersion(true);
-
       //   console.log('isCheckingAppVersion', isCheckingAppVersion);
       //   console.log('calling getUpdatesAsync');
       getUpdatesAsync();
@@ -463,26 +477,6 @@ export default HomeScreen = (props) => {
   });
 
   //   console.log('IN HOME !!!!!  5');
-  useEffect(() => {
-    // console.log('news useEffect', lastUpdateNews);
-    if (lastUpdateNews && lastUpdateNews !== null) {
-      const lastUpdateString = lastUpdateNews.toString();
-      //   console.log('lastUpdateNews', lastUpdateString);
-      const last = moment(lastUpdateString, 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment(lastUpdateNews.toString(), 'DD/MM/YYYY HH:mm:ss');
-      // const last = moment('31/01/2020 12:31:19', 'DD/MM/YYYY HH:mm:ss');
-      //   console.log('now', now);
-      //   console.log('last', last);
-
-      let newAgeOfNews = now.diff(moment(last), 'hours');
-      //   let fromNow = moment(last).fromNow();
-      //   console.log('news fromNow', fromNow);
-
-      // setAgeOfNews(newAgeOfNews);
-      //   console.log('news useEffect', last, now, newAgeOfNews);
-      setAgeOfNews(newAgeOfNews);
-    }
-  }, [lastUpdateNews]);
 
   useEffect(() => {
     const userWipsItems =
@@ -528,15 +522,79 @@ export default HomeScreen = (props) => {
     );
   }, [dealerWipsItems]);
 
-  //   const gridRows =
-  //     Constants.manifest.name &&
-  //     Constants.manifest.name === 'Pocket Infoweb Extra'
-  //       ? 8
-  //       : 6;
-
   const gridRows = showingDemoApp ? 8 : 6;
-  //   console.log('home screen gridRows', gridRows);
-  //   console.log('Rendering Home screen');
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in home useEffect LtpLoansCounts',
+      //     ltpLoansAmberCount,
+      //     ltpLoansRedCount
+      //   );
+      const tempNotifiableCalibrationExpiryRedCount =
+        typeof calibrationExpiryRedCount !== 'undefined' &&
+        calibrationExpiryRedCount !== null
+          ? calibrationExpiryRedCount
+          : 0;
+      const tempNotifiableServiceMeasuresRedCount =
+        typeof serviceMeasuresRedCount !== 'undefined' &&
+        serviceMeasuresRedCount !== null
+          ? serviceMeasuresRedCount
+          : 0;
+      const tempNotifiableLtpLoansRedCount =
+        typeof ltpLoansRedCount !== 'undefined' && ltpLoansRedCount !== null
+          ? ltpLoansRedCount
+          : 0;
+      setNotificationsRedCount(
+        tempNotifiableCalibrationExpiryRedCount +
+          tempNotifiableLtpLoansRedCount +
+          tempNotifiableServiceMeasuresRedCount
+      );
+
+      const tempNotifiableCalibrationExpiryAmberCount =
+        typeof calibrationExpiryAmberCount !== 'undefined' &&
+        calibrationExpiryAmberCount !== null
+          ? calibrationExpiryAmberCount
+          : 0;
+      const tempNotifiableLtpLoansAmberCount =
+        typeof ltpLoansAmberCount !== 'undefined' && ltpLoansAmberCount !== null
+          ? ltpLoansAmberCount
+          : 0;
+
+      const tempNotifiableServiceMeasuresAmberCount =
+        typeof serviceMeasuresAmberCount !== 'undefined' &&
+        serviceMeasuresAmberCount !== null
+          ? serviceMeasuresAmberCount
+          : 0;
+      setNotificationsAmberCount(
+        tempNotifiableCalibrationExpiryAmberCount +
+          tempNotifiableLtpLoansAmberCount +
+          tempNotifiableServiceMeasuresAmberCount +
+          odisChangesToHighlight
+      );
+      setNotificationsTotalAlertCount(
+        tempNotifiableCalibrationExpiryRedCount +
+          tempNotifiableLtpLoansRedCount +
+          tempNotifiableServiceMeasuresRedCount +
+          tempNotifiableCalibrationExpiryAmberCount +
+          tempNotifiableLtpLoansAmberCount +
+          tempNotifiableServiceMeasuresAmberCount
+      );
+      setLtpLoansTotalAlertCount(
+        tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
+      );
+    }
+  }, [
+    calibrationExpiryRedCount,
+    calibrationExpiryAmberCount,
+    ltpLoansRedCount,
+    ltpLoansAmberCount,
+    serviceMeasuresRedCount,
+    serviceMeasuresAmberCount,
+    odisChangesToHighlight,
+    showingDemoApp,
+    showingDemoData,
+  ]);
 
   return (
     <View
@@ -755,10 +813,23 @@ export default HomeScreen = (props) => {
                           size={iconSize}
                         />
                         <BadgedText
-                          showBadge={false}
+                          showBadge={
+                            showingDemoApp
+                              ? (notificationsRedCount &&
+                                  notificationsRedCount > 0) ||
+                                (notificationsAmberCount &&
+                                  notificationsAmberCount > 0)
+                              : 0
+                          }
                           focused={false}
                           text={'Notifications'}
-                          value={'+'}
+                          value={notificationsTotalAlertCount ? '+' : null}
+                          showingDemoApp={showingDemoApp}
+                          showSevereAlert={
+                            notificationsRedCount && notificationsRedCount > 0
+                              ? true
+                              : false
+                          }
                         />
                       </View>
                     </Touchable>
@@ -766,7 +837,7 @@ export default HomeScreen = (props) => {
                       style={baseStyles.viewHomeGridCell}
                       onPress={() =>
                         navigation.navigate('RemindersTabs', {
-                          screen: 'All LTP Loans',
+                          screen: 'LTP Loans',
                         })
                       }
                     >
@@ -777,28 +848,26 @@ export default HomeScreen = (props) => {
                           color={buttonTextColor}
                           size={iconSize}
                         />
-                        {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
-                          <View>
-                            <Text style={baseStyles.textHomeGridCell}>
-                              {`LTP Loans`}
-                              <Text style={baseStyles.textHomeGridCellCount}>
-                                {` (${
-                                  userRequestedDemoData
-                                    ? ltpLoansDummyData
-                                      ? ltpLoansDummyData.length
-                                      : 0
-                                    : ltpLoansItems
-                                    ? ltpLoansItems.length
-                                    : 0
-                                })`}
-                              </Text>
-                            </Text>
-                          </View>
-                        ) : (
-                          <Text
-                            style={baseStyles.textHomeGridCell}
-                          >{`LTP Loans`}</Text>
-                        )}
+                        <BadgedText
+                          showBadge={
+                            showingDemoApp
+                              ? (ltpLoansRedCount && ltpLoansRedCount > 0) ||
+                                (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+                                ? '+'
+                                : 0
+                              : 0
+                          }
+                          focused={false}
+                          text={'LTP Loans'}
+                          value={
+                            (ltpLoansRedCount && ltpLoansRedCount > 0) ||
+                            (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+                              ? '+'
+                              : null
+                          }
+                          showingDemoApp={showingDemoApp}
+                          showSevereAlert={ltpLoansRedCount > 0 ? true : false}
+                        />
                       </View>
                     </Touchable>
                   </View>
@@ -820,10 +889,12 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={false}
+                        showBadge={showingDemoApp ? unseenCriticalItems : 0}
                         focused={false}
                         text={'News'}
-                        value={'+'}
+                        value={unseenCriticalItems ? '+' : null}
+                        showingDemoApp={showingDemoApp}
+                        showSevereAlert={true}
                       />
                     </View>
                   </Touchable>
@@ -846,6 +917,7 @@ export default HomeScreen = (props) => {
                         focused={false}
                         text={'Catalogue'}
                         value={'+'}
+                        showingDemoApp={showingDemoApp}
                       />
                     </View>
                   </Touchable>
@@ -861,10 +933,7 @@ export default HomeScreen = (props) => {
                 <OdisLinkWithStatus
                   showingDemoApp={showingDemoApp}
                   navigation={navigation}
-                  userBrand={userBrand}
-                  itemsObj={odisObj}
-                  viewCount={odisViewCount}
-                  viewMax={5}
+                  showOdisAlert={odisChangesToHighlight}
                 />
               </View>
 

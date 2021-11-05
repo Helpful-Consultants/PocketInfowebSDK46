@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,13 +26,14 @@ import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
 import DemoAppSwitch from '../components/DemoAppSwitch';
 import DemoDataSwitch from '../components/DemoDataSwitch';
-// import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
+import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 // import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
+import { setBadgeCountAsync } from '../helpers/appBadge';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
@@ -41,6 +42,8 @@ const CustomDrawerContent = (props) => {
   //   const { showDataSwitch, showingDemoApp } = props;
   //   console.log('CustomDrawerContent props.showingDemoApp', showingDemoApp);
   //   console.log('CustomDrawerContent props.showDataSwitch', showDataSwitch);
+  const userDataObj = useSelector((state) => state.user.userData[0]);
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -62,10 +65,19 @@ const CustomDrawerContent = (props) => {
         QUICK LINKS
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-      <DemoAppSwitch />
-      <DemoDataSwitch />
+      {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+        <View style={{ flexDirection: 'row' }}>
+          <DemoAppSwitch />
+          <DemoDataSwitch />
+        </View>
+      ) : (
+        <View>
+          <DemoAppSwitch />
+          <DemoDataSwitch />
+        </View>
+      )}
+      <BackgroundFetchBlock />
       <AppInfo />
-      {/* {props.showingDemoApp ? <BackgroundFetchBlock /> : null} */}
     </DrawerContentScrollView>
   );
 };
@@ -75,16 +87,11 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const { showDemoApp } = props;
+  const { showingDemoApp } = props;
   let showDataSwitch = true;
 
-  useEffect(() => {
-    // console.log('Dwr Navigator useEffect', showDemoApp);
-    showDataSwitch = showDemoApp;
-  }, [showDemoApp]);
-
   //   console.log('Dwr Navigator props', props);
-  //   console.log('Dwr Navigator showDemoApp', showDemoApp);
+  //   console.log('Dwr Navigator showingDemoApp', showingDemoApp);
   //   console.log('showingDemoApp', props.showingDemoApp && props.showingDemoApp);
 
   return (
@@ -93,7 +100,7 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props, showDemoApp) => (
+      drawerContent={(props, showingDemoApp) => (
         <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
       )}
       screenOptions={{
@@ -124,7 +131,7 @@ const DrawerNavigator = (props) => {
           drawerLabel: 'News, Catalogue & Stats',
         }}
       />
-      {showDemoApp ? (
+      {showingDemoApp ? (
         <Drawer.Screen
           name='RemindersTabs'
           component={RemindersTabNavigator}
@@ -142,63 +149,56 @@ export default AppNavigator = (props) => {
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const unseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
   const dispatch = useDispatch();
-  const [showDemoApp, setShowDemoApp] = useState(false);
+  //   const ageOfCredentialsLimit = 3;
   //   return <AuthLoadingScreen />;
 
   //   console.log('AppNavigator props', props && props);
   //   console.log('AppNavigator showingDemoApp', showingDemoApp && showingDemoApp);
 
-  //   let now = moment();
-  //   const ageOfCredentialsLimit = 3;
+  //   const fetchDate = async () => {
+  //     const now = new Date().toISOString();
 
-  //   if (userIsSignedIn && userIsSignedIn === true) {
-  //     if (userCredsLastChecked) {
-  //       console.log('now:', now);
-  //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
-  //       console.log('ageOfCredentials:', ageOfCredentials);
-  //       if (ageOfCredentials <= ageOfCredentialsLimit) {
-  //         dispatch(setUserValidated());
-  //         console.log('ageOfCredentials good', ageOfCredentials);
-  //       } else {
-  //         console.log('ageOfCredentials bad', ageOfCredentials);
-  //         dispatch(setUserOutdatedCredentials());
-  //       }
-  //     }
-  //   }
+  //     //   const nowStr = (now && now.toISOString()) || 'no date';
+  //     const result = true;
+  //     console.log('Got background fetch call to fetch date', now);
+  //     // Be sure to return the successful result type!
+  //     return result
+  //       ? BackgroundFetch.BackgroundFetchResult.NewData
+  //       : BackgroundFetch.BackgroundFetchResult.NoData;
+  //   };
 
-  //   revalidateUser();
-  dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
-  //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
-  //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
-  //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+  //   const fetchDateTwo = async () => {
+  //     const now = new Date().toISOString();
 
-  const fetchDate = async () => {
-    const now = new Date().toISOString();
-
-    //   const nowStr = (now && now.toISOString()) || 'no date';
-    const result = true;
-    console.log('Got background fetch call to fetch date', now);
-    // Be sure to return the successful result type!
-    return result
-      ? BackgroundFetch.Result.NewData
-      : BackgroundFetch.Result.NoData;
-  };
-
-  const fetchDateTwo = async () => {
-    const now = new Date().toISOString();
-
-    //   const nowStr = (now && now.toISOString()) || 'no date';
-    const result = true;
-    console.log('Got background fetch call to fetch date two', now);
-    // Be sure to return the successful result type!
-    return result
-      ? BackgroundFetch.Result.NewData
-      : BackgroundFetch.Result.NoData;
-  };
+  //     //   const nowStr = (now && now.toISOString()) || 'no date';
+  //     const result = true;
+  //     console.log('Got background fetch call to fetch date two', now);
+  //     // Be sure to return the successful result type!
+  //     return result
+  //       ? BackgroundFetch.BackgroundFetchResult.NewData
+  //       : BackgroundFetch.BackgroundFetchResult.NoData;
+  //   };
 
   async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
     console.log('in initBackgroundFetch', taskName, taskFn, interval);
@@ -206,8 +206,8 @@ export default AppNavigator = (props) => {
 
     const status = await BackgroundFetch.getStatusAsync();
     switch (status) {
-      case BackgroundFetch.Status.Restricted:
-      case BackgroundFetch.Status.Denied:
+      case BackgroundFetch.BackgroundFetchStatus.Restricted:
+      case BackgroundFetch.BackgroundFetchStatus.Denied:
         console.log('Background execution is disabled');
         return;
 
@@ -235,17 +235,117 @@ export default AppNavigator = (props) => {
   }
 
   useEffect(() => {
-    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate, 5);
-    // initBackgroundFetch(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDateTwo, 5);
-    console.log(
-      '!!!! in AppNavigator useEffect. showingDemoApp is ',
-      showingDemoApp
-    );
-    setShowDemoApp(showingDemoApp);
-  }, [showingDemoApp]);
+    //   if (userIsSignedIn && userIsSignedIn === true) {
+    //     if (userCredsLastChecked) {
+    //       console.log('now:', now);
+    //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
+    //       console.log('ageOfCredentials:', ageOfCredentials);
+    //       if (ageOfCredentials <= ageOfCredentialsLimit) {
+    //         dispatch(setUserValidated());
+    //         console.log('ageOfCredentials good', ageOfCredentials);
+    //       } else {
+    //         console.log('ageOfCredentials bad', ageOfCredentials);
+    //         dispatch(setUserOutdatedCredentials());
+    //       }
+    //     }
+    //   }
+    //   revalidateUser();
+    dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+    //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
+    //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
+    //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+  }, []);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      let tempNotifiableAlertsCount = 0;
+
+      if (
+        typeof calibrationExpiryOverdueCount !== 'undefined' &&
+        calibrationExpiryOverdueCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + calibrationExpiryRedCount;
+      }
+      if (
+        typeof calibrationExpiryRedCount !== 'undefined' &&
+        calibrationExpiryRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + calibrationExpiryRedCount;
+      }
+
+      if (
+        typeof ltpLoansRedCount !== 'undefined' &&
+        ltpLoansRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + ltpLoansRedCount;
+      }
+
+      if (
+        typeof serviceMeasuresRedCount !== 'undefined' &&
+        serviceMeasuresRedCount !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + serviceMeasuresRedCount;
+      }
+
+      if (
+        typeof unseenCriticalItems !== 'undefined' &&
+        unseenCriticalItems !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + unseenCriticalItems;
+      }
+
+      if (
+        typeof odisChangesToHighlight !== 'undefined' &&
+        odisChangesToHighlight !== null
+      ) {
+        tempNotifiableAlertsCount =
+          tempNotifiableAlertsCount + odisChangesToHighlight;
+      }
+
+      //   console.log(
+      //     'in appnav useEffect before setting badge',
+      //     'showingDemoApp',
+      //     showingDemoApp,
+      //     'showingDemoData',
+      //     showingDemoData,
+      //     'calibrationExpiryOverdueCount',
+      //     calibrationExpiryOverdueCount,
+      //     'calibrationExpiryRedCount',
+      //     calibrationExpiryRedCount,
+      //     'serviceMeasuresRedCount',
+      //     serviceMeasuresRedCount,
+      //     'ltpLoansRedCount',
+      //     ltpLoansRedCount,
+      //     'unseenCriticalItems',
+      //     unseenCriticalItems,
+      //     'odisChangesToHighlight',
+      //     odisChangesToHighlight,
+      //     'tempNotifiableAlertsCount',
+      //     tempNotifiableAlertsCount
+      //   );
+
+      setBadgeCountAsync(tempNotifiableAlertsCount);
+    } else {
+      setBadgeCountAsync(0);
+    }
+  }, [
+    calibrationExpiryOverdueCount,
+    calibrationExpiryRedCount,
+    ltpLoansRedCount,
+    serviceMeasuresRedCount,
+    unseenCriticalItems,
+    odisChangesToHighlight,
+    showingDemoApp,
+    showingDemoData,
+  ]); //testing objects
 
   //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
-  //   console.log('ssssss in AppNavigator showDemoApp ', showDemoApp);
+  //   console.log('ssssss in AppNavigator showingDemoApp ', showingDemoApp);
 
   const allOK =
     userIsValidated &&
@@ -269,13 +369,13 @@ export default AppNavigator = (props) => {
   //   console.log(
   //     '?????? in AppNavigator showingDemoApp is ',
   //     showingDemoApp,
-  //     showDemoApp
+  //     showingDemoApp
   //   );
-  if (showDemoApp) {
+  if (showingDemoApp) {
     return (
       <NavigationContainer>
         {allOK === true ? (
-          <DrawerNavigator showDemoApp={true} />
+          <DrawerNavigator showingDemoApp={true} />
         ) : (
           <SignedOutStack />
         )}
@@ -285,7 +385,7 @@ export default AppNavigator = (props) => {
     return (
       <NavigationContainer>
         {allOK === true ? (
-          <DrawerNavigator showDemoApp={false} />
+          <DrawerNavigator showingDemoApp={false} />
         ) : (
           <SignedOutStack />
         )}

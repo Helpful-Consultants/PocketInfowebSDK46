@@ -2,7 +2,6 @@ import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
 import { ListItem, Text } from 'react-native-elements';
 // import Touchable from 'react-native-platform-touchable';
-// import moment from 'moment';
 // import ltpDummyData from '../dummyData/ltpDummyData';
 
 export default function LtpList(props) {
@@ -29,14 +28,6 @@ export default function LtpList(props) {
   //       `the user selected tool ${item.id} for job 999? ; OK; change job; cancel`
   //     );
   //   };
-
-  //   const orderAs = () => (
-  //     // not wanted yet
-  //     <Text>{`Order as ${item.orderPartNo}, from ${moment(
-  //       item.nextAvailableDate,
-  //       'YYYY-MM-DD'
-  //     ).format('Do MMM') || null}`}</Text>
-  //   );
 
   const FlatListItem = (props) => {
     const { item } = props;

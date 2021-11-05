@@ -4,9 +4,12 @@
     "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": ["ios", "android"],
-    "version": "1.2.05",
-    "icon": "./assets/images/icon.png",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.2.34",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -18,20 +21,33 @@
       "checkAutomatically": "ON_ERROR_RECOVERY",
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "112",
+      "buildNumber": "114",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
+        "UIBackgroundModes": [
+          "fetch"
+        ]
       }
     },
     "android": {
-      "versionCode": 17
+      "versionCode": 21,
+      "package": "com.helpfulconsultants.pocketinfowebextra",
+      "permissions": [
+        "CHANGE_BADGE",
+        "com.huawei.android.launcher.permission.CHANGE_BADGE",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "me.everything.badger.permission.BADGE_COUNT_WRITE",
+        "com.majeur.launcher.permission.UPDATE_BADGE"
+      ]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -41,7 +57,9 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo"
+    ],
     "hooks": {
       "postPublish": [
         {

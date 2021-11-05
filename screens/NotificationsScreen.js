@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-  ScrollView,
+  ActivityIndicator,
+  ImageBackground,
   Text,
   TouchableOpacity,
   useWindowDimensions,
@@ -8,50 +9,57 @@ import {
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
 import Colors from '../constants/Colors';
-// import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import CalibrationExpiryList from './CalibrationExpiryList';
-import calibrationExpiryDummyData from '../dummyData/calibrationExpiryDummyData.js';
-import LtpLoansList from './LtpLoansList';
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
-import ServiceMeasuresList from './ServiceMeasuresList';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+import { getOdisRequest } from '../actions/odis';
+import { getNewsRequest } from '../actions/news';
+import InlineIcon from '../components/InlineIcon';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
-const now = moment();
-
-const getCalibrationExpiryCount = (calibrationExpiryItemsToShow) => {
-  let retSum = 0;
-
-  calibrationExpiryItemsToShow.map((item) => {
-    if (!isNaN(parseInt(item.howMany))) {
-      //   console.log('Not NaN', item.howMany);
-      retSum = retSum + parseInt(item.howMany);
-    } else {
-      //   console.log('NaN', item.howMany);
-    }
-  });
-  //   console.log('retSum', retSum);
-  return retSum;
-};
+// const backgroundImage = { uri: 'https://reactjs.org/logo-og.png' };
 
 export default NotificationsScreen = (props) => {
+  //   console.log('NotificationsScreen props', props);
   const { navigation } = props;
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
-  const calibrationExpiryItems = useSelector(
-    (state) => state.calibrationExpiry.calibrationExpiryItems
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.showingDemoData);
+  const userBrand = useSelector((state) => state.user.userBrand);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
   );
-  const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
-  const serviceMeasuresItems = useSelector(
-    (state) => state.serviceMeasures.serviceMeasuresItems
+
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
   );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const calibrationExpiryTotalCount = useSelector(
+    (state) => state.calibrationExpiry.totalCount
+  );
+  const ltpLoansTotalCount = useSelector((state) => state.ltpLoans.totalCount);
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const serviceMeasuresTotalCount = useSelector(
+    (state) => state.serviceMeasures.totalCount
+  );
+
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const userRequestedDemoData = useSelector(
@@ -61,13 +69,12 @@ export default NotificationsScreen = (props) => {
   const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
-  const [isOpenLtpLoans, setIsOpenLtpLoans] = useState(false);
-  const [isOpenServiceMeasures, setIsOpenServiceMeasures] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
+
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
@@ -107,13 +114,6 @@ export default NotificationsScreen = (props) => {
     dealerId: dealerId,
     intId: userIntId,
   };
-  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
-
-  //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
-  //   ]);
-
-  //   console.log('getAlertsData', getAlertsData);
 
   //   const { navigation } = props;
   const getItems = useCallback(async (userApiFetchParamsObj) => {
@@ -121,14 +121,16 @@ export default NotificationsScreen = (props) => {
     //   'in calibrationExpiry getItems userApiFetchParamsObj',
     //   userApiFetchParamsObj
     // );
-    dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [];
-    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj)), [];
-    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj)), [];
+    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
+    dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+    dispatch(getOdisRequest({ userBrand: userBrand }));
+    dispatch(getNewsRequest());
+    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
   });
 
   const getItemsAsync = async () => {
     // console.log(
-    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
+    //   'rendering Notifications screen, userApiFetchParamsObj:',
     //   userApiFetchParamsObj
     // );
 
@@ -141,165 +143,6 @@ export default NotificationsScreen = (props) => {
     }
   };
 
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in notifications use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  const getLtpLoanStatus = (item) => {
-    // console.log(
-    //   'tool',
-    //   item.toolNr,
-    //   'now',
-    //   now,
-    //   'startDate',
-    //   item.startDate,
-    //   'expiryDate',
-    //   item.endDateDue
-    // );
-    let theFromDate = null;
-    let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
-
-    if (item.collectedDate && item.collectionNumber) {
-      return false;
-    }
-
-    if (item.endDateDue && item.endDateDue.length > 0) {
-      theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
-
-    if (ageOfExpiry >= -2) {
-      return false;
-    } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= -3) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const getServiceMeasureStatus = (item) => {
-    // console.log(
-    //   'menuText',
-    //   item.menuText,
-    //   'now',
-    //   now,
-    //   'startDate',
-    //   item.startDate,
-    //   'expiryDate',
-    //   item.expiryDate
-    // );
-    let theFromDate = null;
-    let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
-
-    if (item.expiryDate && item.expiryDate.length > 0) {
-      theToDate = moment(item.expiryDate, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
-
-    if (ageOfExpiry >= 0) {
-      return false;
-    } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= 0) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const filterServiceMeasuresItems = (serviceMeasuresItems) => {
-    let serviceMeasuresItemsFiltered = [];
-    if (serviceMeasuresItems && serviceMeasuresItems.length > 0) {
-      serviceMeasuresItemsFiltered = serviceMeasuresItems.filter(
-        (item) =>
-          (!item.retailerStatus || item.retailerStatus.toLowerCase() !== 'c') &&
-          item.startDate &&
-          item.expiryDate &&
-          getServiceMeasureStatus(item)
-      );
-    }
-    // console.log(
-    //   'serviceMeasuresItemsFiltered',
-    //   serviceMeasuresItemsFiltered.length
-    // );
-    return serviceMeasuresItemsFiltered;
-  };
-
-  //   const filterServiceMeasuresItems = (serviceMeasuresItems) => {
-  //     let serviceMeasuresItemsFiltered = [];
-  //     if (serviceMeasuresItems && serviceMeasuresItems.length > 0) {
-  //       serviceMeasuresItemsFiltered = serviceMeasuresItems.filter(
-  //         (item) =>
-  //           item.startDate && item.expiryDate && getServiceMeasureStatus(item)
-  //       );
-  //     }
-  //     console.log(
-  //       'serviceMeasuresItemsFiltered',
-  //       serviceMeasuresItemsFiltered.length
-  //     );
-  //     return serviceMeasuresItemsFiltered;
-  //   };
-
-  const filterLtpLoansItems = (ltpLoansItems) => {
-    let ltpLoansItemsFiltered = [];
-    if (ltpLoansItems && ltpLoansItems.length > 0) {
-      ltpLoansItemsFiltered = ltpLoansItems.filter(
-        (item) => item.startDate && item.endDateDue && getLtpLoanStatus(item)
-      );
-    }
-    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
-    return ltpLoansItemsFiltered;
-  };
-
-  const filterCalibrationExpiryItems = (calibrationExpiryItems) => {
-    let calibrationExpiryItemsFiltered = [];
-    if (calibrationExpiryItems && calibrationExpiryItems.length > 0) {
-      calibrationExpiryItemsFiltered = calibrationExpiryItems.filter(
-        (item) =>
-          (item.expiry && item.expiry.indexOf('1.') !== -1) ||
-          item.expiry.indexOf('2.') !== -1 ||
-          item.expiry.indexOf('3.') !== -1
-      );
-    }
-
-    // console.log(
-    //   'calibrationExpiryItemsFiltered',
-    //   calibrationExpiryItemsFiltered
-    // );
-    return calibrationExpiryItemsFiltered;
-  };
-
   useEffect(() => {
     if (
       isLoadingCalibrationExpiry ||
@@ -310,10 +153,15 @@ export default NotificationsScreen = (props) => {
     } else {
       setIsLoadingAny(false);
     }
-  }, [isLoadingCalibrationExpiry, isLoadingLtpLoans, isLoadingServiceMeasures]);
+  }, [
+    isLoadingCalibrationExpiry,
+    isLoadingLtpLoans,
+    isLoadingServiceMeasures,
+    showingDemoApp,
+    showingDemoData,
+  ]);
 
   useEffect(() => {
-    // runs only once
     if (dataErrorLtpLoans) {
       setDataErrorAny(dataErrorLtpLoans);
       setDataStatusCodeAny(dataStatusCodeLtpLoans);
@@ -343,9 +191,6 @@ export default NotificationsScreen = (props) => {
     dataErrorLtpLoans,
     dataErrorServiceMeasures,
     dataErrorCalibrationExpiry,
-    ltpLoansItems,
-    serviceMeasuresItems,
-    calibrationExpiryItems,
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
     isLoadingCalibrationExpiry,
@@ -354,272 +199,439 @@ export default NotificationsScreen = (props) => {
   useFocusEffect(
     useCallback(() => {
       //   dispatch(revalidateUserCredentials({ calledBy: 'NotificationsScreen' }));
-      console.log('in Notifications focusEffect ');
+      //   console.log('in Notifications focusEffect ');
 
       getItemsAsync();
+
+      //   console.log(
+      //     'in Notifications focusEffect, calling countCalibrationExpiryItems'
+      //   );
     }, [])
   );
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   const userDataPresent =
-  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
-
-  //   if (userDataPresent === true) {
-  //     // console.log('in notifications screen,userDataObj OK', userDataPresent);
-  //   } else {
-  //     // console.log('in notifications screen, no userDataObj');
-  //     getItems();
-  //   }
-
-  //   let calibrationExpiryItemsToShow = !isLoadingCalibrationExpiry ? filterCalibrationExpiryItems(calibrationExpiryItems) : [];
-  let calibrationExpiryItemsToShow =
-    !isLoadingCalibrationExpiry && !dataErrorCalibrationExpiry
-      ? userRequestedDemoData
-        ? filterCalibrationExpiryItems(calibrationExpiryDummyData)
-        : filterCalibrationExpiryItems(calibrationExpiryItems)
-      : [];
-
-  let ltpLoansItemsToShow =
-    !isLoadingLtpLoans && !dataErrorLtpLoans
-      ? userRequestedDemoData
-        ? filterLtpLoansItems(ltpLoansDummyData)
-        : filterLtpLoansItems(ltpLoansItems)
-      : [];
-
-  let serviceMeasuresItemsToShow =
-    !isLoadingServiceMeasures && !dataErrorServiceMeasures
-      ? userRequestedDemoData
-        ? filterServiceMeasuresItems(serviceMeasuresDummyData)
-        : filterServiceMeasuresItems(serviceMeasuresItems)
-      : [];
-
-  let calibrationExpiryCount = getCalibrationExpiryCount(
-    calibrationExpiryItemsToShow
-  );
-
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     calibrationExpiryItemsToShow,
-  //     'isLoadingCalibrationExpiry',
-  //     isLoadingCalibrationExpiry,
-  //     'dataErrorCalibrationExpiry',
-  //     dataErrorCalibrationExpiry
-  //   );
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     serviceMeasuresItemsToShow.length,
-  //     'isLoadingServiceMeasures',
-  //     isLoadingServiceMeasures,
-  //     'dataErrorServiceMeasures',
-  //     dataErrorServiceMeasures
-  //   );
-
-  //   console.log(
-  //     'rendering Notifications screen',
-  //     ltpLoansItemsToShow.length,
-  //     'isLoadingLtpLoans',
-  //     isLoadingLtpLoans,
-  //     'dataErrorLtpLoansItems',
-  //     dataErrorLtpLoans
-  //   );
+  useEffect(() => {
+    if (showingDemoApp) {
+      getItemsAsync();
+    }
+  }, [showingDemoApp, showingDemoData]);
 
   return (
-    <ScrollView>
-      <View style={baseStyles.viewPromptRibbon}>
-        <Text style={baseStyles.textPromptRibbon}>
-          Your Important Notifications
-        </Text>
-      </View>
-      {userRequestedDemoData && userRequestedDemoData === true ? (
-        <View style={baseStyles.viewDummyDataRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data - change in menu.
-          </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
-        </View>
-      ) : null}
-
-      {!odisViewCount ? (
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate('RemindersTabs', { screen: 'ODIS' })
-          }
+    <ImageBackground
+      source={require('../assets/images/connectivity-narrow.jpg')}
+      // source={require('../assets/images/connectivity-smaller.png')}
+      //source={require('../assets/images/connectivity-wider.jpg')}
+      style={baseStyles.backgroundImage}
+    >
+      <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 0 }}>
+        <View
+          style={{
+            ...baseStyles.viewPromptRibbon,
+            flexDirection: 'row',
+          }}
         >
-          <View style={baseStyles.viewSectionRibbon}>
-            <Ionicons name='tv' size={20} color={Colors.vwgWarmOrange} />
-            <Text style={baseStyles.textSectionRibbon}>
-              {`  Please see the `}
-              <Text
-                style={{
-                  ...baseStyles.textSectionRibbon,
-
-                  fontFamily: 'the-sans-bold',
-                }}
-              >
-                {`new ODIS versions  `}
-              </Text>
+          <Text style={{ ...baseStyles.textPromptRibbon, textAlign: 'left' }}>
+            {`Your Important Notifications`}
+            {isLoadingAny ? <Text>{` - Checking   `}</Text> : null}
+          </Text>
+          {isLoadingAny ? (
+            <ActivityIndicator size={'small'} color={'white'} />
+          ) : null}
+        </View>
+        {!setIsLoadingAny &&
+        userRequestedDemoData &&
+        userRequestedDemoData === true ? (
+          <View style={baseStyles.viewDummyDataRibbon}>
+            <Text style={baseStyles.textPromptRibbon}>
+              Showing sample data - change in menu.
             </Text>
-            <Ionicons name='open-outline' size={20} />
+            <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
           </View>
-        </TouchableOpacity>
-      ) : null}
+        ) : null}
 
-      {!isLoadingCalibrationExpiry ? (
-        dataErrorCalibrationExpiry ? (
-          <ErrorDetails
-            errorSummary={'Error syncing calibration expiry'}
-            dataStatusCode={dataStatusCodeCalibrationExpiry}
-            errorHtml={dataErrorCalibrationExpiry}
-            dataErrorUrl={dataErrorUrlCalibrationExpiry}
-          />
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
-                setIsOpenLtpLoans(false);
-                setIsOpenServiceMeasures(false);
-              }}
-            >
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
+        {odisChangesToHighlight ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+            }
+            style={{ backgroundColor: Colors.vwgWhite }}
+          >
+            <View style={baseStyles.viewSectionRibbon}>
+              <Ionicons name='tv' size={20} color={Colors.vwgBadgeAlertColor} />
+              <Text style={baseStyles.textSectionRibbon}>
+                {`  See `}
+                <Text
+                  style={{
+                    ...baseStyles.textSectionRibbon,
+                    fontFamily: 'the-sans-bold',
+                  }}
+                >
+                  {`ODIS version changes in the last ${InfoTypesAlertAges.ODIS_RED_PERIOD} days  `}
+                </Text>
+              </Text>
+              <Ionicons
+                name='open-outline'
+                size={16}
+                style={{ marginTop: 2 }}
+              />
+            </View>
+          </TouchableOpacity>
+        ) : null}
 
-                <Text style={baseStyles.textSectionRibbon}> </Text>
-                <Text style={baseStyles.textSectionRibbon}>
-                  {calibrationExpiryCount > 1
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
-                    : calibrationExpiryCount > 0
-                    ? ` ${calibrationExpiryCount} Calibration Expiry Actions`
-                    : ' No Calibration Expiry Actions'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {isOpenCalibrationExpiry ? (
-              calibrationExpiryItemsToShow.length > 0 ? (
-                <CalibrationExpiryList items={calibrationExpiryItemsToShow} />
+        {!isLoadingServiceMeasures ? (
+          dataErrorServiceMeasures ? (
+            <ErrorDetails
+              errorSummary={'Error syncing Service Measures'}
+              dataStatusCode={dataStatusCodeServiceMeasures}
+              errorHtml={dataErrorServiceMeasures}
+              dataErrorUrl={dataErrorUrlServiceMeasures}
+            />
+          ) : serviceMeasuresTotalCount !== 'undefined' &&
+            serviceMeasuresRedCount !== 'undefined' &&
+            serviceMeasuresAmberCount !== 'undefined' ? (
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
+              {serviceMeasuresTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('RemindersTabs', {
+                      screen: 'Service Measures',
+                    })
+                  }
+                >
+                  {serviceMeasuresRedCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
+
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` urgent `}
+
+                          {serviceMeasuresRedCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure  `}
+                        </Text>
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  ) : serviceMeasuresAmberCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` expiring `}
+
+                          {serviceMeasuresAmberCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure `}
+                        </Text>
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  ) : (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {serviceMeasuresTotalCount > 1
+                          ? `  See your open Service Measures  `
+                          : `  See your open Service Measure  `}
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
               ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No calibration expirations to show.
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`   No expiring Service Measures`}
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : null
+        ) : null}
+        {!isLoadingLtpLoans ? (
+          dataErrorLtpLoans ? (
+            <ErrorDetails
+              errorSummary={'Error syncing LTP Loans'}
+              dataStatusCode={dataStatusCodeLtpLoans}
+              errorHtml={dataErrorLtpLoans}
+              dataErrorUrl={dataErrorUrlLtpLoans}
+            />
+          ) : ltpLoansTotalCount !== 'undefined' &&
+            ltpLoansRedCount !== 'undefined' &&
+            ltpLoansAmberCount !== 'undefined' ? (
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
+              {ltpLoansTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('RemindersTabs', {
+                      screen: 'LTP Loans',
+                    })
+                  }
+                >
+                  {ltpLoansRedCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
+
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` urgent `}
+
+                          {ltpLoansTotalCount > 1
+                            ? `LTP Loan returns  `
+                            : `LTP Loan return  `}
+                        </Text>
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  ) : ltpLoansAmberCount > 0 ? (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {`  See your`}
+                        <Text
+                          style={{
+                            ...baseStyles.textSectionRibbon,
+                            fontFamily: 'the-sans-bold',
+                          }}
+                        >
+                          {` expiring `}
+
+                          {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
+                        </Text>
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  ) : (
+                    <View style={baseStyles.viewSectionRibbon}>
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
+                      <Text style={baseStyles.textSectionRibbon}>
+                        {ltpLoansTotalCount > 1
+                          ? `  See your open LTP Loans  `
+                          : `  See your open LTP Loan `}
+                      </Text>
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ) : (
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`   No LTP Loans`}
+                  </Text>
+                </View>
+              )}
+            </View>
+          ) : null
+        ) : null}
+        {!isLoadingCalibrationExpiry ? (
+          dataErrorCalibrationExpiry ? (
+            <ErrorDetails
+              errorSummary={'Error syncing calibration expiry'}
+              dataStatusCode={dataStatusCodeCalibrationExpiry}
+              errorHtml={dataErrorCalibrationExpiry}
+              dataErrorUrl={dataErrorUrlCalibrationExpiry}
+            />
+          ) : (
+            <View style={{ backgroundColor: Colors.vwgWhite }}>
+              {calibrationExpiryTotalCount > 0 ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsOpenCalibrationExpiry(!isOpenCalibrationExpiry);
+                  }}
+                >
+                  <View style={baseStyles.viewSectionRibbon}>
+                    <Ionicons
+                      name='timer'
+                      size={20}
+                      color={
+                        calibrationExpiryOverdueCount > 0 ||
+                        calibrationExpiryRedCount > 0
+                          ? Colors.vwgBadgeSevereAlertColor
+                          : Colors.vwgBadgeAlertColor
+                      }
+                    />
+                    <Text style={baseStyles.textSectionRibbon}>
+                      {calibrationExpiryTotalCount > 1
+                        ? `  ${calibrationExpiryTotalCount} Active Calibration Expiry Actions  `
+                        : `  ${calibrationExpiryTotalCount} Active Calibration Expiry Action  `}
+                    </Text>
+                    <Ionicons
+                      name={isOpenCalibrationExpiry ? 'caret-up' : 'caret-down'}
+                      size={20}
+                      color={Colors.vwgVeryDarkGray}
+                    />
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <View style={baseStyles.viewSectionRibbon}>
+                  <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {calibrationExpiryTotalCount > 1
+                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
+                      : calibrationExpiryTotalCount > 0
+                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                      : '  No pending Calibration Expiry Actions  '}
+                  </Text>
+                </View>
+              )}
+              {isOpenCalibrationExpiry ? (
+                calibrationExpiryTotalCount > 0 ? (
+                  <View style={{ backgroundColor: Colors.vwgWhite }}>
+                    {calibrationExpiryOverdueCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-down'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeSevereAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryOverdueCount === 1
+                            ? `  ${calibrationExpiryOverdueCount} item's calibration has expired.`
+                            : `  ${calibrationExpiryOverdueCount} items' calibrations have expired.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {calibrationExpiryRedCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeSevereAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryRedCount === 1
+                            ? `  ${calibrationExpiryRedCount} item's calibration expires within 30 days.`
+                            : `  ${calibrationExpiryRedCount} items' calibrations expire within 30 days.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    {calibrationExpiryAmberCount > 0 ? (
+                      <View
+                        style={{
+                          ...baseStyles.viewRowFlexCentreAligned,
+                          marginHorizontal: 8,
+                          marginTop: 10,
+                        }}
+                      >
+                        <InlineIcon
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
+                          iconSize={RFPercentage(2.4)}
+                          iconColor={Colors.vwgBadgeAlertColor}
+                        />
+                        <Text style={baseStyles.textLeftAligned}>
+                          {calibrationExpiryAmberCount === 1
+                            ? `  ${calibrationExpiryAmberCount} item's calibration expires within 60 days.`
+                            : `  ${calibrationExpiryAmberCount} items' calibrations expire within 60 days.`}
+                        </Text>
+                      </View>
+                    ) : null}
+                    <Text
+                      style={{
+                        ...baseStyles.textLeftAligned,
+                        marginHorizontal: 8,
+                        marginVertical: 10,
+                      }}
+                    >
+                      See these calibration records at Tools Infoweb.
                     </Text>
                   </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        )
-      ) : null}
-      {!isLoadingLtpLoans ? (
-        dataErrorLtpLoans ? (
-          <ErrorDetails
-            errorSummary={'Error syncing LTP loans'}
-            dataStatusCode={dataStatusCodeLtpLoans}
-            errorHtml={dataErrorLtpLoans}
-            dataErrorUrl={dataErrorUrlLtpLoans}
-          />
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(false);
-                setIsOpenLtpLoans(!isOpenLtpLoans);
-                setIsOpenServiceMeasures(false);
-              }}
-            >
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenLtpLoans ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
-                <Text style={baseStyles.textSectionRibbon}> </Text>
-                <Text style={baseStyles.textSectionRibbon}>
-                  {ltpLoansItemsToShow.length > 1
-                    ? ` ${ltpLoansItemsToShow.length} LTP Actions`
-                    : ltpLoansItemsToShow.length > 0
-                    ? ` ${ltpLoansItemsToShow.length} LTP Action`
-                    : ' No LTP Actions'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {isOpenLtpLoans ? (
-              ltpLoansItemsToShow.length > 0 ? (
-                <LtpLoansList
-                  items={ltpLoansItemsToShow}
-                  showFullDetails={false}
-                />
-              ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No LTP loans to show.
-                    </Text>
+                ) : (
+                  <View style={baseStyles.viewDataList}>
+                    <View style={baseStyles.textDataListItem}>
+                      <Text style={baseStyles.textLeftAligned}>
+                        No calibration expirations in the next 60 days.
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        )
-      ) : null}
-      {!isLoadingServiceMeasures ? (
-        dataErrorServiceMeasures ? (
-          <ErrorDetails
-            errorSummary={'Error syncing Service Measures'}
-            dataStatusCode={dataStatusCodeServiceMeasures}
-            errorHtml={dataErrorServiceMeasures}
-            dataErrorUrl={dataErrorUrlServiceMeasures}
-          />
-        ) : (
-          <View>
-            <TouchableOpacity
-              onPress={() => {
-                setIsOpenCalibrationExpiry(false);
-                setIsOpenLtpLoans(false);
-                setIsOpenServiceMeasures(!isOpenServiceMeasures);
-              }}
-            >
-              <View style={baseStyles.viewSectionRibbon}>
-                <Ionicons
-                  name={isOpenServiceMeasures ? 'caret-up' : 'caret-down'}
-                  size={20}
-                  color={Colors.vwgVeryDarkGray}
-                />
-                <Text style={baseStyles.textSectionRibbon}> </Text>
-                <Text style={baseStyles.textSectionRibbon}>
-                  {serviceMeasuresItemsToShow.length > 1
-                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measures`
-                    : serviceMeasuresItemsToShow.length > 0
-                    ? ` ${serviceMeasuresItemsToShow.length} Outstanding Service Measure`
-                    : ' No Outstanding Service Measures'}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {isOpenServiceMeasures ? (
-              serviceMeasuresItemsToShow.length > 0 ? (
-                <ServiceMeasuresList
-                  items={serviceMeasuresItemsToShow}
-                  showFullDetails={false}
-                />
-              ) : (
-                <View style={baseStyles.viewDataList}>
-                  <View style={baseStyles.textDataListItem}>
-                    <Text style={baseStyles.textLeftAligned}>
-                      No Service Measures to show.
-                    </Text>
-                  </View>
-                </View>
-              )
-            ) : null}
-          </View>
-        )
-      ) : null}
-    </ScrollView>
+                )
+              ) : null}
+            </View>
+          )
+        ) : null}
+      </View>
+    </ImageBackground>
   );
 };

@@ -14,7 +14,7 @@ export const getLtpLoans = (wipObj) => {
   const { intId } = wipObj;
   const url =
     '/default.asp?controller=api&action=listActiveLTPBookings&intUserId=' +
-    dummyIntId;
+    intId;
   //   console.log(url);
   return axios.get(url, {
     headers: {

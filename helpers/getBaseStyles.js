@@ -198,6 +198,12 @@ export default getBaseStyles = (props) => {
   const baseStyles = StyleSheet.create({
     // BUTTON - START
     //SignInScreen
+    backgroundImage: {
+      flex: 1,
+      justifyContent: 'center',
+      resizeMode: 'contain',
+      // resizeMode: 'cover',
+    },
     buttonClose: {
       backgroundColor: Colors.vwgDeepBlue,
       borderRadius: Platform.OS === 'ios' ? 3 : 2,
@@ -516,6 +522,9 @@ export default getBaseStyles = (props) => {
     textColoured: {
       ...baseTextColoured,
     },
+    textColouredBold: {
+      ...baseTextColouredBold,
+    },
     textSmallColoured: {
       ...baseTextSmallColoured,
     },
@@ -570,6 +579,10 @@ export default getBaseStyles = (props) => {
     },
     textLeftAlignedBold: {
       ...baseTextBold,
+      textAlign: 'left',
+    },
+    textLeftAlignedBoldSmall: {
+      ...baseTextSmallBold,
       textAlign: 'left',
     },
     textLeftAlignedBoldLarge: {
@@ -691,6 +704,21 @@ export default getBaseStyles = (props) => {
     textItemTitle: {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
+      fontSize:
+        width >= 1024
+          ? fontFactor * 1
+          : width >= 768
+          ? fontFactor * 1
+          : width >= 411
+          ? fontFactor * 0.9
+          : width >= 375
+          ? fontFactor * 0.9
+          : fontFactor * 0.9,
+    },
+    textItemTitleHighlighted: {
+      flexWrap: 'wrap',
+      ...baseLinkTextBold,
+      color: Colors.vwgWarmRed,
       fontSize:
         width >= 1024
           ? fontFactor * 1
@@ -954,7 +982,8 @@ export default getBaseStyles = (props) => {
     // LtpListScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbon: {
       padding: 10,
-      backgroundColor: Colors.vwgDarkSkyBlue,
+      backgroundColor:
+        Platform.OS === 'ios' ? Colors.vwgDarkSkyBlue : Colors.vwgInfoBar,
     },
     viewSectionRibbon: {
       padding: 5,

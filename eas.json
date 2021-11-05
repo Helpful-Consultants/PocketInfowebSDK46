@@ -11,7 +11,7 @@
         "env": {
           "PLATFORM": "android"
         },
-        "buildType": "app-bundle"
+        "buildType": "app-bundle"  
       }
     },
     "PROD": {
@@ -20,7 +20,8 @@
         "releaseChannel": "ios-prod"
       },
       "android": {
-        "releaseChannel": "android-prod"
+        "releaseChannel": "android-prod",
+        "build-type": "app-bundle"
       }
     },
     "EXTRA": {
@@ -29,7 +30,8 @@
         "releaseChannel": "ios-staging"
       },
       "android": {
-        "releaseChannel": "android-staging"
+        "releaseChannel": "android-staging",
+         "build-type": "app-bundle"
       }
     },
     "development": {

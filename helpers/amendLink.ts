@@ -1,4 +1,4 @@
-export default amendLink = (rawLink = '', appCode = '', intId = '') => {
+const amendLink = (rawLink = '', appCode = '', intId = '') => {
   //   const rawLinkLowerCase = rawLink.toLowerCase();
   //   console.log('amendLink rawLink is', rawLink);
   let newLink = '';
@@ -35,3 +35,5 @@ export default amendLink = (rawLink = '', appCode = '', intId = '') => {
     return rawLink;
   }
 };
+
+export default amendLink

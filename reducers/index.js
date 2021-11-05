@@ -10,6 +10,7 @@ import DealerWipsReducer from './dealerWips';
 import DealerToolsReducer from './dealerTools';
 import ServiceMeasuresReducer from './serviceMeasures';
 import CalibrationExpiryReducer from './calibrationExpiry';
+import BackgroundDataReducer from './backgroundData';
 
 export default combineReducers({
   users: UsersReducer,
@@ -23,4 +24,5 @@ export default combineReducers({
   dealerWips: DealerWipsReducer,
   serviceMeasures: ServiceMeasuresReducer,
   calibrationExpiry: CalibrationExpiryReducer,
+  backgroundData: BackgroundDataReducer,
 });

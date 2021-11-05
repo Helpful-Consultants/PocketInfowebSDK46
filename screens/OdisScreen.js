@@ -1,11 +1,17 @@
 import React, { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { useWindowDimensions, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { Text, useWindowDimensions, View } from 'react-native';
+import Colors from '../constants/Colors';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getOdisRequest, incrementOdisViewCount } from '../actions/odis';
+import {
+  getOdisRequest,
+  incrementOdisViewCount,
+  setOdisDisplayTimestamp,
+} from '../actions/odis';
 import OdisVersions from './OdisVersions';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
@@ -23,12 +29,18 @@ export default OdisScreen = (props) => {
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
 
   const getItems = useCallback(
-    async () => dispatch(getOdisRequest()),
+    async () => dispatch(getOdisRequest({ userBrand: userBrand })),
     [odisObj]
   );
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setOdisDisplayTimestamp());
+  };
 
+  //   console.log('OdisScreen,userBrand:', userBrand, odisObj);
   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
   //   const { navigation } = props;
@@ -69,11 +81,12 @@ export default OdisScreen = (props) => {
       dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
       incrementViewCount();
+      storeDisplayTimestampAsync();
     }, [])
   );
 
   //   if (odisObj) {
-  //     console.log('in odis screen,odisObj');
+  //     console.log('in odis screen,odisObj', odisObj);
   //   } else {
   //     console.log('in odis screen, no odisObj');
   //   }
@@ -83,11 +96,11 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  console.log(
-    'rendering Odis screen, odisViewCount',
-    odisViewCount,
-    odisFetchTime
-  );
+  //   console.log(
+  //     'rendering Odis screen, odisViewCount',
+  //     odisViewCount,
+  //     odisFetchTime
+  //   );
 
   return (
     <View style={baseStyles.containerFlexCentred}>
@@ -100,6 +113,26 @@ export default OdisScreen = (props) => {
         dataStatusCode={dataStatusCode}
         dataCount={1}
       />
+      {showingDemoData ? (
+        <View
+          style={{
+            ...baseStyles.viewDummyDataRibbon,
+            backgroundColor: Colors.vwgWhite,
+            color: Colors.vwgWarmOrange,
+          }}
+        >
+          <Text
+            style={{
+              ...baseStyles.textPromptRibbon,
+              backgroundColor: Colors.vwgWhite,
+              color: Colors.vwgWarmOrange,
+            }}
+          >
+            Showing sample data - change in menu.
+          </Text>
+          <Ionicons name='arrow-up' size={20} color={Colors.vwgWarmOrange} />
+        </View>
+      ) : null}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing the ODIS data'}

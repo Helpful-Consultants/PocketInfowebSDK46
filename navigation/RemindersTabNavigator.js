@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -13,8 +13,8 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
-
 import Colors from '../constants/Colors';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
@@ -45,12 +45,51 @@ let headerHeight =
 // Start tab navigator
 
 const RemindersTabs =
-  Platform.OS === 'android'
+  Platform.OS === 'androidzzz'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
+// console.log(
+//   'in navigator, showBadgeLtpLoans ',
+//   showBadgeLtpLoans && showBadgeLtpLoans,
+
+//   ', showBadgeNotifications',
+//   showBadgeNotifications && showBadgeNotifications,
+//   'showBadgeOdis ',
+//   showBadgeOdis && showBadgeOdis,
+//   'showBadgeServiceMeasures ',
+//   showBadgeServiceMeasures && showBadgeServiceMeasures
+// );
+
 export default RemindersTabNavigator = ({ navigation, route }) => {
-  const odisViewCount = useSelector((state) => state.odis.viewCount);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector(
+    (state) => state.user.userRequestedDemoData
+  );
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
+  const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] =
+    useState(0);
+  const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
+
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
@@ -86,6 +125,145 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
+
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in reminders navigator, showingDemoApp',
+  //     showingDemoApp
+  //   );
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      //   console.log(
+      //     'in reminders nav useEffect LtpLoansCounts',
+      //     ltpLoansRedCount,
+      //     ltpLoansAmberCount
+      //   );
+      let tempNotifiableAlertsRedCount = 0;
+
+      if (
+        typeof calibrationExpiryOverdueCount !== 'undefined' ||
+        calibrationExpiryOverdueCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
+      }
+      if (
+        typeof calibrationExpiryRedCount !== 'undefined' ||
+        calibrationExpiryRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
+      }
+      if (
+        typeof serviceMeasuresRedCount !== 'undefined' ||
+        serviceMeasuresRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
+      }
+      if (
+        typeof ltpLoansRedCount !== 'undefined' ||
+        ltpLoansRedCount !== null
+      ) {
+        tempNotifiableAlertsRedCount =
+          tempNotifiableAlertsRedCount + ltpLoansRedCount;
+      }
+
+      //   console.log(
+      //     'in reminders nav useEffect - Red alerts ',
+      //     'tempNotifiableAlertsRedCount',
+      //     tempNotifiableAlertsRedCount,
+      //     'calibrationExpiryRedCount',
+      //     calibrationExpiryRedCount,
+      //     'serviceMeasuresRedCount',
+      //     serviceMeasuresRedCount,
+      //     'ltpLoansRedCount',
+      //     ltpLoansRedCount
+      //   );
+
+      setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
+    }
+  }, [
+    calibrationExpiryOverdueCount,
+    calibrationExpiryRedCount,
+    ltpLoansRedCount,
+    serviceMeasuresRedCount,
+    showingDemoApp,
+    showingDemoData,
+  ]);
+
+  useEffect(() => {
+    if (showingDemoApp) {
+      let tempNotifiableAlertsAmberCount = 0;
+
+      if (
+        typeof calibrationExpiryAmberCount !== 'undefined' ||
+        calibrationExpiryAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
+      }
+      if (
+        typeof serviceMeasuresAmberCount !== 'undefined' ||
+        serviceMeasuresAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
+      }
+      if (
+        typeof ltpLoansAmberCount !== 'undefined' ||
+        ltpLoansAmberCount !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
+      }
+      if (
+        typeof odisChangesToHighlight !== 'undefined' ||
+        odisChangesToHighlight !== null
+      ) {
+        tempNotifiableAlertsAmberCount =
+          tempNotifiableAlertsAmberCount + odisChangesToHighlight;
+      }
+
+      //   console.log(
+      //     'in reminders nav useEffect - Amber Alerts ',
+      //     'calibrationExpiryAmberCount',
+      //     calibrationExpiryAmberCount,
+      //     'ltpLoansAmberCount',
+      //     ltpLoansAmberCount,
+      //     'serviceMeasuresAmberCount',
+      //     serviceMeasuresAmberCount,
+      //   odisChangesToHighlight',
+      //   odisChangesToHighlight,
+      //     'tempNotifiableAlertsAmberCount',
+      //     tempNotifiableAlertsAmberCount',
+
+      //   );
+
+      setNotifiableAlertsAmberCount(tempNotifiableAlertsAmberCount);
+    }
+  }, [
+    calibrationExpiryAmberCount,
+    ltpLoansAmberCount,
+    serviceMeasuresAmberCount,
+    odisChangesToHighlight,
+    showingDemoApp,
+    showingDemoData,
+  ]);
+
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in reminders  navigator,',
+  //     'notificationsAlertCount:',
+  //     notificationsAlertCount,
+  //     'serviceMeasuresAlertCount:',
+  //     serviceMeasuresAlertCount,
+  //     serviceMeasuresAmberCount,
+  //     serviceMeasuresAmberCount,
+  //     'ltpLoansAlertCount: ',
+  //     ltpLoansAlertCount,
+  //     ltpLoansRedCount,
+  //     ltpLoansAmberCount,
+  //   );
 
   return (
     <RemindersTabs.Navigator //iOS
@@ -126,24 +304,71 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='alert-circle' size={size} />
           ),
+          tabBarBadge:
+            (notifiableAlertsRedCount && notifiableAlertsRedCount > 0) ||
+            (notifiableAlertsAmberCount && notifiableAlertsAmberCount > 0)
+              ? ''
+              : null,
+          tabBarBadgeStyle: {
+            color:
+              notifiableAlertsRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              notifiableAlertsRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+          },
         }}
       />
       <RemindersTabs.Screen
-        name='Serv Measures'
+        name='Service Measures'
         component={ServiceMeasuresScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='checkbox' size={size} />
           ),
+          tabBarBadge: showingDemoApp
+            ? (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
+              (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
+              ? ''
+              : null
+            : null,
+          tabBarBadgeStyle: {
+            color:
+              serviceMeasuresRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              serviceMeasuresRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+          },
         }}
       />
       <RemindersTabs.Screen
-        name='All LTP Loans'
+        name='LTP Loans'
         component={LtpLoansScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='calendar' size={size} />
           ),
+          tabBarBadge: showingDemoApp
+            ? (ltpLoansRedCount && ltpLoansRedCount > 0) ||
+              (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+              ? ''
+              : null
+            : null,
+          tabBarBadgeStyle: {
+            color:
+              ltpLoansRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              ltpLoansRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+          },
         }}
       />
       <RemindersTabs.Screen
@@ -155,9 +380,21 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               focused={focused}
               name='tv'
               size={size}
-              alert={odisViewCount ? false : true}
+              // alert={odisChangesToHighlight? false : true}
+              alert={false}
             />
           ),
+          tabBarBadge: odisChangesToHighlight ? '' : null,
+          tabBarBadgeStyle: {
+            color:
+              odisChangesToHighlight > 0
+                ? Colors.vwgBadgeAlertColor
+                : Colors.vwgBadgeColor,
+            backgroundColor:
+              odisChangesToHighlight > 0
+                ? Colors.vwgBadgeAlertColor
+                : Colors.vwgBadgeColor,
+          },
         }}
       />
     </RemindersTabs.Navigator>

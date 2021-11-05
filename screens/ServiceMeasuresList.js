@@ -2,62 +2,52 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
+import { getDateDifference, getFriendlyDisplayDate } from '../helpers/dates';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
-const now = moment();
-
-const getDisplayDate = (rawDate) => {
-  return (
-    (rawDate && moment(rawDate, 'DD/MM/YYYY hh:mm:ss').format('Do MMM YYYY')) ||
-    ''
-  );
-};
-
-const getItemStatus = (startDate, expiryDate) => {
-  let theFromDate = null;
-  let theToDate = null;
-  let ageOfExpiry = 0;
-  let ageOfStart = 0;
-
-  if (expiryDate && expiryDate.length > 0) {
-    theToDate = moment(expiryDate, 'DD/MM/YYYY HH:mm:ss');
-    ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-  }
-  //   console.log('ageOfExpiry', ageOfExpiry);
-
-  if (ageOfExpiry >= 1) {
-    return false;
-  } else {
-    if (startDate && startDate.length > 0) {
-      theFromDate = moment(startDate, 'DD/MM/YYYY HH:mm:ss');
-      ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-      //   console.log('ageOfStart', ageOfStart);
-    }
-
-    if (ageOfStart >= 0) {
-      return true;
-    }
-  }
-  return false;
-};
+const nowDateObj = new Date();
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-
-  const { showFullDetails, items } = props;
-
+  const { showFullDetails, items, displayTimestamp } = props;
   const serviceMeasures = items || [];
-  //   const serviceMeasures = serviceMeasuresDummyData;
-  //   let now = moment();
 
   const getFormattedServiceMeasure = (item) => {
-    let measureIsLive = false;
-    if (item && item.dateCreated && item.expiryDate) {
-      measureIsLive = getItemStatus(item.dateCreated, item.expiryDate);
-    }
+    // console.log('nowDateObj', nowDateObj);
+    // console.log('item', item);
+
+    let measureIsLive = true;
+    const parsedExpiryDate =
+      (item.expiryDate && parse(item.expiryDate, 'dd/MM/yyyy', new Date())) ||
+      null;
+    const parsedDateCreated =
+      (item.dateCreated &&
+        parse(item.dateCreated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
+      null;
+
+    // console.log(
+    //   'parsedDateCreated',
+    //   parsedDateCreated,
+    //   'from',
+    //   item.dateCreated
+    // );
+    const daysLeft = getDateDifference(nowDateObj, parsedExpiryDate) + 1;
+    // console.log('ddddddaysLeft', daysLeft);
+    const daysOld = getDateDifference(parsedDateCreated, nowDateObj);
+    // console.log('ddddddaysOld', daysOld);
+
+    // console.log('in getFormattedServiceMeasure, insUnseen:', itemIsNew);
+    // if (item && item.dateCreated && item.expiryDate) {
+    //   measureIsLive = getItemStatus(parsedStartDate, parsedExpiryDate);
+    // }
+    // console.log(
+    //   'dateCreated sliced',
+    //   item && item.dateCreated && item.dateCreated.slice(0, 10)
+    // );
 
     return (
       <View style={baseStyles.containerNoMargin}>
@@ -79,7 +69,9 @@ export default function ServiceMeasuresList(props) {
               iconSize={RFPercentage(2.4)}
               iconColor={
                 //item.status && item.status.toLowerCase() === 'c'
-                measureIsLive ? Colors.vwgKhaki : Colors.vwgWarmRed
+                measureIsLive
+                  ? Colors.vwgBadgeOKColor
+                  : Colors.vwgBadgeSevereAlertColor
               }
             />
             <Text
@@ -88,6 +80,15 @@ export default function ServiceMeasuresList(props) {
               //item.status && item.status.toLowerCase() === 'c'
               measureIsLive ? 'still open' : 'closed'
             }`}</Text>
+
+            {item.dateCreated && daysOld === 0 ? (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAlignedBoldLarge,
+                  color: Colors.vwgWarmLightBlue,
+                }}
+              >{`  NEW TODAY!`}</Text>
+            ) : null}
           </View>
         ) : null}
         <View style={baseStyles.viewRowFlexCentreAligned}>
@@ -96,7 +97,9 @@ export default function ServiceMeasuresList(props) {
             iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
             iconSize={RFPercentage(2)}
             iconColor={
-              item.retailerStatus ? Colors.vwgKhaki : Colors.vwgWarmRed
+              item.retailerStatus
+                ? Colors.vwgBadgeOKColor
+                : Colors.vwgBadgeSevereAlertColor
             }
           />
           <Text
@@ -129,41 +132,64 @@ export default function ServiceMeasuresList(props) {
         )}
         {showFullDetails && showFullDetails === true ? (
           item.retailerStatus ? null : (
-            <Text
-              style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}
-            >{`Start date: ${getDisplayDate(item.dateCreated)}`}</Text>
+            <Text style={{ ...baseStyles.textLeftAligned, marginTop: 5 }}>
+              {`Start date: ${getFriendlyDisplayDate(item.startDate)}`}{' '}
+            </Text>
           )
         ) : null}
         {item.retailerStatus ? null : (
-          <Text
-            style={baseStyles.textLeftAligned}
-          >{`To be completed by: ${getDisplayDate(item.expiryDate)}`}</Text>
+          <Text style={baseStyles.textLeftAligned}>
+            {`To be completed by: ${getFriendlyDisplayDate(item.expiryDate)}`}
+            {daysLeft === 1 ? (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAlignedBold,
+                  color: Colors.vwgBadgeSevereAlertColor,
+                }}
+              >
+                {` LAST DAY!`}
+              </Text>
+            ) : daysLeft <= InfoTypesAlertAges.SERVICE_MEASURES_AMBER_PERIOD ? (
+              <Text
+                style={{
+                  ...baseStyles.textLeftAlignedBold,
+                  color:
+                    daysLeft <= InfoTypesAlertAges.SERVICE_MEASURES_RED_PERIOD
+                      ? Colors.vwgBadgeSevereAlertColor
+                      : Colors.vwgBadgeAlertColor,
+                }}
+              >
+                {`   ${daysLeft} ${daysLeft === 1 ? `day` : `days`} left!`}
+              </Text>
+            ) : null}
+          </Text>
         )}
       </View>
     );
   };
 
   //   console.log(serviceMeasures && serviceMeasures);
+  //   console.log('displayDate', displayDate);
 
   return (
     <View style={baseStyles.viewDataList}>
       {serviceMeasures && serviceMeasures.length > 0
-        ? serviceMeasures.map((item, i) =>
-            item.retailerStatus &&
-            item.retailerStatus.toLowerCase() === 'c' ? null : (
-              <View
-                style={
-                  i === serviceMeasures.length - 1
-                    ? baseStyles.viewDataListItemNoBorder
-                    : baseStyles.viewDataListItemWithBorder
-                }
-                key={i}
-              >
-                {getFormattedServiceMeasure(item)}
-              </View>
-            )
-          )
-        : null}
+        ? serviceMeasures.map((item, i) => (
+            //  item.retailerStatus &&
+            //  item.retailerStatus.toLowerCase() === 'c' ? null : (
+            <View
+              style={
+                i === serviceMeasures.length - 1
+                  ? baseStyles.viewDataListItemNoBorder
+                  : baseStyles.viewDataListItemWithBorder
+              }
+              key={i}
+            >
+              {getFormattedServiceMeasure(item)}
+            </View>
+          ))
+        : //   )
+          null}
     </View>
   );
 }

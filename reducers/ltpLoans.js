@@ -1,11 +1,56 @@
-// import { Types } from '../actions/ltpLoans';
+import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
+import { getLtpLoansCountsObj } from '../helpers/ltpLoans';
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   ltpLoansItems: [],
+  ltpLoansCounts: defaultCounts,
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  displayTimestamp: null,
+};
+
+const filterReturnedItems = (items) => {
+  const nowDateObj = new Date();
+  let filteredLtpLoansArr = [];
+  //   console.log('nowDateObj', nowDateObj);
+
+  if (items && items.length > 0) {
+    items.map((item) => {
+      //   console.log(
+      //     'in filterExpiredItems',
+      //     item.menuText,
+      //     item.expiryDate,
+      //     getTimeToExpiry(fromDate, item.expiryDate)
+      //   );
+      if (
+        !(item.collectedDate && item.collectedDate.length > 0) &&
+        !(item.collectionNumber && item.collectionNumber.length > 0)
+      ) {
+        filteredLtpLoansArr.push(item);
+      }
+    });
+  }
+
+  //   console.log(
+  //     'reducertime;filterExpiredItems',
+  //     items.length,
+  //     'down to',
+  //     filteredLtpLoansArr.length
+  //   );
+  return filteredLtpLoansArr;
 };
 
 export default function ltpLoans(state = INITIAL_STATE, action) {
@@ -21,14 +66,30 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
         statusCode: null,
       };
     }
+    case Types.SET_LTP_LOANS_DISPLAY_TIMESTAMP: {
+      //   console.log('date in state is', state.displayTimestamp);
+      return {
+        ...state,
+        displayTimestamp: new Date(),
+      };
+    }
     case Types.GET_LTP_LOANS_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
-
+      const filteredLtpLoansArr =
+        (action.payload.items && filterReturnedItems(action.payload.items)) ||
+        [];
+      const ltpLoansCountsObj = getLtpLoansCountsObj(filteredLtpLoansArr);
+      //   console.log('in reducer ltpLoansCountsObj', ltpLoansCountsObj);
       return {
         ...state,
         // newsItems: [],
-        ltpLoansItems: (action.payload.items && action.payload.items) || [],
+        ltpLoansItems: filteredLtpLoansArr,
+        ltpLoansCounts: ltpLoansCountsObj,
+        redCount: ltpLoansCountsObj.redCount,
+        amberCount: ltpLoansCountsObj.amberCount,
+        greenCount: ltpLoansCountsObj.greenCount,
+        totalCount: ltpLoansCountsObj.totalCount,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -42,6 +103,11 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
       return {
         ...state,
         ltpLoansItems: [],
+        ltpLoansCounts: defaultCounts,
+        redCount: 0,
+        amberCount: 0,
+        greenCount: 0,
+        totalCount: 0,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

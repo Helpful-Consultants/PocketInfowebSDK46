@@ -1,11 +1,89 @@
 // import { Types } from '../actions/serviceMeasures';
+import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
+import { getServiceMeasuresCountsObj } from '../helpers/serviceMeasures';
+
+const defaultCounts = {
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   serviceMeasuresItems: [],
+  serviceMeasuresCounts: defaultCounts,
+  redCount: 0,
+  amberCount: 0,
+  greenCount: 0,
+  totalCount: 0,
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  displayTimestamp: null,
+};
+
+const getTimeToExpiry = (nowDateObj, expiryDate) => {
+  let theToDate = expiryDate && parse(expiryDate, 'dd/MM/yyyy', new Date());
+  let timeToExpiry = 0;
+
+  //   console.log(
+  //     '***************in getTimeToExpiry reducer nowDateObj',
+  //     nowDateObj,
+  //     'to',
+  //     theToDate
+  //   );
+
+  if (expiryDate) {
+    timeToExpiry = differenceInCalendarDays(theToDate, nowDateObj);
+  }
+  //   console.log('expiryDate', expiryDate);
+  //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
+
+  return timeToExpiry;
+};
+
+const filterExpiredItems = (serviceMeasures) => {
+  const nowDateObj = new Date();
+  let filteredServiceMeasuresArr = [];
+
+  //   console.log('nowDateObj', nowDateObj);
+  if (serviceMeasures && serviceMeasures.length > 0) {
+    serviceMeasures.map((serviceMeasure) => {
+      //   console.log(
+      //     'in filterExpiredItems',
+      //     serviceMeasure.menuText,
+      //     serviceMeasure.expiryDate,
+      //     getTimeToExpiry(fromDate, serviceMeasure.expiryDate)
+      //   );
+      if (
+        !serviceMeasure.retailerStatus ||
+        (serviceMeasure.retailerStatus &&
+          serviceMeasure.retailerStatus !== 'c' &&
+          serviceMeasure.retailerStatus !== 'C')
+      ) {
+        // console.log(
+        //   serviceMeasure.menuText,
+        //   serviceMeasure.status,
+        //   serviceMeasure.retailerStatus
+        // );
+        if (
+          serviceMeasure.expiryDate &&
+          getTimeToExpiry(nowDateObj, serviceMeasure.expiryDate) >= 0
+        ) {
+          filteredServiceMeasuresArr.push(serviceMeasure);
+        }
+      }
+    });
+  }
+  //   console.log(
+  //     'reducertime;filterExpiredItems',
+  //     serviceMeasures.length,
+  //     'down to',
+  //     filteredServiceMeasuresArr.length
+  //   );
+  return filteredServiceMeasuresArr;
 };
 
 export default function serviceMeasures(state = INITIAL_STATE, action) {
@@ -21,15 +99,38 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         statusCode: null,
       };
     }
+    case Types.SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP: {
+      //   console.log('date in state is', state.displayTimestamp);
+      return {
+        ...state,
+        displayTimestamp: new Date(),
+      };
+    }
     case Types.GET_SERVICE_MEASURES_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
+      //   console.log('STATE', state);
+      const filteredServiceMeasuresArr =
+        (action.payload.items && filterExpiredItems(action.payload.items)) ||
+        [];
+      const serviceMeasuresCountsObj = getServiceMeasuresCountsObj(
+        filteredServiceMeasuresArr
+      );
+      //   console.log(
+      //     'in reducer serviceMeasuresCountsObj',
+      //     serviceMeasuresCountsObj
+      //   );
 
       return {
         ...state,
         // newsItems: [],
-        serviceMeasuresItems:
-          (action.payload.items && action.payload.items) || [],
+        serviceMeasuresItems: filteredServiceMeasuresArr,
+        serviceMeasuresCounts: serviceMeasuresCountsObj,
+        redCount: serviceMeasuresCountsObj.redCount,
+        amberCount: serviceMeasuresCountsObj.amberCount,
+        greenCount: serviceMeasuresCountsObj.greenCount,
+        totalCount: serviceMeasuresCountsObj.totalCount,
+        // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -43,6 +144,11 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       return {
         ...state,
         serviceMeasuresItems: [],
+        serviceMeasuresCounts: defaultCounts,
+        redCount: 0,
+        amberCount: 0,
+        greenCount: 0,
+        totalCount: 0,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

@@ -2,6 +2,11 @@ export default {
   BACKGROUND_SUCCESS: 'appStatus/get_background_success',
   BACKGROUND_ERROR: 'appStatus/get_background_error',
 
+  GET_BACKGROUND_DATA_START: 'backgroundData/get_background_data_start',
+  GET_BACKGROUND_DATA_REQUEST: 'backgroundData/get_request_background_request',
+  GET_BACKGROUND_DATA_SUCCESS: 'backgroundData/get_background_data_success',
+  BACKGROUND_DATA_ERROR: 'backgroundData/background_data_error',
+
   GET_USER_START: 'user/get_user_start',
   GET_USER_REQUEST: 'user/get_user_request',
   GET_USER_RESET_ERRORS: 'user/get_user_reset_errors',
@@ -26,6 +31,8 @@ export default {
   GET_SERVICE_MEASURES_SUCCESS: 'serviceMeasures/get_service_measures_success',
   EMPTY_SERVICE_MEASURES_REQUEST:
     'serviceMeasures/empty_service_measures_request',
+  SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP:
+    'serviceMeasures/set_service_measures_display_timestamp',
   SERVICE_MEASURES_ERROR: 'serviceMeasures/service_measures_error',
 
   GET_CALIBRATION_EXPIRY_START:
@@ -48,13 +55,15 @@ export default {
   GET_LTP_LOANS_REQUEST: 'ltpLoans/get_ltp_loans_request',
   GET_LTP_LOANS_SUCCESS: 'ltpLoans/get_ltp_loans_success',
   EMPTY_LTP_LOANS_REQUEST: 'ltpLoans/empty_ltp_loans_request',
+  SET_LTP_LOANS_DISPLAY_TIMESTAMP: 'ltpLoans/set_ltp_loans_display_timestamp',
   LTP_LOANS_ERROR: 'ltpLoans/ltp_loans_error',
 
   GET_NEWS_START: 'news/get_news_start',
   GET_NEWS_REQUEST: 'news/get_news_request',
   GET_NEWS_SUCCESS: 'news/get_news_success',
-  INCREMENT_NEWS_VIEW_COUNT: 'odis/incrementNewsViewCount',
-  RESET_NEWS_VIEW_COUNT: 'odis/resetNewsViewCount',
+  INCREMENT_NEWS_VIEW_COUNT: 'news/incrementNewsViewCount',
+  RESET_NEWS_VIEW_COUNT: 'news/resetNewsViewCount',
+  SET_NEWS_DISPLAY_TIMESTAMP: 'news/set_news_display_timestamp',
   NEWS_ERROR: 'news/news_error',
 
   GET_ODIS_START: 'odis/get_odis_start',
@@ -62,6 +71,7 @@ export default {
   GET_ODIS_SUCCESS: 'odis/get_odis_success',
   INCREMENT_ODIS_VIEW_COUNT: 'odis/incrementOdisViewCount',
   RESET_ODIS_VIEW_COUNT: 'odis/resetOdisViewCount',
+  SET_ODIS_DISPLAY_TIMESTAMP: 'odis/set_odis_display_timestamp',
   ODIS_ERROR: 'odis/odis_error',
 
   GET_STATS_START: 'stats/get_stats_start',

@@ -3,6 +3,11 @@ import { useWindowDimensions, View } from 'react-native';
 import { Switch, Text } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserRequestedDemoData } from '../actions/user';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import { getLtpLoansRequest } from '../actions/ltpLoans';
+import { getNewsRequest } from '../actions/news';
+import { getOdisRequest } from '../actions/odis';
+import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 
 export default DemoDataSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -12,13 +17,17 @@ export default DemoDataSwitch = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userBrand = useSelector((state) => state.user.userBrand);
   const dispatch = useDispatch();
   const [switchStatus, setSwitchStatus] = useState(false);
   const switchedOffText =
     'Turn ON to show demo data for LTP bookings, service measures & notifications';
   const switchedOnText =
     'Turn OFF to show live data for LTP bookings, service measures & notifications';
-
+  const userApiFetchParamsObj = {
+    dealerId: (userDataObj && userDataObj.dealerId) || null,
+    intId: (userDataObj && userDataObj.intId.toString()) || null,
+  };
   //   console.log(
   //     'in switch reducer switchStatus',
   //     requestedDemoData,
@@ -29,10 +38,29 @@ export default DemoDataSwitch = (props) => {
     let tempSwitchStatus =
       requestedDemoData && requestedDemoData === true ? true : false;
 
-    // console.log('in toggle switch switchStatus', switchStatus);
+    // console.log(
+    //   '@@@@@@@@in toggle switch switchStatus',
+    //   switchStatus,
+    //   'changing to ',
+    //   !switchStatus
+    // );
     dispatch(
       setUserRequestedDemoData({ requestedDemoData: !tempSwitchStatus })
     );
+    // Update state to hold the dummy data or live data
+    if (
+      userApiFetchParamsObj &&
+      userApiFetchParamsObj.intId &&
+      userApiFetchParamsObj.dealerId
+    ) {
+      //   console.log('@@@@@@@@in toggle switch switchStatus calling apis');
+      dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
+      dispatch(getNewsRequest(userApiFetchParamsObj));
+      dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+      dispatch(getOdisRequest({ userBrand: userBrand }));
+      dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
+    }
+
     setSwitchStatus(!tempSwitchStatus);
     // setRequestedDemoData((previousState) => !DemoDataSwitch);
   };
@@ -47,43 +75,67 @@ export default DemoDataSwitch = (props) => {
     );
   }, [requestedDemoData]);
 
-  return showingDemoApp &&
-    userDataObj &&
-    userDataObj.userName &&
-    (userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-      userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
-      (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
-        userDataObj.userName.toLowerCase().indexOf('groves') > -1)) ? (
-    <View
-      style={{
-        ...baseStyles.container,
-        marginTop: 'auto',
-        marginHorizontal: 10,
-      }}
-    >
+  return showingDemoApp && userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
+    (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
+      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
       <View
         style={{
-          ...baseStyles.viewRowFlex,
+          ...baseStyles.container,
           marginTop: 'auto',
+          marginHorizontal: 10,
         }}
       >
-        <Switch
-          value={requestedDemoData}
-          trackColor={{ false: 'gray', true: 'green' }}
-          onValueChange={toggleSwitch}
-        />
-        <Text style={baseStyles.panelTextAppInfo}>{` Use demo data?`}</Text>
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={requestedDemoData}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
+          <Text style={baseStyles.panelTextAppInfo}>{` Use demo data?`}</Text>
+        </View>
+        <View>
+          <Text style={baseStyles.panelTextAppInfo}>
+            {requestedDemoData ? switchedOnText : switchedOffText}
+          </Text>
+          <Text style={baseStyles.panelTextAppInfo}>
+            {'(Special feature for '}
+            {userDataObj.userName && userDataObj.userName}
+            {')'}
+          </Text>
+        </View>
       </View>
-      <View>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {requestedDemoData ? switchedOnText : switchedOffText}
-        </Text>
-        <Text style={baseStyles.panelTextAppInfo}>
-          {'(Special feature for '}
-          {userDataObj.userName && userDataObj.userName}
-          {')'}
-        </Text>
+    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+      <View
+        style={{
+          ...baseStyles.container,
+          marginTop: 5,
+          marginHorizontal: 10,
+        }}
+      >
+        <View
+          style={{
+            ...baseStyles.viewRowFlex,
+            marginTop: 'auto',
+          }}
+        >
+          <Switch
+            value={requestedDemoData}
+            trackColor={{ false: 'gray', true: 'green' }}
+            onValueChange={toggleSwitch}
+          />
+
+          <Text style={baseStyles.panelTextAppInfo}>
+            {switchStatus ? ` Demo data` : ` Demo data?`}
+          </Text>
+        </View>
       </View>
-    </View>
+    ) : null
   ) : null;
 };

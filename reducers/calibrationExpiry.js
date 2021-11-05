@@ -1,7 +1,17 @@
 // import { Types } from '../actions/calibrationExpiry';
 import Types from '../constants/Types';
+import { getCalibrationExpiryCountsObj } from '../helpers/calibrationExpiry';
+
+const defaultCounts = {
+  overdueCount: 0,
+  redCount: 0,
+  amberCount: 0,
+  totalCount: 0,
+};
+
 const INITIAL_STATE = {
   calibrationExpiryItems: [],
+  calibrationExpiryCounts: defaultCounts,
   isLoading: false,
   error: null,
   statusCode: null,
@@ -11,6 +21,7 @@ const INITIAL_STATE = {
 export default function calibrationExpiry(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
+
   switch (action.type) {
     case Types.GET_CALIBRATION_EXPIRY_START: {
       return {
@@ -24,12 +35,28 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
     case Types.GET_CALIBRATION_EXPIRY_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
+      const calibrationExpiryItemsArr =
+        (action.payload && action.payload.items && action.payload.items) || [];
+      const calibrationExpiryCountsObj = getCalibrationExpiryCountsObj(
+        calibrationExpiryItemsArr
+      );
+      //   console.log(
+      //     'in reducer calibrationExpiryCountsObj',
+      //     calibrationExpiryCountsObj
+      //   );
 
       return {
         ...state,
         // newsItems: [],
-        calibrationExpiryItems:
-          (action.payload.items && action.payload.items) || [],
+        calibrationExpiryItems: calibrationExpiryItemsArr,
+        calibrationExpiryCounts: getCalibrationExpiryCountsObj(
+          calibrationExpiryItemsArr
+        ),
+        calibrationExpiryCounts: calibrationExpiryCountsObj,
+        overdueCount: calibrationExpiryCountsObj.overdueCount,
+        redCount: calibrationExpiryCountsObj.redCount,
+        amberCount: calibrationExpiryCountsObj.amberCount,
+        totalCount: calibrationExpiryCountsObj.totalCount,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -43,6 +70,7 @@ export default function calibrationExpiry(state = INITIAL_STATE, action) {
       return {
         ...state,
         calibrationExpiryItems: [],
+        calibrationExpiryCounts: defaultCounts,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

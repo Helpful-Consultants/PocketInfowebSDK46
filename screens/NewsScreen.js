@@ -6,10 +6,12 @@ import { Text } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
 import { createFilter } from 'react-native-search-filter';
+import { Ionicons } from '@expo/vector-icons';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getNewsRequest } from '../actions/news';
+import { getNewsRequest, setNewsDisplayTimestamp } from '../actions/news';
+import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
 // import newsDummyData from '../dummyData/newsDummyData.js';
@@ -32,6 +34,8 @@ export default NewsScreen = (props) => {
   const newsItems = useSelector((state) => state.news.newsItems);
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userData = useSelector((state) => state.user.userData[0]);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector((state) => state.news.isLoading);
@@ -57,6 +61,13 @@ export default NewsScreen = (props) => {
     async () => dispatch(getNewsRequest()),
     [newsItems]
   );
+  const getItemsAsync = async () => {
+    getItems();
+  };
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
+    dispatch(setNewsDisplayTimestamp());
+  };
 
   //   const { navigation } = props;
 
@@ -81,9 +92,7 @@ export default NewsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
-      };
+      storeDisplayTimestampAsync();
       dispatch(
         revalidateUserCredentials({
           calledBy: 'NewsScreen',
@@ -144,6 +153,14 @@ export default NewsScreen = (props) => {
         dataStatusCode={dataStatusCode}
         dataCount={newsItems.length}
       />
+      {showingDemoData ? (
+        <View style={baseStyles.viewDummyDataRibbon}>
+          <Text style={baseStyles.textPromptRibbon}>
+            Showing sample data - change in menu.
+          </Text>
+          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+        </View>
+      ) : null}
       {dataError ? (
         <ErrorDetails
           errorSummary={'Error syncing news items'}
@@ -165,6 +182,7 @@ export default NewsScreen = (props) => {
             pressOpenHandler={pressOpenHandler}
             baseImageUrl={Urls.newsHeadlineImage}
             userIntId={userData && userData.intId}
+            showingDemoApp={showingDemoApp}
           />
         </ScrollView>
       )}

@@ -2,18 +2,25 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getLtpLoansRequest } from '../actions/ltpLoans';
+import {
+  getLtpLoansRequest,
+  setLtpLoansDisplayTimestamp,
+} from '../actions/ltpLoans';
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
-import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
+import { sortObjListByDate } from '../helpers/dates';
+// import { getOpenLtpLoansItems } from '../helpers/ltpLoanStatus';
+
+// import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
-const now = moment();
+
+const nowDateObj = new Date();
 
 export default LtpLoansScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -21,9 +28,7 @@ export default LtpLoansScreen = (props) => {
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const [searchInput, setSearchInput] = useState('');
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const requestedDemoData = useSelector(
-    (state) => state.user.requestedDemoData
-  );
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
@@ -61,59 +66,6 @@ export default LtpLoansScreen = (props) => {
     dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [ltpLoansItems];
   });
 
-  const getItemStatus = (item) => {
-    // console.log(
-    //   'tool',
-    //   item.toolNr,
-    //   'now',
-    //   now,
-    //   'startDate',
-    //   item.startDate,
-    //   'expiryDate',
-    //   item.endDateDue
-    // );
-    let theFromDate = null;
-    let theToDate = null;
-    let ageOfExpiry = 0;
-    let ageOfStart = 0;
-
-    if (item.collectedDate && item.collectionNumber) {
-      return false;
-    }
-
-    if (item.endDateDue && item.endDateDue.length > 0) {
-      theToDate = moment(item.endDateDue, 'DD/MM/YYYY HH:mm:ss');
-      ageOfExpiry = (now && now.diff(moment(theToDate), 'days')) || 0;
-    }
-    // console.log('ageOfExpiry', ageOfExpiry);
-
-    if (ageOfExpiry >= -2) {
-      return false;
-    } else {
-      if (item.startDate && item.startDate.length > 0) {
-        theFromDate = moment(item.startDate, 'DD/MM/YYYY HH:mm:ss');
-        ageOfStart = (now && now.diff(moment(theFromDate), 'days')) || 0;
-        // console.log('ageOfStart', ageOfStart, moment(theFromDate));
-      }
-
-      if (ageOfStart >= -3) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  const filterLtpLoansItems = (ltpLoansItems) => {
-    let ltpLoansItemsFiltered = [];
-    if (ltpLoansItems && ltpLoansItems.length > 0) {
-      ltpLoansItemsFiltered = ltpLoansItems.filter(
-        (item) => item.startDate && item.endDateDue && getItemStatus(item)
-      );
-    }
-    // console.log('LtpLoansItemsFiltered', ltpLoansItemsFiltered);
-    return ltpLoansItemsFiltered;
-  };
-
   //   console.log('in ltpLoans screen - point 2');
 
   const getItemsAsync = async () => {
@@ -129,6 +81,10 @@ export default LtpLoansScreen = (props) => {
     ) {
       getItems(userApiFetchParamsObj);
     }
+  };
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setLtpLoansDisplayTimestamp());
   };
 
   //   console.log('in ltpLoans screen - point 3');
@@ -166,6 +122,7 @@ export default LtpLoansScreen = (props) => {
       //   console.log('in ltpLoans focusffect ');
       setSearchInput('');
       getItemsAsync();
+      storeDisplayTimestampAsync();
     }, [])
   );
   //   console.log('in ltpLoans screen - point 5');
@@ -184,6 +141,9 @@ export default LtpLoansScreen = (props) => {
     getItemsAsync();
   };
 
+  const items = !isLoading && !dataError ? ltpLoansItems : [];
+  let ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
+
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
   //   }
@@ -197,22 +157,14 @@ export default LtpLoansScreen = (props) => {
   //     getItems();
   //   }
 
-  //   let uniqueLtpLoansSorted = sortObjectList(
-  //     unsortedUniqueLtpLoans,
-  //     'loanToolNo',
-  //     'asc'
-  //   );
-
-  //   setUniqueserviceMeasureItems(ltpLoansItems);
-
-  const ltpLoansItemsDataCount = 0;
-
   //   console.log('in ltpLoans screen - point 7');
+
+  //   console.log('ltpLoansItems', items && items.length);
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(ltpLoansItems, searchInput);
+      let newFilteredItems = searchItems(ltpLoansSorted, searchInput);
       //   console.log(
       //     'LtpLoans Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -220,7 +172,7 @@ export default LtpLoansScreen = (props) => {
       //     ltpLoansItems && ltpLoansItems.length,
       //     'itemsToShow: ',
       //     itemsToShow && itemsToShow.length,
-      //     'uniqueserviceMeasureItems: ',
+      //     'uniqueLitpLoansItems: ',
       //     'newFilteredItems:',
       //     newFilteredItems && newFilteredItems.length,
       //     newFilteredItems
@@ -232,16 +184,10 @@ export default LtpLoansScreen = (props) => {
   //   let itemsToShow = !isLoading
   //     ? searchInput && searchInput.length > minSearchLength
   //       ? filteredItems
-  //       : uniqueserviceMeasureItems
+  //       : uniqueLitpLoansItems
   //     : [];
 
   //   console.log('in ltpLoans screen - point 8');
-  const items =
-    !isLoading && !dataError
-      ? requestedDemoData
-        ? ltpLoansDummyData
-        : ltpLoansItems
-      : [];
 
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
@@ -249,9 +195,9 @@ export default LtpLoansScreen = (props) => {
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
-      : items
+      : ltpLoansSorted
     : [];
-
+  //   console.log('itemsToShow', itemsToShow && itemsToShow);
   //   console.log(
   //     'rendering LtpLoans screen, dataError:',
   //     dataError,
@@ -264,7 +210,7 @@ export default LtpLoansScreen = (props) => {
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'LtpLoans items'}
+        dataName={'LTP Loans'}
         someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -274,7 +220,7 @@ export default LtpLoansScreen = (props) => {
         isLoading={isLoading}
         dataCount={ltpLoansItems.length}
       />
-      {requestedDemoData ? (
+      {showingDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.

@@ -138,7 +138,7 @@ export default ErrorDetails = (props) => {
         errorHtml ? (
           <View style={baseStyles.viewPaddedLeft}>
             <HTML
-              html={errorHtml}
+              source={{ html: errorHtml }}
               containerStyle={baseStyles.textLeftAlignedSmall}
             />
           </View>

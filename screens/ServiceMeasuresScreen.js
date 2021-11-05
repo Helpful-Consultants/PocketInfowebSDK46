@@ -6,13 +6,18 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
-import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import {
+  getServiceMeasuresRequest,
+  setServiceMeasuresDisplayTimestamp,
+} from '../actions/serviceMeasures';
 // import { getDealerWipsRequest } from '../actions/serviceMeasures';
 // import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
+import { sortObjListByDate } from '../helpers/dates';
+
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
-import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
+// import serviceMeasuresDummyData from '../dummyData/serviceMeasuresDummyData.js';
 // import statsGrab from '../assets/images/stats.jpg';
 
 const minSearchLength = 1;
@@ -23,22 +28,24 @@ export default ServiceMeasuresScreen = (props) => {
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
   );
-  const [searchInput, setSearchInput] = useState('');
+  const displayTimestamp = useSelector(
+    (state) => state.serviceMeasures.displayTimestamp
+  );
+  const isLoading = useSelector((state) => state.serviceMeasures.isLoading);
+  const dataError = useSelector((state) => state.serviceMeasures.error);
+  const dataStatusCode = useSelector(
+    (state) => state.serviceMeasures.statusCode
+  );
+  const dataErrorUrl = useSelector(
+    (state) => state.serviceMeasures.dataErrorUrl
+  );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemoData = useSelector(
-    (state) => state.user.requestedDemoData
-  );
-  const isLoading = useSelector((state) => state.stats.isLoading);
-  const dataError = useSelector((state) => state.stats.error);
-  const dataStatusCode = useSelector((state) => state.odis.statusCode);
-  const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const [searchInput, setSearchInput] = useState('');
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
-
-  //   console.log('in serviceMeasures screen - userDataObj is set to ', userDataObj);
-
   const userApiFetchParamsObj = {
     dealerId: (userDataObj && userDataObj.dealerId) || null,
     intId: (userDataObj && userDataObj.intId.toString()) || null,
@@ -70,7 +77,7 @@ export default ServiceMeasuresScreen = (props) => {
 
   const getItemsAsync = async () => {
     // console.log(
-    //   'rendering ServiceMeasures screen, userApiFetchParamsObj:',
+    //   'ServiceMeasures screen getItemsAsync, userApiFetchParamsObj:',
     //   userApiFetchParamsObj
     // );
 
@@ -81,6 +88,10 @@ export default ServiceMeasuresScreen = (props) => {
     ) {
       getItems(userApiFetchParamsObj);
     }
+  };
+  const storeDisplayTimestampAsync = async () => {
+    // console.log('istoreDisplayTimestampAsync:');
+    dispatch(setServiceMeasuresDisplayTimestamp());
   };
   //   useEffect(() => {
   //     // runs only once
@@ -113,9 +124,10 @@ export default ServiceMeasuresScreen = (props) => {
           calledBy: 'ServiceMeasures Screen',
         })
       );
-      console.log('in serviceMeasures focusffect ');
+      //   console.log('in serviceMeasures focusffect ');
       setSearchInput('');
       getItemsAsync();
+      storeDisplayTimestampAsync();
     }, [])
   );
 
@@ -124,33 +136,22 @@ export default ServiceMeasuresScreen = (props) => {
     getItemsAsync();
   };
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-  //   const userDataPresent =
-  //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+  let serviceMeasuresSorted = sortObjListByDate(
+    serviceMeasuresItems,
+    'expiryDate',
+    'asc'
+  );
 
-  //   if (userDataPresent === true) {
-  //     // console.log('in stats screen,userDataObj OK', userDataPresent);
-  //   } else {
-  //     // console.log('in stats screen, no userDataObj');
-  //     getItems();
-  //   }
-
-  //   let uniqueServiceMeasuresSorted = sortObjectList(
-  //     unsortedUniqueServiceMeasures,
-  //     'loanToolNo',
-  //     'asc'
+  //   console.log(
+  //     'serviceMeasuresSorted',
+  //     serviceMeasuresItems && serviceMeasuresItems,
+  //     serviceMeasuresSorted && serviceMeasuresSorted
   //   );
-
-  //   setUniqueserviceMeasureItems(serviceMeasuresItems);
-
-  const serviceMeasuresItemsDataCount = 0;
 
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(serviceMeasuresItems, searchInput);
+      let newFilteredItems = searchItems(serviceMeasuresSorted, searchInput);
       //   console.log(
       //     'ServiceMeasures Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -167,29 +168,12 @@ export default ServiceMeasuresScreen = (props) => {
     }
   };
 
-  //   let itemsToShow = !isLoading
-  //     ? searchInput && searchInput.length > minSearchLength
-  //       ? filteredItems
-  //       : uniqueserviceMeasureItems
-  //     : [];
-
-  //   const items = (!isLoading && !dataError && serviceMeasuresItems) || [];
-
-  const items =
+  let itemsToShow =
     !isLoading && !dataError
-      ? userRequestedDemoData
-        ? serviceMeasuresDummyData
-        : serviceMeasuresItems
+      ? searchInput && searchInput.length > minSearchLength
+        ? filteredItems
+        : serviceMeasuresSorted
       : [];
-
-  //   let itemsToShow =
-  //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
-
-  let itemsToShow = !isLoading
-    ? searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : items
-    : [];
 
   //   console.log(
   //     'rendering ServiceMeasures screen, dataError:',
@@ -203,7 +187,7 @@ export default ServiceMeasuresScreen = (props) => {
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'ServiceMeasures items'}
+        dataName={'Service Measures'}
         someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -223,18 +207,21 @@ export default ServiceMeasuresScreen = (props) => {
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
             <Text style={baseStyles.textPromptRibbon}>
-              No service measures to show.
+              No Service Measures to show.
+            </Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              You can view your expired Service Measures at Tools Infoweb.
             </Text>
           </View>
         )
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
-            Complete these on Tools Infoweb.
+            Visit Tools Infoweb to complete these, or view ended measures.
           </Text>
         </View>
       )}
-      {userRequestedDemoData ? (
+      {showingDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
@@ -251,7 +238,11 @@ export default ServiceMeasuresScreen = (props) => {
         />
       ) : (
         <ScrollView>
-          <ServiceMeasuresList items={itemsToShow} showFullDetails={true} />
+          <ServiceMeasuresList
+            items={itemsToShow}
+            showFullDetails={true}
+            displayTimestamp={displayTimestamp}
+          />
         </ScrollView>
       )}
     </View>

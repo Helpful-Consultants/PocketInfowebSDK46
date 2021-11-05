@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
@@ -13,8 +13,8 @@ import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import CatalogueScreen from '../screens/CatalogueScreen';
 import OdisScreen from '../screens/OdisScreen';
-
 import Colors from '../constants/Colors';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
@@ -45,13 +45,25 @@ let headerHeight =
 // Start tab navigator
 
 const NewsTabs =
-  Platform.OS === 'android'
+  Platform.OS === 'androidzzz'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 
+// console.log(
+//   'in news navigator, newsAlertCount ',
+//   newsAlertCount && newsAlertCount
+// );
+
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const unseenCriticalItems = useSelector(
+    (state) => state.news.unseenCriticalItems
+  );
+
   useEffect(() => {
+    // console.log('alerts:', alerts);
+
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
@@ -86,6 +98,11 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       ),
     });
   }, [navigation, route]);
+
+  //   console.log(
+  //     '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
+  //     showingDemoApp
+  //   );
 
   return (
     <NewsTabs.Navigator //iOS
@@ -126,6 +143,14 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
+          tabBarBadge: showingDemoApp && unseenCriticalItems ? '' : null,
+          tabBarBadgeStyle: {
+            backgroundColor: Colors.vwgBadgeSevereAlertColor,
+            // width: 5,
+            //height: 5,
+            // right: 10,
+            // borderRadius: 2,
+          },
         }}
       />
       <NewsTabs.Screen

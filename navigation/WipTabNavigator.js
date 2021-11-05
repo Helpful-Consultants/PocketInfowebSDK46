@@ -44,7 +44,7 @@ let headerHeight =
 // Start tab navigator
 
 const WipTabs =
-  Platform.OS === 'android'
+  Platform.OS === 'androidzzz'
     ? createMaterialBottomTabNavigator()
     : createBottomTabNavigator();
 

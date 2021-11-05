@@ -9,8 +9,15 @@ export const getOdisStart = () => ({
   type: Types.GET_ODIS_START,
 });
 
-export const getOdisRequest = () => ({
+export const setOdisDisplayTimestamp = () => ({
+  type: Types.SET_ODIS_DISPLAY_TIMESTAMP,
+});
+
+export const getOdisRequest = ({ userBrand }) => ({
   type: Types.GET_ODIS_REQUEST,
+  payload: {
+    userBrand: userBrand,
+  },
 });
 
 export const incrementOdisViewCount = () => ({
@@ -21,10 +28,11 @@ export const resetOdisViewCount = () => ({
   type: Types.RESET_ODIS_VIEW_COUNT,
 });
 
-export const getOdisSuccess = ({ items }) => ({
+export const getOdisSuccess = ({ items, userBrand }) => ({
   type: Types.GET_ODIS_SUCCESS,
   payload: {
     items: items,
+    userBrand: userBrand,
   },
 });
 
