@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.2.31",
+    "version": "1.2.34",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
@@ -39,9 +39,15 @@
       }
     },
     "android": {
-      "versionCode": 20,
+      "versionCode": 21,
       "package": "com.helpfulconsultants.pocketinfowebextra",
-      "permissions": ["NOTIFICATIONS","com.anddoes.launcher.permission.UPDATE_COUNT"]
+      "permissions": [
+        "CHANGE_BADGE",
+        "com.huawei.android.launcher.permission.CHANGE_BADGE",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "me.everything.badger.permission.BADGE_COUNT_WRITE",
+        "com.majeur.launcher.permission.UPDATE_BADGE"
+      ]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
