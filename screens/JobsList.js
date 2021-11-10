@@ -128,7 +128,7 @@ export default function DealerToolsList(props) {
                   >
                     <View style={{ alignItems: 'flex-start' }}>
                       <ScaledImageFinder
-                        width={70}
+                        desiredWidth={70}
                         item={item}
                         baseImageUrl={baseImageUrl}
                       />

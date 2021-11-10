@@ -1049,7 +1049,7 @@ export default FindToolsScreen = (props) => {
                   <View style={{ ...baseStyles.viewColumnFlexLeft, width: 70 }}>
                     {item.loanToolNo ? null : (
                       <ScaledImageFinder
-                        width={70}
+                        desiredWidth={70}
                         item={item}
                         baseImageUrl={
                           item.loanToolNo ? Urls.ltpImage : Urls.toolImage

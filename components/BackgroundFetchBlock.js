@@ -13,7 +13,7 @@ import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
 import { getShortDisplayDateAndLongTime } from '../helpers/dates';
 
-import { store } from '../helpers/store';
+// import { store } from '../helpers/store';
 
 const now = new Date();
 const nowString = now.toISOString();

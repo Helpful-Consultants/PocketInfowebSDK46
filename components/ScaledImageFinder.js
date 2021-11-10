@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 // import ScaledImage from '../components/ScaledImage';
-import ScalableImage from 'react-native-scalable-image';
+// import ScalableImage from 'react-native-scalable-image';
 
 export default ScaledImageFinder = (props) => {
   //   console.log('in scaledImageFinder');
   //   console.log(props && props);
   const [isImageFound, setIsImageFound] = useState(false);
   const [imageToShow, setImageToShow] = useState(null);
+  const [imageHeight, setImageHeight] = useState(null);
+  const [imageWidth, setImageWidth] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
-  const { baseImageUrl, item, uri, width } = props;
+  const { baseImageUrl, item, uri, desiredWidth } = props;
 
   const defaultImage = (
     <Image
       source={require('../assets/images/no-image-placeholder.png')}
-      width={width}
+      width={desiredWidth}
     />
   );
 
@@ -47,18 +49,40 @@ export default ScaledImageFinder = (props) => {
 
   useEffect(() => {
     isMounted = true;
+    // console.log('in useEffect, wdth', desiredWidth && desiredWidth);
 
     const imageUrl = uri ? uri : baseImageUrl + getImageUrl(item) + '.png';
     (async () => {
       try {
         Image.getSize(
           imageUrl,
-          () => {
-            // console.log(imageUrl, 'image was found');
-            isMounted &&
-              setImageToShow(
-                <ScalableImage source={{ uri: imageUrl }} width={width} />
-              );
+          (Width, Height) => {
+            const ratio = Width && desiredWidth ? desiredWidth / Width : 0;
+            const calculatedHeight = Height ? Height * ratio : 0;
+            // console.log(
+            //   imageUrl,
+            //   'image was found',
+            //   'desiredWidth',
+            //   desiredWidth && desiredWidth,
+            //   'Width',
+            //   Width && Width,
+            //   'Height',
+            //   Height && Height,
+            //   'calculatedHeight',
+            //   calculatedHeight && calculatedHeight,
+            //   'ratio',
+            //   ratio && ratio
+            // );
+
+            setImageToShow(
+              <Image
+                source={{ uri: imageUrl }}
+                style={{
+                  width: desiredWidth,
+                  height: calculatedHeight,
+                }}
+              />
+            );
           },
           () => {
             // console.log(imageUrl, 'image was not found');
@@ -113,7 +137,7 @@ export default ScaledImageFinder = (props) => {
   //       if (isImageFound === true) {
   //         // console.log('setImageToShow', imageUrl);
   //         setImageToShow(
-  //           <ScalableImage source={{ uri: imageUrl }} width={width} />
+  //           <ScalableImage source={{ uri: imageUrl }} width={desiredWidth} />
   //         );
   //       }
   //     }

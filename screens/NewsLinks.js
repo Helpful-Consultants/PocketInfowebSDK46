@@ -91,7 +91,7 @@ export default function NewsLinks(props) {
       <View style={baseStyles.viewItem}>
         <View style={baseStyles.viewItemTopRow}>
           <ScaledImageFinder
-            width={70}
+            desiredWidth={70}
             uri={`${props.baseImageUrl}${item.imageName}`}
           />
           <View style={baseStyles.viewItemTitle}>

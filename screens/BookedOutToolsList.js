@@ -153,7 +153,7 @@ export default function BookedOutToolsList(props) {
                     }}
                   >
                     <ScaledImageFinder
-                      width={70}
+                      desiredWidth={70}
                       item={item}
                       baseImageUrl={baseImageUrl}
                     />
