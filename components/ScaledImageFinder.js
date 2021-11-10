@@ -6,12 +6,8 @@ import { Image } from 'react-native';
 export default ScaledImageFinder = (props) => {
   //   console.log('in scaledImageFinder');
   //   console.log(props && props);
-  const [isImageFound, setIsImageFound] = useState(false);
-  const [imageToShow, setImageToShow] = useState(null);
-  const [imageHeight, setImageHeight] = useState(null);
-  const [imageWidth, setImageWidth] = useState(null);
-  const [imageUrl, setImageUrl] = useState(null);
 
+  const [imageToShow, setImageToShow] = useState(null);
   const { baseImageUrl, item, uri, desiredWidth } = props;
 
   const defaultImage = (
