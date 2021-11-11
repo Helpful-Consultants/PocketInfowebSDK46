@@ -70,15 +70,16 @@ export default ScaledImageFinder = (props) => {
             //   ratio && ratio
             // );
 
-            setImageToShow(
-              <Image
-                source={{ uri: imageUrl }}
-                style={{
-                  width: desiredWidth,
-                  height: calculatedHeight,
-                }}
-              />
-            );
+            isMounted &&
+              setImageToShow(
+                <Image
+                  source={{ uri: imageUrl }}
+                  style={{
+                    width: desiredWidth,
+                    height: calculatedHeight,
+                  }}
+                />
+              );
           },
           () => {
             // console.log(imageUrl, 'image was not found');
