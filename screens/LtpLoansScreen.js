@@ -80,8 +80,9 @@ export default LtpLoansScreen = (props) => {
     }
   };
   const storeDisplayTimestampAsync = async () => {
-    // console.log('istoreDisplayTimestampAsync:');
-    dispatch(setLtpLoansDisplayTimestamp());
+    // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
+    displayTime = Date.now();
+    dispatch(setLtpLoansDisplayTimestamp({ displayTime }));
   };
 
   //   console.log('in ltpLoans screen - point 3');

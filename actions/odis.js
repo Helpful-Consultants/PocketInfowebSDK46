@@ -9,8 +9,11 @@ export const getOdisStart = () => ({
   type: Types.GET_ODIS_START,
 });
 
-export const setOdisDisplayTimestamp = () => ({
+export const setOdisDisplayTimestamp = ({ displayTime }) => ({
   type: Types.SET_ODIS_DISPLAY_TIMESTAMP,
+  payload: {
+    displayTime,
+  },
 });
 
 export const getOdisRequest = ({ userBrand }) => ({

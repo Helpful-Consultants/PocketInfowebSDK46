@@ -36,8 +36,9 @@ export default OdisScreen = (props) => {
     [odisObj]
   );
   const storeDisplayTimestampAsync = async () => {
+    displayTime = Date.now();
     // console.log('istoreDisplayTimestampAsync:');
-    dispatch(setOdisDisplayTimestamp());
+    dispatch(setOdisDisplayTimestamp({ displayTime }));
   };
 
   //   console.log('OdisScreen,userBrand:', userBrand, odisObj);

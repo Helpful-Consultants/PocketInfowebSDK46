@@ -46,6 +46,7 @@ function* getLtpLoans({ payload }) {
       ) {
         //   console.log('in LtpLoans saga - good 200');
         //   console.log(result.data);
+        const fetchTime = Date.now();
         yield put(
           actions.getLtpLoansSuccess({
             items: result.data,
@@ -53,6 +54,7 @@ function* getLtpLoans({ payload }) {
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else if (

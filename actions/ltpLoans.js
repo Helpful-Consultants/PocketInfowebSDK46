@@ -4,8 +4,11 @@ export const getLtpLoansStart = () => ({
   type: Types.GET_LTP_LOANS_START,
 });
 
-export const setLtpLoansDisplayTimestamp = () => ({
+export const setLtpLoansDisplayTimestamp = ({ displayTime }) => ({
   type: Types.SET_LTP_LOANS_DISPLAY_TIMESTAMP,
+  payload: {
+    displayTime,
+  },
 });
 
 export const getLtpLoansRequest = ({ intId }) => ({

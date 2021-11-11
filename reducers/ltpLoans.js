@@ -66,14 +66,27 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
     }
     case Types.SET_LTP_LOANS_DISPLAY_TIMESTAMP: {
       //   console.log('date in state is', state.displayTimestamp);
+      const displayTime =
+        action.payload && action.payload.displayTime
+          ? action.payload.displayTime
+          : null;
+
+      //   console.log(
+      //     'in ltp loans reducer set display',
+      //     action.payload && action.payload
+      //   );
       return {
         ...state,
-        displayTimestamp: Date.now(),
+        displayTimestamp: displayTime,
       };
     }
     case Types.GET_LTP_LOANS_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
+          : null;
       const filteredLtpLoansArr =
         (action.payload.items && filterReturnedItems(action.payload.items)) ||
         [];
@@ -88,6 +101,7 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
         amberCount: ltpLoansCountsObj.amberCount,
         greenCount: ltpLoansCountsObj.greenCount,
         totalCount: ltpLoansCountsObj.totalCount,
+        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

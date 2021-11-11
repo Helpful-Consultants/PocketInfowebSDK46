@@ -90,6 +90,15 @@ export default function news(state = INITIAL_STATE, action) {
       //     Date.now()
       //   );
       const itemsList = state.newsItems;
+      const displayTime =
+        action.payload && action.payload.displayTime
+          ? action.payload.displayTime
+          : null;
+
+      //   console.log(
+      //     'in news reducer set display',
+      //     action.payload && action.payload
+      //   );
 
       const dateOfLatestCriticalNewsItem =
         getDateOfLatestCriticalNewsItem(itemsList);
@@ -119,11 +128,17 @@ export default function news(state = INITIAL_STATE, action) {
       return {
         ...state,
         unseenCriticalItems: unseenCriticalItems,
-        displayTimestamp: Date.now(),
+        displayTimestamp: displayTime,
       };
     }
     case Types.GET_NEWS_SUCCESS: {
       //   console.log(action.payload.items && action.payload.items);
+
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
+          : null;
+
       const newlastUpdate =
         (action.payload.items &&
           action.payload.items[0] &&
@@ -172,6 +187,7 @@ export default function news(state = INITIAL_STATE, action) {
         unseenCriticalItems: unseenCriticalItems,
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,
+        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

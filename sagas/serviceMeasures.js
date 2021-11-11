@@ -69,6 +69,7 @@ function* getServiceMeasures({ payload }) {
         //     result.request.status && result.request.status
         // );
         //   console.log(result && result);
+        const fetchTime = Date.now();
         yield put(
           actions.getServiceMeasuresSuccess({
             items: [],
@@ -76,6 +77,7 @@ function* getServiceMeasures({ payload }) {
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else {

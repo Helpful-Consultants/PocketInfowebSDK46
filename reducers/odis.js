@@ -29,7 +29,16 @@ export default function odis(state = INITIAL_STATE, action) {
     }
     case Types.SET_ODIS_DISPLAY_TIMESTAMP: {
       //   console.log('date in state is', state.displayTimestamp);
-      const now = Date.now();
+      const displayTime =
+        action.payload && action.payload.displayTime
+          ? action.payload.displayTime
+          : null;
+
+      //   console.log(
+      //     'in odis reducer set display',
+      //     action.payload && action.payload
+      //   );
+
       //   console.log(
       //     'in odis reducer set display  called getOdisAlertCount',
       //     // state.odisData,
@@ -38,14 +47,18 @@ export default function odis(state = INITIAL_STATE, action) {
       //     'changesToHighlight',
       //     changesToHighlight
       //   );
-      const changeObj = getOdisAlertCount(state.odisData, now, state.userBrand);
+      const changeObj = getOdisAlertCount(
+        state.odisData,
+        displayTime,
+        state.userBrand
+      );
       const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
 
       return {
         ...state,
         changesToHighlight:
           changesToHighlight && changesToHighlight > 0 ? 1 : 0,
-        displayTimestamp: now,
+        displayTimestamp: displayTime,
       };
     }
     case Types.INCREMENT_ODIS_VIEW_COUNT: {
@@ -78,6 +91,11 @@ export default function odis(state = INITIAL_STATE, action) {
       let userBrand =
         action.payload && action.payload.userBrand
           ? action.payload.userBrand
+          : null;
+
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
           : null;
 
       //   console.log(
@@ -202,8 +220,6 @@ export default function odis(state = INITIAL_STATE, action) {
       //     newViewCount
       //   );
 
-      const fetchTime = Date.now();
-
       const changeObj = getOdisAlertCount(odisDataObj, fetchTime, userBrand);
       //   console.log('changeObj', changeObj);
       const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
@@ -221,13 +237,13 @@ export default function odis(state = INITIAL_STATE, action) {
 
       return {
         odisData: odisDataObj,
-        fetchTime: fetchTime,
         userBrand: userBrand,
         // odisData: {},
         viewCount: newViewCount,
         latestChangeDate: latestChangeDate,
         changesToHighlight:
           changesToHighlight && changesToHighlight > 0 ? 1 : 0,
+        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

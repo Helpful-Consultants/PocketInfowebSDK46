@@ -66,7 +66,8 @@ export default NewsScreen = (props) => {
   };
   const storeDisplayTimestampAsync = async () => {
     // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
-    dispatch(setNewsDisplayTimestamp());
+    displayTime = Date.now();
+    dispatch(setNewsDisplayTimestamp({ displayTime }));
   };
 
   //   const { navigation } = props;

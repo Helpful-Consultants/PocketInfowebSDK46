@@ -42,12 +42,10 @@ const getTimeToExpiry = (nowDate = null, expiryDate = null) => {
   return timeToExpiry;
 };
 
-const filterExpiredItems = (serviceMeasures) => {
-  const nowDate = Date.now();
-
+const filterExpiredItems = (serviceMeasures, fetchTime) => {
   let filteredServiceMeasuresArr = [];
 
-  //   console.log('nowDate', nowDate);
+  //   console.log('fetchTime', fetchTime);
   if (serviceMeasures && serviceMeasures.length > 0) {
     serviceMeasures.map((serviceMeasure) => {
       //   console.log(
@@ -69,7 +67,7 @@ const filterExpiredItems = (serviceMeasures) => {
         // );
         if (
           serviceMeasure.expiryDate &&
-          getTimeToExpiry(serviceMeasure.expiryDate, nowDate) >= 0
+          getTimeToExpiry(serviceMeasure.expiryDate, fetchTime) >= 0
         ) {
           filteredServiceMeasuresArr.push(serviceMeasure);
         }
@@ -100,17 +98,31 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
     }
     case Types.SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP: {
       //   console.log('date in state is', state.displayTimestamp);
+      const displayTime =
+        action.payload && action.payload.displayTime
+          ? action.payload.displayTime
+          : null;
+
+      //   console.log(
+      //     'in odis reducer set display',
+      //     action.payload && action.payload
+      //   );
       return {
         ...state,
-        displayTimestamp: new Date(),
+        displayTimestamp: displayTime,
       };
     }
     case Types.GET_SERVICE_MEASURES_SUCCESS: {
       //   console.log('action.type is:', action.type);
       //   console.log(action.payload.items && action.payload.items);
       //   console.log('STATE', state);
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
+          : null;
       const filteredServiceMeasuresArr =
-        (action.payload.items && filterExpiredItems(action.payload.items)) ||
+        (action.payload.items &&
+          filterExpiredItems(action.payload.items, fetchTime)) ||
         [];
       const serviceMeasuresCountsObj = getServiceMeasuresCountsObj(
         filteredServiceMeasuresArr
@@ -130,6 +142,7 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         greenCount: serviceMeasuresCountsObj.greenCount,
         totalCount: serviceMeasuresCountsObj.totalCount,
         // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
+        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
@@ -148,6 +161,7 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         amberCount: 0,
         greenCount: 0,
         totalCount: 0,
+        fetchTime: null,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
