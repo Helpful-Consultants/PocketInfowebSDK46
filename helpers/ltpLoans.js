@@ -1,6 +1,5 @@
-import { parse } from 'date-fns';
-import { getDateDifference } from './dates';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { getDateDifference } from '../helpers/dates';
 
 export const getLtpLoansCountsObj = (ltpLoansItems) => {
   let redCount = 0;
@@ -11,13 +10,21 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
 
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     ltpLoansItems.map((item) => {
-      const timeToEnd = item.endDateDue
-        ? item.endDateDue && getDateDifference(nowDate, item.endDateDue) + 1 // add 1 for today
-        : null;
+      const timeToEnd =
+        item.endDateDue && item.endDateDue.length > 0
+          ? item.endDateDue &&
+            getDateDifference(
+              nowDate,
+              item.endDateDue,
+              'getLtpLoansCountsObj'
+            ) + 1 // add 1 for today
+          : null;
       //   console.log(
       //     'in getLtpLoansCountsObj; ',
       //     'item.endDate',
-      //     item.endDate,
+      //     item.endDateDue,
+      //     'nowDate',
+      //     nowDate,
       //     'timeToEnd',
       //     timeToEnd
       //   );
@@ -48,7 +55,7 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
   return ltpLoansCountsObj;
 };
 
-export const getLtpLoanStatus = (nowDateObj, item) => {
+export const getLtpLoanStatus = (nowDate, item) => {
   let daysFromStart = 0;
   let daysFromExpiry = 0;
 
@@ -66,17 +73,9 @@ export const getLtpLoanStatus = (nowDateObj, item) => {
   //   console.log(item.loanToolNo, 'endDueDate', item.endDateDue);
 
   const parsedStartDate =
-    (item &&
-      item.startDate &&
-      item.startDate.length > 0 &&
-      parse(item.startDate, 'dd/MM/yyyy', new Date())) ||
-    null;
+    (item && item.startDate && item.startDate.length > 0) || null;
   const parsedDueDate =
-    (item &&
-      item.endDateDue &&
-      item.endDateDue.length > 0 &&
-      parse(item.endDateDue, 'dd/MM/yyyy', new Date())) ||
-    null;
+    (item && item.endDateDue && item.endDateDue.length > 0) || null;
 
   //   console.log(
   //     item.loanToolNo,
@@ -84,10 +83,10 @@ export const getLtpLoanStatus = (nowDateObj, item) => {
   //     parsedStartDate,
   //     'parsedDueDate',
   //     parsedDueDate,
-  //     nowDateObj
+  //     nowDate
   //   );
-  daysFromStart = getDateDifference(nowDateObj, parsedStartDate);
-  daysFromExpiry = getDateDifference(nowDateObj, parsedDueDate);
+  daysFromStart = getDateDifference(nowDate, parsedStartDate);
+  daysFromExpiry = getDateDifference(nowDate, parsedDueDate);
 
   //   console.log('daysFromStart', daysFromStart);
   //   console.log('daysFromExpiry', daysFromExpiry);
@@ -95,7 +94,7 @@ export const getLtpLoanStatus = (nowDateObj, item) => {
   return true; //@!@!!!!!!!!!!!!!! TODO
 };
 
-export const getOpenLtpLoansItems = (nowDateObj, ltpLoansItems) => {
+export const getOpenLtpLoansItems = (nowDate, ltpLoansItems) => {
   //   console.log(
   //     'in getOpenLtpLoansItems ltpLoansItems',
   //     ltpLoansItems && ltpLoansItems.length
@@ -104,7 +103,7 @@ export const getOpenLtpLoansItems = (nowDateObj, ltpLoansItems) => {
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     openLtpLoansItems = ltpLoansItems.filter(
       (item) =>
-        item.startDate && item.endDateDue && getLtpLoanStatus(nowDateObj, item)
+        item.startDate && item.endDateDue && getLtpLoanStatus(nowDate, item)
     );
   }
   // console.log('LtpLoansItemsFiltered', openLtpLoansItems);

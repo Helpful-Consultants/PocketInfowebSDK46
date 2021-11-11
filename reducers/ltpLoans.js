@@ -1,4 +1,3 @@
-import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
 import { getLtpLoansCountsObj } from '../helpers/ltpLoans';
 const defaultCounts = {
@@ -23,9 +22,8 @@ const INITIAL_STATE = {
 };
 
 const filterReturnedItems = (items) => {
-  const nowDateObj = new Date();
   let filteredLtpLoansArr = [];
-  //   console.log('nowDateObj', nowDateObj);
+  //   console.log('nowDate', nowDate);
 
   if (items && items.length > 0) {
     items.map((item) => {
@@ -70,7 +68,7 @@ export default function ltpLoans(state = INITIAL_STATE, action) {
       //   console.log('date in state is', state.displayTimestamp);
       return {
         ...state,
-        displayTimestamp: new Date(),
+        displayTimestamp: Date.now(),
       };
     }
     case Types.GET_LTP_LOANS_SUCCESS: {

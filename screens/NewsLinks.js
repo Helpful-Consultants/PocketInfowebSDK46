@@ -1,11 +1,15 @@
 import React from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
-import { format, isAfter, parse } from 'date-fns';
+import { format } from 'date-fns';
 import { Base64 } from 'js-base64';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import amendLink from '../helpers/amendLink';
-import { getFriendlyDisplayDate, getDateDifference } from '../helpers/dates';
+import {
+  getFriendlyDisplayDate,
+  getDateDifference,
+  isDateAfter,
+} from '../helpers/dates';
 
 const nowDateObj = new Date();
 const month = format(nowDateObj, 'MMMM');
@@ -26,19 +30,15 @@ export default function NewsLinks(props) {
   let intId = (userIntId && userIntId) || '';
 
   const getFormattedNewsItem = (item) => {
-    const parsedUpdatedDate =
-      (item &&
-        item.lastUpdated &&
-        item.lastUpdated.length > 0 &&
-        parse(item.lastUpdated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
-      null;
+    const updatedDate =
+      item && item.lastUpdated && item.lastUpdated.length > 0
+        ? item.lastUpdated
+        : null;
 
-    const parsedCreatedDate =
-      (item &&
-        item.createdDate &&
-        item.createdDate.length > 0 &&
-        parse(item.createdDate, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
-      null;
+    const createdDate =
+      item && item.createdDate && item.createdDate.length > 0
+        ? item.createdDate
+        : null;
 
     const isBusinessCritical =
       showingDemoApp &&
@@ -57,33 +57,35 @@ export default function NewsLinks(props) {
     // );
 
     // console.log(
-    //   'parsedUpdatedDate',
+    //   'updatedDate',
     //   item.headline,
-    //   parsedUpdatedDate,
+    //   updatedDate,
     //   'from',
     //   item.lastUpdated
     // );
     // console.log(
-    //   'parsedCreatedDate',
-    //   parsedCreatedDate,
+    //   'createdDate',
+    //   createdDate,
     //   'from',
     //   item.createdDate
     // );
 
-    const isRevised =
-      parsedCreatedDate &&
-      parsedUpdatedDate &&
-      isAfter(parsedUpdatedDate, parsedCreatedDate);
+    const isRevised = isDateAfter(updatedDate, createdDate);
     const daysOld = getDateDifference(
-      isRevised ? parsedUpdatedDate : parsedCreatedDate,
+      isRevised ? updatedDate : createdDate,
       nowDateObj
     );
 
-    // console.log('isRevised', parsedUpdatedDate, parsedCreatedDate);
+    // console.log(
+    //   '$$$$$$$$$$$$$$$$$$$$$$$$$$$$isRevised - createdDate',
+    //   createdDate && createdDate,
+    //   'updatedDate',
+    //   updatedDate && updatedDate
+    // );
 
     const displayDate = isRevised
-      ? getFriendlyDisplayDate(parsedUpdatedDate)
-      : getFriendlyDisplayDate(parsedCreatedDate);
+      ? getFriendlyDisplayDate(updatedDate)
+      : getFriendlyDisplayDate(createdDate);
 
     // console.log('displayDate is', displayDate);
 

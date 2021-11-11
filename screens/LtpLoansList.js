@@ -5,7 +5,6 @@ import {
   View,
 } from 'react-native';
 import { Text } from 'react-native-elements';
-import { parse } from 'date-fns';
 import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import {
   getDateDifference,
@@ -14,11 +13,10 @@ import {
 import Colors from '../constants/Colors';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
-const nowDateObj = new Date();
-
 export default function LtpLoansList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const nowDate = Date.now();
 
   //   const ltpLoans = ltpLoansDummyData;
 
@@ -29,13 +27,11 @@ export default function LtpLoansList(props) {
   const getFormattedLtpLoan = (item) => {
     let measureIsLive = false;
     if (item && item.dateCreated && item.expiryDate) {
-      measureIsLive = getLtpLoanStatus(nowDateObj, item);
+      measureIsLive = getLtpLoanStatus(nowDate, item);
     }
-    const parsedEndDueDate =
-      (item.endDateDue && parse(item.endDateDue, 'dd/MM/yyyy', new Date())) ||
-      null;
+    const parsedEndDueDate = (item.endDateDue && item.endDateDue) || null;
 
-    const daysLeft = getDateDifference(nowDateObj, parsedEndDueDate) + 1;
+    const daysLeft = getDateDifference(nowDate, parsedEndDueDate) + 1;
     // console.log(item.loanToolNo, 'ddddddaysLeft', daysLeft);
 
     return (
@@ -56,10 +52,16 @@ export default function LtpLoansList(props) {
               <Text style={{ ...baseStyles.textLeftAligned, marginTop: 2 }}>
                 Your loan period {daysLeft >= 0 ? 'is' : 'was'}
                 {item.startDate
-                  ? ` ${getFriendlyDisplayLongDate(item.startDate)}`
+                  ? ` ${getFriendlyDisplayLongDate(
+                      item.startDate,
+                      'getFormattedLtpLoan'
+                    )}`
                   : null}
                 {item.endDateDue
-                  ? ` to ${getFriendlyDisplayLongDate(item.endDateDue)}`
+                  ? ` to ${getFriendlyDisplayLongDate(
+                      item.endDateDue,
+                      'getFormattedLtpLoan'
+                    )}`
                   : null}
               </Text>
             </View>

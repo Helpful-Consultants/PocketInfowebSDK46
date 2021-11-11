@@ -1,7 +1,6 @@
-// import { Types } from '../actions/serviceMeasures';
-import { differenceInCalendarDays, parse } from 'date-fns';
 import Types from '../constants/Types';
 import { getServiceMeasuresCountsObj } from '../helpers/serviceMeasures';
+import { getDateDifference } from '../helpers/dates';
 
 const defaultCounts = {
   redCount: 0,
@@ -24,19 +23,18 @@ const INITIAL_STATE = {
   displayTimestamp: null,
 };
 
-const getTimeToExpiry = (nowDateObj, expiryDate) => {
-  let theToDate = expiryDate && parse(expiryDate, 'dd/MM/yyyy', new Date());
+const getTimeToExpiry = (nowDate = null, expiryDate = null) => {
   let timeToExpiry = 0;
 
   //   console.log(
-  //     '***************in getTimeToExpiry reducer nowDateObj',
-  //     nowDateObj,
+  //     '***************in getTimeToExpiry reducer nowDate',
+  //     nowDate,
   //     'to',
   //     theToDate
   //   );
 
   if (expiryDate) {
-    timeToExpiry = differenceInCalendarDays(theToDate, nowDateObj);
+    timeToExpiry = getDateDifference(expiryDate, nowDate);
   }
   //   console.log('expiryDate', expiryDate);
   //   console.log('££££££££ reducertimeToExpiry', timeToExpiry);
@@ -45,10 +43,11 @@ const getTimeToExpiry = (nowDateObj, expiryDate) => {
 };
 
 const filterExpiredItems = (serviceMeasures) => {
-  const nowDateObj = new Date();
+  const nowDate = Date.now();
+
   let filteredServiceMeasuresArr = [];
 
-  //   console.log('nowDateObj', nowDateObj);
+  //   console.log('nowDate', nowDate);
   if (serviceMeasures && serviceMeasures.length > 0) {
     serviceMeasures.map((serviceMeasure) => {
       //   console.log(
@@ -70,7 +69,7 @@ const filterExpiredItems = (serviceMeasures) => {
         // );
         if (
           serviceMeasure.expiryDate &&
-          getTimeToExpiry(nowDateObj, serviceMeasure.expiryDate) >= 0
+          getTimeToExpiry(serviceMeasure.expiryDate, nowDate) >= 0
         ) {
           filteredServiceMeasuresArr.push(serviceMeasure);
         }

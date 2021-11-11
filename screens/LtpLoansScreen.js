@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { parse } from 'date-fns';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
@@ -19,8 +18,6 @@ import { sortObjListByDate } from '../helpers/dates';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
-
-const nowDateObj = new Date();
 
 export default LtpLoansScreen = (props) => {
   const windowDim = useWindowDimensions();

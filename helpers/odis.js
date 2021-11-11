@@ -82,7 +82,7 @@ const getOdisAlertCountForAllBrands = (
       (odisDataObj.au.previousDataVersion &&
         odisDataObj.au.previousDataVersion !== odisDataObj.au.dataVersion)
     ) {
-      //   console.log('!!!!! auDateOfChange', auDateOfChange);
+      //   console.log('!!!!! auDateOfChange', odisDataObj.au.lastUpdated, now);
 
       const auAgeOfChange = getDateDifference(odisDataObj.au.lastUpdated, now);
 

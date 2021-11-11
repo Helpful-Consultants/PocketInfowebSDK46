@@ -1,21 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
-// import SafeAreaView from 'react-native-safe-area-view';
-import { useSafeArea } from 'react-native-safe-area-context';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import sortObjectList from '../helpers/sortObjectList';
-// import NewJobButton from '../components/NewJobButton';
-// import BookToJobModal from '../components/BookToJobModal';
-// import Alert from '../components/Alert';
 import { revalidateUserCredentials } from '../actions/user';
 import {
   deleteDealerWipRequest,
@@ -25,8 +14,7 @@ import {
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import BookedOutToolsList from './BookedOutToolsList';
-// import JobsList from './JobsList';
-// import dealerWipsDummyData from '../dummyData/dealerWipsDummyData.js';
+
 const minSearchLength = 1;
 
 export default BookedOutToolsScreen = (props) => {
@@ -50,8 +38,6 @@ export default BookedOutToolsScreen = (props) => {
   const [bookedOutItems, setBookedOutItems] = useState([]);
   const [userWipsItems, setUserWipsItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-
-  const insets = useSafeArea();
 
   const baseStyles = windowDim && getBaseStyles(windowDim);
 

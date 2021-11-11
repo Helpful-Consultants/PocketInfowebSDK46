@@ -7,15 +7,23 @@ import {
   isBefore,
   isThisYear,
   parse,
+  parseISO,
   toDate,
 } from 'date-fns';
 
+const parseDateFromISO = (rawDate) => {
+  const parsedDate = (rawDate && parseISO(rawDate, new Date())) || null;
+  //   console.log('parseDateFromMilliseconds', rawDate, parsedDate);
+  return parsedDate;
+};
 const parseDateFromMilliseconds = (rawDate) => {
+  //   console.log('parseDateFromMilliseconds', rawDate);
   const parsedDate = (rawDate && toDate(rawDate)) || null;
   //   console.log('parseDateFromMilliseconds', rawDate, parsedDate);
   return parsedDate;
 };
 const parseDateFromDDMMYYY = (rawDate) => {
+  //   console.log('parseDateFromDDMMYYY', rawDate);
   const parsedDate =
     (rawDate && parse(rawDate, 'dd/MM/yyyy', new Date())) || null;
   //   console.log('parseDateFromDDMMYYY', rawDate, parsedDate);
@@ -27,10 +35,10 @@ const parseDateFromDDMMYYYHHMMSS = (rawDate) => {
   //   console.log('parseDateFromDDMMYYYHHMMSS', rawDate, parsedDate);
   return parsedDate;
 };
-const parseAnyDate = (rawDate) => {
+const parseAnyDate = (rawDate = null) => {
   let parsedDate = null;
   let length = 0;
-  //   console.log('$$$$ in parseAnyDate', rawDate);
+  //   console.log('$$$$ in parseAnyDate', rawDate && rawDate);
   if (typeof rawDate !== 'undefined' && rawDate) {
     if (typeof rawDate === 'object') {
       parsedDate = rawDate;
@@ -44,30 +52,27 @@ const parseAnyDate = (rawDate) => {
       if (typeof rawDate === 'number') {
         parsedDate = parseDateFromMilliseconds(rawDate);
         // console.log('millisecs', rawDate, parsedDate);
-      } else {
+      } else if (typeof rawDate === 'string' && rawDate.length > 0) {
         length = rawDate.length || 0;
-        if (length === 10 && rawDate.substr(5, 3) === '/20') {
+        // console.log(')))))))))))))))))))rawDate.length', length);
+        if (length && length === 10 && rawDate.substr(5, 3) === '/20') {
           parsedDate = parseDateFromDDMMYYY(rawDate);
           //   console.log('-------dd/MM/yyy', rawDate, parsedDate);
-        } else if (length === 19 && rawDate.substr(5, 3) === '/20') {
+        } else if (length && length === 19 && rawDate.substr(5, 3) === '/20') {
           parsedDate = parseDateFromDDMMYYYHHMMSS(rawDate);
           //   console.log('-----------do MMM yyyy HH:mm:ss', rawDate, parsedDate);
-        } else if (length === 24 && rawDate.substr(10, 1) === 'T') {
-          parsedDate = rawDate;
+        } else if (length && length === 24 && rawDate.substr(10, 1) === 'T') {
+          parsedDate = parseDateFromISO(rawDate);
           //   console.log('-----------javascript ', rawDate, parsedDate);
-        } else {
-          parsedDate = rawDate;
-          //   console.log(
-          //     '-----------unknown ',
-          //     typeof rawDate,
-          //     rawDate,
-          //     parsedDate
-          //   );
         }
+      } else {
+        parsedDate = rawDate;
+        // console.log('-----------unknown ', typeof rawDate, rawDate, parsedDate);
       }
     }
+    // console.log('^^^^^^^^return from parseAnyDate', rawDate, parsedDate);
+    return parsedDate;
   }
-  return parsedDate;
 };
 const formatShortDisplayDate = (parsedDate) => {
   //   console.log('formatShortDisplayDate input', parsedDate);
@@ -82,7 +87,7 @@ const formatShortDisplayDateAndShortTime = (parsedDate) => {
   return displayDate;
 };
 const formatShortDisplayDateAndLongTime = (parsedDate) => {
-  //   console.log('formatFriendlyDisplayDate input', parsedDate);
+  //   console.log('33333 formatShortDisplayDateAndLongTime input', parsedDate);
   const displayDate = parsedDate && format(parsedDate, 'dd/MM/yy HH:mm:ss');
   //   console.log('formatFriendlyDisplayDate output', displayDate);
   return displayDate;
@@ -142,7 +147,7 @@ const formatFriendlyDisplayLongDate = (parsedDate) => {
   return displayDate;
 };
 
-export const getShortDisplayDate = (rawDate) => {
+export const getShortDisplayDate = (rawDate, calledBy = '') => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatShortDisplayDate(parsedDate) || null;
@@ -154,7 +159,7 @@ export const getShortDisplayDate = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getShortDisplayDateAndTime = (rawDate) => {
+export const getShortDisplayDateAndTime = (rawDate, calledBy = '') => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatShortDisplayDateAndShortTime(parsedDate) || null;
@@ -166,7 +171,11 @@ export const getShortDisplayDateAndTime = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getShortDisplayDateAndLongTime = (rawDate) => {
+export const getShortDisplayDateAndLongTime = (rawDate, calledBy = '') => {
+  //   console.log(
+  //     '999999999 in getShortDisplayDateAndLongTime',
+  //     rawDate && rawDate
+  //   );
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatShortDisplayDateAndLongTime(parsedDate) || null;
@@ -179,7 +188,7 @@ export const getShortDisplayDateAndLongTime = (rawDate) => {
   return displayDate;
 };
 
-export const getFriendlyDisplayDate = (rawDate) => {
+export const getFriendlyDisplayDate = (rawDate, calledBy = '') => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayDate(parsedDate) || null;
@@ -192,7 +201,8 @@ export const getFriendlyDisplayDate = (rawDate) => {
   return displayDate;
 };
 
-export const getFriendlyDisplayShortDate = (rawDate) => {
+export const getFriendlyDisplayShortDate = (rawDate, calledBy = '') => {
+  //   console.log('in getShortDisplayDateAndLongTime', rawDate && rawDate);
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
 
@@ -209,7 +219,8 @@ export const getFriendlyDisplayShortDate = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getFriendlyDisplayLongDate = (rawDate) => {
+export const getFriendlyDisplayLongDate = (rawDate, calledBy = '') => {
+  //   console.log('^^^^^^^^^in getFriendlyDisplayLongDate', rawDate);
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
 
@@ -227,7 +238,7 @@ export const getFriendlyDisplayLongDate = (rawDate) => {
   return displayDate;
 };
 
-export const getFriendlyDisplayDateAndShortTime = (rawDate) => {
+export const getFriendlyDisplayDateAndShortTime = (rawDate, calledBy = '') => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayShortTimeAndDate(parsedDate) || null;
@@ -240,7 +251,7 @@ export const getFriendlyDisplayDateAndShortTime = (rawDate) => {
   return displayDate;
 };
 
-export const getFriendlyDisplayDateAndLongTime = (rawDate) => {
+export const getFriendlyDisplayDateAndLongTime = (rawDate, calledBy = '') => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayDateAndLongTime(parsedDate) || null;
@@ -252,7 +263,10 @@ export const getFriendlyDisplayDateAndLongTime = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getFriendlyDisplayLongTimeAndShortDate = (rawDate) => {
+export const getFriendlyDisplayLongTimeAndShortDate = (
+  rawDate,
+  calledBy = ''
+) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayLongTimeAndShortDate(parsedDate) || null;
@@ -264,7 +278,10 @@ export const getFriendlyDisplayLongTimeAndShortDate = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getFriendlyDisplayShortTimeAndShortDate = (rawDate) => {
+export const getFriendlyDisplayShortTimeAndShortDate = (
+  rawDate,
+  calledBy = ''
+) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayShortTimeAndShortDate(parsedDate) || null;
@@ -276,7 +293,10 @@ export const getFriendlyDisplayShortTimeAndShortDate = (rawDate) => {
   //   );
   return displayDate;
 };
-export const getFriendlyDisplayShortTimeAndLongDate = (rawDate) => {
+export const getFriendlyDisplayShortTimeAndLongDate = (
+  rawDate,
+  calledBy = ''
+) => {
   let displayDate = '';
   let parsedDate = parseAnyDate(rawDate);
   displayDate = formatFriendlyDisplayShortTimeAndLongDate(parsedDate) || null;
@@ -289,26 +309,29 @@ export const getFriendlyDisplayShortTimeAndLongDate = (rawDate) => {
   return displayDate;
 };
 
-export const getDateDifference = (dateOne, dateTwo, log = false) => {
-  let timeToExpiry = 0;
-  log &&
-    console.log('***************in getDateDifference', dateOne, 'to', dateTwo);
+export const getDateDifference = (dateOne, dateTwo, calledBy = '') => {
+  let diffInDays = 0;
+  //   calledBy &&
+  //     console.log(
+  //       '***************in getDateDifference',
+  //       'calledBy',
+  //       calledBy,
+  //       dateOne,
+  //       'to',
+  //       dateTwo
+  //     );
 
   if (dateOne && dateTwo) {
     const parsedDateOne = parseAnyDate(dateOne);
     const parsedDateTwo = parseAnyDate(dateTwo);
-    timeToExpiry = differenceInCalendarDays(parsedDateTwo, parsedDateOne);
+    diffInDays = differenceInCalendarDays(parsedDateTwo, parsedDateOne);
   }
 
-  log && console.log('££££££££ getDateDifference result', timeToExpiry);
-  return timeToExpiry;
+  //   calledBy && console.log('££££££££ getDateDifference result', diffInDays);
+  return diffInDays;
 };
 
-export const isDateAfter = (
-  dateOne = null,
-  dateTwo = null
-  //   calledBy = 'unknown'
-) => {
+export const isDateAfter = (dateOne = null, dateTwo = null, calledBy = '') => {
   let isItAfter = 0;
   //   console.log('***************in isDateAfter', dateOne, 'to', dateTwo);
   const parsedDateOne = parseAnyDate(dateOne);

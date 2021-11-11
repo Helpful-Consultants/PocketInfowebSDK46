@@ -14,8 +14,6 @@ import {
 } from 'react-native';
 import { Button, Divider, Input, Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-// import SafeAreaView from 'react-native-safe-area-view';
-import { useSafeArea } from 'react-native-safe-area-context';
 import Modal from 'react-native-modal';
 import AwesomeAlert from 'react-native-awesome-alerts';
 // import { createFilter } from 'react-native-search-filter';
@@ -202,8 +200,6 @@ export default FindToolsScreen = (props) => {
   const input = React.createRef();
   //   const userDataCount =
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
-
-  const insets = useSafeArea();
 
   const getWipsItems = useCallback((userApiFetchParamsObj) => {
     // console.log('in getWipsItems', userApiFetchParamsObj);

@@ -15,7 +15,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 import { differenceInMinutes } from 'date-fns';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';

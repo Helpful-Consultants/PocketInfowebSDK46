@@ -11,8 +11,6 @@ export const getCalibrationExpiryCountsObj = (calibrationExpiryItems) => {
   let redCount = 0;
   let amberCount = 0;
 
-  const nowDateObj = new Date();
-
   //   console.log(
   //     'in getCalibrationExpiryCountsObj; calibrationExpiryItems',
   //     calibrationExpiryItems

@@ -2,13 +2,12 @@ import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import { parse } from 'date-fns';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';
 import { getDateDifference, getFriendlyDisplayDate } from '../helpers/dates';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
-const nowDateObj = new Date();
+const nowDate = Date.now();
 
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
@@ -17,32 +16,27 @@ export default function ServiceMeasuresList(props) {
   const serviceMeasures = items || [];
 
   const getFormattedServiceMeasure = (item) => {
-    // console.log('nowDateObj', nowDateObj);
+    // console.log('nowDate', nowDate);
     // console.log('item', item);
 
     let measureIsLive = true;
-    const parsedExpiryDate =
-      (item.expiryDate && parse(item.expiryDate, 'dd/MM/yyyy', new Date())) ||
-      null;
-    const parsedDateCreated =
-      (item.dateCreated &&
-        parse(item.dateCreated, 'dd/MM/yyyy HH:mm:ss', new Date())) ||
-      null;
+    const rawExpiryDate = (item.expiryDate && item.expiryDate) || null;
+    const rawDateCreated = (item.dateCreated && item.dateCreated) || null;
 
     // console.log(
-    //   'parsedDateCreated',
-    //   parsedDateCreated,
+    //   'rawDateCreated',
+    //   rawDateCreated,
     //   'from',
     //   item.dateCreated
     // );
-    const daysLeft = getDateDifference(nowDateObj, parsedExpiryDate) + 1;
+    const daysLeft = getDateDifference(nowDate, rawExpiryDate) + 1;
     // console.log('ddddddaysLeft', daysLeft);
-    const daysOld = getDateDifference(parsedDateCreated, nowDateObj);
+    const daysOld = getDateDifference(rawDateCreated, nowDate);
     // console.log('ddddddaysOld', daysOld);
 
     // console.log('in getFormattedServiceMeasure, insUnseen:', itemIsNew);
     // if (item && item.dateCreated && item.expiryDate) {
-    //   measureIsLive = getItemStatus(parsedStartDate, parsedExpiryDate);
+    //   measureIsLive = getItemStatus(rawStartDate, rawExpiryDate);
     // }
     // console.log(
     //   'dateCreated sliced',

@@ -1,4 +1,3 @@
-import { parse } from 'date-fns';
 import { getDateDifference } from '../helpers/dates';
 
 export const getServiceMeasuresCountsObj = (serviceMeasuresItems) => {
@@ -6,12 +5,10 @@ export const getServiceMeasuresCountsObj = (serviceMeasuresItems) => {
   let amberCount = 0;
   let greenCount = 0;
 
-  const nowDateObj = new Date();
+  const nowDate = Date.now();
 
-  const checkTimeToExpiry = (expiryDate) => {
-    const parsedExpiryDate =
-      (expiryDate && parse(expiryDate, 'dd/MM/yyyy', new Date())) || null;
-    const daysLeft = getDateDifference(nowDateObj, parsedExpiryDate) + 1; // add 1 for today;
+  const checkTimeToExpiry = (expiryDate = null) => {
+    const daysLeft = getDateDifference(nowDate, expiryDate) + 1; // add 1 for today;
     // console.log(
     //   '£££ in getServiceMeasuresCountsObj, checkTimeToExpiry ',
     //   expiryDate,
