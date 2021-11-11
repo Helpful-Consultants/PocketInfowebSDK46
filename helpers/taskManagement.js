@@ -81,32 +81,6 @@ export const fetchDate = async () => {
     : BackgroundFetch.BackgroundFetchResult.NoData;
 };
 
-export const zzzzfetchDate = async (store) => {
-  //   console.log('store', store ? store : 'nought');
-  const now = new Date().toISOString();
-  const result = true;
-  //   console.log('store', store ? store : 'nought');
-  //   console.log('Got background fetch call to fetch date', now);
-  store.dispatch(getBackgroundDataStart());
-  //   console.log('background fetchDate running!!!!!');
-  //alert('Got background fetch call to fetch date: ' + now);
-
-  return result
-    ? BackgroundFetch.BackgroundFetchResult.NewData
-    : BackgroundFetch.BackgroundFetchResult.NoData;
-};
-
-export const fetchData = async () => {
-  const now = new Date().toISOString();
-
-  //   const nowStr = (now && now.toISOString()) || 'no date';
-  const result = true;
-  console.log('Got background fetch call to fetch datA', now);
-  return result
-    ? BackgroundFetch.BackgroundFetchResult.NewData
-    : BackgroundFetch.BackgroundFetchResult.NoData;
-};
-
 export const showAppBadgeCount = (props) => {
   //   const nowStr = (now && now.toISOString()) || 'no date';
   const result = true;
