@@ -31,8 +31,6 @@ import {
   fetchDate,
   //   fetchData,
 } from './helpers/taskManagement';
-
-// import { AsyncStorage } from 'react-native'; // deprecated
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -45,19 +43,19 @@ import Loading from './components/Loading';
 // showAppBadgeCount(store);
 
 // Here so it can use the Redux store
-const zzzzzzzfetchDate = async () => {
-  //   const now = new Date().toISOString();
-  console.log('background fetchDate running!');
-  console.log('the store contains', store ? store : 'nought');
-  const result = true;
-  store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
-  console.log('the store now contains', store ? store : 'nought');
-  console.log('background fetchDate finished!!!!!');
-  //alert('Got background fetch call to fetch date: ' + now);
-  return result
-    ? BackgroundFetch.BackgroundFetchResult.NewData
-    : BackgroundFetch.BackgroundFetchResult.NoData;
-};
+// const zzzzzzzfetchDate = async () => {
+//   //   const now = new Date().toISOString();
+//   console.log('background fetchDate running!');
+//   console.log('the store contains', store ? store : 'nought');
+//   const result = true;
+//   store && store.dispatch && (await store.dispatch(getBackgroundDataRequest()));
+//   console.log('the store now contains', store ? store : 'nought');
+//   console.log('background fetchDate finished!!!!!');
+//   //alert('Got background fetch call to fetch date: ' + now);
+//   return result
+//     ? BackgroundFetch.BackgroundFetchResult.NewData
+//     : BackgroundFetch.BackgroundFetchResult.NoData;
+// };
 
 enableScreens();
 

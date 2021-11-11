@@ -14,18 +14,6 @@ import Tasks from '../constants/Tasks';
 import { getShortDisplayDateAndLongTime } from '../helpers/dates';
 
 // import { store } from '../helpers/store';
-
-const now = new Date();
-const nowString = now.toISOString();
-console.log(
-  'in BackgroundFetchBlock',
-
-  'now',
-  now,
-  'nowStr',
-  nowString
-);
-
 // console.log('in backgroundfetchblock', store);
 
 // 2. Register the task at some point in your app by providing the same name, and some configuration
@@ -188,12 +176,12 @@ export default BackgroundFetchBlock = () => {
     const isRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_DATE_TASK
     );
-    console.log(
-      'in checkTaskStatusAsync backgroundFetchStatus: ',
-      backgroundFetchStatus,
-      'isRegistered',
-      isRegistered
-    );
+    // console.log(
+    //   'in checkTaskStatusAsync backgroundFetchStatus: ',
+    //   backgroundFetchStatus,
+    //   'isRegistered',
+    //   isRegistered
+    // );
     setTaskStatus(backgroundFetchStatus);
     setIsRegistered(isRegistered);
   };
@@ -225,9 +213,20 @@ export default BackgroundFetchBlock = () => {
   }, []);
   //   console.log(
   //     'backgroundDataItems fetched at ',
-  //     backgroundDataFetchTime && getShortDisplayDateAndLongTime(backgroundDataFetchTime)
+  //     backgroundDataFetchTime &&
+  //       getShortDisplayDateAndLongTime(backgroundDataFetchTime),
+  //     backgroundDataItems && backgroundDataItems
   //   );
-  //   console.log('backgroundDataItems from store', backgroundDataItems);
+  //   console.log(
+  //     'backgroundDataItems from store',
+  //     backgroundDataItems && backgroundDataItems
+  //   );
+  //   console.log(
+  //     'backgroundDataItems.datetime from store',
+  //     backgroundDataItems &&
+  //       backgroundDataItems.datetime &&
+  //       backgroundDataItems.datetime
+  //   );
 
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
@@ -239,11 +238,34 @@ export default BackgroundFetchBlock = () => {
     <View style={styles.screen}>
       <View style={styles.textContainer}>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          Last background fetch at:{' '}
+          {(backgroundDataFetchTime &&
+            getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
+            'not called yet'}{' '}
+          <Text style={styles.boldText}>
+            {' '}
+            Result:{' '}
+            {backgroundDataItems !== 'undefined' &&
+            backgroundDataItems &&
+            backgroundDataItems.abbreviation &&
+            backgroundDataItems.abbreviation.length > 0
+              ? backgroundDataItems.abbreviation
+              : 'n/a'}{' '}
+            {typeof backgroundDataItems !== 'undefined' &&
+            backgroundDataItems &&
+            backgroundDataItems.datetime &&
+            backgroundDataItems.datetime.length > 0
+              ? backgroundDataItems.datetime
+              : 'n/a'}{' '}
+          </Text>
+        </Text>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
           Notif status:{' '}
           <Text style={styles.boldText}>
             {notificationsStatus && notificationsStatus.granted
               ? 'granted'
               : 'not granted'}
+            {` Backgrnd permitted: ${taskStatus ? taskStatus : 'no'}`}
           </Text>
         </Text>
         {1 === 1 ? null : (
@@ -257,10 +279,6 @@ export default BackgroundFetchBlock = () => {
             </TouchableOpacity>
           </Text>
         )}
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Background permitted:{' '}
-          <Text style={styles.boldText}>{taskStatus ? taskStatus : null}</Text>
-        </Text>
         <TouchableOpacity onPress={toggleFetchTaskAsync}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
             {isRegistered
@@ -275,21 +293,6 @@ export default BackgroundFetchBlock = () => {
           </Text>
           <Text style={styles.boldText}>
             {isRegistered ? ' is registered' : ' is not registered yet'}
-          </Text>
-        </Text>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Last background fetch at:{' '}
-          {(backgroundDataFetchTime &&
-            getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
-            'not called yet'}{' '}
-          <Text style={styles.boldText}>
-            {' '}
-            Result:{' '}
-            {(backgroundDataItems &&
-              backgroundDataItems.datetime &&
-              getShortDisplayDateAndLongTime(backgroundDataItems.datetime)) ||
-              'n/a'}{' '}
-            {backgroundDataItems && backgroundDataItems.abbreviation}
           </Text>
         </Text>
       </View>

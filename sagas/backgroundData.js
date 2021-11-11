@@ -4,10 +4,7 @@ import * as api from '../api/backgroundData';
 import Types from '../constants/Types';
 
 function* getBackgroundData({ payload }) {
-  console.log(
-    '%%%%%%%%%%%%%%in saga get backgroundData, payload',
-    payload && payload
-  );
+  console.log('%%%%%%%%%%%%%%in saga get backgroundData');
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the BackgroundData';
   let dataErrorUrl = null;
@@ -15,14 +12,30 @@ function* getBackgroundData({ payload }) {
   try {
     const result = yield call(api.getBackgroundData);
     console.log('in saga get backgroundData - 200!');
-    // console.log(result);
+
+    // console.log('result.data', result.data && result.data);
+    // console.log(
+    //   'result.data',
+    //   result.data &&
+    //     result.data.abbreviation &&
+    //     result.data.abbreviation.length > 0 &&
+    //     result.data.abbreviation
+    // );
     if (
+      result &&
       result.data &&
       result.data.abbreviation &&
       result.data.abbreviation.length > 0
     ) {
       console.log('in BackgroundData saga - good 200');
-      //   console.log(result.data);
+      console.log(
+        'result',
+        result &&
+          result.data &&
+          result.data.abbreviation &&
+          result.data.abbreviation.length > 0 &&
+          result.data.abbreviation
+      );
       yield put(
         actions.getBackgroundDataSuccess({
           items: result.data,

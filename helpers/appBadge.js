@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import Tasks from '../constants/Tasks';
 import { store } from './store';
 
-console.log('in appbadgeStatus', store);
+// console.log('in appbadgeStatus', store);
 
 export const getBadgeCountAsync = async () => {
   // set notifications badge count
@@ -38,10 +38,10 @@ export const incrementBadgeCountAsync = async () => {
 
 export const setBadgeCountAsync = async (count = 0) => {
   // set notifications badge count
-  console.log(`setting the app badge with number ${count}`);
+  //   console.log(`setting the app badge with number ${count}`);
   try {
     const setCount = await Notifications.setBadgeCountAsync(count);
-    console.log('successfully set app badge to', count);
+    // console.log('successfully set app badge to', count);
     // setAppBadgeStatus(setCount);
   } catch (err) {
     //   console.log('did not manage to set notif app badge count!', err);
