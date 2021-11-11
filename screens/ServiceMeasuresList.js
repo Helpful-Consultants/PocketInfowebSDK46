@@ -7,13 +7,12 @@ import Colors from '../constants/Colors';
 import { getDateDifference, getFriendlyDisplayDate } from '../helpers/dates';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
-const nowDate = Date.now();
-
 export default function ServiceMeasuresList(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const { showFullDetails, items, displayTimestamp } = props;
   const serviceMeasures = items || [];
+  const nowDate = Date.now();
 
   const getFormattedServiceMeasure = (item) => {
     // console.log('nowDate', nowDate);
