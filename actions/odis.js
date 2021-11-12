@@ -31,11 +31,12 @@ export const resetOdisViewCount = () => ({
   type: Types.RESET_ODIS_VIEW_COUNT,
 });
 
-export const getOdisSuccess = ({ items, userBrand }) => ({
+export const getOdisSuccess = ({ items, userBrand, fetchTime }) => ({
   type: Types.GET_ODIS_SUCCESS,
   payload: {
-    items: items,
-    userBrand: userBrand,
+    items,
+    userBrand,
+    fetchTime,
   },
 });
 

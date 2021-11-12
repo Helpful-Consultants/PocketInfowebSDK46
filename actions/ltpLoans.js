@@ -18,12 +18,13 @@ export const getLtpLoansRequest = ({ intId }) => ({
   },
 });
 
-export const getLtpLoansSuccess = ({ statusCode, items }) => ({
+export const getLtpLoansSuccess = ({ statusCode, items, fetchTime }) => ({
   type: Types.GET_LTP_LOANS_SUCCESS,
   statusCode,
   payload: {
     items,
     statusCode,
+    fetchTime,
   },
 });
 

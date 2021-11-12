@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   displayTimestamp: null,
+  fetchTime: null,
 };
 
 const getTimeToExpiry = (nowDate = null, expiryDate = null) => {
@@ -114,7 +115,7 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
     }
     case Types.GET_SERVICE_MEASURES_SUCCESS: {
       //   console.log('action.type is:', action.type);
-      //   console.log(action.payload.items && action.payload.items);
+      //   console.log('action payload is:', action.payload && action.payload);
       //   console.log('STATE', state);
       const fetchTime =
         action.payload && action.payload.fetchTime

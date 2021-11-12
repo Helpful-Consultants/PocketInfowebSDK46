@@ -19,7 +19,13 @@ export default function OdisLinkWithStatus(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const { navigation, showOdisAlert, showingDemoApp } = props;
+  const {
+    navigation,
+    showOdisAlert,
+    showingDemoApp,
+    showAlert,
+    showSevereAlert,
+  } = props;
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
   //   console.log('in odisstatus userBrand', userBrand && userBrand);
@@ -47,14 +53,13 @@ export default function OdisLinkWithStatus(props) {
         iconType='ionicon'
         iconSize={iconSizeSmall}
         text={
-          showOdisAlert
-            ? 'See changed ODIS versions'
-            : 'See current ODIS versions'
+          showAlert ? 'See changed ODIS versions' : 'See current ODIS versions'
         }
         colorOne={Colors.vwgDeepBlue}
-        colorTwo={Colors.vwgSkyBlue}
+        colorTwo={Colors.vwgWarmRed}
         fallbackColor={Colors.vwgCoolOrange}
-        blink={showOdisAlert}
+        showAlert={showAlert}
+        showSevereAlert={showSevereAlert}
       />
     </Touchable>
   );

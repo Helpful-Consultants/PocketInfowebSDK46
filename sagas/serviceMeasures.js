@@ -18,6 +18,7 @@ function* getServiceMeasures({ payload }) {
   let showThisDummyData = yield shouldWeUseDummyData(
     InfoTypes.SERVICE_MEASURES
   );
+  const fetchTime = Date.now();
 
   //   console.log(
   //     'in saga showingDummyData:',
@@ -34,6 +35,7 @@ function* getServiceMeasures({ payload }) {
       actions.getServiceMeasuresSuccess({
         items: serviceMeasuresDummyData,
         statusCode: 200,
+        fetchTime,
       })
     );
   } else {
@@ -56,10 +58,12 @@ function* getServiceMeasures({ payload }) {
         yield put(
           actions.getServiceMeasuresSuccess({
             items: result.data,
+
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else if (result && result.data && result.data.length > 0) {

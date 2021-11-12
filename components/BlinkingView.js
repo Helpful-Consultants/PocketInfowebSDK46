@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import Colors from '../constants/Colors';
 
 export default BlinkingView = (props) => {
   const windowDim = useWindowDimensions();
@@ -18,6 +18,8 @@ export default BlinkingView = (props) => {
     iconSize,
     iconType,
     text,
+    showAlert,
+    showSevereAlert,
   } = props;
 
   //   if (blink) {
@@ -48,21 +50,24 @@ export default BlinkingView = (props) => {
       <Ionicons
         name={iconName}
         size={iconSize}
-        color={blink ? fallbackColor : colorOne}
+        color={
+          showSevereAlert
+            ? Colors.vwgWarmRed
+            : showAlert
+            ? Colors.vwgWarmOrange
+            : Colors.vwgDeepBlue
+        }
       />
       <Text> </Text>
       <Text
-        style={
-          blink
-            ? {
-                ...baseStyles.textColouredBold,
-                color: fallbackColor,
-              }
-            : {
-                ...baseStyles.textColoured,
-                color: showItem ? colorOne : colorTwo,
-              }
-        }
+        style={{
+          ...baseStyles.textColouredBold,
+          color: showSevereAlert
+            ? Colors.vwgWarmRed
+            : showAlert
+            ? Colors.vwgWarmOrange
+            : Colors.vwgDeepBlue,
+        }}
       >
         {text}
       </Text>

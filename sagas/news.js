@@ -20,12 +20,14 @@ function* getNews() {
   //     InfoTypes.NEWS,
   //     showThisDummyData
   //   );
+  const fetchTime = Date.now();
   if (showingDummyData && showThisDummyData) {
     // console.log('in saga showingDummyData is the way');
     yield put(
       actions.getNewsSuccess({
         items: newsDummyData,
         statusCode: 200,
+        fetchTime,
       })
     );
   } else {
@@ -57,7 +59,6 @@ function* getNews() {
         result.data[0].createdDate.length > 0
       ) {
         //   console.log('in news saga - good 200');
-        const fetchTime = Date.now();
         yield put(
           actions.getNewsSuccess({
             items: result.data,

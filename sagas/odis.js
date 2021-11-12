@@ -21,13 +21,14 @@ function* getOdis({ payload }) {
   //     '*************in saga, showingDummyData ',
   //     showingDummyData && showingDummyData
   //   );
-
+  const fetchTime = Date.now();
   if (showingDummyData && showThisDummyData) {
     // console.log(
     //   'in odis saga showingDummyData is the way',
     //   odisDummyData[0].brandVersions
     // );
-    const fetchTime = Date.now();
+
+    console.log('in odis saga fetchTime is', fetchTime);
     yield put(
       actions.getOdisSuccess({
         items: odisDummyData[0].brandVersions,
@@ -58,6 +59,7 @@ function* getOdis({ payload }) {
             items: result.data[0].brandVersions,
             statusCode: 200,
             userBrand: payload.userBrand ? payload.userBrand : null,
+            fetchTime,
           })
         );
       } else {

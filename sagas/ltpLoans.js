@@ -21,6 +21,7 @@ function* getLtpLoans({ payload }) {
   //     InfoTypes.LTP_LOANS,
   //     showThisDummyData
   //   );
+  const fetchTime = Date.now();
   if (showingDummyData && showThisDummyData) {
     // console.log('in ltpLoans saga showingDummyData is the way');
     yield put(
@@ -46,7 +47,7 @@ function* getLtpLoans({ payload }) {
       ) {
         //   console.log('in LtpLoans saga - good 200');
         //   console.log(result.data);
-        const fetchTime = Date.now();
+
         yield put(
           actions.getLtpLoansSuccess({
             items: result.data,

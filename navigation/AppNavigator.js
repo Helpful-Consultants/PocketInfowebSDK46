@@ -163,9 +163,7 @@ export default AppNavigator = (props) => {
   const unseenCriticalItems = useSelector(
     (state) => state.news.unseenCriticalItems
   );
-  const odisChangesToHighlight = useSelector(
-    (state) => state.odis.changesToHighlight
-  );
+  const odisRedCount = useSelector((state) => state.odis.redCount);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
@@ -299,12 +297,8 @@ export default AppNavigator = (props) => {
           tempNotifiableAlertsCount + unseenCriticalItems;
       }
 
-      if (
-        typeof odisChangesToHighlight !== 'undefined' &&
-        odisChangesToHighlight !== null
-      ) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + odisChangesToHighlight;
+      if (typeof odisRedCount !== 'undefined' && odisRedCount !== null) {
+        tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
       }
 
       //   console.log(
@@ -323,8 +317,8 @@ export default AppNavigator = (props) => {
       //     ltpLoansRedCount,
       //     'unseenCriticalItems',
       //     unseenCriticalItems,
-      //     'odisChangesToHighlight',
-      //     odisChangesToHighlight,
+      //     'odisRedCount',
+      //     odisRedCount,
       //     'tempNotifiableAlertsCount',
       //     tempNotifiableAlertsCount
       //   );
@@ -338,8 +332,7 @@ export default AppNavigator = (props) => {
     calibrationExpiryRedCount,
     ltpLoansRedCount,
     serviceMeasuresRedCount,
-    unseenCriticalItems,
-    odisChangesToHighlight,
+    odisRedCount,
     showingDemoApp,
     showingDemoData,
   ]); //testing objects

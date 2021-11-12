@@ -19,12 +19,17 @@ export const getServiceMeasuresRequest = ({ dealerId, intId }) => ({
   },
 });
 
-export const getServiceMeasuresSuccess = ({ statusCode, items }) => ({
+export const getServiceMeasuresSuccess = ({
+  statusCode,
+  items,
+  fetchTime,
+}) => ({
   type: Types.GET_SERVICE_MEASURES_SUCCESS,
   statusCode,
   payload: {
     items,
     statusCode,
+    fetchTime,
   },
 });
 

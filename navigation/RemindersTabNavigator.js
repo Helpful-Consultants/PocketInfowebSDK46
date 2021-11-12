@@ -80,6 +80,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const odisChangesToHighlight = useSelector(
     (state) => state.odis.changesToHighlight
   );
+  const odisRedCount = useSelector((state) => state.odis.redCount);
   const serviceMeasuresRedCount = useSelector(
     (state) => state.serviceMeasures.redCount
   );
@@ -168,6 +169,9 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + ltpLoansRedCount;
       }
+      if (typeof odisRedCount !== 'undefined' || odisRedCount !== null) {
+        tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + 1;
+      }
 
       //   console.log(
       //     'in reminders nav useEffect - Red alerts ',
@@ -188,6 +192,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     calibrationExpiryRedCount,
     ltpLoansRedCount,
     serviceMeasuresRedCount,
+    odisRedCount,
     showingDemoApp,
     showingDemoData,
   ]);
@@ -221,8 +226,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         typeof odisChangesToHighlight !== 'undefined' ||
         odisChangesToHighlight !== null
       ) {
-        tempNotifiableAlertsAmberCount =
-          tempNotifiableAlertsAmberCount + odisChangesToHighlight;
+        tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
       }
 
       //   console.log(
@@ -387,11 +391,15 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarBadge: odisChangesToHighlight ? '' : null,
           tabBarBadgeStyle: {
             color:
-              odisChangesToHighlight > 0
+              odisRedCount && odisRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : odisChangesToHighlight && odisChangesToHighlight > 0
                 ? Colors.vwgBadgeAlertColor
                 : Colors.vwgBadgeColor,
             backgroundColor:
-              odisChangesToHighlight > 0
+              odisRedCount && odisRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : odisChangesToHighlight && odisChangesToHighlight > 0
                 ? Colors.vwgBadgeAlertColor
                 : Colors.vwgBadgeColor,
           },

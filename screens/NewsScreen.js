@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
@@ -32,6 +32,7 @@ export default NewsScreen = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const newsItems = useSelector((state) => state.news.newsItems);
+  const newsFetchTime = useSelector((state) => state.news.fetchTime);
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userData = useSelector((state) => state.user.userData[0]);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);

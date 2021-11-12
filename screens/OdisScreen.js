@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +9,7 @@ import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
 import {
   getOdisRequest,
-  incrementOdisViewCount,
+  //   incrementOdisViewCount,
   setOdisDisplayTimestamp,
 } from '../actions/odis';
 import OdisVersions from './OdisVersions';
@@ -19,12 +19,14 @@ export default OdisScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
+
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisObj = useSelector((state) => state.odis.odisData);
   const isLoading = useSelector((state) => state.odis.isLoading);
   const dataError = useSelector((state) => state.odis.error);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
+  const latestChangeDate = useSelector((state) => state.odis.latestChangeDate);
   //   const allOdis = useSelector((state) => state.odis);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
@@ -37,12 +39,12 @@ export default OdisScreen = (props) => {
   );
   const storeDisplayTimestampAsync = async () => {
     displayTime = Date.now();
-    // console.log('istoreDisplayTimestampAsync:');
+    console.log('in storeDisplayTimestampAsync: displayTime', displayTime);
     dispatch(setOdisDisplayTimestamp({ displayTime }));
   };
 
   //   console.log('OdisScreen,userBrand:', userBrand, odisObj);
-  const incrementViewCount = async () => dispatch(incrementOdisViewCount());
+  //   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
 
   //   const { navigation } = props;
 
@@ -79,12 +81,19 @@ export default OdisScreen = (props) => {
       const getItemsAsync = async () => {
         getItems();
       };
-      dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
+      console.log('in odis screen useFocusEffect');
+      //   dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
-      incrementViewCount();
-      storeDisplayTimestampAsync();
+      //   incrementViewCount();
+
+      //   storeDisplayTimestampAsync();
     }, [])
   );
+
+  useEffect(() => {
+    console.log('in odis screen useEffect odisFetchTime', odisFetchTime);
+    storeDisplayTimestampAsync();
+  }, [odisFetchTime]);
 
   //   if (odisObj) {
   //     console.log('in odis screen,odisObj', odisObj);
@@ -97,11 +106,7 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  //   console.log(
-  //     'rendering Odis screen, odisViewCount',
-  //     odisViewCount,
-  //     odisFetchTime
-  //   );
+  console.log('rendering Odis screen, odisFetchTime', odisFetchTime);
 
   return (
     <View style={baseStyles.containerFlexCentred}>

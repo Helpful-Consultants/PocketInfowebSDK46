@@ -24,10 +24,11 @@ export const getNewsRequest = () => ({
   type: Types.GET_NEWS_REQUEST,
 });
 
-export const getNewsSuccess = ({ items }) => ({
+export const getNewsSuccess = ({ items, fetchTime }) => ({
   type: Types.GET_NEWS_SUCCESS,
   payload: {
-    items: items,
+    items,
+    fetchTime,
   },
 });
 

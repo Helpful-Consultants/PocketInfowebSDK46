@@ -1,15 +1,20 @@
 // import odisDummyData from '../dummyData/odisDummyData';
 import Types from '../constants/Types';
 import { getOdisAlertCount } from '../helpers/odis';
+import { isDateAfter } from '../helpers/dates';
+import { toDate } from 'date-fns';
 
 const INITIAL_STATE = {
   odisData: {},
   viewCount: 0,
+  redCount: 0,
+  unseenChanges: 0,
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
   fetchTime: null,
+  latestChangeDate: null,
   displayTimestamp: null,
   userBrand: null,
 };
@@ -33,7 +38,13 @@ export default function odis(state = INITIAL_STATE, action) {
         action.payload && action.payload.displayTime
           ? action.payload.displayTime
           : null;
+      console.log(
+        '^^^^^^^ in odis reducer set displayTime ',
+        // odisDataObj,
 
+        'displayTimestamp',
+        displayTime
+      );
       //   console.log(
       //     'in odis reducer set display',
       //     action.payload && action.payload
@@ -47,17 +58,20 @@ export default function odis(state = INITIAL_STATE, action) {
       //     'changesToHighlight',
       //     changesToHighlight
       //   );
-      const changeObj = getOdisAlertCount(
-        state.odisData,
-        displayTime,
-        state.userBrand
-      );
-      const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
+      //   const changeObj = getOdisAlertCount(
+      //     state.odisData,
+      //     displayTime,
+      //     state.userBrand
+      //   );
+      //   const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
+      let oldViewCount = (state && state.viewCount) || 0;
 
       return {
         ...state,
-        changesToHighlight:
-          changesToHighlight && changesToHighlight > 0 ? 1 : 0,
+        // changesToHighlight:
+        //   changesToHighlight && changesToHighlight > 0 ? 1 : 0,
+        viewCount: oldViewCount + 1,
+        redCount: 0,
         displayTimestamp: displayTime,
       };
     }
@@ -152,11 +166,11 @@ export default function odis(state = INITIAL_STATE, action) {
                   state.odisData[brandCode].dataVersion !== item.dataVersion)
               ) {
                 //   console.log('odis change for ', brandCode);
-                endPointChangedObj[brandCode] = new Date();
+                endPointChangedObj[brandCode] = fetchTime;
               }
             }
             /// remove after testing!!!!
-            //   endPointChangedObj[brandCode] = new Date();
+            //   endPointChangedObj[brandCode] = fetchTime;
 
             odisDataObj[brandCode] = {
               ...item,
@@ -235,16 +249,36 @@ export default function odis(state = INITIAL_STATE, action) {
       //     changesToHighlight
       //   );
 
+      const unseenChanges =
+        typeof state.displayTimestamp !== 'undefined' && state.displayTimestamp
+          ? isDateAfter(latestChangeDate, state.displayTimestamp)
+            ? true
+            : false
+          : true;
+
+      console.log(
+        'in odis reducer set success called getOdisAlertCount',
+        // odisDataObj,
+        'latestChangeDate',
+        latestChangeDate,
+        'state.displayTimestamp',
+        (state.displayTimestamp && state.displayTimestamp) || 'nought',
+        (state.displayTimestamp && toDate(state.displayTimestamp)) || 'nought',
+        'unseenChanges',
+        unseenChanges,
+        state
+      );
+
       return {
         ...state,
         odisData: odisDataObj,
         userBrand: userBrand,
-        // odisData: {},
         viewCount: newViewCount,
         latestChangeDate: latestChangeDate,
         changesToHighlight:
           changesToHighlight && changesToHighlight > 0 ? 1 : 0,
-        fetchTime,
+        redCount: unseenChanges ? 1 : 0,
+        fetchTime: fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,

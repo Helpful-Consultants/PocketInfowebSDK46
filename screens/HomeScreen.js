@@ -160,7 +160,7 @@ export default HomeScreen = (props) => {
   const odisChangesToHighlight = useSelector(
     (state) => state.odis.changesToHighlight
   );
-
+  const odisRedCount = useSelector((state) => state.odis.redCount);
   const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
   const [notificationsRedCount, setNotificationsRedCount] = useState(0);
   const [notificationsAmberCount, setNotificationsAmberCount] = useState(0);
@@ -531,11 +531,16 @@ export default HomeScreen = (props) => {
       //     ltpLoansAmberCount,
       //     ltpLoansRedCount
       //   );
+      const tempNotifiableOdisRedCount =
+        typeof odisRedCount !== 'undefined' && odisRedCount !== null
+          ? odisRedCount
+          : 0;
       const tempNotifiableCalibrationExpiryRedCount =
         typeof calibrationExpiryRedCount !== 'undefined' &&
         calibrationExpiryRedCount !== null
           ? calibrationExpiryRedCount
           : 0;
+
       const tempNotifiableServiceMeasuresRedCount =
         typeof serviceMeasuresRedCount !== 'undefined' &&
         serviceMeasuresRedCount !== null
@@ -546,7 +551,8 @@ export default HomeScreen = (props) => {
           ? ltpLoansRedCount
           : 0;
       setNotificationsRedCount(
-        tempNotifiableCalibrationExpiryRedCount +
+        tempNotifiableOdisRedCount +
+          tempNotifiableCalibrationExpiryRedCount +
           tempNotifiableLtpLoansRedCount +
           tempNotifiableServiceMeasuresRedCount
       );
@@ -592,6 +598,7 @@ export default HomeScreen = (props) => {
     serviceMeasuresRedCount,
     serviceMeasuresAmberCount,
     odisChangesToHighlight,
+    odisRedCount,
     showingDemoApp,
     showingDemoData,
   ]);
@@ -933,7 +940,8 @@ export default HomeScreen = (props) => {
                 <OdisLinkWithStatus
                   showingDemoApp={showingDemoApp}
                   navigation={navigation}
-                  showOdisAlert={odisChangesToHighlight}
+                  showAlert={odisChangesToHighlight}
+                  showSevereAlert={odisRedCount}
                 />
               </View>
 

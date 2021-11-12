@@ -31,10 +31,12 @@ export default NotificationsScreen = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.showingDemoData);
   const userBrand = useSelector((state) => state.user.userBrand);
+  const dealerId = useSelector((state) => state.user.userData.dealerId);
+  const userIntId = useSelector((state) => state.user.userIntId);
   const odisChangesToHighlight = useSelector(
     (state) => state.odis.changesToHighlight
   );
-
+  const odisRedCount = useSelector((state) => state.odis.redCount);
   const calibrationExpiryOverdueCount = useSelector(
     (state) => state.calibrationExpiry.overdueCount
   );
@@ -60,21 +62,16 @@ export default NotificationsScreen = (props) => {
     (state) => state.serviceMeasures.totalCount
   );
 
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const userRequestedDemoData = useSelector(
     (state) => state.user.requestedDemoData
   );
-  const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId.toString();
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
-
   const isLoadingCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.isLoading
   );
@@ -107,7 +104,7 @@ export default NotificationsScreen = (props) => {
   const dataErrorUrlCalibrationExpiry = useSelector(
     (state) => state.calibrationExpiry.dataErrorUrl
   );
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
+  const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const userApiFetchParamsObj = {
@@ -215,6 +212,8 @@ export default NotificationsScreen = (props) => {
     }
   }, [showingDemoApp, showingDemoData]);
 
+  console.log(' ******************** odisRedCount', odisRedCount);
+
   return (
     <ImageBackground
       source={require('../assets/images/connectivity-narrow.jpg')}
@@ -248,7 +247,38 @@ export default NotificationsScreen = (props) => {
           </View>
         ) : null}
 
-        {odisChangesToHighlight ? (
+        {odisRedCount ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+            }
+            style={{ backgroundColor: Colors.vwgWhite }}
+          >
+            <View style={baseStyles.viewSectionRibbon}>
+              <Ionicons
+                name='tv'
+                size={20}
+                color={Colors.vwgBadgeSevereAlertColor}
+              />
+              <Text style={baseStyles.textSectionRibbon}>
+                {`  Please see `}
+                <Text
+                  style={{
+                    ...baseStyles.textSectionRibbon,
+                    fontFamily: 'the-sans-bold',
+                  }}
+                >
+                  {`ODIS version changes   `}
+                </Text>
+              </Text>
+              <Ionicons
+                name='open-outline'
+                size={16}
+                style={{ marginTop: 2 }}
+              />
+            </View>
+          </TouchableOpacity>
+        ) : odisChangesToHighlight ? (
           <TouchableOpacity
             onPress={() =>
               navigation.navigate('RemindersTabs', { screen: 'ODIS' })
@@ -265,7 +295,7 @@ export default NotificationsScreen = (props) => {
                     fontFamily: 'the-sans-bold',
                   }}
                 >
-                  {`ODIS version changes in the last ${InfoTypesAlertAges.ODIS_RED_PERIOD} days  `}
+                  {`recent ODIS version changes  `}
                 </Text>
               </Text>
               <Ionicons
