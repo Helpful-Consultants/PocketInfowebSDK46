@@ -236,6 +236,7 @@ export default function odis(state = INITIAL_STATE, action) {
       //   );
 
       return {
+        ...state,
         odisData: odisDataObj,
         userBrand: userBrand,
         // odisData: {},
