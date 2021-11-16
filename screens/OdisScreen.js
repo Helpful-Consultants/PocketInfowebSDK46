@@ -13,6 +13,7 @@ import {
   setOdisDisplayTimestamp,
 } from '../actions/odis';
 import OdisVersions from './OdisVersions';
+import { selectFetchParamsObj } from '../reducers/user';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
 export default OdisScreen = (props) => {
@@ -22,9 +23,7 @@ export default OdisScreen = (props) => {
 
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisObj = useSelector((state) => state.odis.odisData);
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const isLoading = useSelector((state) => state.odis.isLoading);
   const dataError = useSelector((state) => state.odis.error);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
@@ -36,17 +35,24 @@ export default OdisScreen = (props) => {
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
 
-  const fetchParamsObj = useMemo(() => {
+  //   const fetchParamsObj = useMemo(() => {
+  //     console.log(
+  //       'in serviceMeasures memoising fetchParamsObj',
+  //       userApiFetchParamsObj
+  //     );
+  //     return userApiFetchParamsObj;
+  //   }, [
+  //     userApiFetchParamsObj.dealerId,
+  //     userApiFetchParamsObj.intId,
+  //     userApiFetchParamsObj.userBrand,
+  //   ]);
+
+  useEffect(() => {
     console.log(
-      'in serviceMeasures memoising fetchParamsObj',
-      userApiFetchParamsObj
+      '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
+      fetchParamsObj
     );
-    return userApiFetchParamsObj;
-  }, [
-    userApiFetchParamsObj.dealerId,
-    userApiFetchParamsObj.intId,
-    userApiFetchParamsObj.userBrand,
-  ]);
+  }, [fetchParamsObj]);
 
   const getItems = useCallback(() => {
     console.log('in ODIS in getItems userApiFetchParamsObj', fetchParamsObj);

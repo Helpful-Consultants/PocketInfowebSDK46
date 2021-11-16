@@ -13,7 +13,7 @@ import {
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
 import { sortObjListByDate } from '../helpers/dates';
-
+import { selectFetchParamsObj } from '../reducers/user';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
@@ -26,9 +26,7 @@ export default LtpLoansScreen = (props) => {
   const [searchInput, setSearchInput] = useState('');
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
@@ -57,20 +55,24 @@ export default LtpLoansScreen = (props) => {
   //   console.log('getLtpLoansData', getLtpLoansData);
 
   //   const { navigation } = props;
-  const fetchParamsObj = useMemo(() => {
-    console.log('in ltpLoans memoising fetchParamsObj', userApiFetchParamsObj);
-    return userApiFetchParamsObj;
-  }, [
-    userApiFetchParamsObj.dealerId,
-    userApiFetchParamsObj.intId,
-    userApiFetchParamsObj.userBrand,
-  ]);
+  //   const fetchParamsObj = useMemo(() => {
+  //     console.log('in ltpLoans memoising fetchParamsObj', userApiFetchParamsObj);
+  //     return userApiFetchParamsObj;
+  //   }, [
+  //     userApiFetchParamsObj.dealerId,
+  //     userApiFetchParamsObj.intId,
+  //     userApiFetchParamsObj.userBrand,
+  //   ]);
 
-  const getItems = useCallback(() => {
+  useEffect(() => {
     console.log(
-      'in ltpLoans in getItems userApiFetchParamsObj',
+      '&&&&&&&&&&&&&&&& fetchParamsObj changed for LTP loans',
       fetchParamsObj
     );
+  }, [fetchParamsObj]);
+
+  const getItems = useCallback(() => {
+    console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
     dispatch(getLtpLoansRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 

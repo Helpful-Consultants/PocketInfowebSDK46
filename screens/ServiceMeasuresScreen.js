@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
+import { selectFetchParamsObj } from '../reducers/user';
 import {
   getServiceMeasuresRequest,
   setServiceMeasuresDisplayTimestamp,
@@ -44,9 +45,7 @@ export default ServiceMeasuresScreen = (props) => {
   );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const [searchInput, setSearchInput] = useState('');
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
@@ -68,17 +67,24 @@ export default ServiceMeasuresScreen = (props) => {
 
   //   const { navigation } = props;
 
-  const fetchParamsObj = useMemo(() => {
+  useEffect(() => {
     console.log(
-      'in serviceMeasures memoising fetchParamsObj',
-      userApiFetchParamsObj
+      '&&&&&&&&&&&&&&&& fetchParamsObj changed for SM',
+      fetchParamsObj
     );
-    return userApiFetchParamsObj;
-  }, [
-    userApiFetchParamsObj.dealerId,
-    userApiFetchParamsObj.intId,
-    userApiFetchParamsObj.userBrand,
-  ]);
+  }, [fetchParamsObj]);
+
+  //   const fetchParamsObj = useMemo(() => {
+  //     console.log(
+  //       'in serviceMeasures memoising fetchParamsObj',
+  //       userApiFetchParamsObj
+  //     );
+  //     return userApiFetchParamsObj;
+  //   }, [
+  //     userApiFetchParamsObj.dealerId,
+  //     userApiFetchParamsObj.intId,
+  //     userApiFetchParamsObj.userBrand,
+  //   ]);
 
   const getItems = useCallback(() => {
     console.log(
