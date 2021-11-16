@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +28,9 @@ export default ServiceMeasuresScreen = (props) => {
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
   );
+  const serviceMeasuresFetchTime = useSelector(
+    (state) => state.serviceMeasures.fetchTime
+  );
   const displayTimestamp = useSelector(
     (state) => state.serviceMeasures.displayTimestamp
   );
@@ -41,15 +44,14 @@ export default ServiceMeasuresScreen = (props) => {
   );
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const userApiFetchParamsObj = useSelector(
+    (state) => state.user.userApiFetchParamsObj
+  );
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const [searchInput, setSearchInput] = useState('');
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
-  const userApiFetchParamsObj = {
-    dealerId: (userDataObj && userDataObj.dealerId) || null,
-    intId: (userDataObj && userDataObj.intId.toString()) || null,
-  };
 
   //   console.log(
   //     'in serviceMeasures screen - userApiFetchParamsObj is set to ',
@@ -66,76 +68,62 @@ export default ServiceMeasuresScreen = (props) => {
 
   //   const { navigation } = props;
 
-  const getItems = useCallback(async (userApiFetchParamsObj) => {
-    // console.log(
-    //   'in serviceMeasures getItems userApiFetchParamsObj',
-    //   userApiFetchParamsObj
-    // );
-    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj)),
-      [serviceMeasuresItems];
-  });
+  const fetchParamsObj = useMemo(() => {
+    console.log(
+      'in serviceMeasures memoising fetchParamsObj',
+      userApiFetchParamsObj
+    );
+    return userApiFetchParamsObj;
+  }, [
+    userApiFetchParamsObj.dealerId,
+    userApiFetchParamsObj.intId,
+    userApiFetchParamsObj.userBrand,
+  ]);
 
-  const getItemsAsync = async () => {
-    // console.log(
-    //   'ServiceMeasures screen getItemsAsync, userApiFetchParamsObj:',
-    //   userApiFetchParamsObj
-    // );
+  const getItems = useCallback(() => {
+    console.log(
+      'in serviceMeasures in getItems userApiFetchParamsObj',
+      fetchParamsObj
+    );
+    dispatch(getServiceMeasuresRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
 
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
-      getItems(userApiFetchParamsObj);
-    }
+  //   console.log('in serviceMeasures screen - point 2');
+
+  const storeDisplayTimestamp = () => {
+    console.log('+++++++++++++++=in SM storeDisplayTimestampAsync:');
+    const displayTime = Date.now();
+    dispatch(setServiceMeasuresDisplayTimestamp(displayTime));
   };
-  const storeDisplayTimestampAsync = async () => {
-    // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
-    displayTime = Date.now();
-    dispatch(setServiceMeasuresDisplayTimestamp({ displayTime }));
-  };
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in stats use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
 
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     console.log('in serviceMeasures useEffect', userApiFetchParamsObj);
-  //     //   setGetWipsDataObj(userApiFetchParamsObj);
-  //     getItemsAsync();
-  //   }, [userApiFetchParamsObj]);
+  const refreshRequestHandler = useCallback(() => {
+    console.log('in serviceMeasures refreshRequestHandler');
+    getItems();
+  }, [getItems]);
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(
-        revalidateUserCredentials({
-          calledBy: 'ServiceMeasures Screen',
-        })
-      );
-      //   console.log('in serviceMeasures focusffect ');
+      console.log('in serviceMeasures usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'ServiceMeasures Screen',
+      //     })
+      //   );
+      console.log('in serviceMeasures focusffect calling getItems');
+      getItems();
+      storeDisplayTimestamp();
       setSearchInput('');
-      getItemsAsync();
-      storeDisplayTimestampAsync();
-    }, [])
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('serviceMeasures Screen was unfocused');
+      };
+    }, [dispatch, getItems])
   );
 
-  const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
-    getItemsAsync();
-  };
+  useEffect(() => {
+    // console.log('in odis screen useEffect SM FetchTime', serviceMeasuresFetchTime);
+    storeDisplayTimestamp();
+  }, [serviceMeasuresFetchTime]);
 
   let serviceMeasuresSorted = sortObjListByDate(
     serviceMeasuresItems,

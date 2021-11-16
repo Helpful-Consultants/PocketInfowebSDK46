@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,6 @@ import {
 import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
 import { sortObjListByDate } from '../helpers/dates';
-// import { getOpenLtpLoansItems } from '../helpers/ltpLoanStatus';
 
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
@@ -23,9 +22,13 @@ export default LtpLoansScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
+  const ltpLoansFetchTime = useSelector((state) => state.ltpLoans.fetchTime);
   const [searchInput, setSearchInput] = useState('');
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  const userApiFetchParamsObj = useSelector(
+    (state) => state.user.userApiFetchParamsObj
+  );
   const isLoading = useSelector((state) => state.ltpLoans.isLoading);
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
@@ -35,10 +38,10 @@ export default LtpLoansScreen = (props) => {
 
   //   console.log('in ltpLoans screen - userDataObj is set to ', userDataObj);
 
-  const userApiFetchParamsObj = {
-    dealerId: (userDataObj && userDataObj.dealerId) || null,
-    intId: (userDataObj && userDataObj.intId.toString()) || null,
-  };
+  //   const userApiFetchParamsObj = {
+  //     dealerId: (userDataObj && userDataObj.dealerId) || null,
+  //     intId: (userDataObj && userDataObj.intId.toString()) || null,
+  //   };
   //   console.log('in ltpLoans screen - point 1');
   //   console.log(
   //     'in ltpLoans screen - userApiFetchParamsObj is set to ',
@@ -54,90 +57,63 @@ export default LtpLoansScreen = (props) => {
   //   console.log('getLtpLoansData', getLtpLoansData);
 
   //   const { navigation } = props;
+  const fetchParamsObj = useMemo(() => {
+    console.log('in ltpLoans memoising fetchParamsObj', userApiFetchParamsObj);
+    return userApiFetchParamsObj;
+  }, [
+    userApiFetchParamsObj.dealerId,
+    userApiFetchParamsObj.intId,
+    userApiFetchParamsObj.userBrand,
+  ]);
 
-  const getItems = useCallback(async (userApiFetchParamsObj) => {
-    // console.log(
-    //   'in ltpLoans getItems userApiFetchParamsObj',
-    //   userApiFetchParamsObj
-    // );
-    dispatch(getLtpLoansRequest(userApiFetchParamsObj)), [ltpLoansItems];
-  });
+  const getItems = useCallback(() => {
+    console.log(
+      'in ltpLoans in getItems userApiFetchParamsObj',
+      fetchParamsObj
+    );
+    dispatch(getLtpLoansRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
 
   //   console.log('in ltpLoans screen - point 2');
 
-  const getItemsAsync = async () => {
-    // console.log(
-    //   'rendering LtpLoans screen, userApiFetchParamsObj:',
-    //   userApiFetchParamsObj
-    // );
-
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
-      getItems(userApiFetchParamsObj);
-    }
-  };
-  const storeDisplayTimestampAsync = async () => {
-    // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
-    displayTime = Date.now();
-    dispatch(setLtpLoansDisplayTimestamp({ displayTime }));
+  const storeDisplayTimestamp = () => {
+    console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
+    const now = Date.now();
+    dispatch(setLtpLoansDisplayTimestamp({ now }));
   };
 
-  //   console.log('in ltpLoans screen - point 3');
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in ltpLoans use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
+  const refreshRequestHandler = useCallback(() => {
+    console.log('in ltpLoans refreshRequestHandler');
+    getItems();
+  }, [getItems]);
 
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     console.log('in ltpLoans useEffect', userApiFetchParamsObj);
-  //     //   setGetWipsDataObj(userApiFetchParamsObj);
-  //     getItemsAsync();
-  //   }, [userApiFetchParamsObj]);
-  //   console.log('in ltpLoans screen - point 4');
   useFocusEffect(
     useCallback(() => {
-      dispatch(
-        revalidateUserCredentials({
-          calledBy: 'LtpLoans Screen',
-        })
-      );
-      //   console.log('in ltpLoans focusffect ');
+      console.log('in ltpLoans usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'LtpLoans Screen',
+      //     })
+      //   );
+      console.log('in ltpLoans focusffect calling getItems');
+      getItems();
+      storeDisplayTimestamp();
       setSearchInput('');
-      getItemsAsync();
-      storeDisplayTimestampAsync();
-    }, [])
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('ltpLoans Screen was unfocused');
+      };
+    }, [dispatch, getItems])
   );
-  //   console.log('in ltpLoans screen - point 5');
+
   useEffect(() => {
-    // runs only once
-    // console.log('in booked useEffect', userApiFetchParamsObj && userApiFetchParamsObj.dealerId);
-    // console.log(
-    //   'in ltpLoans getItems userApiFetchParamsObj',
-    //   userApiFetchParamsObj
-    // );
-  }, []);
+    // console.log('in ltpLoans screen useEffect ltpLoansFetchTime', ltpLoansFetchTime);
+    storeDisplayTimestamp();
+  }, [ltpLoansFetchTime]);
+
+  //   console.log('in ltpLoans screen - point 5');
 
   //   console.log('in ltpLoans screen - point 6');
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler');
-    getItemsAsync();
-  };
 
   const items = !isLoading && !dataError ? ltpLoansItems : [];
   let ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
@@ -163,18 +139,18 @@ export default LtpLoansScreen = (props) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(ltpLoansSorted, searchInput);
-      //   console.log(
-      //     'LtpLoans Screen  searchInputHandler for: ',
-      //     searchInput && searchInput,
-      //     'LtpLoans: ',
-      //     ltpLoansItems && ltpLoansItems.length,
-      //     'itemsToShow: ',
-      //     itemsToShow && itemsToShow.length,
-      //     'uniqueLitpLoansItems: ',
-      //     'newFilteredItems:',
-      //     newFilteredItems && newFilteredItems.length,
-      //     newFilteredItems
-      //   );
+      console.log(
+        'LtpLoans Screen  searchInputHandler for: ',
+        searchInput && searchInput,
+        'LtpLoans: ',
+        ltpLoansItems && ltpLoansItems.length,
+        'itemsToShow: ',
+        itemsToShow && itemsToShow.length,
+        'uniqueLitpLoansItems: ',
+        'newFilteredItems:',
+        newFilteredItems && newFilteredItems.length,
+        newFilteredItems
+      );
       setFilteredItems(newFilteredItems);
     }
   };

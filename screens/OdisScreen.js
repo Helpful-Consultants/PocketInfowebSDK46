@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +22,9 @@ export default OdisScreen = (props) => {
 
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisObj = useSelector((state) => state.odis.odisData);
+  const userApiFetchParamsObj = useSelector(
+    (state) => state.user.userApiFetchParamsObj
+  );
   const isLoading = useSelector((state) => state.odis.isLoading);
   const dataError = useSelector((state) => state.odis.error);
   const odisViewCount = useSelector((state) => state.odis.viewCount);
@@ -33,66 +36,55 @@ export default OdisScreen = (props) => {
   //   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
 
-  const getItems = useCallback(
-    async () => dispatch(getOdisRequest({ userBrand: userBrand })),
-    [odisObj]
-  );
-  const storeDisplayTimestampAsync = async () => {
-    displayTime = Date.now();
-    // console.log('in storeDisplayTimestampAsync: displayTime', displayTime);
-    dispatch(setOdisDisplayTimestamp({ displayTime }));
+  const fetchParamsObj = useMemo(() => {
+    console.log(
+      'in serviceMeasures memoising fetchParamsObj',
+      userApiFetchParamsObj
+    );
+    return userApiFetchParamsObj;
+  }, [
+    userApiFetchParamsObj.dealerId,
+    userApiFetchParamsObj.intId,
+    userApiFetchParamsObj.userBrand,
+  ]);
+
+  const getItems = useCallback(() => {
+    console.log('in ODIS in getItems userApiFetchParamsObj', fetchParamsObj);
+    dispatch(getOdisRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
+
+  const storeDisplayTimestamp = () => {
+    console.log('+++++++++++++++=in ODIS storeDisplayTimestampAsync:');
+    const displayTime = Date.now();
+    dispatch(setOdisDisplayTimestamp(displayTime));
   };
 
-  //   console.log('OdisScreen,userBrand:', userBrand, odisObj);
-  //   const incrementViewCount = async () => dispatch(incrementOdisViewCount());
-
-  //   const { navigation } = props;
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     const getItemsAsync = async () => {
-  //       //   console.log('in odis use effect');
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //       incrementViewCount();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler');
+  const refreshRequestHandler = useCallback(() => {
+    console.log('in odis refreshRequestHandler');
     getItems();
-  };
-
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     // incrementViewCount();
-  //     setIsRefreshNeeded(true);
-  //   });
+  }, [getItems]);
 
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
+      console.log('in serviceMeasures usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'ServiceMeasures Screen',
+      //     })
+      //   );
+      console.log('in serviceMeasures focusffect calling getItems');
+      getItems();
+      storeDisplayTimestamp();
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('ODIS Screen was unfocused');
       };
-      //   console.log('in odis screen useFocusEffect');
-      //   dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
-      getItemsAsync();
-      //   incrementViewCount();
-
-      //   storeDisplayTimestampAsync();
-    }, [])
+    }, [dispatch, getItems])
   );
 
   useEffect(() => {
     // console.log('in odis screen useEffect odisFetchTime', odisFetchTime);
-    storeDisplayTimestampAsync();
+    storeDisplayTimestamp();
   }, [odisFetchTime]);
 
   //   if (odisObj) {

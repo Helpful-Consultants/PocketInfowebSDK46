@@ -28,7 +28,7 @@ function* getOdis({ payload }) {
     //   odisDummyData[0].brandVersions
     // );
 
-    console.log('in odis saga fetchTime is', fetchTime);
+    // console.log('in odis saga fetchTime is', fetchTime);
     yield put(
       actions.getOdisSuccess({
         items: odisDummyData[0].brandVersions,

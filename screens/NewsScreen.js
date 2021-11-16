@@ -68,7 +68,7 @@ export default NewsScreen = (props) => {
   const storeDisplayTimestampAsync = async () => {
     // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
     displayTime = Date.now();
-    dispatch(setNewsDisplayTimestamp({ displayTime }));
+    dispatch(setNewsDisplayTimestamp(displayTime));
   };
 
   //   const { navigation } = props;
@@ -104,6 +104,9 @@ export default NewsScreen = (props) => {
       getItemsAsync();
     }, [])
   );
+  useEffect(() => {
+    storeDisplayTimestampAsync();
+  }, [newsFetchTime]);
 
   const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);

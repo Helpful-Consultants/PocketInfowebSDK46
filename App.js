@@ -9,22 +9,16 @@ import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { store, sagaMiddleware } from './helpers/store';
 // import logger from 'redux-logger';
-import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
-import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Tasks from './constants/Tasks';
-import {
-  //   getBackgroundDataRequest,
-  getBackgroundDataStart,
-} from './actions/backgroundData';
 import {
   defineBackgroundTask,
   showAppBadgeCount,

@@ -4,7 +4,7 @@ export const getServiceMeasuresStart = () => ({
   type: Types.GET_SERVICE_MEASURES_START,
 });
 
-export const setServiceMeasuresDisplayTimestamp = ({ displayTime }) => ({
+export const setServiceMeasuresDisplayTimestamp = (displayTime) => ({
   type: Types.SET_SERVICE_MEASURES_DISPLAY_TIMESTAMP,
   payload: {
     displayTime,

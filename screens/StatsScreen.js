@@ -6,11 +6,8 @@ import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
-// import { getDealerWipsRequest } from '../actions/dealerWips';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
-// import userDummyData from '../dummyData/userDummyData.js';
-// import statsDummyData from '../dummyData/statsDummyData.js';
 
 export default StatsScreen = (props) => {
   const windowDim = useWindowDimensions();

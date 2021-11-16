@@ -98,6 +98,7 @@ export default function user(state = INITIAL_STATE, action) {
           ? {
               dealerId: action.payload.items[0].dealerId.toString(),
               intId: action.payload.items[0].intId.toString(),
+              userBrand: action.payload.items[0].brand || null,
             }
           : null;
 

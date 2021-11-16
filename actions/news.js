@@ -13,7 +13,7 @@ export const getNewsStart = () => ({
   type: Types.GET_NEWS_START,
 });
 
-export const setNewsDisplayTimestamp = ({ displayTime }) => ({
+export const setNewsDisplayTimestamp = (displayTime) => ({
   type: Types.SET_NEWS_DISPLAY_TIMESTAMP,
   payload: {
     displayTime,
