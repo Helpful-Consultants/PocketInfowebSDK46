@@ -1,4 +1,5 @@
 // import { Types } from '../actions/user';
+import { createSelector } from 'reselect';
 import Types from '../constants/Types';
 
 const INITIAL_STATE = {
@@ -21,6 +22,38 @@ const INITIAL_STATE = {
   requestedDemoData: false,
   showingDemoApp: false,
 };
+// const stateDealerId = (state) =>
+//   (state && state.userData && state.userData.dealerId) || null;
+// const stateBrand = (state) =>
+//   (state && state.userData && state.userData.brand) || null;
+// const stateUserIntId = (state) =>
+//   (state && state.userData && state.userData.intId) || null;
+
+export const selectFetchParamsObj = createSelector(
+  //   (state) => (state.user && state.userData && state.userData.dealerId) || null,
+  //   (state) => (state.user && state.userData && state.userData.brand) || null,
+  //   (state) => (state.user && state.userData && state.userData.intId) || null,
+  (state) => state.user.userData[0].dealerId,
+  (state) => state.user.userData[0].brand,
+  (state) => state.user.userData[0].intId,
+
+  (dealerId, brand, intId) => {
+    return {
+      dealerId: dealerId,
+      userBrand: brand,
+      userIntId: intId,
+    };
+    // console.log(
+    //   '************** in selectFetchParamsObj',
+    //   state,
+    //   brand,
+    //   dealerId,
+    //   intId,
+    //   'retObj',
+    //   retObj
+    // );
+  }
+);
 
 export default function user(state = INITIAL_STATE, action) {
   //   console.log(Types);
