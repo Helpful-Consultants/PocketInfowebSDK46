@@ -641,16 +641,20 @@ export default getBaseStyles = (props) => {
     },
     // OdisScreen
     textOdisVersion: {
-      ...baseText,
+      ...baseTextBold,
     },
     // OdisScreen
     textOdisVersionSmaller: {
       ...baseTextSmall,
     },
+    textOdisVersionSmallerHighlighted: {
+      ...baseTextSmall,
+      color: Colors.vwgWarmOrange,
+    },
     // OdisScreen
     textOdisVersionHighlighted: {
       ...baseTextBold,
-      color: Colors.vwgCoolOrange,
+      color: Colors.vwgWarmOrange,
     },
     textToolNumber: {
       ...baseLinkTextBold,

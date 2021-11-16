@@ -227,6 +227,33 @@ export default searchItems = (
     return false;
   };
 
+  const ltpLoanMatcher = (item) => {
+    let itemLoanToolNo =
+      (item.loanToolNo && item.loanToolNo.toLowerCase()) || '';
+    // let itemSupplierPartNo =
+    //   (item.supplierPartNo && item.supplierPartNo.toLowerCase()) || '';
+    // let itemOrderPartNo =
+    //   (item.orderPartNo && item.orderPartNo.toLowerCase()) || '';
+    let itemLoanToolNoSpacesStripped =
+      itemLoanToolNo && itemLoanToolNo.replace(/\s+/g, '');
+    let itemDesc =
+      (item.toolDescription && item.toolDescription.toLowerCase()) || '';
+    let itemOrderedBy = (item.createdBy && item.createdBy.toLowerCase()) || '';
+
+    if (
+      (itemLoanToolNoSpacesStripped &&
+        itemLoanToolNoSpacesStripped.includes(searchStringSpacesStripped)) ||
+      (itemDesc && itemDesc.includes(searchStringLowerCase)) ||
+      (itemOrderedBy && itemOrderedBy.includes(searchStringLowerCase))
+    ) {
+      console.log('ltpLoanMatche, matched', itemLoanToolNo);
+      return true;
+      // dealer tool}
+    }
+    console.log('ltpLoanMatche, no match', itemLoanToolNo);
+    return false;
+  };
+
   const dealerToolMatcher = (item) => {
     let itemToolNo = (item.toolNumber && item.toolNumber.toLowerCase()) || '';
     let itemPartNo = (item.partNumber && item.partNumber.toLowerCase()) || '';
@@ -347,7 +374,11 @@ export default searchItems = (
       //   console.log('searchRecords, in map', item);
       let isMatch = false;
 
-      if (item.menuText) {
+      if (item.startDate && item.loanToolNo) {
+        // It's an LTP loan !
+        isMatch = ltpLoanMatcher(item);
+        // It's a booked tool! - end
+      } else if (item.menuText && item.toolsAffected) {
         // It's a service measure !
         isMatch = serviceMeasureMatcher(item);
         // It's a booked tool! - end

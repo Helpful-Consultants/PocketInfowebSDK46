@@ -212,7 +212,7 @@ export default NotificationsScreen = (props) => {
     }
   }, [showingDemoApp, showingDemoData]);
 
-  console.log(' ******************** odisRedCount', odisRedCount);
+  //   console.log(' ******************** odisRedCount', odisRedCount);
 
   return (
     <ImageBackground

@@ -38,13 +38,13 @@ export default function odis(state = INITIAL_STATE, action) {
         action.payload && action.payload.displayTime
           ? action.payload.displayTime
           : null;
-      console.log(
-        '^^^^^^^ in odis reducer set displayTime ',
-        // odisDataObj,
+      //   console.log(
+      //     '^^^^^^^ in odis reducer set displayTime ',
+      //     // odisDataObj,
 
-        'displayTimestamp',
-        displayTime
-      );
+      //     'displayTimestamp',
+      //     displayTime
+      //   );
       //   console.log(
       //     'in odis reducer set display',
       //     action.payload && action.payload
@@ -256,18 +256,18 @@ export default function odis(state = INITIAL_STATE, action) {
             : false
           : true;
 
-      console.log(
-        'in odis reducer set success called getOdisAlertCount',
-        // odisDataObj,
-        'latestChangeDate',
-        latestChangeDate,
-        'state.displayTimestamp',
-        (state.displayTimestamp && state.displayTimestamp) || 'nought',
-        (state.displayTimestamp && toDate(state.displayTimestamp)) || 'nought',
-        'unseenChanges',
-        unseenChanges,
-        state
-      );
+      //   console.log(
+      //     'in odis reducer set success called getOdisAlertCount',
+      //     // odisDataObj,
+      //     'latestChangeDate',
+      //     latestChangeDate,
+      //     'state.displayTimestamp',
+      //     (state.displayTimestamp && state.displayTimestamp) || 'nought',
+      //     (state.displayTimestamp && toDate(state.displayTimestamp)) || 'nought',
+      //     'unseenChanges',
+      //     unseenChanges,
+      //     state
+      //   );
 
       return {
         ...state,

@@ -39,7 +39,7 @@ export default OdisScreen = (props) => {
   );
   const storeDisplayTimestampAsync = async () => {
     displayTime = Date.now();
-    console.log('in storeDisplayTimestampAsync: displayTime', displayTime);
+    // console.log('in storeDisplayTimestampAsync: displayTime', displayTime);
     dispatch(setOdisDisplayTimestamp({ displayTime }));
   };
 
@@ -81,7 +81,7 @@ export default OdisScreen = (props) => {
       const getItemsAsync = async () => {
         getItems();
       };
-      console.log('in odis screen useFocusEffect');
+      //   console.log('in odis screen useFocusEffect');
       //   dispatch(revalidateUserCredentials({ calledBy: 'OdisScreen' }));
       getItemsAsync();
       //   incrementViewCount();
@@ -91,7 +91,7 @@ export default OdisScreen = (props) => {
   );
 
   useEffect(() => {
-    console.log('in odis screen useEffect odisFetchTime', odisFetchTime);
+    // console.log('in odis screen useEffect odisFetchTime', odisFetchTime);
     storeDisplayTimestampAsync();
   }, [odisFetchTime]);
 
@@ -106,7 +106,7 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  console.log('rendering Odis screen, odisFetchTime', odisFetchTime);
+  //   console.log('rendering Odis screen, odisFetchTime', odisFetchTime);
 
   return (
     <View style={baseStyles.containerFlexCentred}>

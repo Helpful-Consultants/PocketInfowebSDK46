@@ -7,7 +7,7 @@ import skodaLogo from '../assets/images/skoda-logo.png';
 import seatLogo from '../assets/images/seat-logo.png';
 import cvLogo from '../assets/images/cv-logo.png';
 import { getShortDisplayDate } from '../helpers/dates';
-
+import { checkOdisChangeAge } from '../helpers/odis';
 export default function OdisVersions(props) {
   //   console.log('props fetchTime', props.fetchTime);
   //   const items = props.items[0].brandVersions || [];
@@ -40,6 +40,8 @@ export default function OdisVersions(props) {
   //     userBrand && userBrand
   //   );
 
+  const displayTime = Date.now();
+
   const getOdisForBrand = (item) => {
     // if (brand === 'sk') {
     // console.log('getOdisForBrand', item && item);
@@ -54,6 +56,10 @@ export default function OdisVersions(props) {
     //   'from',
     //   item.lastUpdated
     // );
+    const isRecentChange = checkOdisChangeAge(
+      item.lastUpdated && item.lastUpdated.length > 0 ? item.lastUpdated : null,
+      displayTime
+    );
     return item ? (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
@@ -66,11 +72,19 @@ export default function OdisVersions(props) {
           <Text style={baseStyles.textOdisVersion}>
             {item.previousProductVersion &&
             item.previousProductVersion !== item.productVersion ? (
-              <Text style={baseStyles.textOdisVersionHighlighted}>
-                {`Product: ${item.productVersion}`}
-                <Text style={baseStyles.textOdisVersionSmaller}>
-                  {` (from ${item.previousProductVersion})`}
-                </Text>
+              <Text
+                style={
+                  isRecentChange
+                    ? baseStyles.textOdisVersionHighlighted
+                    : baseStyles.textOdisVersion
+                }
+              >
+                {`Product: ${item.productVersion}`}{' '}
+                {isRecentChange && true === false ? (
+                  <Text style={baseStyles.textOdisVersionSmaller}>
+                    {` (was ${item.previousProductVersion})`}
+                  </Text>
+                ) : null}
               </Text>
             ) : (
               <Text style={baseStyles.textOdisVersion}>
@@ -81,12 +95,20 @@ export default function OdisVersions(props) {
           {item.previousMainFeatureVersion &&
           item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
             <View style={{ flexDirection: 'column' }}>
-              <Text style={baseStyles.textOdisVersionHighlighted}>
+              <Text
+                style={
+                  isRecentChange
+                    ? baseStyles.textOdisVersionHighlighted
+                    : baseStyles.textOdisVersion
+                }
+              >
                 {`Main feature: ${item.mainFeatureVersion}`}
               </Text>
-              <Text style={baseStyles.textOdisVersionSmaller}>
-                {` (from ${item.previousMainFeatureVersion})`}
-              </Text>
+              {isRecentChange && true === false ? (
+                <Text style={baseStyles.textOdisVersionSmaller}>
+                  {` (was ${item.previousMainFeatureVersion})`}
+                </Text>
+              ) : null}
             </View>
           ) : (
             <Text style={baseStyles.textOdisVersion}>
@@ -96,11 +118,19 @@ export default function OdisVersions(props) {
           <Text style={baseStyles.textOdisVersion}>
             {item.previousDataVersion &&
             item.previousDataVersion !== item.dataVersion ? (
-              <Text style={baseStyles.textOdisVersionHighlighted}>
+              <Text
+                style={
+                  isRecentChange
+                    ? baseStyles.textOdisVersionHighlighted
+                    : baseStyles.textOdisVersion
+                }
+              >
                 {`Data: ${item.dataVersion}`}
-                <Text style={baseStyles.textOdisVersionSmaller}>
-                  {` (from ${item.previousDataVersion})`}
-                </Text>
+                {isRecentChange && true === false ? (
+                  <Text style={baseStyles.textOdisVersionSmaller}>
+                    {` (was ${item.previousDataVersion})`}
+                  </Text>
+                ) : null}
               </Text>
             ) : (
               <Text style={baseStyles.textOdisVersion}>

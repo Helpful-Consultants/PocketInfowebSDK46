@@ -2,6 +2,43 @@
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
 import { getDateDifference, isDateAfter } from '../helpers/dates';
 
+export const checkOdisChangeAge = (
+  lastUpdated = null,
+  displayTime = null,
+  maxAge = InfoTypesAlertAges.ODIS_RED_PERIOD
+) => {
+  //   console.log(
+  //     '------------checkOdisChangeAge ',
+  //     'lastUpdated',
+  //     lastUpdated,
+  //     'displayTime',
+  //     displayTime
+  //   );
+  let recentChange = false;
+
+  // console.log('in getOdisAlertCountForBrand', brandOdisDataObj);
+
+  // console.log('alertNeeded', odisDataObj.brandCode, alertNeeded);
+
+  if (lastUpdated && displayTime) {
+    //   console.log('in getOdisAlertCountForBrand', odisDataObj.lastUpdated);
+
+    // console.log(
+    //   'in getOdisAlertCountForBrand comparing dates',
+    //   odisDataObj.lastUpdated
+    // );
+
+    // console.log('!!!!! dateOfChange', dateOfChange);
+    const ageOfChange = getDateDifference(lastUpdated, displayTime) + 1;
+    // console.log('!!!!! diff', ageOfChange);
+    if (ageOfChange <= maxAge) {
+      recentChange = true;
+      //   console.log('!!!!! alertNeeded', alertNeeded);
+    }
+  }
+  return recentChange;
+};
+
 const getOdisAlertCountForBrand = (
   brandOdisDataObj,
   timestamp = null,
@@ -37,7 +74,7 @@ const getOdisAlertCountForBrand = (
 
       // console.log('!!!!! dateOfChange', dateOfChange);
       const ageOfChange = getDateDifference(odisDataObj.lastUpdated, timestamp);
-      // console.log('!!!!! diff', ageOfChange);
+      //   console.log('!!!!! diff', ageOfChange);
       if (ageOfChange <= minAge) {
         ++alertsNeeded;
         //   console.log('!!!!! alertNeeded', alertNeeded);
