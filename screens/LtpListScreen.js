@@ -34,28 +34,28 @@ export default LtpListScreen = (props) => {
   const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
-  const getItems = useCallback(
-    async () => dispatch(getLtpRequest()),
-    [ltpItems]
-  );
-  const getItemsAsync = async () => {
-    // console.log('ltp - getItemsAsync');
-    getItems();
-  };
-
-  useEffect(() => {
-    // runs only once
-    // console.log('in ltp useEffect getItemsAsync');
-    getItemsAsync();
-  }, []);
+  const getItems = useCallback(() => {
+    console.log('in LTP in getItems - no userApiFetchParamsObj');
+    dispatch(getLtpRequest());
+  }, [dispatch]);
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('ltp - useFocusEffect');
-      // don't refresh the every time user visits the page LTP - they don't change too much
-      dispatch(revalidateUserCredentials({ calledBy: 'LtpListScreen' }));
+      console.log('in ltp list screen usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'ltp list screen Screen',
+      //     })
+      //   );
+      console.log('in LTP Screen focusffect calling getItems');
+      getItems();
       setSearchInput('');
-    }, [])
+
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('LTP Screen was unfocused');
+      };
+    }, [dispatch, getItems])
   );
 
   useEffect(() => {
@@ -120,10 +120,10 @@ export default LtpListScreen = (props) => {
     }
   };
 
-  const refreshRequestHandler = () => {
-    // console.log('ltp - in refreshRequestHandler');
-    getItemsAsync();
-  };
+  const refreshRequestHandler = useCallback(() => {
+    console.log('in ltp refreshRequestHandler');
+    getItems();
+  }, [getItems]);
 
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
