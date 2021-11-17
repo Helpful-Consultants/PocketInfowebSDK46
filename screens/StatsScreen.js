@@ -8,6 +8,7 @@ import { revalidateUserCredentials } from '../actions/user';
 import { getStatsRequest } from '../actions/stats';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
+import { selectFetchParamsObj } from '../reducers/user';
 
 export default StatsScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -19,68 +20,38 @@ export default StatsScreen = (props) => {
   const dealerToolsItems = useSelector(
     (state) => state.dealerTools.dealerToolsItems
   );
-
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const dealerId = userDataObj && userDataObj.dealerId;
-  const userIntId = userDataObj && userDataObj.intId.toString();
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const isLoading = useSelector((state) => state.stats.isLoading);
   const dataError = useSelector((state) => state.stats.error);
   const dataStatusCode = useSelector((state) => state.odis.statusCode);
   const dataErrorUrl = useSelector((state) => state.odis.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-
-  const userApiFetchParamsObj = {
-    dealerId: dealerId,
-    intId: userIntId,
-  };
-  //   console.log('userApiFetchParamsObj is set to ', userApiFetchParamsObj);
-
-  //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
-  //   ]);
-
-  //   console.log('getStatsData', getStatsData);
-
-  //   const { navigation } = props;
 
   const getItems = useCallback(async () => {
     // console.log('in stats getItems');
-    dispatch(getStatsRequest(userApiFetchParamsObj)), [statsObj];
-    // dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
+    dispatch(getStatsRequest(fetchParamsObj));
     if (!dealerToolsItems || dealerToolsItems.length === 0) {
-      console.log('CALLING GET DEALER TOOLS');
-      dispatch(getDealerToolsRequest(userApiFetchParamsObj)),
-        [dealerToolsItems];
+      //   console.log('CALLING GET DEALER TOOLS');
+      dispatch(getDealerToolsRequest(fetchParamsObj)), [dealerToolsItems];
     }
-    // dispatch(getLtpRequest()), [ltpItems];
-  });
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in stats use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     setIsRefreshNeeded(true);
-  //   });
+  }, [dealerToolsItems.length]);
 
   useFocusEffect(
     useCallback(() => {
-      const getItemsAsync = async () => {
-        getItems();
+      console.log('in stats usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'stats Screen',
+      //     })
+      //   );
+      console.log('in stats focusffect calling getItems');
+      getItems();
+
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('stats Screen was unfocused');
       };
-      dispatch(revalidateUserCredentials({ calledBy: 'StatsScreen' }));
-      getItemsAsync();
-    }, [])
+    }, [dispatch, getItems])
   );
 
   const refreshRequestHandler = () => {
@@ -88,16 +59,12 @@ export default StatsScreen = (props) => {
     getItems();
   };
 
-  //   if (!userIsValidated) {
-  //     navigation && navigation.navigate && navigation.navigate('Auth');
-  //   }
   const userDataPresent =
     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
-  if (userDataPresent === true) {
-    // console.log('in stats screen,userDataObj OK', userDataPresent);
-  } else {
+  if (!userDataPresent) {
     // console.log('in stats screen, no userDataObj');
     getItems();
   }
