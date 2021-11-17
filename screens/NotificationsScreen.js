@@ -19,7 +19,7 @@ import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { getOdisRequest } from '../actions/odis';
 import { getNewsRequest } from '../actions/news';
 import InlineIcon from '../components/InlineIcon';
-import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { selectFetchParamsObj } from '../reducers/user';
 
 // const backgroundImage = { uri: 'https://reactjs.org/logo-og.png' };
 
@@ -31,8 +31,6 @@ export default NotificationsScreen = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.showingDemoData);
   const userBrand = useSelector((state) => state.user.userBrand);
-  const dealerId = useSelector((state) => state.user.userData.dealerId);
-  const userIntId = useSelector((state) => state.user.userIntId);
   const odisChangesToHighlight = useSelector(
     (state) => state.odis.changesToHighlight
   );
@@ -107,38 +105,22 @@ export default NotificationsScreen = (props) => {
   const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const userApiFetchParamsObj = {
-    dealerId: dealerId,
-    intId: userIntId,
-  };
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
 
   //   const { navigation } = props;
-  const getItems = useCallback(async (userApiFetchParamsObj) => {
+
+  const getItems = useCallback(() => {
+    console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
     // console.log(
-    //   'in calibrationExpiry getItems userApiFetchParamsObj',
-    //   userApiFetchParamsObj
+    //   'in calibrationExpiry getItems fetchParamsObj',
+    //   fetchParamsObj
     // );
-    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
-    dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+    dispatch(getServiceMeasuresRequest(fetchParamsObj));
+    dispatch(getLtpLoansRequest(fetchParamsObj));
     dispatch(getOdisRequest({ userBrand: userBrand }));
     dispatch(getNewsRequest());
-    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
-  });
-
-  const getItemsAsync = async () => {
-    // console.log(
-    //   'rendering Notifications screen, userApiFetchParamsObj:',
-    //   userApiFetchParamsObj
-    // );
-
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
-      getItems(userApiFetchParamsObj);
-    }
-  };
+    dispatch(getCalibrationExpiryRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
 
   useEffect(() => {
     if (
@@ -198,18 +180,20 @@ export default NotificationsScreen = (props) => {
       //   dispatch(revalidateUserCredentials({ calledBy: 'NotificationsScreen' }));
       //   console.log('in Notifications focusEffect ');
 
-      getItemsAsync();
+      getItems();
 
       //   console.log(
       //     'in Notifications focusEffect, calling countCalibrationExpiryItems'
       //   );
-    }, [])
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('Notifications Screen was unfocused');
+      };
+    }, [getItems])
   );
 
   useEffect(() => {
-    if (showingDemoApp) {
-      getItemsAsync();
-    }
+    getItems();
   }, [showingDemoApp, showingDemoData]);
 
   //   console.log(' ******************** odisRedCount', odisRedCount);

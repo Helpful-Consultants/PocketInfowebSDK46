@@ -38,32 +38,39 @@ export default OdisScreen = (props) => {
   //   const fetchParamsObj = useMemo(() => {
   //     console.log(
   //       'in serviceMeasures memoising fetchParamsObj',
-  //       userApiFetchParamsObj
+  //       fetchParamsObj
   //     );
-  //     return userApiFetchParamsObj;
+  //     return fetchParamsObj;
   //   }, [
-  //     userApiFetchParamsObj.dealerId,
-  //     userApiFetchParamsObj.intId,
-  //     userApiFetchParamsObj.userBrand,
+  //     fetchParamsObj.dealerId,
+  //     fetchParamsObj.userIntId,
+  //     fetchParamsObj.userBrand,
   //   ]);
 
   useEffect(() => {
-    console.log(
-      '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
-      fetchParamsObj
-    );
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
+    //   fetchParamsObj
+    // );
   }, [fetchParamsObj]);
 
   const getItems = useCallback(() => {
-    console.log('in ODIS in getItems userApiFetchParamsObj', fetchParamsObj);
+    console.log('in ODIS in getItems fetchParamsObj', fetchParamsObj);
     dispatch(getOdisRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
-  const storeDisplayTimestamp = () => {
-    console.log('+++++++++++++++=in ODIS storeDisplayTimestampAsync:');
-    const displayTime = Date.now();
-    dispatch(setOdisDisplayTimestamp(displayTime));
-  };
+  const storeDisplayTimestamp = useCallback(
+    (displayTime) => {
+      // const displayTime = Date.now();
+      //   console.log(
+      //     '+++++++++++++++=in New storeDisplayTimestampAsync:',
+      //     displayTime,
+      //     typeof displayTime
+      //   );
+      dispatch(setOdisDisplayTimestamp(displayTime));
+    },
+    [dispatch]
+  );
 
   const refreshRequestHandler = useCallback(() => {
     console.log('in odis refreshRequestHandler');
@@ -89,8 +96,15 @@ export default OdisScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('in odis screen useEffect odisFetchTime', odisFetchTime);
-    storeDisplayTimestamp();
+    const displayTime = Date.now();
+    // console.log(
+    //   'in odis useeffect calling storeDisplayTimestamp',
+    //   'odisFetchTime',
+    //   odisFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
   }, [odisFetchTime]);
 
   //   if (odisObj) {

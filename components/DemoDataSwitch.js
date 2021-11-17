@@ -8,6 +8,7 @@ import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { getNewsRequest } from '../actions/news';
 import { getOdisRequest } from '../actions/odis';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
+import { selectFetchParamsObj } from '../reducers/user';
 
 export default DemoDataSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
@@ -24,10 +25,7 @@ export default DemoDataSwitch = (props) => {
     'Turn ON to show demo data for LTP bookings, service measures & notifications';
   const switchedOnText =
     'Turn OFF to show live data for LTP bookings, service measures & notifications';
-  const userApiFetchParamsObj = {
-    dealerId: (userDataObj && userDataObj.dealerId) || null,
-    intId: (userDataObj && userDataObj.intId.toString()) || null,
-  };
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   //   console.log(
   //     'in switch reducer switchStatus',
   //     requestedDemoData,
@@ -48,17 +46,13 @@ export default DemoDataSwitch = (props) => {
       setUserRequestedDemoData({ requestedDemoData: !tempSwitchStatus })
     );
     // Update state to hold the dummy data or live data
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
+    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId) {
       //   console.log('@@@@@@@@in toggle switch switchStatus calling apis');
-      dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
-      dispatch(getNewsRequest(userApiFetchParamsObj));
-      dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+      dispatch(getServiceMeasuresRequest(fetchParamsObj));
+      dispatch(getNewsRequest(fetchParamsObj));
+      dispatch(getLtpLoansRequest(fetchParamsObj));
       dispatch(getOdisRequest({ userBrand: userBrand }));
-      dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
+      dispatch(getCalibrationExpiryRequest(fetchParamsObj));
     }
 
     setSwitchStatus(!tempSwitchStatus);

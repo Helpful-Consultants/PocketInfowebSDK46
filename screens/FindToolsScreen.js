@@ -34,6 +34,7 @@ import Types from '../constants/Types';
 import DealerToolsList from './DealerToolsList';
 
 import searchItems from '../helpers/searchItems';
+import { selectFetchParamsObj } from '../reducers/user';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const minSearchLength = 1;
@@ -139,9 +140,7 @@ export default FindToolsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const userName = useSelector((state) => state.user.userName);
   const userBrand = useSelector((state) => state.user.userBrand);
 
@@ -201,51 +200,42 @@ export default FindToolsScreen = (props) => {
   //   const userDataCount =
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
-  const getWipsItems = useCallback((userApiFetchParamsObj) => {
-    // console.log('in getWipsItems', userApiFetchParamsObj);
-    dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
+  const getWipsItems = useCallback((fetchParamsObj) => {
+    // console.log('in getWipsItems', fetchParamsObj);
+    dispatch(getDealerWipsRequest(fetchParamsObj)), [dealerWipsItems];
   });
 
   const getWipsItemsAsync = async () => {
     // console.log(
-    //   'find tools - getWipsItemsAsync, userApiFetchParamsObj is',
-    //   userApiFetchParamsObj
+    //   'find tools - getWipsItemsAsync, fetchParamsObj is',
+    //   fetchParamsObj
     // );
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    )
-      getWipsItems(userApiFetchParamsObj);
+    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId)
+      getWipsItems(fetchParamsObj);
   };
 
   const getOtherItems = useCallback(async () => {
     // console.log('in getOtherItems');
     // console.log(
-    //   'find tools - getOtherItems, userApiFetchParamsObj is',
-    //   userApiFetchParamsObj
+    //   'find tools - getOtherItems, fetchParamsObj is',
+    //   fetchParamsObj
     // );
-    dispatch(getDealerToolsRequest(userApiFetchParamsObj));
-    // dispatch(getDealerWipsRequest(userApiFetchParamsObj));
+    dispatch(getDealerToolsRequest(fetchParamsObj));
+    // dispatch(getDealerWipsRequest(fetchParamsObj));
     if (!ltpItems || ltpItems.length === 0) {
       dispatch(getLtpRequest());
     }
   });
 
   const getOtherItemsAsync = async () => {
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
-      getOtherItems(userApiFetchParamsObj);
+    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId) {
+      getOtherItems(fetchParamsObj);
     }
   };
 
   const dispatchNewWip = useCallback(
-    (wipObj) =>
-      dispatch(createDealerWipRequest({ wipObj, userApiFetchParamsObj })),
-    [userApiFetchParamsObj] // something that doesn't change
+    (wipObj) => dispatch(createDealerWipRequest({ wipObj, fetchParamsObj })),
+    [fetchParamsObj] // something that doesn't change
   );
 
   const deleteDealerWip = useCallback(
@@ -289,8 +279,8 @@ export default FindToolsScreen = (props) => {
         // );
         if (mode === 'sending') {
           //   console.log(
-          //     'changing mode to unavailable, userApiFetchParamsObj is ',
-          //     userApiFetchParamsObj
+          //     'changing mode to unavailable, fetchParamsObj is ',
+          //     fetchParamsObj
           //   );
           //   console.log('unavailable ', lastWipProcessed && lastWipProcessed);
           if (
@@ -315,18 +305,18 @@ export default FindToolsScreen = (props) => {
   useEffect(() => {
     getWipsItemsAsync();
     getOtherItemsAsync();
-  }, [userApiFetchParamsObj]);
+  }, [fetchParamsObj]);
 
   useFocusEffect(
     useCallback(() => {
       //   console.log(
-      //     'find tools - useFocusEffect, userApiFetchParamsObj is',
-      //     userApiFetchParamsObj
+      //     'find tools - useFocusEffect, fetchParamsObj is',
+      //     fetchParamsObj
       //   );
       dispatch(revalidateUserCredentials({ calledBy: 'FindToolsScreen' }));
       setSearchInput('');
       getWipsItemsAsync();
-    }, [userApiFetchParamsObj])
+    }, [fetchParamsObj])
   );
 
   useEffect(() => {
@@ -483,23 +473,19 @@ export default FindToolsScreen = (props) => {
 
     const wipId =
       (wipNumber && lastWipProcessed.wipId) ||
-      getWipIdByWipNumber(
-        wipNumber,
-        userApiFetchParamsObj.intId,
-        dealerWipsItems
-      );
+      getWipIdByWipNumber(wipNumber, fetchParamsObj.userIntId, dealerWipsItems);
 
     const wipObj = {
       wipNumber: wipNumber,
       id: wipId,
-      userIntId: userApiFetchParamsObj.intId,
-      dealerId: userApiFetchParamsObj.dealerId,
+      userIntId: fetchParamsObj.userIntId,
+      dealerId: fetchParamsObj.dealerId,
     };
 
     let payload = {
-      dealerId: userApiFetchParamsObj.dealerId,
+      dealerId: fetchParamsObj.dealerId,
       wipObj: wipObj,
-      userApiFetchParamsObj: userApiFetchParamsObj,
+      fetchParamsObj: fetchParamsObj,
     };
 
     // console.log('in deleteWipRequestHandler', payload);
@@ -648,8 +634,8 @@ export default FindToolsScreen = (props) => {
         wipNumber: formState.inputValues.wipNumber.toString(),
         createdBy: userName,
         createdDate: new Date(),
-        userIntId: userApiFetchParamsObj.intId,
-        dealerId: userApiFetchParamsObj.dealerId,
+        userIntId: fetchParamsObj.userIntId,
+        dealerId: fetchParamsObj.dealerId,
         tools: newToolBasket,
       };
 
@@ -1190,8 +1176,8 @@ export default FindToolsScreen = (props) => {
   //    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140;
 
   //   console.log(
-  //     'rendering Find Tools screen, userApiFetchParamsObj:',
-  //     userApiFetchParamsObj
+  //     'rendering Find Tools screen, fetchParamsObj:',
+  //     fetchParamsObj
   //   );
 
   return (
@@ -1232,10 +1218,7 @@ export default FindToolsScreen = (props) => {
             <View>
               <DealerToolsList
                 items={itemsToShow}
-                userIntId={
-                  (userApiFetchParamsObj && userApiFetchParamsObj.userIntId) ||
-                  null
-                }
+                userIntId={(fetchParamsObj && fetchParamsObj.userIntId) || null}
                 dealerWipsItems={dealerWipsItems}
                 bookedToolsList={bookedToolsList}
                 selectItemHandler={selectItemHandler}

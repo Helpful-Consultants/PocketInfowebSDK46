@@ -23,9 +23,9 @@ export const checkUserCredentials = ({ email, pin }) => {
   });
 };
 
-export const getUser = ({ intId }) => {
-  //   console.log('in user api - getUser called', intId);
-  const url = '?controller=api&action=getUserDetails&intUserId=' + intId;
+export const getUser = ({ userIntId }) => {
+  console.log('in user api - getUser called', userIntId);
+  const url = `?controller=api&action=getUserDetails&intUserId=${userIntId}`;
   //   console.log(url);
 
   return axios.get(url, {

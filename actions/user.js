@@ -12,10 +12,10 @@ export const checkUserCredentialsRequest = ({ email, pin }) => ({
   },
 });
 
-export const getUserRequest = ({ intId }) => ({
+export const getUserRequest = ({ userIntId }) => ({
   type: Types.GET_USER_REQUEST,
   payload: {
-    intId,
+    userIntId,
   },
 });
 

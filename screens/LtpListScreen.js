@@ -35,7 +35,7 @@ export default LtpListScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
-    console.log('in LTP in getItems - no userApiFetchParamsObj');
+    console.log('in LTP in getItems - no fetchParamsObj needed');
     dispatch(getLtpRequest());
   }, [dispatch]);
 

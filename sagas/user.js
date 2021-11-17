@@ -14,17 +14,17 @@ import * as api from '../api/user';
 import Types from '../constants/Types';
 
 function* getUser({ payload }) {
-  //   console.log('in user saga - getUser called for', payload && payload);
+  console.log('in user saga - getUser called for', payload && payload);
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the user';
   let dataErrorUrl = null;
 
-  if (payload && payload.intId) {
+  if (payload && payload.userIntId) {
     yield put(actions.getUserStart());
     //   yield put(actions.getUserResetErrors());
     try {
       const result = yield call(api.getUser, {
-        intId: payload.intId,
+        userIntId: payload.userIntId,
       });
       //   console.log('in user saga - 200');
       //   console.log('result is:', result && result);
@@ -55,20 +55,20 @@ function* getUser({ payload }) {
                 null,
             })
           );
-          //   let userApiFetchParamsObj = {
+          //   let fetchParamsObj = {
           //     dealerId:
           //       result.data[0].dealerId && result.data[0].dealerId.toString(),
           //     intId: result.data[0].intId && result.data[0].intId.toString(),
           //   };
           // console.log(
-          //   'userApiFetchParamsObj is ',
-          //   userApiFetchParamsObj,
+          //   'fetchParamsObj is ',
+          //   fetchParamsObj,
           //   result.data[0]
           // );
           // yield put(wipsActions.getDealerWipsStart());
-          // yield put(wipsActions.getDealerWipsRequest(userApiFetchParamsObj));
+          // yield put(wipsActions.getDealerWipsRequest(fetchParamsObj));
           // yield put(toolsActions.getDealerToolsStart());
-          // yield put(toolsActions.getDealerToolsRequest(userApiFetchParamsObj));
+          // yield put(toolsActions.getDealerToolsRequest(fetchParamsObj));
         } else if (result.data[0].userId && result.data[0].userId.length > 0) {
           //   console.log('in user saga - bad 200');
           //   console.log(result.data && result.data[0]);
@@ -258,8 +258,8 @@ function* checkUserCredentials({ payload }) {
             })
           );
         } else if (result.data[0].userId && result.data[0].userId.length > 0) {
-          console.log('in user creds saga - bad 200');
-          console.log(result.data && result.data[0]);
+          //   console.log('in user creds saga - bad 200');
+          //   console.log(result.data && result.data[0]);
 
           const message =
             (result.data[0].userName && result.data[0].username) ||
@@ -316,15 +316,15 @@ function* checkUserCredentials({ payload }) {
         );
       }
     } catch (error) {
-      console.log('in user creds saga - error time!!!!!!!!!!!!!!');
-      console.log('whole Error', error);
-      console.log('whole Error ends');
-      console.log(error && error.config);
+      //   console.log('in user creds saga - error time!!!!!!!!!!!!!!');
+      //   console.log('whole Error', error);
+      //   console.log('whole Error ends');
+      //   console.log(error && error.config);
 
       if (error.response) {
-        console.log('error response starts');
-        console.log('error response', error.response);
-        console.log('error response ends');
+        // console.log('error response starts');
+        // console.log('error response', error.response);
+        // console.log('error response ends');
         if (error.response.status) {
           statusCode = error.response.status;
         }

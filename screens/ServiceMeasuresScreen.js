@@ -11,8 +11,6 @@ import {
   getServiceMeasuresRequest,
   setServiceMeasuresDisplayTimestamp,
 } from '../actions/serviceMeasures';
-// import { getDealerWipsRequest } from '../actions/serviceMeasures';
-// import { getDealerToolsRequest } from '../actions/dealerTools';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import { sortObjListByDate } from '../helpers/dates';
 
@@ -53,14 +51,14 @@ export default ServiceMeasuresScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   //   console.log(
-  //     'in serviceMeasures screen - userApiFetchParamsObj is set to ',
-  //     userApiFetchParamsObj,
+  //     'in serviceMeasures screen - fetchParamsObj is set to ',
+  //     fetchParamsObj,
   //     'serviceMeasuresItems ',
   //     serviceMeasuresItems
   //   );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
+  //     fetchParamsObj
   //   ]);
 
   //   console.log('getServiceMeasuresData', getServiceMeasuresData);
@@ -77,18 +75,18 @@ export default ServiceMeasuresScreen = (props) => {
   //   const fetchParamsObj = useMemo(() => {
   //     console.log(
   //       'in serviceMeasures memoising fetchParamsObj',
-  //       userApiFetchParamsObj
+  //       fetchParamsObj
   //     );
-  //     return userApiFetchParamsObj;
+  //     return fetchParamsObj;
   //   }, [
-  //     userApiFetchParamsObj.dealerId,
-  //     userApiFetchParamsObj.intId,
-  //     userApiFetchParamsObj.userBrand,
+  //     fetchParamsObj.dealerId,
+  //     fetchParamsObj.userIntId,
+  //     fetchParamsObj.userBrand,
   //   ]);
 
   const getItems = useCallback(() => {
     console.log(
-      'in serviceMeasures in getItems userApiFetchParamsObj',
+      'in serviceMeasures in getItems fetchParamsObj',
       fetchParamsObj
     );
     dispatch(getServiceMeasuresRequest(fetchParamsObj));
@@ -96,11 +94,18 @@ export default ServiceMeasuresScreen = (props) => {
 
   //   console.log('in serviceMeasures screen - point 2');
 
-  const storeDisplayTimestamp = () => {
-    console.log('+++++++++++++++=in SM storeDisplayTimestampAsync:');
-    const displayTime = Date.now();
-    dispatch(setServiceMeasuresDisplayTimestamp(displayTime));
-  };
+  const storeDisplayTimestamp = useCallback(
+    (displayTime) => {
+      // const displayTime = Date.now();
+      //   console.log(
+      //     '+++++++++++++++=in New storeDisplayTimestampAsync:',
+      //     displayTime,
+      //     typeof displayTime
+      //   );
+      dispatch(setServiceMeasuresDisplayTimestamp(displayTime));
+    },
+    [dispatch]
+  );
 
   const refreshRequestHandler = useCallback(() => {
     console.log('in serviceMeasures refreshRequestHandler');
@@ -127,8 +132,15 @@ export default ServiceMeasuresScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('in odis screen useEffect SM FetchTime', serviceMeasuresFetchTime);
-    storeDisplayTimestamp();
+    const displayTime = Date.now();
+    // console.log(
+    //   'in ltpLoans useeffect calling storeDisplayTimestamp',
+    //   'ltpLoansFetchTime',
+    //   ltpLoansFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
   }, [serviceMeasuresFetchTime]);
 
   let serviceMeasuresSorted = sortObjListByDate(

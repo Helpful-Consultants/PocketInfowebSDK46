@@ -37,6 +37,7 @@ import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
+import { selectFetchParamsObj } from '../reducers/user';
 // import Constants from 'expo-constants';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 const buttonTextColor = Colors.vwgWhite;
@@ -119,15 +120,11 @@ export default HomeScreen = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
 
   //   console.log('IN HOME !!!!! 1g');
-  //   const userIntId =
-  //     userDataObj && userDataObj.intId ? userDataObj.intId.toString() : null;
 
   const userPin = useSelector((state) => state.user.userPin);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const unseenCriticalItems = useSelector(
     (state) => state.news.unseenCriticalItems
   );
@@ -195,38 +192,38 @@ export default HomeScreen = (props) => {
     dispatch(getLtpRequest());
   });
 
-  const getAllItems = useCallback(async (userApiFetchParamsObj) => {
+  const getAllItems = useCallback(async (fetchParamsObj) => {
     dispatch(
       getUserRequest({
-        intId:
+        userIntId:
           (userIntId && userIntId) ||
-          (userApiFetchParamsObj &&
-            userApiFetchParamsObj.intId &&
-            userApiFetchParamsObj.intId) ||
+          (fetchParamsObj &&
+            fetchParamsObj.userIntId &&
+            fetchParamsObj.userIntId) ||
           null,
       })
     );
-    dispatch(getDealerWipsRequest(userApiFetchParamsObj));
-    dispatch(getServiceMeasuresRequest(userApiFetchParamsObj));
-    dispatch(getLtpLoansRequest(userApiFetchParamsObj));
+    dispatch(getDealerWipsRequest(fetchParamsObj));
+    dispatch(getServiceMeasuresRequest(fetchParamsObj));
+    dispatch(getLtpLoansRequest(fetchParamsObj));
     dispatch(getOdisRequest({ userBrand: userBrand }));
     dispatch(getNewsRequest());
-    dispatch(getCalibrationExpiryRequest(userApiFetchParamsObj));
+    dispatch(getCalibrationExpiryRequest(fetchParamsObj));
   });
 
   const updateItemsAsync = async () => {
     // console.log(
-    //   'home - updateItemsAsync, userApiFetchParamsObj:',
-    //   userApiFetchParamsObj && userApiFetchParamsObj
+    //   'home - updateItemsAsync, fetchParamsObj:',
+    //   fetchParamsObj && fetchParamsObj
     // );
     if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.intId.length > 0 &&
-      userApiFetchParamsObj.dealerId &&
-      userApiFetchParamsObj.dealerId.length > 0
+      fetchParamsObj &&
+      fetchParamsObj.userIntId &&
+      fetchParamsObj.userIntId.length > 0 &&
+      fetchParamsObj.dealerId &&
+      fetchParamsObj.dealerId.length > 0
     ) {
-      getAllItems(userApiFetchParamsObj);
+      getAllItems(fetchParamsObj);
     }
   };
 
@@ -263,13 +260,13 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     // runs only once as LTP doesnt change too often
-    // will run again, though, if the user userApiFetchParamsObj wasn't ready before
+    // will run again, though, if the user fetchParamsObj wasn't ready before
     // console.log(
     //   'home - ltp useEffect',
-    //   userApiFetchParamsObj && userApiFetchParamsObj.intId
+    //   fetchParamsObj && fetchParamsObj.userIntId
     // );
     getLtpItemsAsync();
-  }, [userApiFetchParamsObj]);
+  }, [fetchParamsObj]);
 
   useEffect(() => {
     if (
@@ -300,7 +297,7 @@ export default HomeScreen = (props) => {
 
   //     if (!ltpItems || ltpItems.length === 0) {
   //       // console.log('in this one useEffect - getting ltp');
-  //       getLtpItemsAsync(userApiFetchParamsObj);
+  //       getLtpItemsAsync(fetchParamsObj);
   //     }
 
   //     if (__DEV__) {
@@ -480,8 +477,8 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     const userWipsItems =
-      (userApiFetchParamsObj &&
-        userApiFetchParamsObj.intId &&
+      (fetchParamsObj &&
+        fetchParamsObj.userIntId &&
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
@@ -489,7 +486,7 @@ export default HomeScreen = (props) => {
             item.tools &&
             item.tools.length > 0 &&
             item.userIntId &&
-            item.userIntId.toString() == userApiFetchParamsObj.intId.toString()
+            item.userIntId.toString() == fetchParamsObj.userIntId.toString()
         )) ||
       [];
 

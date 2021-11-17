@@ -5,7 +5,6 @@ import Types from '../constants/Types';
 const INITIAL_STATE = {
   userData: [],
   userBrand: null,
-  userApiFetchParamsObj: null,
   userIsSignedIn: false,
   userIsValidated: false,
   //   userEmail: null,
@@ -58,7 +57,6 @@ export default function user(state = INITIAL_STATE, action) {
         error: null,
         dataErrorUrl: null,
         statusCode: null,
-        //  userApiFetchParamsObj: null,
       };
     }
     case Types.GET_USER_SUCCESS: {
@@ -113,18 +111,18 @@ export default function user(state = INITIAL_STATE, action) {
         action.payload.items[0].intId &&
         action.payload.items[0].intId.toString();
 
-      let userApiFetchParamsObj =
-        action.payload &&
-        action.payload.items &&
-        action.payload.items[0] &&
-        action.payload.items[0].dealerId &&
-        action.payload.items[0].intId
-          ? {
-              dealerId: action.payload.items[0].dealerId.toString(),
-              intId: action.payload.items[0].intId.toString(),
-              userBrand: action.payload.items[0].brand || null,
-            }
-          : null;
+      //   let fetchParamsObj =
+      //     action.payload &&
+      //     action.payload.items &&
+      //     action.payload.items[0] &&
+      //     action.payload.items[0].dealerId &&
+      //     action.payload.items[0].intId
+      //       ? {
+      //           dealerId: action.payload.items[0].dealerId.toString(),
+      //           intId: action.payload.items[0].intId.toString(),
+      //           userBrand: action.payload.items[0].brand || null,
+      //         }
+      //       : null;
 
       //   console.log(action.payload && action.payload);
       //   console.log('action.payload.items ', action.payload.items);
@@ -176,7 +174,6 @@ export default function user(state = INITIAL_STATE, action) {
         userIntId: userIntId,
         dealerName: dealerName,
         userBrand: userBrand,
-        userApiFetchParamsObj: userApiFetchParamsObj,
         lastUpdate: nowString,
         isLoading: false,
         error: null,

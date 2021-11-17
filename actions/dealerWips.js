@@ -13,11 +13,11 @@ export const getDealerWipsStart = () => ({
   type: Types.GET_DEALER_WIPS_START,
 });
 
-export const getDealerWipsRequest = ({ dealerId, intId }) => ({
+export const getDealerWipsRequest = ({ dealerId, userIntId }) => ({
   type: Types.GET_DEALER_WIPS_REQUEST,
   payload: {
     dealerId,
-    intId,
+    userIntId,
   },
 });
 

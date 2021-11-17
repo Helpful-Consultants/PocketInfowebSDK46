@@ -14,6 +14,7 @@ import {
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import BookedOutToolsList from './BookedOutToolsList';
+import { selectFetchParamsObj } from '../reducers/user';
 
 const minSearchLength = 1;
 
@@ -21,9 +22,7 @@ export default BookedOutToolsScreen = (props) => {
   //   console.log('BookedOutToolsScreen props', props);
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  const userApiFetchParamsObj = useSelector(
-    (state) => state.user.userApiFetchParamsObj
-  );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
   );
@@ -41,33 +40,29 @@ export default BookedOutToolsScreen = (props) => {
 
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const getItems = useCallback(async (userApiFetchParamsObj) => {
-    // console.log('in getItems', userApiFetchParamsObj);
+  const getItems = useCallback(async (fetchParamsObj) => {
+    // console.log('in getItems', fetchParamsObj);
     // console.log(
     //   'in booked tools getItems',
-    //   userApiFetchParamsObj && userApiFetchParamsObj
+    //   fetchParamsObj && fetchParamsObj
     // );
-    dispatch(getDealerWipsRequest(userApiFetchParamsObj)), [dealerWipsItems];
+    dispatch(getDealerWipsRequest(fetchParamsObj)), [dealerWipsItems];
   });
 
   const getItemsAsync = async () => {
-    if (
-      userApiFetchParamsObj &&
-      userApiFetchParamsObj.intId &&
-      userApiFetchParamsObj.dealerId
-    ) {
-      getItems(userApiFetchParamsObj);
+    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId) {
+      getItems(fetchParamsObj);
     }
   };
 
   const deleteDealerWip = useCallback(
     (payload) => dispatch(deleteDealerWipRequest(payload)),
-    [userApiFetchParamsObj]
+    [fetchParamsObj]
   );
 
   const deleteDealerWipTool = useCallback(
     (payload) => dispatch(deleteDealerWipToolRequest(payload)),
-    [userApiFetchParamsObj]
+    [fetchParamsObj]
   );
 
   //   useEffect(() => {
@@ -75,7 +70,7 @@ export default BookedOutToolsScreen = (props) => {
   //     // console.log('in jobs use effect');
   //     const getItemsAsync = async () => {
   //       setIsRefreshNeeded(false);
-  //       getItems(userApiFetchParamsObj);
+  //       getItems(fetchParamsObj);
   //     };
   //     if (isRefreshNeeded === true) {
   //       getItemsAsync();
@@ -93,7 +88,7 @@ export default BookedOutToolsScreen = (props) => {
   //   useFocusEffect(
   //     useCallback(() => {
   //       const getItemsAsync = async () => {
-  //         getItems(userApiFetchParamsObj);
+  //         getItems(fetchParamsObj);
   //       };
   //       //   if (searchInput && searchInput.length > 0) {
   //       //     setSearchInput('');
@@ -105,9 +100,9 @@ export default BookedOutToolsScreen = (props) => {
 
   useEffect(() => {
     // runs only once
-    // console.log('in booked useEffect', userApiFetchParamsObj && userApiFetchParamsObj.dealerId);
+    // console.log('in booked useEffect', fetchParamsObj && fetchParamsObj.dealerId);
     getItemsAsync();
-  }, [userApiFetchParamsObj]);
+  }, [fetchParamsObj]);
 
   useFocusEffect(
     useCallback(() => {
@@ -122,16 +117,16 @@ export default BookedOutToolsScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('in booked out useEffect userApiFetchParamsObj is:  ', userApiFetchParamsObj);
+    // console.log('in booked out useEffect fetchParamsObj is:  ', fetchParamsObj);
     let userWipsItems =
-      (userApiFetchParamsObj &&
-        userApiFetchParamsObj.intId &&
+      (fetchParamsObj &&
+        fetchParamsObj.userIntId &&
         dealerWipsItems &&
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
           (item) =>
             item.userIntId &&
-            item.userIntId.toString() == userApiFetchParamsObj.intId.toString()
+            item.userIntId.toString() == fetchParamsObj.userIntId.toString()
         )) ||
       [];
     setUserWipsItems(userWipsItems);
@@ -161,7 +156,7 @@ export default BookedOutToolsScreen = (props) => {
 
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
     setBookedOutItems(bookedOutToolItems);
-  }, [userApiFetchParamsObj, dealerWipsItems]);
+  }, [fetchParamsObj, dealerWipsItems]);
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 
@@ -194,9 +189,9 @@ export default BookedOutToolsScreen = (props) => {
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
-        dealerId: userApiFetchParamsObj.dealerId,
+        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
-        userApiFetchParamsObj: userApiFetchParamsObj,
+        fetchParamsObj: fetchParamsObj,
       };
 
       //   console.log('delete wip ' + currentJob.id);
@@ -204,10 +199,10 @@ export default BookedOutToolsScreen = (props) => {
       deleteDealerWip(payload);
     } else {
       let payload = {
-        dealerId: userApiFetchParamsObj.dealerId,
+        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        userApiFetchParamsObj: userApiFetchParamsObj,
+        fetchParamsObj: fetchParamsObj,
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -216,7 +211,7 @@ export default BookedOutToolsScreen = (props) => {
   };
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', userApiFetchParamsObj);
+    // console.log('in refreshRequestHandler', fetchParamsObj);
     getItemsAsync();
   };
   //   console.log('bookedOutItems', bookedOutItems);
@@ -286,9 +281,7 @@ export default BookedOutToolsScreen = (props) => {
             dataCount={dataCount}
             isLoading={isLoading}
             deleteDealerWipRequest={deleteDealerWip}
-            userIntId={
-              (userApiFetchParamsObj && userApiFetchParamsObj.intId) || null
-            }
+            userIntId={(fetchParamsObj && fetchParamsObj.userIntId) || null}
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
             searchInput={searchInput}

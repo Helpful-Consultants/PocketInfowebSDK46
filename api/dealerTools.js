@@ -11,8 +11,7 @@ import axios from 'axios';
 
 export const getDealerTools = ({ dealerId }) => {
   //   console.log('here in getDealerTools dealerId is ', dealerId);
-  const url =
-    '/mandatoryList/?controller=api&action=listAllTools&dealerId=' + dealerId;
+  const url = `/mandatoryList/?controller=api&action=listAllTools&dealerId=${dealerId}`;
   //   console.log(url);
   return axios.get(url, {
     params: {

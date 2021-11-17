@@ -46,10 +46,9 @@ function* getNews() {
       // console.log(result && result);
       // console.log('result is:', result.data[0]);
       // console.log('result newsId is:', result.data[0].newsId);
-      // console.log('result intIdis:', result.data[0].intId);
 
       // const newsId = result.data[0].newsId && result.data[0].userId;
-      // const userIntId = result.data[0].intId && result.data[0].intId;
+
       if (
         result.data &&
         result.data[0] &&

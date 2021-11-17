@@ -36,32 +36,28 @@ export default LtpLoansScreen = (props) => {
 
   //   console.log('in ltpLoans screen - userDataObj is set to ', userDataObj);
 
-  //   const userApiFetchParamsObj = {
-  //     dealerId: (userDataObj && userDataObj.dealerId) || null,
-  //     intId: (userDataObj && userDataObj.intId.toString()) || null,
-  //   };
   //   console.log('in ltpLoans screen - point 1');
   //   console.log(
-  //     'in ltpLoans screen - userApiFetchParamsObj is set to ',
-  //     userApiFetchParamsObj,
+  //     'in ltpLoans screen - fetchParamsObj is set to ',
+  //     fetchParamsObj,
   //     'ltpLoansItems ',
   //     ltpLoansItems
   //   );
 
   //   const getUserData = useCallback(() => dispatch(getUserRequest()), [
-  //     userApiFetchParamsObj
+  //     fetchParamsObj
   //   ]);
 
   //   console.log('getLtpLoansData', getLtpLoansData);
 
   //   const { navigation } = props;
   //   const fetchParamsObj = useMemo(() => {
-  //     console.log('in ltpLoans memoising fetchParamsObj', userApiFetchParamsObj);
-  //     return userApiFetchParamsObj;
+  //     console.log('in ltpLoans memoising fetchParamsObj', fetchParamsObj);
+  //     return fetchParamsObj;
   //   }, [
-  //     userApiFetchParamsObj.dealerId,
-  //     userApiFetchParamsObj.intId,
-  //     userApiFetchParamsObj.userBrand,
+  //     fetchParamsObj.dealerId,
+  //     fetchParamsObj.userIntId,
+  //     fetchParamsObj.userBrand,
   //   ]);
 
   useEffect(() => {
@@ -78,11 +74,18 @@ export default LtpLoansScreen = (props) => {
 
   //   console.log('in ltpLoans screen - point 2');
 
-  const storeDisplayTimestamp = () => {
-    console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
-    const now = Date.now();
-    dispatch(setLtpLoansDisplayTimestamp({ now }));
-  };
+  const storeDisplayTimestamp = useCallback(
+    (displayTime) => {
+      // const displayTime = Date.now();
+      //   console.log(
+      //     '+++++++++++++++=in New storeDisplayTimestampAsync:',
+      //     displayTime,
+      //     typeof displayTime
+      //   );
+      dispatch(setLtpLoansDisplayTimestamp(displayTime));
+    },
+    [dispatch]
+  );
 
   const refreshRequestHandler = useCallback(() => {
     console.log('in ltpLoans refreshRequestHandler');
@@ -109,8 +112,15 @@ export default LtpLoansScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('in ltpLoans screen useEffect ltpLoansFetchTime', ltpLoansFetchTime);
-    storeDisplayTimestamp();
+    const displayTime = Date.now();
+    // console.log(
+    //   'in ltpLoans useeffect calling storeDisplayTimestamp',
+    //   'ltpLoansFetchTime',
+    //   ltpLoansFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
   }, [ltpLoansFetchTime]);
 
   //   console.log('in ltpLoans screen - point 5');

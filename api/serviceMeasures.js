@@ -8,13 +8,11 @@ const dummyIntId = 850;
 const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
 
-export const getServiceMeasures = (wipObj) => {
+export const getServiceMeasures = (fetchParamsObj) => {
   //   console.log('here in getServiceMeasures API ');
-  //   console.log('here in getServiceMeasures API ', wipObj);
-  const { dealerId } = wipObj;
-  const url =
-    '/default.asp?controller=api&action=listActiveRetailerCampaignsAsJSON&dealerId=' +
-    dealerId;
+  //   console.log('here in getServiceMeasures API ', fetchParamsObj);
+  const { dealerId } = fetchParamsObj;
+  const url = `/default.asp?controller=api&action=listActiveRetailerCampaignsAsJSON&dealerId=${dealerId}`;
   //   console.log(url);
   return axios.get(url, {
     headers: {

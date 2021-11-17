@@ -8,14 +8,10 @@ const dummyIntId = 850;
 const dummyIntIdString = '850';
 const dummyUserName = 'Alan Upstone';
 
-export const getDealerWips = (wipObj) => {
+export const getDealerWips = (fetchParamsObj) => {
   //   console.log('here in getDealerWips API ', wipObj);
-  const { dealerId, intId } = wipObj;
-  const url =
-    '/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=' +
-    intId +
-    '&dealerId=' +
-    dealerId;
+  const { dealerId, userIntId } = fetchParamsObj;
+  const url = `/mandatoryList/?controller=api&action=getWIPsForUserIntId&intId=${userIntId}&dealerId=${dealerId}`;
   //   console.log(url);
   return axios.get(url, {
     headers: {

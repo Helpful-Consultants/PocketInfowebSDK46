@@ -8,13 +8,11 @@ const dummyIntId = '513';
 const dummyIntIdString = '513';
 const dummyUserName = 'Alan Upstone';
 
-export const getLtpLoans = (wipObj) => {
+export const getLtpLoans = (fetchParamsObj) => {
   //   console.log('here in getLtpLoans API ');
-  //   console.log('here in getLtpLoans API ', wipObj);
-  const { intId } = wipObj;
-  const url =
-    '/default.asp?controller=api&action=listActiveLTPBookings&intUserId=' +
-    intId;
+  //   console.log('here in getLtpLoans API ', fetchParamsObj);
+  const { userIntId } = fetchParamsObj;
+  const url = `/default.asp?controller=api&action=listActiveLTPBookings&intUserId=${userIntId}`;
   //   console.log(url);
   return axios.get(url, {
     headers: {

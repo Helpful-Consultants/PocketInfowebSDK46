@@ -1,13 +1,11 @@
 import axios from 'axios';
 
-export const getCalibrationExpiry = (wipObj) => {
+export const getCalibrationExpiry = (fetchParamsObj) => {
   //   console.log('here in getServiceMeasures API ');
-  //   console.log('here in getServiceMeasures API ', wipObj);
-  const { dealerId } = wipObj;
+  //   console.log('here in getServiceMeasures API ', fetchParamsObj);
+  const { dealerId } = fetchParamsObj;
   //   const dealerId = 'helpful';
-  const url =
-    '/mandatoryList/?controller=api&action=listCalibrationExpiry&id=' +
-    dealerId;
+  const url = `/mandatoryList/?controller=api&action=listCalibrationExpiry&id=${dealerId}`;
   //   console.log(url);
   return axios.get(url, {
     headers: {

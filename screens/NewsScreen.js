@@ -29,22 +29,20 @@ const checkUrl = (rawUrl) => {
 export default NewsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const navigation = useNavigation();
+  //   const navigation = useNavigation();
   const dispatch = useDispatch();
   const newsItems = useSelector((state) => state.news.newsItems);
   const newsFetchTime = useSelector((state) => state.news.fetchTime);
-  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  //   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userData = useSelector((state) => state.user.userData[0]);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const dealerId = userData && userData.dealerId;
+  //   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
   const isLoading = useSelector((state) => state.news.isLoading);
   const dataError = useSelector((state) => state.news.error);
   const dataStatusCode = useSelector((state) => state.news.statusCode);
   const dataErrorUrl = useSelector((state) => state.news.dataErrorUrl);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [browserResult, setBrowserResult] = useState(null);
 
   if (newsItems && newsItems.length > 0) {
@@ -59,9 +57,7 @@ export default NewsScreen = (props) => {
   //   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = useCallback(() => {
-    console.log(
-      'in news in getItems userApiFetchParamsObj - no fetchParamsObj'
-    );
+    console.log('in news in getItems - no fetchParamsObj needed');
     dispatch(getNewsRequest());
   }, [dispatch]);
 
