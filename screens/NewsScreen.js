@@ -58,18 +58,25 @@ export default NewsScreen = (props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   //   const [isLoading, setIsLoading] = useState(false);
 
-  const getItems = useCallback(
-    async () => dispatch(getNewsRequest()),
-    [newsItems]
+  const getItems = useCallback(() => {
+    console.log(
+      'in news in getItems userApiFetchParamsObj - no fetchParamsObj'
+    );
+    dispatch(getNewsRequest());
+  }, [dispatch]);
+
+  const storeDisplayTimestamp = useCallback(
+    (displayTime) => {
+      // const displayTime = Date.now();
+      //   console.log(
+      //     '+++++++++++++++=in New storeDisplayTimestampAsync:',
+      //     displayTime,
+      //     typeof displayTime
+      //   );
+      dispatch(setNewsDisplayTimestamp(displayTime));
+    },
+    [dispatch]
   );
-  const getItemsAsync = async () => {
-    getItems();
-  };
-  const storeDisplayTimestampAsync = async () => {
-    // console.log('+++++++++++++++=in storeDisplayTimestampAsync:');
-    displayTime = Date.now();
-    dispatch(setNewsDisplayTimestamp(displayTime));
-  };
 
   //   const { navigation } = props;
 
@@ -94,19 +101,29 @@ export default NewsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      storeDisplayTimestampAsync();
-      dispatch(
-        revalidateUserCredentials({
-          calledBy: 'NewsScreen',
-        })
-      );
+      //   console.log('in news focusffect calling getItems');
+      getItems();
+      //   console.log('in news focusffect calling storeDisplayTimestamp');
+      //   storeDisplayTimestamp();
       setSearchInput('');
-      getItemsAsync();
-    }, [])
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('news Screen was unfocused');
+      };
+    }, [dispatch, getItems])
   );
+
   useEffect(() => {
-    storeDisplayTimestampAsync();
-  }, [newsFetchTime]);
+    const displayTime = Date.now();
+    // console.log(
+    //   'in news useeffect calling storeDisplayTimestamp',
+    //   'newsFetchTime',
+    //   newsFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
+  }, [newsFetchTime.toString()]);
 
   const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);
@@ -132,7 +149,7 @@ export default NewsScreen = (props) => {
   };
 
   const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler');
+    console.log('in refreshRequestHandler');
     getItems();
   };
   //   console.log('newsItems AREEEEEEEEEE', newsItems);
