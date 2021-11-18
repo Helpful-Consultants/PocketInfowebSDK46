@@ -60,14 +60,14 @@ export default function OdisVersions(props) {
       item.lastUpdated && item.lastUpdated.length > 0 ? item.lastUpdated : null,
       displayTime
     );
-    console.log(
-      'isreecntcahnge',
-      isRecentChange,
-      'for',
-      item.brandCode,
-      item,
-      item.previousProductVersion && item.previousProductVersion
-    );
+    // console.log(
+    //   'is recent change',
+    //   isRecentChange,
+    //   'for',
+    //   item.brandCode,
+    //   item,
+    //   item.previousProductVersion && item.previousProductVersion
+    // );
     return item ? (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
