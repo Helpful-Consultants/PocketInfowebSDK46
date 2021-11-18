@@ -38,18 +38,18 @@ export default StatsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in stats usefocusffect, usecallback ');
+      //   console.log('in stats usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'stats Screen',
       //     })
       //   );
-      console.log('in stats focusffect calling getItems');
+      //   console.log('in stats focusffect calling getItems');
       getItems();
 
       return () => {
         // Do something when the screen is unfocused
-        console.log('stats Screen was unfocused');
+        // console.log('stats Screen was unfocused');
       };
     }, [dispatch, getItems])
   );

@@ -31,7 +31,7 @@ export const selectFetchParamsObj = createSelector(
     return {
       dealerId: dealerId,
       userBrand: brand,
-      userIntId: intId,
+      userIntId: intId ? intId.toString() : '',
     };
     // console.log(
     //   '************** in selectFetchParamsObj',

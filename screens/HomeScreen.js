@@ -529,24 +529,22 @@ export default HomeScreen = (props) => {
       //     ltpLoansRedCount
       //   );
       const tempNotifiableOdisRedCount =
-        typeof odisRedCount !== 'undefined' && odisRedCount !== null
-          ? odisRedCount
-          : 0;
+        typeof odisRedCount === 'number' && odisRedCount > 0 ? 1 : 0;
       const tempNotifiableCalibrationExpiryRedCount =
-        typeof calibrationExpiryRedCount !== 'undefined' &&
-        calibrationExpiryRedCount !== null
+        typeof calibrationExpiryRedCount === 'number' &&
+        calibrationExpiryRedCount > 0
           ? calibrationExpiryRedCount
           : 0;
-
       const tempNotifiableServiceMeasuresRedCount =
-        typeof serviceMeasuresRedCount !== 'undefined' &&
-        serviceMeasuresRedCount !== null
+        typeof serviceMeasuresRedCount === 'number' &&
+        serviceMeasuresRedCount > 0
           ? serviceMeasuresRedCount
           : 0;
       const tempNotifiableLtpLoansRedCount =
-        typeof ltpLoansRedCount !== 'undefined' && ltpLoansRedCount !== null
+        typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0
           ? ltpLoansRedCount
           : 0;
+
       setNotificationsRedCount(
         tempNotifiableOdisRedCount +
           tempNotifiableCalibrationExpiryRedCount +
@@ -555,18 +553,18 @@ export default HomeScreen = (props) => {
       );
 
       const tempNotifiableCalibrationExpiryAmberCount =
-        typeof calibrationExpiryAmberCount !== 'undefined' &&
-        calibrationExpiryAmberCount !== null
+        typeof calibrationExpiryAmberCount === 'number' &&
+        calibrationExpiryAmberCount > 0
           ? calibrationExpiryAmberCount
           : 0;
       const tempNotifiableLtpLoansAmberCount =
-        typeof ltpLoansAmberCount !== 'undefined' && ltpLoansAmberCount !== null
+        typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0
           ? ltpLoansAmberCount
           : 0;
 
       const tempNotifiableServiceMeasuresAmberCount =
-        typeof serviceMeasuresAmberCount !== 'undefined' &&
-        serviceMeasuresAmberCount !== null
+        typeof serviceMeasuresAmberCount === 'number' &&
+        serviceMeasuresAmberCount > 0
           ? serviceMeasuresAmberCount
           : 0;
       setNotificationsAmberCount(
@@ -819,7 +817,7 @@ export default HomeScreen = (props) => {
                         <BadgedText
                           showBadge={
                             showingDemoApp
-                              ? (notificationsRedCount &&
+                              ? (typeof notificationsRedCount === 'number' &&
                                   notificationsRedCount > 0) ||
                                 (notificationsAmberCount &&
                                   notificationsAmberCount > 0)
@@ -827,10 +825,18 @@ export default HomeScreen = (props) => {
                           }
                           focused={false}
                           text={'Notifications'}
-                          value={notificationsTotalAlertCount ? '+' : null}
+                          value={
+                            (typeof notificationsRedCount === 'number' &&
+                              notificationsRedCount > 0) ||
+                            (typeof notificationsAmberCount === 'number' &&
+                              notificationsAmberCount > 0)
+                              ? '+'
+                              : null
+                          }
                           showingDemoApp={showingDemoApp}
                           showSevereAlert={
-                            notificationsRedCount && notificationsRedCount > 0
+                            typeof notificationsRedCount === 'number' &&
+                            notificationsRedCount > 0
                               ? true
                               : false
                           }
@@ -855,8 +861,10 @@ export default HomeScreen = (props) => {
                         <BadgedText
                           showBadge={
                             showingDemoApp
-                              ? (ltpLoansRedCount && ltpLoansRedCount > 0) ||
-                                (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+                              ? (typeof ltpLoansRedCount === 'number' &&
+                                  ltpLoansRedCount > 0) ||
+                                (typeof ltpLoansAmberCount === 'number' &&
+                                  ltpLoansAmberCount > 0)
                                 ? '+'
                                 : 0
                               : 0
@@ -864,8 +872,10 @@ export default HomeScreen = (props) => {
                           focused={false}
                           text={'LTP Loans'}
                           value={
-                            (ltpLoansRedCount && ltpLoansRedCount > 0) ||
-                            (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+                            (typeof ltpLoansRedCount === 'number' &&
+                              ltpLoansRedCount > 0) ||
+                            (typeof ltpLoansAmberCount === 'number' &&
+                              ltpLoansAmberCount > 0)
                               ? '+'
                               : null
                           }
@@ -893,10 +903,20 @@ export default HomeScreen = (props) => {
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={showingDemoApp ? unseenCriticalItems : 0}
+                        showBadge={
+                          showingDemoApp
+                            ? typeof unseenCriticalItems === 'number' &&
+                              unseenCriticalItems > 0
+                            : 0
+                        }
                         focused={false}
                         text={'News'}
-                        value={unseenCriticalItems ? '+' : null}
+                        value={
+                          typeof unseenCriticalItems === 'number' &&
+                          unseenCriticalItems > 0
+                            ? '+'
+                            : null
+                        }
                         showingDemoApp={showingDemoApp}
                         showSevereAlert={true}
                       />

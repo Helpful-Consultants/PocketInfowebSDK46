@@ -52,7 +52,7 @@ export default JobsScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
-    console.log('in jobs in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log('in jobs in getItems fetchParamsObj is', fetchParamsObj);
     dispatch(getDealerWipsRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -67,29 +67,29 @@ export default JobsScreen = (props) => {
   );
 
   useEffect(() => {
-    console.log(
-      '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
-      fetchParamsObj
-    );
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
+    //   fetchParamsObj
+    // );
     getItems();
   }, [fetchParamsObj]);
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in Jobs usefocusffect, usecallback ');
+      //   console.log('in Jobs usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'Jobs Screen',
       //     })
       //   );
-      console.log('in Jobs focusffect calling getItems');
+      //   console.log('in Jobs focusffect calling getItems');
       //   dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
       getItems();
 
       setSearchInput('');
       return () => {
         // Do something when the screen is unfocused
-        console.log('Jobs Screen was unfocused');
+        // console.log('Jobs Screen was unfocused');
       };
     }, [getItems])
   );
@@ -98,7 +98,7 @@ export default JobsScreen = (props) => {
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in Jobs refreshRequestHandler');
+    // console.log('in Jobs refreshRequestHandler');
     getItems();
   }, [getItems]);
 

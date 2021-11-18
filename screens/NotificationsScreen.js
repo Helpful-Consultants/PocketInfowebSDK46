@@ -110,7 +110,7 @@ export default NotificationsScreen = (props) => {
   //   const { navigation } = props;
 
   const getItems = useCallback(() => {
-    console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
     // console.log(
     //   'in calibrationExpiry getItems fetchParamsObj',
     //   fetchParamsObj

@@ -66,10 +66,11 @@ export default ServiceMeasuresScreen = (props) => {
   //   const { navigation } = props;
 
   useEffect(() => {
-    console.log(
-      '&&&&&&&&&&&&&&&& fetchParamsObj changed for SM',
-      fetchParamsObj
-    );
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for SM',
+    //   fetchParamsObj
+    // );
+    getItems();
   }, [fetchParamsObj]);
 
   //   const fetchParamsObj = useMemo(() => {
@@ -85,10 +86,10 @@ export default ServiceMeasuresScreen = (props) => {
   //   ]);
 
   const getItems = useCallback(() => {
-    console.log(
-      'in serviceMeasures in getItems fetchParamsObj',
-      fetchParamsObj
-    );
+    // console.log(
+    //   'in serviceMeasures in getItems fetchParamsObj',
+    //   fetchParamsObj
+    // );
     dispatch(getServiceMeasuresRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -108,25 +109,25 @@ export default ServiceMeasuresScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in serviceMeasures refreshRequestHandler');
+    // console.log('in serviceMeasures refreshRequestHandler');
     getItems();
   }, [getItems]);
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in serviceMeasures usefocusffect, usecallback ');
+      //   console.log('in serviceMeasures usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'ServiceMeasures Screen',
       //     })
       //   );
-      console.log('in serviceMeasures focusffect calling getItems');
+      //   console.log('in serviceMeasures focusffect calling getItems');
       getItems();
       storeDisplayTimestamp();
       setSearchInput('');
       return () => {
         // Do something when the screen is unfocused
-        console.log('serviceMeasures Screen was unfocused');
+        // console.log('serviceMeasures Screen was unfocused');
       };
     }, [dispatch, getItems])
   );

@@ -52,10 +52,11 @@ export default OdisScreen = (props) => {
     //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
     //   fetchParamsObj
     // );
+    getItems();
   }, [fetchParamsObj]);
 
   const getItems = useCallback(() => {
-    console.log('in ODIS in getItems fetchParamsObj', fetchParamsObj);
+    // console.log('in ODIS in getItems fetchParamsObj', fetchParamsObj);
     dispatch(getOdisRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -79,18 +80,18 @@ export default OdisScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in serviceMeasures usefocusffect, usecallback ');
+      //   console.log('in serviceMeasures usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'ServiceMeasures Screen',
       //     })
       //   );
-      console.log('in serviceMeasures focusffect calling getItems');
+      //   console.log('in serviceMeasures focusffect calling getItems');
       getItems();
       storeDisplayTimestamp();
       return () => {
         // Do something when the screen is unfocused
-        console.log('ODIS Screen was unfocused');
+        // console.log('ODIS Screen was unfocused');
       };
     }, [dispatch, getItems])
   );

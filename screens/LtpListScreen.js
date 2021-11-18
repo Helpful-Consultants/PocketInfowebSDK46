@@ -35,25 +35,25 @@ export default LtpListScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
-    console.log('in LTP in getItems - no fetchParamsObj needed');
+    // console.log('in LTP in getItems - no fetchParamsObj needed');
     dispatch(getLtpRequest());
   }, [dispatch]);
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in ltp list screen usefocusffect, usecallback ');
+      //   console.log('in ltp list screen usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'ltp list screen Screen',
       //     })
       //   );
-      console.log('in LTP Screen focusffect calling getItems');
+      //   console.log('in LTP Screen focusffect calling getItems');
       getItems();
       setSearchInput('');
 
       return () => {
         // Do something when the screen is unfocused
-        console.log('LTP Screen was unfocused');
+        // console.log('LTP Screen was unfocused');
       };
     }, [dispatch, getItems])
   );
@@ -121,7 +121,7 @@ export default LtpListScreen = (props) => {
   };
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in ltp refreshRequestHandler');
+    // console.log('in ltp refreshRequestHandler');
     getItems();
   }, [getItems]);
 

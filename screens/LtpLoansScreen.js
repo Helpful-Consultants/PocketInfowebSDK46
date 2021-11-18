@@ -61,14 +61,15 @@ export default LtpLoansScreen = (props) => {
   //   ]);
 
   useEffect(() => {
-    console.log(
-      '&&&&&&&&&&&&&&&& fetchParamsObj changed for LTP loans',
-      fetchParamsObj
-    );
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for LTP loans',
+    //   fetchParamsObj
+    // );
+    getItems();
   }, [fetchParamsObj]);
 
   const getItems = useCallback(() => {
-    console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log('in ltpLoans in getItems fetchParamsObj is', fetchParamsObj);
     dispatch(getLtpLoansRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -94,19 +95,19 @@ export default LtpLoansScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('in ltpLoans usefocusffect, usecallback ');
+      //   console.log('in ltpLoans usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'LtpLoans Screen',
       //     })
       //   );
-      console.log('in ltpLoans focusffect calling getItems');
+      //   console.log('in ltpLoans focusffect calling getItems');
       getItems();
       storeDisplayTimestamp();
       setSearchInput('');
       return () => {
         // Do something when the screen is unfocused
-        console.log('ltpLoans Screen was unfocused');
+        // console.log('ltpLoans Screen was unfocused');
       };
     }, [dispatch, getItems])
   );
@@ -151,18 +152,18 @@ export default LtpLoansScreen = (props) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
       let newFilteredItems = searchItems(ltpLoansSorted, searchInput);
-      console.log(
-        'LtpLoans Screen  searchInputHandler for: ',
-        searchInput && searchInput,
-        'LtpLoans: ',
-        ltpLoansItems && ltpLoansItems.length,
-        'itemsToShow: ',
-        itemsToShow && itemsToShow.length,
-        'uniqueLitpLoansItems: ',
-        'newFilteredItems:',
-        newFilteredItems && newFilteredItems.length,
-        newFilteredItems
-      );
+      //   console.log(
+      //     'LtpLoans Screen  searchInputHandler for: ',
+      //     searchInput && searchInput,
+      //     'LtpLoans: ',
+      //     ltpLoansItems && ltpLoansItems.length,
+      //     'itemsToShow: ',
+      //     itemsToShow && itemsToShow.length,
+      //     'uniqueLitpLoansItems: ',
+      //     'newFilteredItems:',
+      //     newFilteredItems && newFilteredItems.length,
+      //     newFilteredItems
+      //   );
       setFilteredItems(newFilteredItems);
     }
   };

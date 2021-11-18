@@ -140,36 +140,51 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //     ltpLoansAmberCount
       //   );
       let tempNotifiableAlertsRedCount = 0;
+      console.log(
+        'in reminders nav useEffect tempNotifiableAlertsRedCount',
+        tempNotifiableAlertsRedCount
+      );
 
       if (
-        typeof calibrationExpiryOverdueCount !== 'undefined' ||
-        calibrationExpiryOverdueCount !== null
+        typeof calibrationExpiryOverdueCount === 'number' &&
+        calibrationExpiryOverdueCount > 0
       ) {
+        console.log(
+          'adding calibrationExpiryOverdueCount',
+          calibrationExpiryOverdueCount
+        );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
       }
       if (
-        typeof calibrationExpiryRedCount !== 'undefined' ||
-        calibrationExpiryRedCount !== null
+        typeof calibrationExpiryRedCount === 'number' &&
+        calibrationExpiryRedCount > 0
       ) {
+        console.log(
+          'adding calibrationExpiryRedCount',
+          calibrationExpiryRedCount
+        );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
       }
       if (
-        typeof serviceMeasuresRedCount !== 'undefined' ||
-        serviceMeasuresRedCount !== null
+        typeof serviceMeasuresRedCount === 'number' &&
+        serviceMeasuresRedCount > 0
       ) {
+        console.log(
+          'adding tempNotifiableAlertsRedCount',
+          serviceMeasuresRedCount
+        );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
       }
-      if (
-        typeof ltpLoansRedCount !== 'undefined' ||
-        ltpLoansRedCount !== null
-      ) {
+      if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
+        console.log('adding ltpLoansRedCount', ltpLoansRedCount);
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + ltpLoansRedCount;
       }
-      if (typeof odisRedCount !== 'undefined' || odisRedCount !== null) {
+      if (typeof odisRedCount === 'number' && odisRedCount > 0) {
+        console.log('adding odisRedCount', odisRedCount);
         tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + 1;
       }
 
@@ -181,8 +196,12 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //     calibrationExpiryRedCount,
       //     'serviceMeasuresRedCount',
       //     serviceMeasuresRedCount,
+      //     'calibrationExpiryOverdueCount',
+      //     calibrationExpiryOverdueCount,
       //     'ltpLoansRedCount',
-      //     ltpLoansRedCount
+      //     ltpLoansRedCount,
+      //     'odisRedCount',
+      //     odisRedCount
       //   );
 
       setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
@@ -202,29 +221,26 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       let tempNotifiableAlertsAmberCount = 0;
 
       if (
-        typeof calibrationExpiryAmberCount !== 'undefined' ||
-        calibrationExpiryAmberCount !== null
+        typeof calibrationExpiryAmberCount === 'number' &&
+        calibrationExpiryAmberCount > 0
       ) {
         tempNotifiableAlertsAmberCount =
           tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
       }
       if (
-        typeof serviceMeasuresAmberCount !== 'undefined' ||
-        serviceMeasuresAmberCount !== null
+        typeof serviceMeasuresAmberCount === 'number' &&
+        serviceMeasuresAmberCount > 0
       ) {
         tempNotifiableAlertsAmberCount =
           tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
       }
-      if (
-        typeof ltpLoansAmberCount !== 'undefined' ||
-        ltpLoansAmberCount !== null
-      ) {
+      if (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0) {
         tempNotifiableAlertsAmberCount =
           tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
       }
       if (
-        typeof odisChangesToHighlight !== 'undefined' ||
-        odisChangesToHighlight !== null
+        typeof odisChangesToHighlight === 'number' &&
+        odisChangesToHighlight > 0
       ) {
         tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
       }

@@ -57,7 +57,7 @@ export default NewsScreen = (props) => {
   //   const [isLoading, setIsLoading] = useState(false);
 
   const getItems = useCallback(() => {
-    console.log('in news in getItems - no fetchParamsObj needed');
+    // console.log('in news in getItems - no fetchParamsObj needed');
     dispatch(getNewsRequest());
   }, [dispatch]);
 
@@ -104,7 +104,7 @@ export default NewsScreen = (props) => {
       setSearchInput('');
       return () => {
         // Do something when the screen is unfocused
-        console.log('news Screen was unfocused');
+        // console.log('news Screen was unfocused');
       };
     }, [dispatch, getItems])
   );
@@ -145,7 +145,7 @@ export default NewsScreen = (props) => {
   };
 
   const refreshRequestHandler = () => {
-    console.log('in refreshRequestHandler');
+    // console.log('in refreshRequestHandler');
     getItems();
   };
   //   console.log('newsItems AREEEEEEEEEE', newsItems);

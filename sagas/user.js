@@ -14,7 +14,7 @@ import * as api from '../api/user';
 import Types from '../constants/Types';
 
 function* getUser({ payload }) {
-  console.log('in user saga - getUser called for', payload && payload);
+  //   console.log('in user saga - getUser called for', payload && payload);
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the user';
   let dataErrorUrl = null;

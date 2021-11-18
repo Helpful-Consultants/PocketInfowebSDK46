@@ -60,6 +60,14 @@ export default function OdisVersions(props) {
       item.lastUpdated && item.lastUpdated.length > 0 ? item.lastUpdated : null,
       displayTime
     );
+    console.log(
+      'isreecntcahnge',
+      isRecentChange,
+      'for',
+      item.brandCode,
+      item,
+      item.previousProductVersion && item.previousProductVersion
+    );
     return item ? (
       <View style={baseStyles.viewRowFlex}>
         <View style={baseStyles.odisLogoContainer}>
@@ -69,75 +77,46 @@ export default function OdisVersions(props) {
           />
         </View>
         <View style={{ padding: 5 }}>
-          <Text style={baseStyles.textOdisVersion}>
-            {item.previousProductVersion &&
-            item.previousProductVersion !== item.productVersion ? (
-              <Text
-                style={
-                  isRecentChange
-                    ? baseStyles.textOdisVersionHighlighted
-                    : baseStyles.textOdisVersion
-                }
-              >
-                {`Product: ${item.productVersion}`}{' '}
-                {isRecentChange && true === false ? (
-                  <Text style={baseStyles.textOdisVersionSmaller}>
-                    {` (was ${item.previousProductVersion})`}
-                  </Text>
-                ) : null}
-              </Text>
-            ) : (
-              <Text style={baseStyles.textOdisVersion}>
-                {`Product: ${item.productVersion}`}
-              </Text>
-            )}
-          </Text>
-          {item.previousMainFeatureVersion &&
-          item.previousMainFeatureVersion !== item.mainFeatureVersion ? (
-            <View style={{ flexDirection: 'column' }}>
-              <Text
-                style={
-                  isRecentChange
-                    ? baseStyles.textOdisVersionHighlighted
-                    : baseStyles.textOdisVersion
-                }
-              >
-                {`Main feature: ${item.mainFeatureVersion}`}
-              </Text>
-              {isRecentChange && true === false ? (
-                <Text style={baseStyles.textOdisVersionSmaller}>
-                  {` (was ${item.previousMainFeatureVersion})`}
-                </Text>
-              ) : null}
-            </View>
-          ) : (
-            <Text style={baseStyles.textOdisVersion}>
-              {`Main Feature: ${item.mainFeatureVersion}`}
+          <View style={{ flexDirection: 'column' }}>
+            <Text
+              style={
+                isRecentChange &&
+                (!item.previousProductVersion ||
+                  item.previousProductVersion !== item.ProductVersion)
+                  ? baseStyles.textOdisVersionHighlighted
+                  : baseStyles.textOdisVersion
+              }
+            >
+              {`Product: ${item.productVersion}`}
             </Text>
-          )}
-          <Text style={baseStyles.textOdisVersion}>
-            {item.previousDataVersion &&
-            item.previousDataVersion !== item.dataVersion ? (
-              <Text
-                style={
-                  isRecentChange
-                    ? baseStyles.textOdisVersionHighlighted
-                    : baseStyles.textOdisVersion
-                }
-              >
-                {`Data: ${item.dataVersion}`}
-                {isRecentChange && true === false ? (
-                  <Text style={baseStyles.textOdisVersionSmaller}>
-                    {` (was ${item.previousDataVersion})`}
-                  </Text>
-                ) : null}
-              </Text>
-            ) : (
-              <Text style={baseStyles.textOdisVersion}>
-                {`Data: ${item.dataVersion}`}
-              </Text>
-            )}
-          </Text>
+          </View>
+
+          <View style={{ flexDirection: 'column' }}>
+            <Text
+              style={
+                isRecentChange &&
+                (!item.previousMainFeatureVersion ||
+                  item.previousMainFeatureVersion !== item.mainFeatureVersion)
+                  ? baseStyles.textOdisVersionHighlighted
+                  : baseStyles.textOdisVersion
+              }
+            >
+              {`Main feature: ${item.mainFeatureVersion}`}
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'column' }}>
+            <Text
+              style={
+                isRecentChange &&
+                (!item.previousDataVersion ||
+                  item.previousDataVersion !== item.DataVersion)
+                  ? baseStyles.textOdisVersionHighlighted
+                  : baseStyles.textOdisVersion
+              }
+            >
+              {`Data: ${item.dataVersion}`}
+            </Text>
+          </View>
 
           {item.lastUpdated && item.lastUpdated.length > 0 ? (
             <Text style={baseStyles.textOdisVersionSmaller}>

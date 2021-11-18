@@ -259,45 +259,36 @@ export default AppNavigator = (props) => {
       let tempNotifiableAlertsCount = 0;
 
       if (
-        typeof calibrationExpiryOverdueCount !== 'undefined' &&
-        calibrationExpiryOverdueCount !== null
+        typeof calibrationExpiryOverdueCount === 'number' &&
+        calibrationExpiryOverdueCount > 0
       ) {
         tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + calibrationExpiryRedCount;
+          tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
       }
       if (
-        typeof calibrationExpiryRedCount !== 'undefined' &&
-        calibrationExpiryRedCount !== null
+        typeof calibrationExpiryRedCount === 'number' &&
+        calibrationExpiryRedCount > 0
       ) {
         tempNotifiableAlertsCount =
           tempNotifiableAlertsCount + calibrationExpiryRedCount;
       }
 
-      if (
-        typeof ltpLoansRedCount !== 'undefined' &&
-        ltpLoansRedCount !== null
-      ) {
+      if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
         tempNotifiableAlertsCount =
           tempNotifiableAlertsCount + ltpLoansRedCount;
       }
-
       if (
-        typeof serviceMeasuresRedCount !== 'undefined' &&
-        serviceMeasuresRedCount !== null
+        typeof serviceMeasuresRedCount === 'number' &&
+        serviceMeasuresRedCount > 0
       ) {
         tempNotifiableAlertsCount =
           tempNotifiableAlertsCount + serviceMeasuresRedCount;
       }
-
-      if (
-        typeof unseenCriticalItems !== 'undefined' &&
-        unseenCriticalItems !== null
-      ) {
+      if (typeof unseenCriticalItems === 'number' && unseenCriticalItems > 0) {
         tempNotifiableAlertsCount =
           tempNotifiableAlertsCount + unseenCriticalItems;
       }
-
-      if (typeof odisRedCount !== 'undefined' && odisRedCount !== null) {
+      if (typeof odisRedCount === 'number' && odisRedCount > 0) {
         tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
       }
 
