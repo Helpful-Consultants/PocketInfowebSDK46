@@ -125,8 +125,8 @@ export default HomeScreen = (props) => {
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const unseenCriticalItems = useSelector(
-    (state) => state.news.unseenCriticalItems
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
   );
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems
@@ -904,16 +904,18 @@ export default HomeScreen = (props) => {
                       />
                       <BadgedText
                         showBadge={
-                          showingDemoApp
-                            ? typeof unseenCriticalItems === 'number' &&
-                              unseenCriticalItems > 0
+                          showingDemoApp &&
+                          typeof unseenCriticalNews === 'number' &&
+                          unseenCriticalNews > 0
+                            ? 1
                             : 0
                         }
                         focused={false}
                         text={'News'}
                         value={
-                          typeof unseenCriticalItems === 'number' &&
-                          unseenCriticalItems > 0
+                          showingDemoApp &&
+                          typeof unseenCriticalNews === 'number' &&
+                          unseenCriticalNews > 0
                             ? '+'
                             : null
                         }

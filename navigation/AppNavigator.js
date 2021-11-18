@@ -160,8 +160,8 @@ export default AppNavigator = (props) => {
     (state) => state.serviceMeasures.redCount
   );
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const unseenCriticalItems = useSelector(
-    (state) => state.news.unseenCriticalItems
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
   );
   const odisRedCount = useSelector((state) => state.odis.redCount);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
@@ -284,35 +284,35 @@ export default AppNavigator = (props) => {
         tempNotifiableAlertsCount =
           tempNotifiableAlertsCount + serviceMeasuresRedCount;
       }
-      if (typeof unseenCriticalItems === 'number' && unseenCriticalItems > 0) {
+      if (typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0) {
         tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + unseenCriticalItems;
+          tempNotifiableAlertsCount + unseenCriticalNews;
       }
       if (typeof odisRedCount === 'number' && odisRedCount > 0) {
         tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
       }
 
-      //   console.log(
-      //     'in appnav useEffect before setting badge',
-      //     'showingDemoApp',
-      //     showingDemoApp,
-      //     'showingDemoData',
-      //     showingDemoData,
-      //     'calibrationExpiryOverdueCount',
-      //     calibrationExpiryOverdueCount,
-      //     'calibrationExpiryRedCount',
-      //     calibrationExpiryRedCount,
-      //     'serviceMeasuresRedCount',
-      //     serviceMeasuresRedCount,
-      //     'ltpLoansRedCount',
-      //     ltpLoansRedCount,
-      //     'unseenCriticalItems',
-      //     unseenCriticalItems,
-      //     'odisRedCount',
-      //     odisRedCount,
-      //     'tempNotifiableAlertsCount',
-      //     tempNotifiableAlertsCount
-      //   );
+      console.log(
+        'in appnav useEffect before setting badge',
+        'showingDemoApp',
+        showingDemoApp,
+        'showingDemoData',
+        showingDemoData,
+        'calibrationExpiryOverdueCount',
+        calibrationExpiryOverdueCount,
+        'calibrationExpiryRedCount',
+        calibrationExpiryRedCount,
+        'serviceMeasuresRedCount',
+        serviceMeasuresRedCount,
+        'ltpLoansRedCount',
+        ltpLoansRedCount,
+        'unseenCriticalNews',
+        unseenCriticalNews,
+        'odisRedCount',
+        odisRedCount,
+        'tempNotifiableAlertsCount',
+        tempNotifiableAlertsCount
+      );
 
       setBadgeCountAsync(tempNotifiableAlertsCount);
     } else {

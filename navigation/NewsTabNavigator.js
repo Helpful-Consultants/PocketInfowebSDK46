@@ -57,8 +57,8 @@ const NewsTabs =
 export default NewsTabNavigator = ({ navigation, route }) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const unseenCriticalItems = useSelector(
-    (state) => state.news.unseenCriticalItems
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
   );
 
   useEffect(() => {
@@ -143,7 +143,12 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
-          tabBarBadge: showingDemoApp && unseenCriticalItems ? '' : null,
+          tabBarBadge:
+            showingDemoApp &&
+            typeof unseenCriticalNews === 'number' &&
+            unseenCriticalNews > 0
+              ? ''
+              : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,

@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   redCount: 0,
   lastUpdate: null,
   latestCriticalItemDate: null,
-  unseenCriticalItems: false,
+  unseenCriticalNews: 0,
   previousUpdate: null,
   isLoading: false,
   error: null,
@@ -38,12 +38,12 @@ const countCriticalItems = (items) => {
   return count;
 };
 
-const checkUnseenCriticalItems = (
+const checkunseenCriticalNews = (
   latestCriticalItemDate = null,
   displayTimestamp = null
 ) => {
   //   console.log(
-  //     'in checkUnseenCriticalItems',
+  //     'in checkunseenCriticalNews',
   //     'latestCriticalItemDate',
   //     latestCriticalItemDate,
   //     'displayTimestamp',
@@ -55,7 +55,7 @@ const checkUnseenCriticalItems = (
     'news reducer'
   );
   //   console.log(
-  //     'in checkUnseenCriticalItems',
+  //     'in checkunseenCriticalNews',
   //     'isSeen',
   //     isSeen,
   //     'latestCriticalItemDate',
@@ -64,9 +64,9 @@ const checkUnseenCriticalItems = (
   //     displayTimestamp
   //   );
 
-  const unseenCriticalItems = isSeen ? 0 : 1;
+  const unseenCriticalNews = isSeen ? 0 : 1;
 
-  return unseenCriticalItems;
+  return unseenCriticalNews;
 };
 
 export default function news(state = INITIAL_STATE, action) {
@@ -103,10 +103,10 @@ export default function news(state = INITIAL_STATE, action) {
       const dateOfLatestCriticalNewsItem =
         getDateOfLatestCriticalNewsItem(itemsList);
       const redCount = countCriticalItems(itemsList);
-      const unseenCriticalItems = state.displayTimestamp
+      const unseenCriticalNews = state.displayTimestamp
         ? redCount
           ? dateOfLatestCriticalNewsItem
-            ? checkUnseenCriticalItems(
+            ? checkunseenCriticalNews(
                 dateOfLatestCriticalNewsItem,
                 state.displayTimestamp
               )
@@ -122,12 +122,12 @@ export default function news(state = INITIAL_STATE, action) {
       //     dateOfLatestCriticalNewsItem,
       //     'state.displayTimestamp',in appnav useEffect
       //     state.displayTimestamp,
-      //     'unseenCriticalItems',
-      //     unseenCriticalItems
+      //     'unseenCriticalNews',
+      //     unseenCriticalNews
       //   );
       return {
         ...state,
-        unseenCriticalItems: unseenCriticalItems,
+        unseenCriticalNews: unseenCriticalNews,
         displayTimestamp: displayTime,
       };
     }
@@ -156,17 +156,16 @@ export default function news(state = INITIAL_STATE, action) {
       const dateOfLatestCriticalNewsItem =
         getDateOfLatestCriticalNewsItem(itemsList);
       const redCount = countCriticalItems(itemsList);
-      const unseenCriticalItems = state.displayTimestamp
-        ? redCount
-          ? dateOfLatestCriticalNewsItem
-            ? checkUnseenCriticalItems(
+      const unseenCriticalNews = redCount
+        ? dateOfLatestCriticalNewsItem
+          ? state.displayTimestamp
+            ? checkunseenCriticalNews(
                 dateOfLatestCriticalNewsItem,
                 state.displayTimestamp
               )
             : 0
-          : 0
-        : 1;
-
+          : 1
+        : 0;
       //   console.log(
       //     'in news reducer, saving news',
       //     'redCount',
@@ -175,8 +174,8 @@ export default function news(state = INITIAL_STATE, action) {
       //     dateOfLatestCriticalNewsItem,
       //     'state.displayTimestamp',
       //     state.displayTimestamp,
-      //     'unseenCriticalItems',
-      //     unseenCriticalItems
+      //     'unseenCriticalNews',
+      //     unseenCriticalNews
       //   );
       return {
         ...state,
@@ -184,7 +183,7 @@ export default function news(state = INITIAL_STATE, action) {
         newsItems: itemsList,
         latestCriticalItemDate: dateOfLatestCriticalNewsItem,
         redCount: redCount,
-        unseenCriticalItems: unseenCriticalItems,
+        unseenCriticalNews: unseenCriticalNews,
         previousUpdate: (state.lastUpdate && state.lastUpdate) || newlastUpdate,
         lastUpdate: newlastUpdate,
         fetchTime,
