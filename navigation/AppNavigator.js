@@ -65,7 +65,7 @@ const CustomDrawerContent = (props) => {
         QUICK LINKS
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-      {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+      {userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ? (
         <View style={{ flexDirection: 'row' }}>
           <DemoAppSwitch />
           <DemoDataSwitch />
