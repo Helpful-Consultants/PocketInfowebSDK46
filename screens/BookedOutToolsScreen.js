@@ -125,6 +125,8 @@ export default BookedOutToolsScreen = (props) => {
         dealerWipsItems.length > 0 &&
         dealerWipsItems.filter(
           (item) =>
+            item.tools &&
+            item.tools.length > 0 &&
             item.userIntId &&
             item.userIntId.toString() == fetchParamsObj.userIntId.toString()
         )) ||
