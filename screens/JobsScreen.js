@@ -19,23 +19,23 @@ import { selectFetchParamsObj } from '../reducers/user';
 
 const minSearchLength = 1;
 
-const identifyUserWipsItems = (fetchParamsObj, dealerWipsItems) =>
-  (fetchParamsObj &&
-    fetchParamsObj.userIntId &&
-    dealerWipsItems &&
-    dealerWipsItems.length > 0 &&
-    dealerWipsItems.filter(
-      (item) =>
-        item.userIntId &&
-        item.userIntId.toString() == fetchParamsObj.userIntId.toString() &&
-        item.tools &&
-        item.tools.length > 0
-    )) ||
+const identifyUserWipsItems = (fetchParamsObj, dealerWipsItems = []) =>
   console.log(
     'in jobs identifyUserWipsItems, fetchParamsObj is:  ',
     fetchParamsObj && fetchParamsObj,
     dealerWipsItems && dealerWipsItems.length
   );
+(fetchParamsObj &&
+  fetchParamsObj.userIntId &&
+  dealerWipsItems &&
+  dealerWipsItems.length > 0 &&
+  dealerWipsItems.filter(
+    (item) =>
+      item.tools &&
+      item.tools.length > 0 &&
+      item.userIntId &&
+      item.userIntId.toString() == fetchParamsObj.userIntId.toString()
+  )) ||
   [];
 
 export default JobsScreen = (props) => {
