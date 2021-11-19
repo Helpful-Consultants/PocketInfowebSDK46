@@ -117,7 +117,10 @@ export default BookedOutToolsScreen = (props) => {
   );
 
   useEffect(() => {
-    // console.log('in booked out useEffect fetchParamsObj is:  ', fetchParamsObj);
+    console.log(
+      'in booked out useEffect fetchParamsObj is:  ',
+      fetchParamsObj && fetchParamsObj
+    );
     let userWipsItems =
       (fetchParamsObj &&
         fetchParamsObj.userIntId &&
@@ -161,6 +164,11 @@ export default BookedOutToolsScreen = (props) => {
   }, [fetchParamsObj, dealerWipsItems]);
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
+  console.log(
+    '&&&&&&&&&&&&&&&& in booked out  dealerWipsItems ',
+    dealerWipsItems && dealerWipsItems.length
+  );
+  console.log('&&&&&&&&&&&&&&&& in booked out userWipsItems ', dataCount);
 
   const searchInputHandler = (searchInput) => {
     // console.log(searchInput, bookedOutItems);

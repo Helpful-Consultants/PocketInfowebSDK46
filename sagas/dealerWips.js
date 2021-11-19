@@ -27,9 +27,10 @@ function* getDealerWips({ payload }) {
         dealerId: payload.dealerId,
         userIntId: payload.userIntId,
       });
-      // console.log('in saga get dealerWips -200');
+      //   console.log('in saga get dealerWips -200');
+      //   console.log(result && result.data);
 
-      // console.log('end results in saga get dealerWips, success');
+      //   console.log('end results in saga get dealerWips, success');
       // console.log('@@@@@@@@@@@result starts');
       // console.log(result);
       // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
@@ -50,7 +51,7 @@ function* getDealerWips({ payload }) {
         // console.log('in wips saga - good 200');
 
         //   console.log('in Wips saga - good 200');
-        // console.log(result);
+        console.log(result);
         yield put(
           actions.getDealerWipsSuccess({
             items: result.data,
@@ -184,7 +185,7 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  //   console.log('in create wip saga', payload);
+  console.log('in create wip saga', payload);
   //   console.log('in create wip saga', payload.wipObj);
   let statusCode = null;
   let errorText = 'A server error occurred when trying to save the job';

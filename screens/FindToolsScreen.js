@@ -244,6 +244,7 @@ export default FindToolsScreen = (props) => {
   );
 
   const saveToJob = (wipObj) => {
+    console.log('dispatchNewWip', wipObj && wipObj);
     dispatchNewWip(wipObj);
   };
 
@@ -329,6 +330,11 @@ export default FindToolsScreen = (props) => {
         }
       });
     setBookedToolsList(bookedToolsList);
+    console.log(
+      'in findtools useffect',
+      dealerWipsItems.length,
+      bookedToolsList.length
+    );
   }, [dealerWipsItems]);
 
   useEffect(() => {

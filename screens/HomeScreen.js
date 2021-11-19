@@ -489,6 +489,11 @@ export default HomeScreen = (props) => {
             item.userIntId.toString() == fetchParamsObj.userIntId.toString()
         )) ||
       [];
+    console.log(
+      'in home useEffect fetchParamsObj is:  ',
+      fetchParamsObj && fetchParamsObj,
+      userWipsItems && userWipsItems
+    );
 
     setWipsCount((userWipsItems && userWipsItems.length) || 0);
 
@@ -514,6 +519,10 @@ export default HomeScreen = (props) => {
     };
 
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
+    console.log(
+      'in home useEffect bookedOutToolItems is:  ',
+      bookedOutToolItems
+    );
     setBookedOutToolsCount(
       (bookedOutToolItems && bookedOutToolItems.length) || 0
     );

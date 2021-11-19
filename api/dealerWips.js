@@ -26,14 +26,14 @@ export const getDealerWips = (fetchParamsObj) => {
 };
 
 export const createDealerWip = (wipObj) => {
-  //   console.log('!!!!!!!!!!!! in create wip api', wipObj);
+  console.log('!!!!!!!!!!!! in create wip api', wipObj);
 
   //   const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON'; // old
   const url =
     '/mandatoryList/?controller=api&action=acceptWIPpostAvailableJSON';
 
   const strung = JSON.stringify(wipObj);
-  //   console.log('in create wip api, strung is ', strung);
+  console.log('in create wip api, strung is ', strung);
 
   const wipArr = [wipObj];
 
@@ -45,7 +45,7 @@ export const createDealerWip = (wipObj) => {
   //   console.log(postUrl);
   //   console.log(stuff);
   //   console.log('in create wip api, strungArray is ', strungArray);
-  //   console.log(strungArray);
+  console.log(strungArray);
   //   return fetch(postUrl, {
   //     method: 'POST',
   //     headers: {

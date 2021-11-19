@@ -31,6 +31,11 @@ const identifyUserWipsItems = (fetchParamsObj, dealerWipsItems) =>
         item.tools &&
         item.tools.length > 0
     )) ||
+  console.log(
+    'in jobs identifyUserWipsItems, fetchParamsObj is:  ',
+    fetchParamsObj && fetchParamsObj,
+    dealerWipsItems && dealerWipsItems.length
+  );
   [];
 
 export default JobsScreen = (props) => {
@@ -96,6 +101,11 @@ export default JobsScreen = (props) => {
 
   const userWipsItems = identifyUserWipsItems(fetchParamsObj, dealerWipsItems);
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
+  console.log(
+    '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
+    dealerWipsItems && dealerWipsItems.length
+  );
+  console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
 
   const refreshRequestHandler = useCallback(() => {
     // console.log('in Jobs refreshRequestHandler');
