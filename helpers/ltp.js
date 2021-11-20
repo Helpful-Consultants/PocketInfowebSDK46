@@ -1,10 +1,36 @@
 import { sortObjectList } from './objects';
 
+export const getSortedUniqueLtpItems = (ltpItemsAll = []) => {
+  //   console.log('in helper getSortedUniqueLtpItems');
+  let ltpItemsFiltered =
+    ltpItemsAll.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+    ) || [];
+
+  const ltpItemsSorted =
+    ltpItemsFiltered.length > 0
+      ? sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc')
+      : ltpItemsFiltered;
+
+  //   console.log(
+  //     'in helper getSortedUniqueLtpItems',
+  //     'ltpItemsAll',
+  //     ltpItemsAll && ltpItemsAll.length,
+  //     'ltpItemsFiltered',
+  //     ltpItemsFiltered && ltpItemsFiltered.length,
+  //     'ltpItemsSorted',
+  //     ltpItemsSorted && ltpItemsSorted.length
+  //   );
+
+  return ltpItemsSorted;
+};
+
 export const getSortedLtpItemsForUserBrand = (
   ltpItemsAll = [],
   userBrand = null
 ) => {
-  console.log('in getSortedLtpItemsForUserBrand');
+  //   console.log('in helper getSortedLtpItemsForUserBrand');
   let ltpItemsFiltered = [];
 
   if (userBrand) {
@@ -34,16 +60,16 @@ export const getSortedLtpItemsForUserBrand = (
       ? sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc')
       : ltpItemsFiltered;
 
-  console.log(
-    'in getSortedLtpItemsForUserBrand userBrand',
-    userBrand && userBrand,
-    'ltpItemsAll',
-    ltpItemsAll && ltpItemsAll.length,
-    'ltpItemsFiltered',
-    ltpItemsFiltered && ltpItemsFiltered.length,
-    'ltpItemsSorted',
-    ltpItemsSorted && ltpItemsSorted.length
-  );
+  //   console.log(
+  //     'in helper getSortedLtpItemsForUserBrand userBrand',
+  //     userBrand && userBrand,
+  //     'ltpItemsAll',
+  //     ltpItemsAll && ltpItemsAll.length,
+  //     'ltpItemsFiltered',
+  //     ltpItemsFiltered && ltpItemsFiltered.length,
+  //     'ltpItemsSorted',
+  //     ltpItemsSorted && ltpItemsSorted.length
+  //   );
 
   return ltpItemsSorted;
 };

@@ -1,5 +1,8 @@
 import Types from '../constants/Types';
-import { getSortedLtpItemsForUserBrand } from '../helpers/ltp';
+import {
+  getSortedLtpItemsForUserBrand,
+  getSortedUniqueLtpItems,
+} from '../helpers/ltp';
 import { createSelector } from 'reselect';
 const INITIAL_STATE = {
   ltpItems: [],
@@ -10,6 +13,25 @@ const INITIAL_STATE = {
   fetchTime: null,
 };
 
+// export const selectSortedLtpTools = createSelector(
+//   (state) => state.ltp.ltpItems || [],
+
+//   //   (ltpItems) =>
+//   //     ltpItems.filter(
+//   //       (item, index, self) =>
+//   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+//   //       )
+//   (ltpItems) => {
+//     let uniqueLtpItems = ltpItems;
+//     console.log(
+//       'in selectSortedUniqueLtpTools ',
+//       ltpItems.length,
+//       uniqueLtpItems.length
+//     );
+//     return uniqueLtpItems;
+//   }
+// );
+
 export const selectSortedUniqueLtpTools = createSelector(
   (state) => state.ltp.ltpItems || [],
 
@@ -19,7 +41,7 @@ export const selectSortedUniqueLtpTools = createSelector(
   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
   //       )
   (ltpItems) => {
-    let uniqueLtpItems = ltpItems;
+    let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
     console.log(
       'in selectSortedUniqueLtpTools ',
       ltpItems.length,
