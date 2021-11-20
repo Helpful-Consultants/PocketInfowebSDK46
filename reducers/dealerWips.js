@@ -1,7 +1,10 @@
-// import { Types } from '../actions/dealerWips';
+import { createSelector } from 'reselect';
+import { getSortedDealerWipsItemsForUser } from '../helpers/dealerWips';
+
 import Types from '../constants/Types';
 const INITIAL_STATE = {
   dealerWipsItems: [],
+  userIntId: null,
   isLoading: false,
   isSending: false,
   error: null,
@@ -10,6 +13,25 @@ const INITIAL_STATE = {
   lastWipProcessed: null,
   unavailableTools: false,
 };
+
+export const selectDealerWipsForUser = createSelector(
+  (state) => state.dealerWips.dealerWipsItems,
+  (state) => state.dealerWips.userIntId,
+
+  (dealerWipsItems, userIntId) => {
+    let retArr = getSortedDealerWipsItemsForUser(dealerWipsItems, userIntId);
+    console.log(
+      '************** in selectWipsForUser',
+      'userIntId',
+      userIntId,
+      'dealerWipsItems',
+      dealerWipsItems.length,
+      'retArr',
+      retArr.length
+    );
+    return retArr;
+  }
+);
 
 export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
