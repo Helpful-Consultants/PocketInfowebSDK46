@@ -117,7 +117,7 @@ export default NotificationsScreen = (props) => {
     // );
     dispatch(getServiceMeasuresRequest(fetchParamsObj));
     dispatch(getLtpLoansRequest(fetchParamsObj));
-    dispatch(getOdisRequest({ userBrand: userBrand }));
+    dispatch(getOdisRequest(fetchParamsObj));
     dispatch(getNewsRequest());
     dispatch(getCalibrationExpiryRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);

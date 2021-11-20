@@ -51,7 +51,7 @@ export default DemoDataSwitch = (props) => {
       dispatch(getServiceMeasuresRequest(fetchParamsObj));
       dispatch(getNewsRequest(fetchParamsObj));
       dispatch(getLtpLoansRequest(fetchParamsObj));
-      dispatch(getOdisRequest({ userBrand: userBrand }));
+      dispatch(getOdisRequest(fetchParamsObj));
       dispatch(getCalibrationExpiryRequest(fetchParamsObj));
     }
 

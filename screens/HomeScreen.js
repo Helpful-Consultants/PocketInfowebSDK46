@@ -206,7 +206,7 @@ export default HomeScreen = (props) => {
     dispatch(getDealerWipsRequest(fetchParamsObj));
     dispatch(getServiceMeasuresRequest(fetchParamsObj));
     dispatch(getLtpLoansRequest(fetchParamsObj));
-    dispatch(getOdisRequest({ userBrand: userBrand }));
+    dispatch(getOdisRequest(fetchParamsObj));
     dispatch(getNewsRequest());
     dispatch(getCalibrationExpiryRequest(fetchParamsObj));
   });
