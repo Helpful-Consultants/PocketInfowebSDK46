@@ -139,7 +139,6 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         greenCount: serviceMeasuresCountsObj.greenCount,
         totalCount: serviceMeasuresCountsObj.totalCount,
         // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
-        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
