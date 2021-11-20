@@ -33,39 +33,67 @@ export default LtpListScreen = (props) => {
   const dataErrorUrl = useSelector((state) => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
+  const [itemsToShow, setItemsToShow] = useState([]);
 
   const getItems = useCallback(() => {
-    // console.log('in LTP in getItems - no fetchParamsObj needed');
+    // console.log(
+    //   'LLLLTP in LTP in getItems -fetchParamsObj',
+    //   fetchParamsObj && fetchParamsObj
+    // );
     dispatch(getLtpRequest(fetchParamsObj));
-  }, [dispatch]);
+  }, [dispatch, fetchParamsObj]);
 
   const refreshRequestHandler = useCallback(() => {
-    // console.log('in ltp refreshRequestHandler');
+    // console.log('LLLLTP in ltp refreshRequestHandler');
     getItems();
   }, [getItems]);
 
   const searchInputHandler = (searchInput) => {
+    // console.log(
+    //   'LLLLTP in ltp list screen searchInputHandler, searchInput',
+    //   searchInput
+    // );
     setSearchInput(searchInput);
-    if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(ltpItems, searchInput);
-      //   console.log(
-      //     'LTP Screen  searchInputHandler for: ',
-      //     searchInput && searchInput,
-      //     'ltpItems: ',
-      //     ltpItems && ltpItems.length,
-      //     'itemsToShow: ',
-      //     itemsToShow && itemsToShow.length,
-      //     'newFilteredItems:',
-      //     newFilteredItems && newFilteredItems.length,
-      //     newFilteredItems
-      //   );
-      setFilteredItems(newFilteredItems);
-    }
   };
+
+  const selectItemsToShow = useCallback(() => {
+    // console.log('LLLLTP in ltp selectItemsToShow');
+    if (searchInput && searchInput.length > minSearchLength) {
+      setItemsToShow(searchItems(ltpItems, searchInput));
+    } else {
+      setItemsToShow(ltpItems);
+    }
+  }, [searchInput]);
+
+  useEffect(() => {
+    // console.log(
+    //   'LLLLTP in ltp list screen useEffect, setting items to show ',
+    //   'isLoading',
+    //   isLoading,
+    //   'searchInput',
+    //   searchInput
+    // );
+
+    if (isLoading) {
+      //   console.log('still loading');
+    } else {
+      selectItemsToShow();
+    }
+  }, [isLoading, searchInput]);
+
+  //   console.log(
+  //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
+  //     dataError
+  //   );
+  //   console.log(
+  //     'rendering LTP Screen',
+  //     ltpItems && ltpItems.length,
+  //     itemsToShow && itemsToShow.length
+  //   );
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('in ltp list screen usefocusffect, usecallback ');
+      //   console.log('LLLLTP in ltp list screen usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'ltp list screen Screen',
@@ -82,21 +110,10 @@ export default LtpListScreen = (props) => {
     }, [getItems])
   );
 
-  let itemsToShow = !isLoading
-    ? searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : ltpItems
-    : [];
   //   console.log(
-  //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
-  //     dataError
+  //     'LTTTTTP RENDERING ltp screen !!!!!!!!!!!!!!!!!!!, isLoading',
+  //     isLoading
   //   );
-  //   console.log(
-  //     'rendering LTP Screen',
-  //     ltpItems && ltpItems.length,
-  //     itemsToShow && itemsToShow.length
-  //   );
-
   return (
     <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh

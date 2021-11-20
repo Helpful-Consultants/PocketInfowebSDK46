@@ -18,17 +18,15 @@ export const selectSortedUniqueLtpTools = createSelector(
   //       (item, index, self) =>
   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
   //       )
-  (ltpItems) => ltpItems
-
-  // console.log(
-  //   '************** in selectFetchParamsObj',
-  //   state,
-  //   brand,
-  //   dealerId,
-  //   intId,
-  //   'retObj',
-  //   retObj
-  // );
+  (ltpItems) => {
+    let uniqueLtpItems = ltpItems;
+    console.log(
+      'in selectSortedUniqueLtpTools ',
+      ltpItems.length,
+      uniqueLtpItems.length
+    );
+    return uniqueLtpItems;
+  }
 );
 
 export default function ltp(state = INITIAL_STATE, action) {
@@ -50,19 +48,22 @@ export default function ltp(state = INITIAL_STATE, action) {
       //     action.payload && action.payload.items && action.payload.items.length
       //   );
 
-      //   console.log(
-      //     'in ltp reducer',
-      //     action.payload.items,
-      //     action.payload.userBrand
-      //   );
-      const filteredItems = getSortedLtpItemsForUserBrand(
+      console.log(
+        'in ltp get success reducer',
+        action.payload.items && action.payload.items.length,
+        action.payload.userBrand && action.payload.userBrand
+      );
+      let filteredItems = getSortedLtpItemsForUserBrand(
         action.payload.items,
         action.payload.userBrand
       );
-      //   console.log('in ltp reducer', filteredItems);
+      console.log(
+        'in ltp reducer filteredItems.length',
+        filteredItems && filteredItems.length
+      );
       return {
         ...state,
-        ltpItems: action.payload.items,
+        ltpItems: filteredItems,
         isLoading: false,
         error: null,
         statusCode: null,

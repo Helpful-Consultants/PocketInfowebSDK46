@@ -4,14 +4,9 @@ export const getSortedLtpItemsForUserBrand = (
   ltpItemsAll = [],
   userBrand = null
 ) => {
+  console.log('in getSortedLtpItemsForUserBrand');
   let ltpItemsFiltered = [];
 
-  console.log(
-    'in getSortedLtpItemsForUserBrand userBrand',
-    userBrand && userBrand,
-    'ltpItemsAll',
-    ltpItemsAll && ltpItemsAll.length
-  );
   if (userBrand) {
     //   const tempItem = ltpItemsAll[2];
     //   console.log(
@@ -34,6 +29,10 @@ export const getSortedLtpItemsForUserBrand = (
         item.vw === ('Y' || 'y')
     );
   }
+  const ltpItemsSorted =
+    ltpItemsFiltered.length > 0
+      ? sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc')
+      : ltpItemsFiltered;
 
   console.log(
     'in getSortedLtpItemsForUserBrand userBrand',
@@ -41,15 +40,8 @@ export const getSortedLtpItemsForUserBrand = (
     'ltpItemsAll',
     ltpItemsAll && ltpItemsAll.length,
     'ltpItemsFiltered',
-    ltpItemsFiltered && ltpItemsFiltered.length
-  );
-
-  const ltpItemsSorted =
-    ltpItemsFiltered.length > 0
-      ? sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc')
-      : ltpItemsFiltered;
-  console.log(
-    'in getSortedLtpItemsForUserBrand ltpItemsSorted',
+    ltpItemsFiltered && ltpItemsFiltered.length,
+    'ltpItemsSorted',
     ltpItemsSorted && ltpItemsSorted.length
   );
 
