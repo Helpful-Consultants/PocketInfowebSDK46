@@ -15,6 +15,7 @@ import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import BookedOutToolsList from './BookedOutToolsList';
 import { selectFetchParamsObj } from '../reducers/user';
+import { selectDealerWipsForUser } from '../reducers/dealerWips';
 
 const minSearchLength = 1;
 
@@ -23,9 +24,7 @@ export default BookedOutToolsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const dealerWipsItems = useSelector(
-    (state) => state.dealerWips.dealerWipsItems
-  );
+  const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoading = useSelector((state) => state.dealerWips.isLoading);
   const dataError = useSelector((state) => state.dealerWips.error);
   const dataErrorUrl = useSelector((state) => state.dealerWips.dataErrorUrl);
@@ -35,140 +34,33 @@ export default BookedOutToolsScreen = (props) => {
   const [currentTool, setCurrentTool] = useState({});
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [bookedOutItems, setBookedOutItems] = useState([]);
-  const [userWipsItems, setUserWipsItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const getItems = useCallback(async (fetchParamsObj) => {
-    // console.log('in getItems', fetchParamsObj);
-    // console.log(
-    //   'in booked tools getItems',
-    //   fetchParamsObj && fetchParamsObj
-    // );
-    dispatch(getDealerWipsRequest(fetchParamsObj)), [dealerWipsItems];
-  });
-
-  const getItemsAsync = async () => {
-    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId) {
-      getItems(fetchParamsObj);
-    }
-  };
+  const getItems = useCallback(() => {
+    console.log('BOT *****  in getItems fetchParamsObj is', fetchParamsObj);
+    dispatch(getDealerWipsRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
 
   const deleteDealerWip = useCallback(
-    (payload) => dispatch(deleteDealerWipRequest(payload)),
-    [fetchParamsObj]
+    (payload) => {
+      dispatch(deleteDealerWipRequest(payload));
+    },
+    [dispatch, fetchParamsObj]
   );
 
   const deleteDealerWipTool = useCallback(
-    (payload) => dispatch(deleteDealerWipToolRequest(payload)),
-    [fetchParamsObj]
+    (payload) => {
+      dispatch(deleteDealerWipToolRequest(payload));
+    },
+    [dispatch, fetchParamsObj]
   );
 
-  //   useEffect(() => {
-  //     // runs only once
-  //     // console.log('in jobs use effect');
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems(fetchParamsObj);
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     if (searchInput && searchInput.length > 0) {
-  //       setSearchInput('');
-  //     }
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  //   useFocusEffect(
-  //     useCallback(() => {
-  //       const getItemsAsync = async () => {
-  //         getItems(fetchParamsObj);
-  //       };
-  //       //   if (searchInput && searchInput.length > 0) {
-  //       //     setSearchInput('');
-  //       //   }
-  //       setSearchInput('');
-  //       getItemsAsync();
-  //     }, [])
-  //   );
-
-  useEffect(() => {
-    // runs only once
-    // console.log('in booked useEffect', fetchParamsObj && fetchParamsObj.dealerId);
-    getItemsAsync();
-  }, [fetchParamsObj]);
-
-  useFocusEffect(
-    useCallback(() => {
-      //   if (searchInput && searchInput.length > 0) {
-      //     setSearchInput('');
-      //   }
-      //   console.log('booked tools - useFocusEffect');
-      dispatch(revalidateUserCredentials({ calledBy: 'BookedOutToolScreen' }));
-      setSearchInput('');
-      getItemsAsync();
-    }, [])
-  );
-
-  useEffect(() => {
-    console.log(
-      'in booked out useEffect fetchParamsObj is:  ',
-      fetchParamsObj && fetchParamsObj
-    );
-    let userWipsItems =
-      (fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        dealerWipsItems &&
-        dealerWipsItems.length > 0 &&
-        dealerWipsItems.filter(
-          (item) =>
-            item.tools &&
-            item.tools.length > 0 &&
-            item.userIntId &&
-            item.userIntId.toString() == fetchParamsObj.userIntId.toString()
-        )) ||
-      [];
-    setUserWipsItems(userWipsItems);
-
-    const buildBookedOutToolsArrForJob = (wip) => {
-      const thisWipsToolsArr = wip.tools.map((tool) => ({
-        ...tool,
-        wipNumber: wip.wipNumber,
-        wipId: wip.id.toString(),
-        wipCreatedDate: wip.createdDate,
-      }));
-      return thisWipsToolsArr;
-    };
-
-    const buildBookedOutToolsArr = (wips) => {
-      let allToolsArr = [];
-
-      wips.forEach((wip) => {
-        if (wip.tools && wip.tools.length > 0) {
-          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-          allToolsArr.push(...wipToolsArr);
-        }
-      });
-      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
-      return sortObjectList(allToolsArr, 'partNumber', 'asc');
-    };
-
-    let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
-    setBookedOutItems(bookedOutToolItems);
-  }, [fetchParamsObj]);
-
-  const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
-  //   console.log(
-  //     '&&&&&&&&&&&&&&&& in booked out  dealerWipsItems ',
-  //     dealerWipsItems && dealerWipsItems.length
-  //   );
-  //   console.log('&&&&&&&&&&&&&&&& in booked out userWipsItems ', dataCount);
+  const refreshRequestHandler = useCallback(() => {
+    console.log('BOT ***** in refreshRequestHandler');
+    getItems();
+  }, [getItems]);
 
   const searchInputHandler = (searchInput) => {
     // console.log(searchInput, bookedOutItems);
@@ -220,28 +112,86 @@ export default BookedOutToolsScreen = (props) => {
     }
   };
 
-  const refreshRequestHandler = () => {
-    // console.log('in refreshRequestHandler', fetchParamsObj);
-    getItemsAsync();
-  };
+  //   useEffect(() => {
+  //     console.log(
+  //       'BOT *****  useEffect',
+  //       fetchParamsObj && fetchParamsObj.dealerId
+  //     );
+  //     fetchParamsObj &&
+  //       fetchParamsObj.dealerId &&
+  //       fetchParamsObj.userIntId &&
+  //       getItems();
+  //   }, [fetchParamsObj]);
+
+  useEffect(() => {
+    console.log(
+      'BOT ***** in booked out useEffect fetchParamsObj is:  ',
+      fetchParamsObj && fetchParamsObj
+    );
+
+    const buildBookedOutToolsArrForJob = (wip) => {
+      const thisWipsToolsArr = wip.tools.map((tool) => ({
+        ...tool,
+        wipNumber: wip.wipNumber,
+        wipId: wip.id.toString(),
+        wipCreatedDate: wip.createdDate,
+      }));
+      return thisWipsToolsArr;
+    };
+
+    const buildBookedOutToolsArr = (wips) => {
+      let allToolsArr = [];
+
+      wips.forEach((wip) => {
+        if (wip.tools && wip.tools.length > 0) {
+          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+          allToolsArr.push(...wipToolsArr);
+        }
+      });
+      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+      return sortObjectList(allToolsArr, 'partNumber', 'asc');
+    };
+
+    let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
+    setBookedOutItems(bookedOutToolItems);
+  }, [fetchParamsObj]);
+
+  //   console.log(
+  //     '&&&&&&&&&&&&&&&& in booked out  userWipsItems ',
+  //     userWipsItems && userWipsItems.length
+  //   );
+  //   console.log('&&&&&&&&&&&&&&&& in booked out userWipsItems ', dataCount);
+
   //   console.log('bookedOutItems', bookedOutItems);
   //   const filteredItems =
   //     (!isLoading &&
   //       bookedOutItems.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
   //     [];
+  useFocusEffect(
+    useCallback(() => {
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      //   console.log('booked tools - useFocusEffect');
+      setSearchInput('');
+      getItems();
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('Booked out tools Screen was unfocused');
+      };
+    }, [getItems])
+  );
+
+  const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
 
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength
       ? filteredItems
       : bookedOutItems;
 
-  //   console.log(
-  //     'RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
-  //   );
-
-  //   console.log('rendering Booked Tools screen');
-  //   console.log('searchInput.length', searchInput && searchInput.length);
-  //   console.log('itemsToShow.length', itemsToShow && itemsToShow.length);
+  console.log(
+    'BOT ***** RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
+  );
 
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>

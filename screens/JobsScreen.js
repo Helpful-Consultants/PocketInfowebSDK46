@@ -108,13 +108,16 @@ export default JobsScreen = (props) => {
     setIsAlertVisible(true);
   };
 
-  useEffect(() => {
-    // console.log(
-    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
-    //   fetchParamsObj
-    // );
-    getItems();
-  }, [fetchParamsObj]);
+  //   useEffect(() => {
+  //     // console.log(
+  //     //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
+  //     //   fetchParamsObj
+  //     // );
+  //     fetchParamsObj &&
+  //       fetchParamsObj.dealerId &&
+  //       fetchParamsObj.userIntId &&
+  //       getItems();
+  //   }, [fetchParamsObj]);
 
   useFocusEffect(
     useCallback(() => {
@@ -126,9 +129,9 @@ export default JobsScreen = (props) => {
       //   );
       //   console.log('in Jobs focusffect calling getItems');
       //   dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
-      getItems();
 
       setSearchInput('');
+      getItems();
       return () => {
         // Do something when the screen is unfocused
         // console.log('Jobs Screen was unfocused');
@@ -137,11 +140,6 @@ export default JobsScreen = (props) => {
   );
 
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
-  //   console.log(
-  //     '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
-  //     dealerWipsItems && dealerWipsItems.length
-  //   );
-  //   console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
 
   const items = (!isLoading && !dataError && userWipsItems) || [];
 
@@ -154,19 +152,6 @@ export default JobsScreen = (props) => {
   //     'items ',
   //     fetchParamsObj
   //   );
-  //   console.log(
-  //     'isLoading ',
-  //     isLoading,
-  //     'dataError ',
-  //     dataError,
-  //     'statusCode ',
-  //     dataStatusCode,
-  //     ' items ',
-  //     items.length
-  //   );
-
-  //   console.log('searchInput.length', searchInput && searchInput.length);
-  //   console.log('itemsToShow.length', itemsToShow && itemsToShow.length);
 
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>
