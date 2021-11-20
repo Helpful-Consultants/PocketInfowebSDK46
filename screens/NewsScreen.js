@@ -73,54 +73,6 @@ export default NewsScreen = (props) => {
     },
     [dispatch]
   );
-
-  //   const { navigation } = props;
-
-  //   useEffect(() => {
-  //     // runs only once
-  //     const getItemsAsync = async () => {
-  //       setIsRefreshNeeded(false);
-  //       getItems();
-  //     };
-  //     if (isRefreshNeeded === true) {
-  //       getItemsAsync();
-  //     }
-  //   }, [isRefreshNeeded]);
-
-  //   const didFocusSubscription = navigation.addListener('didFocus', () => {
-  //     didFocusSubscription.remove();
-  //     if (searchInput && searchInput.length > 0) {
-  //       setSearchInput('');
-  //     }
-  //     setIsRefreshNeeded(true);
-  //   });
-
-  useFocusEffect(
-    useCallback(() => {
-      //   console.log('in news focusffect calling getItems');
-      getItems();
-      //   console.log('in news focusffect calling storeDisplayTimestamp');
-      //   storeDisplayTimestamp();
-      setSearchInput('');
-      return () => {
-        // Do something when the screen is unfocused
-        // console.log('news Screen was unfocused');
-      };
-    }, [dispatch, getItems])
-  );
-
-  useEffect(() => {
-    const displayTime = Date.now();
-    // console.log(
-    //   'in news useeffect calling storeDisplayTimestamp',
-    //   'newsFetchTime',
-    //   newsFetchTime,
-    //   'displayTime',
-    //   displayTime
-    // );
-    storeDisplayTimestamp(displayTime);
-  }, [newsFetchTime.toString()]);
-
   const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);
     let checkedUrl = checkUrl(url);
@@ -148,6 +100,33 @@ export default NewsScreen = (props) => {
     // console.log('in refreshRequestHandler');
     getItems();
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      //   console.log('in news focusffect calling getItems');
+      getItems();
+      //   console.log('in news focusffect calling storeDisplayTimestamp');
+      //   storeDisplayTimestamp();
+      setSearchInput('');
+      return () => {
+        // Do something when the screen is unfocused
+        // console.log('news Screen was unfocused');
+      };
+    }, [getItems])
+  );
+
+  useEffect(() => {
+    const displayTime = Date.now();
+    // console.log(
+    //   'in news useeffect calling storeDisplayTimestamp',
+    //   'newsFetchTime',
+    //   newsFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
+  }, [newsFetchTime.toString()]);
+
   //   console.log('newsItems AREEEEEEEEEE', newsItems);
   const items = (!isLoading && !dataError && newsItems) || [];
   //   console.log('items AREEEEEEEEEE', items);

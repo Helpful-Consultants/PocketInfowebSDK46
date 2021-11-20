@@ -194,7 +194,7 @@ export default NotificationsScreen = (props) => {
 
   useEffect(() => {
     getItems();
-  }, [showingDemoApp, showingDemoData]);
+  }, [getItems, showingDemoApp, showingDemoData]);
 
   //   console.log(' ******************** odisRedCount', odisRedCount);
 

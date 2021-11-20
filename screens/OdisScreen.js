@@ -70,13 +70,13 @@ export default OdisScreen = (props) => {
     getItems();
   }, [getItems]);
 
-  useEffect(() => {
-    // console.log(
-    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
-    //   fetchParamsObj
-    // );
-    getItems();
-  }, [fetchParamsObj]);
+  //   useEffect(() => {
+  //     // console.log(
+  //     //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
+  //     //   fetchParamsObj
+  //     // );
+  //     getItems();
+  //   }, [fetchParamsObj]);
 
   useEffect(() => {
     const displayTime = Date.now();
