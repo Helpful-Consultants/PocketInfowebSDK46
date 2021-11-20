@@ -189,7 +189,7 @@ export default HomeScreen = (props) => {
 
   //   console.log('IN HOME !!!!!  2');
   const getLtpItems = useCallback(async () => {
-    dispatch(getLtpRequest());
+    dispatch(getLtpRequest(fetchParamsObj));
   });
 
   const getAllItems = useCallback(async (fetchParamsObj) => {
@@ -227,10 +227,6 @@ export default HomeScreen = (props) => {
     }
   };
 
-  const getLtpItemsAsync = async () => {
-    // console.log('home - updateItemsAsync');
-    getLtpItems();
-  };
   //   console.log('IN HOME !!!!! brand', userBrand);
   //   const notificationLimit = 168;
   //   console.log('IN HOME !!!!! 3');
@@ -265,7 +261,7 @@ export default HomeScreen = (props) => {
     //   'home - ltp useEffect',
     //   fetchParamsObj && fetchParamsObj.userIntId
     // );
-    getLtpItemsAsync();
+    getLtpItems();
   }, [fetchParamsObj]);
 
   useEffect(() => {
@@ -489,11 +485,11 @@ export default HomeScreen = (props) => {
             item.userIntId.toString() == fetchParamsObj.userIntId.toString()
         )) ||
       [];
-    console.log(
-      'in home useEffect fetchParamsObj is:  ',
-      fetchParamsObj && fetchParamsObj,
-      userWipsItems && userWipsItems
-    );
+    // console.log(
+    //   'in home useEffect fetchParamsObj is:  ',
+    //   fetchParamsObj && fetchParamsObj,
+    //   userWipsItems && userWipsItems
+    // );
 
     setWipsCount((userWipsItems && userWipsItems.length) || 0);
 
@@ -521,12 +517,12 @@ export default HomeScreen = (props) => {
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
     console.log(
       'in home useEffect bookedOutToolItems is:  ',
-      bookedOutToolItems
+      bookedOutToolItems && bookedOutToolItems.length
     );
     setBookedOutToolsCount(
       (bookedOutToolItems && bookedOutToolItems.length) || 0
     );
-  }, [dealerWipsItems]);
+  }, [dealerWipsItems.length]);
 
   const gridRows = showingDemoApp ? 8 : 6;
 
