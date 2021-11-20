@@ -25,7 +25,6 @@ export const getServiceMeasuresSuccess = ({
   fetchTime,
 }) => ({
   type: Types.GET_SERVICE_MEASURES_SUCCESS,
-  statusCode,
   payload: {
     items,
     statusCode,
