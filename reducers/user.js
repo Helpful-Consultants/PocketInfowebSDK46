@@ -1,4 +1,3 @@
-// import { Types } from '../actions/user';
 import { createSelector } from 'reselect';
 import Types from '../constants/Types';
 

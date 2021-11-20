@@ -1,4 +1,3 @@
-// import { Types } from '../actions/ltp';
 import Types from '../constants/Types';
 import { getSortedLtpItemsForUserBrand } from '../helpers/ltp';
 import { createSelector } from 'reselect';
