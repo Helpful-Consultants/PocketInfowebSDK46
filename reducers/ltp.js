@@ -10,6 +10,27 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
 };
 
+export const selectSortedUniqueLtpTools = createSelector(
+  (state) => state.ltp.ltpItems || [],
+
+  //   (ltpItems) =>
+  //     ltpItems.filter(
+  //       (item, index, self) =>
+  //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+  //       )
+  (ltpItems) => ltpItems
+
+  // console.log(
+  //   '************** in selectFetchParamsObj',
+  //   state,
+  //   brand,
+  //   dealerId,
+  //   intId,
+  //   'retObj',
+  //   retObj
+  // );
+);
+
 export default function ltp(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
