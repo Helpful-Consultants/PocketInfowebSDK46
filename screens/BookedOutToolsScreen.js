@@ -175,10 +175,10 @@ export default BookedOutToolsScreen = (props) => {
       //   console.log('booked tools - useFocusEffect');
       setSearchInput('');
       getItems();
-      return () => {
-        // Do something when the screen is unfocused
-        console.log('Booked out tools Screen was unfocused');
-      };
+      // return () => {
+      //   // Do something when the screen is unfocused
+      //   console.log('Booked out tools Screen was unfocused');
+      // };
     }, [getItems])
   );
 

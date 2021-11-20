@@ -37,7 +37,7 @@ export default JobsScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
-    // console.log('in jobs in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log('JOBS *****  in jobs in getItems fetchParamsObj is', fetchParamsObj);
     dispatch(getDealerWipsRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -56,7 +56,7 @@ export default JobsScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    // console.log('in Jobs refreshRequestHandler');
+    // console.log('JOBS *****  in Jobs refreshRequestHandler');
     getItems();
   }, [getItems]);
 
@@ -70,15 +70,15 @@ export default JobsScreen = (props) => {
   };
 
   const returnToolHandler = (job, tool) => {
-    // console.log('in returnToolHandler', job, tool);
+    // console.log('JOBS *****  in returnToolHandler', job, tool);
     setCurrentJob(job);
     setCurrentTool(tool);
     setIsAlertVisible(true);
   };
 
   const confirmReturnToolHandler = () => {
-    // console.log('in confirmreturnToolHandler', currentJob);
-    // console.log('in confirmreturnToolHandler', currentTool);
+    // console.log('JOBS *****  in confirmreturnToolHandler', currentJob);
+    // console.log('JOBS *****  in confirmreturnToolHandler', currentTool);
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
@@ -86,8 +86,8 @@ export default JobsScreen = (props) => {
         wipObj: currentJob,
         fetchParamsObj: fetchParamsObj,
       };
-      //   console.log('delete wip ' + currentJob.id);
-      //   console.log('delete wip ', payload);
+      //   console.log('JOBS *****  delete wip ' + currentJob.id);
+      //   console.log('JOBS *****  delete wip ', payload);
       deleteDealerWip(payload);
     } else {
       let payload = {
@@ -96,14 +96,14 @@ export default JobsScreen = (props) => {
         wipToolLineId: currentTool.id,
         fetchParamsObj: fetchParamsObj,
       };
-      //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
-      //   console.log('for wip wip ', payload);
+      //   console.log('JOBS *****  remove ' + currentTool.tools_id + 'from ' + currentJob.id);
+      //   console.log('JOBS *****  for wip wip ', payload);
       deleteDealerWipTool(payload);
     }
   };
 
   const returnAllToolsHandler = (job) => {
-    // console.log('in returnToolHandler', job);
+    // console.log('JOBS *****  in returnToolHandler', job);
     setCurrentJob(job);
     setIsAlertVisible(true);
   };
@@ -121,21 +121,21 @@ export default JobsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('in Jobs usefocusffect, usecallback ');
+      //   console.log('JOBS *****  in Jobs usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'Jobs Screen',
       //     })
       //   );
-      //   console.log('in Jobs focusffect calling getItems');
+      //   console.log('JOBS *****  in Jobs focusffect calling getItems');
       //   dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
 
       setSearchInput('');
       getItems();
-      return () => {
-        // Do something when the screen is unfocused
-        // console.log('Jobs Screen was unfocused');
-      };
+      //   return () => {
+      //     // Do something when the screen is unfocused
+      //     // console.log('JOBS *****  Jobs Screen was unfocused');
+      //   };
     }, [getItems])
   );
 
@@ -146,12 +146,12 @@ export default JobsScreen = (props) => {
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
-  //   console.log(
-  //     'Rendering Jobs screen ',
-  //     items.length,
-  //     'items ',
-  //     fetchParamsObj
-  //   );
+  console.log(
+    'JOBS *****  Rendering Jobs screen ',
+    items && items.length,
+    'items ',
+    fetchParamsObj
+  );
 
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>
