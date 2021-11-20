@@ -103,6 +103,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
       sceneContainerStyle={{ backgroundColor: 'white' }} // ios
       screenOptions={{
         // android and ios
+        lazy: true,
         headerShown: false, //ios
         tabBarActiveTintColor: Colors.vwgActiveLink, //ios
         tabBarInactiveTintColor: Colors.vwgInactiveLink, //ios
@@ -121,6 +122,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
         name='Find Tools'
         component={FindToolsScreen}
         options={{
+          lazy: true,
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='build' size={size} />
           ),
@@ -130,6 +132,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
         name='Booked Tools'
         component={BookedOutToolsScreen}
         options={{
+          lazy: true,
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='return-down-back' size={size} />
           ),
@@ -139,6 +142,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
         name='My Jobs'
         component={JobsScreen}
         options={{
+          lazy: true,
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='clipboard' size={size} />
           ),
@@ -148,6 +152,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
         name='Loan Tools'
         component={LtpListScreen}
         options={{
+          lazy: true,
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='swap-horizontal' size={size} />
           ),
