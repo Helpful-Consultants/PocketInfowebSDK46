@@ -16,37 +16,16 @@ import Colors from '../constants/Colors';
 import JobsList from './JobsList';
 import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
+import { selectDealerWipsForUser } from '../reducers/dealerWips';
 
 const minSearchLength = 1;
-
-const identifyUserWipsItems = (fetchParamsObj, dealerWipsItems = []) => {
-  //   console.log(
-  //     'in jobs identifyUserWipsItems, fetchParamsObj is:  ',
-  //     fetchParamsObj && fetchParamsObj,
-  //     dealerWipsItems && dealerWipsItems.length
-  //   );
-  (fetchParamsObj &&
-    fetchParamsObj.userIntId &&
-    dealerWipsItems &&
-    dealerWipsItems.length > 0 &&
-    dealerWipsItems.filter(
-      (item) =>
-        item.tools &&
-        item.tools.length > 0 &&
-        item.userIntId &&
-        item.userIntId.toString() == fetchParamsObj.userIntId.toString()
-    )) ||
-    [];
-};
 
 export default JobsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const dealerWipsItems = useSelector(
-    (state) => state.dealerWips.dealerWipsItems
-  );
+  const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoading = useSelector((state) => state.dealerWips.isLoading);
   const dataError = useSelector((state) => state.dealerWips.error);
   const dataErrorUrl = useSelector((state) => state.dealerWips.dataErrorUrl);
@@ -63,50 +42,18 @@ export default JobsScreen = (props) => {
   }, [dispatch, fetchParamsObj]);
 
   const deleteDealerWip = useCallback(
-    (payload) => dispatch(deleteDealerWipRequest(payload)),
-    [dealerWipsItems]
+    (payload) => {
+      dispatch(deleteDealerWipRequest(payload));
+    },
+    [dispatch, fetchParamsObj]
   );
 
   const deleteDealerWipTool = useCallback(
-    (payload) => dispatch(deleteDealerWipToolRequest(payload)),
-    [dealerWipsItems]
+    (payload) => {
+      dispatch(deleteDealerWipToolRequest(payload));
+    },
+    [dispatch, fetchParamsObj]
   );
-
-  useEffect(() => {
-    // console.log(
-    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
-    //   fetchParamsObj
-    // );
-    getItems();
-  }, [fetchParamsObj]);
-
-  useFocusEffect(
-    useCallback(() => {
-      //   console.log('in Jobs usefocusffect, usecallback ');
-      //   dispatch(
-      //     revalidateUserCredentials({
-      //       calledBy: 'Jobs Screen',
-      //     })
-      //   );
-      //   console.log('in Jobs focusffect calling getItems');
-      //   dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
-      getItems();
-
-      setSearchInput('');
-      return () => {
-        // Do something when the screen is unfocused
-        // console.log('Jobs Screen was unfocused');
-      };
-    }, [getItems])
-  );
-
-  const userWipsItems = identifyUserWipsItems(fetchParamsObj, dealerWipsItems);
-  const dataCount = (userWipsItems && userWipsItems.length) || 0;
-  //   console.log(
-  //     '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
-  //     dealerWipsItems && dealerWipsItems.length
-  //   );
-  //   console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
 
   const refreshRequestHandler = useCallback(() => {
     // console.log('in Jobs refreshRequestHandler');
@@ -160,6 +107,41 @@ export default JobsScreen = (props) => {
     setCurrentJob(job);
     setIsAlertVisible(true);
   };
+
+  useEffect(() => {
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for Jobs',
+    //   fetchParamsObj
+    // );
+    getItems();
+  }, [fetchParamsObj]);
+
+  useFocusEffect(
+    useCallback(() => {
+      //   console.log('in Jobs usefocusffect, usecallback ');
+      //   dispatch(
+      //     revalidateUserCredentials({
+      //       calledBy: 'Jobs Screen',
+      //     })
+      //   );
+      //   console.log('in Jobs focusffect calling getItems');
+      //   dispatch(revalidateUserCredentials({ calledBy: 'JobsScreen' }));
+      getItems();
+
+      setSearchInput('');
+      return () => {
+        // Do something when the screen is unfocused
+        // console.log('Jobs Screen was unfocused');
+      };
+    }, [getItems])
+  );
+
+  const dataCount = (userWipsItems && userWipsItems.length) || 0;
+  //   console.log(
+  //     '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
+  //     dealerWipsItems && dealerWipsItems.length
+  //   );
+  //   console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
 
   const items = (!isLoading && !dataError && userWipsItems) || [];
 
