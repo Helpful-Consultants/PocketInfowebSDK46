@@ -25,7 +25,6 @@ export default LtpListScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
-  const userBrand = useSelector((state) => state.user.userBrand);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
   const isLoading = useSelector((state) => state.ltp.isLoading);
@@ -33,13 +32,36 @@ export default LtpListScreen = (props) => {
   const dataStatusCode = useSelector((state) => state.ltp.statusCode);
   const dataErrorUrl = useSelector((state) => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
-  const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
     // console.log('in LTP in getItems - no fetchParamsObj needed');
-    dispatch(getLtpRequest());
+    dispatch(getLtpRequest(fetchParamsObj));
   }, [dispatch]);
+
+  const refreshRequestHandler = useCallback(() => {
+    // console.log('in ltp refreshRequestHandler');
+    getItems();
+  }, [getItems]);
+
+  const searchInputHandler = (searchInput) => {
+    setSearchInput(searchInput);
+    if (searchInput && searchInput.length > minSearchLength) {
+      let newFilteredItems = searchItems(ltpItems, searchInput);
+      //   console.log(
+      //     'LTP Screen  searchInputHandler for: ',
+      //     searchInput && searchInput,
+      //     'ltpItems: ',
+      //     ltpItems && ltpItems.length,
+      //     'itemsToShow: ',
+      //     itemsToShow && itemsToShow.length,
+      //     'newFilteredItems:',
+      //     newFilteredItems && newFilteredItems.length,
+      //     newFilteredItems
+      //   );
+      setFilteredItems(newFilteredItems);
+    }
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -57,80 +79,13 @@ export default LtpListScreen = (props) => {
         // Do something when the screen is unfocused
         // console.log('LTP Screen was unfocused');
       };
-    }, [dispatch, getItems])
+    }, [getItems])
   );
-
-  useEffect(() => {
-    // console.log('getting unique LTP items', ltpItems && ltpItems);
-    // console.log('userBrand is ', userBrand);
-    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
-    let ltpItemsFiltered = [];
-    if (userBrand) {
-      //   const tempItem = ltpItemsAll[2];
-      //   console.log(
-      //     'userBrand is ',
-      //     userBrand,
-      //     ltpItemsAll.length,
-      //     tempItem[userBrand]
-      //   );
-      ltpItemsFiltered =
-        userBrand &&
-        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
-    } else {
-      //   console.log('userBrand isnt : ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(
-        (item) =>
-          item.au === ('Y' || 'y') ||
-          item.cv === ('Y' || 'y') ||
-          item.se === ('Y' || 'y') ||
-          item.sk === ('Y' || 'y') ||
-          item.vw === ('Y' || 'y')
-      );
-    }
-
-    // console.log(
-    //   'ltpItemsFiltered',
-    //   ltpItemsFiltered && ltpItemsFiltered.length
-    // );
-
-    let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
-    // console.log('ltpItemsSorted', ltpItemsSorted && ltpItemsSorted.length);
-
-    setUniqueLtpItems(ltpItemsSorted);
-    // setUniqueLtpItems([]);
-    // console.log('filtered items', uniqueLtpItemsTemp);
-  }, [ltpItems, userBrand]);
-
-  const searchInputHandler = (searchInput) => {
-    setSearchInput(searchInput);
-    if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
-      //   console.log(
-      //     'LTP Screen  searchInputHandler for: ',
-      //     searchInput && searchInput,
-      //     'ltpItems: ',
-      //     ltpItems && ltpItems.length,
-      //     'itemsToShow: ',
-      //     itemsToShow && itemsToShow.length,
-      //     'uniqueLtpItems: ',
-      //     uniqueLtpItems && uniqueLtpItems.length,
-      //     'newFilteredItems:',
-      //     newFilteredItems && newFilteredItems.length,
-      //     newFilteredItems
-      //   );
-      setFilteredItems(newFilteredItems);
-    }
-  };
-
-  const refreshRequestHandler = useCallback(() => {
-    // console.log('in ltp refreshRequestHandler');
-    getItems();
-  }, [getItems]);
 
   let itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
-      : uniqueLtpItems
+      : ltpItems
     : [];
   //   console.log(
   //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',

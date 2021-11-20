@@ -1,5 +1,7 @@
 // import { Types } from '../actions/ltp';
 import Types from '../constants/Types';
+import { getSortedLtpItemsForUserBrand } from '../helpers/ltp';
+import { createSelector } from 'reselect';
 const INITIAL_STATE = {
   ltpItems: [],
   isLoading: false,
@@ -26,6 +28,17 @@ export default function ltp(state = INITIAL_STATE, action) {
       //     'ltp action items length ',
       //     action.payload && action.payload.items && action.payload.items.length
       //   );
+
+      //   console.log(
+      //     'in ltp reducer',
+      //     action.payload.items,
+      //     action.payload.userBrand
+      //   );
+      const filteredItems = getSortedLtpItemsForUserBrand(
+        action.payload.items,
+        action.payload.userBrand
+      );
+      //   console.log('in ltp reducer', filteredItems);
       return {
         ...state,
         ltpItems: action.payload.items,
