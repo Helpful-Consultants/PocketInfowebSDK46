@@ -55,6 +55,7 @@ function* getDealerWips({ payload }) {
         yield put(
           actions.getDealerWipsSuccess({
             items: result.data,
+            userIntId: payload.userIntId,
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
@@ -71,6 +72,7 @@ function* getDealerWips({ payload }) {
         yield put(
           actions.getDealerWipsSuccess({
             items: [],
+            userIntId: payload.userIntId,
             statusCode:
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||

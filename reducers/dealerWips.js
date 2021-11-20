@@ -30,6 +30,7 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       return {
         ...state,
         dealerWipsItems: action.payload.items,
+        userIntId: action.payload.userIntId || null,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
