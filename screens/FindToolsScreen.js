@@ -27,6 +27,7 @@ import {
   deleteDealerWipRequest,
 } from '../actions/dealerWips';
 import { getLtpRequest } from '../actions/ltp';
+import { selectSortedUniqueLtpTools } from '../reducers/ltp';
 import { createDealerWipRequest } from '../actions/dealerWips';
 import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
@@ -141,6 +142,7 @@ export default FindToolsScreen = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
   const fetchParamsObj = useSelector(selectFetchParamsObj);
+  const sortedUniqueLtpTools = useSelector(selectSortedUniqueLtpTools);
   const userName = useSelector((state) => state.user.userName);
   const userBrand = useSelector((state) => state.user.userBrand);
 
@@ -200,21 +202,15 @@ export default FindToolsScreen = (props) => {
   //   const userDataCount =
   //     (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
-  const getWipsItems = useCallback((fetchParamsObj) => {
-    // console.log('in getWipsItems', fetchParamsObj);
-    dispatch(getDealerWipsRequest(fetchParamsObj)), [dealerWipsItems];
-  });
+  const getWipsItems = useCallback(() => {
+    console.log(
+      '************ Find Tools in getWipsItems',
+      fetchParamsObj && fetchParamsObj
+    );
+    dispatch(getDealerWipsRequest(fetchParamsObj));
+  }, [fetchParamsObj]);
 
-  const getWipsItemsAsync = async () => {
-    // console.log(
-    //   'find tools - getWipsItemsAsync, fetchParamsObj is',
-    //   fetchParamsObj
-    // );
-    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId)
-      getWipsItems(fetchParamsObj);
-  };
-
-  const getOtherItems = useCallback(async () => {
+  const getOtherItems = useCallback(() => {
     // console.log('in getOtherItems');
     // console.log(
     //   'find tools - getOtherItems, fetchParamsObj is',
@@ -223,15 +219,9 @@ export default FindToolsScreen = (props) => {
     dispatch(getDealerToolsRequest(fetchParamsObj));
     // dispatch(getDealerWipsRequest(fetchParamsObj));
     if (!ltpItems || ltpItems.length === 0) {
-      dispatch(getLtpRequest());
+      dispatch(getLtpRequest(fetchParamsObj));
     }
-  });
-
-  const getOtherItemsAsync = async () => {
-    if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.dealerId) {
-      getOtherItems(fetchParamsObj);
-    }
-  };
+  }, [fetchParamsObj, ltpItems.length]);
 
   const dispatchNewWip = useCallback(
     (wipObj) => dispatch(createDealerWipRequest({ wipObj, fetchParamsObj })),
@@ -247,206 +237,6 @@ export default FindToolsScreen = (props) => {
     console.log('dispatchNewWip', wipObj && wipObj);
     dispatchNewWip(wipObj);
   };
-
-  useEffect(() => {
-    // runs only once
-    // console.log(
-    //   'in findtools, isSendingWip is ',
-    //   isSendingWip,
-    //   'code is ',
-    //   dataStatusCodeWips
-    // );
-    if (isSendingWip === false) {
-      if (dataStatusCodeWips === 201) {
-        // console.log(
-        //   'isSendingWip is ',
-        //   isSendingWip,
-        //   'code is 201',
-        //   lastWipProcessed && lastWipProcessed,
-        //   dataStatusCodeWips,
-        //   'mode is ',
-        //   mode
-        // );
-        setMode('confirm');
-      } else if (dataStatusCodeWips === 409) {
-        // console.log(
-        //   'isSendingWip is ',
-        //   isSendingWip,
-        //   'code is 409',
-        //   dataStatusCodeWips,
-        //   lastWipProcessed && lastWipProcessed,
-        //   'mode is ',
-        //   mode
-        // );
-        if (mode === 'sending') {
-          //   console.log(
-          //     'changing mode to unavailable, fetchParamsObj is ',
-          //     fetchParamsObj
-          //   );
-          //   console.log('unavailable ', lastWipProcessed && lastWipProcessed);
-          if (
-            lastWipProcessed &&
-            lastWipProcessed.tools &&
-            lastWipProcessed.tools.length > 0
-          ) {
-            // console.log('some unavailable');
-            setMode('some-unavailable');
-            markUnavailableBasketItems();
-            getWipsItemsAsync();
-          } else {
-            // console.log('all unavailable');
-            setMode('all-unavailable');
-            getWipsItemsAsync();
-          }
-        }
-      }
-    }
-  }, [isSendingWip]);
-
-  useEffect(() => {
-    getWipsItemsAsync();
-    getOtherItemsAsync();
-  }, [fetchParamsObj]);
-
-  useFocusEffect(
-    useCallback(() => {
-      //   console.log(
-      //     'find tools - useFocusEffect, fetchParamsObj is',
-      //     fetchParamsObj
-      //   );
-      dispatch(revalidateUserCredentials({ calledBy: 'FindToolsScreen' }));
-      setSearchInput('');
-      getWipsItemsAsync();
-    }, [fetchParamsObj])
-  );
-
-  useEffect(() => {
-    let bookedToolsList = [];
-
-    dealerWipsItems &&
-      dealerWipsItems.forEach((wip) => {
-        if (wip.tools && wip.tools.length > 0) {
-          wip.tools.forEach((tool) => bookedToolsList.push(tool.tools_id));
-        }
-      });
-    setBookedToolsList(bookedToolsList);
-    console.log(
-      'in findtools useffect',
-      dealerWipsItems.length,
-      bookedToolsList.length
-    );
-  }, [dealerWipsItems]);
-
-  useEffect(() => {
-    // runs only once
-    // console.log('in tools use effect');
-    if (isLoadingUser || isLoadingTools || isLoadingWips || isLoadingLtp) {
-      setIsLoadingAny(true);
-    } else {
-      setIsLoadingAny(false);
-    }
-  }, [isLoadingUser, isLoadingTools, isLoadingWips, isLoadingLtp]);
-
-  useEffect(() => {
-    // runs only once
-    if (dataErrorTools) {
-      setDataErrorAny(dataErrorTools);
-      setDataStatusCodeAny(dataStatusCodeTools);
-      setDataErrorUrlAny(dataErrorUrlTools);
-      setDataErrorSummary('Error syncing tools');
-      setDataNameInPlay('tools');
-    } else if (dataErrorWips) {
-      setDataErrorAny(dataErrorWips);
-      setDataStatusCodeAny(dataStatusCodeWips);
-      setDataErrorUrlAny(dataErrorUrlWips);
-      setDataErrorSummary('Error syncing jobs');
-      setDataNameInPlay('jobs');
-    } else if (dataErrorLtp) {
-      setDataErrorAny(dataErrorLtp);
-      setDataStatusCodeAny(dataStatusCodeLtp);
-      setDataErrorUrlAny(dataErrorUrlLtp);
-      setDataErrorSummary('Error syncing LTP');
-      setDataNameInPlay('LTP');
-      // } else if (
-      //   !isLoadingTools &&
-      //   dealerToolsItems &&
-      //   dealerToolsItems.length === 0
-      // ) {
-      //   //   console.log('empty tools items');
-      //   setDataErrorAny('Does your site have a tools list?');
-      //   setDataStatusCodeAny(dataStatusCodeTools);
-      //   setDataErrorUrlAny('');
-      //   setDataErrorSummary('No tools fetched from web server');
-      //   setDataNameInPlay('tools');
-      // } else if (!isLoadingLtp && ltpItems && ltpItems.length === 0) {
-      //   //   console.log('empty ltp items', ltpItems);
-      //   setDataErrorAny('The LTP list should not be empty. Please refresh.');
-      //   setDataStatusCodeAny(dataStatusCodeLtp);
-      //   setDataErrorUrlAny('');
-      //   setDataErrorSummary(
-      //     'No LTP items fetched from web server. Please try again.'
-      //   );
-      //   setDataNameInPlay('LTP');
-    } else {
-      setDataErrorAny('');
-      setDataStatusCodeAny('');
-      setDataErrorUrlAny('');
-      setDataErrorSummary('');
-      setDataNameInPlay('');
-    }
-  }, [
-    dataErrorTools,
-    dataErrorWips,
-    dataErrorLtp,
-    dealerToolsItems,
-    ltpItems,
-    isLoadingTools,
-    isLoadingLtp,
-  ]);
-
-  useEffect(() => {
-    // console.log('getting unique LTP items', ltpItems && ltpItems.length);
-    // console.log('userBrand is ', userBrand);
-    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
-    let ltpItemsFiltered = [];
-    if (userBrand) {
-      //   console.log('userBrand is ', userBrand);
-      ltpItemsFiltered =
-        userBrand &&
-        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
-    } else {
-      //   console.log('userBrand isnt : ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(
-        (item) =>
-          item.au === ('Y' || 'y') ||
-          item.cv === ('Y' || 'y') ||
-          item.se === ('Y' || 'y') ||
-          item.sk === ('Y' || 'y') ||
-          item.vw === ('Y' || 'y')
-      );
-    }
-
-    let unsortedUniqueLtpItems =
-      ltpItemsFiltered.filter(
-        (item, index, self) =>
-          index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
-      ) || [];
-
-    let uniqueLtpItemsSorted = sortObjectList(
-      unsortedUniqueLtpItems,
-      'loanToolNo',
-      'asc'
-    );
-
-    setUniqueLtpItems(uniqueLtpItemsSorted);
-    // console.log('filtered items', uniqueLtpItemsTemp);
-  }, [ltpItems, userBrand]);
-
-  useEffect(() => {
-    let concatItems = dealerToolsItems.concat(uniqueLtpItems);
-    setCombinedItems(concatItems);
-  }, [dealerToolsItems, uniqueLtpItems]);
-
   const selectItemHandler = (tool, lastPerson) => {
     // console.log('in selectItemHandler');
     let dup =
@@ -620,7 +410,8 @@ export default FindToolsScreen = (props) => {
 
   const refreshRequestHandler = () => {
     // console.log('in refreshRequestHandler');
-    getOtherItemsAsync();
+    getWipsItems();
+    getOtherItems();
   };
 
   const saveToJobRequestHandler = () => {
@@ -652,6 +443,218 @@ export default FindToolsScreen = (props) => {
       setIsBasketVisible(true);
     }
   };
+
+  useEffect(() => {
+    console.log(
+      'in findtools, isSendingWip is ',
+      isSendingWip,
+      'code is ',
+      dataStatusCodeWips
+    );
+    if (isSendingWip === false) {
+      if (dataStatusCodeWips === 201) {
+        // console.log(
+        //   'isSendingWip is ',
+        //   isSendingWip,
+        //   'code is 201',
+        //   lastWipProcessed && lastWipProcessed,
+        //   dataStatusCodeWips,
+        //   'mode is ',
+        //   mode
+        // );
+        setMode('confirm');
+      } else if (dataStatusCodeWips === 409) {
+        // console.log(
+        //   'isSendingWip is ',
+        //   isSendingWip,
+        //   'code is 409',
+        //   dataStatusCodeWips,
+        //   lastWipProcessed && lastWipProcessed,
+        //   'mode is ',
+        //   mode
+        // );
+        if (mode === 'sending') {
+          //   console.log(
+          //     'changing mode to unavailable, fetchParamsObj is ',
+          //     fetchParamsObj
+          //   );
+          //   console.log('unavailable ', lastWipProcessed && lastWipProcessed);
+          if (
+            lastWipProcessed &&
+            lastWipProcessed.tools &&
+            lastWipProcessed.tools.length > 0
+          ) {
+            // console.log('some unavailable');
+            setMode('some-unavailable');
+            markUnavailableBasketItems();
+            getWipsItems();
+          } else {
+            // console.log('all unavailable');
+            setMode('all-unavailable');
+            getWipsItems();
+          }
+        }
+      }
+    }
+  }, [isSendingWip, dataStatusCodeWips, mode]);
+
+  useEffect(() => {
+    console.log(
+      'in Find Tools useEffect AAAAAA',
+      fetchParamsObj && fetchParamsObj
+    );
+    getWipsItems();
+    getOtherItems();
+  }, [fetchParamsObj]);
+
+  useEffect(() => {
+    let bookedToolsList = [];
+
+    if (isLoadingAny) {
+      console.log(
+        'in findtools useffect to create booked tools list NOT  running code'
+      );
+    } else {
+      console.log(
+        'in findtools useffect to create booked tools list YES running code'
+      );
+      if (dealerWipsItems && dealerWipsItems.length > 0) {
+        dealerWipsItems.forEach((wip) => {
+          if (wip.tools && wip.tools.length > 0) {
+            wip.tools.forEach((tool) => bookedToolsList.push(tool.tools_id));
+          }
+        });
+      }
+      setBookedToolsList(bookedToolsList);
+    }
+    console.log(
+      'in findtools useffect to create booked tools list,isLoadingAny ',
+      isLoadingAny,
+      'dealerWipsItems;',
+      dealerWipsItems.length,
+      'bookedToolsList',
+      bookedToolsList.length
+    );
+  }, [isLoadingAny]);
+
+  useEffect(() => {
+    // runs only once
+    if (isLoadingUser || isLoadingTools || isLoadingWips || isLoadingLtp) {
+      console.log('in tools use effect BBBB something is loading');
+      setIsLoadingAny(true);
+    } else {
+      console.log('in tools use effect BBBB nothing is loading');
+      setIsLoadingAny(false);
+    }
+  }, [isLoadingUser, isLoadingTools, isLoadingWips, isLoadingLtp]);
+
+  useEffect(() => {
+    console.log(
+      'in useEffect CCCCC checking for errors',
+      dataErrorTools,
+      dataErrorLtp,
+      dataErrorWips,
+      (dealerToolsItems && dealerToolsItems.length) || 0,
+      (ltpItems && ltpItems.length) || 0,
+      isLoadingTools,
+      isLoadingLtp,
+      isLoadingWips
+    );
+
+    if (dataErrorTools) {
+      setDataErrorAny(dataErrorTools);
+      setDataStatusCodeAny(dataStatusCodeTools);
+      setDataErrorUrlAny(dataErrorUrlTools);
+      setDataErrorSummary('Error syncing tools');
+      setDataNameInPlay('tools');
+    } else if (dataErrorWips) {
+      setDataErrorAny(dataErrorWips);
+      setDataStatusCodeAny(dataStatusCodeWips);
+      setDataErrorUrlAny(dataErrorUrlWips);
+      setDataErrorSummary('Error syncing jobs');
+      setDataNameInPlay('jobs');
+    } else if (dataErrorLtp) {
+      setDataErrorAny(dataErrorLtp);
+      setDataStatusCodeAny(dataStatusCodeLtp);
+      setDataErrorUrlAny(dataErrorUrlLtp);
+      setDataErrorSummary('Error syncing LTP');
+      setDataNameInPlay('LTP');
+    } else {
+      setDataErrorAny('');
+      setDataStatusCodeAny('');
+      setDataErrorUrlAny('');
+      setDataErrorSummary('');
+      setDataNameInPlay('');
+    }
+  }, [
+    dataErrorTools,
+    dataErrorWips,
+    dataErrorLtp,
+    isLoadingTools,
+    isLoadingWips,
+    isLoadingLtp,
+  ]);
+
+  useEffect(() => {
+    // console.log('getting unique LTP items', ltpItems && ltpItems.length);
+    // console.log('userBrand is ', userBrand);
+    console.log('in useEffect DDDD');
+    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
+    let ltpItemsFiltered = [];
+    if (userBrand) {
+      //   console.log('userBrand is ', userBrand);
+      ltpItemsFiltered =
+        userBrand &&
+        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
+    } else {
+      //   console.log('userBrand isnt : ', userBrand);
+      ltpItemsFiltered = ltpItemsAll.filter(
+        (item) =>
+          item.au === ('Y' || 'y') ||
+          item.cv === ('Y' || 'y') ||
+          item.se === ('Y' || 'y') ||
+          item.sk === ('Y' || 'y') ||
+          item.vw === ('Y' || 'y')
+      );
+    }
+
+    let unsortedUniqueLtpItems =
+      ltpItemsFiltered.filter(
+        (item, index, self) =>
+          index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+      ) || [];
+
+    let uniqueLtpItemsSorted = sortObjectList(
+      unsortedUniqueLtpItems,
+      'loanToolNo',
+      'asc'
+    );
+
+    setUniqueLtpItems(uniqueLtpItemsSorted);
+    // console.log('filtered items', uniqueLtpItemsTemp);
+  }, [ltpItems, userBrand]);
+
+  useEffect(() => {
+    console.log('in useEffect EEEEE');
+    let concatItems = dealerToolsItems.concat(uniqueLtpItems);
+    setCombinedItems(concatItems);
+  }, [dealerToolsItems, uniqueLtpItems]);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log(
+        'find tools - useFocusEffect, fetchParamsObj is',
+        fetchParamsObj
+      );
+      dispatch(revalidateUserCredentials({ calledBy: 'FindToolsScreen' }));
+      setSearchInput('');
+      getWipsItems();
+      return () => {
+        // Do something when the screen is unfocused
+        console.log('Find tools Screen was unfocused');
+      };
+    }, [fetchParamsObj])
+  );
 
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength
