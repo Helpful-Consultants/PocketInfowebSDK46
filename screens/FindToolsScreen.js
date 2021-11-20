@@ -207,10 +207,13 @@ export default FindToolsScreen = (props) => {
       '************ Find Tools in getWipsItems, fetchParamsObj is',
       fetchParamsObj && fetchParamsObj
     );
-    typeof fetchParamsObj !== 'undefined' &&
+    if (
+      typeof fetchParamsObj !== 'undefined' &&
       fetchParamsObj.dealerId &&
-      fetchParamsObj.userIntId &&
+      fetchParamsObj.userIntId
+    ) {
       dispatch(getDealerWipsRequest(fetchParamsObj));
+    }
   }, [dispatch, fetchParamsObj]);
 
   const getOtherItems = useCallback(() => {
@@ -220,14 +223,17 @@ export default FindToolsScreen = (props) => {
     //   fetchParamsObj
     // );
     if (
-      (!ltpItems || ltpItems.length === 0) &&
-      fetchParamsObj !== 'undefined' &&
+      typeof fetchParamsObj !== 'undefined' &&
       fetchParamsObj.dealerId &&
       fetchParamsObj.userIntId
     ) {
       dispatch(getDealerToolsRequest(fetchParamsObj));
+      if (!ltpItems || ltpItems.length === 0) {
+        dispatch(getLtpRequest(fetchParamsObj));
+      }
     }
-  }, [dispatch, fetchParamsObj, ltpItems.length]);
+    // dispatch(getDealerWipsRequest(fetchParamsObj));
+  }, [fetchParamsObj, ltpItems.length]);
 
   const dispatchNewWip = useCallback(
     (wipObj) => dispatch(createDealerWipRequest({ wipObj, fetchParamsObj })),
