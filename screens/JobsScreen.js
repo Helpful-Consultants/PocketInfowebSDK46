@@ -146,12 +146,12 @@ export default JobsScreen = (props) => {
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
 
-  console.log(
-    'JOBS *****  Rendering Jobs screen ',
-    items && items.length,
-    'items ',
-    fetchParamsObj
-  );
+  //   console.log(
+  //     'JOBS *****  Rendering Jobs screen ',
+  //     items && items.length,
+  //     'items ',
+  //     fetchParamsObj
+  //   );
 
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>

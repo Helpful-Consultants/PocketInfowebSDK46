@@ -42,11 +42,11 @@ export const selectSortedUniqueLtpTools = createSelector(
   //       )
   (ltpItems) => {
     let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
-    console.log(
-      'in selectSortedUniqueLtpTools ',
-      ltpItems.length,
-      uniqueLtpItems.length
-    );
+    // console.log(
+    //   'in selectSortedUniqueLtpTools ',
+    //   ltpItems.length,
+    //   uniqueLtpItems.length
+    // );
     return uniqueLtpItems;
   }
 );
@@ -70,19 +70,19 @@ export default function ltp(state = INITIAL_STATE, action) {
       //     action.payload && action.payload.items && action.payload.items.length
       //   );
 
-      console.log(
-        'in ltp get success reducer',
-        action.payload.items && action.payload.items.length,
-        action.payload.userBrand && action.payload.userBrand
-      );
+      //   console.log(
+      //     'in ltp get success reducer',
+      //     action.payload.items && action.payload.items.length,
+      //     action.payload.userBrand && action.payload.userBrand
+      //   );
       let filteredItems = getSortedLtpItemsForUserBrand(
         action.payload.items,
         action.payload.userBrand
       );
-      console.log(
-        'in ltp reducer filteredItems.length',
-        filteredItems && filteredItems.length
-      );
+      //   console.log(
+      //     'in ltp reducer filteredItems.length',
+      //     filteredItems && filteredItems.length
+      //   );
       return {
         ...state,
         ltpItems: filteredItems,

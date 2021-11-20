@@ -8,6 +8,6 @@ const compareObjectValues = (key, order = 'asc') => {
 };
 
 export const sortObjectList = (objArr, key, order = 'asc') => {
-  console.log('in sortObjectList helper', objArr.length, key, order);
+  //   console.log('in sortObjectList helper', objArr.length, key, order);
   return objArr.sort(compareObjectValues(key, order));
 };

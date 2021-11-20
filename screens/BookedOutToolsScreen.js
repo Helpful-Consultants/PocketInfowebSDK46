@@ -39,7 +39,7 @@ export default BookedOutToolsScreen = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
   const getItems = useCallback(() => {
-    console.log('BOT *****  in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log('BOT *****  in getItems fetchParamsObj is', fetchParamsObj);
     dispatch(getDealerWipsRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
 
@@ -58,7 +58,7 @@ export default BookedOutToolsScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('BOT ***** in refreshRequestHandler');
+    // console.log('BOT ***** in refreshRequestHandler');
     getItems();
   }, [getItems]);
 
@@ -124,10 +124,10 @@ export default BookedOutToolsScreen = (props) => {
   //   }, [fetchParamsObj]);
 
   useEffect(() => {
-    console.log(
-      'BOT ***** in booked out useEffect fetchParamsObj is:  ',
-      fetchParamsObj && fetchParamsObj
-    );
+    // console.log(
+    //   'BOT ***** in booked out useEffect fetchParamsObj is:  ',
+    //   fetchParamsObj && fetchParamsObj
+    // );
 
     const buildBookedOutToolsArrForJob = (wip) => {
       const thisWipsToolsArr = wip.tools.map((tool) => ({
@@ -189,9 +189,9 @@ export default BookedOutToolsScreen = (props) => {
       ? filteredItems
       : bookedOutItems;
 
-  console.log(
-    'BOT ***** RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
-  );
+  //   console.log(
+  //     'BOT ***** RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
+  //   );
 
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>

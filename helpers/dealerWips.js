@@ -28,16 +28,16 @@ export const getSortedDealerWipsItemsForUser = (
   //       ? sortObjectList(dealerWipsItemsFiltered, 'loanToolNo', 'asc')
   //       : dealerWipsItemsFiltered;
 
-  console.log(
-    'in getSorteddealerWipsItemsForUserBrand userIntId',
-    userIntId && userIntId,
-    'dealerWipsItemsAll',
-    dealerWipsItemsAll && dealerWipsItemsAll.length,
-    'dealerWipsItemsFiltered',
-    dealerWipsItemsFiltered && dealerWipsItemsFiltered.length
-    // 'dealerWipsItemsSorted',
-    // dealerWipsItemsSorted && dealerWipsItemsSorted.length
-  );
+  //   console.log(
+  //     'in getSorteddealerWipsItemsForUserBrand userIntId',
+  //     userIntId && userIntId,
+  //     'dealerWipsItemsAll',
+  //     dealerWipsItemsAll && dealerWipsItemsAll.length,
+  //     'dealerWipsItemsFiltered',
+  //     dealerWipsItemsFiltered && dealerWipsItemsFiltered.length
+  //     // 'dealerWipsItemsSorted',
+  //     // dealerWipsItemsSorted && dealerWipsItemsSorted.length
+  //   );
 
   return dealerWipsItemsFiltered;
 };
