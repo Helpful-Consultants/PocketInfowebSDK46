@@ -13,6 +13,7 @@ function* getLtpLoans({ payload }) {
   //     payload && payload
   //   );
   yield put(actions.getLtpLoansStart());
+  const fetchTime = Date.now();
   let showingDummyData = yield select(showingDemoData);
   let showThisDummyData = yield shouldWeUseDummyData(InfoTypes.LTP_LOANS);
   //   console.log(
@@ -21,13 +22,14 @@ function* getLtpLoans({ payload }) {
   //     InfoTypes.LTP_LOANS,
   //     showThisDummyData
   //   );
-  const fetchTime = Date.now();
+
   if (showingDummyData && showThisDummyData) {
     // console.log('in ltpLoans saga showingDummyData is the way');
     yield put(
       actions.getLtpLoansSuccess({
         items: ltpLoansDummyData,
         statusCode: 200,
+        fetchTime,
       })
     );
   } else {
@@ -76,6 +78,7 @@ function* getLtpLoans({ payload }) {
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else {
