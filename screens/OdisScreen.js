@@ -47,14 +47,6 @@ export default OdisScreen = (props) => {
   //     fetchParamsObj.userBrand,
   //   ]);
 
-  useEffect(() => {
-    // console.log(
-    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
-    //   fetchParamsObj
-    // );
-    getItems();
-  }, [fetchParamsObj]);
-
   const getItems = useCallback(() => {
     // console.log('in ODIS in getItems fetchParamsObj', fetchParamsObj);
     dispatch(getOdisRequest(fetchParamsObj));
@@ -78,6 +70,26 @@ export default OdisScreen = (props) => {
     getItems();
   }, [getItems]);
 
+  useEffect(() => {
+    // console.log(
+    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
+    //   fetchParamsObj
+    // );
+    getItems();
+  }, [fetchParamsObj]);
+
+  useEffect(() => {
+    const displayTime = Date.now();
+    // console.log(
+    //   'in odis useeffect calling storeDisplayTimestamp',
+    //   'odisFetchTime',
+    //   odisFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
+  }, [odisFetchTime]);
+
   useFocusEffect(
     useCallback(() => {
       //   console.log('in serviceMeasures usefocusffect, usecallback ');
@@ -93,20 +105,8 @@ export default OdisScreen = (props) => {
         // Do something when the screen is unfocused
         // console.log('ODIS Screen was unfocused');
       };
-    }, [dispatch, getItems])
+    }, [getItems])
   );
-
-  useEffect(() => {
-    const displayTime = Date.now();
-    // console.log(
-    //   'in odis useeffect calling storeDisplayTimestamp',
-    //   'odisFetchTime',
-    //   odisFetchTime,
-    //   'displayTime',
-    //   displayTime
-    // );
-    storeDisplayTimestamp(displayTime);
-  }, [odisFetchTime]);
 
   //   if (odisObj) {
   //     console.log('in odis screen,odisObj', odisObj);
