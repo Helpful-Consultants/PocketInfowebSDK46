@@ -161,7 +161,7 @@ export default BookedOutToolsScreen = (props) => {
 
     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
     setBookedOutItems(bookedOutToolItems);
-  }, [fetchParamsObj, dealerWipsItems]);
+  }, [fetchParamsObj]);
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
   //   console.log(
