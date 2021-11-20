@@ -12,9 +12,7 @@ import Types from '../constants/Types';
 
 function* getDealerTools({ payload }) {
   //   console.log('in saga get dealerTools, payload', payload && payload);
-  let statusCode = null;
-  let errorText = 'An error occurred when trying to get the dealer tools';
-  let dataErrorUrl = null;
+  const fetchTime = Date.now();
   yield put(actions.getDealerToolsStart());
   try {
     const result = yield call(api.getDealerTools, {
@@ -42,6 +40,7 @@ function* getDealerTools({ payload }) {
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
             null,
+          fetchTime,
         })
       );
     } else if (result && result.data && result.data.length > 0) {
@@ -58,6 +57,7 @@ function* getDealerTools({ payload }) {
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
             null,
+          fetchTime,
         })
       );
     } else {

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  fetchTime: null,
 };
 
 export const selectSortedUniqueLtpTools = createSelector(
@@ -67,6 +68,8 @@ export default function ltp(state = INITIAL_STATE, action) {
         error: null,
         statusCode: null,
         dataErrorUrl: null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.EMPTY_LTP_REQUEST: {

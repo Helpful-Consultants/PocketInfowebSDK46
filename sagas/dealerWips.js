@@ -20,7 +20,7 @@ function* getDealerWips({ payload }) {
     let errorText =
       'A server error occurred when trying to get the dealer jobs';
     let dataErrorUrl = null;
-
+    const fetchTime = Date.now();
     yield put(actions.getDealerWipsStart());
     try {
       const result = yield call(api.getDealerWips, {
@@ -60,6 +60,7 @@ function* getDealerWips({ payload }) {
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else if (result && result.data && result.data.length > 0) {
@@ -77,6 +78,7 @@ function* getDealerWips({ payload }) {
               (result.status && result.status) ||
               (result.request.status && result.request.status) ||
               null,
+            fetchTime,
           })
         );
       } else {

@@ -21,10 +21,16 @@ export const getDealerWipsRequest = ({ dealerId, userIntId }) => ({
   },
 });
 
-export const getDealerWipsSuccess = ({ statusCode, items, userIntId }) => ({
+export const getDealerWipsSuccess = ({
+  statusCode,
+  items,
+  userIntId,
+  fetchTime,
+}) => ({
   type: Types.GET_DEALER_WIPS_SUCCESS,
   statusCode,
   payload: {
+    fetchTime,
     items,
     statusCode,
     userIntId,

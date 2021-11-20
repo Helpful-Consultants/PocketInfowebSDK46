@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
   lastWipProcessed: null,
   unavailableTools: false,
+  fetchTime: null,
 };
 
 export const selectDealerWipsForUser = createSelector(
@@ -58,6 +59,8 @@ export default function dealerWips(state = INITIAL_STATE, action) {
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.CREATE_DEALER_WIP_START: {

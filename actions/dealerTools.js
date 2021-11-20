@@ -17,11 +17,12 @@ export const getDealerToolsRequest = ({ dealerId }) => ({
   },
 });
 
-export const getDealerToolsSuccess = ({ statusCode, items }) => ({
+export const getDealerToolsSuccess = ({ statusCode, items, fetchTime }) => ({
   type: Types.GET_DEALER_TOOLS_SUCCESS,
   payload: {
     items,
     statusCode,
+    fetchTime,
   },
 });
 

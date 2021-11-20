@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   statusCode: null,
   dataErrorUrl: null,
   statusCode: null,
+  fetchTime: null,
 };
 
 export default function dealerTools(state = INITIAL_STATE, action) {
@@ -33,6 +34,8 @@ export default function dealerTools(state = INITIAL_STATE, action) {
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.EMPTY_DEALER_TOOLS_REQUEST: {

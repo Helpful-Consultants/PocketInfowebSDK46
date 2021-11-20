@@ -4,7 +4,7 @@ export const getSortedDealerWipsItemsForUser = (
   dealerWipsItemsAll = [],
   userIntId = null
 ) => {
-  console.log('in getSortedDealerWipsItemsForUser');
+  //   console.log('in getSortedDealerWipsItemsForUser');
   let dealerWipsItemsFiltered = [];
 
   if (userIntId) {
