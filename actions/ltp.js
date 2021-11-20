@@ -9,14 +9,19 @@ export const getLtpStart = () => ({
   type: Types.GET_LTP_START,
 });
 
-export const getLtpRequest = () => ({
+export const getLtpRequest = ({ userBrand }) => ({
   type: Types.GET_LTP_REQUEST,
+  payload: {
+    userBrand,
+  },
 });
 
-export const getLtpSuccess = ({ items }) => ({
+export const getLtpSuccess = ({ items, userBrand, fetchTime }) => ({
   type: Types.GET_LTP_SUCCESS,
   payload: {
-    items: items,
+    items,
+    userBrand,
+    fetchTime,
   },
 });
 

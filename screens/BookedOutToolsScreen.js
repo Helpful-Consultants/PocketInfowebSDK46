@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import sortObjectList from '../helpers/sortObjectList';
+import { sortObjectList } from '../helpers/objects';
 import { revalidateUserCredentials } from '../actions/user';
 import {
   deleteDealerWipRequest,
@@ -164,11 +164,11 @@ export default BookedOutToolsScreen = (props) => {
   }, [fetchParamsObj, dealerWipsItems]);
 
   const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
-  console.log(
-    '&&&&&&&&&&&&&&&& in booked out  dealerWipsItems ',
-    dealerWipsItems && dealerWipsItems.length
-  );
-  console.log('&&&&&&&&&&&&&&&& in booked out userWipsItems ', dataCount);
+  //   console.log(
+  //     '&&&&&&&&&&&&&&&& in booked out  dealerWipsItems ',
+  //     dealerWipsItems && dealerWipsItems.length
+  //   );
+  //   console.log('&&&&&&&&&&&&&&&& in booked out userWipsItems ', dataCount);
 
   const searchInputHandler = (searchInput) => {
     // console.log(searchInput, bookedOutItems);

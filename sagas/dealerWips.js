@@ -51,7 +51,7 @@ function* getDealerWips({ payload }) {
         // console.log('in wips saga - good 200');
 
         //   console.log('in Wips saga - good 200');
-        console.log(result);
+        // console.log(result);
         yield put(
           actions.getDealerWipsSuccess({
             items: result.data,

@@ -20,11 +20,11 @@ import { selectFetchParamsObj } from '../reducers/user';
 const minSearchLength = 1;
 
 const identifyUserWipsItems = (fetchParamsObj, dealerWipsItems = []) => {
-  console.log(
-    'in jobs identifyUserWipsItems, fetchParamsObj is:  ',
-    fetchParamsObj && fetchParamsObj,
-    dealerWipsItems && dealerWipsItems.length
-  );
+  //   console.log(
+  //     'in jobs identifyUserWipsItems, fetchParamsObj is:  ',
+  //     fetchParamsObj && fetchParamsObj,
+  //     dealerWipsItems && dealerWipsItems.length
+  //   );
   (fetchParamsObj &&
     fetchParamsObj.userIntId &&
     dealerWipsItems &&
@@ -102,11 +102,11 @@ export default JobsScreen = (props) => {
 
   const userWipsItems = identifyUserWipsItems(fetchParamsObj, dealerWipsItems);
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
-  console.log(
-    '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
-    dealerWipsItems && dealerWipsItems.length
-  );
-  console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
+  //   console.log(
+  //     '&&&&&&&&&&&&&&&& in jobs dealerWipsItems ',
+  //     dealerWipsItems && dealerWipsItems.length
+  //   );
+  //   console.log('&&&&&&&&&&&&&&&& in jobs userWipsItems ', dataCount);
 
   const refreshRequestHandler = useCallback(() => {
     // console.log('in Jobs refreshRequestHandler');
@@ -198,7 +198,9 @@ export default JobsScreen = (props) => {
         dataError={dataError}
         dataStatusCode={dataStatusCode}
         dataErrorUrl={dataErrorUrl}
-        dataCount={userWipsItems.length}
+        dataCount={
+          userWipsItems && userWipsItems.length ? userWipsItems.length : 0
+        }
       />
       {dataError ? null : searchInput &&
         searchInput.length &&

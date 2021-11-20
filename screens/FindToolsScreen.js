@@ -19,7 +19,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 // import { createFilter } from 'react-native-search-filter';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import sortObjectList from '../helpers/sortObjectList';
+import { sortObjectList } from '../helpers/objects';
 import { revalidateUserCredentials } from '../actions/user';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import {
