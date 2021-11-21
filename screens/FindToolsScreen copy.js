@@ -512,10 +512,10 @@ export default FindToolsScreen = (props) => {
   }, [isSendingWip, dataStatusCodeWips, mode]);
 
   useEffect(() => {
-    console.log(
-      'in Find Tools useEffect AAAAAA',
-      fetchParamsObj && fetchParamsObj
-    );
+    // console.log(
+    //   'in Find Tools useEffect AAAAAA',
+    //   fetchParamsObj && fetchParamsObj
+    // );
     getWipsItems();
     getOtherItems();
   }, [fetchParamsObj]);
@@ -524,13 +524,13 @@ export default FindToolsScreen = (props) => {
     let bookedToolsList = [];
 
     if (isLoadingAny) {
-      console.log(
-        'in findtools useffect to create booked tools list NOT  running code'
-      );
+      //   console.log(
+      //     'in findtools useffect to create booked tools list NOT  running code'
+      //   );
     } else {
-      console.log(
-        'in findtools useffect to create booked tools list YES running code'
-      );
+      //   console.log(
+      //     'in findtools useffect to create booked tools list YES running code'
+      //   );
       if (dealerWipsItems && dealerWipsItems.length > 0) {
         dealerWipsItems.forEach((wip) => {
           if (wip.tools && wip.tools.length > 0) {
@@ -540,23 +540,23 @@ export default FindToolsScreen = (props) => {
       }
       setBookedToolsList(bookedToolsList);
     }
-    console.log(
-      'in findtools useffect to create booked tools list,isLoadingAny ',
-      isLoadingAny,
-      'dealerWipsItems;',
-      dealerWipsItems.length,
-      'bookedToolsList',
-      bookedToolsList.length
-    );
+    // console.log(
+    //   'in findtools useffect to create booked tools list,isLoadingAny ',
+    //   isLoadingAny,
+    //   'dealerWipsItems;',
+    //   dealerWipsItems.length,
+    //   'bookedToolsList',
+    //   bookedToolsList.length
+    // );
   }, [isLoadingAny, dealerWipsItems.length]);
 
   useEffect(() => {
     // runs only once
     if (isLoadingUser || isLoadingTools || isLoadingWips || isLoadingLtp) {
-      console.log('in tools use effect BBBB something is loading');
+      //   console.log('in tools use effect BBBB something is loading');
       setIsLoadingAny(true);
     } else {
-      console.log('in tools use effect BBBB nothing is loading');
+      //   console.log('in tools use effect BBBB nothing is loading');
       setIsLoadingAny(false);
     }
   }, [isLoadingUser, isLoadingTools, isLoadingWips, isLoadingLtp]);
@@ -567,8 +567,6 @@ export default FindToolsScreen = (props) => {
       dataErrorTools,
       dataErrorLtp,
       dataErrorWips,
-      (dealerToolsItems && dealerToolsItems.length) || 0,
-      (ltpItems && ltpItems.length) || 0,
       isLoadingTools,
       isLoadingLtp,
       isLoadingWips
@@ -655,16 +653,16 @@ export default FindToolsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log(
-        'find tools - useFocusEffect, fetchParamsObj is',
-        fetchParamsObj
-      );
+      //   console.log(
+      //     'find tools - useFocusEffect, fetchParamsObj is',
+      //     fetchParamsObj
+      //   );
       dispatch(revalidateUserCredentials({ calledBy: 'FindToolsScreen' }));
       setSearchInput('');
       getWipsItems();
       return () => {
         // Do something when the screen is unfocused
-        console.log('Find tools Screen was unfocused');
+        // console.log('Find tools Screen was unfocused');
       };
     }, [fetchParamsObj])
   );
