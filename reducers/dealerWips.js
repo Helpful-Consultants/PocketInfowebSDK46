@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
-import { getSortedDealerWipsItemsForUser } from '../helpers/dealerWips';
+import {
+  getSortedBookedOutTools,
+  getSortedDealerWipsItemsForUser,
+} from '../helpers/dealerWips';
 
 import Types from '../constants/Types';
 const INITIAL_STATE = {
@@ -21,15 +24,31 @@ export const selectDealerWipsForUser = createSelector(
 
   (dealerWipsItems, userIntId) => {
     let retArr = getSortedDealerWipsItemsForUser(dealerWipsItems, userIntId);
-    console.log(
-      '************** in selectWipsForUser',
-      'userIntId',
-      userIntId,
-      'dealerWipsItems',
-      dealerWipsItems.length,
-      'retArr',
-      retArr.length
-    );
+    // console.log(
+    //   '************** in selectWipsForUser',
+    //   'userIntId',
+    //   userIntId,
+    //   'dealerWipsItems',
+    //   dealerWipsItems.length,
+    //   'retArr',
+    //   retArr.length
+    // );
+    return retArr;
+  }
+);
+export const selectBookedOutToolsForUser = createSelector(
+  (state) => state.dealerWips.dealerWipsItems,
+
+  (dealerWipsItems) => {
+    let retArr = getSortedBookedOutTools(dealerWipsItems);
+    // console.log(
+    //   '************** in selectBookedOutToolsForUser',
+
+    //   'dealerWipsItems',
+    //   dealerWipsItems.length,
+    //   'retArr',
+    //   retArr
+    // );
     return retArr;
   }
 );

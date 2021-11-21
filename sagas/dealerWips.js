@@ -23,7 +23,8 @@ function* getDealerWips({ payload }) {
     const fetchTime = Date.now();
     yield put(actions.getDealerWipsStart());
     try {
-      const result = yield call(api.getDealerWips, {
+      let result = yield call(api.getDealerWips, {
+        // it's let, not const on purpose
         dealerId: payload.dealerId,
         userIntId: payload.userIntId,
       });
@@ -40,6 +41,37 @@ function* getDealerWips({ payload }) {
       //   'wips data ends here'
       // );
       // console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
+      //   if (result.data && result.data.length > 0) {
+      //     console.log(
+      //       '&&&&&&&&&&&&&&&&&&&&&&&&&&&& result.data',
+      //       'result.data.length',
+      //       result.data.length && result.data.length,
+      //       'result.data[0].length',
+      //       result.data[0].length && result.data[0].length,
+      //       'id',
+      //       result.data[0].id && result.data[0].id,
+      //       'wipNumber',
+      //       result.data[0].wipNumber && result.data[0].wipNumber,
+      //       result.data[0] && result.data[0]
+      //     );
+      //   }
+      //   console.log(
+      //     'getDealerWips',
+      //     result.data && typeof result.data,
+      //     result.data
+      //   );
+      if (result.data && typeof result.data === 'string') {
+        let newDataStr = result.data.replaceAll('\\', '/');
+        // console.log('fixedData', newDataStr);
+        try {
+          newDataObj = JSON.parse(newDataStr);
+          result.data = newDataObj;
+          //   console.log('newdata worked');
+        } catch (e) {
+          console.log('newdata error');
+        }
+      }
+
       if (
         result.data &&
         result.data.length > 0 &&
@@ -64,12 +96,12 @@ function* getDealerWips({ payload }) {
           })
         );
       } else if (result && result.data && result.data.length > 0) {
-        // console.log(
-        //   'in Wips saga - an empty 200',
-        //   result.request.status && result.request.status,
-        //   payload && payload
-        // );
-        //   console.log(result && result);
+        console.log(
+          'in Wips saga - an empty 200',
+          result.request.status && result.request.status
+          //   payload && payload
+        );
+        // console.log(result && result);
         yield put(
           actions.getDealerWipsSuccess({
             items: [],
@@ -425,7 +457,7 @@ function* watchDeleteDealerWipToolRequest() {
 // Delete WIP
 function* deleteDealerWip(payload) {
   //   console.log('in saga DELETE dealerWip called');
-  console.log('in saga DELETE dealerWip payload', payload);
+  //   console.log('in saga DELETE dealerWip payload', payload);
   //   console.log('in saga DELETE dealerWip wip', payload.wipNumber);
   let statusCode = null;
   let errorText = 'An error occurred when trying to delete the job';

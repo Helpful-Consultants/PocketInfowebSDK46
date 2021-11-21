@@ -15,7 +15,10 @@ import Urls from '../constants/Urls';
 import Colors from '../constants/Colors';
 import BookedOutToolsList from './BookedOutToolsList';
 import { selectFetchParamsObj } from '../reducers/user';
-import { selectDealerWipsForUser } from '../reducers/dealerWips';
+import {
+  selectBookedOutToolsForUser,
+  selectDealerWipsForUser,
+} from '../reducers/dealerWips';
 
 const minSearchLength = 1;
 
@@ -24,7 +27,9 @@ export default BookedOutToolsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const fetchParamsObj = useSelector(selectFetchParamsObj);
+  const userBookedOutTools = useSelector(selectBookedOutToolsForUser);
   const userWipsItems = useSelector(selectDealerWipsForUser);
+
   const isLoading = useSelector((state) => state.dealerWips.isLoading);
   const dataError = useSelector((state) => state.dealerWips.error);
   const dataErrorUrl = useSelector((state) => state.dealerWips.dataErrorUrl);
@@ -33,7 +38,6 @@ export default BookedOutToolsScreen = (props) => {
   const [currentJob, setCurrentJob] = useState({});
   const [currentTool, setCurrentTool] = useState({});
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const [bookedOutItems, setBookedOutItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
 
   const baseStyles = windowDim && getBaseStyles(windowDim);
@@ -63,10 +67,10 @@ export default BookedOutToolsScreen = (props) => {
   }, [getItems]);
 
   const searchInputHandler = (searchInput) => {
-    // console.log(searchInput, bookedOutItems);
+    // console.log(searchInput, userBookedOutTools);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(bookedOutItems, searchInput);
+      let newFilteredItems = searchItems(userBookedOutTools, searchInput);
       setFilteredItems(newFilteredItems);
     }
   };
@@ -123,38 +127,38 @@ export default BookedOutToolsScreen = (props) => {
   //       getItems();
   //   }, [fetchParamsObj]);
 
-  useEffect(() => {
-    // console.log(
-    //   'BOT ***** in booked out useEffect fetchParamsObj is:  ',
-    //   fetchParamsObj && fetchParamsObj
-    // );
+  //   useEffect(() => {
+  //     // console.log(
+  //     //   'BOT ***** in booked out useEffect fetchParamsObj is:  ',
+  //     //   fetchParamsObj && fetchParamsObj
+  //     // );
 
-    const buildBookedOutToolsArrForJob = (wip) => {
-      const thisWipsToolsArr = wip.tools.map((tool) => ({
-        ...tool,
-        wipNumber: wip.wipNumber,
-        wipId: wip.id.toString(),
-        wipCreatedDate: wip.createdDate,
-      }));
-      return thisWipsToolsArr;
-    };
+  //     const buildBookedOutToolsArrForJob = (wip) => {
+  //       const thisWipsToolsArr = wip.tools.map((tool) => ({
+  //         ...tool,
+  //         wipNumber: wip.wipNumber,
+  //         wipId: wip.id.toString(),
+  //         wipCreatedDate: wip.createdDate,
+  //       }));
+  //       return thisWipsToolsArr;
+  //     };
 
-    const buildBookedOutToolsArr = (wips) => {
-      let allToolsArr = [];
+  //     const buildBookedOutToolsArr = (wips) => {
+  //       let allToolsArr = [];
 
-      wips.forEach((wip) => {
-        if (wip.tools && wip.tools.length > 0) {
-          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-          allToolsArr.push(...wipToolsArr);
-        }
-      });
-      //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
-      return sortObjectList(allToolsArr, 'partNumber', 'asc');
-    };
+  //       wips.forEach((wip) => {
+  //         if (wip.tools && wip.tools.length > 0) {
+  //           let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+  //           allToolsArr.push(...wipToolsArr);
+  //         }
+  //       });
+  //       //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+  //       return sortObjectList(allToolsArr, 'partNumber', 'asc');
+  //     };
 
-    let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
-    setBookedOutItems(bookedOutToolItems);
-  }, [fetchParamsObj]);
+  //     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
+  //     setBookedOutItems(bookedOutToolItems);
+  //   }, [fetchParamsObj]);
 
   //   console.log(
   //     '&&&&&&&&&&&&&&&& in booked out  userWipsItems ',
@@ -182,12 +186,12 @@ export default BookedOutToolsScreen = (props) => {
     }, [getItems])
   );
 
-  const dataCount = (bookedOutItems && bookedOutItems.length) || 0;
+  const dataCount = (userBookedOutTools && userBookedOutTools.length) || 0;
 
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength
       ? filteredItems
-      : bookedOutItems;
+      : userBookedOutTools;
 
   //   console.log(
   //     'BOT ***** RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
@@ -210,9 +214,9 @@ export default BookedOutToolsScreen = (props) => {
         searchInput.length >= minSearchLength ? (
         itemsToShow &&
         itemsToShow.length &&
-        itemsToShow.length > 0 ? null : bookedOutItems &&
-          bookedOutItems.length &&
-          bookedOutItems.length > 0 ? (
+        itemsToShow.length > 0 ? null : userBookedOutTools &&
+          userBookedOutTools.length &&
+          userBookedOutTools.length > 0 ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
             <Text style={baseStyles.textPromptRibbon}>
               Your search found no results.
