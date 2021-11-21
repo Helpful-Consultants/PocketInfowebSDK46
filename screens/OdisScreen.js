@@ -66,7 +66,7 @@ export default OdisScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in odis refreshRequestHandler');
+    // console.log('in odis refreshRequestHandler');
     getItems();
   }, [getItems]);
 
@@ -119,7 +119,11 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  //   console.log('rendering Odis screen, odisFetchTime', odisFetchTime);
+  //   console.log(
+  //     'rendering Odis screen, odisFetchTime',
+  //     fetchParamsObj && fetchParamsObj,
+  //     odisFetchTime && odisFetchTime
+  //   );
 
   return (
     <View style={baseStyles.containerFlexCentred}>
