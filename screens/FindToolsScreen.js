@@ -1166,9 +1166,11 @@ export default FindToolsScreen = (props) => {
   //   console.log(
   //     'FT ***** rendering Find Tools screen, fetchParamsObj:',
   //     fetchParamsObj,
-  //     dealerToolsFetchTime,
-  //     dealerWipsFetchTime,
-  //     ltpFetchTime
+  //     'uniqueLtpItems',
+  //     uniqueLtpItems && uniqueLtpItems.length
+  //     //   dealerToolsFetchTime,
+  //     //   dealerWipsFetchTime,
+  //     //   ltpFetchTime
   //   );
 
   return (

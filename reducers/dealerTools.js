@@ -51,7 +51,7 @@ export default function dealerTools(state = INITIAL_STATE, action) {
       };
     }
     case Types.DEALER_TOOLS_ERROR: {
-      console.log(action && action.payload);
+      console.log('DEALER_TOOLS_ERROR', action && action.payload);
       return {
         ...state,
         isLoading: false,

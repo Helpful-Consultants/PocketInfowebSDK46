@@ -112,7 +112,9 @@ export default LtpListScreen = (props) => {
 
   //   console.log(
   //     'LTTTTTP RENDERING ltp screen !!!!!!!!!!!!!!!!!!!, isLoading',
-  //     isLoading
+  //     isLoading,
+  //     'itemsToShow',
+  //     itemsToShow && itemsToShow.length
   //   );
   return (
     <View style={baseStyles.containerFlexAndMargin}>
