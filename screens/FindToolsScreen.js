@@ -46,6 +46,29 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 // console.log( 'FT ***** bottomTabHeight', bottomTabHeight && bottomTabHeight);
 
+// function debounceLeading(func, timeout = 300) {
+//   let timer;
+//   return (...args) => {
+//     if (!timer) {
+//       func.apply(this, args);
+//     }
+//     clearTimeout(timer);
+//     timer = setTimeout(() => {
+//       timer = undefined;
+//     }, timeout);
+//   };
+// }
+
+// function debounce(func, timeout = 300) {
+//   let timer;
+//   return (...args) => {
+//     clearTimeout(timer);
+//     timer = setTimeout(() => {
+//       func.apply(this, args);
+//     }, timeout);
+//   };
+// }
+
 const formReducer = (state, action) => {
   if (action.type === Types.FORM_INPUT_UPDATE) {
     const updatedValues = {
@@ -305,7 +328,7 @@ export default FindToolsScreen = (props) => {
     setMode('list');
     setIsBasketVisible(false);
     inputChangeHandler('wipNumber', '');
-    deleteDealerWip(payload);
+    setTimeout(() => deleteDealerWip(payload), 300);
   };
 
   const removeBasketHandler = () => {
