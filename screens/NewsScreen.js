@@ -125,7 +125,7 @@ export default NewsScreen = (props) => {
     //   displayTime
     // );
     storeDisplayTimestamp(displayTime);
-  }, [newsFetchTime.toString()]);
+  }, [newsFetchTime]);
 
   //   console.log('newsItems AREEEEEEEEEE', newsItems);
   const items = (!isLoading && !dataError && newsItems) || [];
