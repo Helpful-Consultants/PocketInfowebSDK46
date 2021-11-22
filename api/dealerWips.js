@@ -16,7 +16,7 @@ export const getDealerWips = (fetchParamsObj) => {
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
-      Accept: 'text/json',
+      //   Accept: 'text/json',
       //   'Content-Type': 'text/json'
       //   'Content-Type': 'text / text; charset=UTF - 8'
       //   'Content-Type': 'application/json;charset=UTF - 8'
@@ -26,14 +26,14 @@ export const getDealerWips = (fetchParamsObj) => {
 };
 
 export const createDealerWip = (wipObj) => {
-  console.log('!!!!!!!!!!!! in create wip api', wipObj);
+  //   console.log('!!!!!!!!!!!! in create wip api');
 
   //   const url = '/mandatoryList/?controller=api&action=acceptWIPpostJSON'; // old
   const url =
     '/mandatoryList/?controller=api&action=acceptWIPpostAvailableJSON';
 
   const strung = JSON.stringify(wipObj);
-  console.log('in create wip api, strung is ', strung);
+  //   console.log('in create wip api, strung is ', strung);
 
   const wipArr = [wipObj];
 
@@ -45,7 +45,7 @@ export const createDealerWip = (wipObj) => {
   //   console.log(postUrl);
   //   console.log(stuff);
   //   console.log('in create wip api, strungArray is ', strungArray);
-  console.log(strungArray);
+  //   console.log(strungArray);
   //   return fetch(postUrl, {
   //     method: 'POST',
   //     headers: {
@@ -82,11 +82,7 @@ export const deleteDealerWipTool = (payload) => {
   const wipId = payload.wipObj.id;
   const wipToolLineId = payload.wipToolLineId;
 
-  const url =
-    '/mandatoryList/?controller=api&action=appDeleteToolFromWIP&wipId=' +
-    wipId +
-    '&wipLineId=' +
-    wipToolLineId;
+  const url = `/mandatoryList/?controller=api&action=appDeleteToolFromWIP&wipId=${wipId}&wipLineId=${wipToolLineId}`;
   //   console.log(url);
   return axios.post(url);
 };
@@ -94,7 +90,10 @@ export const deleteDealerWipTool = (payload) => {
 export const deleteDealerWip = (payload) => {
   //   console.log('in delete dealer wip api', payload);
 
-  const dealerId = (payload && payload.dealerId && payload.dealerId) || '';
+  const dealerId =
+    payload && payload.fetchParamsObj && payload.fetchParamsObj.dealerId
+      ? payload.fetchParamsObj.dealerId
+      : '';
   const wipObj = payload.wipObj;
   const sendData =
     'id=' +
@@ -105,8 +104,7 @@ export const deleteDealerWip = (payload) => {
     wipObj.userIntId +
     '';
   //   console.log(sendData);
-  const url =
-    '/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=' + dealerId;
+  const url = `/mandatoryList/?controller=api&action=appDeleteWIP&dealerId=${dealerId}`;
   //   console.log(url);
   return axios.post(url, sendData, {
     headers: {
