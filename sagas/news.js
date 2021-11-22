@@ -1,4 +1,4 @@
-import { takeEvery, call, put, fork, select } from 'redux-saga/effects';
+import { takeLatest, call, put, fork, select } from 'redux-saga/effects';
 import * as actions from '../actions/news';
 // import * as actions from '../constants/Types'
 import Types from '../constants/Types';
@@ -152,7 +152,7 @@ function* getNews() {
 
 function* watchGetNewsRequest() {
   //   console.log('in saga watch for news');
-  yield takeEvery(Types.GET_NEWS_REQUEST, getNews);
+  yield takeLatest(Types.GET_NEWS_REQUEST, getNews);
 }
 
 const newsSagas = [fork(watchGetNewsRequest)];

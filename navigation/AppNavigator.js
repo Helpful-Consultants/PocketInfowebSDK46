@@ -65,7 +65,7 @@ const CustomDrawerContent = (props) => {
         QUICK LINKS
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
-      {userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ? (
+      {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
         <View style={{ flexDirection: 'row' }}>
           <DemoAppSwitch />
           <DemoDataSwitch />
@@ -292,27 +292,27 @@ export default AppNavigator = (props) => {
         tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
       }
 
-      console.log(
-        'in appnav useEffect before setting badge',
-        'showingDemoApp',
-        showingDemoApp,
-        'showingDemoData',
-        showingDemoData,
-        'calibrationExpiryOverdueCount',
-        calibrationExpiryOverdueCount,
-        'calibrationExpiryRedCount',
-        calibrationExpiryRedCount,
-        'serviceMeasuresRedCount',
-        serviceMeasuresRedCount,
-        'ltpLoansRedCount',
-        ltpLoansRedCount,
-        'unseenCriticalNews',
-        unseenCriticalNews,
-        'odisRedCount',
-        odisRedCount,
-        'tempNotifiableAlertsCount',
-        tempNotifiableAlertsCount
-      );
+      //   console.log(
+      //     'in appnav useEffect before setting badge',
+      //     'showingDemoApp',
+      //     showingDemoApp,
+      //     'showingDemoData',
+      //     showingDemoData,
+      //     'calibrationExpiryOverdueCount',
+      //     calibrationExpiryOverdueCount,
+      //     'calibrationExpiryRedCount',
+      //     calibrationExpiryRedCount,
+      //     'serviceMeasuresRedCount',
+      //     serviceMeasuresRedCount,
+      //     'ltpLoansRedCount',
+      //     ltpLoansRedCount,
+      //     'unseenCriticalNews',
+      //     unseenCriticalNews,
+      //     'odisRedCount',
+      //     odisRedCount,
+      //     'tempNotifiableAlertsCount',
+      //     tempNotifiableAlertsCount
+      //   );
 
       setBadgeCountAsync(tempNotifiableAlertsCount);
     } else {

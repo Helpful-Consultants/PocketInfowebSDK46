@@ -1,7 +1,13 @@
-// import { Types } from '../actions/dealerWips';
+import { createSelector } from 'reselect';
+import {
+  getSortedBookedOutTools,
+  getSortedDealerWipsItemsForUser,
+} from '../helpers/dealerWips';
+
 import Types from '../constants/Types';
 const INITIAL_STATE = {
   dealerWipsItems: [],
+  userIntId: null,
   isLoading: false,
   isSending: false,
   error: null,
@@ -9,7 +15,69 @@ const INITIAL_STATE = {
   dataErrorUrl: null,
   lastWipProcessed: null,
   unavailableTools: false,
+  fetchTime: null,
 };
+
+export const selectLastWipProcessedInfo = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => lastWipProcessed
+);
+export const selectLastWipProcessedObj = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => {
+    // console.log('lastWipProcessed', lastWipProcessed && lastWipProcessed);
+    return lastWipProcessed && lastWipProcessed.wipObj
+      ? lastWipProcessed.wipObj
+      : null;
+  }
+);
+export const selectLastWipProcessedId = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => {
+    return lastWipProcessed &&
+      lastWipProcessed.wipObj &&
+      lastWipProcessed.wipObj.wipId
+      ? lastWipProcessed.wipObj.wipId
+      : null;
+  }
+);
+export const selectDealerWipsForUser = createSelector(
+  (state) => state.dealerWips.dealerWipsItems,
+  (state) => state.dealerWips.userIntId,
+
+  (dealerWipsItems, userIntId) => {
+    let retArr = getSortedDealerWipsItemsForUser(dealerWipsItems, userIntId);
+    // console.log(
+    //   '************** in selectWipsForUser',
+    //   'userIntId',
+    //   userIntId,
+    //   'dealerWipsItems',
+    //   dealerWipsItems.length,
+    //   'retArr',
+    //   retArr.length
+    // );
+    return retArr;
+  }
+);
+export const selectBookedOutToolsForUser = createSelector(
+  (state) => state.dealerWips.dealerWipsItems,
+
+  (dealerWipsItems) => {
+    let retArr = getSortedBookedOutTools(dealerWipsItems);
+    // console.log(
+    //   '************** in selectBookedOutToolsForUser',
+
+    //   'dealerWipsItems',
+    //   dealerWipsItems.length,
+    //   'retArr',
+    //   retArr
+    // );
+    return retArr;
+  }
+);
 
 export default function dealerWips(state = INITIAL_STATE, action) {
   //   console.log(Types);
@@ -25,16 +93,22 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.GET_DEALER_WIPS_SUCCESS: {
-      //   console.log(action.payload);
+      //   console.log(
+      //     'GET_DEALER_WIPS_SUCCESS action.payload.statusCode',
+      //     action.payload.statusCode & action.payload.statusCode
+      //   );
       //   console.log('reducer end data');
       return {
         ...state,
         dealerWipsItems: action.payload.items,
+        userIntId: action.payload.userIntId || null,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.CREATE_DEALER_WIP_START: {
@@ -47,15 +121,21 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.CREATE_DEALER_WIP_SUCCESS: {
-      //   console.log('action.type is:', action.type);
-      //   console.log('CREATE_DEALER_WIP_SUCCESS', action);
+      //   console.log(
+      //     'CREATE_DEALER_WIP_SUCCESS action.payload.statusCode',
+      //     action.payload.statusCode & action.payload.statusCode
+      //   );
+      //   console.log(
+      //     'reducer CREATE_DEALER_WIP_SUCCESS action.payload is',
+      //     action.payload
+      //   );
       return {
         ...state,
         lastWipProcessed: {
-          ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
+          wipObj: (action.payload.wipObj && action.payload.wipObj) || null,
         },
         isLoading: false,
         isSending: false,
@@ -66,15 +146,21 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.DEALER_WIP_UNAVAILABLE_TOOLS: {
-      console.log('action.type is:', action.type);
-      console.log(action.payload);
+      //   console.log(
+      //     'reducer DEALER_WIP_UNAVAILABLE_TOOLS action.payload.statusCode',
+      //     action.payload.statusCode & action.payload.statusCode
+      //   );
+      //   console.log(
+      //     'reducer DEALER_WIP_UNAVAILABLE_TOOLS action.payload',
+      //     action.payload
+      //   );
       return {
         ...state,
         lastWipProcessed: {
-          ...action.payload.wipProcessed,
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
+          wipObj: (action.payload.wipObj && action.payload.wipObj) || null,
         },
         isLoading: false,
         isSending: false,
@@ -88,14 +174,21 @@ export default function dealerWips(state = INITIAL_STATE, action) {
     case Types.DELETE_DEALER_WIP_SUCCESS: {
       //   console.log(action.payload);
       //   console.log('reducer end data');
+      //   console.log(
+      //     'reducer DELETE_DEALER_WIP_SUCCESS action.payload.statusCode',
+      //     action.payload.statusCode & action.payload.statusCode
+      //   );
+      //   console.log(
+      //     'reducer DELETE_DEALER_WIP_SUCCESS action.payload',
+      //     action.payload
+      //   );
       return {
         ...state,
         lastWipProcessed: {
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
-          wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          wipObj: (action.payload.wipObj && action.payload.wipObj) || null,
         },
         isLoading: false,
         error: null,
@@ -105,16 +198,21 @@ export default function dealerWips(state = INITIAL_STATE, action) {
       };
     }
     case Types.DELETE_DEALER_WIP_TOOL_SUCCESS: {
-      //   console.log(action.payload);
-      //   console.log('reducer end data');
+      //   console.log(
+      //     'reducer DELETE_DEALER_WIP_TOOL_SUCCESS action.payload.statusCode',
+      //     action.payload.statusCode & action.payload.statusCode
+      //   );
+      //   console.log(
+      //     'reducer DELETE_DEALER_WIP_TOOL_SUCCESS action.payload',
+      //     action.payload & action.payload
+      //   );
       return {
         ...state,
         lastWipProcessed: {
           statusCode:
             (action.payload.statusCode && action.payload.statusCode) || null,
           message: (action.payload.message && action.payload.message) || null,
-          wipNumber:
-            (action.payload.wipNumber && action.payload.wipNumber) || '',
+          wipObj: (action.payload.wipObj && action.payload.wipObj) || null,
         },
         isLoading: false,
         error: (action.payload.error && action.payload.error) || null,

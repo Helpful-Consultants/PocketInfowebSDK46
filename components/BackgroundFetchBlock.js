@@ -234,7 +234,7 @@ export default BackgroundFetchBlock = () => {
   return showingDemoApp &&
     userDataObj &&
     userDataObj.userName &&
-    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
+    userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
     <View style={styles.screen}>
       <View style={styles.textContainer}>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>

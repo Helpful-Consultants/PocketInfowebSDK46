@@ -117,7 +117,7 @@ export default NotificationsScreen = (props) => {
     // );
     dispatch(getServiceMeasuresRequest(fetchParamsObj));
     dispatch(getLtpLoansRequest(fetchParamsObj));
-    dispatch(getOdisRequest({ userBrand: userBrand }));
+    dispatch(getOdisRequest(fetchParamsObj));
     dispatch(getNewsRequest());
     dispatch(getCalibrationExpiryRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
@@ -194,7 +194,7 @@ export default NotificationsScreen = (props) => {
 
   useEffect(() => {
     getItems();
-  }, [showingDemoApp, showingDemoData]);
+  }, [getItems, showingDemoApp, showingDemoData]);
 
   //   console.log(' ******************** odisRedCount', odisRedCount);
 

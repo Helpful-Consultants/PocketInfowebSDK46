@@ -117,13 +117,10 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       //   console.log('action.type is:', action.type);
       //   console.log('action payload is:', action.payload && action.payload);
       //   console.log('STATE', state);
-      const fetchTime =
-        action.payload && action.payload.fetchTime
-          ? action.payload.fetchTime
-          : null;
       const filteredServiceMeasuresArr =
         (action.payload.items &&
-          filterExpiredItems(action.payload.items, fetchTime)) ||
+          action.payload.fetchTime &&
+          filterExpiredItems(action.payload.items, action.payload.fetchTime)) ||
         [];
       const serviceMeasuresCountsObj = getServiceMeasuresCountsObj(
         filteredServiceMeasuresArr
@@ -143,12 +140,13 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
         greenCount: serviceMeasuresCountsObj.greenCount,
         totalCount: serviceMeasuresCountsObj.totalCount,
         // serviceMeasuresItems: filterExpiredItems(serviceMeasuresDummyData),
-        fetchTime,
         isLoading: false,
         error: null,
         dataErrorUrl: null,
         statusCode:
           (action.payload.statusCode && action.payload.statusCode) || null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.EMPTY_SERVICE_MEASURES_REQUEST: {

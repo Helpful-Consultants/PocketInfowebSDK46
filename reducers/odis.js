@@ -172,6 +172,8 @@ export default function odis(state = INITIAL_STATE, action) {
             /// remove after testing!!!!
             //   endPointChangedObj[brandCode] = fetchTime;
 
+            // console.log('in storeOdisDataForBrand odisDataObj', odisDataObj);
+
             odisDataObj[brandCode] = {
               ...item,
               dateChangedInApp:
@@ -234,7 +236,11 @@ export default function odis(state = INITIAL_STATE, action) {
       //     newViewCount
       //   );
 
+      //   console.log('in storeOdisDataForBrand cccc  odisDataObj', odisDataObj);
+
       const changeObj = getOdisAlertCount(odisDataObj, fetchTime, userBrand);
+
+      //   console.log('in storeOdisDataForBrand ddd  odisDataObj', odisDataObj);
       //   console.log('changeObj', changeObj);
       const changesToHighlight = (changeObj && changeObj.alertsNeeded) || 0;
 

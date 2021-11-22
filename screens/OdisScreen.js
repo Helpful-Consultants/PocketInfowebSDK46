@@ -47,14 +47,6 @@ export default OdisScreen = (props) => {
   //     fetchParamsObj.userBrand,
   //   ]);
 
-  useEffect(() => {
-    // console.log(
-    //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
-    //   fetchParamsObj
-    // );
-    getItems();
-  }, [fetchParamsObj]);
-
   const getItems = useCallback(() => {
     // console.log('in ODIS in getItems fetchParamsObj', fetchParamsObj);
     dispatch(getOdisRequest(fetchParamsObj));
@@ -74,9 +66,29 @@ export default OdisScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in odis refreshRequestHandler');
+    // console.log('in odis refreshRequestHandler');
     getItems();
   }, [getItems]);
+
+  //   useEffect(() => {
+  //     // console.log(
+  //     //   '&&&&&&&&&&&&&&&& fetchParamsObj changed for ODIS',
+  //     //   fetchParamsObj
+  //     // );
+  //     getItems();
+  //   }, [fetchParamsObj]);
+
+  useEffect(() => {
+    const displayTime = Date.now();
+    // console.log(
+    //   'in odis useeffect calling storeDisplayTimestamp',
+    //   'odisFetchTime',
+    //   odisFetchTime,
+    //   'displayTime',
+    //   displayTime
+    // );
+    storeDisplayTimestamp(displayTime);
+  }, [odisFetchTime]);
 
   useFocusEffect(
     useCallback(() => {
@@ -93,20 +105,8 @@ export default OdisScreen = (props) => {
         // Do something when the screen is unfocused
         // console.log('ODIS Screen was unfocused');
       };
-    }, [dispatch, getItems])
+    }, [getItems])
   );
-
-  useEffect(() => {
-    const displayTime = Date.now();
-    // console.log(
-    //   'in odis useeffect calling storeDisplayTimestamp',
-    //   'odisFetchTime',
-    //   odisFetchTime,
-    //   'displayTime',
-    //   displayTime
-    // );
-    storeDisplayTimestamp(displayTime);
-  }, [odisFetchTime]);
 
   //   if (odisObj) {
   //     console.log('in odis screen,odisObj', odisObj);
@@ -119,7 +119,11 @@ export default OdisScreen = (props) => {
 
   //   console.log(allOdis && allOdis);
 
-  //   console.log('rendering Odis screen, odisFetchTime', odisFetchTime);
+  //   console.log(
+  //     'rendering Odis screen, odisFetchTime',
+  //     fetchParamsObj && fetchParamsObj,
+  //     odisFetchTime && odisFetchTime
+  //   );
 
   return (
     <View style={baseStyles.containerFlexCentred}>

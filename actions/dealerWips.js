@@ -1,100 +1,78 @@
-// export const Types = {
-//   EMPTY_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
-//   GET_DEALER_WIPS_REQUEST: 'dealerWips/get_dealer_wips_request',
-//   GET_DEALER_WIPS_SUCCESS: 'dealerWips/get_dealer_wips_success',
-//   DELETE_DEALER_WIP_REQUEST: 'dealerWips/delete_dealer_wip_request',
-//   CREATE_DEALER_WIP_REQUEST: 'dealerWips/create_dealer_wip_request',
-//   CREATE_DEALER_WIP_SUCCESS: 'dealerWips/create_dealer_wip_success',
-//   DEALER_WIPS_ERROR: 'dealerWips/dealer_wips_error'
-// };
 import Types from '../constants/Types';
 
 export const getDealerWipsStart = () => ({
   type: Types.GET_DEALER_WIPS_START,
 });
 
-export const getDealerWipsRequest = ({ dealerId, userIntId }) => ({
+export const getDealerWipsRequest = (payload) => ({
   type: Types.GET_DEALER_WIPS_REQUEST,
-  payload: {
-    dealerId,
-    userIntId,
-  },
+  payload,
 });
 
-export const getDealerWipsSuccess = ({ statusCode, items }) => ({
+export const getDealerWipsSuccess = (payload) => ({
   type: Types.GET_DEALER_WIPS_SUCCESS,
-  statusCode,
-  payload: {
-    items,
-    statusCode,
-  },
+  payload,
 });
 
 export const createDealerWipStart = () => ({
   type: Types.CREATE_DEALER_WIP_START,
 });
 
-export const createDealerWipRequest = (wipData) => {
-  //   console.log('in delete action');
-  //   console.log(wipData);
-  return { type: Types.CREATE_DEALER_WIP_REQUEST, payload: wipData };
+export const createDealerWipRequest = (payload) => {
+  //   console.log('in createDealerWip action');
+  //   console.log(payload);
+  return { type: Types.CREATE_DEALER_WIP_REQUEST, payload };
 };
 
-export const createDealerWipSuccess = (payload) => ({
-  type: Types.CREATE_DEALER_WIP_SUCCESS,
-  payload: payload,
-});
+export const createDealerWipSuccess = (payload) => {
+  //   console.log('in createDealerWip Success action', payload);
+  return {
+    type: Types.CREATE_DEALER_WIP_SUCCESS,
+    payload,
+  };
+};
 
 export const dealerWipUnavailableTools = (payload) => {
-  console.log('in unavail action');
-  console.log(payload);
-  //   console.log(id, wipNumber, intId);
+  //   console.log('in unavail action', payload);
   return {
     type: Types.DEALER_WIP_UNAVAILABLE_TOOLS,
-    payload: payload,
+    payload,
   };
 };
 
 export const deleteDealerWipRequest = (payload) => {
-  //   console.log('in delete action');
+  //   console.log('********* in delete action');
   //   console.log(payload);
-  //   console.log(id, wipNumber, intId);
   return {
     type: Types.DELETE_DEALER_WIP_REQUEST,
+    payload,
+  };
+};
+
+export const deleteDealerWipSuccess = (payload) => ({
+  type: Types.DELETE_DEALER_WIP_SUCCESS,
+  payload,
+});
+
+export const deleteDealerWipToolRequest = (payload) => {
+  //   console.log('********* in delete tool action');
+  //   console.log(payload);
+  return {
+    type: Types.DELETE_DEALER_WIP_TOOL_REQUEST,
     payload: payload,
   };
 };
 
-export const deleteDealerWipSuccess = ({ statusCode, message }) => ({
-  type: Types.DELETE_DEALER_WIP_SUCCESS,
-  payload: {
-    message,
-  },
-});
-
-export const deleteDealerWipToolRequest = (payload) => ({
-  type: Types.DELETE_DEALER_WIP_TOOL_REQUEST,
-  payload: payload,
-});
-// spacer
-// spacer
-export const deleteDealerWipToolSuccess = ({ statusCode, message }) => ({
+export const deleteDealerWipToolSuccess = (payload) => ({
   type: Types.DELETE_DEALER_WIP_TOOL_SUCCESS,
-  payload: {
-    statusCode,
-    message,
-  },
+  payload,
 });
 
 export const emptyDealerWipsRequest = () => ({
   type: Types.EMPTY_DEALER_WIPS_REQUEST,
 });
 
-export const dealerWipsError = ({ error, statusCode, dataErrorUrl }) => ({
+export const dealerWipsError = (payload) => ({
   type: Types.DEALER_WIPS_ERROR,
-  payload: {
-    error,
-    statusCode,
-    dataErrorUrl,
-  },
+  payload,
 });

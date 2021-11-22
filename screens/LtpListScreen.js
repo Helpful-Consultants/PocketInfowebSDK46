@@ -7,12 +7,13 @@ import { Text } from 'react-native-elements';
 import { revalidateUserCredentials } from '../actions/user';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import sortObjectList from '../helpers/sortObjectList';
+import { sortObjectList } from '../helpers/objects';
 import getBaseStyles from '../helpers/getBaseStyles';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
 import searchItems from '../helpers/searchItems';
+import { selectFetchParamsObj } from '../reducers/user';
 // import stringCleaner from '../helpers/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 const minSearchLength = 1;
@@ -24,24 +25,75 @@ export default LtpListScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
-  const userBrand = useSelector((state) => state.user.userBrand);
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
   const isLoading = useSelector((state) => state.ltp.isLoading);
   const dataError = useSelector((state) => state.ltp.error);
   const dataStatusCode = useSelector((state) => state.ltp.statusCode);
   const dataErrorUrl = useSelector((state) => state.ltp.dataErrorUrl);
   const [searchInput, setSearchInput] = useState('');
-  const [uniqueLtpItems, setUniqueLtpItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [itemsToShow, setItemsToShow] = useState([]);
 
   const getItems = useCallback(() => {
-    // console.log('in LTP in getItems - no fetchParamsObj needed');
-    dispatch(getLtpRequest());
-  }, [dispatch]);
+    // console.log(
+    //   'LLLLTP in LTP in getItems -fetchParamsObj',
+    //   fetchParamsObj && fetchParamsObj
+    // );
+    dispatch(getLtpRequest(fetchParamsObj));
+  }, [dispatch, fetchParamsObj]);
+
+  const refreshRequestHandler = useCallback(() => {
+    // console.log('LLLLTP in ltp refreshRequestHandler');
+    getItems();
+  }, [getItems]);
+
+  const searchInputHandler = (searchInput) => {
+    // console.log(
+    //   'LLLLTP in ltp list screen searchInputHandler, searchInput',
+    //   searchInput
+    // );
+    setSearchInput(searchInput);
+  };
+
+  const selectItemsToShow = useCallback(() => {
+    // console.log('LLLLTP in ltp selectItemsToShow');
+    if (searchInput && searchInput.length > minSearchLength) {
+      setItemsToShow(searchItems(ltpItems, searchInput));
+    } else {
+      setItemsToShow(ltpItems);
+    }
+  }, [searchInput]);
+
+  useEffect(() => {
+    // console.log(
+    //   'LLLLTP in ltp list screen useEffect, setting items to show ',
+    //   'isLoading',
+    //   isLoading,
+    //   'searchInput',
+    //   searchInput
+    // );
+
+    if (isLoading) {
+      //   console.log('still loading');
+    } else {
+      selectItemsToShow();
+    }
+  }, [isLoading, searchInput]);
+
+  //   console.log(
+  //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
+  //     dataError
+  //   );
+  //   console.log(
+  //     'rendering LTP Screen',
+  //     ltpItems && ltpItems.length,
+  //     itemsToShow && itemsToShow.length
+  //   );
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('in ltp list screen usefocusffect, usecallback ');
+      //   console.log('LLLLTP in ltp list screen usefocusffect, usecallback ');
       //   dispatch(
       //     revalidateUserCredentials({
       //       calledBy: 'ltp list screen Screen',
@@ -55,91 +107,15 @@ export default LtpListScreen = (props) => {
         // Do something when the screen is unfocused
         // console.log('LTP Screen was unfocused');
       };
-    }, [dispatch, getItems])
+    }, [getItems])
   );
 
-  useEffect(() => {
-    // console.log('getting unique LTP items', ltpItems && ltpItems);
-    // console.log('userBrand is ', userBrand);
-    let ltpItemsAll = (ltpItems && ltpItems.length > 0 && ltpItems) || [];
-    let ltpItemsFiltered = [];
-    if (userBrand) {
-      //   const tempItem = ltpItemsAll[2];
-      //   console.log(
-      //     'userBrand is ',
-      //     userBrand,
-      //     ltpItemsAll.length,
-      //     tempItem[userBrand]
-      //   );
-      ltpItemsFiltered =
-        userBrand &&
-        ltpItemsAll.filter((item) => item[userBrand] === ('Y' || 'y'));
-    } else {
-      //   console.log('userBrand isnt : ', userBrand);
-      ltpItemsFiltered = ltpItemsAll.filter(
-        (item) =>
-          item.au === ('Y' || 'y') ||
-          item.cv === ('Y' || 'y') ||
-          item.se === ('Y' || 'y') ||
-          item.sk === ('Y' || 'y') ||
-          item.vw === ('Y' || 'y')
-      );
-    }
-
-    // console.log(
-    //   'ltpItemsFiltered',
-    //   ltpItemsFiltered && ltpItemsFiltered.length
-    // );
-
-    let ltpItemsSorted = sortObjectList(ltpItemsFiltered, 'loanToolNo', 'asc');
-    // console.log('ltpItemsSorted', ltpItemsSorted && ltpItemsSorted.length);
-
-    setUniqueLtpItems(ltpItemsSorted);
-    // setUniqueLtpItems([]);
-    // console.log('filtered items', uniqueLtpItemsTemp);
-  }, [ltpItems, userBrand]);
-
-  const searchInputHandler = (searchInput) => {
-    setSearchInput(searchInput);
-    if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(uniqueLtpItems, searchInput);
-      //   console.log(
-      //     'LTP Screen  searchInputHandler for: ',
-      //     searchInput && searchInput,
-      //     'ltpItems: ',
-      //     ltpItems && ltpItems.length,
-      //     'itemsToShow: ',
-      //     itemsToShow && itemsToShow.length,
-      //     'uniqueLtpItems: ',
-      //     uniqueLtpItems && uniqueLtpItems.length,
-      //     'newFilteredItems:',
-      //     newFilteredItems && newFilteredItems.length,
-      //     newFilteredItems
-      //   );
-      setFilteredItems(newFilteredItems);
-    }
-  };
-
-  const refreshRequestHandler = useCallback(() => {
-    // console.log('in ltp refreshRequestHandler');
-    getItems();
-  }, [getItems]);
-
-  let itemsToShow = !isLoading
-    ? searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : uniqueLtpItems
-    : [];
   //   console.log(
-  //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
-  //     dataError
-  //   );
-  //   console.log(
-  //     'rendering LTP Screen',
-  //     ltpItems && ltpItems.length,
+  //     'LTTTTTP RENDERING ltp screen !!!!!!!!!!!!!!!!!!!, isLoading',
+  //     isLoading,
+  //     'itemsToShow',
   //     itemsToShow && itemsToShow.length
   //   );
-
   return (
     <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh

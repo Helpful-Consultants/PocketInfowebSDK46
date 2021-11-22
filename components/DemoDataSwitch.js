@@ -51,7 +51,7 @@ export default DemoDataSwitch = (props) => {
       dispatch(getServiceMeasuresRequest(fetchParamsObj));
       dispatch(getNewsRequest(fetchParamsObj));
       dispatch(getLtpLoansRequest(fetchParamsObj));
-      dispatch(getOdisRequest({ userBrand: userBrand }));
+      dispatch(getOdisRequest(fetchParamsObj));
       dispatch(getCalibrationExpiryRequest(fetchParamsObj));
     }
 
@@ -105,7 +105,7 @@ export default DemoDataSwitch = (props) => {
           </Text>
         </View>
       </View>
-    ) : userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ? (
+    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
       <View
         style={{
           ...baseStyles.container,

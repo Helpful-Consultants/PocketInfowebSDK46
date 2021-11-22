@@ -1,4 +1,3 @@
-// import { Types } from '../actions/user';
 import { createSelector } from 'reselect';
 import Types from '../constants/Types';
 
@@ -24,13 +23,13 @@ const INITIAL_STATE = {
 
 export const selectFetchParamsObj = createSelector(
   (state) => state.user.userData[0].dealerId,
-  (state) => state.user.userData[0].brand,
+  (state) => state.user.userBrand,
   (state) => state.user.userData[0].intId,
 
-  (dealerId, brand, intId) => {
+  (dealerId, userBrand, intId) => {
     return {
-      dealerId: dealerId,
-      userBrand: brand,
+      dealerId,
+      userBrand,
       userIntId: intId ? intId.toString() : '',
     };
     // console.log(
@@ -65,7 +64,7 @@ export default function user(state = INITIAL_STATE, action) {
       //     action.payload.items
       //   );
 
-      let userBrand = null;
+      let userBrandCode = null;
       let userDataBrand =
         (action.payload &&
           action.payload.items &&
@@ -132,31 +131,31 @@ export default function user(state = INITIAL_STATE, action) {
       switch (userDataBrand) {
         case 'audi': {
           //   console.log('userDataBrand is audi ');
-          userBrand = 'au';
+          userBrandCode = 'au';
           break;
         }
         case 'seat': {
           //   console.log('userDataBrand is seat ');
-          userBrand = 'se';
+          userBrandCode = 'se';
           break;
         }
         case 'skoda': {
           //   console.log('userDataBrand is skoda');
-          userBrand = 'sk';
+          userBrandCode = 'sk';
           break;
         }
         case 'volkswagen': {
           //   console.log('userDataBrand is vw');
-          userBrand = 'vw';
+          userBrandCode = 'vw';
           break;
         }
         case 'volkswagen commercial vehicles': {
           //   console.log('userDataBrand is cv ');
-          userBrand = 'cv';
+          userBrandCode = 'cv';
           break;
         }
       }
-      //   userBrand = 'se';
+      //   userBrandCode = 'se';
       //   console.log('%%% user reducer -userBrand in reducer is ', userBrand);
       const now = new Date();
       const nowString = now.toISOString();
@@ -173,7 +172,7 @@ export default function user(state = INITIAL_STATE, action) {
         userId: userId,
         userIntId: userIntId,
         dealerName: dealerName,
-        userBrand: userBrand,
+        userBrand: userBrandCode,
         lastUpdate: nowString,
         isLoading: false,
         error: null,

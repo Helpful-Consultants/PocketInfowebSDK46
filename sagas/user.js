@@ -1,11 +1,4 @@
-import {
-  //   takeEvery,
-  takeLatest,
-  //   take,
-  call,
-  put,
-  fork,
-} from 'redux-saga/effects';
+import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/user';
 // import * as wipsActions from '../actions/dealerWips';
 // import * as toolsActions from '../actions/dealerTools';

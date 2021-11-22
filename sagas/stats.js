@@ -1,11 +1,4 @@
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  put,
-  fork
-} from 'redux-saga/effects';
+import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import Types from '../constants/Types';
 import * as actions from '../actions/stats';
 import * as api from '../api/stats';
@@ -18,7 +11,7 @@ function* getStats({ payload }) {
   yield put(actions.getStatsStart());
   try {
     const result = yield call(api.getStats, {
-      dealerId: payload.dealerId
+      dealerId: payload.dealerId,
     });
     // console.log('in saga get stats, success');
     // console.log(result);
@@ -38,7 +31,7 @@ function* getStats({ payload }) {
           statusCode:
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
-            null
+            null,
         })
       );
     } else {
@@ -50,7 +43,7 @@ function* getStats({ payload }) {
           statusCode:
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
-            null
+            null,
         })
       );
     }
@@ -122,7 +115,7 @@ function* getStats({ payload }) {
       actions.statsError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
@@ -130,7 +123,7 @@ function* getStats({ payload }) {
 
 function* watchGetStatsRequest() {
   //   console.log('in saga watch for stats');
-  yield takeEvery(Types.GET_STATS_REQUEST, getStats);
+  yield takeLatest(Types.GET_STATS_REQUEST, getStats);
 }
 
 const statsSagas = [fork(watchGetStatsRequest)];

@@ -1,17 +1,11 @@
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  put,
-  fork
-} from 'redux-saga/effects';
+import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import Types from '../constants/Types';
 import * as actions from '../actions/ltp';
 import * as api from '../api/ltp';
 
-function* getLtp() {
+function* getLtp({ payload }) {
   yield put(actions.getLtpStart());
+  const fetchTime = Date.now();
   try {
     const result = yield call(api.getLtp);
     // console.log('in saga get ltp, success');
@@ -26,7 +20,10 @@ function* getLtp() {
       //   console.log('in ltp saga - good 200');
       yield put(
         actions.getLtpSuccess({
-          items: result.data
+          items: result.data,
+          statusCode: 200,
+          fetchTime,
+          userBrand: payload.userBrand ? payload.userBrand : null,
         })
       );
     } else {
@@ -40,7 +37,7 @@ function* getLtp() {
           error:
             (result.request.response && result.request.response.toString()) ||
             'An error occurred when trying to update the LTP',
-          statusCode: (result.request.status && result.request.status) || null
+          statusCode: (result.request.status && result.request.status) || null,
         })
       );
     }
@@ -118,7 +115,7 @@ function* getLtp() {
       actions.ltpError({
         error: errorText,
         statusCode: statusCode,
-        dataErrorUrl: dataErrorUrl
+        dataErrorUrl: dataErrorUrl,
       })
     );
   }
@@ -126,7 +123,7 @@ function* getLtp() {
 
 function* watchGetLtpRequest() {
   //   console.log('in saga watch for ltp');
-  yield takeEvery(Types.GET_LTP_REQUEST, getLtp);
+  yield takeLatest(Types.GET_LTP_REQUEST, getLtp);
 }
 
 const ltpSagas = [fork(watchGetLtpRequest)];

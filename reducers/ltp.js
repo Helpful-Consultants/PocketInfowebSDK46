@@ -1,12 +1,55 @@
-// import { Types } from '../actions/ltp';
 import Types from '../constants/Types';
+import {
+  getSortedLtpItemsForUserBrand,
+  getSortedUniqueLtpItems,
+} from '../helpers/ltp';
+import { createSelector } from 'reselect';
 const INITIAL_STATE = {
   ltpItems: [],
   isLoading: false,
   error: null,
   statusCode: null,
   dataErrorUrl: null,
+  fetchTime: null,
 };
+
+// export const selectSortedLtpTools = createSelector(
+//   (state) => state.ltp.ltpItems || [],
+
+//   //   (ltpItems) =>
+//   //     ltpItems.filter(
+//   //       (item, index, self) =>
+//   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+//   //       )
+//   (ltpItems) => {
+//     let uniqueLtpItems = ltpItems;
+//     console.log(
+//       'in selectSortedUniqueLtpTools ',
+//       ltpItems.length,
+//       uniqueLtpItems.length
+//     );
+//     return uniqueLtpItems;
+//   }
+// );
+
+export const selectSortedUniqueLtpTools = createSelector(
+  (state) => state.ltp.ltpItems || [],
+
+  //   (ltpItems) =>
+  //     ltpItems.filter(
+  //       (item, index, self) =>
+  //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+  //       )
+  (ltpItems) => {
+    let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
+    // console.log(
+    //   'in selectSortedUniqueLtpTools ',
+    //   ltpItems.length,
+    //   uniqueLtpItems.length
+    // );
+    return uniqueLtpItems;
+  }
+);
 
 export default function ltp(state = INITIAL_STATE, action) {
   //   console.log(Types);
@@ -26,13 +69,29 @@ export default function ltp(state = INITIAL_STATE, action) {
       //     'ltp action items length ',
       //     action.payload && action.payload.items && action.payload.items.length
       //   );
+
+      //   console.log(
+      //     'in ltp get success reducer',
+      //     action.payload.items && action.payload.items.length,
+      //     action.payload.userBrand && action.payload.userBrand
+      //   );
+      let filteredItems = getSortedLtpItemsForUserBrand(
+        action.payload.items,
+        action.payload.userBrand
+      );
+      //   console.log(
+      //     'in ltp reducer filteredItems.length',
+      //     filteredItems && filteredItems.length
+      //   );
       return {
         ...state,
-        ltpItems: action.payload.items,
+        ltpItems: filteredItems,
         isLoading: false,
         error: null,
         statusCode: null,
         dataErrorUrl: null,
+        fetchTime:
+          (action.payload.fetchTime && action.payload.fetchTime) || null,
       };
     }
     case Types.EMPTY_LTP_REQUEST: {

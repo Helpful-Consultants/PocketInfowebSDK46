@@ -10,7 +10,7 @@ export const getCalibrationExpiry = (fetchParamsObj) => {
   return axios.get(url, {
     headers: {
       //   'Content-Type': 'text/plain'
-      Accept: 'text/json',
+      //   Accept: 'text/json',
       //   'Content-Type': 'text/json'
       //   'Content-Type': 'text / text; charset=UTF - 8'
       //   'Content-Type': 'application/json;charset=UTF - 8'

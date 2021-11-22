@@ -1,4 +1,4 @@
-import { takeEvery, call, put, fork, select } from 'redux-saga/effects';
+import { takeLatest, call, put, fork, select } from 'redux-saga/effects';
 import * as actions from '../actions/odis';
 import * as api from '../api/odis';
 import Types from '../constants/Types';
@@ -150,7 +150,7 @@ function* getOdis({ payload }) {
 
 function* watchGetOdisRequest() {
   //   console.log('in saga watch');
-  yield takeEvery(Types.GET_ODIS_REQUEST, getOdis);
+  yield takeLatest(Types.GET_ODIS_REQUEST, getOdis);
 }
 
 const odisSagas = [fork(watchGetOdisRequest)];

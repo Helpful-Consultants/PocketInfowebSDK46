@@ -149,10 +149,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         typeof calibrationExpiryOverdueCount === 'number' &&
         calibrationExpiryOverdueCount > 0
       ) {
-        console.log(
-          'adding calibrationExpiryOverdueCount',
-          calibrationExpiryOverdueCount
-        );
+        // console.log(
+        //   'adding calibrationExpiryOverdueCount',
+        //   calibrationExpiryOverdueCount
+        // );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
       }
@@ -160,10 +160,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         typeof calibrationExpiryRedCount === 'number' &&
         calibrationExpiryRedCount > 0
       ) {
-        console.log(
-          'adding calibrationExpiryRedCount',
-          calibrationExpiryRedCount
-        );
+        // console.log(
+        //   'adding calibrationExpiryRedCount',
+        //   calibrationExpiryRedCount
+        // );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
       }
@@ -171,20 +171,20 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         typeof serviceMeasuresRedCount === 'number' &&
         serviceMeasuresRedCount > 0
       ) {
-        console.log(
-          'adding tempNotifiableAlertsRedCount',
-          serviceMeasuresRedCount
-        );
+        // console.log(
+        //   'adding tempNotifiableAlertsRedCount',
+        //   serviceMeasuresRedCount
+        // );
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
       }
       if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
-        console.log('adding ltpLoansRedCount', ltpLoansRedCount);
+        // console.log('adding ltpLoansRedCount', ltpLoansRedCount);
         tempNotifiableAlertsRedCount =
           tempNotifiableAlertsRedCount + ltpLoansRedCount;
       }
       if (typeof odisRedCount === 'number' && odisRedCount > 0) {
-        console.log('adding odisRedCount', odisRedCount);
+        // console.log('adding odisRedCount', odisRedCount);
         tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + 1;
       }
 

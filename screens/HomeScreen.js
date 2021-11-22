@@ -38,6 +38,10 @@ import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { selectFetchParamsObj } from '../reducers/user';
+import {
+  selectBookedOutToolsForUser,
+  selectDealerWipsForUser,
+} from '../reducers/dealerWips';
 // import Constants from 'expo-constants';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 const buttonTextColor = Colors.vwgWhite;
@@ -113,7 +117,6 @@ export default HomeScreen = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
-  const userId = useSelector((state) => state.user.userId);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
@@ -121,16 +124,15 @@ export default HomeScreen = (props) => {
 
   //   console.log('IN HOME !!!!! 1g');
 
-  const userPin = useSelector((state) => state.user.userPin);
-  const userBrand = useSelector((state) => state.user.userBrand);
+  //   const userPin = useSelector((state) => state.user.userPin);
+  //   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const unseenCriticalNews = useSelector(
     (state) => state.news.unseenCriticalNews
   );
-  const dealerWipsItems = useSelector(
-    (state) => state.dealerWips.dealerWipsItems
-  );
+  const userBookedOutTools = useSelector(selectBookedOutToolsForUser);
+  const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isLoadingOdis = useSelector((state) => state.odis.isLoading);
@@ -169,15 +171,7 @@ export default HomeScreen = (props) => {
   const [timeCheckedAppVersion, setTimeCheckedAppVersion] = useState(null);
   const [isAppUpdated, setIsAppUpdated] = useState(false);
   const [showReloadDialogue, setShowReloadDialogue] = useState(false);
-  const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const [wipsCount, setWipsCount] = useState(0);
-  const [bookedOutToolsCount, setBookedOutToolsCount] = useState(0);
-  const [ageOfNews, setAgeOfNews] = useState(0);
-
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const [ltpLoansAlertCount, setLtpLoansAlertCount] = useState(0);
-  const [notificationsAlertCount, setNotificationsAlertCount] = useState(0);
-  const [serviceMeasuresAlertCount, setServiceMeasuresAlertCount] = useState(0);
 
   const windowDim = useWindowDimensions();
   const baseStyles =
@@ -188,49 +182,43 @@ export default HomeScreen = (props) => {
   //   console.log('windowDim', windowDim);
 
   //   console.log('IN HOME !!!!!  2');
-  const getLtpItems = useCallback(async () => {
-    dispatch(getLtpRequest());
-  });
 
-  const getAllItems = useCallback(async (fetchParamsObj) => {
-    dispatch(
-      getUserRequest({
-        userIntId:
-          (userIntId && userIntId) ||
-          (fetchParamsObj &&
-            fetchParamsObj.userIntId &&
-            fetchParamsObj.userIntId) ||
-          null,
-      })
-    );
-    dispatch(getDealerWipsRequest(fetchParamsObj));
-    dispatch(getServiceMeasuresRequest(fetchParamsObj));
-    dispatch(getLtpLoansRequest(fetchParamsObj));
-    dispatch(getOdisRequest({ userBrand: userBrand }));
-    dispatch(getNewsRequest());
-    dispatch(getCalibrationExpiryRequest(fetchParamsObj));
-  });
+  const getAllItems = useCallback(
+    (fetchParamsObj) => {
+      if (
+        fetchParamsObj &&
+        fetchParamsObj.userIntId &&
+        fetchParamsObj.userIntId
+      ) {
+        dispatch(
+          getUserRequest({
+            userIntId: fetchParamsObj.userIntId,
+          })
+        );
+        dispatch(getDealerWipsRequest(fetchParamsObj));
+        dispatch(getServiceMeasuresRequest(fetchParamsObj));
+        dispatch(getLtpLoansRequest(fetchParamsObj));
+        dispatch(getOdisRequest(fetchParamsObj));
+        dispatch(getNewsRequest());
+        dispatch(getCalibrationExpiryRequest(fetchParamsObj));
+        dispatch(getLtpRequest(fetchParamsObj));
+      }
+    },
+    [fetchParamsObj]
+  );
+  const getLtpItems = useCallback(
+    (fetchParamsObj) => {
+      if (
+        fetchParamsObj &&
+        fetchParamsObj.userIntId &&
+        fetchParamsObj.userIntId
+      ) {
+        dispatch(getLtpRequest(fetchParamsObj));
+      }
+    },
+    [fetchParamsObj]
+  );
 
-  const updateItemsAsync = async () => {
-    // console.log(
-    //   'home - updateItemsAsync, fetchParamsObj:',
-    //   fetchParamsObj && fetchParamsObj
-    // );
-    if (
-      fetchParamsObj &&
-      fetchParamsObj.userIntId &&
-      fetchParamsObj.userIntId.length > 0 &&
-      fetchParamsObj.dealerId &&
-      fetchParamsObj.dealerId.length > 0
-    ) {
-      getAllItems(fetchParamsObj);
-    }
-  };
-
-  const getLtpItemsAsync = async () => {
-    // console.log('home - updateItemsAsync');
-    getLtpItems();
-  };
   //   console.log('IN HOME !!!!! brand', userBrand);
   //   const notificationLimit = 168;
   //   console.log('IN HOME !!!!! 3');
@@ -265,7 +253,7 @@ export default HomeScreen = (props) => {
     //   'home - ltp useEffect',
     //   fetchParamsObj && fetchParamsObj.userIntId
     // );
-    getLtpItemsAsync();
+    getLtpItems();
   }, [fetchParamsObj]);
 
   useEffect(() => {
@@ -292,96 +280,6 @@ export default HomeScreen = (props) => {
     isLoadingLtp,
   ]);
 
-  //   useEffect(() => {
-  //     // console.log('in this one useEffect isRefreshNeeded ', isRefreshNeeded);
-
-  //     if (!ltpItems || ltpItems.length === 0) {
-  //       // console.log('in this one useEffect - getting ltp');
-  //       getLtpItemsAsync(fetchParamsObj);
-  //     }
-
-  //     if (__DEV__) {
-  //       // console.log('no update check because DEV');
-  //       setShouldCheckAppVersion(false);
-  //     } else {
-  //       setShouldCheckAppVersion(true);
-  //     }
-  //   if (searchInput && searchInput.length > 0) {
-  //     setSearchInput('');
-  //   }
-
-  // updateItemsAsync();
-  // const listener = event => {
-  //   if (event.type === Updates.EventType.DOWNLOAD_FINISHED) {
-  //     setShowReloadDialogue(true);
-
-  //    Updates.reloadAsync();
-  //   }
-  // };
-  // const getUpdatesAsync = async () => {
-  //   //   console.log('in home screen getUpdatesAsync');
-  //   try {
-  //     // const update = await Updates.checkForUpdateAsync(listener(event));
-  //     const update = await Updates.checkForUpdateAsync();
-  //     if (update.isAvailable) {
-  //       //   console.log('updateAvailable', update && update);
-  //       setIsCheckingAppVersion(false);
-  //       setIsUpdatingAppVersion(true);
-  //       setShowReloadDialogue(true);
-  //       await Updates.fetchUpdateAsync();
-  //      Updates.reloadAsync();
-  //     } else {
-  //       updateItemsAsync();
-  //       setIsCheckingAppVersion(false);
-  //       setShowReloadDialogue(false);
-  //     }
-  //   } catch (e) {
-  //     setIsCheckingAppVersion(false);
-  //     setIsUpdatingAppVersion(false);
-  //     console.log('updateAvailable error');
-  //   }
-  // };
-
-  // if (isRefreshNeeded === true) {
-  //   if (__DEV__) {
-  //     // console.log('no update check because DEV');
-  //     setShouldCheckAppVersion(false);
-  //     updateItemsAsync();
-  //   } else {
-  //     setShouldCheckAppVersion(true);
-  //     console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-  //     console.log('timeCheckedAppVersion now', now);
-  //     if (timeCheckedAppVersion) {
-  //       setShouldCheckAppVersion(true);
-  //       console.log(
-  //         'timeCheckedAppVersion diff',
-  //         now.diff(moment(timeCheckedAppVersion))
-  //       );
-  //       if (now.diff(moment(timeCheckedAppVersion), 'minutes') > 10) {
-  //         setTimeCheckedAppVersion(now);
-  //         setIsCheckingAppVersion(true);
-  //         getUpdatesAsync();
-  //       } else {
-  //         setIsCheckingAppVersion(false);
-  //         updateItemsAsync();
-  //       }
-  //     } else {
-  //       //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
-  //       //   console.log('timeCheckedAppVersion now', now);
-  //       setTimeCheckedAppVersion(now);
-  //       //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-  //       setIsCheckingAppVersion(true);
-
-  //       //   console.log('isCheckingAppVersion', isCheckingAppVersion);
-  //       //   console.log('calling getUpdatesAsync');
-  //       getUpdatesAsync();
-  //     }
-  //   }
-  // }
-  //   }, [isRefreshNeeded]);
-
-  //   console.log('IN HOME !!!!! 4');
-
   const getUpdatesAsync = async () => {
     //   console.log('in home screen getUpdatesAsync');
     try {
@@ -396,7 +294,7 @@ export default HomeScreen = (props) => {
         await Updates.fetchUpdateAsync();
         Updates.reloadAsync();
       } else {
-        updateItemsAsync();
+        getAllItems();
         setIsCheckingAppVersion(false);
         setShowReloadDialogue(false);
       }
@@ -427,7 +325,7 @@ export default HomeScreen = (props) => {
       } else {
         setIsCheckingAppVersion(false);
         dispatch(revalidateUserCredentials('HomeScreen'));
-        updateItemsAsync();
+        getAllItems();
       }
     } else {
       //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
@@ -440,27 +338,6 @@ export default HomeScreen = (props) => {
       getUpdatesAsync();
     }
   };
-
-  useFocusEffect(
-    useCallback(() => {
-      //   if (searchInput && searchInput.length > 0) {
-      //     setSearchInput('');
-      //   }
-      //   console.log('in home useFocusEffect');
-
-      updateItemsAsync();
-      checkAppUpdates();
-      if (__DEV__) {
-        // console.log('no update check because DEV');
-        setShouldCheckAppVersion(false);
-        dispatch(revalidateUserCredentials({ calledBy: 'HomeScreen' }));
-        updateItemsAsync();
-      } else {
-        setShouldCheckAppVersion(true);
-        checkAppUpdates();
-      }
-    }, [])
-  );
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
@@ -475,49 +352,45 @@ export default HomeScreen = (props) => {
 
   //   console.log('IN HOME !!!!!  5');
 
-  useEffect(() => {
-    const userWipsItems =
-      (fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        dealerWipsItems &&
-        dealerWipsItems.length > 0 &&
-        dealerWipsItems.filter(
-          (item) =>
-            item.tools &&
-            item.tools.length > 0 &&
-            item.userIntId &&
-            item.userIntId.toString() == fetchParamsObj.userIntId.toString()
-        )) ||
-      [];
+  //   useEffect(() => {
+  //     // console.log(
+  //     //   'in home useEffect fetchParamsObj is:  ',
+  //     //   fetchParamsObj && fetchParamsObj,
+  //     //   userWipsItems && userWipsItems
+  //     // );
 
-    setWipsCount((userWipsItems && userWipsItems.length) || 0);
+  //     // setWipsCount((userWipsItems && userWipsItems.length) || 0);
 
-    const buildBookedOutToolsArrForJob = (wip) => {
-      const thisWipsToolsArr = wip.tools.map((tool) => ({
-        ...tool,
-        wipNumber: wip.wipNumber,
-        wipId: wip.id.toString(),
-        wipCreatedDate: wip.createdDate,
-      }));
-      return thisWipsToolsArr;
-    };
-    const buildBookedOutToolsArr = (wips) => {
-      let allToolsArr = [];
+  //     const buildBookedOutToolsArrForJob = (wip) => {
+  //       const thisWipsToolsArr = wip.tools.map((tool) => ({
+  //         ...tool,
+  //         wipNumber: wip.wipNumber,
+  //         wipId: wip.id.toString(),
+  //         wipCreatedDate: wip.createdDate,
+  //       }));
+  //       return thisWipsToolsArr;
+  //     };
+  //     const buildBookedOutToolsArr = (wips) => {
+  //       let allToolsArr = [];
 
-      wips.forEach((wip) => {
-        if (wip.tools && wip.tools.length > 0) {
-          let wipToolsArr = buildBookedOutToolsArrForJob(wip);
-          allToolsArr.push(...wipToolsArr);
-        }
-      });
-      return allToolsArr;
-    };
+  //       wips.forEach((wip) => {
+  //         if (wip.tools && wip.tools.length > 0) {
+  //           let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+  //           allToolsArr.push(...wipToolsArr);
+  //         }
+  //       });
+  //       return allToolsArr;
+  //     };
 
-    let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
-    setBookedOutToolsCount(
-      (bookedOutToolItems && bookedOutToolItems.length) || 0
-    );
-  }, [dealerWipsItems]);
+  //     let bookedOutToolItems = buildBookedOutToolsArr(userWipsItems);
+  //     console.log(
+  //       'in home useEffect bookedOutToolItems is:  ',
+  //       bookedOutToolItems && bookedOutToolItems.length
+  //     );
+  //     setBookedOutToolsCount(
+  //       (bookedOutToolItems && bookedOutToolItems.length) || 0
+  //     );
+  //   }, [userWipsItems.length]);
 
   const gridRows = showingDemoApp ? 8 : 6;
 
@@ -597,6 +470,27 @@ export default HomeScreen = (props) => {
     showingDemoApp,
     showingDemoData,
   ]);
+
+  useFocusEffect(
+    useCallback(() => {
+      //   if (searchInput && searchInput.length > 0) {
+      //     setSearchInput('');
+      //   }
+      //   console.log('in home useFocusEffect');
+
+      getAllItems();
+      checkAppUpdates();
+      if (__DEV__) {
+        // console.log('no update check because DEV');
+        setShouldCheckAppVersion(false);
+        dispatch(revalidateUserCredentials({ calledBy: 'HomeScreen' }));
+        getAllItems();
+      } else {
+        setShouldCheckAppVersion(true);
+        checkAppUpdates();
+      }
+    }, [getAllItems])
+  );
 
   return (
     <View
@@ -718,9 +612,9 @@ export default HomeScreen = (props) => {
                       />
                       <Text style={baseStyles.textHomeGridCell}>
                         {`My Jobs`}
-                        {wipsCount && wipsCount > 0 ? (
+                        {userWipsItems && userWipsItems.length > 0 ? (
                           <Text style={baseStyles.textHomeGridCellCount}>
-                            {` (${wipsCount})`}
+                            {` (${userWipsItems.length})`}
                           </Text>
                         ) : null}
                       </Text>
@@ -747,7 +641,7 @@ export default HomeScreen = (props) => {
                         color={buttonTextColor}
                         size={iconSize}
                       />
-                      {bookedOutToolsCount && bookedOutToolsCount > 0 ? (
+                      {userBookedOutTools && userBookedOutTools.length > 0 ? (
                         <View>
                           <Text
                             style={{
@@ -758,7 +652,7 @@ export default HomeScreen = (props) => {
                           <Text style={baseStyles.textHomeGridCell}>
                             {`Tools`}
                             <Text style={baseStyles.textHomeGridCellCount}>
-                              {` (${bookedOutToolsCount})`}
+                              {` (${userBookedOutTools.length})`}
                             </Text>
                           </Text>
                         </View>
