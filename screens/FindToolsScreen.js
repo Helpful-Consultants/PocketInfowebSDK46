@@ -679,18 +679,6 @@ export default FindToolsScreen = (props) => {
     }
   }, [isLoadingAny]);
 
-  useFocusEffect(
-    useCallback(() => {
-      // console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
-      setSearchInput('');
-      getWipsItems();
-      return () => {
-        // Do something when the screen is unfocused
-        // console.log('FT ***** Find tools Screen was unfocused');
-      };
-    }, [getWipsItems])
-  );
-
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength
       ? filteredItems.slice(0, 100)
@@ -727,6 +715,23 @@ export default FindToolsScreen = (props) => {
   //     console.log('FT *** lastWipProcessedObj', lastWipProcessedObj);
   //     console.log('FT *** lastWipProcessedId', lastWipProcessedId);
   //   }, [lastWipProcessedId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
+      setSearchInput('');
+      getWipsItems();
+      console.log(
+        'lastWipProcessedObj',
+        lastWipProcessedObj && lastWipProcessedObj
+      );
+      return () => {
+        // Do something when the screen is unfocused
+        // console.log('FT ***** Find tools Screen was unfocused');
+      };
+    }, [getWipsItems])
+  );
+
   let basketActionRows = null;
 
   basketActionRows =
