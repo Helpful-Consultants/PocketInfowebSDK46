@@ -36,6 +36,9 @@ import DealerToolsList from './DealerToolsList';
 
 import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
+import { selectLastWipProcessedInfo } from '../reducers/dealerWips';
+import { selectLastWipProcessedObj } from '../reducers/dealerWips';
+import { selectLastWipProcessedId } from '../reducers/dealerWips';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 
 const minSearchLength = 1;
@@ -199,9 +202,9 @@ export default FindToolsScreen = (props) => {
   const dataStatusCodeWips = useSelector(
     (state) => state.dealerWips.statusCode
   );
-  const lastWipProcessed = useSelector(
-    (state) => state.dealerWips.lastWipProcessed
-  );
+  const lastWipProcessedInfo = useSelector(selectLastWipProcessedInfo);
+  const lastWipProcessedObj = useSelector(selectLastWipProcessedObj);
+  const lastWipProcessedId = useSelector(selectLastWipProcessedId);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
   const dataErrorLtp = useSelector((state) => state.ltp.error);
   const dataErrorUrlLtp = useSelector((state) => state.ltp.dataErrorUrl);
@@ -300,26 +303,31 @@ export default FindToolsScreen = (props) => {
   };
 
   const deleteWipRequestHandler = () => {
-    const wipNumber = (lastWipProcessed && lastWipProcessed.wipNumber) || '';
+    console.log(
+      'FT **** deleteWipRequestHandler',
+      lastWipProcessedObj && lastWipProcessedObj
+    );
+    const wipNumber =
+      lastWipProcessedObj && lastWipProcessedObj.wipNumber
+        ? lastWipProcessedObj.wipNumber
+        : '';
     // console.log(
     //   'in deleteWipRequestHandler last wip',
-    //   lastWipProcessed && lastWipProcessed
+    //   lastWipProcessedObj && lastWipProcessedObj
     // );
 
-    const wipId =
-      (wipNumber && lastWipProcessed.wipId) ||
-      getWipIdByWipNumber(wipNumber, fetchParamsObj.userIntId, dealerWipsItems);
+    // const wipId =
+    //   (wipNumber && lastWipProcessedObj.wipId) ||
+    //   getWipIdByWipNumber(wipNumber, fetchParamsObj.userIntId, dealerWipsItems);
 
-    const wipObj = {
-      wipNumber: wipNumber,
-      id: wipId,
-      userIntId: fetchParamsObj.userIntId,
-      dealerId: fetchParamsObj.dealerId,
-    };
+    // const wipObj = {
+    //   wipNumber: wipNumber,
+    //   id: lastWipProcessedId ? lastWipProcessedId : '',
+    //   fetchParamsObj,
+    // };
 
     let payload = {
-      dealerId: fetchParamsObj.dealerId,
-      wipObj: wipObj,
+      wipObj: lastWipProcessedObj,
       fetchParamsObj: fetchParamsObj,
     };
 
@@ -369,11 +377,16 @@ export default FindToolsScreen = (props) => {
 
   const markUnavailableBasketItems = () => {
     let unavailableToolIdsArr = [];
-    lastWipProcessed.unavailableTools.forEach((item) => {
-      // console.log(item.tools_id);
-      unavailableToolIdsArr.push(item.tools_id);
-    });
-    // console.log( 'FT ***** lastWipProcessed', lastWipProcessed);
+    if (
+      lastWipProcessedObj.unavailableTools &&
+      lastWipProcessedObj.unavailableTools.length > 0
+    ) {
+      lastWipProcessedObj.unavailableTools.forEach((item) => {
+        // console.log(item.tools_id);
+        unavailableToolIdsArr.push(item.tools_id);
+      });
+    }
+    // console.log( 'FT ***** lastWipProcessedObj', lastWipProcessedObj);
     // console.log( 'FT ***** unavailableToolIdsArr', unavailableToolIdsArr);
     // console.log( 'FT ***** old toolBasket', toolBasket);
     let newToolBasket = toolBasket.map((item) => {
@@ -475,13 +488,14 @@ export default FindToolsScreen = (props) => {
         dealerId: fetchParamsObj.dealerId,
         tools: newToolBasket,
       };
-
-      saveToJob(wipObj);
-      inputChangeHandler('wipNumber', '');
       //   console.log(
       //     'FT *** in saveToJobRequestHandler, saveToJob  wipObj',
       //     wipObj
       //   );
+      setTimeout(() => {
+        saveToJob(wipObj);
+        inputChangeHandler('wipNumber', '');
+      }, 2000);
     } else {
       setMode('book');
       setIsBasketVisible(true);
@@ -493,7 +507,11 @@ export default FindToolsScreen = (props) => {
     //   'FT ***** in findtools, isSendingWip is ',
     //   isSendingWip,
     //   'code is ',
-    //   dataStatusCodeWips
+    //   dataStatusCodeWips,
+    //   'lastWipProcessedObj',
+    //   lastWipProcessedObj,
+    //   'mode',
+    //   mode
     // );
     if (isSendingWip === false) {
       if (dataStatusCodeWips === 201) {
@@ -501,7 +519,7 @@ export default FindToolsScreen = (props) => {
         //   'isSendingWip is ',
         //   isSendingWip,
         //   'code is 201',
-        //   lastWipProcessed && lastWipProcessed,
+        //   lastWipProcessedObj && lastWipProcessedObj,
         //   dataStatusCodeWips,
         //   'mode is ',
         //   mode
@@ -513,7 +531,7 @@ export default FindToolsScreen = (props) => {
         //   isSendingWip,
         //   'code is 409',
         //   dataStatusCodeWips,
-        //   lastWipProcessed && lastWipProcessed,
+        //   lastWipProcessedObj && lastWipProcessedObj,
         //   'mode is ',
         //   mode
         // );
@@ -527,9 +545,9 @@ export default FindToolsScreen = (props) => {
           //     lastWipProcessedObj && lastWipProcessedObj
           //   );
           if (
-            lastWipProcessed &&
-            lastWipProcessed.tools &&
-            lastWipProcessed.tools.length > 0
+            lastWipProcessedObj &&
+            lastWipProcessedObj.tools &&
+            lastWipProcessedObj.tools.length > 0
           ) {
             // console.log( 'FT ***** some unavailable');
             setMode('some-unavailable');
@@ -543,7 +561,7 @@ export default FindToolsScreen = (props) => {
         }
       }
     }
-  }, [isSendingWip, dataStatusCodeWips, mode]);
+  }, [isSendingWip, dataStatusCodeWips, lastWipProcessedId, mode]);
 
   useEffect(() => {
     // console.log(
@@ -704,6 +722,11 @@ export default FindToolsScreen = (props) => {
   );
   //   console.log( 'FT ***** toolBasket is', toolBasket);
 
+  //   useEffect(() => {
+  //     console.log('FT *** lastWipProcessedInfo', lastWipProcessedInfo);
+  //     console.log('FT *** lastWipProcessedObj', lastWipProcessedObj);
+  //     console.log('FT *** lastWipProcessedId', lastWipProcessedId);
+  //   }, [lastWipProcessedId]);
   let basketActionRows = null;
 
   basketActionRows =
@@ -901,11 +924,11 @@ export default FindToolsScreen = (props) => {
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textConfirmation}>
               {`${
-                lastWipProcessed.unavailableTools &&
-                lastWipProcessed.unavailableTools.length > 1
+                lastWipProcessedObj.unavailableTools &&
+                lastWipProcessedObj.unavailableTools.length > 1
                   ? `These items have been booked to job`
                   : `This item has been booked to job`
-              } '${lastWipProcessed.wipNumber}'.`}
+              } '${lastWipProcessedObj.wipNumber}'.`}
             </Text>
           </View>
         </View>
@@ -927,13 +950,13 @@ export default FindToolsScreen = (props) => {
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked the item${
-                lastWipProcessed.unavailableTools &&
-                lastWipProcessed.unavailableTools.length > 1
+                lastWipProcessedObj.unavailableTools &&
+                lastWipProcessedObj.unavailableTools.length > 1
                   ? `s`
                   : ``
               } marked above. Do you want to keep the other item${
-                lastWipProcessed.unavailableTools &&
-                lastWipProcessed.unavailableTools.length > 1
+                lastWipProcessedObj.unavailableTools &&
+                lastWipProcessedObj.unavailableTools.length > 1
                   ? `s`
                   : ``
               } booked out or cancel the whole booking?`}
@@ -961,9 +984,10 @@ export default FindToolsScreen = (props) => {
           />
           <Button
             title={
-              lastWipProcessed.unavailableTools &&
+              lastWipProcessedObj.unavailableTools &&
               toolBasket.length > 0 &&
-              toolBasket.length - lastWipProcessed.unavailableTools.length > 1
+              toolBasket.length - lastWipProcessedObj.unavailableTools.length >
+                1
                 ? `Keep available`
                 : `Keep available`
             }
@@ -991,8 +1015,8 @@ export default FindToolsScreen = (props) => {
           <View style={baseStyles.viewNoPadding}>
             <Text style={baseStyles.textLeftAlignedLarge}>
               {`Someone else has recently booked ${
-                lastWipProcessed.unavailableTools &&
-                lastWipProcessed.unavailableTools.length > 1
+                lastWipProcessedObj.unavailableTools &&
+                lastWipProcessedObj.unavailableTools.length > 1
                   ? `these items.`
                   : `this item`
               }`}
@@ -1108,7 +1132,7 @@ export default FindToolsScreen = (props) => {
                         style={baseStyles.textSmallError}
                       >{`${getUnavailableToolDetails(
                         item.id,
-                        lastWipProcessed.unavailableTools
+                        lastWipProcessedObj.unavailableTools
                       )}`}</Text>
                     ) : null}
                   </View>
