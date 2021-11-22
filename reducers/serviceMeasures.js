@@ -119,7 +119,8 @@ export default function serviceMeasures(state = INITIAL_STATE, action) {
       //   console.log('STATE', state);
       const filteredServiceMeasuresArr =
         (action.payload.items &&
-          filterExpiredItems(action.payload.items, fetchTime)) ||
+          action.payload.fetchTime &&
+          filterExpiredItems(action.payload.items, action.payload.fetchTime)) ||
         [];
       const serviceMeasuresCountsObj = getServiceMeasuresCountsObj(
         filteredServiceMeasuresArr
