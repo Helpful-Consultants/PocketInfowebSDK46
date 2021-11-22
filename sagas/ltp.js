@@ -1,11 +1,4 @@
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  put,
-  fork,
-} from 'redux-saga/effects';
+import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import Types from '../constants/Types';
 import * as actions from '../actions/ltp';
 import * as api from '../api/ltp';
@@ -130,7 +123,7 @@ function* getLtp({ payload }) {
 
 function* watchGetLtpRequest() {
   //   console.log('in saga watch for ltp');
-  yield takeEvery(Types.GET_LTP_REQUEST, getLtp);
+  yield takeLatest(Types.GET_LTP_REQUEST, getLtp);
 }
 
 const ltpSagas = [fork(watchGetLtpRequest)];
