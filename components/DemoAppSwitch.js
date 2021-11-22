@@ -87,7 +87,7 @@ export default DemoAppSwitch = (props) => {
           )}
         </View>
       </View>
-    ) : userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
+    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
       <View
         style={{
           ...baseStyles.container,
