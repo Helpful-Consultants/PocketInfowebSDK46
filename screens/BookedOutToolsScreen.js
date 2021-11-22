@@ -95,24 +95,22 @@ export default BookedOutToolsScreen = (props) => {
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
-        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
         fetchParamsObj: fetchParamsObj,
       };
 
       //   console.log('delete wip ' + currentJob.id);
       //   console.log('delete wip ', payload);
-      deleteDealerWip(payload);
+      setTimeout(() => deleteDealerWip(payload), 500);
     } else {
       let payload = {
-        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
         fetchParamsObj: fetchParamsObj,
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
-      deleteDealerWipTool(payload);
+      setTimeout(() => deleteDealerWipTool(payload), 500);
     }
   };
 

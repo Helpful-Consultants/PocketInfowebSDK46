@@ -82,23 +82,22 @@ export default JobsScreen = (props) => {
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
       let payload = {
-        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
         fetchParamsObj: fetchParamsObj,
       };
       //   console.log('JOBS *****  delete wip ' + currentJob.id);
       //   console.log('JOBS *****  delete wip ', payload);
-      deleteDealerWip(payload);
+      setTimeout(() => deleteDealerWip(payload), 500);
     } else {
       let payload = {
-        dealerId: fetchParamsObj.dealerId,
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
         fetchParamsObj: fetchParamsObj,
       };
       //   console.log('JOBS *****  remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('JOBS *****  for wip wip ', payload);
-      deleteDealerWipTool(payload);
+
+      setTimeout(() => deleteDealerWipTool(payload), 500);
     }
   };
 
