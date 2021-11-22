@@ -97,7 +97,7 @@ const formReducer = (state, action) => {
 //   unavailableToolsArr.forEach((item, index) => {
 //     // console.log(item.tools_id);
 //     if (item.tools_id && item.tools_id === toolId) {
-//       //   console.log( 'FT ***** match on', item.tools_id);
+//       // ( 'FT ***** match on', item.tools_id);
 //       retValue = index;
 //     }
 //   });
@@ -109,13 +109,13 @@ const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
 
   unavailableToolsArr.forEach((item, index) => {
     if (item.tools_id && item.tools_id === toolId) {
-      //   console.log( 'FT ***** match on', item.tools_id);
+      // ( 'FT ***** match on', item.tools_id);
       retValue = `Unavailable. Now booked out to ${
         item.updatedBy && item.updatedBy
       }, job ${item.wipNumber && item.wipNumber}`;
     }
   });
-  //   console.log(
+  // (
   //     'in identifyUnavailableTool',
   //     toolId,
   //     unavailableToolsArr,
@@ -128,7 +128,7 @@ const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
 const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
   let retValue = null;
   //   if (dealerWips && dealerWips.length) {
-  //     console.log( 'FT ***** dealerWips[0]', dealerWips[0]);
+  //   ( 'FT ***** dealerWips[0]', dealerWips[0]);
   //   }
   dealerWips.forEach((item) => {
     // console.log(
@@ -142,11 +142,11 @@ const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
       item.userIntId &&
       item.userIntId.toString() === userIntId
     ) {
-      //   console.log( 'FT ***** match on', item.tools_id);
+      // ( 'FT ***** match on', item.tools_id);
       retValue = item.id.toString();
     }
   });
-  //   console.log(
+  // (
   //     'in getWipIdByWipNumber',
   //     'wipNumber',
   //     wipNumber,
@@ -272,7 +272,7 @@ export default FindToolsScreen = (props) => {
   );
 
   const saveToJob = (wipObj) => {
-    // console.log('FT ***** dispatchNewWip', wipObj && wipObj);
+    // console.log('FT ***** saveToJob calling dispatchNewWip', wipObj && wipObj);
     dispatchNewWip(wipObj);
   };
 
@@ -323,7 +323,7 @@ export default FindToolsScreen = (props) => {
       fetchParamsObj: fetchParamsObj,
     };
 
-    // console.log( 'FT ***** in deleteWipRequestHandler', payload);
+    // console.log('FT ***** in deleteWipRequestHandler', payload);
     setToolBasket([]);
     setMode('list');
     setIsBasketVisible(false);
@@ -454,6 +454,7 @@ export default FindToolsScreen = (props) => {
   };
 
   const saveToJobRequestHandler = () => {
+    // console.log('FT *** in saveToJobRequestHandler');
     const removeLastWip = (item) => {
       const newItem = { ...item };
       delete newItem.lastWIP;
@@ -477,6 +478,10 @@ export default FindToolsScreen = (props) => {
 
       saveToJob(wipObj);
       inputChangeHandler('wipNumber', '');
+      //   console.log(
+      //     'FT *** in saveToJobRequestHandler, saveToJob  wipObj',
+      //     wipObj
+      //   );
     } else {
       setMode('book');
       setIsBasketVisible(true);
@@ -517,7 +522,10 @@ export default FindToolsScreen = (props) => {
           //     'changing mode to unavailable, fetchParamsObj is ',
           //     fetchParamsObj
           //   );
-          //   console.log( 'FT ***** unavailable ', lastWipProcessed && lastWipProcessed);
+          //   console.log(
+          //     'FT ***** unavailable ',
+          //     lastWipProcessedObj && lastWipProcessedObj
+          //   );
           if (
             lastWipProcessed &&
             lastWipProcessed.tools &&
