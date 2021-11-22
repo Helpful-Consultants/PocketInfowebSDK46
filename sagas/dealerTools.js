@@ -1,11 +1,4 @@
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  put,
-  fork,
-} from 'redux-saga/effects';
+import { takeLatest, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/dealerTools';
 import * as api from '../api/dealerTools';
 import Types from '../constants/Types';
@@ -160,7 +153,7 @@ function* getDealerTools({ payload }) {
 
 function* watchGetDealerToolsRequest() {
   //   console.log('in saga watch for dealerTools');
-  yield takeEvery(Types.GET_DEALER_TOOLS_REQUEST, getDealerTools);
+  yield takeLatest(Types.GET_DEALER_TOOLS_REQUEST, getDealerTools);
 }
 
 const dealerToolsSagas = [fork(watchGetDealerToolsRequest)];

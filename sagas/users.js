@@ -1,11 +1,4 @@
-import {
-  takeEvery,
-  takeLatest,
-  take,
-  call,
-  put,
-  fork
-} from 'redux-saga/effects';
+import { takeLatest, take, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/users';
 import * as api from '../api/users';
 import Types from '../constants/Types';
@@ -18,14 +11,14 @@ function* getUsers() {
     // console.log(result);
     yield put(
       actions.getUsersSuccess({
-        items: result.data.data
+        items: result.data.data,
       })
     );
   } catch (e) {
     console.log('error!!!!!!!!!!!!!!');
     yield put(
       actions.usersError({
-        error: 'An error occurred when trying to get the users'
+        error: 'An error occurred when trying to get the users',
       })
     );
   }
@@ -33,7 +26,7 @@ function* getUsers() {
 
 function* watchGetUsersRequest() {
   //   console.log('in saga watch');
-  yield takeEvery(Types.GET_USERS_REQUEST, getUsers);
+  yield takeLatest(Types.GET_USERS_REQUEST, getUsers);
 }
 
 function* deleteUser(userId) {
@@ -44,7 +37,7 @@ function* deleteUser(userId) {
   } catch (e) {
     yield put(
       actions.usersError({
-        error: 'An error occurred when trying to delete the user'
+        error: 'An error occurred when trying to delete the user',
       })
     );
   }
@@ -61,14 +54,14 @@ function* createUser({ payload }) {
   try {
     yield call(api.createUser, {
       firstName: payload.firstName,
-      lastName: payload.lastName
+      lastName: payload.lastName,
     });
 
     yield call(getUsers);
   } catch (e) {
     yield put(
       actions.usersError({
-        error: 'An error occurred when trying to create the user'
+        error: 'An error occurred when trying to create the user',
       })
     );
   }
@@ -81,7 +74,7 @@ function* watchCreateUserRequest() {
 const userSagas = [
   fork(watchGetUsersRequest),
   fork(watchDeleteUserRequest),
-  fork(watchCreateUserRequest)
+  fork(watchCreateUserRequest),
 ];
 
 export default userSagas;
