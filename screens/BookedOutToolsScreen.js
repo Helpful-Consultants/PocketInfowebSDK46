@@ -70,7 +70,9 @@ export default BookedOutToolsScreen = (props) => {
     // console.log(searchInput, userBookedOutTools);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(userBookedOutTools, searchInput);
+      let newFilteredItems = userBookedOutTools
+        ? searchItems(userBookedOutTools, searchInput)
+        : [];
       setFilteredItems(newFilteredItems);
     }
   };
