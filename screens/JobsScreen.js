@@ -37,9 +37,13 @@ export default JobsScreen = (props) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   const getItems = useCallback(() => {
-    // console.log('JOBS *****  in jobs in getItems fetchParamsObj is', fetchParamsObj);
+    // console.log(
+    //   'JOBS *****  in jobs in getItems fetchParamsObj is',
+    //   fetchParamsObj
+    // );
     dispatch(getDealerWipsRequest(fetchParamsObj));
   }, [dispatch, fetchParamsObj]);
+  //   console.log('JOBS *****  in userWipsItems', userWipsItems);
 
   const deleteDealerWip = useCallback(
     (payload) => {
@@ -139,12 +143,12 @@ export default JobsScreen = (props) => {
   );
 
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
-
+  //   console.log(userWipsItems);
   const items = (!isLoading && !dataError && userWipsItems) || [];
-
+  //   console.log(items);
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
-
+  //   console.log(itemsToShow);
   //   console.log(
   //     'JOBS *****  Rendering Jobs screen ',
   //     items && items.length,

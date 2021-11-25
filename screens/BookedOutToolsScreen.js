@@ -183,7 +183,8 @@ export default BookedOutToolsScreen = (props) => {
       // };
     }, [getItems])
   );
-
+  //   console.log('BOT *****  in userWipsItems', userWipsItems);
+  //   console.log('BOT *****  in userBookedOutTools', userBookedOutTools);
   const dataCount = (userBookedOutTools && userBookedOutTools.length) || 0;
 
   let itemsToShow =
