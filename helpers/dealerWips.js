@@ -26,11 +26,11 @@ export const getSortedDealerWipsItemsForUser = (
     //     tempItem[userBrand]
     //   );
     dealerWipsItemsFiltered = dealerWipsItemsAll.filter(
-      (item) =>
-        item.tools &&
-        item.tools.length > 0 &&
-        item.userIntId &&
-        item.userIntId.toString() == userIntId
+      (wip) =>
+        wip.tools &&
+        wip.tools.length > 0 &&
+        wip.userIntId &&
+        wip.userIntId.toString() == userIntId
     );
   }
   //   const dealerWipsItemsSorted =
@@ -61,6 +61,25 @@ export const getSortedBookedOutTools = (wips = []) => {
       allToolsArr.push(...wipToolsArr);
     }
   });
+  //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
+  return sortObjectList(allToolsArr, 'partNumber', 'asc');
+};
+
+export const getSortedBookedOutToolsForUser = (wips = [], userIntId = null) => {
+  let allToolsArr = [];
+
+  userIntId &&
+    wips.forEach((wip) => {
+      if (
+        wip.tools &&
+        wip.tools.length > 0 &&
+        wip.userIntId &&
+        wip.userIntId.toString() == userIntId
+      ) {
+        let wipToolsArr = buildBookedOutToolsArrForJob(wip);
+        allToolsArr.push(...wipToolsArr);
+      }
+    });
   //   allToolsArr.sort((a, b) => a.partNumber > b.partNumber);
   return sortObjectList(allToolsArr, 'partNumber', 'asc');
 };

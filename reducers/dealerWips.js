@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import {
-  getSortedBookedOutTools,
+  getSortedBookedOutToolsForUser,
   getSortedDealerWipsItemsForUser,
 } from '../helpers/dealerWips';
 
@@ -18,32 +18,12 @@ const INITIAL_STATE = {
   fetchTime: null,
 };
 
-export const selectLastWipProcessedInfo = createSelector(
-  (state) => state.dealerWips.lastWipProcessed,
+export const selectDealerWips = createSelector(
+  (state) => state.dealerWips.dealerWipsItems,
 
-  (lastWipProcessed) => lastWipProcessed
+  (dealerWipsItems) => dealerWipsItems || []
 );
-export const selectLastWipProcessedObj = createSelector(
-  (state) => state.dealerWips.lastWipProcessed,
 
-  (lastWipProcessed) => {
-    // console.log('lastWipProcessed', lastWipProcessed && lastWipProcessed);
-    return lastWipProcessed && lastWipProcessed.wipObj
-      ? lastWipProcessed.wipObj
-      : null;
-  }
-);
-export const selectLastWipProcessedId = createSelector(
-  (state) => state.dealerWips.lastWipProcessed,
-
-  (lastWipProcessed) => {
-    return lastWipProcessed &&
-      lastWipProcessed.wipObj &&
-      lastWipProcessed.wipObj.wipId
-      ? lastWipProcessed.wipObj.wipId
-      : null;
-  }
-);
 export const selectDealerWipsForUser = createSelector(
   (state) => state.dealerWips.dealerWipsItems,
   (state) => state.dealerWips.userIntId,
@@ -62,11 +42,13 @@ export const selectDealerWipsForUser = createSelector(
     return retArr;
   }
 );
+
 export const selectBookedOutToolsForUser = createSelector(
   (state) => state.dealerWips.dealerWipsItems,
+  (state) => state.dealerWips.userIntId,
 
-  (dealerWipsItems) => {
-    let retArr = getSortedBookedOutTools(dealerWipsItems);
+  (dealerWipsItems, userIntId) => {
+    let retArr = getSortedBookedOutToolsForUser(dealerWipsItems, userIntId);
     // console.log(
     //   '************** in selectBookedOutToolsForUser',
 
@@ -76,6 +58,35 @@ export const selectBookedOutToolsForUser = createSelector(
     //   retArr
     // );
     return retArr;
+  }
+);
+
+export const selectLastWipProcessedInfo = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => lastWipProcessed
+);
+
+export const selectLastWipProcessedObj = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => {
+    // console.log('lastWipProcessed', lastWipProcessed && lastWipProcessed);
+    return lastWipProcessed && lastWipProcessed.wipObj
+      ? lastWipProcessed.wipObj
+      : null;
+  }
+);
+
+export const selectLastWipProcessedId = createSelector(
+  (state) => state.dealerWips.lastWipProcessed,
+
+  (lastWipProcessed) => {
+    return lastWipProcessed &&
+      lastWipProcessed.wipObj &&
+      lastWipProcessed.wipObj.wipId
+      ? lastWipProcessed.wipObj.wipId
+      : null;
   }
 );
 
