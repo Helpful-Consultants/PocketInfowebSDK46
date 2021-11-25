@@ -36,6 +36,7 @@ import DealerToolsList from './DealerToolsList';
 
 import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
+import { selectDealerWips } from '../reducers/dealerWips';
 import { selectLastWipProcessedInfo } from '../reducers/dealerWips';
 import { selectLastWipProcessedObj } from '../reducers/dealerWips';
 import { selectLastWipProcessedId } from '../reducers/dealerWips';
@@ -180,9 +181,7 @@ export default FindToolsScreen = (props) => {
     (state) => state.dealerWips.fetchTime
   );
   const ltpFetchTime = useSelector((state) => state.ltp.fetchTime);
-  const dealerWipsItems = useSelector(
-    (state) => state.dealerWips.dealerWipsItems
-  );
+  const dealerWipsItems = useSelector(selectDealerWips);
   const uniqueLtpItems = useSelector(selectSortedUniqueLtpTools);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const isLoadingTools = useSelector((state) => state.dealerTools.isLoading);
