@@ -42,7 +42,7 @@ export default function OdisVersions(props) {
 
   const displayTime = Date.now();
 
-  const getOdisForBrand = (item) => {
+  const getOdisForBrand = (item = null) => {
     // if (brand === 'sk') {
     // console.log('getOdisForBrand', item && item);
     // console.log('getOdisForBrand brand is ', item.brandCode);
@@ -56,8 +56,14 @@ export default function OdisVersions(props) {
     //   'from',
     //   item.lastUpdated
     // );
+    // console.log('odis item', item && item);
     const isRecentChange = checkOdisChangeAge(
-      item.lastUpdated && item.lastUpdated.length > 0 ? item.lastUpdated : null,
+      item &&
+        typeof item.lastUpdated !== 'undefined' &&
+        item.lastUpdated !== null &&
+        item.lastUpdated.length > 0
+        ? item.lastUpdated
+        : null,
       displayTime
     );
     // console.log(
