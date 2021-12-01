@@ -10,18 +10,18 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 
-const myMiddleware = (store) => (next) => (action) => {
-  console.log('@@@@@@@@@@@@@@ My first middleware ran');
-  return next(action);
-};
-const mySecondMiddleware = (store) => (next) => (action) => {
-  console.log('@@@@@@@@@@@@@@ My second middleware ran');
-  return next(action);
-};
-const myThirdMiddleware = (store) => (next) => (action) => {
-  console.log('@@@@@@@@@@@@@@ My third middleware ran');
-  return next(action);
-};
+// const myMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My first middleware ran');
+//   return next(action);
+// };
+// const mySecondMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My second middleware ran');
+//   return next(action);
+// };
+// const myThirdMiddleware = (store) => (next) => (action) => {
+//   console.log('@@@@@@@@@@@@@@ My third middleware ran');
+//   return next(action);
+// };
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 console.log('creating store');
