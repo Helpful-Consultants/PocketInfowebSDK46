@@ -8,18 +8,12 @@ export const getBackgroundDataRequest = () => ({
   type: Types.GET_BACKGROUND_DATA_REQUEST,
 });
 
-export const getBackgroundDataSuccess = ({ items }) => ({
+export const getBackgroundDataSuccess = (payload) => ({
   type: Types.GET_BACKGROUND_DATA_SUCCESS,
-  payload: {
-    items: items,
-  },
+  payload,
 });
 
-export const BackgroundDataError = ({ error, statusCode, dataErrorUrl }) => ({
+export const BackgroundDataError = (payload) => ({
   type: Types.BACKGROUND_DATA_ERROR,
-  payload: {
-    error,
-    statusCode,
-    dataErrorUrl,
-  },
+  payload,
 });
