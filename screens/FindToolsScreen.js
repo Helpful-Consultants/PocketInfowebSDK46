@@ -494,7 +494,7 @@ export default FindToolsScreen = (props) => {
       setTimeout(() => {
         saveToJob(wipObj);
         inputChangeHandler('wipNumber', '');
-      }, 2000);
+      }, 300);
     } else {
       setMode('book');
       setIsBasketVisible(true);

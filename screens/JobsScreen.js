@@ -91,7 +91,7 @@ export default JobsScreen = (props) => {
       };
       //   console.log('JOBS *****  delete wip ' + currentJob.id);
       //   console.log('JOBS *****  delete wip ', payload);
-      setTimeout(() => deleteDealerWip(payload), 500);
+      setTimeout(() => deleteDealerWip(payload), 300);
     } else {
       let payload = {
         wipObj: currentJob,
@@ -101,7 +101,7 @@ export default JobsScreen = (props) => {
       //   console.log('JOBS *****  remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('JOBS *****  for wip wip ', payload);
 
-      setTimeout(() => deleteDealerWipTool(payload), 500);
+      setTimeout(() => deleteDealerWipTool(payload), 300);
     }
   };
 

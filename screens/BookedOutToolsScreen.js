@@ -103,7 +103,7 @@ export default BookedOutToolsScreen = (props) => {
 
       //   console.log('delete wip ' + currentJob.id);
       //   console.log('delete wip ', payload);
-      setTimeout(() => deleteDealerWip(payload), 500);
+      setTimeout(() => deleteDealerWip(payload), 300);
     } else {
       let payload = {
         wipObj: currentJob,
@@ -112,7 +112,7 @@ export default BookedOutToolsScreen = (props) => {
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
-      setTimeout(() => deleteDealerWipTool(payload), 500);
+      setTimeout(() => deleteDealerWipTool(payload), 300);
     }
   };
 
