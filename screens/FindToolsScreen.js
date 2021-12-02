@@ -1266,7 +1266,7 @@ export default FindToolsScreen = (props) => {
             </View>
           ) : null}
 
-          {isLoadingAny || dataErrorAny ? null : (
+          {dataErrorAny ? null : (
             <View>
               <DealerToolsList
                 items={itemsToShow}
