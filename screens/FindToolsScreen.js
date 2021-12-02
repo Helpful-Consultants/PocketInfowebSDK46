@@ -487,9 +487,11 @@ export default FindToolsScreen = (props) => {
         dealerId: fetchParamsObj.dealerId,
         tools: newToolBasket,
       };
-      //   console.log('FT *** in saveToJobRequestHandler,  wipObj', wipObj);
+      //   console.log(
+      //     'FT *** in saveToJobRequestHandler, saveToJob  wipObj',
+      //     wipObj
+      //   );
       setTimeout(() => {
-        // console.log('FT *** in saveToJobRequestHandler, calling saveToJob');
         saveToJob(wipObj);
         inputChangeHandler('wipNumber', '');
       }, 300);
@@ -715,13 +717,13 @@ export default FindToolsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      //   console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
+      console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
       setSearchInput('');
       getWipsItems();
-      //   console.log(
-      //     'lastWipProcessedObj',
-      //     lastWipProcessedObj && lastWipProcessedObj
-      //   );
+      console.log(
+        'lastWipProcessedObj',
+        lastWipProcessedObj && lastWipProcessedObj
+      );
       return () => {
         // Do something when the screen is unfocused
         // console.log('FT ***** Find tools Screen was unfocused');
@@ -1264,7 +1266,7 @@ export default FindToolsScreen = (props) => {
             </View>
           ) : null}
 
-          {dataErrorAny ? null : (
+          {isLoadingAny || dataErrorAny ? null : (
             <View>
               <DealerToolsList
                 items={itemsToShow}
