@@ -38,6 +38,7 @@ import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { selectFetchParamsObj } from '../reducers/user';
+import { setUserRequestedDemoApp } from '../actions/user';
 import {
   selectBookedOutToolsForUser,
   selectDealerWipsForUser,
@@ -470,6 +471,13 @@ export default HomeScreen = (props) => {
     showingDemoApp,
     showingDemoData,
   ]);
+
+  useEffect(() => {
+    // Force the new app
+    if (!showingDemoApp) {
+      dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
+    }
+  }, []);
 
   useFocusEffect(
     useCallback(() => {

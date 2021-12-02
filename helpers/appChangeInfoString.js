@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Notifications, wip bug fix';
+const appChangeInfoString = 'Changes: New notification screens';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
