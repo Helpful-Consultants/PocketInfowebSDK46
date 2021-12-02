@@ -181,9 +181,9 @@ export default JobsScreen = (props) => {
         searchInput.length >= minSearchLength ? (
         itemsToShow &&
         itemsToShow.length &&
-        itemsToShow.length > 0 ? null : items &&
-          items.length &&
-          items.length > 0 ? (
+        itemsToShow.length > 0 ? null : userWipsItems &&
+          userWipsItems.length &&
+          userWipsItems > 0 ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
             <Text style={baseStyles.textPromptRibbon}>
               Your search found no results.
