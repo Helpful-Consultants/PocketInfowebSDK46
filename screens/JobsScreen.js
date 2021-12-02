@@ -68,7 +68,9 @@ export default JobsScreen = (props) => {
     // console.log(searchInput);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(userWipsItems, searchInput);
+      let newFilteredItems = userWipsItems
+        ? searchItems(userWipsItems, searchInput)
+        : [];
       setFilteredItems(newFilteredItems);
     }
   };
@@ -144,10 +146,12 @@ export default JobsScreen = (props) => {
 
   const dataCount = (userWipsItems && userWipsItems.length) || 0;
   //   console.log(userWipsItems);
-  const items = (!isLoading && !dataError && userWipsItems) || [];
+  //   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log(items);
   let itemsToShow =
-    searchInput && searchInput.length > minSearchLength ? filteredItems : items;
+    searchInput && searchInput.length > minSearchLength
+      ? filteredItems
+      : userWipsItems;
   //   console.log(itemsToShow);
   //   console.log(
   //     'JOBS *****  Rendering Jobs screen ',
