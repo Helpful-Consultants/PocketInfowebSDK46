@@ -7,13 +7,13 @@ import * as TaskManager from 'expo-task-manager';
 import React, { useState } from 'react';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
-import { store, sagaMiddleware } from './helpers/store';
+import { store, runSagaMiddleware } from './helpers/store';
 // import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 // import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
-import rootSaga from './sagas';
+// import rootSaga from './sagas';
 import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
@@ -86,6 +86,8 @@ Sentry.init({
   release: Constants.manifest.revisionId,
 });
 
+runSagaMiddleware(); // run here so it isn't run on every render
+
 // deprecated so moved above
 // Sentry.setRelease(Constants.manifest.revisionId);
 
@@ -135,8 +137,6 @@ Sentry.init({
 //   {},
 //   compose(applyMiddleware(sagaMiddleware))
 // );
-
-sagaMiddleware.run(rootSaga);
 
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate);
 // console.log('%%%%%%%%% in app.js calling defineBackgroundTask');
@@ -243,6 +243,7 @@ export default function App(props) {
   //   console.log('7777 Text.defaultProps', Text && Text, TextInput && TextInput);
 
   const persistor = persistStore(store);
+
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return (
       <AppLoading
