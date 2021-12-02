@@ -23,8 +23,16 @@ export default function backgroundData(state = INITIAL_STATE, action) {
       //     'state in reducer; GET_BACKGROUND_DATA_START',
       //     state && state
       //   );
-      const fetchTime = Date.now();
-      //   console.log('action.type is:', action.type, 'fetchTime', fetchTime);
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
+          : null;
+      //   console.log(
+      //     'action.type is:',
+      //     action.type,
+      //     'action.payload',
+      //     action.payload
+      //   );
 
       return {
         ...state,
@@ -41,12 +49,19 @@ export default function backgroundData(state = INITIAL_STATE, action) {
       //     'state in reducer; GET_BACKGROUND_DATA_SUCCESS',
       //     state && state
       //   );
-      //   console.log('from API', action.payload.items && action.payload.items);
-      const fetchTime = Date.now();
+      //   console.log(
+      //     'in GET_BACKGROUND_DATA_SUCCESS from API',
+      //     action && action.payload && action.payload
+      //   );
+      const fetchTime =
+        action.payload && action.payload.fetchTime
+          ? action.payload.fetchTime
+          : null;
       return {
         ...state,
         backgroundDataItems:
-          (action.payload.items && action.payload.items) || {},
+          (action.payload && action.payload.items && action.payload.items) ||
+          {},
         fetchTime: fetchTime,
         // odisData: {},
         isLoading: false,

@@ -3,15 +3,22 @@ import * as actions from '../actions/backgroundData';
 import * as api from '../api/backgroundData';
 import Types from '../constants/Types';
 
-function* getBackgroundData({ payload }) {
-  console.log('%%%%%%%%%%%%%%in saga get backgroundData');
+function* getBackgroundData() {
+  //   console.log('%%%%%%%%%%%%%%in SAGA get backgroundData');
   let statusCode = null;
   let errorText = 'An error occurred when trying to get the BackgroundData';
   let dataErrorUrl = null;
-  yield put(actions.getBackgroundDataStart());
+  const fetchTime = Date.now();
+  //   console.log('SAGA getBackgroundData, fetchTime', fetchTime);
+  yield put(
+    actions.getBackgroundDataStart({
+      fetchTime,
+    })
+  );
+
   try {
     const result = yield call(api.getBackgroundData);
-    console.log('in saga get backgroundData - 200!');
+    // console.log('in saga get backgroundData - 200!');
 
     // console.log('result.data', result.data && result.data);
     // console.log(
@@ -27,15 +34,17 @@ function* getBackgroundData({ payload }) {
       result.data.abbreviation &&
       result.data.abbreviation.length > 0
     ) {
-      console.log('in BackgroundData saga - good 200');
-      console.log(
-        'result',
-        result &&
-          result.data &&
-          result.data.abbreviation &&
-          result.data.abbreviation.length > 0 &&
-          result.data.abbreviation
-      );
+      //   console.log('in BackgroundData saga - good 200');
+      //   console.log(
+      //     'in BackgroundData saga - good 200; fetchTime',
+      //     fetchTime,
+      //     'result',
+      //     result &&
+      //       result.data &&
+      //       result.data.abbreviation &&
+      //       result.data.abbreviation.length > 0 &&
+      //       result.data.abbreviation
+      //   );
       yield put(
         actions.getBackgroundDataSuccess({
           items: result.data,
@@ -43,15 +52,16 @@ function* getBackgroundData({ payload }) {
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
             null,
+          fetchTime,
         })
       );
     } else if (result && result.data) {
-      console.log('in BackgroundData saga - empty 200');
-      console.log(
-        'in BackgroundData saga - empty 200',
-        result.request.status && result.request.status
-      );
-      console.log(result && result);
+      //   console.log('in BackgroundData saga - empty 200');
+      //   console.log(
+      //     'in BackgroundData saga - empty 200',
+      //     result.request.status && result.request.status
+      //   );
+      //   console.log(result && result);
       yield put(
         actions.getBackgroundDataSuccess({
           items: {},
@@ -59,6 +69,7 @@ function* getBackgroundData({ payload }) {
             (result.status && result.status) ||
             (result.request.status && result.request.status) ||
             null,
+          fetchTime,
         })
       );
     } else {

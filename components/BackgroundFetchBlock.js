@@ -22,10 +22,10 @@ import { getShortDisplayDateAndLongTime } from '../helpers/dates';
 const registerBackgroundFetchAsync = async () => {
   const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
 
-  console.log(
-    'in registerBackgroundFetchAsync',
-    BackgroundFetch.BackgroundFetchStatus
-  );
+  //   console.log(
+  //     'in registerBackgroundFetchAsync',
+  //     BackgroundFetch.BackgroundFetchStatus
+  //   );
 
   switch (backgroundFetchStatus) {
     case BackgroundFetch.BackgroundFetchStatus.Restricted:
@@ -82,6 +82,7 @@ export default BackgroundFetchBlock = () => {
   const backgroundDataItems = useSelector(
     (state) => state.backgroundData.backgroundDataItems
   );
+  const backgroundData = useSelector((state) => state.backgroundData);
   const backgroundDataFetchTime = useSelector(
     (state) => state.backgroundData.fetchTime
   );
@@ -231,6 +232,7 @@ export default BackgroundFetchBlock = () => {
   //   console.log('notificationsStatus', notificationsStatus);
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
+  //   console.log('backgroundData', backgroundData);
   return showingDemoApp &&
     userDataObj &&
     userDataObj.userName &&

@@ -9,7 +9,7 @@ export const getBackgroundData = () => {
 
   //   const url = '?controller=api&action=listSoftwareVersionsAsJSON&appName=ODIS';
   //   console.log('in get Odis, url', url);
-  console.log('in getBackgroundData API ', url);
+  //   console.log('in getBackgroundData API ', url);
   return axios.get('https://worldtimeapi.org/api/timezone/Europe/London', {
     params: {
       //   limit: 1000
@@ -19,7 +19,7 @@ export const getBackgroundData = () => {
 };
 
 export const zzzgetBackgroundData = () => {
-  console.log('in getBackgroundData API ', url);
+  //   console.log('in getBackgroundData API ', url);
   //   console.log('here in getServiceMeasures API ', wipObj);
   //   const { dealerId } = wipObj;
   //   const dealerId = 'helpful';

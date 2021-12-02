@@ -2,9 +2,10 @@ import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { store } from '../helpers/store';
 import {
-  //   getBackgroundDataRequest,
-  getBackgroundDataStart,
+  getBackgroundDataRequest,
+  //   getBackgroundDataStart,
 } from '../actions/backgroundData';
+import backgroundData from '../reducers/backgroundData';
 
 export const defineBackgroundTask = async (taskName, taskExecutor) => {
   console.log('INSIDE TASKMANAGER.defineTASK');
@@ -69,12 +70,15 @@ export const fetchNews = async (props) => {
 
 export const fetchDate = async () => {
   //   const now = new Date().toISOString();
-  console.log('task management background fetchDate running!');
-  console.log('the store contains', store ? store : 'nought');
+  //   console.log('task management background fetchDate running!');
+  //   console.log('the store contains', store ? store.getState() : 'nought');
   const result = true;
-  store && store.dispatch && (await store.dispatch(getBackgroundDataStart()));
-  console.log('the store now contains', store ? store : 'nought');
-  console.log('background fetchDate finished!!!!!');
+  store && store.dispatch && (await store.dispatch(getBackgroundDataRequest()));
+  //   console.log(
+  //     'the store now contains',
+  //     store ? store.getState().backgroundData : 'nought'
+  //   );
+  //   console.log('background fetchDate finished!!!!!');
   //alert('Got background fetch call to fetch date: ' + now);
   return result
     ? BackgroundFetch.BackgroundFetchResult.NewData
