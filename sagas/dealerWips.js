@@ -266,11 +266,7 @@ function* watchGetDealerWipsRequest() {
 
 // Create WIP start
 function* createDealerWip({ payload }) {
-  //   console.log(
-  //     'SAGA in create wip saga',
-  //     payload && payload.wipObj && payload.wipObj.wipNumber
-  //   );
-  //   console.log('in create wip saga', payload.wipObj);
+  //   console.log('$$$$$ in create wip saga, payload:', payload && payload);
   let statusCode = null;
   let errorText = 'A server error occurred when trying to save the job';
   let dataErrorUrl = null;
@@ -398,7 +394,12 @@ function* createDealerWip({ payload }) {
 }
 
 function* watchCreateDealerWipRequest() {
-  yield takeEvery(Types.CREATE_DEALER_WIP_REQUEST, createDealerWip);
+  // yield takeEvery(Types.CREATE_DEALER_WIP_REQUEST, createDealerWip);
+  while (true) {
+    const { payload } = yield take(Types.CREATE_DEALER_WIP_REQUEST);
+    // console.log('watchCreateDealerWipRequest ', payload && payload);
+    yield call(createDealerWip, { payload });
+  }
 }
 // Create WIP end
 
@@ -505,14 +506,24 @@ function* deleteDealerWipTool({ payload }) {
 }
 
 function* watchDeleteDealerWipToolRequest() {
-  yield takeLatest(Types.DELETE_DEALER_WIP_TOOL_REQUEST, deleteDealerWipTool);
+  while (true) {
+    const { payload } = yield take(Types.DELETE_DEALER_WIP_TOOL_REQUEST);
+    // console.log(
+    //   'watchDeleteDealerWipToolRequest, payload:',
+    //   payload && payload
+    // );
+    yield call(deleteDealerWipTool, { payload });
+  }
 }
 // Remove tool from WIP end
 
 // Delete WIP
-function* deleteDealerWip(payload) {
+function* deleteDealerWip({ payload }) {
   //   console.log('in saga DELETE dealerWip called');
-  //   console.log('************ in saga DELETE dealerWip payload is', payload);
+  //   console.log(
+  //     '************ in saga DELETE dealerWip payload is',
+  //     payload && payload
+  //   );
   //   console.log('in saga DELETE dealerWip wip', payload.wipNumber);
   let statusCode = null;
   let errorText = 'An error occurred when trying to delete the job';
@@ -615,7 +626,8 @@ function* watchDeleteDealerWipRequest() {
   //   console.log('in saga watch for DELETE dealerWip');
   while (true) {
     const { payload } = yield take(Types.DELETE_DEALER_WIP_REQUEST);
-    yield call(deleteDealerWip, payload);
+    // console.log('In watchDeleteDealerWipRequest, payload:', payload && payload);
+    yield call(deleteDealerWip, { payload });
   }
 }
 // Delete WIP end
