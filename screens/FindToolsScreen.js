@@ -717,13 +717,13 @@ export default FindToolsScreen = (props) => {
 
   useFocusEffect(
     useCallback(() => {
-      console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
+      //   console.log('FT ***** useFocusEffect, fetchParamsObj is', fetchParamsObj);
       setSearchInput('');
       getWipsItems();
-      console.log(
-        'lastWipProcessedObj',
-        lastWipProcessedObj && lastWipProcessedObj
-      );
+      //   console.log(
+      //     'lastWipProcessedObj',
+      //     lastWipProcessedObj && lastWipProcessedObj
+      //   );
       return () => {
         // Do something when the screen is unfocused
         // console.log('FT ***** Find tools Screen was unfocused');
