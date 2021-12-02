@@ -942,6 +942,12 @@ export default getBaseStyles = (props) => {
     viewRowFlex: {
       flexDirection: 'row',
     },
+    viewRowFlexData: {
+      flexDirection: 'row',
+      height: 50,
+      alignItems: 'center',
+      //   backgroundColor: 'red',
+    },
     viewRowFlexCentreJustified: {
       flexDirection: 'row',
       justifyContent: 'center',

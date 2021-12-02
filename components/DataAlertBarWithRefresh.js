@@ -29,7 +29,7 @@ export default DataAlertBarWithRefresh = (props) => {
   const dataNameToUse = dataName || 'data';
 
   return dataCount && dataCount > 0 ? null : (
-    <View style={baseStyles.viewRowFlex}>
+    <View style={baseStyles.viewRowFlexData}>
       {isLoading ? (
         <View style={baseStyles.searchBarRowRefreshButton}>
           <ActivityIndicator size={'small'} />

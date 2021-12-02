@@ -31,7 +31,7 @@ export default SearchBarWithRefresh = (props) => {
     // console.log('dataError: ', dataError);
   }
   return (
-    <View style={baseStyles.viewRowFlex}>
+    <View style={baseStyles.viewRowFlexData}>
       {isLoading ? (
         <View style={baseStyles.searchBarRowRefreshButton}>
           <ActivityIndicator size={'small'} />
