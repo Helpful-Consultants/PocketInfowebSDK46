@@ -77,7 +77,7 @@ export const createDealerWip = (wipObj) => {
 // export const deleteDealerWip = ({ dealerId, wipObj }) => {
 
 export const deleteDealerWipTool = (payload) => {
-  //   console.log('in delete dealer wip tool api', payload);
+  console.log('in delete dealer wip tool api', payload);
 
   const wipId = payload.wipObj.id;
   const wipToolLineId = payload.wipToolLineId;
@@ -94,7 +94,8 @@ export const deleteDealerWip = (payload) => {
     payload && payload.fetchParamsObj && payload.fetchParamsObj.dealerId
       ? payload.fetchParamsObj.dealerId
       : '';
-  const wipObj = payload.wipObj;
+  const wipObj = (payload && payload.wipObj) || {};
+  //   console.log('in delete dealer wip api, wipObj:', wipObj && wipObj);
   const sendData =
     'id=' +
     wipObj.id +
