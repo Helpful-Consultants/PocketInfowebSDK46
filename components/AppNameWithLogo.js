@@ -34,7 +34,7 @@ export default AppNameWithLogo = () => {
           Constants.manifest.name === 'Pocket Infoweb Extra'
             ? 'Pocket Infoweb Extra'
             : showingDemoApp
-            ? 'Pocket Infoweb (Demo)'
+            ? 'Pocket Infoweb'
             : 'Pocket Infoweb'}
         </Text>
       </View>

@@ -140,10 +140,10 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       //     ltpLoansAmberCount
       //   );
       let tempNotifiableAlertsRedCount = 0;
-      console.log(
-        'in reminders nav useEffect tempNotifiableAlertsRedCount',
-        tempNotifiableAlertsRedCount
-      );
+      //   console.log(
+      //     'in reminders nav useEffect tempNotifiableAlertsRedCount',
+      //     tempNotifiableAlertsRedCount
+      //   );
 
       if (
         typeof calibrationExpiryOverdueCount === 'number' &&
