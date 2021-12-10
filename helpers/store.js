@@ -46,13 +46,13 @@ function configStore() {
 }
 
 function runSaga() {
-  console.log('!!!!! in runSaga');
+  //   console.log('!!!!! in runSaga');
   sagaMiddleware.run(rootSaga);
 }
 export const store = configStore();
 
 export const runSagaMiddleware = () => {
-  console.log('!!!!! in runSagaMiddleware');
+  //   console.log('!!!!! in runSagaMiddleware');
   runSaga();
 };
 

@@ -187,7 +187,7 @@ export default NotificationsScreen = (props) => {
       //   );
       return () => {
         // Do something when the screen is unfocused
-        console.log('Notifications Screen was unfocused');
+        // console.log('Notifications Screen was unfocused');
       };
     }, [getItems])
   );
