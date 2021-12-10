@@ -104,8 +104,10 @@ const DrawerNavigator = (props) => {
         <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
       )}
       screenOptions={{
-        activeBackgroundColor: Colors.vwgActiveLink,
-        inactiveBackgroundColor: Colors.vwgInactiveLink,
+        drawerActiveTintColor: Colors.vwgWhite,
+        drawerInactiveTintColor: Colors.vwgWhite,
+        drawerActiveBackgroundColor: Colors.vwgActiveLink,
+        drawerInactiveBackgroundColor: Colors.vwgInactiveLink,
         labelStyle: baseStyles.panelTextNav,
       }}
     >
