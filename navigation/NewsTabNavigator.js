@@ -3,7 +3,6 @@ import { Dimensions, Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -44,10 +43,7 @@ let headerHeight =
 
 // Start tab navigator
 
-const NewsTabs =
-  Platform.OS === 'androidzzz'
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const NewsTabs = createBottomTabNavigator();
 
 // console.log(
 //   'in news navigator, newsAlertCount ',

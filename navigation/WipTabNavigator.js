@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButton';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -43,10 +42,7 @@ let headerHeight =
 
 // Start tab navigator
 
-const WipTabs =
-  Platform.OS === 'androidzzz'
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const WipTabs = createBottomTabNavigator();
 
 export default WipTabNavigator = ({ navigation, route }) => {
   useEffect(() => {

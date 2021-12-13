@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
@@ -44,10 +43,7 @@ let headerHeight =
 
 // Start tab navigator
 
-const RemindersTabs =
-  Platform.OS === 'androidzzz'
-    ? createMaterialBottomTabNavigator()
-    : createBottomTabNavigator();
+const RemindersTabs = createBottomTabNavigator();
 
 // console.log(
 //   'in navigator, showBadgeLtpLoans ',
