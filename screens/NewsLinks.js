@@ -131,16 +131,18 @@ export default function NewsLinks(props) {
     <View>
       {items && items.length > 0 ? (
         <ScrollView>
-          {items.map((item, i) => (
-            <Touchable
-              onPress={() =>
-                props.pressOpenHandler(amendLink(item.linkTo, appCode, intId))
-              }
-              key={i}
-            >
-              {getFormattedNewsItem(item)}
-            </Touchable>
-          ))}
+          {items.map((item, i) => {
+            console.log(item);
+            const amendedLink = amendLink(item.linkTo, appCode, intId);
+            return (
+              <Touchable
+                onPress={() => props.pressOpenHandler(amendedLink)}
+                key={i}
+              >
+                {getFormattedNewsItem(item)}
+              </Touchable>
+            );
+          })}
         </ScrollView>
       ) : null}
     </View>
