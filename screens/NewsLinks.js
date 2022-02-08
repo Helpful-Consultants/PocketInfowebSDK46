@@ -132,7 +132,6 @@ export default function NewsLinks(props) {
       {items && items.length > 0 ? (
         <ScrollView>
           {items.map((item, i) => {
-            console.log(item);
             const amendedLink = amendLink(item.linkTo, appCode, intId);
             return (
               <Touchable
