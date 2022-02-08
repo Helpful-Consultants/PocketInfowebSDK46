@@ -1,6 +1,6 @@
 const amendLink = (rawLink = '', appCode = '', intId = '') => {
   //   const rawLinkLowerCase = rawLink.toLowerCase();
-  //   console.log('amendLink rawLink is', rawLink);
+//   console.log('amendLink rawLink is', rawLink);
   let newLink = '';
 
   if (rawLink.indexOf('controller=desktopBulletins&action=list') > 0) {
@@ -23,9 +23,20 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       .replace('&Id=', '&id=')
       .replace('?controller=stories', 'controller=api')
       .replace('&id=', '&shadowController=stories&shadowAction=view&shadowId=')
-      .replace('&action=view', '&action=showToUser');
+        .replace('&action=view', '&action=showToUser');
+      
+      
+       newLink =
+        '?appCode=' +
+        appCode +
+        '&userId=' +
+        intId +
+        '&' +
+        newLink;
 
-    newLink = '?appCode=' + appCode + '&userId=' + intId + '&' + newLink;
+    if (rawLink.indexOf('https://toolsinfoweb.co.uk')  === -1) {
+      newLink =  'https://toolsinfoweb.co.uk' + newLink
+    }
 
     // console.log('amendLink returning newLink', newLink);
 
@@ -36,4 +47,4 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
   }
 };
 
-export default amendLink
+export default amendLink;
