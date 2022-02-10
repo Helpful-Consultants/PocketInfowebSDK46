@@ -129,6 +129,7 @@ export default NewsScreen = (props) => {
 
   //   console.log('newsItems AREEEEEEEEEE', newsItems);
   const items = (!isLoading && !dataError && newsItems) || [];
+  //   const items = (!isLoading && !dataError && newsDummyData) || [];
   //   console.log('items AREEEEEEEEEE', items);
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
   //   console.log(items);

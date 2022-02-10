@@ -1,13 +1,60 @@
 export default newsDummyData = [
   {
-    id: '63',
+    id: '88',
     newsType: 'News',
-    headline: 'The New VAS 6150F Diagnostic Laptop',
+    headline: 'Story:The New VAS 6150F Diagnostic Laptop',
+    newstext:
+      'The New VAS 6150F diagnosis unit impresses not only due to improved performance, but also due to maximum user safety, extremely high user comfort and numerous other highlights which are ideal for harsh everyday usage in the workshop. In addition, it has been optimally coordinated with the Offboard Diagnostic Information System and the diagnostic interface. A generation that is setting benchmarks.',
+    imageName: 'VAS6150F.png',
+    linkTo: '?controller=Stories&action=View&id=72',
+    createdDate: '28/01/2022 10:30:28',
+    lastUpdated: '07/02/2022 18:56:16',
+    updatedBy: 'Simon Groves',
+    ipAddress: '109.149.144.89',
+    businessCritical: 'Y',
+    topLine: 'Y',
+  },
+  {
+    id: '99',
+    newsType: 'News',
+    headline: 'PDF: Straight to the brochure',
+    newstext:
+      'The New VAS 6150F diagnosis unit impresses not only due to improved performance, but also due to maximum user safety, extremely high user comfort and numerous other highlights which are ideal for harsh everyday usage in the workshop. In addition, it has been optimally coordinated with the Offboard Diagnostic Information System and the diagnostic interface. A generation that is setting benchmarks.',
+    imageName: 'VAS6150F.png',
+    linkTo:
+      'https://toolsinfoweb.co.uk/content/documents/Sales_Support/Brochure_VAS6150F.pdf',
+    createdDate: '28/01/2022 10:30:28',
+    lastUpdated: '07/02/2022 18:56:16',
+    updatedBy: 'Simon Groves',
+    ipAddress: '109.149.144.89',
+    businessCritical: 'Y',
+    topLine: 'Y',
+  },
+  {
+    id: '33',
+    newsType: 'News',
+    headline: 'PDF: The New VAS 6150F Diagnostic Laptop',
     newstext:
       'The New VAS 6150F diagnosis unit impresses not only due to improved performance, but also due to maximum user safety, extremely high user comfort and numerous other highlights which are ideal for harsh everyday usage in the workshop. In addition, it has been optimally coordinated with the Offboard Diagnostic Information System and the diagnostic interface. A generation that is setting benchmarks.',
     imageName: 'VAS6150F.png',
     linkTo:
       'https://toolsinfoweb.co.uk/content/documents/Sales_Support/View_The_VAS_6150F_diagnostic_laptop.pdf',
+    createdDate: '28/01/2022 10:30:28',
+    lastUpdated: '07/02/2022 18:56:16',
+    updatedBy: 'Simon Groves',
+    ipAddress: '109.149.144.89',
+    businessCritical: 'Y',
+    topLine: 'Y',
+  },
+  {
+    id: '63',
+    newsType: 'News',
+    headline: 'PDF: Landscape brochure test',
+    newstext:
+      'The New VAS 6150F diagnosis unit impresses not only due to improved performance, but also due to maximum user safety, extremely high user comfort and numerous other highlights which are ideal for harsh everyday usage in the workshop. In addition, it has been optimally coordinated with the Offboard Diagnostic Information System and the diagnostic interface. A generation that is setting benchmarks.',
+    imageName: 'VAS6150F.png',
+    linkTo:
+      'https://toolsinfoweb.co.uk/content/documents/Sales_Support/landscape_brochure_1.pdf',
     createdDate: '28/01/2022 10:30:28',
     lastUpdated: '07/02/2022 18:56:16',
     updatedBy: 'Simon Groves',

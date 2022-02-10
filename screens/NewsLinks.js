@@ -133,6 +133,7 @@ export default function NewsLinks(props) {
         <ScrollView>
           {items.map((item, i) => {
             const amendedLink = amendLink(item.linkTo, appCode, intId);
+
             return (
               <Touchable
                 onPress={() => props.pressOpenHandler(amendedLink)}
@@ -147,3 +148,6 @@ export default function NewsLinks(props) {
     </View>
   );
 }
+
+// console.log('link from endpoint', item && item.linkTo && item.linkTo);
+// console.log('amended link', amendedLink);

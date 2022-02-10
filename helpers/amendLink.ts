@@ -23,7 +23,7 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       .replace('&Id=', '&id=')
       .replace('?controller=stories', 'controller=api')
       .replace('&id=', '&shadowController=stories&shadowAction=view&shadowId=')
-        .replace('&action=view', '&action=showToUser');
+      .replace('&action=view', '&action=showToUser');
       
       
        newLink =
