@@ -38,6 +38,19 @@ export default AppInfo = (props) => {
   //     '!!!!!!!!!!!! isTabletOrMobileDevice',
   //     isTabletOrMobileDevice && isTabletOrMobileDevice
   //   );
+  const buildNumber =
+    Platform && Platform.OS === 'ios'
+      ? Constants.manifest &&
+        Constants.manifest.ios &&
+        Constants.manifest.ios.buildNumber
+        ? Constants.manifest.ios.buildNumber
+        : null
+      : Constants.manifest &&
+        Constants.manifest.android &&
+        Constants.manifest.android.versionCode
+      ? Constants.manifest.android.versionCode
+      : null;
+
   return (
     <View
       style={{
@@ -103,6 +116,7 @@ export default AppInfo = (props) => {
         {Constants.manifest.sdkVersion
           ? `${Constants.manifest.sdkVersion}/`
           : null}
+        {buildNumber ? `${buildNumber}/` : 'null'}
         {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
           ? `${Constants.manifest.version} OTA`

@@ -461,6 +461,12 @@ export default getBaseStyles = (props) => {
       fontSize: baseFontSizeSmaller,
       paddingTop: 2,
     },
+    textUpdateApp: {
+      ...baseText,
+      textTransform: 'uppercase',
+      fontSize: baseFontSizeLarge,
+      paddingTop: 2,
+    },
     // PANEL - END
     // SEARCH BAR - START
     searchBarContainer: {
