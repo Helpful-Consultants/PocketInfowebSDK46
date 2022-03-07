@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
 // import * as Permissions from 'expo-permissions';
 import {
   ActivityIndicator,
+  Linking,
   Platform,
   ScrollView,
   useWindowDimensions,
@@ -112,6 +114,38 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeArea();
 
+  const buildNumber =
+    Platform && Platform.OS === 'ios'
+      ? Constants.manifest &&
+        Constants.manifest.ios &&
+        Constants.manifest.ios.buildNumber
+        ? Constants.manifest.ios.buildNumber
+        : null
+      : Constants.manifest &&
+        Constants.manifest.android &&
+        Constants.manifest.android.versionCode
+      ? Constants.manifest.android.versionCode
+      : null;
+  //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
+  //   console.log('IN HOME !!!!! Platform', Platform); 
+  //   const isUpdateNeeded = buildNumber
+  //     ? Platform.OS === 'ios'
+  //       ? buildNumber !== '118'
+  //         ? true
+  //         : false
+  //       : buildNumber !== '24'
+  //       ? true
+  //       : false
+  //       : false;
+  const isUpdateNeeded = false;
+
+  //   console.log(
+  //     'IN HOME !!!!! buildNumber',
+  //     buildNumber,
+  //     typeof buildNumber,
+  //     'isUpdateNeeded',
+  //     isUpdateNeeded
+  //   );
   // force a crash
   //const crashMe = CrashObj;
 
@@ -122,6 +156,7 @@ export default HomeScreen = (props) => {
   const userIntId = useSelector((state) => state.user.userIntId);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingUpdateAppPrompt = true;
 
   //   console.log('IN HOME !!!!! 1g');
 
@@ -395,6 +430,20 @@ export default HomeScreen = (props) => {
 
   const gridRows = showingDemoApp ? 8 : 6;
 
+  const openAppStore = () => {
+    const appLinkPro =
+      'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
+    const appLinkExtra =
+      'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
+    https: Linking.canOpenURL(appLinkPro).then(
+      (supported) => {
+        console.log('open to link');
+        supported && Linking.openURL(appLinkPro);
+      },
+      (err) => console.log(err)
+    );
+  };
+
   useEffect(() => {
     if (showingDemoApp) {
       //   console.log(
@@ -515,7 +564,7 @@ export default HomeScreen = (props) => {
         }}
       >
         <AppNameWithLogo />
-        {showingDemoApp ? (
+        {1 === 2 && showingDemoApp && !isUpdateNeeded ? (
           <Text
             style={{
               ...baseStyles.textExtraApp,
@@ -523,6 +572,18 @@ export default HomeScreen = (props) => {
             }}
           >
             Showing proposed new features
+          </Text>
+        ) : null}
+
+        {isUpdateNeeded ? (
+          <Text
+            style={{
+              ...baseStyles.textUpdateApp,
+              color: Colors.vwgCoolOrange,
+            }}
+            onPress={openAppStore}
+          >
+            Click here to update app in app store
           </Text>
         ) : null}
 
