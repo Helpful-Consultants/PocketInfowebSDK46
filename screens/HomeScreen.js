@@ -130,7 +130,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
     ? Platform.OS === 'ios'
-      ? buildNumber !== '118'
+      ? buildNumber !== '117'
         ? true
         : false
       : buildNumber !== '24'
