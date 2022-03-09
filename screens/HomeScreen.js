@@ -128,16 +128,16 @@ export default HomeScreen = (props) => {
       : null;
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
   //   console.log('IN HOME !!!!! Platform', Platform);
-  //   const isUpdateNeeded = buildNumber
-  //     ? Platform.OS === 'ios'
-  //       ? buildNumber !== '118'
-  //         ? true
-  //         : false
-  //       : buildNumber !== '24'
-  //       ? true
-  //       : false
-  //       : false;
-  const isUpdateNeeded = false;
+  const isUpdateNeeded = buildNumber
+    ? Platform.OS === 'ios'
+      ? buildNumber !== '118'
+        ? true
+        : false
+      : buildNumber !== '24'
+      ? true
+      : false
+    : false;
+  //   const isUpdateNeeded = false;
 
   //   console.log(
   //     'IN HOME !!!!! buildNumber',
@@ -583,7 +583,7 @@ export default HomeScreen = (props) => {
             }}
             onPress={openAppStore}
           >
-            Click here to update app in app store
+            Press here to update app in app store
           </Text>
         ) : null}
 
