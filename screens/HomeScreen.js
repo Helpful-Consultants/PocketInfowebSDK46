@@ -113,7 +113,8 @@ export default HomeScreen = (props) => {
 
   const { navigation } = props;
   const insets = useSafeArea();
-  //   console.log('Constants.manifest', Constants.manifest);
+  //   console.log('Constants', Constants);
+  //   console.log('Constants.manifest', Constants.manifest && Constants.manifest);
 
   const buildNumber =
     typeof Constants !== 'undefined' &&
@@ -143,7 +144,7 @@ export default HomeScreen = (props) => {
       : buildNumber !== 24 // it is a number
       ? true
       : false
-    : false;
+    : true; // not SDK 44 or above
   //   const isUpdateNeeded = false;
 
   //   console.log(
