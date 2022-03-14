@@ -113,16 +113,19 @@ export default HomeScreen = (props) => {
 
   const { navigation } = props;
   const insets = useSafeArea();
+  //   console.log('Constants.manifest', Constants.manifest);
 
   const buildNumber =
     Platform && Platform.OS === 'ios'
       ? Constants.manifest &&
         Constants.manifest.ios &&
+        typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
         Constants.manifest.ios.buildNumber
         ? Constants.manifest.ios.buildNumber
         : null
       : Constants.manifest &&
         Constants.manifest.android &&
+        typeof Constants.manifest.android.versionCode !== 'undefined' &&
         Constants.manifest.android.versionCode
       ? Constants.manifest.android.versionCode
       : null;
@@ -130,10 +133,10 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
     ? Platform.OS === 'ios'
-      ? buildNumber !== '117'
+      ? buildNumber !== '117' // it is a string
         ? true
         : false
-      : buildNumber !== '24'
+      : buildNumber !== 24 // it is a number
       ? true
       : false
     : false;
