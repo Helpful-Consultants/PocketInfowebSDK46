@@ -116,18 +116,22 @@ export default HomeScreen = (props) => {
   //   console.log('Constants.manifest', Constants.manifest);
 
   const buildNumber =
-    Platform && Platform.OS === 'ios'
-      ? Constants.manifest &&
-        Constants.manifest.ios &&
-        typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
-        Constants.manifest.ios.buildNumber
-        ? Constants.manifest.ios.buildNumber
+    typeof Constants !== 'undefined' &&
+    typeof Constants.manifest !== 'undefined' &&
+    typeof Platform !== 'undefined' &&
+    typeof Platform.OS !== 'undefined' &&
+    Platform.OS
+      ? Platform.OS === 'ios'
+        ? Constants.manifest.ios &&
+          typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
+          Constants.manifest.ios.buildNumber
+          ? Constants.manifest.ios.buildNumber
+          : null
+        : Constants.manifest.android &&
+          typeof Constants.manifest.android.versionCode !== 'undefined' &&
+          Constants.manifest.android.versionCode
+        ? Constants.manifest.android.versionCode
         : null
-      : Constants.manifest &&
-        Constants.manifest.android &&
-        typeof Constants.manifest.android.versionCode !== 'undefined' &&
-        Constants.manifest.android.versionCode
-      ? Constants.manifest.android.versionCode
       : null;
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
   //   console.log('IN HOME !!!!! Platform', Platform);
