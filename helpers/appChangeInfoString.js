@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Check SDK version';
+const appChangeInfoString = 'Changes: Check SDK version.';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
