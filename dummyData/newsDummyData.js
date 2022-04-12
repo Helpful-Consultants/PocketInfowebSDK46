@@ -172,4 +172,36 @@ export default newsDummyData = [
     businessCritical: 'N',
     topLine: 'N',
   },
+  {
+    businessCritical: 'N',
+    createdDate: '08/11/2018 13:37:36',
+    headline: 'VAS 6154(A) Post Warranty Support',
+    id: '10',
+    imageName: '6154-a.PNG',
+    ipAddress: '147.161.171.80',
+    lastUpdated: '12/01/2022 11:15:00',
+    linkTo:
+      '/content/documents/VAS_Hardware_Support/VAS_6154A/VAS_6154_Order_for_Repair_with_Costs.pdf',
+    newsType: 'News',
+    newstext:
+      'Please view the above document if you have either a damaged device(s) that falls outside of warranty repair, or your devices(s) are out of their warranty period. There are repair costs included in the document on the final page.',
+    topLine: 'Y',
+    updatedBy: 'Lyndon Evans',
+  },
+  {
+    businessCritical: 'N',
+    createdDate: '07/11/2018 13:37:36',
+    headline: 'VAS 6154(A) Dummy news',
+    id: '10',
+    imageName: '6154-a.PNG',
+    ipAddress: '147.161.171.80',
+    lastUpdated: '12/01/2022 11:15:00',
+    linkTo:
+      'content/documents/VAS_Hardware_Support/VAS_6154A/VAS_6154_Order_for_Repair_with_Costs.pdf',
+    newsType: 'News',
+    newstext:
+      'Just a test of the news page for items missing an / at the beginning',
+    topLine: 'Y',
+    updatedBy: 'Lyndon Evans',
+  },
 ];
