@@ -54,7 +54,6 @@ import Loading from './components/Loading';
 enableScreens();
 
 axios.defaults.withCredentials = true;
-// axios.defaults.baseURL = 'http://rem-rest-api.herokuapp.com/api';
 axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
 
 // const theme = {
