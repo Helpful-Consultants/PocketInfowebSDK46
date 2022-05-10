@@ -12,7 +12,10 @@ import * as Notifications from 'expo-notifications';
 import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
 import { getShortDisplayDateAndLongTime } from '../helpers/dates';
-
+import {
+  requestNotificationsPermissionAsync,
+  registerForPushNotificationsAsync,
+} from '../helpers/notifications';
 // import { store } from '../helpers/store';
 // console.log('in backgroundfetchblock', store);
 
@@ -158,19 +161,6 @@ export default BackgroundFetchBlock = () => {
     );
   };
 
-  const requestNotificationsPermissionAsync = async () => {
-    const permissionsStatus = await Notifications.requestPermissionsAsync({
-      ios: {
-        allowAlert: false,
-        allowBadge: true,
-        allowSound: false,
-        allowAnnouncements: false,
-      },
-    });
-    // console.log(`permissionsStatus`, permissionsStatus);
-    setPermissionsStatus(permissionsStatus);
-  };
-
   const checkTaskStatusAsync = async () => {
     const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
 
@@ -208,7 +198,8 @@ export default BackgroundFetchBlock = () => {
   useEffect(() => {
     checkTaskStatusAsync();
     checkNotificationsStatusAsync();
-    requestNotificationsPermissionAsync();
+    // requestNotificationsPermissionAsync();
+    registerForPushNotificationsAsync();
     getBadgeCountAsync();
     // console.log('in useEffect appBadgeCount is', appBadgeCount);
   }, []);
