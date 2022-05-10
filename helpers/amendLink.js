@@ -45,7 +45,7 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       'toolsinfoweb.co.ukcontent',
       'toolsinfoweb.co.uk/content'
     );
-    console.log('amendLink returning ', rawLink, 'as', newLink);
+    // console.log('amendLink returning ', rawLink, 'as', newLink);
     return newLink;
   }
 };
