@@ -25,7 +25,7 @@ import {
   fetchDate,
   //   fetchData,
 } from './helpers/taskManagement';
-import { handleNewNotification } from './helpers/notifications';
+import { handleBackgroundNotification } from './helpers/notifications';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -143,7 +143,8 @@ runSagaMiddleware(); // run here so it isn't run on every render
 defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
 defineBackgroundTask(
   Tasks.BACKGROUND_NOTIFICATIONS_TASK,
-  ({ data, error, executionInfo }) => handleNewNotification(data.notification)
+  ({ data, error, executionInfo }) =>
+    handleBackgroundNotification(data.notification)
 );
 
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData);

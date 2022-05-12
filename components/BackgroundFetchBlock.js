@@ -14,12 +14,11 @@ import { Text } from 'react-native-elements';
 import Tasks from '../constants/Tasks';
 import { getShortDisplayDateAndLongTime } from '../helpers/dates';
 import {
-  requestNotificationsPermissionAsync,
   registerBackgroundNotificationsTaskAsync,
   registerDeviceForPushNotificationsAsync,
-  setUpNotificationsHandler,
+  setUpForegroundNotificationsHandler,
+  schedulePushNotificationAsync,
   unregisterBackgroundNotificationsTaskAsync,
-  resetBackgroundhandleNotificationsTaskInterval,
 } from '../helpers/notifications';
 // import { store } from '../helpers/store';
 // console.log('in backgroundfetchblock', store);
@@ -29,21 +28,17 @@ import {
 // Note: This does NOT need to be in the global scope and CAN be used in your React components!
 const registerBackgroundFetchTaskAsync = async () => {
   const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
-
   //   console.log(
   //     'in registerBackgroundFetchTaskAsync',
   //     BackgroundFetch.BackgroundFetchStatus
   //   );
-
   switch (backgroundFetchStatus) {
     case BackgroundFetch.BackgroundFetchStatus.Restricted:
     case BackgroundFetch.BackgroundFetchStatus.Denied:
       console.log('Background execution is disabled');
       return;
-
     default: {
       //   console.log('Background execution allowed');
-
       let tasks = await TaskManager.getRegisteredTasksAsync();
       if (
         tasks.find((f) => f.taskName === Tasks.BACKGROUND_FETCH_DATE_TASK) ==
@@ -58,7 +53,6 @@ const registerBackgroundFetchTaskAsync = async () => {
             startOnBoot: true, // android only
           }
         );
-
         tasks = await TaskManager.getRegisteredTasksAsync();
         console.log('Registered tasks', tasks);
       } else {
@@ -66,13 +60,11 @@ const registerBackgroundFetchTaskAsync = async () => {
           `Task ${Tasks.BACKGROUND_FETCH_DATE_TASK} already registered, skipping`
         );
       }
-
       console.log('Setting interval to', 15);
       await BackgroundFetch.setMinimumIntervalAsync(15);
     }
   }
 };
-
 const resetBackgroundFetchTaskInterval = async () => {
   console.log('in resetBackgroundFetchTaskInterval');
   return BackgroundFetch.setMinimumIntervalAsync(15);
@@ -97,8 +89,10 @@ export default BackgroundFetchBlock = () => {
   );
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const [isFetchTaskRegistered, setIsFetchTaskRegistered] = useState(false);
-  const [isNotificationsTaskRegistered, setIsNotificationsTaskRegistered] =
-    useState(false);
+  const [
+    isBackgroundNotificationsTaskRegistered,
+    setIsBackgroundNotificationsTaskRegistered,
+  ] = useState(false);
   const [expoPushToken, setExpoPushToken] = useState('');
   const [expoPushResult, setExpoPushResult] = useState('');
   const [backgroundTaskStatus, setBackgroundTaskStatus] = useState(null);
@@ -165,24 +159,29 @@ export default BackgroundFetchBlock = () => {
     }
   };
 
-  const checkNotificationsStatusAsync = async () => {
-    const settings = await Notifications.getPermissionsAsync();
+  const checkNotificationsPermissionStatusAsync = async (settings) => {
+    // const settings = await Notifications.getPermissionsAsync();
     // console.log(`notif status`, settings);
-    setNotificationsPermissionsStatus(settings);
-    return (
-      settings.granted ||
-      settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-    );
+    const returnVal =
+      (settings && settings.granted) ||
+      (settings &&
+        settings.ios?.status ===
+          Notifications.IosAuthorizationStatus.PROVISIONAL);
+    setNotificationsPermissionsStatus(returnVal);
+    return returnVal;
   };
 
-  const checkFetchTaskStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync();
-
-    const isTaskRegistered = await TaskManager.isTaskRegisteredAsync(
+  const checkBackgroundFetchTaskStatusAsync = async () => {
+    const getStatus = await BackgroundFetch.getStatusAsync();
+    const getIsTaskRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_FETCH_DATE_TASK
     );
+    const [status, isTaskRegistered] = await Promise.all([
+      getStatus,
+      getIsTaskRegistered,
+    ]);
     console.log(
-      'in checkFetchTaskStatusAsync backgroundFetchStatus: ',
+      'in checkBackgroundFetchTaskStatusAsync backgroundFetchStatus: ',
       status,
       'isFetchTaskRegistered',
       isTaskRegistered
@@ -191,87 +190,70 @@ export default BackgroundFetchBlock = () => {
     setIsFetchTaskRegistered(isTaskRegistered);
   };
 
-  const checkNotificationsTaskStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync();
-
+  const checkBackgroundNotificationsTaskStatusAsync = async () => {
     const isTaskRegistered = await TaskManager.isTaskRegisteredAsync(
       Tasks.BACKGROUND_NOTIFICATIONS_TASK
     );
     console.log(
-      '$$$ in checkNotificationsTaskStatusAsync backgroundFetchStatus: ',
-      status,
-      'isNotificationsTaskRegistered',
+      '$$$ in checkBackgroundNotificationsTaskStatusAsync;isBackgroundNotificationsTaskRegistered',
       isTaskRegistered
     );
-    setBackgroundTaskStatus(status);
-    setIsNotificationsTaskRegistered(isTaskRegistered);
+    setIsBackgroundNotificationsTaskRegistered(isTaskRegistered);
   };
 
-  const toggleFetchTaskAsync = async () => {
+  const toggleBackgroundFetchTaskAsync = async () => {
     console.log(
-      'in toggleFetchTaskAsync, isFetchTaskRegistered: ',
+      'in toggleBackgroundFetchTaskAsync, isFetchTaskRegistered: ',
       isFetchTaskRegistered
     );
     if (isFetchTaskRegistered) {
       await unregisterBackgroundFetchTaskAsync();
       console.log(
-        'in toggleFetchTaskAsync, unregisterBackgroundFetchTaskAsync finished '
+        'in toggleBackgroundFetchTaskAsync, unregisterBackgroundFetchTaskAsync finished '
       );
-      checkFetchTaskStatusAsync();
+      checkBackgroundFetchTaskStatusAsync();
     } else {
       await registerBackgroundFetchTaskAsync();
       await resetBackgroundFetchTaskInterval();
       console.log(
-        'in toggleFetchTaskAsync, registerBackgroundFetchTaskAsync finished '
+        'in toggleBackgroundFetchTaskAsync, registerBackgroundFetchTaskAsync finished '
       );
-      checkFetchTaskStatusAsync();
+      checkBackgroundFetchTaskStatusAsync();
     }
   };
-  const toggleNotificationsTaskAsync = async () => {
+  const toggleBackgroundNotificationsTaskAsync = async () => {
     console.log(
-      '££££ in toggleNotificationsTaskAsync, isNotificationsTaskRegistered: ',
-      isNotificationsTaskRegistered
+      '££££ in toggleBackgroundNotificationsTaskAsync, isBackgroundNotificationsTaskRegistered: ',
+      isBackgroundNotificationsTaskRegistered
     );
-    if (isNotificationsTaskRegistered) {
+    if (isBackgroundNotificationsTaskRegistered) {
       await unregisterBackgroundNotificationsTaskAsync();
       console.log(
-        '££££ in toggleNotificationsTaskAsync, unregisterBackgroundNotificationsTaskAsync finished '
+        '££££ in toggleBackgroundNotificationsTaskAsync, unregisterBackgroundNotificationsTaskAsync finished '
       );
-      checkNotificationsTaskStatusAsync();
+      checkBackgroundNotificationsTaskStatusAsync();
     } else {
       await registerBackgroundNotificationsTaskAsync();
-      await resetBackgroundhandleNotificationsTaskInterval();
       console.log(
-        '££££ in toggleNotificationsTaskAsync, registerBackgroundNotificationsTaskAsync finished '
+        '££££ in toggleBackgroundNotificationsTaskAsync, registerBackgroundNotificationsTaskAsync finished '
       );
-      checkNotificationsTaskStatusAsync();
+      checkBackgroundNotificationsTaskStatusAsync();
     }
-  };
-
-  const schedulePushNotificationAsync = async () => {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: 'Notification!',
-        body: 'Here is the notification body',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    });
   };
 
   useEffect(() => {
-    checkFetchTaskStatusAsync();
+    checkBackgroundFetchTaskStatusAsync();
     // requestNotificationsPermissionAsync();
-    setUpNotificationsHandler();
-    registerDeviceForPushNotificationsAsync().then(({ result, token }) => {
-      console.log('result:', result);
+    setUpForegroundNotificationsHandler();
+    registerDeviceForPushNotificationsAsync().then(({ permission, token }) => {
+      console.log('permission:', permission);
       console.log('token:', token);
       setExpoPushToken(token);
-      setExpoPushResult(result);
+      checkNotificationsPermissionStatusAsync(permission);
     });
-    checkNotificationsTaskStatusAsync();
-    checkNotificationsStatusAsync();
-    getBadgeCountAsync();
+    checkBackgroundNotificationsTaskStatusAsync();
+    // checkNotificationsPermissionStatusAsync();
+    getBadgeCountAsync(); //conflict?
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -349,76 +331,81 @@ export default BackgroundFetchBlock = () => {
           </Text>
         </Text>
         <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Notif status:{' '}
-          <Text style={styles.boldText}>
-            {notificationsPermissionsStatus &&
+          {`Notif granted: ${
+            notificationsPermissionsStatus &&
             notificationsPermissionsStatus.granted
-              ? 'granted'
-              : 'not grantd'}
-            {`; Backgrnd permitted: ${
-              backgroundTaskStatus ? backgroundTaskStatus : 'no'
-            }`}
-          </Text>
+              ? 'Y'
+              : 'N'
+          }; Backgrnd permitted: ${
+            backgroundTaskStatus ? backgroundTaskStatus : 'N'
+          }`}
         </Text>
         {1 === 1 ? null : (
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
             Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
             <TouchableOpacity
-              onPress={async () => {
-                await resetBadgeCountAsync();
+              onPress={() => {
+                resetBadgeCountAsync();
               }}
             >
               <Text>{` Reset`}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={async () => {
-                await incrementBadgeCountAsync();
+              onPress={() => {
+                incrementBadgeCountAsync();
               }}
             >
               <Text>{` Increment`}</Text>
             </TouchableOpacity>
           </Text>
         )}
+        {1 === 2 ? (
+          <TouchableOpacity
+            onPress={() => {
+              toggleBackgroundFetchTaskAsync();
+            }}
+          >
+            <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+              {isFetchTaskRegistered
+                ? `>Unregister ${Tasks.BACKGROUND_FETCH_DATE_TASK}`
+                : `>Register ${Tasks.BACKGROUND_FETCH_DATE_TASK}`}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
+        {1 === 2 ? (
+          <TouchableOpacity
+            onPress={() => {
+              toggleBackgroundNotificationsTaskAsync();
+            }}
+          >
+            <Text
+              style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0, hidden }}
+            >
+              {isBackgroundNotificationsTaskRegistered
+                ? `>Unregister ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`
+                : `>Register ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
         <TouchableOpacity
-          onPress={async () => {
-            await toggleFetchTaskAsync();
+          onPress={() => {
+            schedulePushNotificationAsync();
           }}
         >
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            {isFetchTaskRegistered
-              ? `Unregister ${Tasks.BACKGROUND_FETCH_DATE_TASK}`
-              : `Register ${Tasks.BACKGROUND_FETCH_DATE_TASK}`}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={async () => {
-            await toggleNotificationsTaskAsync();
-          }}
-        >
-          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            {isNotificationsTaskRegistered
-              ? `Unregister ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`
-              : `Register ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`}
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={async () => {
-            await schedulePushNotificationAsync();
-          }}
-        >
-          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            Schedule a push notification
+            {`>Schedule a push notification`}
           </Text>
         </TouchableOpacity>
       </View>
       <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-        {Device.isDevice ? null : 'Simulator; '}
-        {expoPushToken ? expoPushToken : expoPushResult ? expoPushResult : null}
+        {Device.isDevice ? 'Device' : 'Simulator; '}
+        {expoPushToken}
       </Text>
     </View>
   ) : null;
 };
+
+/* {expoPushToken ? expoPushToken : expoPushResult ? expoPushResult : null} */
 
 const styles = StyleSheet.create({
   screen: {

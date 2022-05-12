@@ -53,60 +53,6 @@ const buttonTextColor = Colors.vwgWhite;
 // console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
 
-// if (Platform.OS !== 'android') {
-//   Notifications.setNotificationHandler({
-//     handleNotifications: async () => ({
-//       shouldShowAlert: false,
-//       shouldPlaySound: false,
-//       shouldSetBadge: true,
-//     }),
-//   });
-// }
-
-// await Notifications.scheduleLocalNotificationAsync({
-//   title: '...',
-//   body: '...',
-//   ios: {count: 1},
-// }, {
-//   time: ...
-// })
-
-// async function getiOSNotificationPermission() {
-//   console.log('in home getiOSNotificationPermission');
-
-//   const { status } = await Notifications.requestPermissionsAsync;
-
-//   const { status } = await Permissions.getAsync(
-//     Permissions.USER_FACING_NOTIFICATIONS
-//   );
-//   if (status !== 'granted') {
-//     await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
-//   }
-// }
-
-export async function allowsNotificationsAsync() {
-  const settings = await Notifications.getPermissionsAsync();
-  return (
-    settings.granted ||
-    settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-  );
-}
-export async function requestPermissionsAsync() {
-  return await Notifications.requestPermissionsAsync({
-    android: {},
-    ios: {
-      allowAlert: false,
-      allowBadge: true,
-      allowSound: false,
-      allowDisplayInCarPlay: false,
-      allowCriticalAlerts: false,
-      provideAppNotificationSettings: false,
-      allowProvisional: false,
-      allowAnnouncements: false,
-    },
-  });
-}
-
 export default HomeScreen = (props) => {
   const dispatch = useDispatch();
   //   const navigation = useNavigation();

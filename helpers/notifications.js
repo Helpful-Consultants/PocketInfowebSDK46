@@ -5,20 +5,20 @@ import { Platform } from 'react-native';
 import { setBadgeCountAsync } from '../helpers/appBadge';
 
 // defines how device should handle a notification when the app is running (foreground notifications)
-export const setUpNotificationsHandler = () => {
-  console.log('In setUpNotificationsHandler');
+export const setUpForegroundNotificationsHandler = () => {
+  console.log('In setUpForegroundNotificationsHandler');
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowAlert: false,
       shouldPlaySound: false,
       shouldSetBadge: true,
     }),
   });
 };
-
-export const handleNewNotification = async (notificationObject) => {
-  console.log('in handleNewNotification');
+// defines how device should handle a notification when the app is running (foreground notifications)
+export const handleBackgroundNotification = async (notificationObject) => {
+  console.log('in handleBackgroundNotification');
   try {
     const newNotification = {
       id: notificationObject.messageId,
@@ -36,39 +36,41 @@ export const handleNewNotification = async (notificationObject) => {
   }
 };
 
-export const requestNotificationsPermissionAsync = async () => {
-  const permissionsStatus = await Notifications.requestPermissionsAsync({
-    android: {},
-    ios: {
-      allowAlert: false,
-      allowBadge: true,
-      allowSound: false,
-      allowDisplayInCarPlay: false,
-      allowCriticalAlerts: false,
-      provideAppNotificationSettings: false,
-      allowProvisional: false,
-      allowAnnouncements: false,
-    },
-  });
-  // console.log(`permissionsStatus`, permissionsStatus);
-  setPermissionsStatus(permissionsStatus);
-};
+// export const requestNotificationsPermissionAsync = async () => {
+//   const permissionsStatus = await Notifications.requestPermissionsAsync({
+//     android: {},
+//     ios: {
+//       allowAlert: false,
+//       allowBadge: true,
+//       allowSound: false,
+//       allowDisplayInCarPlay: false,
+//       allowCriticalAlerts: false,
+//       provideAppNotificationSettings: true,
+//       allowProvisional: false,
+//       allowAnnouncements: false,
+//     },
+//   });
+//   // console.log(`permissionsStatus`, permissionsStatus);
+//   // setPermissionsStatus(permissionsStatus);
+//   return permissionsStatus;
+// };
 
-export const checkNotificationsStatusAsync = async () => {
+export const checkNotificationsPermissionStatusAsync = async () => {
   if (Device.isDevice) {
     {
       const settings = await Notifications.getPermissionsAsync();
       // console.log(`notif status`, settings);
       setNotificationsStatus(settings);
       return (
-        settings.granted ||
-        settings.ios?.status ===
-          Notifications.IosAuthorizationStatus.PROVISIONAL
+        (settings && settings.granted) ||
+        (settings &&
+          settings.ios?.status ===
+            Notifications.IosAuthorizationStatus.PROVISIONAL)
       );
     }
   } else {
     console.log(
-      'In checkNotificationsStatusAsync on simulator: use physical device for Push Notifications'
+      'In checkNotificationsPermissionStatusAsync on simulator: use physical device for Push Notifications'
     );
     return;
   }
@@ -76,7 +78,8 @@ export const checkNotificationsStatusAsync = async () => {
 
 export const registerDeviceForPushNotificationsAsync = async () => {
   let token;
-  let result = 'Not device';
+  finalStatus = 'Not device';
+
   if (Device.isDevice) {
     try {
       const { status: existingStatus } =
@@ -84,17 +87,22 @@ export const registerDeviceForPushNotificationsAsync = async () => {
       let finalStatus = existingStatus;
       result = existingStatus;
       if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
+        const { status } = await Notifications.requestPermissionsAsync({
+          ios: {
+            allowAlert: true,
+            allowBadge: true,
+          },
+        });
         finalStatus = status;
       }
       if (finalStatus !== 'granted') {
         throw new Error('Permission not granted!');
       }
-      result = finalStatus;
+
       token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log('token is:', token);
     } catch (error) {
-      result = 'error in get';
+      console.log('error in get');
       console.log(Device);
       console.log(error);
     }
@@ -112,7 +120,7 @@ export const registerDeviceForPushNotificationsAsync = async () => {
       lightColor: '#FF231F7C',
     });
   }
-  return { result, token };
+  return { finalStatus, token };
 };
 
 export const registerBackgroundNotificationsTaskAsync = async () => {
@@ -121,6 +129,7 @@ export const registerBackgroundNotificationsTaskAsync = async () => {
   // register task to run whenever is received while the app is in the background
   Notifications.registerTaskAsync(BACKGROUND_NOTIFICATIONS_TASK);
 };
+
 export const unregisterBackgroundNotificationsTaskAsync = async () => {
   if (Device.isDevice) {
     console.log('in unregisterBackgroundNotificationsTaskAsync on device');
@@ -132,8 +141,13 @@ export const unregisterBackgroundNotificationsTaskAsync = async () => {
     return;
   }
 };
-
-export const resetBackgroundhandleNotificationsTaskInterval = async () => {
-  console.log('in resetBackgroundhandleNotificationsInterval');
-  return BackgroundFetch.setMinimumIntervalAsync(15);
+export const schedulePushNotificationAsync = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'T&E Notification',
+      body: 'Here is the notification body',
+      data: { badge: 33 },
+    },
+    trigger: { seconds: 2 },
+  });
 };
