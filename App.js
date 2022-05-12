@@ -25,6 +25,7 @@ import {
   fetchDate,
   //   fetchData,
 } from './helpers/taskManagement';
+import { handleNewNotification } from './helpers/notifications';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -99,7 +100,7 @@ runSagaMiddleware(); // run here so it isn't run on every render
 
 // if (Platform.OS !== 'android') {
 //   Notifications.setNotificationHandler({
-//     handleNotification: async () => ({
+//     handleNotifications: async () => ({
 //       shouldShowAlert: false,
 //       shouldPlaySound: false,
 //       shouldSetBadge: true,
@@ -140,6 +141,11 @@ runSagaMiddleware(); // run here so it isn't run on every render
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_TASK, fetchDate);
 // console.log('%%%%%%%%% in app.js calling defineBackgroundTask');
 defineBackgroundTask(Tasks.BACKGROUND_FETCH_DATE_TASK, fetchDate);
+defineBackgroundTask(
+  Tasks.BACKGROUND_NOTIFICATIONS_TASK,
+  ({ data, error, executionInfo }) => handleNewNotification(data.notification)
+);
+
 // defineBackgroundFetch(Tasks.BACKGROUND_FETCH_DATA_TASK, fetchData);
 
 // async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {

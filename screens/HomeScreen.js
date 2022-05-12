@@ -55,7 +55,7 @@ var iconSize = RFPercentage(5);
 
 // if (Platform.OS !== 'android') {
 //   Notifications.setNotificationHandler({
-//     handleNotification: async () => ({
+//     handleNotifications: async () => ({
 //       shouldShowAlert: false,
 //       shouldPlaySound: false,
 //       shouldSetBadge: true,
@@ -268,7 +268,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! 3');
 
   //   useEffect(() => {
-  //     registerForPushNotificationsAsync().then((token) =>
+  //     registerDeviceForPushNotificationsAsync().then((token) =>
   //       setExpoPushToken(token)
   //     );
 
