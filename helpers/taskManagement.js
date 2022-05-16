@@ -8,14 +8,14 @@ import {
 import backgroundData from '../reducers/backgroundData';
 
 export const defineBackgroundTask = async (taskName, taskExecutor) => {
-  console.log('INSIDE TASKMANAGER.defineTASK');
-  console.log(
-    'in defineBackgroundFetch',
-    'task:',
-    taskName,
-    'taskName:',
-    taskExecutor
-  );
+  //   console.log('INSIDE TASKMANAGER.defineTASK');
+  //   console.log(
+  //     'in defineBackgroundFetch',
+  //     'task:',
+  //     taskName,
+  //     'taskName:',
+  //     taskExecutor
+  //   );
 
   TaskManager.defineTask(taskName, taskExecutor);
 

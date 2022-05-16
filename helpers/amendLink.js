@@ -15,7 +15,7 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
     if (rawLink.indexOf('https://toolsinfoweb.co.uk') === -1) {
       newLink = 'https://toolsinfoweb.co.uk' + newLink;
     }
-    console.log('amendLink rawLInk of ', rawLink, ' changed to ', newLink);
+    // console.log('amendLink rawLInk of ', rawLink, ' changed to ', newLink);
 
     return newLink;
   } else if (rawLink.indexOf('controller=') && rawLink.indexOf('action=') > 0) {
@@ -34,7 +34,7 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       newLink = 'https://toolsinfoweb.co.uk' + newLink;
     }
 
-    console.log('amendLink rawLInk of ', rawLink, 'changed to ', newLink);
+    // console.log('amendLink rawLInk of ', rawLink, 'changed to ', newLink);
 
     return newLink;
   } else {

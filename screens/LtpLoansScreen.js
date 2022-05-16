@@ -89,7 +89,7 @@ export default LtpLoansScreen = (props) => {
   );
 
   const refreshRequestHandler = useCallback(() => {
-    console.log('in ltpLoans refreshRequestHandler');
+    // console.log('in ltpLoans refreshRequestHandler');
     getItems();
   }, [getItems]);
 
