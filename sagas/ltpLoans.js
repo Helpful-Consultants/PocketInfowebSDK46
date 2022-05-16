@@ -36,7 +36,7 @@ function* getLtpLoans({ payload }) {
     // console.log('in saga showing real data');
     try {
       const result = yield call(api.getLtpLoans, {
-        intId: payload.userIntId,
+        userIntId: payload.userIntId,
       });
       // console.log('in saga get ltpLoans - 200');
       // console.log(result);
