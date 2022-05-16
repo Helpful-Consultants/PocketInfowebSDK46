@@ -10,7 +10,7 @@ export const setUpForegroundNotificationsHandler = () => {
 
   Notifications.setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: false,
+      shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: true,
     }),
