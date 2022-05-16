@@ -11,7 +11,7 @@ export const setLtpLoansDisplayTimestamp = (displayTime) => ({
   },
 });
 
-export const getLtpLoansRequest = ({ intId }) => ({
+export const getLtpLoansRequest = ({ userIntId }) => ({
   type: Types.GET_LTP_LOANS_REQUEST,
   payload: {
     userIntId,
