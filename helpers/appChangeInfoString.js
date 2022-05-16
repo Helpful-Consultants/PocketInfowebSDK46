@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Fix news links.';
+const appChangeInfoString = 'Changes: Fix loans issue.';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
