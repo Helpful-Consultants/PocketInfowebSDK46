@@ -54,7 +54,7 @@ import Loading from './components/Loading';
 enableScreens();
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'https://toolsinfoweb.co.uk';
+axios.defaults.baseURL = 'https://www.toolsinfoweb.co.uk';
 
 // const theme = {
 //   colors: {
