@@ -10,7 +10,7 @@ import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
 
 const catalogueUrl =
-  'https://toolsinfoweb.co.uk/VW_AG_Sales_Catalogue/Catalogue_2021_May/';
+  'https://www.toolsinfoweb.co.uk/VW_AG_Sales_Catalogue/Catalogue_2021_May/';
 const buttonTextColor = Colors.vwgWhite;
 let iconSize = RFPercentage(5);
 

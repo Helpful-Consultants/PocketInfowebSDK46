@@ -1,4 +1,4 @@
-const serverAddress = 'https://toolsinfoweb.co.uk';
+const serverAddress = 'https://www.toolsinfoweb.co.uk';
 
 export default {
   toolsInfoweb: serverAddress,

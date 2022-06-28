@@ -12,11 +12,10 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       '&controller=api&action=showToUser&userId=' +
       intId +
       '&shadowController=desktopBulletins&shadowAction=list';
-    if (rawLink.indexOf('https://toolsinfoweb.co.uk') === -1) {
-      newLink = 'https://toolsinfoweb.co.uk' + newLink;
+    if (rawLink.indexOf('toolsinfoweb.co.uk') === -1) {
+      newLink = 'https://www.toolsinfoweb.co.uk' + newLink;
     }
     // console.log('amendLink rawLInk of ', rawLink, ' changed to ', newLink);
-
     return newLink;
   } else if (rawLink.indexOf('controller=') && rawLink.indexOf('action=') > 0) {
     // console.log('amendLink so far', newLink);
@@ -30,16 +29,17 @@ const amendLink = (rawLink = '', appCode = '', intId = '') => {
       .replace('&action=view', '&action=showToUser');
 
     newLink = newLink + '&appCode=' + appCode + '&userId=' + intId;
-    if (rawLink.indexOf('https://toolsinfoweb.co.uk') === -1) {
-      newLink = 'https://toolsinfoweb.co.uk' + newLink;
+
+    if (rawLink.indexOf('toolsinfoweb.co.uk') === -1) {
+      newLink = 'https://www.toolsinfoweb.co.uk' + newLink;
     }
 
     // console.log('amendLink rawLInk of ', rawLink, 'changed to ', newLink);
 
     return newLink;
   } else {
-    if (rawLink.indexOf('https://toolsinfoweb.co.uk') === -1) {
-      newLink = 'https://toolsinfoweb.co.uk' + newLink;
+    if (rawLink.indexOf('toolsinfoweb.co.uk') === -1) {
+      newLink = 'https://www.toolsinfoweb.co.uk' + newLink;
     }
     newLink = newLink.replace(
       'toolsinfoweb.co.ukcontent',

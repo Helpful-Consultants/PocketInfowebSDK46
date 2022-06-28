@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Change API endpoint.';
+const appChangeInfoString = 'Changes: Change API endpoint (www).';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
