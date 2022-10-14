@@ -32,7 +32,7 @@
     "expo-application": "~4.0.1",
     "expo-asset": "~8.4.6",
     "expo-background-fetch": "~10.1.0",
-    "expo-constants": "^13.1.1",
+    "expo-constants": "~13.0.1",
     "expo-device": "~4.1.0",
     "expo-file-system": "~13.1.4",
     "expo-font": "~10.0.4",
