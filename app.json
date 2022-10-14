@@ -27,7 +27,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "118",
+      "buildNumber": "117",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
