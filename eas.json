@@ -20,8 +20,7 @@
         "releaseChannel": "ios-prod"
       },
       "android": {
-        "releaseChannel": "android-prod",
-        "build-type": "app-bundle"
+        "releaseChannel": "android-prod"
       }
     },
     "EXTRA": {
@@ -30,8 +29,7 @@
         "releaseChannel": "ios-staging"
       },
       "android": {
-        "releaseChannel": "android-staging",
-         "build-type": "app-bundle"
+        "releaseChannel": "android-staging"
       }
     },
     "development": {

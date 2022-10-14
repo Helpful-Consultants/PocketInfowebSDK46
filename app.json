@@ -4,8 +4,11 @@
     "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": ["ios", "android"],
-    "version": "1.2.61",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.2.62",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -24,7 +27,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "117",
+      "buildNumber": "118",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
@@ -36,9 +39,15 @@
       }
     },
     "android": {
-     "versionCode": 24,
+      "versionCode": 25,
       "package": "com.helpfulconsultants.pocketinfowebextra",
-       "permissions":["CHANGE_BADGE","com.huawei.android.launcher.permission.CHANGE_BADGE","com.sec.android.provider.badge.permission.WRITE","me.everything.badger.permission.BADGE_COUNT_WRITE", "com.majeur.launcher.permission.UPDATE_BADGE"]
+      "permissions": [
+        "CHANGE_BADGE",
+        "com.huawei.android.launcher.permission.CHANGE_BADGE",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "me.everything.badger.permission.BADGE_COUNT_WRITE",
+        "com.majeur.launcher.permission.UPDATE_BADGE"
+      ]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
