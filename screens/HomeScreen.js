@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import Application from 'expo-application';
 // import * as Permissions from 'expo-permissions';
 import {
   ActivityIndicator,
@@ -75,9 +76,9 @@ export default HomeScreen = (props) => {
           ? Constants.manifest.ios.buildNumber
           : null
         : Constants.manifest.android &&
-          typeof Constants.manifest.android.versionCode !== 'undefined' &&
-          Constants.manifest.android.versionCode
-        ? Constants.manifest.android.versionCode
+          typeof Application.nativeBuildVersion !== 'undefined' &&
+          Application.nativeBuildVersion
+        ? Application.nativeBuildVersion
         : null
       : null;
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
