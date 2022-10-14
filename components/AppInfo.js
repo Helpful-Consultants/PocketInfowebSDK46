@@ -4,7 +4,6 @@ import { Platform, useWindowDimensions, View } from 'react-native';
 import { Text } from 'react-native-elements';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
-import Application from 'expo-application';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
 import { getShortDisplayDateAndTime } from '../helpers/dates';
@@ -52,9 +51,9 @@ export default AppInfo = (props) => {
           ? Constants.manifest.ios.buildNumber
           : null
         : Constants.manifest.android &&
-          typeof Application.nativeBuildVersion !== 'undefined' &&
-          Application.nativeBuildVersion
-        ? Application.nativeBuildVersion
+          typeof Constants.manifest.android.versionCode !== 'undefined' &&
+          Constants.manifest.android.versionCode
+        ? Constants.manifest.android.versionCode
         : null
       : null;
 
@@ -96,8 +95,8 @@ export default AppInfo = (props) => {
             {Platform.Version ? (
               <Text>
                 {`${Platform.constants.systemName} v${Platform.Version}`}
-                {Application.nativeBuildVersion
-                  ? ` Store v${Application.nativeBuildVersion}`
+                {Constants.nativeBuildVersion
+                  ? ` Store v${Constants.nativeBuildVersion}`
                   : null}
               </Text>
             ) : null}
@@ -111,8 +110,8 @@ export default AppInfo = (props) => {
                 ? `Android`
                 : `${Platform.OS}`}
               {` v${Platform.Version}`}
-              {Application.nativeBuildVersion
-                ? ` Store v${Application.nativeBuildVersion}`
+              {Constants.nativeBuildVersion
+                ? ` Store v${Constants.nativeBuildVersion}`
                 : null}
             </Text>
           ) : null}
@@ -124,9 +123,7 @@ export default AppInfo = (props) => {
           ? `${Constants.manifest.sdkVersion}/`
           : null}
         {buildNumber ? `${buildNumber}/` : 'null'}
-        {Application.nativeAppVersion
-          ? `${Application.nativeAppVersion}/`
-          : null}
+        {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
         {Constants.manifest.version
           ? `${Constants.manifest.version} OTA`
           : null}

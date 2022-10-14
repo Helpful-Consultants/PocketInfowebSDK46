@@ -4,7 +4,6 @@ import { Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
-import Application from 'expo-application';
 
 export default ErrorDetails = (props) => {
   const windowDim = useWindowDimensions();
@@ -66,9 +65,7 @@ export default ErrorDetails = (props) => {
         </Text>
         <Text style={baseStyles.textLeftAlignedSmall}>
           {`Build `}
-          {Application.nativeAppVersion
-            ? `${Application.nativeAppVersion}/`
-            : null}
+          {Constants.nativeAppVersion ? `${Constants.nativeAppVersion}/` : null}
           {Constants.manifest.version
             ? `${Constants.manifest.version} OTA`
             : null}
@@ -87,8 +84,8 @@ export default ErrorDetails = (props) => {
               {Platform.Version ? (
                 <Text>
                   {`${Platform.constants.systemName} v${Platform.Version}`}
-                  {Application.nativeBuildVersion
-                    ? ` Store v${Application.nativeBuildVersion}`
+                  {Constants.nativeBuildVersion
+                    ? ` Store v${Constants.nativeBuildVersion}`
                     : null}
                 </Text>
               ) : null}
@@ -102,8 +99,8 @@ export default ErrorDetails = (props) => {
                   ? `Android`
                   : `${Platform.OS}`}
                 {` v${Platform.Version}`}
-                {Application.nativeBuildVersion
-                  ? ` Store v${Application.nativeBuildVersion}`
+                {Constants.nativeBuildVersion
+                  ? ` Store v${Constants.nativeBuildVersion}`
                   : null}
               </Text>
             ) : null}
