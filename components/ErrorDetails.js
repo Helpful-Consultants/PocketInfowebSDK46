@@ -4,7 +4,8 @@ import { Text } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
-import Application from 'expo-application';
+import * as Application from 'expo-application';
+import * as Device from 'expo-device';
 
 export default ErrorDetails = (props) => {
   const windowDim = useWindowDimensions();
@@ -66,8 +67,8 @@ export default ErrorDetails = (props) => {
         </Text>
         <Text style={baseStyles.textLeftAlignedSmall}>
           {`Build `}
-          {Application.nativeAppVersion
-            ? `${Application.nativeAppVersion}/`
+          {Application.nativeApplicationVersion
+            ? `${Application.nativeApplicationVersion}/`
             : null}
           {Constants.manifest.version
             ? `${Constants.manifest.version} OTA`
@@ -86,8 +87,9 @@ export default ErrorDetails = (props) => {
             <Text style={baseStyles.textLeftAlignedSmall}>
               {Platform.Version ? (
                 <Text>
+                  {Device && Device.modelName ? `${Device.modelName} ` : null}
                   {`${Platform.constants.systemName} v${Platform.Version}`}
-                  {Application.nativeBuildVersion
+                  {Application && Application.nativeBuildVersion
                     ? ` Store v${Application.nativeBuildVersion}`
                     : null}
                 </Text>
@@ -98,23 +100,18 @@ export default ErrorDetails = (props) => {
           <Text style={baseStyles.textLeftAlignedSmall}>
             {Platform && Platform.Version ? (
               <Text>
+                {Device && Device.modelName ? `${Device.modelName} ` : null}
                 {Platform && Platform.OS === 'android'
                   ? `Android`
                   : `${Platform.OS}`}
                 {` v${Platform.Version}`}
-                {Application.nativeBuildVersion
+                {Application && Application.nativeBuildVersion
                   ? ` Store v${Application.nativeBuildVersion}`
                   : null}
               </Text>
             ) : null}
           </Text>
         )}
-
-        {Platform && Platform.constants && Platform.constants.Model ? (
-          <Text style={baseStyles.textLeftAlignedSmall}>
-            {`Model ${Platform.constants.Model}`}
-          </Text>
-        ) : null}
       </View>
 
       {userDataObj ? (

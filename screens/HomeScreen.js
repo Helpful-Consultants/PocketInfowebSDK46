@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
-import Application from 'expo-application';
+import * as Application from 'expo-application';
 // import * as Permissions from 'expo-permissions';
 import {
   ActivityIndicator,
