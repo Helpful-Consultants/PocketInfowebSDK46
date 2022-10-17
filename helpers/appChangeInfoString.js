@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: SDK 45. Refactored.';
+const appChangeInfoString = 'Changes: SDK 46. Refactored.';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
