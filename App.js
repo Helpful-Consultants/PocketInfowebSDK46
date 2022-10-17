@@ -1,10 +1,11 @@
-import AppLoading from 'expo-app-loading';
+// import AppLoading from 'expo-app-loading';
+// import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { store, runSagaMiddleware } from './helpers/store';
@@ -26,6 +27,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
+import { useCachedResources } from './helpers/useCachedResources';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -201,7 +203,8 @@ defineBackgroundTask(
 export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const isLoadingComplete = useCachedResources();
+  //   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
   async function unregisterBackgroundFetch(taskName) {
     console.log('in unregisterBackgroundFetch', taskName);
@@ -250,14 +253,27 @@ export default function App(props) {
 
   const persistor = persistStore(store);
 
+  //   useEffect(() => {
+  //     async function loadResourcesAndDataAsync() {
+  //       try {
+  //         SplashScreen.preventAutoHideAsync();
+
+  //         // Load images
+  //         const resourecs = loadResourcesAsync();
+  //       } catch (e) {
+  //         // We might want to provide this error information to an error reporting service
+  //         console.warn(e);
+  //       } finally {
+  //         setLoadingComplete(true);
+  //         SplashScreen.hideAsync();
+  //       }
+  //     }
+
+  //     loadResourcesAndDataAsync();
+  //   }, []);
+
   if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
+    return null;
   } else {
     return (
       <SafeAreaProvider>
@@ -302,7 +318,7 @@ export default function App(props) {
 //   await Promise.all([...imageAssets, ...fontAssets]);
 // }
 
-async function loadResourcesAsync() {
+async function zzzzloadResourcesAsync() {
   await Promise.all([
     Asset.loadAsync([
       require('./assets/images/icon.png'),
@@ -325,14 +341,6 @@ async function loadResourcesAsync() {
       'the-sans-light': require('./assets/fonts/VWAGTheSans-Light.ttf'),
     }),
   ]);
-}
-
-function handleLoadingError(error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
-  console.warn(error);
-}
-
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
+  console.log(' loadResourcesAsync done');
+  return true;
 }
