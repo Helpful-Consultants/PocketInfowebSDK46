@@ -19,7 +19,7 @@ export default ErrorDetails = (props) => {
     dataErrorUrl,
   } = props;
 
-  console.log('in ErrorDetails', props);
+  //   console.log('in ErrorDetails', props);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   //   console.log(props);
   return (
