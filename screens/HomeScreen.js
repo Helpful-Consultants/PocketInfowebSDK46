@@ -85,7 +85,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
     ? Platform.OS === 'ios'
-      ? buildNumber !== '119' // it is a string
+      ? buildNumber !== '121' // it is a string
         ? true
         : false
       : buildNumber !== 26 // it is a number
@@ -390,10 +390,10 @@ export default HomeScreen = (props) => {
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
     const appLinkExtra =
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-    https: Linking.canOpenURL(appLinkPro).then(
+    https: Linking.canOpenURL(appLinkExtra).then(
       (supported) => {
         console.log('open to link');
-        supported && Linking.openURL(appLinkPro);
+        supported && Linking.openURL(appLinkExtra);
       },
       (err) => console.log(err)
     );
