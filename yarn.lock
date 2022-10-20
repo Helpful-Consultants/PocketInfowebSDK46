@@ -5949,7 +5949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-application@npm:~4.2.0, expo-application@npm:~4.2.2":
+"expo-application@npm:^4.2.2, expo-application@npm:~4.2.0, expo-application@npm:~4.2.2":
   version: 4.2.2
   resolution: "expo-application@npm:4.2.2"
   peerDependencies:
@@ -5985,7 +5985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-constants@npm:~13.2.0, expo-constants@npm:~13.2.2, expo-constants@npm:~13.2.4":
+"expo-constants@npm:^13.2.4, expo-constants@npm:~13.2.0, expo-constants@npm:~13.2.2, expo-constants@npm:~13.2.4":
   version: 13.2.4
   resolution: "expo-constants@npm:13.2.4"
   dependencies:
@@ -12081,10 +12081,10 @@ __metadata:
     date-fns: ^2.29.3
     expo: ^46.0.0
     expo-app-loading: ~2.1.0
-    expo-application: ~4.2.2
+    expo-application: ^4.2.2
     expo-asset: ~8.6.1
     expo-background-fetch: ~10.3.0
-    expo-constants: ~13.2.4
+    expo-constants: ^13.2.4
     expo-device: ~4.3.0
     expo-file-system: ~14.1.0
     expo-font: ~10.2.0

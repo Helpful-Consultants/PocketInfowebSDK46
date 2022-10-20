@@ -19,6 +19,25 @@ export default ErrorDetails = (props) => {
     dataErrorUrl,
   } = props;
 
+  const buildNumber =
+    typeof Constants !== 'undefined' &&
+    typeof Constants.manifest !== 'undefined' &&
+    typeof Platform !== 'undefined'
+      ? typeof Platform.OS !== 'undefined' && Platform.OS
+        ? Platform.OS === 'ios'
+          ? Constants.manifest.ios &&
+            typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
+            Constants.manifest.ios.buildNumber
+            ? Constants.manifest.ios.buildNumber
+            : null
+          : Constants.manifest.android &&
+            typeof Constants.manifest.android.versionCode !== 'undefined' &&
+            Constants.manifest.android.versionCode
+          ? Constants.manifest.android.versionCode
+          : null
+        : null
+      : null;
+
   //   console.log('in ErrorDetails', props);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   //   console.log(props);
@@ -67,6 +86,10 @@ export default ErrorDetails = (props) => {
         </Text>
         <Text style={baseStyles.textLeftAlignedSmall}>
           {`Build `}
+          {Constants.manifest.sdkVersion
+            ? `${Constants.manifest.sdkVersion}/`
+            : null}
+          {buildNumber ? `${buildNumber}/` : 'null'}
           {Application.nativeApplicationVersion
             ? `${Application.nativeApplicationVersion}/`
             : null}
@@ -74,11 +97,18 @@ export default ErrorDetails = (props) => {
             ? `${Constants.manifest.version} OTA`
             : null}
           {Constants.manifest.releaseChannel
-            ? Constants.manifest.releaseChannel
-              ? Constants.manifest.releaseChannel === 'default'
-                ? ' (Prod)'
-                : ' (Staging)'
-              : null
+            ? Constants.manifest.releaseChannel === 'default' ||
+              Constants.manifest.releaseChannel === 'ios' ||
+              Constants.manifest.releaseChannel === 'android' ||
+              Constants.manifest.releaseChannel === 'ios-prod' ||
+              Constants.manifest.releaseChannel === 'android-prod' ||
+              Constants.manifest.releaseChannel === 'prod-v2'
+              ? ' (Prod)'
+              : Constants.manifest.releaseChannel === 'ios-staging' ||
+                Constants.manifest.releaseChannel === 'android-staging' ||
+                Constants.manifest.releaseChannel === 'staging'
+              ? ' (Staging)'
+              : ` (${Constants.manifest.releaseChannel})`
             : null}
         </Text>
 
@@ -89,8 +119,8 @@ export default ErrorDetails = (props) => {
                 <Text>
                   {Device && Device.modelName ? `${Device.modelName} ` : null}
                   {`${Platform.constants.systemName} v${Platform.Version}`}
-                  {Application && Application.nativeBuildVersion
-                    ? ` Store v${Application.nativeBuildVersion}`
+                  {Constants.manifest.android.versionCode
+                    ? ` Store v${Constants.manifest.android.versionCode}`
                     : null}
                 </Text>
               ) : null}

@@ -19,7 +19,9 @@ export default AppInfo = (props) => {
   //   console.log('8888888888888 odisFetchTime', odisFetchTime);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
-
+  //   console.log(Application);
+  //   console.log(Application && Application.nativeBuildVersion);
+  //   console.log('constants are', Constants);
   const brandText = userDataObj
     ? userDataObj.brand
       ? userDataObj.brand
@@ -53,9 +55,9 @@ export default AppInfo = (props) => {
           ? Constants.manifest.ios.buildNumber
           : null
         : Constants.manifest.android &&
-          typeof Application.nativeBuildVersion !== 'undefined' &&
-          Application.nativeBuildVersion
-        ? Application.nativeBuildVersion
+          typeof Constants.manifest.android.versionCode !== 'undefined' &&
+          Constants.manifest.android.versionCode
+        ? Constants.manifest.android.versionCode
         : null
       : null;
 
