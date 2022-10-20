@@ -8,8 +8,8 @@
       "ios",
       "android"
     ],
-    "version": "1.2.61",
-    "icon": "./assets/images/icon-extra.png",
+    "version": "1.2.66",
+    "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -27,7 +27,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "117",
+      "buildNumber": "121",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
@@ -39,9 +39,15 @@
       }
     },
     "android": {
-     "versionCode": 24,
+      "versionCode": 27,
       "package": "com.helpfulconsultants.pocketinfowebextra",
-       "permissions":["CHANGE_BADGE","com.huawei.android.launcher.permission.CHANGE_BADGE","com.sec.android.provider.badge.permission.WRITE","me.everything.badger.permission.BADGE_COUNT_WRITE", "com.majeur.launcher.permission.UPDATE_BADGE"]
+      "permissions": [
+        "CHANGE_BADGE",
+        "com.huawei.android.launcher.permission.CHANGE_BADGE",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "me.everything.badger.permission.BADGE_COUNT_WRITE",
+        "com.majeur.launcher.permission.UPDATE_BADGE"
+      ]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
@@ -65,6 +71,11 @@
           }
         }
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+      }
     }
   }
 }
