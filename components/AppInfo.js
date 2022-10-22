@@ -42,12 +42,19 @@ export default AppInfo = (props) => {
   //     '!!!!!!!!!!!! isTabletOrMobileDevice',
   //     isTabletOrMobileDevice && isTabletOrMobileDevice
   //   );
-  const buildNumber =
-    typeof Constants !== 'undefined' &&
-    typeof Constants.manifest !== 'undefined' &&
+  const appOS =
     typeof Platform !== 'undefined' &&
     typeof Platform.OS !== 'undefined' &&
     Platform.OS
+      ? Platform.OS === 'ios'
+        ? 'ios'
+        : 'android'
+      : null;
+
+  const buildNumber =
+    typeof Constants !== 'undefined' &&
+    typeof Constants.manifest !== 'undefined' &&
+    appOS
       ? Platform.OS === 'ios'
         ? Constants.manifest.ios &&
           typeof Constants.manifest.ios.buildNumber !== 'undefined' &&

@@ -86,7 +86,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
     ? Platform.OS === 'ios'
-      ? buildNumber !== '121' // it is a string
+      ? buildNumber !== '122' // it is a string
         ? true
         : false
       : buildNumber !== 26 // it is a number
@@ -387,14 +387,30 @@ export default HomeScreen = (props) => {
   const gridRows = showingDemoApp ? 8 : 6;
 
   const openAppStore = () => {
-    const appLinkPro =
+    const androidAppLinkPro =
+      'market://details?id=com.helpfulconsultants.pocketinfowebpro';
+    const androidAppLinkExtra =
+      'market://details?id=com.helpfulconsultants.pocketinfowebextra';
+    const iosAppLinkPro =
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
-    const appLinkExtra =
+    const iosAppLinkExtra =
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-    https: Linking.canOpenURL(appLinkExtra).then(
+
+    const appLink =
+      appOS === 'ios'
+        ? appEdition === 'extra'
+          ? iosAppLinkExtra
+          : iosAppLinkPro
+        : appEdition === 'extra'
+        ? androidAppLinkExtra
+        : androidAppLinkPro;
+    console.log('appOS is', appOS);
+    console.log('appLink is', appLink);
+
+    Linking.canOpenURL(appLink).then(
       (supported) => {
-        console.log('open to link');
-        supported && Linking.openURL(appLinkExtra);
+        // console.log('open to link', appLink);
+        supported && Linking.openURL(appLink);
       },
       (err) => console.log(err)
     );
