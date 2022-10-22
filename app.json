@@ -39,9 +39,9 @@
       }
     },
     "android": {
-    "versionCode": 26,
-    "package": "com.helpfulconsultants.pocketinfowebextra",
-    "permissions": [
+      "versionCode": 26,
+      "package": "com.helpfulconsultants.pocketinfowebextra",
+      "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
         "com.huawei.android.launcher.permission.CHANGE_BADGE",
@@ -51,35 +51,40 @@
         "com.sec.android.provider.badge.permission.READ",
         "com.sec.android.provider.badge.permission.WRITE",
         "com.sonyericsson.home.permission.BROADCAST_BADGE"
-    ]
+      ]
     },
     "androidStatusBar": {
-    "barStyle": "light-content",
-    "backgroundColor": "#0b4a76"
+      "barStyle": "light-content",
+      "backgroundColor": "#0b4a76"
     },
     "androidNavigationBar": {
-    "barStyle": "light-content",
-    "backgroundColor": "#3689b1"
+      "barStyle": "light-content",
+      "backgroundColor": "#3689b1"
     },
     "plugins": [
-    "sentry-expo"
+      "sentry-expo"
     ],
     "hooks": {
-    "postPublish": [
+      "postPublish": [
         {
-        "file": "sentry-expo/upload-sourcemaps",
-        "config": {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
             "organization": "helpful-consultants",
             "project": "pocket-infoweb",
             "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
+          }
         }
-        }
-    ]
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+      }
     }
   },
   "extra": {
     "eas": {
-    "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+      "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
     }
   }
 }
