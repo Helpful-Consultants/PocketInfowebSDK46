@@ -40,7 +40,7 @@
     },
     "android": {
       "versionCode": 26,
-      "package": "com.helpfulconsultants.pocketinfowebextra",
+      "package": "com.helpfulconsultants.pocketinfowebpro",
       "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
