@@ -69,11 +69,11 @@ export default DemoDataSwitch = (props) => {
     );
   }, [requestedDemoData]);
 
-  return showingDemoApp && userDataObj && userDataObj.userName ? (
-    userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+  return 1 == 2 && showingDemoApp && userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('zzzlyndon') > -1 ||
     userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
-    (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
-      userDataObj.userName.toLowerCase().indexOf('groves') > -1) ? (
+    (userDataObj.userName.toLowerCase().indexOf('zzzsimon') > -1 &&
+      userDataObj.userName.toLowerCase().indexOf('zzzgroves') > -1) ? (
       <View
         style={{
           ...baseStyles.container,
@@ -105,7 +105,7 @@ export default DemoDataSwitch = (props) => {
           </Text>
         </View>
       </View>
-    ) : userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+    ) : userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
       <View
         style={{
           ...baseStyles.container,
