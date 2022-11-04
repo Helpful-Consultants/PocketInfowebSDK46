@@ -302,106 +302,137 @@ export default BackgroundFetchBlock = () => {
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
   //   console.log('backgroundData', backgroundData);
-  return showingDemoApp &&
-    userDataObj &&
-    userDataObj.userName &&
-    userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
-    <View style={styles.screen}>
-      <View style={styles.textContainer}>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          Last background fetch at:{' '}
-          {(backgroundDataFetchTime &&
-            getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
-            'not called yet'}{' '}
-          <Text style={styles.boldText}>
-            {' '}
-            Result:{' '}
-            {backgroundDataItems !== 'undefined' &&
-            backgroundDataItems &&
-            backgroundDataItems.abbreviation &&
-            backgroundDataItems.abbreviation.length > 0
-              ? backgroundDataItems.abbreviation
-              : 'n/a'}{' '}
-            {typeof backgroundDataItems !== 'undefined' &&
-            backgroundDataItems &&
-            backgroundDataItems.datetime &&
-            backgroundDataItems.datetime.length > 0
-              ? backgroundDataItems.datetime
-              : 'n/a'}{' '}
-          </Text>
-        </Text>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          {`Notif granted: ${
-            notificationsPermissionsStatus &&
-            notificationsPermissionsStatus.granted
-              ? 'Y'
-              : 'N'
-          }; Backgrnd permitted: ${
-            backgroundTaskStatus ? backgroundTaskStatus : 'N'
-          }`}
-        </Text>
-        {1 === 1 ? null : (
+  return userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
+      <View style={styles.screen}>
+        <View style={styles.textContainer}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                resetBadgeCountAsync();
-              }}
-            >
-              <Text>{` Reset`}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                incrementBadgeCountAsync();
-              }}
-            >
-              <Text>{` Increment`}</Text>
-            </TouchableOpacity>
+            Last background fetch at:{' '}
+            {(backgroundDataFetchTime &&
+              getShortDisplayDateAndLongTime(backgroundDataFetchTime)) ||
+              'not called yet'}{' '}
+            <Text style={styles.boldText}>
+              {' '}
+              Result:{' '}
+              {backgroundDataItems !== 'undefined' &&
+              backgroundDataItems &&
+              backgroundDataItems.abbreviation &&
+              backgroundDataItems.abbreviation.length > 0
+                ? backgroundDataItems.abbreviation
+                : 'n/a'}{' '}
+              {typeof backgroundDataItems !== 'undefined' &&
+              backgroundDataItems &&
+              backgroundDataItems.datetime &&
+              backgroundDataItems.datetime.length > 0
+                ? backgroundDataItems.datetime
+                : 'n/a'}{' '}
+            </Text>
           </Text>
-        )}
-        {1 === 2 ? (
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            {`Notif granted: ${
+              notificationsPermissionsStatus &&
+              notificationsPermissionsStatus.granted
+                ? 'Y'
+                : 'N'
+            }; Backgrnd permitted: ${
+              backgroundTaskStatus ? backgroundTaskStatus : 'N'
+            }`}
+          </Text>
+          {1 === 1 ? null : (
+            <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+              Badge count: <Text style={styles.boldText}>{appBadgeCount}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  resetBadgeCountAsync();
+                }}
+              >
+                <Text>{` Reset`}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  incrementBadgeCountAsync();
+                }}
+              >
+                <Text>{` Increment`}</Text>
+              </TouchableOpacity>
+            </Text>
+          )}
+          {1 === 2 ? (
+            <TouchableOpacity
+              onPress={() => {
+                toggleBackgroundFetchTaskAsync();
+              }}
+            >
+              <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                {isFetchTaskRegistered
+                  ? `>Unregister ${Tasks.BACKGROUND_FETCH_DATE_TASK}`
+                  : `>Register ${Tasks.BACKGROUND_FETCH_DATE_TASK}`}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
+          {1 === 2 ? (
+            <TouchableOpacity
+              onPress={() => {
+                toggleBackgroundNotificationsTaskAsync();
+              }}
+            >
+              <Text
+                style={{
+                  ...baseStyles.panelTextAppInfo,
+                  paddingTop: 0,
+                  hidden,
+                }}
+              >
+                {isBackgroundNotificationsTaskRegistered
+                  ? `>Unregister ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`
+                  : `>Register ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`}
+              </Text>
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity
             onPress={() => {
-              toggleBackgroundFetchTaskAsync();
+              schedulePushNotificationAsync();
             }}
           >
             <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-              {isFetchTaskRegistered
-                ? `>Unregister ${Tasks.BACKGROUND_FETCH_DATE_TASK}`
-                : `>Register ${Tasks.BACKGROUND_FETCH_DATE_TASK}`}
+              {`>Schedule a push notification`}
             </Text>
           </TouchableOpacity>
-        ) : null}
-        {1 === 2 ? (
+        </View>
+        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+          {Device.isDevice ? 'Device' : 'Simulator; '}
+          {expoPushToken}
+        </Text>
+      </View>
+    ) : (
+      <View style={styles.screen}>
+        <View style={styles.textContainer}>
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            {`Notif granted: ${
+              notificationsPermissionsStatus &&
+              notificationsPermissionsStatus.granted
+                ? 'Y'
+                : 'N'
+            }; Backgrnd permitted: ${
+              backgroundTaskStatus ? backgroundTaskStatus : 'N'
+            }`}
+          </Text>
+          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+            {Device.isDevice ? 'Device' : 'Simulator; '}
+            {expoPushToken}
+          </Text>
           <TouchableOpacity
             onPress={() => {
-              toggleBackgroundNotificationsTaskAsync();
+              schedulePushNotificationAsync();
             }}
           >
-            <Text
-              style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0, hidden }}
-            >
-              {isBackgroundNotificationsTaskRegistered
-                ? `>Unregister ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`
-                : `>Register ${Tasks.BACKGROUND_NOTIFICATIONS_TASK}`}
+            <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+              {`> Schedule a push notification`}
             </Text>
           </TouchableOpacity>
-        ) : null}
-        <TouchableOpacity
-          onPress={() => {
-            schedulePushNotificationAsync();
-          }}
-        >
-          <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            {`>Schedule a push notification`}
-          </Text>
-        </TouchableOpacity>
+        </View>
       </View>
-      <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-        {Device.isDevice ? 'Device' : 'Simulator; '}
-        {expoPushToken}
-      </Text>
-    </View>
+    )
   ) : null;
 };
 
