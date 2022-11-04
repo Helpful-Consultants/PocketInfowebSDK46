@@ -41,11 +41,7 @@ export default function OdisLinkWithStatus(props) {
 
   return (
     <Touchable
-      onPress={() =>
-        showingDemoApp
-          ? navigation.navigate('RemindersTabs', { screen: 'ODIS' })
-          : navigation.navigate('NewsTabs', { screen: 'ODIS' })
-      }
+      onPress={() => navigation.navigate('RemindersTabs', { screen: 'ODIS' })}
       style={{ padding: 5 }}
     >
       <BlinkingView
