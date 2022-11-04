@@ -15,7 +15,8 @@ export default AppInfo = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemo     dApp);
+  const showingFullApp = true;
   //   console.log('8888888888888 odisFetchTime', odisFetchTime);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
@@ -82,18 +83,15 @@ export default AppInfo = (props) => {
         Constants.manifest.name &&
         Constants.manifest.name === 'Pocket Infoweb Extra'
           ? 'Pocket Infoweb Extra'
-          : showingDemoApp
-          ? 'Pocket Infoweb'
           : 'Pocket Infoweb'}
       </Text>
-      {showingDemoApp ? null : null}
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
         </Text>
       ) : null}
       <Text style={baseStyles.panelTextBrand}>{brandText}</Text>
-      {showingDemoApp ? (
+      {1 === 2 && showingDemoApp ? (
         odisFetchTime ? (
           <Text style={baseStyles.panelTextAppInfo}>
             {`Last ODIS check: ${getShortDisplayDateAndTime(odisFetchTime)}`}

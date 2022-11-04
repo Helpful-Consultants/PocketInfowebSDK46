@@ -8,11 +8,12 @@ import Constants from 'expo-constants';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
 export default AppNameWithLogo = () => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  // const showingFullApp = useSelector((state) => state.user.showingFullApp);
+  const showingFullApp = true;
   const windowDim = useWindowDimensions();
   const baseStyles =
     windowDim &&
-    getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
+    getBaseStyles({ ...windowDim, showingFullApp: showingFullApp });
   //   console.log('name', Constants.manifest);
   //   console.log(
   //     'in AppNameWithLogo, windowDim:',
@@ -33,8 +34,6 @@ export default AppNameWithLogo = () => {
           Constants.manifest.name &&
           Constants.manifest.name === 'Pocket Infoweb Extra'
             ? 'Pocket Infoweb Extra'
-            : showingDemoApp
-            ? 'Pocket Infoweb'
             : 'Pocket Infoweb'}
         </Text>
       </View>

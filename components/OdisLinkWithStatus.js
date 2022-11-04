@@ -22,7 +22,7 @@ export default function OdisLinkWithStatus(props) {
   const {
     navigation,
     showOdisAlert,
-    showingDemoApp,
+    showingFullApp,
     showAlert,
     showSevereAlert,
   } = props;
@@ -35,8 +35,8 @@ export default function OdisLinkWithStatus(props) {
   //   console.log(
   //     'OdisLinkWithStatus showOdisAlert',
   //     showOdisAlert,
-  //     'showingDemoApp',
-  //     showingDemoApp
+  //     'showingFullApp',
+  //     showingFullApp
   //   );
 
   return (

@@ -11,7 +11,8 @@ import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { selectFetchParamsObj } from '../reducers/user';
 
 export default DemoDataSwitch = (props) => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  // const showingFullApp = useSelector((state) => state.user.showingFullApp);
+  const showingFullApp = true;
   const requestedDemoData = useSelector(
     (state) => state.user.requestedDemoData
   );
@@ -69,7 +70,7 @@ export default DemoDataSwitch = (props) => {
     );
   }, [requestedDemoData]);
 
-  return 1 == 2 && showingDemoApp && userDataObj && userDataObj.userName ? (
+  return 1 == 2 && showingFullApp && userDataObj && userDataObj.userName ? (
     userDataObj.userName.toLowerCase().indexOf('zzzlyndon') > -1 ||
     userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
     (userDataObj.userName.toLowerCase().indexOf('zzzsimon') > -1 &&

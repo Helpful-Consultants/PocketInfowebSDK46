@@ -4,14 +4,14 @@ import Colors from '../constants/Colors';
 import Constants from 'expo-constants';
 
 export default getBaseStyles = (props) => {
-  const { fontScale, height, scale, width, showingDemoApp = false } = props;
+  const { fontScale, height, scale, width, showingFullApp = false } = props;
 
   //   console.log(props && fontScale && 'in getBaseStyles, fontScale:', fontScale);
   //   console.log(props && scale && 'in getBaseStyles, scale:', scale);
   //   console.log(props && height && 'in getBaseStyles, height:', height);
   //   console.log(props && width && 'in getBaseStyles, width:', width);
   //   console.log('in getBaseStyles, props :', props);
-  //   console.log('in getBaseStyles, showingDemoApp :', showingDemoApp);
+  //   console.log('in getBaseStyles, showingFullApp :', showingFullApp);
 
   //   const gridRows =
   //     Constants.manifest.name &&
