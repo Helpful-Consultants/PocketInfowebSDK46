@@ -28,7 +28,6 @@ export default NotificationsScreen = (props) => {
   const { navigation } = props;
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.showingDemoData);
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisChangesToHighlight = useSelector(
@@ -136,7 +135,6 @@ export default NotificationsScreen = (props) => {
     isLoadingCalibrationExpiry,
     isLoadingLtpLoans,
     isLoadingServiceMeasures,
-    showingDemoApp,
     showingDemoData,
   ]);
 
@@ -194,7 +192,7 @@ export default NotificationsScreen = (props) => {
 
   useEffect(() => {
     getItems();
-  }, [getItems, showingDemoApp, showingDemoData]);
+  }, [getItems, showingDemoData]);
 
   //   console.log(' ******************** odisRedCount', odisRedCount);
 

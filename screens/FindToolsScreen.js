@@ -185,7 +185,7 @@ export default FindToolsScreen = (props) => {
   const dealerWipsItems = useSelector(selectDealerWips);
   const uniqueLtpItems = useSelector(selectSortedUniqueLtpTools);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingFullApp = true;
   const isLoadingTools = useSelector((state) => state.dealerTools.isLoading);
   const dataErrorTools = useSelector((state) => state.dealerTools.error);
   const dataErrorUrlTools = useSelector(
@@ -717,12 +717,12 @@ export default FindToolsScreen = (props) => {
   //     console.log('FT *** lastWipProcessedId', lastWipProcessedId);
   //   }, [lastWipProcessedId]);
 
-  useEffect(() => {
-    // Force the new app
-    if (!showingDemoApp) {
-      dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
-    }
-  }, []);
+  //   useEffect(() => {
+  //     // Force the new app
+  //     if (!showingFullApp) {
+  //       dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
+  //     }
+  //   }, []);
 
   useFocusEffect(
     useCallback(() => {

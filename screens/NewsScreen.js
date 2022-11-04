@@ -35,7 +35,6 @@ export default NewsScreen = (props) => {
   const newsFetchTime = useSelector((state) => state.news.fetchTime);
   //   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userData = useSelector((state) => state.user.userData[0]);
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   //   const dealerId = userData && userData.dealerId;
   //   const [isLoading, setIsLoading] = useState(false);
@@ -180,7 +179,6 @@ export default NewsScreen = (props) => {
             pressOpenHandler={pressOpenHandler}
             baseImageUrl={Urls.newsHeadlineImage}
             userIntId={userData && userData.intId}
-            showingDemoApp={showingDemoApp}
           />
         </ScrollView>
       )}
