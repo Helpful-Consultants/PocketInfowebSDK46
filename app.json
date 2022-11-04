@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Pocket Infoweb",
-    "slug": "PocketInfoweb-Dev",
+    "name": "Pocket Infoweb Extra",
+    "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": [
@@ -27,8 +27,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "122",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "buildNumber": "119",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -40,17 +40,13 @@
     },
     "android": {
       "versionCode": 26,
-      "package": "com.helpfulconsultants.pocketinfowebpro",
+      "package": "com.helpfulconsultants.pocketinfowebextra",
       "permissions": [
         "CHANGE_BADGE",
-        "com.anddoes.launcher.permission.UPDATE_COUNT",
         "com.huawei.android.launcher.permission.CHANGE_BADGE",
-        "com.htc.launcher.permission.UPDATE_SHORTCUT",
-        "me.everything.badger.permission.BADGE_COUNT_WRITE",
-        "com.majeur.launcher.permission.UPDATE_BADGE",
-        "com.sec.android.provider.badge.permission.READ",
         "com.sec.android.provider.badge.permission.WRITE",
-        "com.sonyericsson.home.permission.BROADCAST_BADGE"
+        "me.everything.badger.permission.BADGE_COUNT_WRITE",
+        "com.majeur.launcher.permission.UPDATE_BADGE"
       ]
     },
     "androidStatusBar": {
@@ -70,7 +66,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb",
+            "project": "pocket-infoweb-extra",
             "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
           }
         }
@@ -78,13 +74,8 @@
     },
     "extra": {
       "eas": {
-        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
       }
-    }
-  },
-  "extra": {
-    "eas": {
-      "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
     }
   }
 }
