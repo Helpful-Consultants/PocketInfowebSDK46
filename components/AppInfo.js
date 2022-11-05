@@ -15,7 +15,7 @@ export default AppInfo = (props) => {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const odisFetchTime = useSelector((state) => state.odis.fetchTime);
-  const showingDemoApp = useSelector((state) => state.user.showingDemo     dApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingFullApp = true;
   //   console.log('8888888888888 odisFetchTime', odisFetchTime);
   //   const brandText =
