@@ -51,8 +51,7 @@ const NewsTabs = createBottomTabNavigator();
 // );
 
 export default NewsTabNavigator = ({ navigation, route }) => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
-  const showingDemoData = useSelector((state) => state.user.requestedDemoData);
+  // const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const unseenCriticalNews = useSelector(
     (state) => state.news.unseenCriticalNews
   );
@@ -95,11 +94,6 @@ export default NewsTabNavigator = ({ navigation, route }) => {
     });
   }, [navigation, route]);
 
-  //   console.log(
-  //     '$$$$$$$$$$$$$$ in news navigator, showingDemoApp',
-  //     showingDemoApp
-  //   );
-
   return (
     <NewsTabs.Navigator //iOS
       initialRouteName='News' // ios and android
@@ -140,9 +134,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
             <TabBarIcon focused={focused} name='document' size={size} />
           ),
           tabBarBadge:
-            showingDemoApp &&
-            typeof unseenCriticalNews === 'number' &&
-            unseenCriticalNews > 0
+            typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0
               ? ''
               : null,
           tabBarBadgeStyle: {
@@ -163,17 +155,6 @@ export default NewsTabNavigator = ({ navigation, route }) => {
           ),
         }}
       />
-      {showingDemoApp ? null : (
-        <NewsTabs.Screen
-          name='ODIS'
-          component={OdisScreen}
-          options={{
-            tabBarIcon: ({ focused, size }) => (
-              <TabBarIcon focused={focused} name='tv' size={size} />
-            ),
-          }}
-        />
-      )}
       <NewsTabs.Screen
         name='Stats'
         component={StatsScreen}

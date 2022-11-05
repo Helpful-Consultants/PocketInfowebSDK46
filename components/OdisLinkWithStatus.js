@@ -19,13 +19,7 @@ export default function OdisLinkWithStatus(props) {
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
   //   const items = (props.items && props.items) || [];
-  const {
-    navigation,
-    showOdisAlert,
-    showingFullApp,
-    showAlert,
-    showSevereAlert,
-  } = props;
+  const { navigation, showOdisAlert, showAlert, showSevereAlert } = props;
   // console.log('start odisDummyData');
   // console.log(odisDummyData);
   //   console.log('in odisstatus userBrand', userBrand && userBrand);
@@ -34,9 +28,7 @@ export default function OdisLinkWithStatus(props) {
   //   console.log('odisDummyData', odisDummyData);
   //   console.log(
   //     'OdisLinkWithStatus showOdisAlert',
-  //     showOdisAlert,
-  //     'showingFullApp',
-  //     showingFullApp
+  //     showOdisAlert
   //   );
 
   return (

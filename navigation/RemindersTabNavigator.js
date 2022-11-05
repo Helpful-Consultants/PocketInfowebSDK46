@@ -58,7 +58,6 @@ const RemindersTabs = createBottomTabNavigator();
 // );
 
 export default RemindersTabNavigator = ({ navigation, route }) => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector(
     (state) => state.user.userRequestedDemoData
   );
@@ -123,147 +122,137 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     });
   }, [navigation, route]);
 
-  //   console.log(
-  //     '$$$$$$$$$$$$$$ in reminders navigator, showingDemoApp',
-  //     showingDemoApp
-  //   );
-
   useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in reminders nav useEffect LtpLoansCounts',
-      //     ltpLoansRedCount,
-      //     ltpLoansAmberCount
-      //   );
-      let tempNotifiableAlertsRedCount = 0;
-      //   console.log(
-      //     'in reminders nav useEffect tempNotifiableAlertsRedCount',
-      //     tempNotifiableAlertsRedCount
-      //   );
+    //   console.log(
+    //     'in reminders nav useEffect LtpLoansCounts',
+    //     ltpLoansRedCount,
+    //     ltpLoansAmberCount
+    //   );
+    let tempNotifiableAlertsRedCount = 0;
+    //   console.log(
+    //     'in reminders nav useEffect tempNotifiableAlertsRedCount',
+    //     tempNotifiableAlertsRedCount
+    //   );
 
-      if (
-        typeof calibrationExpiryOverdueCount === 'number' &&
-        calibrationExpiryOverdueCount > 0
-      ) {
-        // console.log(
-        //   'adding calibrationExpiryOverdueCount',
-        //   calibrationExpiryOverdueCount
-        // );
-        tempNotifiableAlertsRedCount =
-          tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
-      }
-      if (
-        typeof calibrationExpiryRedCount === 'number' &&
-        calibrationExpiryRedCount > 0
-      ) {
-        // console.log(
-        //   'adding calibrationExpiryRedCount',
-        //   calibrationExpiryRedCount
-        // );
-        tempNotifiableAlertsRedCount =
-          tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
-      }
-      if (
-        typeof serviceMeasuresRedCount === 'number' &&
-        serviceMeasuresRedCount > 0
-      ) {
-        // console.log(
-        //   'adding tempNotifiableAlertsRedCount',
-        //   serviceMeasuresRedCount
-        // );
-        tempNotifiableAlertsRedCount =
-          tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
-      }
-      if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
-        // console.log('adding ltpLoansRedCount', ltpLoansRedCount);
-        tempNotifiableAlertsRedCount =
-          tempNotifiableAlertsRedCount + ltpLoansRedCount;
-      }
-      if (typeof odisRedCount === 'number' && odisRedCount > 0) {
-        // console.log('adding odisRedCount', odisRedCount);
-        tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + 1;
-      }
-
-      //   console.log(
-      //     'in reminders nav useEffect - Red alerts ',
-      //     'tempNotifiableAlertsRedCount',
-      //     tempNotifiableAlertsRedCount,
-      //     'calibrationExpiryRedCount',
-      //     calibrationExpiryRedCount,
-      //     'serviceMeasuresRedCount',
-      //     serviceMeasuresRedCount,
-      //     'calibrationExpiryOverdueCount',
-      //     calibrationExpiryOverdueCount,
-      //     'ltpLoansRedCount',
-      //     ltpLoansRedCount,
-      //     'odisRedCount',
-      //     odisRedCount
-      //   );
-
-      setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
+    if (
+      typeof calibrationExpiryOverdueCount === 'number' &&
+      calibrationExpiryOverdueCount > 0
+    ) {
+      // console.log(
+      //   'adding calibrationExpiryOverdueCount',
+      //   calibrationExpiryOverdueCount
+      // );
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
     }
+    if (
+      typeof calibrationExpiryRedCount === 'number' &&
+      calibrationExpiryRedCount > 0
+    ) {
+      // console.log(
+      //   'adding calibrationExpiryRedCount',
+      //   calibrationExpiryRedCount
+      // );
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
+    }
+    if (
+      typeof serviceMeasuresRedCount === 'number' &&
+      serviceMeasuresRedCount > 0
+    ) {
+      // console.log(
+      //   'adding tempNotifiableAlertsRedCount',
+      //   serviceMeasuresRedCount
+      // );
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
+    }
+    if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
+      // console.log('adding ltpLoansRedCount', ltpLoansRedCount);
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + ltpLoansRedCount;
+    }
+    if (typeof odisRedCount === 'number' && odisRedCount > 0) {
+      // console.log('adding odisRedCount', odisRedCount);
+      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + 1;
+    }
+
+    //   console.log(
+    //     'in reminders nav useEffect - Red alerts ',
+    //     'tempNotifiableAlertsRedCount',
+    //     tempNotifiableAlertsRedCount,
+    //     'calibrationExpiryRedCount',
+    //     calibrationExpiryRedCount,
+    //     'serviceMeasuresRedCount',
+    //     serviceMeasuresRedCount,
+    //     'calibrationExpiryOverdueCount',
+    //     calibrationExpiryOverdueCount,
+    //     'ltpLoansRedCount',
+    //     ltpLoansRedCount,
+    //     'odisRedCount',
+    //     odisRedCount
+    //   );
+
+    setNotifiableAlertsRedCount(tempNotifiableAlertsRedCount);
   }, [
     calibrationExpiryOverdueCount,
     calibrationExpiryRedCount,
     ltpLoansRedCount,
     serviceMeasuresRedCount,
     odisRedCount,
-    showingDemoApp,
+
     showingDemoData,
   ]);
 
   useEffect(() => {
-    if (showingDemoApp) {
-      let tempNotifiableAlertsAmberCount = 0;
+    let tempNotifiableAlertsAmberCount = 0;
 
-      if (
-        typeof calibrationExpiryAmberCount === 'number' &&
-        calibrationExpiryAmberCount > 0
-      ) {
-        tempNotifiableAlertsAmberCount =
-          tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
-      }
-      if (
-        typeof serviceMeasuresAmberCount === 'number' &&
-        serviceMeasuresAmberCount > 0
-      ) {
-        tempNotifiableAlertsAmberCount =
-          tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
-      }
-      if (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0) {
-        tempNotifiableAlertsAmberCount =
-          tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
-      }
-      if (
-        typeof odisChangesToHighlight === 'number' &&
-        odisChangesToHighlight > 0
-      ) {
-        tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
-      }
-
-      //   console.log(
-      //     'in reminders nav useEffect - Amber Alerts ',
-      //     'calibrationExpiryAmberCount',
-      //     calibrationExpiryAmberCount,
-      //     'ltpLoansAmberCount',
-      //     ltpLoansAmberCount,
-      //     'serviceMeasuresAmberCount',
-      //     serviceMeasuresAmberCount,
-      //   odisChangesToHighlight',
-      //   odisChangesToHighlight,
-      //     'tempNotifiableAlertsAmberCount',
-      //     tempNotifiableAlertsAmberCount',
-
-      //   );
-
-      setNotifiableAlertsAmberCount(tempNotifiableAlertsAmberCount);
+    if (
+      typeof calibrationExpiryAmberCount === 'number' &&
+      calibrationExpiryAmberCount > 0
+    ) {
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
     }
+    if (
+      typeof serviceMeasuresAmberCount === 'number' &&
+      serviceMeasuresAmberCount > 0
+    ) {
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
+    }
+    if (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0) {
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
+    }
+    if (
+      typeof odisChangesToHighlight === 'number' &&
+      odisChangesToHighlight > 0
+    ) {
+      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
+    }
+
+    //   console.log(
+    //     'in reminders nav useEffect - Amber Alerts ',
+    //     'calibrationExpiryAmberCount',
+    //     calibrationExpiryAmberCount,
+    //     'ltpLoansAmberCount',
+    //     ltpLoansAmberCount,
+    //     'serviceMeasuresAmberCount',
+    //     serviceMeasuresAmberCount,
+    //   odisChangesToHighlight',
+    //   odisChangesToHighlight,
+    //     'tempNotifiableAlertsAmberCount',
+    //     tempNotifiableAlertsAmberCount',
+
+    //   );
+
+    setNotifiableAlertsAmberCount(tempNotifiableAlertsAmberCount);
   }, [
     calibrationExpiryAmberCount,
     ltpLoansAmberCount,
     serviceMeasuresAmberCount,
     odisChangesToHighlight,
-    showingDemoApp,
     showingDemoData,
   ]);
 
@@ -344,12 +333,11 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='checkbox' size={size} />
           ),
-          tabBarBadge: showingDemoApp
-            ? (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
-              (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
+          tabBarBadge:
+            (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
+            (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
               ? ''
-              : null
-            : null,
+              : null,
           tabBarBadgeStyle: {
             color:
               serviceMeasuresRedCount > 0
@@ -369,12 +357,11 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name='calendar' size={size} />
           ),
-          tabBarBadge: showingDemoApp
-            ? (ltpLoansRedCount && ltpLoansRedCount > 0) ||
-              (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+          tabBarBadge:
+            (ltpLoansRedCount && ltpLoansRedCount > 0) ||
+            (ltpLoansAmberCount && ltpLoansAmberCount > 0)
               ? ''
-              : null
-            : null,
+              : null,
           tabBarBadgeStyle: {
             color:
               ltpLoansRedCount > 0

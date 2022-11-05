@@ -39,8 +39,7 @@ import { setBadgeCountAsync } from '../helpers/appBadge';
 // console.log(Platform && Platform);
 
 const CustomDrawerContent = (props) => {
-  //   const { showDataSwitch, showingDemoApp } = props;
-  //   console.log('CustomDrawerContent props.showingDemoApp', showingDemoApp);
+  //   const { showDataSwitch } = props;
   //   console.log('CustomDrawerContent props.showDataSwitch', showDataSwitch);
   const userDataObj = useSelector((state) => state.user.userData[0]);
 
@@ -87,12 +86,9 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const { showingDemoApp } = props;
   let showDataSwitch = true;
 
   //   console.log('Dwr Navigator props', props);
-  //   console.log('Dwr Navigator showingDemoApp', showingDemoApp);
-  //   console.log('showingDemoApp', props.showingDemoApp && props.showingDemoApp);
 
   return (
     <Drawer.Navigator
@@ -100,7 +96,7 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props, showingDemoApp) => (
+      drawerContent={(props) => (
         <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
       )}
       screenOptions={{
@@ -133,15 +129,13 @@ const DrawerNavigator = (props) => {
           drawerLabel: 'News, Catalogue & Stats',
         }}
       />
-      {showingDemoApp ? (
-        <Drawer.Screen
-          name='RemindersTabs'
-          component={RemindersTabNavigator}
-          options={{
-            drawerLabel: 'Alerts, S Measures, Loans, ODIS',
-          }}
-        />
-      ) : null}
+      <Drawer.Screen
+        name='RemindersTabs'
+        component={RemindersTabNavigator}
+        options={{
+          drawerLabel: 'Alerts, S Measures, Loans, ODIS',
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -150,7 +144,6 @@ export default AppNavigator = (props) => {
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const calibrationExpiryOverdueCount = useSelector(
     (state) => state.calibrationExpiry.overdueCount
@@ -174,7 +167,6 @@ export default AppNavigator = (props) => {
   //   return <AuthLoadingScreen />;
 
   //   console.log('AppNavigator props', props && props);
-  //   console.log('AppNavigator showingDemoApp', showingDemoApp && showingDemoApp);
 
   //   const fetchDate = async () => {
   //     const now = new Date().toISOString();
@@ -257,81 +249,70 @@ export default AppNavigator = (props) => {
   }, []);
 
   useEffect(() => {
-    if (showingDemoApp) {
-      let tempNotifiableAlertsCount = 0;
+    let tempNotifiableAlertsCount = 0;
 
-      if (
-        typeof calibrationExpiryOverdueCount === 'number' &&
-        calibrationExpiryOverdueCount > 0
-      ) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
-      }
-      if (
-        typeof calibrationExpiryRedCount === 'number' &&
-        calibrationExpiryRedCount > 0
-      ) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + calibrationExpiryRedCount;
-      }
-
-      if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + ltpLoansRedCount;
-      }
-      if (
-        typeof serviceMeasuresRedCount === 'number' &&
-        serviceMeasuresRedCount > 0
-      ) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + serviceMeasuresRedCount;
-      }
-      if (typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0) {
-        tempNotifiableAlertsCount =
-          tempNotifiableAlertsCount + unseenCriticalNews;
-      }
-      if (typeof odisRedCount === 'number' && odisRedCount > 0) {
-        tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
-      }
-
-      //   console.log(
-      //     'in appnav useEffect before setting badge',
-      //     'showingDemoApp',
-      //     showingDemoApp,
-      //     'showingDemoData',
-      //     showingDemoData,
-      //     'calibrationExpiryOverdueCount',
-      //     calibrationExpiryOverdueCount,
-      //     'calibrationExpiryRedCount',
-      //     calibrationExpiryRedCount,
-      //     'serviceMeasuresRedCount',
-      //     serviceMeasuresRedCount,
-      //     'ltpLoansRedCount',
-      //     ltpLoansRedCount,
-      //     'unseenCriticalNews',
-      //     unseenCriticalNews,
-      //     'odisRedCount',
-      //     odisRedCount,
-      //     'tempNotifiableAlertsCount',
-      //     tempNotifiableAlertsCount
-      //   );
-
-      setBadgeCountAsync(tempNotifiableAlertsCount);
-    } else {
-      setBadgeCountAsync(0);
+    if (
+      typeof calibrationExpiryOverdueCount === 'number' &&
+      calibrationExpiryOverdueCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
     }
+    if (
+      typeof calibrationExpiryRedCount === 'number' &&
+      calibrationExpiryRedCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + calibrationExpiryRedCount;
+    }
+
+    if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + ltpLoansRedCount;
+    }
+    if (
+      typeof serviceMeasuresRedCount === 'number' &&
+      serviceMeasuresRedCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + serviceMeasuresRedCount;
+    }
+    if (typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + unseenCriticalNews;
+    }
+    if (typeof odisRedCount === 'number' && odisRedCount > 0) {
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
+    }
+
+    //   console.log(
+    //     'in appnav useEffect before setting badge',
+    //     'showingDemoData',
+    //     showingDemoData,
+    //     'calibrationExpiryOverdueCount',
+    //     calibrationExpiryOverdueCount,
+    //     'calibrationExpiryRedCount',
+    //     calibrationExpiryRedCount,
+    //     'serviceMeasuresRedCount',
+    //     serviceMeasuresRedCount,
+    //     'ltpLoansRedCount',
+    //     ltpLoansRedCount,
+    //     'unseenCriticalNews',
+    //     unseenCriticalNews,
+    //     'odisRedCount',
+    //     odisRedCount,
+    //     'tempNotifiableAlertsCount',
+    //     tempNotifiableAlertsCount
+    //   );
+
+    setBadgeCountAsync(tempNotifiableAlertsCount);
   }, [
     calibrationExpiryOverdueCount,
     calibrationExpiryRedCount,
     ltpLoansRedCount,
     serviceMeasuresRedCount,
     odisRedCount,
-    showingDemoApp,
     showingDemoData,
   ]); //testing objects
-
-  //   console.log('?????? in AppNavigator showingDemoApp is ', showingDemoApp);
-  //   console.log('ssssss in AppNavigator showingDemoApp ', showingDemoApp);
 
   const allOK =
     userIsValidated &&
@@ -343,39 +324,14 @@ export default AppNavigator = (props) => {
 
   //   const AppStack = createStackNavigator();
 
-  //   console.log(
-  //     'AppNavigator, showingDemoApp is: ',
-  //     showingDemoApp && showingDemoApp
-  //   );
-
   //   console.log('AppNavigator, props are: ', props);
 
-  //   const newPropsObj = { ...props, showingDemoApp: true };
+  //   const newPropsObj = { ...props, showingFullApp: true };
   //   console.log('AppNavigator, newPropsObj is: ', newPropsObj);
-  //   console.log(
-  //     '?????? in AppNavigator showingDemoApp is ',
-  //     showingDemoApp,
-  //     showingDemoApp
-  //   );
-  if (showingDemoApp) {
-    return (
-      <NavigationContainer>
-        {allOK === true ? (
-          <DrawerNavigator showingDemoApp={true} />
-        ) : (
-          <SignedOutStack />
-        )}
-      </NavigationContainer>
-    );
-  } else {
-    return (
-      <NavigationContainer>
-        {allOK === true ? (
-          <DrawerNavigator showingDemoApp={false} />
-        ) : (
-          <SignedOutStack />
-        )}
-      </NavigationContainer>
-    );
-  }
+
+  return (
+    <NavigationContainer>
+      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
+    </NavigationContainer>
+  );
 };

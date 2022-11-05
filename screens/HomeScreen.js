@@ -41,7 +41,7 @@ import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { selectFetchParamsObj } from '../reducers/user';
-import { setUserRequestedDemoApp } from '../actions/user';
+// import { setUserRequestedDemoApp } from '../actions/user';
 import {
   selectBookedOutToolsForUser,
   selectDealerWipsForUser,
@@ -122,8 +122,9 @@ export default HomeScreen = (props) => {
   const userName = useSelector((state) => state.user.userName);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
+
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoApp = false;
   const showingUpdateAppPrompt = true;
 
   //   console.log('IN HOME !!!!! 1g');
@@ -178,11 +179,8 @@ export default HomeScreen = (props) => {
   const [isLoadingAny, setIsLoadingAny] = useState(false);
 
   const windowDim = useWindowDimensions();
-  const baseStyles =
-    windowDim &&
-    getBaseStyles({ ...windowDim, showingDemoApp: showingDemoApp });
+  const baseStyles = windowDim && getBaseStyles({ ...windowDim });
 
-  //   console.log('IN HOME !!!!! showingDemoApp', showingDemoApp);
   //   console.log('windowDim', windowDim);
 
   //   console.log('IN HOME !!!!!  2');
@@ -396,7 +394,7 @@ export default HomeScreen = (props) => {
   //     );
   //   }, [userWipsItems.length]);
 
-  const gridRows = showingDemoApp ? 8 : 6;
+  const gridRows = 8;
 
   const openAppStore = () => {
     const androidAppLinkPro =
@@ -429,69 +427,66 @@ export default HomeScreen = (props) => {
   };
 
   useEffect(() => {
-    if (showingDemoApp) {
-      //   console.log(
-      //     'in home useEffect LtpLoansCounts',
-      //     ltpLoansAmberCount,
-      //     ltpLoansRedCount
-      //   );
-      const tempNotifiableOdisRedCount =
-        typeof odisRedCount === 'number' && odisRedCount > 0 ? 1 : 0;
-      const tempNotifiableCalibrationExpiryRedCount =
-        typeof calibrationExpiryRedCount === 'number' &&
-        calibrationExpiryRedCount > 0
-          ? calibrationExpiryRedCount
-          : 0;
-      const tempNotifiableServiceMeasuresRedCount =
-        typeof serviceMeasuresRedCount === 'number' &&
-        serviceMeasuresRedCount > 0
-          ? serviceMeasuresRedCount
-          : 0;
-      const tempNotifiableLtpLoansRedCount =
-        typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0
-          ? ltpLoansRedCount
-          : 0;
+    //   console.log(
+    //     'in home useEffect LtpLoansCounts',
+    //     ltpLoansAmberCount,
+    //     ltpLoansRedCount
+    //   );
+    const tempNotifiableOdisRedCount =
+      typeof odisRedCount === 'number' && odisRedCount > 0 ? 1 : 0;
+    const tempNotifiableCalibrationExpiryRedCount =
+      typeof calibrationExpiryRedCount === 'number' &&
+      calibrationExpiryRedCount > 0
+        ? calibrationExpiryRedCount
+        : 0;
+    const tempNotifiableServiceMeasuresRedCount =
+      typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0
+        ? serviceMeasuresRedCount
+        : 0;
+    const tempNotifiableLtpLoansRedCount =
+      typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0
+        ? ltpLoansRedCount
+        : 0;
 
-      setNotificationsRedCount(
-        tempNotifiableOdisRedCount +
-          tempNotifiableCalibrationExpiryRedCount +
-          tempNotifiableLtpLoansRedCount +
-          tempNotifiableServiceMeasuresRedCount
-      );
-
-      const tempNotifiableCalibrationExpiryAmberCount =
-        typeof calibrationExpiryAmberCount === 'number' &&
-        calibrationExpiryAmberCount > 0
-          ? calibrationExpiryAmberCount
-          : 0;
-      const tempNotifiableLtpLoansAmberCount =
-        typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0
-          ? ltpLoansAmberCount
-          : 0;
-
-      const tempNotifiableServiceMeasuresAmberCount =
-        typeof serviceMeasuresAmberCount === 'number' &&
-        serviceMeasuresAmberCount > 0
-          ? serviceMeasuresAmberCount
-          : 0;
-      setNotificationsAmberCount(
-        tempNotifiableCalibrationExpiryAmberCount +
-          tempNotifiableLtpLoansAmberCount +
-          tempNotifiableServiceMeasuresAmberCount +
-          odisChangesToHighlight
-      );
-      setNotificationsTotalAlertCount(
+    setNotificationsRedCount(
+      tempNotifiableOdisRedCount +
         tempNotifiableCalibrationExpiryRedCount +
-          tempNotifiableLtpLoansRedCount +
-          tempNotifiableServiceMeasuresRedCount +
-          tempNotifiableCalibrationExpiryAmberCount +
-          tempNotifiableLtpLoansAmberCount +
-          tempNotifiableServiceMeasuresAmberCount
-      );
-      setLtpLoansTotalAlertCount(
-        tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
-      );
-    }
+        tempNotifiableLtpLoansRedCount +
+        tempNotifiableServiceMeasuresRedCount
+    );
+
+    const tempNotifiableCalibrationExpiryAmberCount =
+      typeof calibrationExpiryAmberCount === 'number' &&
+      calibrationExpiryAmberCount > 0
+        ? calibrationExpiryAmberCount
+        : 0;
+    const tempNotifiableLtpLoansAmberCount =
+      typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0
+        ? ltpLoansAmberCount
+        : 0;
+
+    const tempNotifiableServiceMeasuresAmberCount =
+      typeof serviceMeasuresAmberCount === 'number' &&
+      serviceMeasuresAmberCount > 0
+        ? serviceMeasuresAmberCount
+        : 0;
+    setNotificationsAmberCount(
+      tempNotifiableCalibrationExpiryAmberCount +
+        tempNotifiableLtpLoansAmberCount +
+        tempNotifiableServiceMeasuresAmberCount +
+        odisChangesToHighlight
+    );
+    setNotificationsTotalAlertCount(
+      tempNotifiableCalibrationExpiryRedCount +
+        tempNotifiableLtpLoansRedCount +
+        tempNotifiableServiceMeasuresRedCount +
+        tempNotifiableCalibrationExpiryAmberCount +
+        tempNotifiableLtpLoansAmberCount +
+        tempNotifiableServiceMeasuresAmberCount
+    );
+    setLtpLoansTotalAlertCount(
+      tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
+    );
   }, [
     calibrationExpiryRedCount,
     calibrationExpiryAmberCount,
@@ -501,16 +496,15 @@ export default HomeScreen = (props) => {
     serviceMeasuresAmberCount,
     odisChangesToHighlight,
     odisRedCount,
-    showingDemoApp,
     showingDemoData,
   ]);
 
-  useEffect(() => {
-    // Force the new app
-    if (!showingDemoApp) {
-      dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
-    }
-  }, []);
+  //   useEffect(() => {
+  //     // Force the new app
+  //     if (!showingDemoApp) {
+  //       dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
+  //     }
+  //   }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -548,7 +542,7 @@ export default HomeScreen = (props) => {
         }}
       >
         <AppNameWithLogo />
-        {1 === 2 && showingDemoApp && !isUpdateNeeded ? (
+        {showingDemoApp && !isUpdateNeeded ? (
           <Text
             style={{
               ...baseStyles.textExtraApp,
@@ -559,7 +553,11 @@ export default HomeScreen = (props) => {
           </Text>
         ) : null}
 
-        {isUpdateNeeded ? (
+        {Constants &&
+        Constants.manifest &&
+        Constants.manifest.name &&
+        Constants.manifest.name === 'Pocket Infoweb' &&
+        isUpdateNeeded ? (
           <Text
             style={{
               ...baseStyles.textUpdateApp,
@@ -740,7 +738,7 @@ export default HomeScreen = (props) => {
                     </View>
                   </Touchable>
                 </View>
-                {showingDemoApp ? (
+                {
                   <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                     <Touchable
                       style={baseStyles.viewHomeGridCell}
@@ -763,12 +761,10 @@ export default HomeScreen = (props) => {
                         />
                         <BadgedText
                           showBadge={
-                            showingDemoApp
-                              ? (typeof notificationsRedCount === 'number' &&
-                                  notificationsRedCount > 0) ||
-                                (notificationsAmberCount &&
-                                  notificationsAmberCount > 0)
-                              : 0
+                            (typeof notificationsRedCount === 'number' &&
+                              notificationsRedCount > 0) ||
+                            (notificationsAmberCount &&
+                              notificationsAmberCount > 0)
                           }
                           focused={false}
                           text={'Notifications'}
@@ -780,7 +776,6 @@ export default HomeScreen = (props) => {
                               ? '+'
                               : null
                           }
-                          showingDemoApp={showingDemoApp}
                           showSevereAlert={
                             typeof notificationsRedCount === 'number' &&
                             notificationsRedCount > 0
@@ -807,13 +802,11 @@ export default HomeScreen = (props) => {
                         />
                         <BadgedText
                           showBadge={
-                            showingDemoApp
-                              ? (typeof ltpLoansRedCount === 'number' &&
-                                  ltpLoansRedCount > 0) ||
-                                (typeof ltpLoansAmberCount === 'number' &&
-                                  ltpLoansAmberCount > 0)
-                                ? '+'
-                                : 0
+                            (typeof ltpLoansRedCount === 'number' &&
+                              ltpLoansRedCount > 0) ||
+                            (typeof ltpLoansAmberCount === 'number' &&
+                              ltpLoansAmberCount > 0)
+                              ? '+'
                               : 0
                           }
                           focused={false}
@@ -826,13 +819,12 @@ export default HomeScreen = (props) => {
                               ? '+'
                               : null
                           }
-                          showingDemoApp={showingDemoApp}
                           showSevereAlert={ltpLoansRedCount > 0 ? true : false}
                         />
                       </View>
                     </Touchable>
                   </View>
-                ) : null}
+                }
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
@@ -851,7 +843,6 @@ export default HomeScreen = (props) => {
                       />
                       <BadgedText
                         showBadge={
-                          showingDemoApp &&
                           typeof unseenCriticalNews === 'number' &&
                           unseenCriticalNews > 0
                             ? 1
@@ -860,13 +851,11 @@ export default HomeScreen = (props) => {
                         focused={false}
                         text={'News'}
                         value={
-                          showingDemoApp &&
                           typeof unseenCriticalNews === 'number' &&
                           unseenCriticalNews > 0
                             ? '+'
                             : null
                         }
-                        showingDemoApp={showingDemoApp}
                         showSevereAlert={true}
                       />
                     </View>
@@ -890,7 +879,6 @@ export default HomeScreen = (props) => {
                         focused={false}
                         text={'Catalogue'}
                         value={'+'}
-                        showingDemoApp={showingDemoApp}
                       />
                     </View>
                   </Touchable>
@@ -904,7 +892,6 @@ export default HomeScreen = (props) => {
                 }}
               >
                 <OdisLinkWithStatus
-                  showingDemoApp={showingDemoApp}
                   navigation={navigation}
                   showAlert={odisChangesToHighlight}
                   showSevereAlert={odisRedCount}
