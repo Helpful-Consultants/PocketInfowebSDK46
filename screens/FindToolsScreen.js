@@ -185,7 +185,7 @@ export default FindToolsScreen = (props) => {
   const dealerWipsItems = useSelector(selectDealerWips);
   const uniqueLtpItems = useSelector(selectSortedUniqueLtpTools);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
-  const showingFullApp = true;
+  const showingDemoApp = false;
   const isLoadingTools = useSelector((state) => state.dealerTools.isLoading);
   const dataErrorTools = useSelector((state) => state.dealerTools.error);
   const dataErrorUrlTools = useSelector(
@@ -719,7 +719,7 @@ export default FindToolsScreen = (props) => {
 
   //   useEffect(() => {
   //     // Force the new app
-  //     if (!showingFullApp) {
+  //     if (!showingDemoApp) {
   //       dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
   //     }
   //   }, []);

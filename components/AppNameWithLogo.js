@@ -8,12 +8,8 @@ import Constants from 'expo-constants';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
 export default AppNameWithLogo = () => {
-  // const showingFullApp = useSelector((state) => state.user.showingFullApp);
-  const showingFullApp = true;
   const windowDim = useWindowDimensions();
-  const baseStyles =
-    windowDim &&
-    getBaseStyles({ ...windowDim, showingFullApp: showingFullApp });
+  const baseStyles = windowDim && getBaseStyles({ ...windowDim });
   //   console.log('name', Constants.manifest);
   //   console.log(
   //     'in AppNameWithLogo, windowDim:',

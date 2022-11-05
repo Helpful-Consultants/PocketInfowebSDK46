@@ -7,7 +7,6 @@ import { setUserRequestedDemoData } from '../actions/user';
 
 export default DemoAppSwitch = (props) => {
   const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
-  const showingFullApp = true;
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);

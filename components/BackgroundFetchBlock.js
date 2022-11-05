@@ -79,7 +79,7 @@ const unregisterBackgroundFetchTaskAsync = async () => {
 };
 
 export default BackgroundFetchBlock = () => {
-  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  // const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const backgroundDataItems = useSelector(
     (state) => state.backgroundData.backgroundDataItems
   );
