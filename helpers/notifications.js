@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import * as BackgroundFetch from 'expo-background-fetch';
+//import * as BackgroundFetch from 'expo-background-fetch';
 import * as Device from 'expo-device';
 import { Platform } from 'react-native';
 import { setBadgeCountAsync } from '../helpers/appBadge';
