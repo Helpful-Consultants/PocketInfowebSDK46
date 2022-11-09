@@ -19,6 +19,7 @@ import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as SplashScreen from 'expo-splash-screen';
 import Tasks from './constants/Tasks';
 import {
   defineBackgroundTask,
@@ -54,6 +55,8 @@ import Loading from './components/Loading';
 //     : BackgroundFetch.BackgroundFetchResult.NoData;
 // };
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 enableScreens();
 
 axios.defaults.withCredentials = true;

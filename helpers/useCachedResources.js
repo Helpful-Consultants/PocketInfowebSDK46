@@ -6,10 +6,10 @@ import * as Font from 'expo-font';
 export const useCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   // Load any resources or data that we need prior to rendering the app
+
   useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHideAsync();
         // Load images
         await Promise.all([
           Asset.loadAsync([
@@ -43,6 +43,7 @@ export const useCachedResources = () => {
       }
     }
 
+    loadResourcesAndDataAsync();
     loadResourcesAndDataAsync();
   }, []);
 
