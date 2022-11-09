@@ -556,7 +556,8 @@ export default HomeScreen = (props) => {
         {Constants &&
         Constants.manifest &&
         Constants.manifest.name &&
-        Constants.manifest.name === 'Pocket Infoweb' &&
+        (Constants.manifest.name === 'Pocket Infoweb' ||
+          Constants.manifest.name === 'Pocket Infoweb Extra') &&
         isUpdateNeeded ? (
           <Text
             style={{
