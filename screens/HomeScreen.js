@@ -227,7 +227,7 @@ export default HomeScreen = (props) => {
 
   //   useEffect(() => {
   //     registerDeviceForPushNotificationsAsync().then((token) =>
-  //       setExpoPushToken(token)
+  //       setExponentPushToken(token)
   //     );
 
   //     notificationListener.current =

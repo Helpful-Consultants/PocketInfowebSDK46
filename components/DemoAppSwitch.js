@@ -107,7 +107,7 @@ export default DemoAppSwitch = (props) => {
             onValueChange={toggleSwitch}
           />
           <Text style={baseStyles.panelTextAppInfo}>
-            {switchStatus ? ` Demo app` : ` Show demo?`}
+            {switchStatus ? ` Demoing alerts` : ` Demo alerts?`}
           </Text>
         </View>
       </View>

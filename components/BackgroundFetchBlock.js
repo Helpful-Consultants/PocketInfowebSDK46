@@ -24,8 +24,9 @@ import {
 // import { store } from '../helpers/store';
 // console.log('in backgroundfetchblock', store);
 
-const exponentPushTokenIPhone12 = 'ExponentPushToken[8l1YL_H2N_84dNlAy4aPBh]';
-const exponentPushTokenAndroid = 'ExponentPushToken[]';
+const exponentPushTokenIPhone12Pro =
+  'ExponentPushToken[8l1YL_H2N_84dNlAy4aPBh]';
+const exponentPushTokenAndroidPro = 'ExponentPushToken[]';
 const exponentPushTokenIPhone12Extra =
   'ExponentPushToken[rFlR5bPYAAfrGqKwglHzQs]';
 const exponentPushTokenIPhone7Extra =
@@ -103,7 +104,7 @@ export default BackgroundFetchBlock = () => {
     isBackgroundNotificationsTaskRegistered,
     setIsBackgroundNotificationsTaskRegistered,
   ] = useState(false);
-  const [ExponentPushToken, setExponentPushToken] = useState('');
+  const [exponentPushToken, setExponentPushToken] = useState('');
   const [expoPushResult, setExpoPushResult] = useState('');
   const [backgroundTaskStatus, setBackgroundTaskStatus] = useState(null);
   const [appBadgeCount, setAppBadgeCount] = useState(0);
@@ -404,7 +405,7 @@ export default BackgroundFetchBlock = () => {
             <View>
               <TouchableOpacity
                 onPress={() => {
-                  schedulePushNotificationAsync(ExponentPushToken);
+                  schedulePushNotificationAsync(exponentPushToken);
                 }}
               >
                 <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -413,7 +414,7 @@ export default BackgroundFetchBlock = () => {
               </TouchableOpacity>
               <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
                 {Device.isDevice ? 'Device' : 'Simulator; '}
-                {ExponentPushToken}
+                {exponentPushToken}
               </Text>
             </View>
           ) : null}
@@ -431,20 +432,20 @@ export default BackgroundFetchBlock = () => {
           </Text>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
             {Device.isDevice ? 'Device' : 'Simulator; '}
-            {ExponentPushToken}
+            {exponentPushToken}
           </Text>
         </View>
         <View>
           <TouchableOpacity
             onPress={() => {
-              schedulePushNotificationAsync(ExponentPushToken);
+              schedulePushNotificationAsync(exponentPushToken);
             }}
           >
             <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
               {`> Send yourself a test notification`}
             </Text>
             <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-              {`Your token is ${ExponentPushToken}`}
+              {`Your token is ${exponentPushToken}`}
             </Text>
           </TouchableOpacity>
         </View>
@@ -452,7 +453,7 @@ export default BackgroundFetchBlock = () => {
           <View>
             <TouchableOpacity
               onPress={() => {
-                scheduleRegularPushNotificationAsync(ExponentPushToken);
+                scheduleRegularPushNotificationAsync(exponentPushToken);
               }}
             >
               <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -465,7 +466,7 @@ export default BackgroundFetchBlock = () => {
               }}
             >
               <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-                {`> Schedule a push notification to Al phone 7 ${exponentPushTokenIPhone7Extra}`}
+                {`> Schedule a push to Al phone 7 (Extra) ${exponentPushTokenIPhone7Extra}`}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -474,7 +475,7 @@ export default BackgroundFetchBlock = () => {
               }}
             >
               <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-                {`> Schedule a push notification to Al phone 12 ${exponentPushTokenIPhone12Extra}`}
+                {`> Schedule a push to Al phone 12 (Extra) ${exponentPushTokenIPhone12Extra}`}
               </Text>
             </TouchableOpacity>
           </View>
@@ -484,7 +485,7 @@ export default BackgroundFetchBlock = () => {
   ) : null;
 };
 
-/* {ExponentPushToken ? ExponentPushToken : expoPushResult ? expoPushResult : null} */
+/* {exponentPushToken ? exponentPushToken : expoPushResult ? expoPushResult : null} */
 
 const styles = StyleSheet.create({
   screen: {
