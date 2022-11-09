@@ -542,7 +542,7 @@ export default HomeScreen = (props) => {
         }}
       >
         <AppNameWithLogo />
-        {showingDemoApp && !isUpdateNeeded ? (
+        {1 === 2 && showingDemoApp && !isUpdateNeeded ? (
           <Text
             style={{
               ...baseStyles.textExtraApp,
