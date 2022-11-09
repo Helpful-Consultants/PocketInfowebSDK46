@@ -8,7 +8,7 @@
       "ios",
       "android"
     ],
-    "version": "1.2.67",
+    "version": "1.2.68",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
@@ -39,7 +39,7 @@
       }
     },
     "android": {
-      "versionCode": 28,
+      "versionCode": 29,
       "package": "com.helpfulconsultants.pocketinfowebextra",
       "googleServicesFile": "./google-services-extra.json",
       "permissions": [

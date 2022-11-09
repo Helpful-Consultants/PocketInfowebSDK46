@@ -101,7 +101,7 @@ export default HomeScreen = (props) => {
       ? buildNumber !== '123' // it is a string
         ? true
         : false
-      : buildNumber !== 28 // it is a number
+      : buildNumber !== 29 // it is a number
       ? true
       : false
     : true; // not SDK 44 or above
