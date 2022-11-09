@@ -103,8 +103,8 @@ export const registerDeviceForPushNotificationsAsync = async () => {
       console.log('token is:', token);
     } catch (error) {
       console.log('error in get');
-      console.log(Device);
-      console.log(error);
+      console.log(JSON.stringify(Device));
+      console.log(JSON.stringify(error));
     }
   } else {
     console.log(
