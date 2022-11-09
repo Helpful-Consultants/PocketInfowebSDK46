@@ -9,7 +9,7 @@
       "android"
     ],
     "version": "1.2.67",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -27,7 +27,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "119",
+      "buildNumber": "123",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
@@ -39,8 +39,9 @@
       }
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 28,
       "package": "com.helpfulconsultants.pocketinfowebextra",
+      "googleServicesFile": "./google-services-extra.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.huawei.android.launcher.permission.CHANGE_BADGE",

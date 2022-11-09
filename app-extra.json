@@ -27,7 +27,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "119",
+      "buildNumber": "123",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
@@ -39,7 +39,7 @@
       }
     },
     "android": {
-      "versionCode": 27,
+      "versionCode": 28,
       "package": "com.helpfulconsultants.pocketinfowebextra",
       "googleServicesFile": "./google-services-extra.json",
       "permissions": [
