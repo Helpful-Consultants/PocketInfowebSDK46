@@ -6186,9 +6186,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-updates@npm:~0.14.6":
-  version: 0.14.6
-  resolution: "expo-updates@npm:0.14.6"
+"expo-updates@npm:~0.14.7":
+  version: 0.14.7
+  resolution: "expo-updates@npm:0.14.7"
   dependencies:
     "@expo/code-signing-certificates": 0.0.2
     "@expo/config": ~7.0.1
@@ -6206,7 +6206,7 @@ __metadata:
     expo: "*"
   bin:
     expo-updates: bin/cli.js
-  checksum: ee6e7e30785e9d5b53236b8097e1380adc2efcfd465458ffbeaa5c4d81dc7dd02c327cb5d107cfb6a7db5a91a2e89f87ee755b556ac668151b7635fd43649e69
+  checksum: 53e1ac3f1be045bc7e569e91e0736d3caae4a66fd38897306faedd0872ed7fde487610b5cb75303187132633d536490978ef512add26f7a25bbd2c7670d28bec
   languageName: node
   linkType: hard
 
@@ -12094,7 +12094,7 @@ __metadata:
     expo-splash-screen: ~0.16.2
     expo-status-bar: ~1.4.0
     expo-task-manager: ~10.3.0
-    expo-updates: ~0.14.6
+    expo-updates: ~0.14.7
     expo-web-browser: ~11.0.0
     htmlparser2: ^8.0.1
     ios: ^0.0.1

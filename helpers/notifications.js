@@ -141,13 +141,39 @@ export const unregisterBackgroundNotificationsTaskAsync = async () => {
     return;
   }
 };
-export const schedulePushNotificationAsync = async () => {
+export const schedulePushNotificationAsync = async (token = '') => {
   await Notifications.scheduleNotificationAsync({
     content: {
       title: 'T&E Notification',
-      body: 'Here is the notification body',
+      body: `ODIS version updated - please check in the app. Sent to ${token}`,
       data: { badge: 33 },
     },
     trigger: { seconds: 2 },
+  });
+};
+export const scheduleRegularPushNotificationAsync = async (token = '') => {
+  const trigger = new Date(Date.now() + 5 * 60 * 1000);
+  trigger.setMinutes(0);
+  trigger.setSeconds(0);
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'T&E Notification',
+      body: 'You should get this every 5 mins',
+      data: { badge: 5 },
+    },
+    trigger,
+  });
+};
+export const zzzzscheduleRegularPushNotificationAsync = async (token = '') => {
+  const trigger = new Date(Date.now() + 5 * 60 * 1000);
+  trigger.setMinutes(0);
+  trigger.setSeconds(0);
+  const notificationID = await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'T&E Notification',
+      body: 'You should get this every 5 mins',
+      data: { badge: 5 },
+    },
+    trigger,
   });
 };

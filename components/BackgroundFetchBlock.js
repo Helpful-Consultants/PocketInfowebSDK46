@@ -18,10 +18,20 @@ import {
   registerDeviceForPushNotificationsAsync,
   setUpForegroundNotificationsHandler,
   schedulePushNotificationAsync,
+  scheduleRegularPushNotificationAsync,
   unregisterBackgroundNotificationsTaskAsync,
 } from '../helpers/notifications';
 // import { store } from '../helpers/store';
 // console.log('in backgroundfetchblock', store);
+
+const exponentPushTokenIPhone12 = 'ExponentPushToken[8l1YL_H2N_84dNlAy4aPBh]';
+const exponentPushTokenAndroid = 'ExponentPushToken[]';
+const exponentPushTokenIPhone12Extra =
+  'ExponentPushToken[rFlR5bPYAAfrGqKwglHzQs]';
+const exponentPushTokenIPhone7Extra =
+  'ExponentPushToken[WCD8FKGLAdvehtFR3DcPNo]';
+const exponentPushTokenLyndonExtra =
+  'ExponentPushToken[ntbDpPBhHEY4fpLtMsTio9]';
 
 // 2. Register the task at some point in your app by providing the same name, and some configuration
 // options for how the background fetch should behave
@@ -79,7 +89,7 @@ const unregisterBackgroundFetchTaskAsync = async () => {
 };
 
 export default BackgroundFetchBlock = () => {
-  // const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
+  const showingDemoApp = useSelector((state) => state.user.showingDemoApp);
   const backgroundDataItems = useSelector(
     (state) => state.backgroundData.backgroundDataItems
   );
@@ -93,7 +103,7 @@ export default BackgroundFetchBlock = () => {
     isBackgroundNotificationsTaskRegistered,
     setIsBackgroundNotificationsTaskRegistered,
   ] = useState(false);
-  const [expoPushToken, setExpoPushToken] = useState('');
+  const [ExponentPushToken, setExponentPushToken] = useState('');
   const [expoPushResult, setExpoPushResult] = useState('');
   const [backgroundTaskStatus, setBackgroundTaskStatus] = useState(null);
   const [appBadgeCount, setAppBadgeCount] = useState(0);
@@ -248,7 +258,7 @@ export default BackgroundFetchBlock = () => {
     registerDeviceForPushNotificationsAsync().then(({ permission, token }) => {
       console.log('permission:', permission);
       console.log('token:', token);
-      setExpoPushToken(token);
+      setExponentPushToken(token);
       checkNotificationsPermissionStatusAsync(permission);
     });
     checkBackgroundNotificationsTaskStatusAsync();
@@ -302,8 +312,8 @@ export default BackgroundFetchBlock = () => {
   //   console.log('appBadgeCount', appBadgeCount, 'appBadgeStatus', appBadgeStatus);
 
   //   console.log('backgroundData', backgroundData);
-  return userDataObj && userDataObj.userName ? (
-    userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
+  return showingDemoApp && userDataObj && userDataObj.userName ? (
+    userDataObj.userName.toLowerCase().indexOf('zzupstone') > -1 ? (
       <View style={styles.screen}>
         <View style={styles.textContainer}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
@@ -329,12 +339,12 @@ export default BackgroundFetchBlock = () => {
             </Text>
           </Text>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            {`Notif granted: ${
+            {`${
               notificationsPermissionsStatus &&
               notificationsPermissionsStatus.granted
-                ? 'Y'
-                : 'N'
-            }; Backgrnd permitted: ${
+                ? 'Notif granted'
+                : 'Notif not granted'
+            }; Backgrnd task status: ${
               backgroundTaskStatus ? backgroundTaskStatus : 'N'
             }`}
           </Text>
@@ -389,54 +399,92 @@ export default BackgroundFetchBlock = () => {
               </Text>
             </TouchableOpacity>
           ) : null}
-          <TouchableOpacity
-            onPress={() => {
-              schedulePushNotificationAsync();
-            }}
-          >
-            <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-              {`>Schedule a push notification`}
-            </Text>
-          </TouchableOpacity>
+          {notificationsPermissionsStatus &&
+          notificationsPermissionsStatus.granted ? (
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  schedulePushNotificationAsync(ExponentPushToken);
+                }}
+              >
+                <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                  {`>Schedule a push notification`}
+                </Text>
+              </TouchableOpacity>
+              <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                {Device.isDevice ? 'Device' : 'Simulator; '}
+                {ExponentPushToken}
+              </Text>
+            </View>
+          ) : null}
         </View>
-        <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-          {Device.isDevice ? 'Device' : 'Simulator; '}
-          {expoPushToken}
-        </Text>
       </View>
     ) : (
       <View style={styles.screen}>
         <View style={styles.textContainer}>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-            {`Notif granted: ${
-              notificationsPermissionsStatus &&
-              notificationsPermissionsStatus.granted
-                ? 'Y'
-                : 'N'
-            }; Backgrnd permitted: ${
+            {`${
+              1 === 1 ? 'Notif granted' : 'Notif not granted'
+            }; Backgrnd task status: ${
               backgroundTaskStatus ? backgroundTaskStatus : 'N'
             }`}
           </Text>
           <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
             {Device.isDevice ? 'Device' : 'Simulator; '}
-            {expoPushToken}
+            {ExponentPushToken}
           </Text>
+        </View>
+        <View>
           <TouchableOpacity
             onPress={() => {
-              schedulePushNotificationAsync();
+              schedulePushNotificationAsync(ExponentPushToken);
             }}
           >
             <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
-              {`> Schedule a push notification`}
+              {`> Send yourself a test notification`}
+            </Text>
+            <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+              {`Your token is ${ExponentPushToken}`}
             </Text>
           </TouchableOpacity>
         </View>
+        {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
+          <View>
+            <TouchableOpacity
+              onPress={() => {
+                scheduleRegularPushNotificationAsync(ExponentPushToken);
+              }}
+            >
+              <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                {`> Schedule a regular notification`}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                schedulePushNotificationAsync(exponentPushTokenIPhone7Extra);
+              }}
+            >
+              <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                {`> Schedule a push notification to Al phone 7 ${exponentPushTokenIPhone7Extra}`}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                schedulePushNotificationAsync(exponentPushTokenIPhone12Extra);
+              }}
+            >
+              <Text style={{ ...baseStyles.panelTextAppInfo, paddingTop: 0 }}>
+                {`> Schedule a push notification to Al phone 12 ${exponentPushTokenIPhone12Extra}`}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     )
   ) : null;
 };
 
-/* {expoPushToken ? expoPushToken : expoPushResult ? expoPushResult : null} */
+/* {ExponentPushToken ? ExponentPushToken : expoPushResult ? expoPushResult : null} */
 
 const styles = StyleSheet.create({
   screen: {
