@@ -9,7 +9,7 @@
       "android"
     ],
     "version": "1.2.67",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
