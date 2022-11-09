@@ -26,7 +26,8 @@ import {
 
 const exponentPushTokenIPhone12Pro =
   'ExponentPushToken[8l1YL_H2N_84dNlAy4aPBh]';
-const exponentPushTokenAndroidPro = 'ExponentPushToken[]';
+const exponentPushTokenAndroidExtra =
+  'ExponentPushToken[wp049JDgdW1D9xkowSOah4]';
 const exponentPushTokenIPhone12Extra =
   'ExponentPushToken[rFlR5bPYAAfrGqKwglHzQs]';
 const exponentPushTokenIPhone7Extra =

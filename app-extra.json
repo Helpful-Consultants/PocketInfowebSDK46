@@ -39,8 +39,9 @@
       }
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 27,
       "package": "com.helpfulconsultants.pocketinfowebextra",
+      "googleServicesFile": "./google-services-extra.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.huawei.android.launcher.permission.CHANGE_BADGE",
