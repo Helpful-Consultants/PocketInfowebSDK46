@@ -31,7 +31,7 @@ const exponentPushTokenAndroidExtra =
 const exponentPushTokenIPhone12Extra =
   'ExponentPushToken[rFlR5bPYAAfrGqKwglHzQs]';
 const exponentPushTokenIPhone7Extra =
-  'ExponentPushToken[WCD8FKGLAdvehtFR3DcPNo]';
+  'ExponentPushToken[-I0OERHBihE5SfUVDX3DXn]';
 const exponentPushTokenLyndonExtra =
   'ExponentPushToken[ntbDpPBhHEY4fpLtMsTio9]';
 
