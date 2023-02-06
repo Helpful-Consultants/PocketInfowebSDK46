@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { SearchBar, Text } from 'react-native-elements';
+import { SearchBar, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 

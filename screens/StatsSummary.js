@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowDimensions, ScrollView, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 
 // import statsGrab from '../assets/images/stats.jpg';
 

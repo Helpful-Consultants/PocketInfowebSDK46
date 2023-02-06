@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
-import { Image, Text } from 'react-native-elements';
+import { Image, Text } from '@rneui/themed';
 import getBaseStyles from '../helpers/getBaseStyles';
 
 export default function TitleWithAppLogo(props) {

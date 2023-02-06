@@ -1,6 +1,6 @@
 import React from 'react';
 import UserListItem from './UserListItem';
-import { ListGroup, ListGroupItem } from 'react-native-elements';
+import { ListGroup, ListGroupItem } from '@rneui/themed';
 
 const UserList = ({ users, onDeleteUserClick }) => {
   return (

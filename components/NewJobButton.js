@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 

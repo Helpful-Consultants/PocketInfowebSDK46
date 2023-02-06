@@ -10,7 +10,7 @@ import {
 // import SafeAreaView from 'react-native-safe-area-view';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input, Text } from 'react-native-elements';
+import { Button, Input, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import AppNameWithLogo from '../components/AppNameWithLogo';

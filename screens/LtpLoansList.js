@@ -4,7 +4,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 import { getLtpLoanStatus } from '../helpers/ltpLoans';
 import {
   getDateDifference,

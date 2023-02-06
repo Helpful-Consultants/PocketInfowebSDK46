@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 
 import { revalidateUserCredentials } from '../actions/user';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';

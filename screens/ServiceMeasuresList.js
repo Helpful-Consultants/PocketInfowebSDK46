@@ -1,6 +1,6 @@
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';

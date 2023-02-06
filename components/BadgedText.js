@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Badge, Text } from 'react-native-elements';
+import { Badge, Text } from '@rneui/themed';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';

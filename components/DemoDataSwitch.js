@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import { Switch, Text } from 'react-native-elements';
+import { Switch, Text } from '@rneui/themed';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUserRequestedDemoData } from '../actions/user';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';

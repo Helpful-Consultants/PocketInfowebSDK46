@@ -15,7 +15,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage } from 'react-native-responsive-fontsize';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Linking, useWindowDimensions, ScrollView, View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Button, Text } from '@rneui/themed';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Urls from '../constants/Urls';
 //import { conditionalExpression } from '@babel/types';

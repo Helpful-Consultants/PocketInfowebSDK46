@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useWindowDimensions, View } from 'react-native';
 
-import { Badge, Text } from 'react-native-elements';
+import { Badge, Text } from '@rneui/themed';
 // import { Ionicons } from '@expo/vector-icons';
 // import Colors from '../constants/Colors';
 

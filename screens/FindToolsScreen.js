@@ -12,7 +12,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Button, Divider, Input, Text } from 'react-native-elements';
+import { Button, Divider, Input, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import AwesomeAlert from 'react-native-awesome-alerts';

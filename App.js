@@ -16,7 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import axios from 'axios';
 // import rootSaga from './sagas';
 import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
-import { Text, TextInput } from 'react-native'; // not react-native-elements, for setting properties
+import { Text, TextInput } from 'react-native'; // not react-native-elements or @rneui/themed, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
@@ -34,7 +34,7 @@ import * as Sentry from 'sentry-expo';
 // import { useMediaQuery } from 'react-responsive';
 import Constants from 'expo-constants';
 // import { Ionicons } from '@expo/vector-icons';
-// import { Button, colors, ThemeProvider } from 'react-native-elements';
+// import { Button, colors, ThemeProvider } from '@rneui/themed';
 import AppNavigator from './navigation/AppNavigator';
 import Loading from './components/Loading';
 

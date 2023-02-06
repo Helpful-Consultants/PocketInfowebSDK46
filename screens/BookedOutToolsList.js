@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { Divider } from 'react-native-elements';
+import { Divider } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import ScaledImageFinder from '../components/ScaledImageFinder';
 import Colors from '../constants/Colors';

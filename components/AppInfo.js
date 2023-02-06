@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Platform, useWindowDimensions, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';

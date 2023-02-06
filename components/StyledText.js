@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 
 export default StyledText = (props) => {
   const { text, style, stylee, textStyle } = props;

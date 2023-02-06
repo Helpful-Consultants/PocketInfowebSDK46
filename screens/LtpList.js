@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { ListItem, Text } from '@rneui/themed';
 // import Touchable from 'react-native-platform-touchable';
 // import ltpDummyData from '../dummyData/ltpDummyData';
 

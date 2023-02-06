@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 //import react in our project
 
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 //import all the components we needed
 
 export default class BlinkingText extends Component {

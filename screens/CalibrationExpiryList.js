@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, useWindowDimensions, View } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
+import { ListItem, Text } from '@rneui/themed';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import InlineIcon from '../components/InlineIcon';
 import Colors from '../constants/Colors';

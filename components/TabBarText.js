@@ -1,6 +1,6 @@
 import React from 'react';
 // import { useWindowDimensions, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text } from '@rneui/themed';
 
 export default function TabBarText(props) {
   //   const windowDim = useWindowDimensions();

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useWindowDimensions, View } from 'react-native';
-import { Image, Text } from 'react-native-elements';
+import { Image, Text } from '@rneui/themed';
 import Constants from 'expo-constants';
 // import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import Colors from '../constants/Colors';
