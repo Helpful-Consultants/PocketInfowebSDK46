@@ -1,6 +1,6 @@
 {
   "build": {
-    "base": {    
+    "base": {
       "distribution": "store",
       "ios": {
         "env": {
@@ -11,7 +11,7 @@
         "env": {
           "PLATFORM": "android"
         },
-        "buildType": "app-bundle"  
+        "buildType": "app-bundle"
       }
     },
     "PROD": {
@@ -35,6 +35,12 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal"
+    },
+    "preview": {
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
     }
   },
   "submit": {
@@ -47,7 +53,6 @@
         "language": "en-GB",
         "appName": "Pocket Infoweb",
         "companyName": "Volkswagen Group UK Limited"
-       
       }
     },
     "EXTRA": {
@@ -62,5 +67,4 @@
       }
     }
   }
-  
 }
