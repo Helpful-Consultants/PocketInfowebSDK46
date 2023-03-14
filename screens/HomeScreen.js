@@ -756,7 +756,7 @@ export default HomeScreen = (props) => {
                       style={baseStyles.viewHomeGridCell}
                       onPress={() =>
                         navigation.navigate('RemindersTabs', {
-                          screen: 'Notifications',
+                          screen: 'Alerts',
                         })
                       }
                     >
@@ -779,7 +779,7 @@ export default HomeScreen = (props) => {
                               notificationsAmberCount > 0)
                           }
                           focused={false}
-                          text={'Notifications'}
+                          text={'Alerts'}
                           value={
                             (typeof notificationsRedCount === 'number' &&
                               notificationsRedCount > 0) ||

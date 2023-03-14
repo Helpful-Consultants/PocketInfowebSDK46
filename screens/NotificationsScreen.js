@@ -211,7 +211,7 @@ export default NotificationsScreen = (props) => {
           }}
         >
           <Text style={{ ...baseStyles.textPromptRibbon, textAlign: 'left' }}>
-            {`Your Important Notifications`}
+            {`Your Important Actions`}
             {isLoadingAny ? <Text>{` - Checking   `}</Text> : null}
           </Text>
           {isLoadingAny ? (

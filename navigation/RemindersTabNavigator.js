@@ -272,7 +272,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   return (
     <RemindersTabs.Navigator //iOS
-      initialRouteName='Notifications' // ios and android
+      initialRouteName='Alerts' // ios and android
       backBehavior='history' // ios and android
       // for android - start
       activeColor={Colors.vwgActiveLink} // android
@@ -303,7 +303,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       // for ios - end
     >
       <RemindersTabs.Screen
-        name='Notifications'
+        name='Alerts'
         component={NotificationsScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
