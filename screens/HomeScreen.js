@@ -63,7 +63,7 @@ export default HomeScreen = (props) => {
   //   console.log('Constants', Constants);
   //   console.log('Constants.manifest', Constants.manifest && Constants.manifest);
 
-  const appOS =
+  const platform =
     typeof Platform !== 'undefined' &&
     typeof Platform.OS !== 'undefined' &&
     Platform.OS
@@ -74,7 +74,10 @@ export default HomeScreen = (props) => {
   const appName = Constants.manifest.name ? Constants.manifest.name : '';
   //   console.log('appName', appName);
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
-
+  const storeBuildNumberAndroidPro = 30; // it is a string
+  const storeBuildNumberAndroidExtra = 29; // it is a string
+  const storeBuildNumberIOSPro = '122'; // it is a number
+  const storeBuildNumberIOSExtra = '123'; // it is a number
   const buildNumber =
     typeof Constants !== 'undefined' &&
     typeof Constants.manifest !== 'undefined' &&
@@ -97,14 +100,22 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
-    ? Platform.OS === 'ios'
-      ? buildNumber !== '123' // it is a string
+    ? platform === 'ios'
+      ? appEdition === 'extra'
+        ? buildNumber !== storeBuildNumberIOSExtra // it is a string
+          ? true
+          : false
+        : buildNumber !== storeBuildNumberIOSPro
         ? true
         : false
-      : buildNumber !== 29 // it is a number
+      : appEdition === 'extra' // android
+      ? buildNumber !== storeBuildNumberAndroidExtra // it is a number
+        ? true
+        : false
+      : buildNumber !== storeBuildNumberAndroidPro
       ? true
       : false
-    : true; // not SDK 44 or above
+    : true;
   //   const isUpdateNeeded = false;
 
   //   console.log(

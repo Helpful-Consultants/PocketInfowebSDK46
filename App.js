@@ -1,6 +1,7 @@
 // import AppLoading from 'expo-app-loading';
 // import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
+import registerNNPushToken from 'native-notify';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
@@ -208,6 +209,30 @@ export default function App(props) {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const isLoadingComplete = useCachedResources();
   //   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  const platform =
+    typeof Platform !== 'undefined' &&
+    typeof Platform.OS !== 'undefined' &&
+    Platform.OS
+      ? Platform.OS === 'ios'
+        ? 'ios'
+        : 'android'
+      : null;
+  const appEdition =
+    Constants.manifest.name === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
+  console.log('platform is', platform && platform);
+  console.log('appEdition is', appEdition && appEdition);
+  const NNPushID = appEdition === 'extra' ? 6502 : 6501;
+  const NNPushTokenKey =
+    appEdition === 'extra'
+      ? 'WJQm9OtVWDabcKdQ1oxW3f'
+      : '28ZUQr3UiskMDLgEwxcmm1';
+
+  console.log('NNPushTokenKey', NNPushTokenKey);
+  console.log('NNPushID', NNPushID);
+  console.log('Not calling NNPushID');
+  //   platform == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
+  //   appEdition === 'extra' && registerNNPushToken(NNPushID, NNPushTokenKey);
+  registerNNPushToken(NNPushID, NNPushTokenKey);
 
   async function unregisterBackgroundFetch(taskName) {
     console.log('in unregisterBackgroundFetch', taskName);

@@ -31,15 +31,19 @@
       }
     },
     "android": {
-      "versionCode": 29,
+      "versionCode": 30,
       "package": "com.helpfulconsultants.pocketinfowebextra",
       "googleServicesFile": "./google-services-extra.json",
       "permissions": [
         "CHANGE_BADGE",
+        "com.anddoes.launcher.permission.UPDATE_COUNT",
         "com.huawei.android.launcher.permission.CHANGE_BADGE",
-        "com.sec.android.provider.badge.permission.WRITE",
+        "com.htc.launcher.permission.UPDATE_SHORTCUT",
         "me.everything.badger.permission.BADGE_COUNT_WRITE",
-        "com.majeur.launcher.permission.UPDATE_BADGE"
+        "com.majeur.launcher.permission.UPDATE_BADGE",
+        "com.sec.android.provider.badge.permission.READ",
+        "com.sec.android.provider.badge.permission.WRITE",
+        "com.sonyericsson.home.permission.BROADCAST_BADGE"
       ]
     },
     "androidStatusBar": {

@@ -5,7 +5,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.67",
+    "version": "1.2.70",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -31,7 +31,7 @@
       }
     },
     "android": {
-      "versionCode": 26,
+      "versionCode": 30,
       "package": "com.helpfulconsultants.pocketinfowebpro",
       "googleServicesFile": "./google-services-pro.json",
       "permissions": [

@@ -8,36 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404368859327:android:f177df74fb8d24aeb8660a",
-        "android_client_info": {
-          "package_name": "com.helpfulconsultants.pocketinfowebextra"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "404368859327-g5juf4v4vu9fmudifgfohhfotg521uog.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBgtHndV2CGhSbOhy64yJTIKvII73lT4L8"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "404368859327-g5juf4v4vu9fmudifgfohhfotg521uog.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:404368859327:android:b72a077ffb11df9bb8660a",
+        "mobilesdk_app_id": "1:404368859327:android:c7e5227112ac4643b8660a",
         "android_client_info": {
           "package_name": "com.helpfulconsultants.pocketinfowebpro"
         }

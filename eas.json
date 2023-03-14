@@ -32,6 +32,9 @@
         "releaseChannel": "android-staging"
       }
     },
+    "production": {
+      "extends": "base"
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal"

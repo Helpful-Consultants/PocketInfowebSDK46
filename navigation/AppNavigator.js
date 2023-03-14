@@ -26,7 +26,7 @@ import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
 import DemoAppSwitch from '../components/DemoAppSwitch';
 import DemoDataSwitch from '../components/DemoDataSwitch';
-import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
+// import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 // import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
 import WipTabNavigator from './WipTabNavigator';
@@ -66,16 +66,14 @@ const CustomDrawerContent = (props) => {
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
       {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
         <View style={{ flexDirection: 'row' }}>
-          <DemoAppSwitch />
           <DemoDataSwitch />
         </View>
       ) : (
         <View>
-          <DemoAppSwitch />
           <DemoDataSwitch />
         </View>
       )}
-      <BackgroundFetchBlock />
+
       <AppInfo />
     </DrawerContentScrollView>
   );
