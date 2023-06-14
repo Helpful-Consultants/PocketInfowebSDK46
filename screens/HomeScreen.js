@@ -416,7 +416,14 @@ export default HomeScreen = (props) => {
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
     const iosAppLinkExtra =
       'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-
+    const appOS =
+      typeof Platform !== 'undefined' &&
+      typeof Platform.OS !== 'undefined' &&
+      Platform.OS
+        ? Platform.OS === 'ios'
+          ? 'ios'
+          : 'android'
+        : null;
     const appLink =
       appOS === 'ios'
         ? appEdition === 'extra'
