@@ -510,13 +510,6 @@ export default HomeScreen = (props) => {
     showingDemoData,
   ]);
 
-  //   useEffect(() => {
-  //     // Force the new app
-  //     if (!showingDemoApp) {
-  //       dispatch(setUserRequestedDemoApp({ showDemoApp: true }));
-  //     }
-  //   }, []);
-
   useFocusEffect(
     useCallback(() => {
       //   if (searchInput && searchInput.length > 0) {
@@ -876,12 +869,16 @@ export default HomeScreen = (props) => {
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
                     onPress={() =>
-                      navigation.navigate('NewsTabs', { screen: 'Catalogue' })
+                      navigation.navigate('NewsTabs', { screen: 'Elsa2Go' })
                     }
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
-                        name={Platform.OS === 'ios' ? 'book' : 'book'}
+                        name={
+                          Platform.OS === 'ios'
+                            ? 'phone-portrait'
+                            : 'phone-portrait'
+                        }
                         type='ionicon'
                         color={buttonTextColor}
                         size={iconSize}
@@ -889,7 +886,7 @@ export default HomeScreen = (props) => {
                       <BadgedText
                         showBadge={false}
                         focused={false}
-                        text={'Catalogue'}
+                        text={'Elsa2Go'}
                         value={'+'}
                       />
                     </View>

@@ -174,7 +174,7 @@ export default function OdisVersions(props) {
         <View style={baseStyles.viewRowWithImage}>
           <Image
             source={require('../assets/images/odis.jpg')}
-            style={baseStyles.imageContent}
+            style={baseStyles.inlineImageOdis}
           />
         </View>
 

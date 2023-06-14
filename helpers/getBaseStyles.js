@@ -369,9 +369,18 @@ export default getBaseStyles = (props) => {
       width: 50,
       marginRight: 10,
     },
-
+    // ElsaScreen
+    inlineImageElsa: {
+      width: 230,
+      height: 168,
+      resizeMode: 'contain',
+      marginTop: 15,
+      marginBottom: 15,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
     // OdisScreen
-    imageContent: {
+    inlineImageOdis: {
       width: 225,
       height: 70,
       resizeMode: 'contain',

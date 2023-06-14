@@ -124,7 +124,7 @@ const DrawerNavigator = (props) => {
         name='NewsTabs'
         component={NewsTabNavigator}
         options={{
-          drawerLabel: 'News, Catalogue & Stats',
+          drawerLabel: 'News & Stats',
         }}
       />
       <Drawer.Screen

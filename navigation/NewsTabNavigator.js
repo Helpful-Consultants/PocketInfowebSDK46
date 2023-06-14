@@ -10,8 +10,9 @@ import TabBarIcon from '../components/TabBarIcon';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
 import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
-import CatalogueScreen from '../screens/CatalogueScreen';
-import OdisScreen from '../screens/OdisScreen';
+// import CatalogueScreen from '../screens/CatalogueScreen';
+import ElsaScreen from '../screens/ElsaScreen';
+// import OdisScreen from '../screens/OdisScreen';
 import Colors from '../constants/Colors';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -147,11 +148,11 @@ export default NewsTabNavigator = ({ navigation, route }) => {
         }}
       />
       <NewsTabs.Screen
-        name='Catalogue'
-        component={CatalogueScreen}
+        name='Elsa2Go'
+        component={ElsaScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon focused={focused} name='book' size={size} />
+            <TabBarIcon focused={focused} name='phone-portrait' size={size} />
           ),
         }}
       />

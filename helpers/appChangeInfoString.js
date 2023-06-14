@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Alerts 1.2';
+const appChangeInfoString = 'Changes: Removed catalogue';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
