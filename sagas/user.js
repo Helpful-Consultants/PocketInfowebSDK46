@@ -205,10 +205,10 @@ function* getUser({ payload }) {
 }
 
 function* checkUserCredentials({ payload }) {
-  //   console.log(
-  //     'in user creds saga - checkUserCreds called for',
-  //     payload && payload
-  //   );
+  console.log(
+    'in user creds saga - checkUserCreds called for',
+    payload && payload
+  );
   let statusCode = null;
   let errorText = 'An error occurred when trying to check the user creds';
   let dataErrorUrl = null;
@@ -221,7 +221,7 @@ function* checkUserCredentials({ payload }) {
         email: payload.email,
         pin: payload.pin,
       });
-      //   console.log('in user creds saga - 200!');
+      console.log('in user creds saga - 200!');
       //   console.log('result is:', result && result);
       //   console.log('result is:', result.data[0]);
       // console.log('result userId is:', result.data[0].userId);
@@ -238,7 +238,7 @@ function* checkUserCredentials({ payload }) {
           result.data[0].dealerId &&
           result.data[0].dealerId.length > 0
         ) {
-          //   console.log('in user creds saga - good 200', result.data);
+          console.log('in user creds saga - good 200', result.data);
           yield put(
             actions.getUserSuccess({
               items: result.data,
@@ -309,7 +309,7 @@ function* checkUserCredentials({ payload }) {
         );
       }
     } catch (error) {
-      //   console.log('in user creds saga - error time!!!!!!!!!!!!!!');
+      console.log('in user creds saga - error time!!!!!!!!!!!!!!');
       //   console.log('whole Error', error);
       //   console.log('whole Error ends');
       //   console.log(error && error.config);
