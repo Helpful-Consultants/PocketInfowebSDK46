@@ -19,6 +19,11 @@ export default ErrorDetails = (props) => {
     dataErrorUrl,
   } = props;
 
+  const appEdition =
+    Application && Application.applicationName
+      ? Application.applicationName
+      : 'Test app';
+
   const buildNumber =
     typeof Constants !== 'undefined' &&
     typeof Constants.manifest !== 'undefined' &&
@@ -81,9 +86,7 @@ export default ErrorDetails = (props) => {
         ) : null}
       </View>
       <View style={baseStyles.viewPaddedLeft}>
-        <Text style={baseStyles.textLeftAlignedSmall}>
-          {Constants.manifest.name}
-        </Text>
+        <Text style={baseStyles.textLeftAlignedSmall}>{appEdition}</Text>
         <Text style={baseStyles.textLeftAlignedSmall}>
           {`Build `}
           {Constants.manifest.sdkVersion
