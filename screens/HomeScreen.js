@@ -71,8 +71,10 @@ export default HomeScreen = (props) => {
         ? 'ios'
         : 'android'
       : null;
-  const appName = Constants.manifest.name ? Constants.manifest.name : '';
-  //   console.log('appName', appName);
+  const appName =
+    Application && Application.applicationName
+      ? Application.applicationName
+      : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
   const storeBuildNumberAndroidPro = 30; // it is a string
   const storeBuildNumberAndroidExtra = 29; // it is a string
@@ -564,11 +566,10 @@ export default HomeScreen = (props) => {
           </Text>
         ) : null}
 
-        {Constants &&
-        Constants.manifest &&
-        Constants.manifest.name &&
-        (Constants.manifest.name === 'Pocket Infoweb' ||
-          Constants.manifest.name === 'Pocket Infoweb Extra') &&
+        {Application &&
+        Application.applicationName &&
+        (Application.applicationName === 'Pocket Infoweb' ||
+          Application.applicationName === 'Pocket Infoweb Extra') &&
         isUpdateNeeded ? (
           <Text
             style={{
