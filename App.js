@@ -219,8 +219,8 @@ export default function App(props) {
       : null;
   const appEdition =
     Constants.manifest.name === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
-  console.log('platform is', platform && platform);
-  console.log('appEdition is', appEdition && appEdition);
+  //   console.log('platform is', platform && platform);
+  //   console.log('appEdition is', appEdition && appEdition);
   const NNPushID = appEdition === 'extra' ? 6502 : 6501;
   const NNPushTokenKey =
     appEdition === 'extra'
@@ -229,7 +229,7 @@ export default function App(props) {
 
   console.log('NNPushTokenKey', NNPushTokenKey);
   console.log('NNPushID', NNPushID);
-  console.log('Not calling NNPushID');
+  //   console.log('Not calling NNPushID');
   //   platform == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
   //   appEdition === 'extra' && registerNNPushToken(NNPushID, NNPushTokenKey);
   registerNNPushToken(NNPushID, NNPushTokenKey);
