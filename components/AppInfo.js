@@ -42,6 +42,10 @@ export default AppInfo = (props) => {
   //     '!!!!!!!!!!!! isTabletOrMobileDevice',
   //     isTabletOrMobileDevice && isTabletOrMobileDevice
   //   );
+  const appEdition =
+    Application && Application.applicationName
+      ? Application.applicationName
+      : 'Test app';
   const appOS =
     typeof Platform !== 'undefined' &&
     typeof Platform.OS !== 'undefined' &&
@@ -50,6 +54,7 @@ export default AppInfo = (props) => {
         ? 'ios'
         : 'android'
       : null;
+  console.log('appOS is', appOS);
 
   const buildNumber =
     typeof Constants !== 'undefined' &&
@@ -76,14 +81,7 @@ export default AppInfo = (props) => {
         marginHorizontal: 10,
       }}
     >
-      <Text style={baseStyles.panelTextAppName}>
-        {Constants &&
-        Constants.manifest &&
-        Constants.manifest.name &&
-        Constants.manifest.name === 'Pocket Infoweb Extra'
-          ? 'Pocket Infoweb Extra'
-          : 'Pocket Infoweb'}
-      </Text>
+      <Text style={baseStyles.panelTextAppName}>{appEdition}</Text>
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
