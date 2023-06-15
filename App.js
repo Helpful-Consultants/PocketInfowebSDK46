@@ -2,6 +2,7 @@
 // import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
 import registerNNPushToken from 'native-notify';
+import * as Application from 'expo-application';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
@@ -75,12 +76,12 @@ axios.defaults.baseURL = 'https://www.toolsinfoweb.co.uk';
 let sentryDSN =
   'https://753764f4208a4f429c2c21d20a45adf0@o359939.ingest.sentry.io/3578989';
 
-if (
-  Constants &&
-  Constants.manifest &&
-  Constants.manifest.name &&
-  Constants.manifest.name === 'Pocket Infoweb Extra'
-) {
+// console.log(
+//   'Application.applicationName',
+//   Application && Application.applicationName
+// );
+
+if (Application && Application.applicationName === 'Pocket Infoweb Extra') {
   sentryDSN =
     'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
 }
@@ -89,8 +90,15 @@ Sentry.init({
   dsn: sentryDSN,
   enableInExpoDevelopment: true,
   debug: true,
-  release: Constants.manifest.revisionId,
 });
+// console.log('release', ExpoClientConfig && ExpoClientConfig.releaseId);
+
+// Sentry.init({
+//   dsn: sentryDSN,
+//   enableInExpoDevelopment: true,
+//   debug: true,
+//   release: Constants.manifest.revisionId,
+// });
 
 runSagaMiddleware(); // run here so it isn't run on every render
 
@@ -217,8 +225,11 @@ export default function App(props) {
         ? 'ios'
         : 'android'
       : null;
+  //   const appEdition =
+  //       Constants.manifest.name === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
+  //   const appEdition = 'pro';
   const appEdition =
-    Constants.manifest.name === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
+    Application.applicationName === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
   //   console.log('platform is', platform && platform);
   //   console.log('appEdition is', appEdition && appEdition);
   const NNPushID = appEdition === 'extra' ? 6502 : 6501;
