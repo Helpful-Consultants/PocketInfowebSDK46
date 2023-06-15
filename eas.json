@@ -17,24 +17,29 @@
     "PROD": {
       "extends": "base",
       "ios": {
-        "releaseChannel": "ios-prod"
+        "channel": "ios-prod"
       },
       "android": {
-        "releaseChannel": "android-prod"
+        "channel": "android-prod"
       }
     },
     "EXTRA": {
       "extends": "base",
       "ios": {
-        "releaseChannel": "ios-staging"
+        "channel": "ios-staging"
       },
       "android": {
-        "releaseChannel": "android-staging"
+        "channel": "android-staging"
       }
     },
     "production": {
       "extends": "base",
-      "channel": "production"
+      "ios": {
+        "channel": "ios-prod"
+      },
+      "android": {
+        "channel": "android-prod"
+      }
     },
     "development": {
       "developmentClient": true,
