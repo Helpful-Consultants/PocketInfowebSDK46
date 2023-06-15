@@ -33,7 +33,8 @@
       }
     },
     "production": {
-      "extends": "base"
+      "extends": "base",
+      "channel": "production"
     },
     "development": {
       "developmentClient": true,
