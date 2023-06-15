@@ -13,8 +13,7 @@ export default getBaseStyles = (props) => {
   //   console.log('in getBaseStyles, props :', props);
 
   //   const gridRows =
-  //     Constants.manifest.name &&
-  //     Constants.manifest.name === 'Pocket Infoweb Extra'
+  //     Application && Application.applicationName === 'Pocket Infoweb Extra'
   //       ? 8
   //       : 6;
   const gridRows = 8;
