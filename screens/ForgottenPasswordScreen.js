@@ -1,6 +1,7 @@
 import React from 'react';
 import { Linking, useWindowDimensions, ScrollView, View } from 'react-native';
 import { Button, Text } from '@rneui/themed';
+import Constants from 'expo-constants';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Urls from '../constants/Urls';
 //import { conditionalExpression } from '@babel/types';
@@ -8,12 +9,16 @@ import Urls from '../constants/Urls';
 export default ForgottenPasswordScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
+      : 'Test app';
   return (
     <View
       style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}
     >
       <ScrollView>
-        <AppNameWithLogo />
+        <AppNameWithLogo appName={appName} />
         <View
           style={{
             marginHorizontal: 10,

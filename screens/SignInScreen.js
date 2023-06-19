@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
+import Constants from 'expo-constants';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Text } from '@rneui/themed';
@@ -126,11 +127,15 @@ export default SignInScreen = (props) => {
       dispatch(checkUserCredentialsRequest(signInData));
     }
   };
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
+      : 'Test app';
 
   return (
     <View style={{ paddingTop: insets.top }}>
       <ScrollView>
-        <AppNameWithLogo />
+        <AppNameWithLogo appName={appName} />
         <Text style={baseStyles.textInstructions}>
           {userIsValidated && userIsSignedIn
             ? `Signed in`

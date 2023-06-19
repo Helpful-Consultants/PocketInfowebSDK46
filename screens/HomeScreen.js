@@ -72,8 +72,8 @@ export default HomeScreen = (props) => {
         : 'android'
       : null;
   const appName =
-    Application && Application.applicationName
-      ? Application.applicationName
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
       : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
   const storeBuildNumberAndroidPro = 30; // it is a string
@@ -554,7 +554,7 @@ export default HomeScreen = (props) => {
           height: '100%',
         }}
       >
-        <AppNameWithLogo />
+        <AppNameWithLogo appName={appName} />
         {1 === 2 && showingDemoApp && !isUpdateNeeded ? (
           <Text
             style={{
