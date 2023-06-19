@@ -105,9 +105,16 @@ export default AppInfo = (props) => {
         ? Constants.expoConfig.android.versionCode
         : null
       : null;
-
+  const runtimeVersion =
+    Constants && Constants.expoConfig && Constants.expoConfig.runtimeVersion
+      ? Constants.expoConfig.runtimeVersion
+      : null;
+  //   console.log('Constants.expoConfig', Constants.expoConfig);
+  //   console.log('appVersion', appVersion);
   //   console.log('Constants.expoConfig.ios', Constants.expoConfig.ios);
   //   console.log('buildNumber', buildNumber);
+
+  //   console.log('runtimeVersion', runtimeVersion);
 
   const channel =
     typeof Updates !== 'undefined' &&
@@ -171,6 +178,7 @@ export default AppInfo = (props) => {
         {sdkVersion ? `${sdkVersion}` : null}
         {buildNumber ? `/${buildNumber}` : null}
         {appVersion ? `/${appVersion}` : null}
+        {runtimeVersion ? `/${runtimeVersion}` : null}
         {channel ? `/${channel}` : null}
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
