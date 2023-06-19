@@ -76,10 +76,10 @@ export default HomeScreen = (props) => {
       ? Constants.expoConfig.name
       : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
-  const storeBuildNumberAndroidPro = 30; // it is a string
-  const storeBuildNumberAndroidExtra = 29; // it is a string
-  const storeBuildNumberIOSPro = '124'; // it is a number
-  const storeBuildNumberIOSExtra = '123'; // it is a number
+  const storeBuildNumberAndroidPro = 30; // it is a number
+  const storeBuildNumberAndroidExtra = 29; // it is a number
+  const storeBuildNumberIOSPro = '126'; // it is a string
+  const storeBuildstringIOSExtra = '126'; // it is a string
   //   console.log(Constants);
 
   // Constants.manifest.buildNumber is null in Expo Go
