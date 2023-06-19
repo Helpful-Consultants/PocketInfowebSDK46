@@ -33,7 +33,7 @@ export const useCachedResources = () => {
             'the-sans-light': require('../assets/fonts/VWAGTheSans-Light.ttf'),
           }),
         ]);
-        console.log(' loadResourcesAsync done');
+        // console.log(' loadResourcesAsync done');
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
