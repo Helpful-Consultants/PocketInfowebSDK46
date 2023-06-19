@@ -6,6 +6,7 @@ import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import * as Application from 'expo-application';
 import * as Device from 'expo-device';
+import * as Updates from 'expo-updates';
 
 export default ErrorDetails = (props) => {
   const windowDim = useWindowDimensions();
@@ -18,29 +19,59 @@ export default ErrorDetails = (props) => {
     dataStatusCode,
     dataErrorUrl,
   } = props;
-
-  const appEdition =
-    Application && Application.applicationName
-      ? Application.applicationName
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
       : 'Test app';
+  const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
+  const appOS =
+    typeof Platform !== 'undefined' &&
+    Platform &&
+    typeof Platform.OS !== 'undefined' &&
+    Platform.OS
+      ? Platform.OS === 'ios'
+        ? 'ios'
+        : 'android'
+      : null;
+  const sdkVersion =
+    Constants && Constants.expoConfig && Constants.expoConfig.sdkVersion
+      ? Constants.expoConfig.sdkVersion
+      : null;
+  console.log(
+    'Constants.expoConfig.sdkVersion',
+    Constants.expoConfig.sdkVersion
+  );
+  console.log('sdkVersion', sdkVersion);
+  const appVersion =
+    Constants && Constants.expoConfig && Constants.expoConfig.version
+      ? Constants.expoConfig.version
+      : null;
+  console.log('Constants.expoConfig.version', Constants.expoConfig.version);
+  console.log('appVersion', appVersion);
 
   const buildNumber =
-    typeof Constants !== 'undefined' &&
-    typeof Constants.manifest !== 'undefined' &&
-    typeof Platform !== 'undefined'
-      ? typeof Platform.OS !== 'undefined' && Platform.OS
-        ? Platform.OS === 'ios'
-          ? Constants.manifest.ios &&
-            typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
-            Constants.manifest.ios.buildNumber
-            ? Constants.manifest.ios.buildNumber
-            : null
-          : Constants.manifest.android &&
-            typeof Constants.manifest.android.versionCode !== 'undefined' &&
-            Constants.manifest.android.versionCode
-          ? Constants.manifest.android.versionCode
+    Constants && Constants.expoConfig && appOS
+      ? appOS === 'ios'
+        ? typeof Constants.expoConfig.ios !== 'undefined' &&
+          Constants.expoConfig.ios &&
+          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
+          Constants.expoConfig.ios.buildNumber
+          ? Constants.expoConfig.ios.buildNumber
           : null
+        : typeof Constants.expoConfig.android !== 'undefined' &&
+          Constants.expoConfig.android &&
+          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+          Constants.expoConfig.android.versionCode
+        ? Constants.expoConfig.android.versionCode
         : null
+      : null;
+
+  const channel =
+    typeof Updates !== 'undefined' &&
+    Updates &&
+    typeof Updates.channel !== 'undefined' &&
+    Updates.channel
+      ? Updates.channel
       : null;
 
   //   console.log('in ErrorDetails', props);
@@ -86,33 +117,13 @@ export default ErrorDetails = (props) => {
         ) : null}
       </View>
       <View style={baseStyles.viewPaddedLeft}>
-        <Text style={baseStyles.textLeftAlignedSmall}>{appEdition}</Text>
+        <Text style={baseStyles.textLeftAlignedSmall}>{appName}</Text>
         <Text style={baseStyles.textLeftAlignedSmall}>
           {`Build `}
-          {Constants.manifest.sdkVersion
-            ? `${Constants.manifest.sdkVersion}/`
-            : null}
-          {buildNumber ? `${buildNumber}/` : 'null'}
-          {Application.nativeApplicationVersion
-            ? `${Application.nativeApplicationVersion}/`
-            : null}
-          {Constants.manifest.version
-            ? `${Constants.manifest.version} OTA`
-            : null}
-          {Constants.manifest.releaseChannel
-            ? Constants.manifest.releaseChannel === 'default' ||
-              Constants.manifest.releaseChannel === 'ios' ||
-              Constants.manifest.releaseChannel === 'android' ||
-              Constants.manifest.releaseChannel === 'ios-prod' ||
-              Constants.manifest.releaseChannel === 'android-prod' ||
-              Constants.manifest.releaseChannel === 'prod-v2'
-              ? ' (Prod)'
-              : Constants.manifest.releaseChannel === 'ios-staging' ||
-                Constants.manifest.releaseChannel === 'android-staging' ||
-                Constants.manifest.releaseChannel === 'staging'
-              ? ' (Staging)'
-              : ` (${Constants.manifest.releaseChannel})`
-            : null}
+          {sdkVersion ? `${sdkVersion}` : null}
+          {buildNumber ? `/${buildNumber}` : null}
+          {appVersion ? `/${appVersion}` : null}
+          {channel ? `/${channel}` : null}
         </Text>
 
         {Platform && Platform.OS === 'ios' ? (
@@ -122,9 +133,6 @@ export default ErrorDetails = (props) => {
                 <Text>
                   {Device && Device.modelName ? `${Device.modelName} ` : null}
                   {`${Platform.constants.systemName} v${Platform.Version}`}
-                  {Constants.manifest.android.versionCode
-                    ? ` Store v${Constants.manifest.android.versionCode}`
-                    : null}
                 </Text>
               ) : null}
             </Text>
@@ -138,9 +146,6 @@ export default ErrorDetails = (props) => {
                   ? `Android`
                   : `${Platform.OS}`}
                 {` v${Platform.Version}`}
-                {Application && Application.nativeBuildVersion
-                  ? ` Store v${Application.nativeBuildVersion}`
-                  : null}
               </Text>
             ) : null}
           </Text>

@@ -80,6 +80,9 @@ export default HomeScreen = (props) => {
   const storeBuildNumberAndroidExtra = 29; // it is a string
   const storeBuildNumberIOSPro = '124'; // it is a number
   const storeBuildNumberIOSExtra = '123'; // it is a number
+  //   console.log(Constants);
+
+  // Constants.manifest.buildNumber is null in Expo Go
   const buildNumber =
     typeof Constants !== 'undefined' &&
     typeof Constants.manifest !== 'undefined' &&
@@ -87,10 +90,10 @@ export default HomeScreen = (props) => {
     typeof Platform.OS !== 'undefined' &&
     Platform.OS
       ? Platform.OS === 'ios'
-        ? Constants.manifest.ios &&
-          typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
-          Constants.manifest.ios.buildNumber
-          ? Constants.manifest.ios.buildNumber
+        ? Constants.manifest &&
+          typeof Constants.manifest.buildNumber !== 'undefined' &&
+          Constants.manifest.buildNumber
+          ? Constants.manifest.buildNumber
           : null
         : Constants.manifest.android &&
           typeof Constants.manifest.android.versionCode !== 'undefined' &&

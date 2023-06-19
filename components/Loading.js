@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Text } from '@rneui/themed';
 import SafeAreaView from 'react-native-safe-area-view';
+import Constants from 'expo-constants';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import Colors from '../constants/Colors';
 
@@ -46,11 +47,15 @@ export default Loading = () => {
   //      Updates.reloadAsync();
   //     }
   //   };
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
+      : 'Test app';
 
   return (
     <SafeAreaView style={baseStyles.containerFlexMarginTop}>
       <ScrollView>
-        <AppNameWithLogo />
+        <AppNameWithLogo appName={appName} />
         <View style={baseStyles.viewLoadingMessage}>
           {showReloadDialogue === true ? (
             <Text style={baseStyles.textLoading}>

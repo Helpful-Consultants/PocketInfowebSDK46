@@ -8,17 +8,10 @@ import * as Application from 'expo-application';
 // import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';
 
-export default AppNameWithLogo = () => {
+export default AppNameWithLogo = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles({ ...windowDim });
-  const appEdition = Application.applicationName;
-  //   console.log('name', Constants.manifest);
-  //   console.log(
-  //     'in AppNameWithLogo, windowDim:',
-  //     windowDim,
-  //     'baseStyles.textAppName',
-  //     baseStyles.textAppName
-  //   );
+  const { appName } = props;
   return (
     <View>
       <View style={baseStyles.viewImageAppLogo}>
@@ -26,7 +19,7 @@ export default AppNameWithLogo = () => {
           source={require('../assets/images/tiw-app-logo-less-whitespace.png')}
           style={baseStyles.imageAppLogo}
         />
-        <Text style={baseStyles.textAppName}>{appEdition}</Text>
+        <Text style={baseStyles.textAppName}>{appName}</Text>
       </View>
     </View>
   );

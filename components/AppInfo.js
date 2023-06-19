@@ -6,6 +6,7 @@ import { Text } from '@rneui/themed';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
 import * as Application from 'expo-application';
+import * as Updates from 'expo-updates';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';
 import { getShortDisplayDateAndTime } from '../helpers/dates';
@@ -19,9 +20,7 @@ export default AppInfo = (props) => {
   //   console.log('8888888888888 odisFetchTime', odisFetchTime);
   //   const brandText =
   //     (userDataObj && userDataObj.brand) || (userDataObj && 'All brands') || '';
-  //   console.log(Application);
-  //   console.log(Application && Application.nativeBuildVersion);
-  //   console.log('constants are', Constants);
+
   const brandText = userDataObj
     ? userDataObj.brand
       ? userDataObj.brand
@@ -42,36 +41,84 @@ export default AppInfo = (props) => {
   //     '!!!!!!!!!!!! isTabletOrMobileDevice',
   //     isTabletOrMobileDevice && isTabletOrMobileDevice
   //   );
-  const appEdition =
-    Application && Application.applicationName
-      ? Application.applicationName
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
       : 'Test app';
   const appOS =
     typeof Platform !== 'undefined' &&
+    Platform &&
     typeof Platform.OS !== 'undefined' &&
     Platform.OS
       ? Platform.OS === 'ios'
         ? 'ios'
         : 'android'
       : null;
-  console.log('appOS is', appOS);
+  //   console.log('appOS is', appOS);
+  //   console.log('Constants.expoConfig', Constants.expoConfig);
+  // Constants.manifest.buildNumber is null in Expo Go
+  //   const buildNumber =
+  //     typeof Constants !== 'undefined' &&
+  //     typeof Constants.manifest !== 'undefined' &&
+  //     appOS
+  //       ? Platform.OS === 'ios'
+  //         ? Constants.manifest &&
+  //           typeof Constants.manifest.buildNumber !== 'undefined' &&
+  //           Constants.manifest.buildNumber
+  //           ? Constants.manifest.buildNumber
+  //           : null
+  //         : Constants.manifest.android &&
+  //           typeof Constants.manifest.android.versionCode !== 'undefined' &&
+  //           Constants.manifest.android.versionCode
+  //         ? Constants.manifest.android.versionCode
+  //         : null
+  //       : null;
+  const sdkVersion =
+    Constants && Constants.expoConfig && Constants.expoConfig.sdkVersion
+      ? Constants.expoConfig.sdkVersion
+      : null;
+  //   console.log(
+  //     'Constants.expoConfig.sdkVersion',
+  //     Constants.expoConfig.sdkVersion
+  //   );
+  //   console.log('sdkVersion', sdkVersion);
+  const appVersion =
+    Constants && Constants.expoConfig && Constants.expoConfig.version
+      ? Constants.expoConfig.version
+      : null;
+  //   console.log('Constants.expoConfig.version', Constants.expoConfig.version);
+  //   console.log('appVersion', appVersion);
 
   const buildNumber =
-    typeof Constants !== 'undefined' &&
-    typeof Constants.manifest !== 'undefined' &&
-    appOS
-      ? Platform.OS === 'ios'
-        ? Constants.manifest.ios &&
-          typeof Constants.manifest.ios.buildNumber !== 'undefined' &&
-          Constants.manifest.ios.buildNumber
-          ? Constants.manifest.ios.buildNumber
+    Constants && Constants.expoConfig && appOS
+      ? appOS === 'ios'
+        ? typeof Constants.expoConfig.ios !== 'undefined' &&
+          Constants.expoConfig.ios &&
+          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
+          Constants.expoConfig.ios.buildNumber
+          ? Constants.expoConfig.ios.buildNumber
           : null
-        : Constants.manifest.android &&
-          typeof Constants.manifest.android.versionCode !== 'undefined' &&
-          Constants.manifest.android.versionCode
-        ? Constants.manifest.android.versionCode
+        : typeof Constants.expoConfig.android !== 'undefined' &&
+          Constants.expoConfig.android &&
+          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+          Constants.expoConfig.android.versionCode
+        ? Constants.expoConfig.android.versionCode
         : null
       : null;
+
+  //   console.log('Constants.expoConfig.ios', Constants.expoConfig.ios);
+  //   console.log('buildNumber', buildNumber);
+
+  const channel =
+    typeof Updates !== 'undefined' &&
+    Updates &&
+    typeof Updates.channel !== 'undefined' &&
+    Updates.channel
+      ? Updates.channel
+      : null;
+
+  //   console.log('Updates.channel', Updates);
+  //   console.log('channel', channel);
 
   return (
     <View
@@ -81,7 +128,7 @@ export default AppInfo = (props) => {
         marginHorizontal: 10,
       }}
     >
-      <Text style={baseStyles.panelTextAppName}>{appEdition}</Text>
+      <Text style={baseStyles.panelTextAppName}>{appName}</Text>
       {userDataObj && userDataObj.userName ? (
         <Text style={baseStyles.panelTextBrand}>
           {(userDataObj && userDataObj.userName) || null}
@@ -102,9 +149,6 @@ export default AppInfo = (props) => {
               <Text>
                 {Device && Device.modelName ? `${Device.modelName} ` : null}
                 {`${Platform.constants.systemName} v${Platform.Version}`}
-                {Application && Application.nativeBuildVersion
-                  ? ` Store v${Application.nativeBuildVersion}`
-                  : null}
               </Text>
             ) : null}
           </Text>
@@ -118,39 +162,16 @@ export default AppInfo = (props) => {
                 ? `Android`
                 : `${Platform.OS}`}
               {` v${Platform.Version}`}
-              {Application && Application.nativeBuildVersion
-                ? ` Store v${Application.nativeBuildVersion}`
-                : null}
             </Text>
           ) : null}
         </Text>
       )}
       <Text style={baseStyles.panelTextAppInfo}>
         {`Build `}
-        {Constants.manifest.sdkVersion
-          ? `${Constants.manifest.sdkVersion}/`
-          : null}
-        {buildNumber ? `${buildNumber}/` : 'null'}
-        {Application.nativeApplicationVersion
-          ? `${Application.nativeApplicationVersion}/`
-          : null}
-        {Constants.manifest.version
-          ? `${Constants.manifest.version} OTA`
-          : null}
-        {Constants.manifest.releaseChannel
-          ? Constants.manifest.releaseChannel === 'default' ||
-            Constants.manifest.releaseChannel === 'ios' ||
-            Constants.manifest.releaseChannel === 'android' ||
-            Constants.manifest.releaseChannel === 'ios-prod' ||
-            Constants.manifest.releaseChannel === 'android-prod' ||
-            Constants.manifest.releaseChannel === 'prod-v2'
-            ? ' (Prod)'
-            : Constants.manifest.releaseChannel === 'ios-staging' ||
-              Constants.manifest.releaseChannel === 'android-staging' ||
-              Constants.manifest.releaseChannel === 'staging'
-            ? ' (Staging)'
-            : ` (${Constants.manifest.releaseChannel})`
-          : null}
+        {sdkVersion ? `${sdkVersion}` : null}
+        {buildNumber ? `/${buildNumber}` : null}
+        {appVersion ? `/${appVersion}` : null}
+        {channel ? `/${channel}` : null}
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
         <Text

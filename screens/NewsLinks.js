@@ -75,13 +75,6 @@ export default function NewsLinks(props) {
       nowDateObj
     );
 
-    // console.log(
-    //   '$$$$$$$$$$$$$$$$$$$$$$$$$$$$isRevised - createdDate',
-    //   createdDate && createdDate,
-    //   'updatedDate',
-    //   updatedDate && updatedDate
-    // );
-
     const displayDate = isRevised
       ? getFriendlyDisplayDate(updatedDate)
       : getFriendlyDisplayDate(createdDate);
