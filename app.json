@@ -42,10 +42,7 @@
         "com.sec.android.provider.badge.permission.READ",
         "com.sec.android.provider.badge.permission.WRITE",
         "com.sonyericsson.home.permission.BROADCAST_BADGE"
-      ],
-      "runtimeVersion": {
-        "policy": "sdkVersion"
-      }
+      ]
     },
     "androidStatusBar": {
       "barStyle": "light-content",
