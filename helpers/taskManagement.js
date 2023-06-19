@@ -39,9 +39,9 @@ export const defineBackgroundTask = async (taskName, taskExecutor) => {
       return;
 
     default: {
-      console.log(
-        `in defineBackgroundFetchfor ${taskName}; background execution allowed`
-      );
+      //   console.log(
+      //     `in defineBackgroundFetchfor ${taskName}; background execution allowed`
+      //   );
 
       let tasks = await TaskManager.getRegisteredTasksAsync();
       tasks = await TaskManager.getRegisteredTasksAsync();
