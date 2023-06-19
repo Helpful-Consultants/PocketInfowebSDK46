@@ -238,8 +238,8 @@ export default function App(props) {
       ? 'WJQm9OtVWDabcKdQ1oxW3f'
       : '28ZUQr3UiskMDLgEwxcmm1';
 
-  console.log('NNPushTokenKey', NNPushTokenKey);
-  console.log('NNPushID', NNPushID);
+  //   console.log('NNPushTokenKey', NNPushTokenKey);
+  //   console.log('NNPushID', NNPushID);
   //   console.log('Not calling NNPushID');
   //   platform == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
   //   appEdition === 'extra' && registerNNPushToken(NNPushID, NNPushTokenKey);
@@ -380,6 +380,6 @@ async function zzzzloadResourcesAsync() {
       'the-sans-light': require('./assets/fonts/VWAGTheSans-Light.ttf'),
     }),
   ]);
-  console.log(' loadResourcesAsync done');
+  //   console.log(' loadResourcesAsync done');
   return true;
 }
