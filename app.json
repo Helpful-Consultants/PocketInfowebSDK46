@@ -5,7 +5,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.72",
+    "version": "1.2.73",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -22,7 +22,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "124",
+      "buildNumber": "125",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "infoPlist": {
         "UIBackgroundModes": ["fetch"]
