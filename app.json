@@ -4,10 +4,7 @@
     "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "version": "1.2.74",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
@@ -22,10 +19,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
     },
-    "assetBundlePatterns": [
-      "assets/images/*",
-      "assets/fonts/*"
-    ],
+    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "126",
@@ -34,9 +28,7 @@
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch"
-        ]
+        "UIBackgroundModes": ["fetch"]
       }
     },
     "android": {
@@ -63,9 +55,7 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": [
-      "sentry-expo"
-    ],
+    "plugins": ["sentry-expo"],
     "hooks": {
       "postPublish": [
         {
@@ -77,11 +67,6 @@
           }
         }
       ]
-    },
-    "extra": {
-      "eas": {
-        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
-      }
     }
   },
   "extra": {
