@@ -1,12 +1,15 @@
 {
   "expo": {
-    "name": "Pocket Infoweb Extra",
-    "slug": "PocketInfoweb-Extra",
+    "name": "Pocket Infoweb",
+    "slug": "PocketInfoweb-Dev",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.2.74",
-    "icon": "./assets/images/icon-extra.png",
+    "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -17,24 +20,29 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+      "url": "https://u.expo.dev/0a540561-d833-425b-8955-13bf1915cc35"
     },
-    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "126",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
-      "config": {
-        "usesNonExemptEncryption": false
-      },
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
+        "UIBackgroundModes": [
+          "fetch"
+        ]
+      },
+      "runtimeVersion": {
+        "policy": "sdkVersion"
       }
     },
     "android": {
       "versionCode": 30,
-      "package": "com.helpfulconsultants.pocketinfowebextra",
-      "googleServicesFile": "./google-services-extra.json",
+      "package": "com.helpfulconsultants.pocketinfowebpro",
+      "googleServicesFile": "./google-services-pro.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
@@ -55,23 +63,30 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo"
+    ],
     "hooks": {
       "postPublish": [
         {
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb-extra",
+            "project": "pocket-infoweb",
             "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
           }
         }
       ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+      }
     }
   },
   "extra": {
     "eas": {
-      "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+      "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
     }
   }
 }
