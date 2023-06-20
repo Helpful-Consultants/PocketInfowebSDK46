@@ -67,11 +67,14 @@
           }
         }
       ]
-    }
-  },
-  "extra": {
-    "eas": {
-      "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }
