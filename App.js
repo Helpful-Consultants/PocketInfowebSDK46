@@ -8,6 +8,7 @@ import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import React, { useEffect, useState } from 'react';
+import Constants from 'expo-constants';
 import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { store, runSagaMiddleware } from './helpers/store';
@@ -86,19 +87,22 @@ if (Application && Application.applicationName === 'Pocket Infoweb Extra') {
     'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
 }
 
-Sentry.init({
-  dsn: sentryDSN,
-  enableInExpoDevelopment: true,
-  debug: true,
-});
-// console.log('release', ExpoClientConfig && ExpoClientConfig.releaseId);
-
 // Sentry.init({
 //   dsn: sentryDSN,
 //   enableInExpoDevelopment: true,
 //   debug: true,
-//   release: Constants.manifest.revisionId,
 // });
+// console.log('release', Constants && Constants.expoConfig && Constants.expoConfig.releaseId);
+
+Sentry.init({
+  dsn: sentryDSN,
+  enableInExpoDevelopment: true,
+  debug: true,
+  release:
+    Constants && Constants.expoConfig && Constants.expoConfig.releaseId
+      ? Constants.expoConfig.releaseId
+      : 'unknown',
+});
 
 runSagaMiddleware(); // run here so it isn't run on every render
 
