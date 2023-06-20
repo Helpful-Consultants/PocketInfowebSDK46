@@ -22,7 +22,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "127",
+      "buildNumber": "128",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
