@@ -35,7 +35,6 @@ import { useCachedResources } from './helpers/useCachedResources';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
-import Constants from 'expo-constants';
 // import { Ionicons } from '@expo/vector-icons';
 // import { Button, colors, ThemeProvider } from '@rneui/themed';
 import AppNavigator from './navigation/AppNavigator';
