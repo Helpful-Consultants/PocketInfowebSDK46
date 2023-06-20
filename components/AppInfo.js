@@ -56,23 +56,6 @@ export default AppInfo = (props) => {
       : null;
   //   console.log('appOS is', appOS);
   //   console.log('Constants.expoConfig', Constants.expoConfig);
-  // Constants.manifest.buildNumber is null in Expo Go
-  //   const buildNumber =
-  //     typeof Constants !== 'undefined' &&
-  //     typeof Constants.manifest !== 'undefined' &&
-  //     appOS
-  //       ? Platform.OS === 'ios'
-  //         ? Constants.manifest &&
-  //           typeof Constants.manifest.buildNumber !== 'undefined' &&
-  //           Constants.manifest.buildNumber
-  //           ? Constants.manifest.buildNumber
-  //           : null
-  //         : Constants.manifest.android &&
-  //           typeof Constants.manifest.android.versionCode !== 'undefined' &&
-  //           Constants.manifest.android.versionCode
-  //         ? Constants.manifest.android.versionCode
-  //         : null
-  //       : null;
   const sdkVersion =
     Constants && Constants.expoConfig && Constants.expoConfig.sdkVersion
       ? Constants.expoConfig.sdkVersion

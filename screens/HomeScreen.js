@@ -61,8 +61,6 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeArea();
   //   console.log('Constants', Constants);
-  //   console.log('Constants.manifest', Constants.manifest && Constants.manifest);
-
   const platform =
     typeof Platform !== 'undefined' &&
     typeof Platform.OS !== 'undefined' &&
@@ -81,26 +79,23 @@ export default HomeScreen = (props) => {
   const storeBuildStringIOSPro = '126'; // it is a string
   const storeBuildStringIOSExtra = '126'; // it is a string
   //   console.log(Constants);
-
-  // Constants.manifest.buildNumber is null in Expo Go
   const buildNumber =
-    typeof Constants !== 'undefined' &&
-    typeof Constants.manifest !== 'undefined' &&
-    typeof Platform !== 'undefined' &&
-    typeof Platform.OS !== 'undefined' &&
-    Platform.OS
-      ? Platform.OS === 'ios'
-        ? Constants.manifest &&
-          typeof Constants.manifest.buildNumber !== 'undefined' &&
-          Constants.manifest.buildNumber
-          ? Constants.manifest.buildNumber
+    Constants && Constants.expoConfig && appOS
+      ? appOS === 'ios'
+        ? typeof Constants.expoConfig.ios !== 'undefined' &&
+          Constants.expoConfig.ios &&
+          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
+          Constants.expoConfig.ios.buildNumber
+          ? Constants.expoConfig.ios.buildNumber
           : null
-        : Constants.manifest.android &&
-          typeof Constants.manifest.android.versionCode !== 'undefined' &&
-          Constants.manifest.android.versionCode
-        ? Constants.manifest.android.versionCode
+        : typeof Constants.expoConfig.android !== 'undefined' &&
+          Constants.expoConfig.android &&
+          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+          Constants.expoConfig.android.versionCode
+        ? Constants.expoConfig.android.versionCode
         : null
       : null;
+
   //   console.log('^^^^^^^^buildNumber is', buildNumber);
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
   //   console.log('IN HOME !!!!! Platform', Platform);
