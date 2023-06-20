@@ -66,13 +66,12 @@ export default ErrorDetails = (props) => {
         : null
       : null;
 
-  const channel =
-    typeof Updates !== 'undefined' &&
-    Updates &&
-    typeof Updates.channel !== 'undefined' &&
-    Updates.channel
-      ? Updates.channel
-      : null;
+  const channel = Updates && Updates.channel ? Updates.channel : null;
+  const isUpdatedOTA = Updates
+    ? Updates.isEmbeddedLaunch
+      ? false
+      : true
+    : false;
 
   //   console.log('in ErrorDetails', props);
   const userDataObj = useSelector((state) => state.user.userData[0]);
@@ -124,6 +123,7 @@ export default ErrorDetails = (props) => {
           {buildNumber ? `/${buildNumber}` : null}
           {appVersion ? `/${appVersion}` : null}
           {channel ? `/${channel}` : null}
+          {isUpdatedOTA ? '/OTA' : null}
         </Text>
 
         {Platform && Platform.OS === 'ios' ? (

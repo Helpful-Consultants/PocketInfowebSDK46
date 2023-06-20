@@ -99,13 +99,12 @@ export default AppInfo = (props) => {
 
   //   console.log('runtimeVersion', runtimeVersion);
 
-  const channel =
-    typeof Updates !== 'undefined' &&
-    Updates &&
-    typeof Updates.channel !== 'undefined' &&
-    Updates.channel
-      ? Updates.channel
-      : null;
+  const channel = Updates && Updates.channel ? Updates.channel : null;
+  const isUpdatedOTA = Updates
+    ? Updates.isEmbeddedLaunch
+      ? false
+      : true
+    : false;
 
   //   console.log('Updates.channel', Updates);
   //   console.log('channel', channel);
@@ -163,6 +162,7 @@ export default AppInfo = (props) => {
         {appVersion ? `/${appVersion}` : null}
         {runtimeVersion ? `/${runtimeVersion}` : null}
         {channel ? `/${channel}` : null}
+        {isUpdatedOTA ? '/OTA' : null}
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
         <Text
