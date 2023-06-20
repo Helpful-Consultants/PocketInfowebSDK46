@@ -46,10 +46,7 @@ export default AppInfo = (props) => {
       ? Constants.expoConfig.name
       : 'Test app';
   const appOS =
-    typeof Platform !== 'undefined' &&
-    Platform &&
-    typeof Platform.OS !== 'undefined' &&
-    Platform.OS
+    Platform && Platform.OS
       ? Platform.OS === 'ios'
         ? 'ios'
         : 'android'
@@ -75,22 +72,17 @@ export default AppInfo = (props) => {
   const buildNumber =
     Constants && Constants.expoConfig && appOS
       ? appOS === 'ios'
-        ? typeof Constants.expoConfig.ios !== 'undefined' &&
-          Constants.expoConfig.ios &&
-          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
-          Constants.expoConfig.ios.buildNumber
+        ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : typeof Constants.expoConfig.android !== 'undefined' &&
-          Constants.expoConfig.android &&
-          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+        : Constants.expoConfig.android &&
           Constants.expoConfig.android.versionCode
         ? Constants.expoConfig.android.versionCode
         : null
       : null;
   const runtimeVersion =
     Constants && Constants.expoConfig && Constants.expoConfig.runtimeVersion
-      ? Constants.expoConfig.runtimeVersion
+      ? Constants.expoConfig.runtimeVersion.toString()
       : null;
   //   console.log('Constants.expoConfig', Constants.expoConfig);
   //   console.log('appVersion', appVersion);
@@ -160,7 +152,6 @@ export default AppInfo = (props) => {
         {sdkVersion ? `${sdkVersion}` : null}
         {buildNumber ? `/${buildNumber}` : null}
         {appVersion ? `/${appVersion}` : null}
-        {runtimeVersion ? `/${runtimeVersion}` : null}
         {channel ? `/${channel}` : null}
         {isUpdatedOTA ? '/OTA' : null}
       </Text>

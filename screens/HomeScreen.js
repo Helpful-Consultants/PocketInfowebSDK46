@@ -61,10 +61,8 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeArea();
   //   console.log('Constants', Constants);
-  const platform =
-    typeof Platform !== 'undefined' &&
-    typeof Platform.OS !== 'undefined' &&
-    Platform.OS
+  const appOS =
+    Platform && Platform.OS
       ? Platform.OS === 'ios'
         ? 'ios'
         : 'android'
@@ -82,15 +80,10 @@ export default HomeScreen = (props) => {
   const buildNumber =
     Constants && Constants.expoConfig && appOS
       ? appOS === 'ios'
-        ? typeof Constants.expoConfig.ios !== 'undefined' &&
-          Constants.expoConfig.ios &&
-          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
-          Constants.expoConfig.ios.buildNumber
+        ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : typeof Constants.expoConfig.android !== 'undefined' &&
-          Constants.expoConfig.android &&
-          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+        : Constants.expoConfig.android &&
           Constants.expoConfig.android.versionCode
         ? Constants.expoConfig.android.versionCode
         : null
@@ -100,7 +93,7 @@ export default HomeScreen = (props) => {
   //   console.log('IN HOME !!!!! buildNumber', buildNumber, typeof buildNumber);
   //   console.log('IN HOME !!!!! Platform', Platform);
   const isUpdateNeeded = buildNumber
-    ? platform === 'ios'
+    ? appOS === 'ios'
       ? appEdition === 'extra'
         ? buildNumber !== storeBuildStringIOSExtra // it is a string
           ? true

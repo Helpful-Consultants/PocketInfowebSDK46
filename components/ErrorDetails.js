@@ -52,15 +52,10 @@ export default ErrorDetails = (props) => {
   const buildNumber =
     Constants && Constants.expoConfig && appOS
       ? appOS === 'ios'
-        ? typeof Constants.expoConfig.ios !== 'undefined' &&
-          Constants.expoConfig.ios &&
-          typeof Constants.expoConfig.ios.buildNumber !== 'undefined' &&
-          Constants.expoConfig.ios.buildNumber
+        ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : typeof Constants.expoConfig.android !== 'undefined' &&
-          Constants.expoConfig.android &&
-          typeof Constants.expoConfig.android.versionCode !== 'undefined' &&
+        : Constants.expoConfig.android &&
           Constants.expoConfig.android.versionCode
         ? Constants.expoConfig.android.versionCode
         : null
