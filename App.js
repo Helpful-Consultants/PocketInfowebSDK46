@@ -4,7 +4,9 @@ import registerNNPushToken from 'native-notify';
 import * as Application from 'expo-application';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useCallback } from 'react';
+import { Asset } from 'expo-asset';
+import * as Font from 'expo-font';
+import React, { useCallback, useEffect, useState } from 'react';
 import Constants from 'expo-constants';
 import { Provider } from 'react-redux';
 import { store, runSagaMiddleware } from './helpers/store';
@@ -26,7 +28,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
-import { loadCachedResources } from './helpers/loadCachedResources';
+// import { loadCachedResources } from './helpers/loadCachedResources';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -213,9 +215,9 @@ defineBackgroundTask(
 export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const isLoadingComplete = loadCachedResources();
-  //   console.log('app props', props);
-  //   const [isLoadingComplete, setLoadingComplete] = useState(false);
+  //   const isAppReady = loadCachedResources();
+  //   console.log('app props', props); const isAppReady = loadCachedResources();
+  const [isAppReady, setIsAppReady] = useState(false);
   const appOS =
     Platform && Platform.OS
       ? Platform.OS === 'ios'
