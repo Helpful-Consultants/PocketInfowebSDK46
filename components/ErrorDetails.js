@@ -25,10 +25,7 @@ export default ErrorDetails = (props) => {
       : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
   const appOS =
-    typeof Platform !== 'undefined' &&
-    Platform &&
-    typeof Platform.OS !== 'undefined' &&
-    Platform.OS
+    Platform && Platform.OS
       ? Platform.OS === 'ios'
         ? 'ios'
         : 'android'
