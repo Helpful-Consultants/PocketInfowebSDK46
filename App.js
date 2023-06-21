@@ -308,35 +308,69 @@ export default function App(props) {
   //     loadResourcesAndDataAsync();
   //   }, []);
 
+  useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        await Promise.all([
+          Asset.loadAsync([
+            require('./assets/images/icon.png'),
+            require('./assets/images/splash.png'),
+            require('./assets/images/tiw-app-logo-less-whitespace.png'),
+            require('./assets/images/tiw-app-logo-trans.png'),
+            require('./assets/images/tiw-app-logo-trans-white.png'),
+            require('./assets/images/tiw-app-logo.png'),
+            require('./assets/images/audi-logo.png'),
+            require('./assets/images/cv-logo.png'),
+            require('./assets/images/seat-logo.png'),
+            require('./assets/images/skoda-logo.png'),
+            require('./assets/images/vw-logo.png'),
+            require('./assets/images/odis.jpg'),
+            require('./assets/images/no-image-placeholder.png'),
+          ]),
+          Font.loadAsync({
+            'the-sans': require('./assets/fonts/VWAGTheSans-Regular.ttf'),
+            'the-sans-bold': require('./assets/fonts/VWAGTheSans-Bold.ttf'),
+            'the-sans-light': require('./assets/fonts/VWAGTheSans-Light.ttf'),
+          }),
+        ]);
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setIsAppReady(true);
+      }
+    }
+    loadResourcesAndDataAsync();
+  }, []);
+
   const onLayoutRootView = useCallback(async () => {
-    if (isLoadingComplete) {
+    if (isAppReady) {
       // This tells the splash screen to hide immediately! If we call this after
-      // `setAppIsReady`, then we may see a blank screen while the app is
+      // `setisAppReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,
       // we hide the splash screen once we know the root view has already
       // performed layout.
       await SplashScreen.hideAsync();
     }
-  }, [isLoadingComplete]);
+  }, [isAppReady]);
 
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
+  if (!isAppReady) {
     return null;
-  } else {
-    return (
-      <SafeAreaProvider>
-        <Provider store={store}>
-          <PersistGate loading={<Loading />} persistor={persistor}>
-            <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
-              {appOS === 'ios' ? (
-                <StatusBar barStyle='dark-content' />
-              ) : (
-                <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
-              )}
-              <AppNavigator />
-            </View>
-          </PersistGate>
-        </Provider>
-      </SafeAreaProvider>
-    );
   }
+
+  return (
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
+            {appOS === 'ios' ? (
+              <StatusBar barStyle='dark-content' />
+            ) : (
+              <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
+            )}
+            <AppNavigator />
+          </View>
+        </PersistGate>
+      </Provider>
+    </SafeAreaProvider>
+  );
 }
