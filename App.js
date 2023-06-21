@@ -220,10 +220,8 @@ export default function App(props) {
   const baseStyles = windowDim && getBaseStyles(windowDim);
   const isLoadingComplete = useCachedResources();
   //   const [isLoadingComplete, setLoadingComplete] = useState(false);
-  const platform =
-    typeof Platform !== 'undefined' &&
-    typeof Platform.OS !== 'undefined' &&
-    Platform.OS
+  const appOS =
+    Platform && Platform.OS
       ? Platform.OS === 'ios'
         ? 'ios'
         : 'android'
@@ -233,7 +231,6 @@ export default function App(props) {
   //   const appEdition = 'pro';
   const appEdition =
     Application.applicationName === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
-  //   console.log('platform is', platform && platform);
   //   console.log('appEdition is', appEdition && appEdition);
   const NNPushID = appEdition === 'extra' ? 6502 : 6501;
   const NNPushTokenKey =
@@ -244,7 +241,7 @@ export default function App(props) {
   //   console.log('NNPushTokenKey', NNPushTokenKey);
   //   console.log('NNPushID', NNPushID);
   //   console.log('Not calling NNPushID');
-  //   platform == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
+  //   appOS == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
   //   appEdition === 'extra' && registerNNPushToken(NNPushID, NNPushTokenKey);
   registerNNPushToken(NNPushID, NNPushTokenKey);
 
@@ -287,10 +284,9 @@ export default function App(props) {
 
   // This limits fontscaling by the user - a bit kinder
   Text.defaultProps = Text.defaultProps || {};
-  Text.defaultProps.maxFontSizeMultiplier = Platform.OS === 'ios' ? 1.6 : 1.4;
+  Text.defaultProps.maxFontSizeMultiplier = appOS === 'ios' ? 1.6 : 1.4;
   TextInput.defaultProps = TextInput.defaultProps || {};
-  TextInput.defaultProps.maxFontSizeMultiplier =
-    Platform.OS === 'ios' ? 1.5 : 1.4;
+  TextInput.defaultProps.maxFontSizeMultiplier = appOS === 'ios' ? 1.5 : 1.4;
   //   console.log('7777 Text.defaultProps', Text && Text, TextInput && TextInput);
 
   const persistor = persistStore(store);
@@ -322,7 +318,7 @@ export default function App(props) {
         <Provider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
             <View style={baseStyles.containerFlex}>
-              {Platform.OS === 'ios' ? (
+              {appOS === 'ios' ? (
                 <StatusBar barStyle='dark-content' />
               ) : (
                 <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
