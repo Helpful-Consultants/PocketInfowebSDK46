@@ -42,8 +42,6 @@ export const useCachedResources = () => {
         SplashScreen.hideAsync();
       }
     }
-
-    loadResourcesAndDataAsync();
     loadResourcesAndDataAsync();
   }, []);
 
