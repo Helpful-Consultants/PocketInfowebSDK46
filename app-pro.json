@@ -1,11 +1,12 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "Pocket Infoweb",
     "slug": "PocketInfoweb-Dev",
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.75",
+    "version": "1.2.77",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
@@ -22,7 +23,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "128",
+      "buildNumber": "130",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
