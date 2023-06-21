@@ -73,12 +73,11 @@ axios.defaults.baseURL = 'https://www.toolsinfoweb.co.uk';
 let sentryDSN =
   'https://753764f4208a4f429c2c21d20a45adf0@o359939.ingest.sentry.io/3578989';
 
-// console.log(
-//   'Application.applicationName',
-//   Application && Application.applicationName
-// );
-
-if (Application && Application.applicationName === 'Pocket Infoweb Extra') {
+const appName =
+  Constants && Constants.expoConfig && Constants.expoConfig.name
+    ? Constants.expoConfig.name
+    : 'Test app';
+if (appName.toLowerCase().includes('extra')) {
   sentryDSN =
     'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
 }
@@ -227,20 +226,20 @@ export default function App(props) {
   //   const appEdition =
   //       Constants.manifest.name === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
   //   const appEdition = 'pro';
-  const appEdition =
-    Application.applicationName === 'Pocket Infoweb Extra' ? 'extra' : 'pro';
-  //   console.log('appEdition is', appEdition && appEdition);
-  const NNPushID = appEdition === 'extra' ? 6502 : 6501;
-  const NNPushTokenKey =
-    appEdition === 'extra'
-      ? 'WJQm9OtVWDabcKdQ1oxW3f'
-      : '28ZUQr3UiskMDLgEwxcmm1';
+  const appName =
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
+      : 'Test app';
+  //   console.log('appName is', appName);
+  const NNPushID = appName.toLowerCase().includes('extra') ? 6502 : 6501;
+  const NNPushTokenKey = appName.toLowerCase().includes('extra')
+    ? 'WJQm9OtVWDabcKdQ1oxW3f'
+    : '28ZUQr3UiskMDLgEwxcmm1';
 
   //   console.log('NNPushTokenKey', NNPushTokenKey);
   //   console.log('NNPushID', NNPushID);
   //   console.log('Not calling NNPushID');
   //   appOS == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
-  //   appEdition === 'extra' && registerNNPushToken(NNPushID, NNPushTokenKey);
   registerNNPushToken(NNPushID, NNPushTokenKey);
 
   async function unregisterBackgroundFetch(taskName) {

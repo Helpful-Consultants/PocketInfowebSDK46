@@ -12,10 +12,6 @@ export default getBaseStyles = (props) => {
   //   console.log(props && width && 'in getBaseStyles, width:', width);
   //   console.log('in getBaseStyles, props :', props);
 
-  //   const gridRows =
-  //     Application && Application.applicationName === 'Pocket Infoweb Extra'
-  //       ? 8
-  //       : 6;
   const gridRows = 8;
   //   console.log('gridRows', gridRows);
 

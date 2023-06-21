@@ -555,11 +555,7 @@ export default HomeScreen = (props) => {
           </Text>
         ) : null}
 
-        {Application &&
-        Application.applicationName &&
-        (Application.applicationName === 'Pocket Infoweb' ||
-          Application.applicationName === 'Pocket Infoweb Extra') &&
-        isUpdateNeeded ? (
+        {isUpdateNeeded ? (
           <Text
             style={{
               ...baseStyles.textUpdateApp,
