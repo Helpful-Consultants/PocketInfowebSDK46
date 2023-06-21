@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "Pocket Infoweb Extra",
     "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
