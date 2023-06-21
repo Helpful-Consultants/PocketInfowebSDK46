@@ -3,7 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 
-export const useCachedResources = () => {
+export const loadCachedResources = () => {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
   // Load any resources or data that we need prior to rendering the app
 
@@ -33,7 +33,7 @@ export const useCachedResources = () => {
             'the-sans-light': require('../assets/fonts/VWAGTheSans-Light.ttf'),
           }),
         ]);
-        // console.log(' loadResourcesAsync done');
+        console.log(' loadResourcesAsync done');
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

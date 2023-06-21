@@ -1,15 +1,11 @@
-// import AppLoading from 'expo-app-loading';
-// import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
 import registerNNPushToken from 'native-notify';
 import * as Application from 'expo-application';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import Constants from 'expo-constants';
-import reducers from './reducers';
 import { Provider } from 'react-redux';
 import { store, runSagaMiddleware } from './helpers/store';
 // import logger from 'redux-logger';
@@ -22,7 +18,6 @@ import { Platform, StatusBar, useWindowDimensions, View } from 'react-native';
 import { Text, TextInput } from 'react-native'; // not react-native-elements or @rneui/themed, for setting properties
 import { enableScreens } from 'react-native-screens';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as SplashScreen from 'expo-splash-screen';
 import Tasks from './constants/Tasks';
 import {
   defineBackgroundTask,
@@ -31,7 +26,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
-import { useCachedResources } from './helpers/useCachedResources';
+import { loadCachedResources } from './helpers/loadCachedResources';
 import * as Sentry from 'sentry-expo';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
@@ -218,7 +213,8 @@ defineBackgroundTask(
 export default function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const isLoadingComplete = useCachedResources();
+  const isLoadingComplete = loadCachedResources();
+  //   console.log('app props', props);
   //   const [isLoadingComplete, setLoadingComplete] = useState(false);
   const appOS =
     Platform && Platform.OS
@@ -310,6 +306,17 @@ export default function App(props) {
   //     loadResourcesAndDataAsync();
   //   }, []);
 
+  const onLayoutRootView = useCallback(async () => {
+    if (isLoadingComplete) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
+      await SplashScreen.hideAsync();
+    }
+  }, [isLoadingComplete]);
+
   if (!isLoadingComplete && !props.skipLoadingScreen) {
     return null;
   } else {
@@ -317,7 +324,7 @@ export default function App(props) {
       <SafeAreaProvider>
         <Provider store={store}>
           <PersistGate loading={<Loading />} persistor={persistor}>
-            <View style={baseStyles.containerFlex}>
+            <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
               {appOS === 'ios' ? (
                 <StatusBar barStyle='dark-content' />
               ) : (
