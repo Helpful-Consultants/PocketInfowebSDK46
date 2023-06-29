@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Ready for Elsa2Go v3.4';
+const appChangeInfoString = 'Changes: Ready for Elsa2Go';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
