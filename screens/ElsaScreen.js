@@ -50,7 +50,11 @@ export default ElsaScreen = (props) => {
       </Text>
       <Text style={baseStyles.textItemMain}></Text>
       <Touchable
-        style={{ ...baseStyles.viewHomeGridCell, marginVertical: 30 }}
+        style={{
+          ...baseStyles.viewHomeGridCell,
+          marginVertical: 30,
+          borderRadius: Platform.OS === 'ios' ? 24 : 28,
+        }}
         onPress={() => pressOpenHandler()}
       >
         <View style={baseStyles.viewColumnFlexCentre}>
