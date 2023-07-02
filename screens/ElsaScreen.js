@@ -15,16 +15,17 @@ let iconSize = RFPercentage(5);
 export default ElsaScreen = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  const userDataObj = useSelector((state) => state.user.userData[0]);
-  const showLink =
-    userDataObj && userDataObj.userName
-      ? userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
-        userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
-        (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
-          userDataObj.userName.toLowerCase().indexOf('groves') > -1)
-        ? true
-        : false
-      : false;
+  //   const userDataObj = useSelector((state) => state.user.userData[0]);
+  const showLink = true;
+  //   const showLink =
+  //     userDataObj && userDataObj.userName
+  //       ? userDataObj.userName.toLowerCase().indexOf('lyndon') > -1 ||
+  //         userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ||
+  //         (userDataObj.userName.toLowerCase().indexOf('simon') > -1 &&
+  //           userDataObj.userName.toLowerCase().indexOf('groves') > -1)
+  //         ? true
+  //         : false
+  //       : false;
   const [browserResult, setBrowserResult] = useState(null);
 
   const pressOpenHandler = async () => {
@@ -46,7 +47,7 @@ export default ElsaScreen = (props) => {
       }}
     >
       <Text style={baseStyles.textItemMain}>
-        The Volkswagen Group Aftersales application, Elsa2Go, is here.
+        The Volkswagen Group Aftersales application, Elsa2Go, is now available.
       </Text>
       <Text style={baseStyles.textItemMain}></Text>
       <Touchable
