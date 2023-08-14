@@ -83,6 +83,11 @@
     "url-parse": "^1.5.10",
     "util": "^0.12.5"
   },
+  "expo": {
+    "install": {
+      "exclude": []
+    }
+  },
   "devDependencies": {
     "@babel/code-frame": "^7.18.6",
     "@babel/core": "^7.19.3",
