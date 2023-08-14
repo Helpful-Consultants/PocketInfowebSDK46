@@ -102,6 +102,7 @@ const sentryDist =
       ? Constants.expoConfig.android.versionCode
       : ''
     : '';
+// console.log('SENTRY_PROJECT', process.env.EXPO_PUBLIC_SENTRY_PROJECT);
 console.log('sentryDist for sentry', appOS, sentryDist);
 // Constants.expoConfig.android &&
 //   console.log('Constants.expoConfig', Constants && Constants.expoConfig);
