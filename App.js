@@ -2,6 +2,7 @@ import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
 import registerNNPushToken from 'native-notify';
 import * as Application from 'expo-application';
+import * as Device from 'expo-device';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { Asset } from 'expo-asset';
@@ -277,7 +278,9 @@ export default function App(props) {
   //   console.log('NNPushID', NNPushID);
   //   console.log('Not calling NNPushID');
   //   appOS == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
-  registerNNPushToken(NNPushID, NNPushTokenKey);
+
+  //   console.log('device', Device.isDevice);
+  Device.isDevice && registerNNPushToken(NNPushID, NNPushTokenKey);
 
   async function unregisterBackgroundFetch(taskName) {
     console.log('in unregisterBackgroundFetch', taskName);
