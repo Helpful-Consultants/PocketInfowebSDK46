@@ -4,12 +4,14 @@
       "distribution": "store",
       "ios": {
         "env": {
-          "PLATFORM": "ios"
+          "PLATFORM": "ios",
+          "SENTRY_AUTH_TOKEN": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
         }
       },
       "android": {
         "env": {
-          "PLATFORM": "android"
+          "PLATFORM": "android",
+          "SENTRY_AUTH_TOKEN": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
         },
         "buildType": "app-bundle"
       }
