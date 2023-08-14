@@ -87,16 +87,53 @@ if (appName.toLowerCase().includes('extra')) {
 //   enableInExpoDevelopment: true,
 //   debug: true,
 // });
-// console.log('release', Constants && Constants.expoConfig && Constants.expoConfig.releaseId);
+const appOS =
+  Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
+const sentryDist =
+  Constants && Constants.expoConfig
+    ? appOS === 'ios' &&
+      Constants.expoConfig.ios &&
+      Constants.expoConfig.ios.buildNumber
+      ? Constants.expoConfig.ios.buildNumber
+      : appOS === 'android' &&
+        Constants.expoConfig.android &&
+        Constants.expoConfig.android.versionCode
+      ? Constants.expoConfig.android.versionCode
+      : ''
+    : '';
+console.log('sentryDist for sentry', appOS, sentryDist);
+// Constants.expoConfig.android &&
+//   console.log('Constants.expoConfig', Constants && Constants.expoConfig);
+// console.log(
+//   'Constants.ios.buildNumber',
+//   Constants &&
+//     Constants.expoConfig &&
+//     Constants.expoConfig.ios &&
+//     Constants.expoConfig.ios.buildNumber
+// );
+// console.log(
+//   'Constants.android.versionCode',
+//   Constants &&
+//     Constants.expoConfig &&
+//     Constants.expoConfig.android &&
+//     Constants.expoConfig.android.versionCode
+// );
+// console.log(
+//   'release',
+//   Constants && Constants.expoConfig && Constants.expoConfig.releaseId
+// );
 
+// Sentry.init({
+//   dsn: sentryDSN,
+//   enableInExpoDevelopment: true,
+//   debug: true,
+//   release: release,
+//   dist: sentryDist,
+// });
 Sentry.init({
   dsn: sentryDSN,
   enableInExpoDevelopment: true,
   debug: true,
-  release:
-    Constants && Constants.expoConfig && Constants.expoConfig.releaseId
-      ? Constants.expoConfig.releaseId
-      : 'unknown',
 });
 
 runSagaMiddleware(); // run here so it isn't run on every render
