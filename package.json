@@ -80,7 +80,7 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.2.1",
     "reselect": "^4.1.6",
-    "sentry-expo": "~6.0.0",
+    "sentry-expo": "~7.0.1",
     "stringify-entities": "^4.0.3",
     "url-parse": "^1.5.10",
     "util": "^0.12.5"
