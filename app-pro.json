@@ -1,13 +1,13 @@
 {
   "expo": {
     "jsEngine": "hermes",
-    "name": "Pocket Infoweb",
-    "slug": "PocketInfoweb-Dev",
+    "name": "Pocket Infoweb Extra",
+    "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.77",
-    "icon": "./assets/images/icon.png",
+    "version": "1.2.79",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -18,13 +18,13 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 1000,
-      "url": "https://u.expo.dev/0a540561-d833-425b-8955-13bf1915cc35"
+      "url": "https://u.expo.dev/69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
     },
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "130",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "buildNumber": "131",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -33,9 +33,9 @@
       }
     },
     "android": {
-      "versionCode": 30,
-      "package": "com.helpfulconsultants.pocketinfowebpro",
-      "googleServicesFile": "./google-services-pro.json",
+      "versionCode": 33,
+      "package": "com.helpfulconsultants.pocketinfowebextra",
+      "googleServicesFile": "./google-services-extra.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
@@ -63,15 +63,14 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb",
-            "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
+            "project": "pocket-infoweb-extra"
           }
         }
       ]
     },
     "extra": {
       "eas": {
-        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
       }
     },
     "runtimeVersion": {

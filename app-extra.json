@@ -6,7 +6,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.77",
+    "version": "1.2.79",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
@@ -23,7 +23,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "130",
+      "buildNumber": "131",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
@@ -33,7 +33,7 @@
       }
     },
     "android": {
-      "versionCode": 30,
+      "versionCode": 33,
       "package": "com.helpfulconsultants.pocketinfowebextra",
       "googleServicesFile": "./google-services-extra.json",
       "permissions": [
@@ -63,8 +63,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb-extra",
-            "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
+            "project": "pocket-infoweb-extra"
           }
         }
       ]
