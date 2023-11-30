@@ -74,8 +74,8 @@ export default HomeScreen = (props) => {
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
   const storeBuildNumberAndroidPro = 33; // it is a number
   const storeBuildNumberAndroidExtra = 33; // it is a number
-  const storeBuildStringIOSPro = '132'; // it is a string
-  const storeBuildStringIOSExtra = '132'; // it is a string
+  const storeBuildStringIOSPro = '133'; // it is a string
+  const storeBuildStringIOSExtra = '133'; // it is a string
   //   console.log(Constants);
   const buildNumber =
     Constants && Constants.expoConfig && appOS
