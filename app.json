@@ -63,8 +63,7 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "helpful-consultants",
-            "project": "pocket-infoweb",
-            "authToken": "b56aa595c46643938a2352f4ce9a51fec5f0d0a48e9445b5aa91c0888a124cf3"
+            "project": "pocket-infoweb"
           }
         }
       ]
