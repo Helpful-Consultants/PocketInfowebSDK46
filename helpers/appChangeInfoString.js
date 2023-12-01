@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: Elsa2Go available.';
+const appChangeInfoString = 'Changes: Elsa2Go is available.';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
