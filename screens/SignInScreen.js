@@ -50,9 +50,9 @@ export default SignInScreen = (props) => {
   const [error, setError] = useState();
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
-  const userDataObj = useSelector((state) => state.user.userData[0]);
+  //   const userDataObj = useSelector((state) => state.user.userData[0]);
   const userError = useSelector((state) => state.user.error);
-  const state = useSelector((state) => state);
+  //   const state = useSelector((state) => state);
 
   //   console.log('windowDim', windowDim && windowDim);
   //   console.log('in sign in, windowDim:', windowDim);
