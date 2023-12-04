@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: SDK 49.0';
+const appChangeInfoString = 'Changes: SDK 49.1';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
