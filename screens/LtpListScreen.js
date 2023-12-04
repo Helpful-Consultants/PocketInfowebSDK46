@@ -63,7 +63,7 @@ export default LtpListScreen = (props) => {
     } else {
       setItemsToShow(ltpItems);
     }
-  }, [searchInput]);
+  }, [searchInput, ltpItems]);
 
   useEffect(() => {
     // console.log(
@@ -79,7 +79,7 @@ export default LtpListScreen = (props) => {
     } else {
       selectItemsToShow();
     }
-  }, [isLoading, searchInput]);
+  }, [isLoading, selectItemsToShow]);
 
   //   console.log(
   //     'RENDERING ltp screen 1147 !!!!!!!!!!!!!!!!!!!, dataError ',
@@ -107,7 +107,7 @@ export default LtpListScreen = (props) => {
         // Do something when the screen is unfocused
         // console.log('LTP Screen was unfocused');
       };
-    }, [getItems])
+    }, [getItems, setSearchInput])
   );
 
   //   console.log(
