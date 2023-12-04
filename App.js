@@ -132,9 +132,11 @@ console.log('sentryDist for sentry', appOS, sentryDist);
 //   release: release,
 //   dist: sentryDist,
 // });
+
+// enableInExpoDevelopment: true/false depetermines whether Sentry is enabled in dev mode
 Sentry.init({
   dsn: sentryDSN,
-  enableInExpoDevelopment: true,
+  enableInExpoDevelopment: false,
   debug: true,
 });
 
