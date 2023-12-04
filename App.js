@@ -132,13 +132,13 @@ console.log('sentryDist for sentry', appOS, sentryDist);
 //   release: release,
 //   dist: sentryDist,
 // });
+
+// enableInExpoDevelopment: true/false  to see Sentry errors in Expo development mode
 Sentry.init({
   dsn: sentryDSN,
-  enableInExpoDevelopment: true,
+  enableInExpoDevelopment: false,
   debug: true,
 });
-
-runSagaMiddleware(); // run here so it isn't run on every render
 
 // deprecated so moved above
 // Sentry.setRelease(Constants.manifest.revisionId);
