@@ -90,6 +90,7 @@ const DrawerNavigator = (props) => {
 
   return (
     <Drawer.Navigator
+      initialRouteName='Home'
       headerShown={false}
       drawerStyle={{
         width: baseStyles.panelWidth.width,
