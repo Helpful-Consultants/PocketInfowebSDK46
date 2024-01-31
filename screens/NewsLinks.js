@@ -10,6 +10,7 @@ import {
   getDateDifference,
   isDateAfter,
 } from '../helpers/dates';
+import Colors from '../constants/Colors';
 
 const nowDateObj = new Date();
 const month = format(nowDateObj, 'MMMM');
@@ -29,7 +30,8 @@ export default function NewsLinks(props) {
   //   console.log('in newslinks, baseStyles:', baseStyles);
   let intId = (userIntId && userIntId) || '';
 
-  const getFormattedNewsItem = (item) => {
+  const getFormattedNewsItem = (item, islastOne) => {
+    // console.log(item);
     const updatedDate =
       item && item.lastUpdated && item.lastUpdated.length > 0
         ? item.lastUpdated
@@ -82,7 +84,12 @@ export default function NewsLinks(props) {
     // console.log('displayDate is', displayDate);
 
     return (
-      <View style={baseStyles.viewItem}>
+      <View
+        style={{
+          ...baseStyles.viewItem,
+          borderBottomColor: islastOne ? Colors.vwgWhite : Colors.vwgLightGray,
+        }}
+      >
         <View style={baseStyles.viewItemTopRow}>
           <ScaledImageFinder
             desiredWidth={70}
@@ -125,16 +132,34 @@ export default function NewsLinks(props) {
         <ScrollView>
           {items.map((item, i) => {
             const amendedLink = amendLink(item.linkTo, appCode, intId);
+            const islastOne = i === items.length - 1;
 
             return (
               <Touchable
                 onPress={() => props.pressOpenHandler(amendedLink)}
                 key={i}
               >
-                {getFormattedNewsItem(item)}
+                {getFormattedNewsItem(item, islastOne)}
               </Touchable>
             );
           })}
+          <Text />
+          <Touchable
+            style={baseStyles.viewPromptRibbon}
+            onPress={() =>
+              props.pressOpenHandler('https://www.toolsinfoweb.co.uk')
+            }
+          >
+            <View>
+              <Text style={baseStyles.textPromptRibbon}>
+                {`You can view more news at >Tools Infoweb.`}
+              </Text>
+              <Text />
+              <Text />
+              <Text />
+              <Text />
+            </View>
+          </Touchable>
         </ScrollView>
       ) : null}
     </View>
