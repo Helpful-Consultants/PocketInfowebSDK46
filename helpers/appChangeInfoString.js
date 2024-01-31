@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: SDK 49.2';
+const appChangeInfoString = 'Changes: Formatting';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
