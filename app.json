@@ -5,7 +5,10 @@
     "slug": "PocketInfoweb-Dev",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.2.79",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
@@ -20,7 +23,10 @@
       "fallbackToCacheTimeout": 1000,
       "url": "https://u.expo.dev/0a540561-d833-425b-8955-13bf1915cc35"
     },
-    "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "133",
@@ -29,7 +35,9 @@
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
+        "UIBackgroundModes": [
+          "fetch"
+        ]
       }
     },
     "android": {
@@ -56,7 +64,11 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": ["sentry-expo"],
+    "plugins": [
+      "sentry-expo",
+      "expo-font",
+      "expo-secure-store"
+    ],
     "hooks": {
       "postPublish": [
         {
