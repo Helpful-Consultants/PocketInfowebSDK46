@@ -112,7 +112,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title='menu'
-            iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
+            iconName={'menu'}
             onPress={() => {
               navigation.toggleDrawer();
             }}

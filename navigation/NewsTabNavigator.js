@@ -71,7 +71,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title='home'
-            iconName={Platform.OS === 'ios' ? 'home' : 'home'}
+            iconName={'home'}
             onPress={() => {
               {
                 /* console.log('pressed homescreen icon'); */
@@ -85,7 +85,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title='menu'
-            iconName={Platform.OS === 'ios' ? 'menu' : 'menu'}
+            iconName={'menu'}
             onPress={() => {
               navigation.toggleDrawer();
             }}
