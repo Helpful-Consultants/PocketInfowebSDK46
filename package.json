@@ -105,5 +105,9 @@
     "typescript": "^5.1.3"
   },
   "resolutions": {},
+  "overrides": {
+    "@rneui/themed": {
+      "@rneui/base": "4.0.0-rc.8"
+    }
   }
 }
