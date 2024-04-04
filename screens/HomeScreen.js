@@ -14,7 +14,8 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
+// import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Touchable from 'react-native-platform-touchable';
@@ -59,7 +60,7 @@ export default HomeScreen = (props) => {
   //   const navigation = useNavigation();
 
   const { navigation } = props;
-  const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
   //   console.log('Constants', Constants);
   const appOS =
     Platform && Platform.OS

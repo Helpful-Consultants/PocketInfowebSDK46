@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
 import Constants from 'expo-constants';
-import { useSafeArea } from 'react-native-safe-area-context';
+// import { useSafeArea } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
@@ -65,7 +66,8 @@ export default SignInScreen = (props) => {
   //   console.log('in sign in, state', state);
 
   //   const { navigation } = props;
-  const insets = useSafeArea();
+  // const insets = useSafeArea();
+  const insets = useSafeAreaInsets();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { email: '', pin: '' },
