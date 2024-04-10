@@ -67,6 +67,12 @@ const CustomDrawerContent = (props) => {
       {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
         <View style={{ flexDirection: 'row' }}>
           <DemoDataSwitch />
+          <Button
+            title='Sentry Test'
+            onPress={() => {
+              throw new Error('Sentry test on ' + Platform.OS);
+            }}
+          />
         </View>
       ) : (
         <View>
