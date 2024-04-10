@@ -1,7 +1,6 @@
 {
   "build": {
     "base": {
-      "node": "20.12.2",
       "distribution": "store",
       "ios": {
         "env": {
