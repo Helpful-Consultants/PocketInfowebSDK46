@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react';
-import { Text, useWindowDimensions, View } from 'react-native';
+import {
+  Button,
+  Platform,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
@@ -65,7 +71,7 @@ const CustomDrawerContent = (props) => {
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
       {userDataObj.userName.toLowerCase().indexOf('upstone') > -1 ? (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
           <DemoDataSwitch />
           <Button
             title='Sentry Test'
