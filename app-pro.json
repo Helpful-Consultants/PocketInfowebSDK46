@@ -56,17 +56,19 @@
       "barStyle": "light-content",
       "backgroundColor": "#3689b1"
     },
-    "plugins": ["sentry-expo"],
-    "hooks": {
-      "postPublish": [
+    "plugins": [
+      [
+        "@sentry/react-native/expo",
         {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "helpful-consultants",
-            "project": "pocket-infoweb"
-          }
+          "organization": "helpful-consultants",
+          "project": "pocket-infoweb"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-secure-store"
+    ],
+    "hooks": {
+      "postPublish": []
     },
     "extra": {
       "eas": {

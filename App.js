@@ -30,7 +30,7 @@ import {
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
 // import { loadCachedResources } from './helpers/loadCachedResources';
-import * as Sentry from 'sentry-expo';
+import * as Sentry from '@sentry/react-native';
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
 // import { Ionicons } from '@expo/vector-icons';
@@ -136,7 +136,6 @@ console.log('sentryDist for sentry', appOS, sentryDist);
 // enableInExpoDevelopment: true/false depetermines whether Sentry is enabled in dev mode
 Sentry.init({
   dsn: sentryDSN,
-  enableInExpoDevelopment: false,
   debug: true,
 });
 
