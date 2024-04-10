@@ -35,7 +35,7 @@
     "axios": "^1.6.8",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "date-fns": "^3.6.0",
-    "expo": "^50.0.14",
+    "expo": "~50.0.15",
     "expo-application": "~5.8.3",
     "expo-asset": "~9.0.2",
     "expo-background-fetch": "~11.8.1",
