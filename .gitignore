@@ -28,3 +28,4 @@ eas.json
 .DS_Store
 ios/
 android/
+metro.config.js
