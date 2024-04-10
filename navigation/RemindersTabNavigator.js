@@ -98,7 +98,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title='home'
-            iconName={Platform.OS === 'ios' ? 'home' : 'home'}
+            iconName={'home'}
             onPress={() => {
               {
                 /* console.log('pressed homescreen icon'); */
