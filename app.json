@@ -65,20 +65,18 @@
       "backgroundColor": "#3689b1"
     },
     "plugins": [
-      "sentry-expo",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "helpful-consultants",
+          "project": "pocket-infoweb"
+        }
+      ],
       "expo-font",
       "expo-secure-store"
     ],
     "hooks": {
-      "postPublish": [
-        {
-          "file": "sentry-expo/upload-sourcemaps",
-          "config": {
-            "organization": "helpful-consultants",
-            "project": "pocket-infoweb"
-          }
-        }
-      ]
+      "postPublish": []
     },
     "extra": {
       "eas": {
