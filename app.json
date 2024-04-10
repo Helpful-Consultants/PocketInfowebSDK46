@@ -1,13 +1,13 @@
 {
   "expo": {
     "jsEngine": "hermes",
-    "name": "Pocket Infoweb",
-    "slug": "PocketInfoweb-Dev",
+    "name": "Pocket Infoweb Extra",
+    "slug": "PocketInfoweb-Extra",
     "description": "Find your tools inventory.",
     "privacy": "public",
-    "version": "1.2.79",
     "platforms": ["ios", "android"],
-    "icon": "./assets/images/icon.png",
+    "version": "1.2.81",
+    "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -16,15 +16,15 @@
     },
     "updates": {
       "enabled": true,
-      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 1000,
-      "url": "https://u.expo.dev/0a540561-d833-425b-8955-13bf1915cc35"
+      "url": "https://u.expo.dev/69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
     },
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "133",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
+      "buildNumber": "134",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -33,9 +33,9 @@
       }
     },
     "android": {
-      "versionCode": 33,
-      "package": "com.helpfulconsultants.pocketinfowebpro",
-      "googleServicesFile": "./google-services-pro.json",
+      "versionCode": 34,
+      "package": "com.helpfulconsultants.pocketinfowebextra",
+      "googleServicesFile": "./google-services-extra.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
@@ -61,7 +61,7 @@
         "@sentry/react-native/expo",
         {
           "organization": "helpful-consultants",
-          "project": "pocket-infoweb"
+          "project": "pocket-infoweb-extra"
         }
       ],
       "expo-font",
@@ -72,7 +72,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
+        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
       }
     },
     "runtimeVersion": {
