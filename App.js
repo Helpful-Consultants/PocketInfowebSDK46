@@ -1,7 +1,6 @@
 import * as SplashScreen from 'expo-splash-screen';
 // import * as Notifications from 'expo-notifications';
 import registerNNPushToken from 'native-notify';
-import * as Application from 'expo-application';
 import * as Device from 'expo-device';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
