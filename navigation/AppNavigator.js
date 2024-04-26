@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Platform,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   createDrawerNavigator,
@@ -35,11 +35,13 @@ import DemoDataSwitch from '../components/DemoDataSwitch';
 // import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 // import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
+import { AppSectionsByScreen } from '../constants/AppParts';
 import WipTabNavigator from './WipTabNavigator';
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
 import { setBadgeCountAsync } from '../helpers/appBadge';
+import getNavTargetObj from '../helpers/getNavTargetObj';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
@@ -152,6 +154,7 @@ const DrawerNavigator = (props) => {
 };
 
 export default AppNavigator = (props) => {
+  const dispatch = useDispatch();
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
@@ -173,7 +176,7 @@ export default AppNavigator = (props) => {
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
-  const dispatch = useDispatch();
+
   //   const ageOfCredentialsLimit = 3;
   //   return <AuthLoadingScreen />;
 
@@ -254,6 +257,7 @@ export default AppNavigator = (props) => {
     //   }
     //   revalidateUser();
     dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+
     //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
     //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
     //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);

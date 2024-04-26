@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
+import { getPushDataObject } from 'native-notify';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
@@ -13,6 +14,10 @@ import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import LtpLoansScreen from '../screens/LtpLoansScreen';
 import OdisScreen from '../screens/OdisScreen';
 import Colors from '../constants/Colors';
+import { AppSections } from '../constants/AppParts';
+// import { setNotificationTarget } from '../actions/user';
+// import { resetNotificationTarget } from '../actions/user';
+import getNavTargetObj from '../helpers/getNavTargetObj';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
@@ -58,6 +63,15 @@ const RemindersTabs = createBottomTabNavigator();
 // );
 
 export default RemindersTabNavigator = ({ navigation, route }) => {
+  //   const dispatch = useDispatch();
+  //   const thisSection = AppSections.REMINDERSTABS;
+  //   const notificationTarget = useSelector(
+  //     (state) => state.user.notificationTarget
+  //   );
+  //   console.log(
+  //     'notificationTarget state.user.notificationTarget',
+  //     notificationTarget
+  //   );
   const showingDemoData = useSelector(
     (state) => state.user.userRequestedDemoData
   );
@@ -85,6 +99,97 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] =
     useState(0);
   const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
+  const [pushDataObj, setPushDataObj] = useState(null);
+  const [pushDataReturned, setPushDataReturned] = useState(false);
+
+  //   const [pushDataTargetScreen, setPushDataTargetScreen] = useState(null);
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+
+  const getPushDataObjFn = async () => {
+    // console.log('in RemNav in getPushDataObjFn');
+    // let data = {};
+    try {
+      data = await getPushDataObject();
+      //   console.log('in RemNav getPushDataObjFn finished', data);
+      //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
+      //     setPushDataTargetScreen(pushDataObj.targetScreen);
+      //   }
+    } catch (err) {
+      //   console.log('in RemNav getPushDataObjFn err', err);
+    }
+    // console.log('in RemNav end of getPushDataObjFn', data);
+  };
+  // let data = getPushDataObject();
+  let data = {};
+  getPushDataObjFn();
+
+  useEffect(() => {
+    if (data && data.hasOwnProperty('targetScreen')) {
+      //   console.log('in RemNav useEffect 1, storing in state', 'data', data);
+      setPushDataObj(data);
+    } else if (data && data.hasOwnProperty('dataError')) {
+      //   console.log('in RemNav useEffect 1 dataError', 'data', data);
+      setPushDataObj(data);
+    } else {
+      //   console.log('in RemNav useEffect 1 no data in state', 'data', data);
+    }
+  }); // must not have any dependency on pushDataObj
+
+  useEffect(() => {
+    // console.log('in RemNav useEffect 2 pushDataObj', pushDataObj);
+    if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
+      //   console.log(
+      //     'in WipNav pushDataObj.hasOwnProperty(dataError)',
+      //     pushDataObj
+      //   );
+      navigation.navigate('NewsTabs', { screen: 'News' });
+    } else if (pushDataObj && pushDataObj.hasOwnProperty('targetScreen')) {
+      //   console.log(
+      //     'in RemNav pushDataObj.hasOwnProperty(targetScreen)',
+      //     pushDataObj
+      //   );
+      const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+      //   console.log('in RemNav after getNavTargetObj', targetObj);
+      if (
+        targetObj &&
+        targetObj.hasOwnProperty('targetScreen') &&
+        targetObj.hasOwnProperty('targetSection')
+      ) {
+        //   dispatch(setNotificationTarget(targetObj));
+        // console.log(
+        //   'in in RemNav end of getPushDataObjFn targetObj: ',
+        //   targetObj
+        // );
+        const tempNotificationTarget = { ...targetObj };
+        //     (pushDataObj && pushDataObj.targetScreen) || null;
+        // console.log(
+        //   'in RemNav useEffect, tempNotificationTarget',
+        //   tempNotificationTarget
+        // );
+        const constantFromTargetSection = tempNotificationTarget.targetSection
+          ? tempNotificationTarget.targetSection
+              .replace(/\s/g, '')
+              .toUpperCase()
+          : '';
+        // setPushDataObj(null);
+        if (constantFromTargetSection === AppSections.HOME) {
+          //   console.log('in RemNav useEffect, e');
+          navigation.navigate('Home');
+        } else {
+          navigation.navigate(tempNotificationTarget.targetSection, {
+            screen: tempNotificationTarget.targetScreen,
+          });
+        }
+        // setPushDataObj(data);
+      } else {
+        // console.log('in RemNav Target object is not useable.', targetObj);
+      }
+    }
+    if (pushDataObj != null) {
+      //   console.log('in RemNav at zz', pushDataObj);
+    }
+  }, [pushDataObj]); // stops it looping
 
   useEffect(() => {
     navigation.setOptions({
@@ -94,6 +199,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       headerTitle: () => (
         <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
       ),
+      headerLeftContainerStyle: { ...baseStyles.paddingLeft },
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -269,6 +375,34 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   //     ltpLoansRedCount,
   //     ltpLoansAmberCount,
   //   );
+
+  //   useEffect(() => {
+  //     if (
+  //       notificationTarget &&
+  //       notificationTarget.hasOwnProperty('targetScreen')
+  //     ) {
+  //       const tempNotificationTarget = { ...notificationTarget };
+  //       //     (pushDataObj && pushDataObj.targetScreen) || null;
+  //       console.log(
+  //         'in WipNav useEffect, pushDataObj.targetScreen',
+  //         notificationTarget,
+  //         tempNotificationTarget
+  //       );
+  //       dispatch(resetNotificationTarget());
+  //       // props.navigation.navigate(pushDataTargetScreen);
+  //       //   navigation.navigate('RemindersTabs', { screen: 'Alerts' });
+  //       const constantFromTargetSection = tempNotificationTarget.targetSection
+  //         ? tempNotificationTarget.targetSection.replace(/\s/g, '').toUpperCase()
+  //         : '';
+  //       if (constantFromTargetSection === AppSections.HOME) {
+  //         navigation.navigate('Home');
+  //       } else {
+  //         navigation.navigate(tempNotificationTarget.targetSection, {
+  //           screen: tempNotificationTarget.targetScreen,
+  //         });
+  //       }
+  //     }
+  //   }, [notificationTarget]);
 
   return (
     <RemindersTabs.Navigator //iOS
