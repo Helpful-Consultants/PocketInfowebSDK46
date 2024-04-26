@@ -13,7 +13,32 @@ const INITIAL_STATE = {
   fetchTime: null,
 };
 
-// export const selectSortedLtpTools = createSelector(
+export const selectSortedUniqueLtpTools = createSelector(
+  (state) => state.ltp.ltpItems || [],
+
+  (ltpItems) => {
+    // Integrate the logic from getSortedUniqueLtpItems here
+    const keyName = 'orderPartNo';
+    let uniqueLtpItems = ltpItems.filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
+    );
+    let ltpItemsSorted = uniqueLtpItems.sort(function (a, b) {
+      if (!a.hasOwnProperty(keyName) || !b.hasOwnProperty(keyName)) return 0;
+      let comparison = a[keyName].localeCompare(b[keyName]);
+      return comparison;
+    });
+
+    console.log(
+      'in selectSortedUniqueLtpTools ',
+      ltpItems.length,
+      uniqueLtpItems.length
+    );
+    return ltpItemsSorted;
+  }
+);
+
+// export const selectSortedUniqueLtpTools = createSelector(
 //   (state) => state.ltp.ltpItems || [],
 
 //   //   (ltpItems) =>
@@ -22,34 +47,15 @@ const INITIAL_STATE = {
 //   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
 //   //       )
 //   (ltpItems) => {
-//     let uniqueLtpItems = ltpItems;
-//     console.log(
-//       'in selectSortedUniqueLtpTools ',
-//       ltpItems.length,
-//       uniqueLtpItems.length
-//     );
+//     let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
+//     // console.log(
+//     //   'in selectSortedUniqueLtpTools ',
+//     //   ltpItems.length,
+//     //   uniqueLtpItems.length
+//     // );
 //     return uniqueLtpItems;
 //   }
 // );
-
-export const selectSortedUniqueLtpTools = createSelector(
-  (state) => state.ltp.ltpItems || [],
-
-  //   (ltpItems) =>
-  //     ltpItems.filter(
-  //       (item, index, self) =>
-  //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
-  //       )
-  (ltpItems) => {
-    let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
-    // console.log(
-    //   'in selectSortedUniqueLtpTools ',
-    //   ltpItems.length,
-    //   uniqueLtpItems.length
-    // );
-    return uniqueLtpItems;
-  }
-);
 
 export default function ltp(state = INITIAL_STATE, action) {
   //   console.log(Types);

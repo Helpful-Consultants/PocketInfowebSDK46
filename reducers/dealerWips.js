@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
-import {
-  getSortedBookedOutToolsForUser,
-  getSortedDealerWipsItemsForUser,
-} from '../helpers/dealerWips';
+// import {
+//   getSortedBookedOutToolsForUser,
+//   getSortedDealerWipsItemsForUser,
+// } from '../helpers/dealerWips';
 
 import Types from '../constants/Types';
 const INITIAL_STATE = {
@@ -24,12 +24,40 @@ export const selectDealerWips = createSelector(
   (dealerWipsItems) => dealerWipsItems || []
 );
 
+// export const selectDealerWipsForUser = createSelector(
+//   (state) => state.dealerWips.dealerWipsItems,
+//   (state) => state.dealerWips.userIntId,
+
+//   (dealerWipsItems, userIntId) => {
+//     let retArr = getSortedDealerWipsItemsForUser(dealerWipsItems, userIntId);
+//     // console.log(
+//     //   '************** in selectWipsForUser',
+//     //   'userIntId',
+//     //   userIntId,
+//     //   'dealerWipsItems',
+//     //   dealerWipsItems.length,
+//     //   'retArr',
+//     //   retArr.length
+//     // );
+//     return retArr;
+//   }
+// );
+
 export const selectDealerWipsForUser = createSelector(
   (state) => state.dealerWips.dealerWipsItems,
   (state) => state.dealerWips.userIntId,
 
   (dealerWipsItems, userIntId) => {
-    let retArr = getSortedDealerWipsItemsForUser(dealerWipsItems, userIntId);
+    let retArr = [];
+    if (userIntId && dealerWipsItems && dealerWipsItems.length > 0) {
+      retArr = dealerWipsItems.filter(
+        (wip) =>
+          wip.tools &&
+          wip.tools.length > 0 &&
+          wip.userIntId &&
+          wip.userIntId.toString() == userIntId
+      );
+    }
     // console.log(
     //   '************** in selectWipsForUser',
     //   'userIntId',
@@ -43,12 +71,54 @@ export const selectDealerWipsForUser = createSelector(
   }
 );
 
+// export const selectBookedOutToolsForUser = createSelector(
+//   (state) => state.dealerWips.dealerWipsItems,
+//   (state) => state.dealerWips.userIntId,
+
+//   (dealerWipsItems, userIntId) => {
+//     let retArr = getSortedBookedOutToolsForUser(dealerWipsItems, userIntId);
+//     // console.log(
+//     //   '************** in selectBookedOutToolsForUser',
+
+//     //   'dealerWipsItems',
+//     //   dealerWipsItems.length,
+//     //   'retArr',
+//     //   retArr
+//     // );
+//     return retArr;
+//   }
+// );
+
 export const selectBookedOutToolsForUser = createSelector(
   (state) => state.dealerWips.dealerWipsItems,
   (state) => state.dealerWips.userIntId,
 
   (dealerWipsItems, userIntId) => {
-    let retArr = getSortedBookedOutToolsForUser(dealerWipsItems, userIntId);
+    const keyName = 'partNumber';
+    let allToolsArr = [];
+    userIntId &&
+      dealerWipsItems.forEach((wip) => {
+        if (
+          wip.tools &&
+          wip.tools.length > 0 &&
+          wip.userIntId &&
+          wip.userIntId.toString() == userIntId
+        ) {
+          let wipToolsArr = wip.tools.map((tool) => ({
+            ...tool,
+            wipNumber: wip.wipNumber,
+            wipId: wip.id.toString(),
+            wipCreatedDate: wip.createdDate,
+          }));
+          allToolsArr.push(...wipToolsArr);
+        }
+      });
+
+    let retArr = allToolsArr.sort(function (a, b) {
+      if (!a.hasOwnProperty(keyName) || !b.hasOwnProperty(keyName)) return 0;
+      let comparison = a[keyName].localeCompare(b[keyName]);
+      return comparison;
+    });
     // console.log(
     //   '************** in selectBookedOutToolsForUser',
 
