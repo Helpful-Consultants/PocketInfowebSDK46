@@ -190,6 +190,7 @@ export default getBaseStyles = (props) => {
   };
 
   const baseStyles = StyleSheet.create({
+    paddingLeft: { paddingLeft: 12 },
     // BUTTON - START
     //SignInScreen
     backgroundImage: {
@@ -488,6 +489,7 @@ export default getBaseStyles = (props) => {
       borderColor: Colors.vwgSearchBarInputContainer,
       borderRadius: Platform.OS === 'ios' ? 10 : 20,
       height: 30,
+      paddingLeft: 5,
     },
     searchBarRowSearchInput: { width: '85%' },
     searchBarRowTextNoDataContainer: {
