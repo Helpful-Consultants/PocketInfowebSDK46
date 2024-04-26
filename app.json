@@ -6,7 +6,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.2.81",
+    "version": "1.2.82",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
@@ -23,7 +23,7 @@
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "134",
+      "buildNumber": "135",
       "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
       "config": {
         "usesNonExemptEncryption": false
