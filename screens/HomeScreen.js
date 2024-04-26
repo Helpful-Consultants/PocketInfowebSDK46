@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
 import * as Notifications from 'expo-notifications';
+import { getPushDataObject } from 'native-notify';
+import getNavTargetObj from '../helpers/getNavTargetObj';
 import Constants from 'expo-constants';
+import { AppSections } from '../constants/AppParts';
 // import * as Permissions from 'expo-permissions';
 import {
   ActivityIndicator,
@@ -46,6 +49,9 @@ import {
   selectBookedOutToolsForUser,
   selectDealerWipsForUser,
 } from '../reducers/dealerWips';
+
+// import { setNotificationTarget } from '../actions/user';
+// import { resetNotificationTarget } from '../actions/user';
 // import Constants from 'expo-constants';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 const buttonTextColor = Colors.vwgWhite;
@@ -126,7 +132,9 @@ export default HomeScreen = (props) => {
   const userName = useSelector((state) => state.user.userName);
   //   console.log('IN HOME !!!!! 1f');
   const userIntId = useSelector((state) => state.user.userIntId);
-
+  //   const notificationTarget = useSelector(
+  //     (state) => state.user.notificationTarget
+  //   );
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const showingDemoApp = false;
   const showingUpdateAppPrompt = true;
@@ -181,6 +189,8 @@ export default HomeScreen = (props) => {
   const [isAppUpdated, setIsAppUpdated] = useState(false);
   const [showReloadDialogue, setShowReloadDialogue] = useState(false);
   const [isLoadingAny, setIsLoadingAny] = useState(false);
+  const [pushDataObj, setPushDataObj] = useState(null);
+  //   const [pushDataTargetScreen, setPushDataTargetScreen] = useState(null);
 
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles({ ...windowDim });
@@ -224,6 +234,21 @@ export default HomeScreen = (props) => {
     },
     [fetchParamsObj]
   );
+  //   const getPushDataObjFn = async () => {
+  //     console.log('in getPushDataObjFn');
+  //     let data = {}
+  //     try {
+  //       data = await getPushDataObject();
+  //       console.log('getPushDataObjFn finished', data);
+  //  if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
+  //         setPushDataTargetScreen(data.targetScreen);
+  //       }
+  //     } catch (err) {
+  //       console.log('getPushDataObjFn err', err);
+  //     }
+  //     console.log('end of getPushDataObjFn', pushDataTargetScreen);
+  //   };
+  //   getPushDataObjFn();
 
   //   console.log('IN HOME !!!!! brand', userBrand);
   //   const notificationLimit = 168;
@@ -435,6 +460,88 @@ export default HomeScreen = (props) => {
     );
   };
 
+  const getPushDataObjFn = async () => {
+    // console.log('in Home in getPushDataObjFn');
+    // let data = {};
+    try {
+      data = await getPushDataObject();
+      //   console.log('in Home getPushDataObjFn finished', data);
+      //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
+      //     setPushDataTargetScreen(pushDataObj.targetScreen);
+      //   }
+    } catch (err) {
+      //   console.log('in Home getPushDataObjFn err', err);
+    }
+    // console.log('in Home end of getPushDataObjFn', data);
+  };
+  // let data = getPushDataObject();
+  let data = {};
+  getPushDataObjFn();
+
+  useEffect(() => {
+    if (data && data.hasOwnProperty('targetScreen')) {
+      //   console.log('in Home useEffect 1, storing in state', 'data', data);
+      setPushDataObj(data);
+    } else if (data && data.hasOwnProperty('dataError')) {
+      //   console.log('in Home useEffect 1 dataError', 'data', data);
+      setPushDataObj(data);
+    } else {
+      //   console.log('in Home useEffect 1 no data in state', 'data', data);
+    }
+  }); // must not have any dependency on pushDataObj
+
+  useEffect(() => {
+    // console.log('in Home useEffect 2 pushDataObj', pushDataObj);
+    if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
+      //   console.log('in Home pushDataObj.hasOwnProperty(dataError)', pushDataObj);
+      navigation.navigate('NewsTabs', { screen: 'News' });
+    } else if (pushDataObj && pushDataObj.hasOwnProperty('targetScreen')) {
+      //   console.log(
+      //     'in Home pushDataObj.hasOwnProperty(targetScreen)',
+      //     pushDataObj
+      //   );
+      const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+      //   console.log('in Home after getNavTargetObj', targetObj);
+      if (
+        targetObj &&
+        targetObj.hasOwnProperty('targetScreen') &&
+        targetObj.hasOwnProperty('targetSection')
+      ) {
+        //   dispatch(setNotificationTarget(targetObj));
+        // console.log(
+        //   'in in Home end of getPushDataObjFn targetObj: ',
+        //   targetObj
+        // );
+        const tempNotificationTarget = { ...targetObj };
+        //     (pushDataObj && pushDataObj.targetScreen) || null;
+        // console.log(
+        //   'in Home useEffect, tempNotificationTarget',
+        //   tempNotificationTarget
+        // );
+        const constantFromTargetSection = tempNotificationTarget.targetSection
+          ? tempNotificationTarget.targetSection
+              .replace(/\s/g, '')
+              .toUpperCase()
+          : '';
+        // setPushDataObj(null);
+        if (constantFromTargetSection === AppSections.HOME) {
+          //   console.log('in Home useEffect, e');
+          navigation.navigate('Home');
+        } else {
+          navigation.navigate(tempNotificationTarget.targetSection, {
+            screen: tempNotificationTarget.targetScreen,
+          });
+        }
+        // setPushDataObj(data);
+      } else {
+        // console.log('in Home Target object is not useable.', targetObj);
+      }
+    }
+    if (pushDataObj != null) {
+      //   console.log('in Home at zz', pushDataObj);
+    }
+  }, [pushDataObj]); // stops it looping
+
   useEffect(() => {
     //   console.log(
     //     'in home useEffect LtpLoansCounts',
@@ -528,6 +635,34 @@ export default HomeScreen = (props) => {
       }
     }, [getAllItems])
   );
+
+  //   useEffect(() => {
+  //     if (
+  //       notificationTarget &&
+  //       notificationTarget.hasOwnProperty('targetScreen')
+  //     ) {
+  //       const tempNotificationTarget = { ...notificationTarget };
+  //       //     (pushDataObject && pushDataObject.targetScreen) || null;
+  //       console.log(
+  //         'in WipNav useEffect, pushDataObject.targetScreen',
+  //         notificationTarget,
+  //         tempNotificationTarget
+  //       );
+  //       dispatch(resetNotificationTarget());
+  //       // props.navigation.navigate(pushDataTargetScreen);
+  //       //   navigation.navigate('RemindersTabs', { screen: 'Alerts' });
+  //       const constantFromTargetSection = tempNotificationTarget.targetSection
+  //         ? tempNotificationTarget.targetSection.replace(/\s/g, '').toUpperCase()
+  //         : '';
+  //       if (constantFromTargetSection === AppSections.HOME) {
+  //         console.log('already in target screen');
+  //       } else {
+  //         navigation.navigate(tempNotificationTarget.targetSection, {
+  //           screen: tempNotificationTarget.targetScreen,
+  //         });
+  //       }
+  //     }
+  //   }, [notificationTarget]);
 
   return (
     <View
