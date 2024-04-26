@@ -2,9 +2,21 @@ import React from 'react';
 import { Platform, useWindowDimensions, View } from 'react-native';
 import { Image, Text } from '@rneui/themed';
 import getBaseStyles from '../helpers/getBaseStyles';
+import { ScreenNames } from '../constants/AppParts';
 
-export default function TitleWithAppLogo(props) {
+export default function TitleWithAppLogo({ title }) {
   const windowDim = useWindowDimensions();
+  const constantFromPropsTitle = title
+    ? title.replace(/\s/g, '').toUpperCase()
+    : null;
+
+  const titleToUse = ScreenNames[constantFromPropsTitle] || ScreenNames.DEFAULT;
+  //   console.log(
+  //     'in getLogoTitle/TitleWithAppLogo, title:',
+  //     title,
+  //     constantFromPropsTitle,
+  //     titleToUse
+  //   );
 
   //   console.log('windowDim', windowDim && windowDim);
   //   console.log(
@@ -56,7 +68,7 @@ export default function TitleWithAppLogo(props) {
               : 22,
         }}
       />
-      <Text style={{ ...baseStyles.textScreenTitle }}>{props.title}</Text>
+      <Text style={{ ...baseStyles.textScreenTitle }}>{titleToUse}</Text>
     </View>
   );
 }
