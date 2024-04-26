@@ -280,8 +280,24 @@ export default function App(props) {
   //   console.log('Not calling NNPushID');
   //   appOS == 'ios' && registerNNPushToken(NNPushID, NNPushTokenKey);
 
-  //   console.log('device', Device.isDevice);
-  Device.isDevice && registerNNPushToken(NNPushID, NNPushTokenKey);
+  const registerForPush = async () => {
+    console.log('in registerForPush', NNPushID, NNPushTokenKey);
+
+    try {
+      registerNNPushToken(NNPushID, NNPushTokenKey);
+      console.log('in registerForPush finished');
+    } catch (err) {
+      console.log('in registerForPush err', err);
+    }
+  };
+
+  console.log('device', Device.isDevice);
+  // Device.isDevice && registerForPush;
+  // Device.isDevice && registerForPush();
+  registerForPush();
+  //   registerNNPushToken(20905, 'DJT3KwE2V9QURLP8wQSG1z');
+
+  //   console.log('registerNNPushToken', registerNNPushToken);
 
   async function unregisterBackgroundFetch(taskName) {
     console.log('in unregisterBackgroundFetch', taskName);
