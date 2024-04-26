@@ -82,6 +82,7 @@ export default SearchBarWithRefresh = (props) => {
           <SearchBar
             onChangeText={searchInputHandler}
             value={searchInput}
+            searchIcon={null}
             placeholder='Type here to search...'
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={baseStyles.searchBarContainer}
