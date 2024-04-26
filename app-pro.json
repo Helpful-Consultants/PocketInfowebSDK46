@@ -61,7 +61,7 @@
         "@sentry/react-native/expo",
         {
           "organization": "helpful-consultants",
-          "project": "pocket-infoweb"
+          "project": "pocket-infoweb-extra"
         }
       ],
       "expo-font",
