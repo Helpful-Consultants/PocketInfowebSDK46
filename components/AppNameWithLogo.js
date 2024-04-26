@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useWindowDimensions, View } from 'react-native';
 import { Image, Text } from '@rneui/themed';
 import Constants from 'expo-constants';
-import * as Application from 'expo-application';
+
 // import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import Colors from '../constants/Colors';
 // import appLogo from '../assets/images/tiw-app-logo-trans.png';

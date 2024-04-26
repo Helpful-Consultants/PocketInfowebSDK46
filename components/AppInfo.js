@@ -5,7 +5,7 @@ import { Text } from '@rneui/themed';
 // import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
-import * as Application from 'expo-application';
+
 import * as Updates from 'expo-updates';
 import { useMediaQuery } from 'react-responsive';
 import appChangeInfoString from '../helpers/appChangeInfoString';

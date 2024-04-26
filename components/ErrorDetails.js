@@ -4,7 +4,7 @@ import { Text } from '@rneui/themed';
 import { useSelector } from 'react-redux';
 import HTML from 'react-native-render-html';
 import Constants from 'expo-constants';
-import * as Application from 'expo-application';
+
 import * as Device from 'expo-device';
 import * as Updates from 'expo-updates';
 
