@@ -1,6 +1,7 @@
 {
   "build": {
     "base": {
+      "node": "20.0.0",
       "distribution": "store",
       "ios": {
         "env": {
@@ -44,8 +45,17 @@
       }
     },
     "development": {
+      "node": "20.0.0",
       "developmentClient": true,
       "distribution": "internal"
+    },
+    "development-simulator": {
+      "node": "20.0.0",
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "android": {
