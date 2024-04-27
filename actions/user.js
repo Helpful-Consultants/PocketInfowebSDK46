@@ -65,6 +65,15 @@ export const revalidateUserCredentials = ({ calledBy }) => ({
   },
 });
 
+export const setNotificationTarget = ({ targetScreen, targetSection }) => ({
+  type: Types.SET_NOTIFICATION_TARGET,
+  payload: { targetScreen, targetSection },
+});
+
+export const resetNotificationTarget = () => ({
+  type: Types.RESET_NOTIFICATION_TARGET,
+});
+
 export const userError = ({ error, statusCode, dataErrorUrl }) => ({
   type: Types.USER_ERROR,
   payload: {

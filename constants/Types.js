@@ -19,6 +19,8 @@ export default {
   SET_USER_REQUESTED_DEMO_APP: 'user/set_user_requested_demo_app',
   SET_USER_REQUESTED_DEMO_DATA: 'user/set_user_requested_demo_data',
   USER_ERROR: 'user/user_error',
+  SET_NOTIFICATION_TARGET: 'user/SET_NOTIFICATION_TARGET',
+  RESET_NOTIFICATION_TARGET: 'user/reSET_NOTIFICATION_TARGET',
 
   GET_DEALER_TOOLS_START: 'dealerTools/get_dealer_tools_start',
   GET_DEALER_TOOLS_REQUEST: 'dealerTools/get_dealer_tools_request',

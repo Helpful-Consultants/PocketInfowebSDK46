@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   statusCode: null,
   requestedDemoData: false,
   showingDemoApp: false,
+  notificationTarget: {},
 };
 
 export const selectFetchParamsObj = createSelector(
@@ -207,6 +208,20 @@ export default function user(state = INITIAL_STATE, action) {
         ...state,
         userIsSignedIn: true,
         userIsValidated: true,
+      };
+    }
+    case Types.SET_NOTIFICATION_TARGET: {
+      console.log('in reducer setNotificationTarget', action.payload);
+      return {
+        ...state,
+        notificationTarget: action.payload ? action.payload : {},
+      };
+    }
+    case Types.RESET_NOTIFICATION_TARGET: {
+      console.log('in reducer resetNotificationTarget');
+      return {
+        ...state,
+        notificationTarget: {},
       };
     }
     case Types.SET_USER_REQUESTED_DEMO_DATA: {
