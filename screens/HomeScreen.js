@@ -698,7 +698,7 @@ export default HomeScreen = (props) => {
             }}
             onPress={openAppStore}
           >
-            Press here to update app in app store
+            Press here to update in app store
           </Text>
         ) : null}
 
