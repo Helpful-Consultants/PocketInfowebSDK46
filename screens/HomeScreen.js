@@ -484,12 +484,12 @@ export default HomeScreen = (props) => {
       //   console.log('in Home useEffect 1 dataError', 'data', data);
       setPushDataObj(data);
     } else {
-      //   console.log('in Home useEffect 1 no data in state', 'data', data);
+      alert('in Home useEffect 1 no data in state', 'data', data);
     }
   }); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    // console.log('in Home useEffect 2 pushDataObj', pushDataObj);
+    alert('in Home useEffect 2 pushDataObj', pushDataObj);
     if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
       alert('in Home pushDataObj.hasOwnProperty(dataError)', pushDataObj);
       navigation.navigate('NewsTabs', { screen: 'News' });
