@@ -1,23 +1,23 @@
 import { AppSectionsByScreen, ScreenNames } from '../constants/AppParts';
 
 const getNavTargetObj = (title) => {
-  alert('in getNavTargetObj, start ' + title && title);
+  console.log('in getNavTargetObj, start ' + title && title);
   // Input validation
   if (!title) {
-    alert('Invalid title:' + title);
+    console.log('Invalid title:' + title);
     return null; // or throw an error
   }
   // Normalize title and convert to uppercase
   const constantFromPropsTitle = title?.replace(/\s/g, '').toUpperCase();
-  alert('constantFromPropsTitle' + constantFromPropsTitle);
+  console.log('constantFromPropsTitle' + constantFromPropsTitle);
   // Get the corresponding app section from constants
   const appSectionToUse = AppSectionsByScreen?.[constantFromPropsTitle] ?? '';
-  alert('appSectionToUse' + appSectionToUse);
+  console.log('appSectionToUse' + appSectionToUse);
   // Get the screen name from constants, defaulting to 'DEFAULT' if not found
   const titleToUse =
     ScreenNames?.[constantFromPropsTitle] ?? ScreenNames.DEFAULT;
 
-  alert(
+  console.log(
     'in getNavTargetObj, titleToUse ' +
       JSON.stringify(titleToUse) +
       'appSectionToUse ' +
@@ -28,7 +28,7 @@ const getNavTargetObj = (title) => {
     targetSection: appSectionToUse,
     targetScreen: titleToUse,
   };
-  alert('in getNavTargetObj, returnObj' + JSON.stringify(returnObj));
+  console.log('in getNavTargetObj, returnObj' + JSON.stringify(returnObj));
   return returnObj;
 };
 export default getNavTargetObj;
