@@ -158,7 +158,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       ) {
         //   dispatch(setNotificationTarget(targetObj));
         // console.log(
-        //   'in in RemNav end of getPushDataObjFn targetObj: ',
+        //   'in RemNav end of getPushDataObjFn targetObj: ',
         //   targetObj
         // );
         const tempNotificationTarget = { ...targetObj };

@@ -26,7 +26,7 @@ export const ScreenNames = {
   ALERTS: 'Alerts',
   BOOKEDTOOLS: 'Booked Tools',
   ELSA2GO: 'Elsa2Go',
-  DEFAULT: 'Pocket Infoweb',
+  DEFAULT: 'Home',,
   FINDTOOLS: 'Find Tools',
   HOME: 'Home',
   LOANTOOLS: 'Loan Tools',

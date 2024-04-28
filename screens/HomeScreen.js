@@ -512,7 +512,7 @@ export default HomeScreen = (props) => {
       ) {
         //   dispatch(setNotificationTarget(targetObj));
         alert(
-          'in in Home end of getPushDataObjFn targetObj: ' +
+          'in Home end of getPushDataObjFn targetObj: ' +
             JSON.stringify(targetObj)
         );
         const tempNotificationTarget = { ...targetObj };

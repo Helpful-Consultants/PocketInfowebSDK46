@@ -125,7 +125,7 @@ export default NewsTabNavigator = ({ navigation, route }) => {
       ) {
         //   dispatch(setNotificationTarget(targetObj));
         // console.log(
-        //   'in in NewsNav end of getPushDataObjFn targetObj: ',
+        //   'in NewsNav end of getPushDataObjFn targetObj: ',
         //   targetObj
         // );
         const tempNotificationTarget = { ...targetObj };

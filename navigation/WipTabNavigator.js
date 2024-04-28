@@ -113,7 +113,7 @@ export default WipTabNavigator = ({ navigation, route }) => {
       ) {
         //   dispatch(setNotificationTarget(targetObj));
         // console.log(
-        //   'in in WipNav end of getPushDataObjFn targetObj: ',
+        //   'in WipNav end of getPushDataObjFn targetObj: ',
         //   targetObj
         // );
         const tempNotificationTarget = { ...targetObj };
