@@ -493,18 +493,18 @@ export default HomeScreen = (props) => {
   useEffect(() => {
     alert('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj?.hasOwnProperty('dataError')) {
-      alert(
+      console.log(
         'in Home pushDataObj.hasOwnProperty(dataError)' +
           JSON.stringify(pushDataObj)
       );
       navigation.navigate('NewsTabs', { screen: 'News' });
     } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      alert(
+      console.log(
         'in Home pushDataObj.hasOwnProperty(targetScreen)' +
           JSON.stringify(pushDataObj)
       );
       const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      alert('in Home after getNavTargetObj' + JSON.stringify(targetObj));
+      console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
       if (
         targetObj?.hasOwnProperty('targetScreen') &&
         targetObj.targetScreen &&
@@ -512,10 +512,10 @@ export default HomeScreen = (props) => {
         targetObj.targetSection
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        alert('in Home end targetObj: ' + JSON.stringify(targetObj));
+        console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
-        alert(
+        console.log(
           'in Home useEffect, tempNotificationTarget',
           JSON.stringify(tempNotificationTarget)
         );
@@ -525,10 +525,10 @@ export default HomeScreen = (props) => {
             .toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
-          alert('in Home useEffect, e');
+          console.log('in Home useEffect, e');
           //   navigation.navigate('Home');
         } else {
-          alert(
+          console.log(
             'in Home useEffect ready to navigate to' +
               JSON.stringify(tempNotificationTarget)
           );
@@ -538,13 +538,13 @@ export default HomeScreen = (props) => {
         }
         // setPushDataObj(data);
       } else {
-        alert(
+        console.log(
           'in Home Target object is not useable.' + JSON.stringify(targetObj)
         );
       }
     }
     if (pushDataObj != null) {
-      alert('in Home at zz' + JSON.stringify(pushDataObj));
+      console.log('in Home at zz' + JSON.stringify(pushDataObj));
     }
   }, [pushDataObj]); // stops it looping
 
