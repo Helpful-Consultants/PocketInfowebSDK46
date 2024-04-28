@@ -528,15 +528,15 @@ export default HomeScreen = (props) => {
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
           console.log('in Home useEffect, e');
-          //   navigation.navigate('Home');
+          navigation.navigate('Home');
         } else {
           console.log(
             'in Home useEffect ready to navigate to' +
               JSON.stringify(tempNotificationTarget)
           );
-          //   navigation.navigate(tempNotificationTarget.targetSection, {
-          //     screen: tempNotificationTarget.targetScreen,
-          //   });
+          navigation.navigate(tempNotificationTarget.targetSection, {
+            screen: tempNotificationTarget.targetScreen,
+          });
         }
         // setPushDataObj(data);
       } else {
