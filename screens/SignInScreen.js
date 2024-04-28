@@ -136,122 +136,120 @@ export default SignInScreen = (props) => {
 
   return (
     <View style={{ paddingTop: insets.top }}>
-      <ScrollView>
-        <AppNameWithLogo appName={appName} />
-        <Text style={baseStyles.textInstructions}>
-          {userIsValidated && userIsSignedIn
-            ? `Signed in`
-            : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
-        </Text>
+      <AppNameWithLogo appName={appName} />
+      <Text style={baseStyles.textInstructions}>
+        {userIsValidated && userIsSignedIn
+          ? `Signed in`
+          : 'Pocket Infoweb is only available to registered users of Tools Infoweb'}
+      </Text>
+      <View>
+        {userError ? (
+          <Text style={baseStyles.textError}>{userError}</Text>
+        ) : userIsSignedIn ? (
+          <Text style={baseStyles.textSecurityCheck}>
+            Please sign in again to renew your access
+          </Text>
+        ) : null}
+      </View>
+      <KeyboardAvoidingView
+        style={baseStyles.containerSignIn}
+        behavior='padding'
+        keyboardVerticalOffset={50}
+      >
+        <Input
+          autoFocus
+          value={formState.inputValues.email}
+          onChangeText={inputChangeHandler.bind(this, 'email')}
+          label='User ID - your toolsinfoweb.co.uk email address'
+          containerStyle={baseStyles.viewInputContainerSignIn}
+          textInputStyle={baseStyles.textInputStyleSignIn}
+          labelStyle={baseStyles.textInputLabelSignIn}
+          required
+          email
+          autoCapitalize='none'
+          placeholder='e.g. janedoe@dtauto.co.uk'
+          leftIcon={{
+            type: 'ionicon',
+            name: Platform.OS === 'ios' ? 'mail' : 'mail',
+            color: Colors.vwgDarkSkyBlue,
+            paddingRight: 10,
+            paddingTop: 4,
+          }}
+          keyboardType='email-address'
+          autoCorrect={false}
+          returnKeyType='next'
+          onSubmitEditing={(text) => console.log(text)}
+          errorStyle={{ color: Colors.errorText }}
+          errorText='The email you sign in to toolsinfoweb.co.uk with'
+        />
+
+        <Input
+          value={formState.inputValues.pin}
+          onChangeText={inputChangeHandler.bind(this, 'pin')}
+          label='Your Pocket Infoweb access PIN*'
+          labelStyle={baseStyles.textInputLabelSignIn}
+          containerStyle={baseStyles.viewInputContainerSignIn}
+          textInputStyle={baseStyles.textInputStyleSignIn}
+          required
+          maxLength={6}
+          placeholder='Six digits, e.g. 123456'
+          leftIcon={{
+            type: 'ionicon',
+            name: Platform.OS === 'ios' ? 'key' : 'key',
+            color: Colors.vwgDarkSkyBlue,
+            paddingRight: 10,
+          }}
+          keyboardType='numeric'
+          secureTextEntry
+          returnKeyType='done'
+          onSubmitEditing={(text) => console.log(text)}
+          errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
+          errorStyle={{ color: 'red' }}
+        />
         <View>
-          {userError ? (
-            <Text style={baseStyles.textError}>{userError}</Text>
-          ) : userIsSignedIn ? (
-            <Text style={baseStyles.textSecurityCheck}>
-              Please sign in again to renew your access
-            </Text>
-          ) : null}
+          {isLoading ? (
+            <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
+          ) : (
+            <Button
+              title='Sign in'
+              disabled={formState.formIsValid ? false : true}
+              onPress={submitHandler}
+              buttonStyle={baseStyles.buttonSignIn}
+              titleStyle={baseStyles.buttonTextSignIn}
+              icon={
+                <Ionicons
+                  name={Platform.OS === 'ios' ? 'log-in' : 'log-in'}
+                  color={Colors.vwgWhite}
+                  size={20}
+                  paddingTop={4}
+                  paddingRight={10}
+                />
+              }
+            />
+          )}
         </View>
-        <KeyboardAvoidingView
-          style={baseStyles.containerSignIn}
-          behavior='padding'
-          keyboardVerticalOffset={50}
-        >
-          <Input
-            autoFocus
-            value={formState.inputValues.email}
-            onChangeText={inputChangeHandler.bind(this, 'email')}
-            label='User ID - your toolsinfoweb.co.uk email address'
-            containerStyle={baseStyles.viewInputContainerSignIn}
-            textInputStyle={baseStyles.textInputStyleSignIn}
-            labelStyle={baseStyles.textInputLabelSignIn}
-            required
-            email
-            autoCapitalize='none'
-            placeholder='e.g. janedoe@dtauto.co.uk'
-            leftIcon={{
-              type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'mail' : 'mail',
-              color: Colors.vwgDarkSkyBlue,
-              paddingRight: 10,
-              paddingTop: 4,
-            }}
-            keyboardType='email-address'
-            autoCorrect={false}
-            returnKeyType='next'
-            onSubmitEditing={(text) => console.log(text)}
-            errorStyle={{ color: Colors.errorText }}
-            errorText='The email you sign in to toolsinfoweb.co.uk with'
-          />
 
-          <Input
-            value={formState.inputValues.pin}
-            onChangeText={inputChangeHandler.bind(this, 'pin')}
-            label='Your Pocket Infoweb access PIN*'
-            labelStyle={baseStyles.textInputLabelSignIn}
-            containerStyle={baseStyles.viewInputContainerSignIn}
-            textInputStyle={baseStyles.textInputStyleSignIn}
-            required
-            maxLength={6}
-            placeholder='Six digits, e.g. 123456'
-            leftIcon={{
-              type: 'ionicon',
-              name: Platform.OS === 'ios' ? 'key' : 'key',
-              color: Colors.vwgDarkSkyBlue,
-              paddingRight: 10,
-            }}
-            keyboardType='numeric'
-            secureTextEntry
-            returnKeyType='done'
-            onSubmitEditing={(text) => console.log(text)}
-            errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
-            errorStyle={{ color: 'red' }}
-          />
+        <View>
           <View>
-            {isLoading ? (
-              <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
-            ) : (
-              <Button
-                title='Sign in'
-                disabled={formState.formIsValid ? false : true}
-                onPress={submitHandler}
-                buttonStyle={baseStyles.buttonSignIn}
-                titleStyle={baseStyles.buttonTextSignIn}
-                icon={
-                  <Ionicons
-                    name={Platform.OS === 'ios' ? 'log-in' : 'log-in'}
-                    color={Colors.vwgWhite}
-                    size={20}
-                    paddingTop={4}
-                    paddingRight={10}
-                  />
-                }
-              />
-            )}
-          </View>
+            <Text style={baseStyles.textInstructions}>
+              * To activate Pocket Infoweb you will need to generate an access
+              PIN for your User ID.
+            </Text>
 
-          <View>
-            <View>
-              <Text style={baseStyles.textInstructions}>
-                * To activate Pocket Infoweb you will need to generate an access
-                PIN for your User ID.
-              </Text>
-
-              <Button
-                title='Trouble signing in? Need a PIN?'
-                type='clear'
-                onPress={() => {
-                  props.navigation.navigate('ForgottenPassword');
-                }}
-                buttonStyle={{
-                  marginTop: 0,
-                }}
-                titleStyle={[{ ...baseStyles.textLink }]}
-              />
-            </View>
+            <Button
+              title='Trouble signing in? Need a PIN?'
+              type='clear'
+              onPress={() => {
+                props.navigation.navigate('ForgottenPassword');
+              }}
+              buttonStyle={{
+                marginTop: 0,
+              }}
+              titleStyle={[{ ...baseStyles.textLink }]}
+            />
           </View>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };
