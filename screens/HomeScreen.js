@@ -478,20 +478,22 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
-      alert(
+      console.log(
         'in Home useEffect 1, storing in state data' + JSON.stringify(data)
       );
       setPushDataObj(data);
     } else if (data && data.hasOwnProperty('dataError')) {
-      alert('in Home useEffect 1 dataError' + JSON.stringify(data));
+      console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
       setPushDataObj(data);
     } else {
-      alert('in Home useEffect 1 no data in state data' + JSON.stringify(data));
+      console.log(
+        'in Home useEffect 1 no data in state data' + JSON.stringify(data)
+      );
     }
   }); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    alert('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
+    console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj?.hasOwnProperty('dataError')) {
       console.log(
         'in Home pushDataObj.hasOwnProperty(dataError)' +
