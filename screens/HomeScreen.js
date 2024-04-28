@@ -524,7 +524,7 @@ export default HomeScreen = (props) => {
             .replace?.(/\s/g, '')
             .toUpperCase?.() ?? '';
         // setPushDataObj(null);
-        if (constantFromTargetSection?.AppSections.HOME) {
+        if (constantFromTargetSection === AppSections.HOME) {
           alert('in Home useEffect, e');
           //   navigation.navigate('Home');
         } else {
