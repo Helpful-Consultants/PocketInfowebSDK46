@@ -1043,11 +1043,15 @@ export default HomeScreen = (props) => {
               >
                 <Text style={baseStyles.textSignedIn}>
                   {userIsValidated
-                    ? `Signed in as ${userName}`
+                    ? userName
+                      ? `Signed in as ${userName}`
+                      : `Not signed-in properly`
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
                 <Text style={baseStyles.textSignedInSmall}>
-                  {userIsValidated ? `${dealerName}` : null}
+                  {userIsValidated && dealerName
+                    ? `${dealerName}`
+                    : 'No jobs can be shown till you are signed in'}
                 </Text>
               </View>
               <Touchable
