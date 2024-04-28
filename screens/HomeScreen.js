@@ -7,6 +7,7 @@ import { getPushDataObject } from 'native-notify';
 import getNavTargetObj from '../helpers/getNavTargetObj';
 import Constants from 'expo-constants';
 import { AppSections } from '../constants/AppParts';
+import { AppStoreBuildNumbers } from '../constants/AppVersions';
 // import * as Permissions from 'expo-permissions';
 import {
   ActivityIndicator,
@@ -78,10 +79,7 @@ export default HomeScreen = (props) => {
       ? Constants.expoConfig.name
       : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
-  const storeBuildNumberAndroidPro = 33; // it is a number
-  const storeBuildNumberAndroidExtra = 34; // it is a number
-  const storeBuildStringIOSPro = '133'; // it is a string
-  const storeBuildStringIOSExtra = '134'; // it is a string
+
   //   console.log(Constants);
   const buildNumber =
     Constants && Constants.expoConfig && appOS
@@ -101,17 +99,17 @@ export default HomeScreen = (props) => {
   const isUpdateNeeded = buildNumber
     ? appOS === 'ios'
       ? appEdition === 'extra'
-        ? buildNumber !== storeBuildStringIOSExtra // it is a string
+        ? buildNumber !== AppStoreBuildNumbers.IOS_EXTRA // it is a string
           ? true
           : false
-        : buildNumber !== storeBuildStringIOSPro
+        : buildNumber !== AppStoreBuildNumbers.IOS_PRO // it is a string
         ? true
         : false
       : appEdition === 'extra' // android
-      ? buildNumber !== storeBuildNumberAndroidExtra // it is a number
+      ? buildNumber !== AppStoreBuildNumbers.ANDROID_EXTRA // it is a number
         ? true
         : false
-      : buildNumber !== storeBuildNumberAndroidPro
+      : buildNumber !== AppStoreBuildNumbers.ANDROID_PRO // it is a number
       ? true
       : false
     : true;
@@ -698,7 +696,7 @@ export default HomeScreen = (props) => {
             }}
             onPress={openAppStore}
           >
-            Press here to update in app store
+            Press to update in app store
           </Text>
         ) : null}
 

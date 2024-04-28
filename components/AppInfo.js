@@ -8,7 +8,7 @@ import * as Device from 'expo-device';
 
 import * as Updates from 'expo-updates';
 import { useMediaQuery } from 'react-responsive';
-import appChangeInfoString from '../helpers/appChangeInfoString';
+import { APP_CHANGE_INFO_STRING } from '../constants/AppVersions';
 import { getShortDisplayDateAndTime } from '../helpers/dates';
 
 export default AppInfo = (props) => {
@@ -160,7 +160,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>{appChangeInfoString}</Text>
+      <Text style={baseStyles.panelTextAppInfo}>{APP_CHANGE_INFO_STRING}</Text>
     </View>
   );
 };
