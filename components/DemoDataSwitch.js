@@ -31,7 +31,7 @@ export default DemoDataSwitch = (props) => {
   //     'in switch reducer switchStatus',
   //     requestedDemoData,
   //     'for ',
-  //     userDataObj.userName.toLowerCase()
+  //     userDataObj?.userName.toLowerCase?.()
   //   );
   const toggleSwitch = () => {
     let tempSwitchStatus =
@@ -70,7 +70,7 @@ export default DemoDataSwitch = (props) => {
     );
   }, [requestedDemoData]);
 
-  return 1 == 2 && showingDemoApp && userDataObj && userDataObj.userName ? (
+  return 1 == 2 && showingDemoApp && userDataObj?.userName ? (
     userDataObj.userName.toLowerCase().indexOf('zzzlyndon') > -1 ||
     userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ||
     (userDataObj.userName.toLowerCase().indexOf('zzzsimon') > -1 &&
@@ -101,12 +101,12 @@ export default DemoDataSwitch = (props) => {
           </Text>
           <Text style={baseStyles.panelTextAppInfo}>
             {'(Special feature for '}
-            {userDataObj.userName && userDataObj.userName}
+            {userDataObj?.userName ?? ''}
             {')'}
           </Text>
         </View>
       </View>
-    ) : userDataObj.userName.toLowerCase().indexOf('zzzupstone') > -1 ? (
+    ) : userDataObj?.userName.toLowerCase?.().indexOf('zzzupstone') > -1 ? (
       <View
         style={{
           ...baseStyles.container,
