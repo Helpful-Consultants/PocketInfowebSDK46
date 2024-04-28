@@ -33,7 +33,7 @@
       }
     },
     "android": {
-      "versionCode": 34,
+      "versionCode": 36,
       "package": "com.helpfulconsultants.pocketinfowebpro",
       "googleServicesFile": "./google-services-pro.json",
       "permissions": [
