@@ -151,11 +151,12 @@ export default SignInScreen = (props) => {
           </Text>
         ) : null}
       </View>
-      <KeyboardAvoidingView
-        style={baseStyles.containerSignIn}
+      {/* <KeyboardAvoidingView
+        // style={baseStyles.containerSignIn}
         behavior='padding'
         keyboardVerticalOffset={50}
-      >
+      > */}
+      <View>
         <Input
           autoFocus
           value={formState.inputValues.email}
@@ -223,6 +224,7 @@ export default SignInScreen = (props) => {
                   size={20}
                   paddingTop={4}
                   paddingRight={10}
+                  urtyf1111
                 />
               }
             />
@@ -249,7 +251,8 @@ export default SignInScreen = (props) => {
             />
           </View>
         </View>
-      </KeyboardAvoidingView>
+      </View>
+      {/* </KeyboardAvoidingView> */}
     </View>
   );
 };
