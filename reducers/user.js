@@ -23,15 +23,22 @@ const INITIAL_STATE = {
 };
 
 export const selectFetchParamsObj = createSelector(
-  (state) => state.user.userData[0].dealerId,
+  (state) => state.user.userData,
   (state) => state.user.userBrand,
-  (state) => state.user.userData[0].intId,
 
-  (dealerId, userBrand, intId) => {
+  (userData, userBrand) => {
     return {
-      dealerId,
       userBrand,
-      userIntId: intId ? intId.toString() : '',
+      userIntId: userData
+        ? typeof userData[0].intid !== 'undefined'
+          ? userData[0].intId.toString()
+          : ''
+        : '',
+      dealerId: userData
+        ? typeof userData[0].dealerId !== 'undefined'
+          ? userData[0].dealerId.toString()
+          : ''
+        : '',
     };
     // console.log(
     //   '************** in selectFetchParamsObj',
