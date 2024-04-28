@@ -492,45 +492,39 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     alert('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
-    if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
+    if (pushDataObj?.hasOwnProperty('dataError')) {
       alert(
         'in Home pushDataObj.hasOwnProperty(dataError)' +
           JSON.stringify(pushDataObj)
       );
       navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj && pushDataObj.hasOwnProperty('targetScreen')) {
+    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
       alert(
         'in Home pushDataObj.hasOwnProperty(targetScreen)' +
           JSON.stringify(pushDataObj)
       );
-      const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
       alert('in Home after getNavTargetObj' + JSON.stringify(targetObj));
       if (
-        targetObj &&
-        targetObj.hasOwnProperty('targetScreen') &&
-        targetObj.hasOwnProperty('targetSection')
+        targetObj?.hasOwnProperty('targetScreen') &&
+        targetObj.targetScreen &&
+        targetObj?.hasOwnProperty('targetSection') &&
+        targetObj.targetSection
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        alert(
-          'in Home end of getPushDataObjFn targetObj: ' +
-            JSON.stringify(targetObj)
-        );
+        alert('in Home end targetObj: ' + JSON.stringify(targetObj));
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
         alert(
           'in Home useEffect, tempNotificationTarget',
           JSON.stringify(tempNotificationTarget)
         );
-        const constantFromTargetSection = tempNotificationTarget.targetSection
-          ? tempNotificationTarget.targetSection
-              .replace(/\s/g, '')
-              .toUpperCase()
-          : '';
+        const constantFromTargetSection =
+          tempNotificationTarget?.targetSection
+            .replace?.(/\s/g, '')
+            .toUpperCase?.() ?? '';
         // setPushDataObj(null);
-        if (
-          constantFromTargetSection &&
-          constantFromTargetSection === AppSections.HOME
-        ) {
+        if (constantFromTargetSection?.AppSections.HOME) {
           alert('in Home useEffect, e');
           //   navigation.navigate('Home');
         } else {
