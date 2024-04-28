@@ -11,15 +11,17 @@ const getNavTargetObj = (title) => {
   const constantFromPropsTitle = title?.replace(/\s/g, '').toUpperCase();
   alert('constantFromPropsTitle' + constantFromPropsTitle);
   // Get the corresponding app section from constants
-  const appSectionToUse = AppSectionsByScreen?.[constantFromPropsTitle] ?? null;
+  const appSectionToUse = AppSectionsByScreen?.[constantFromPropsTitle] ?? '';
   alert('appSectionToUse' + appSectionToUse);
   // Get the screen name from constants, defaulting to 'DEFAULT' if not found
   const titleToUse =
     ScreenNames?.[constantFromPropsTitle] ?? ScreenNames.DEFAULT;
 
   alert(
-    'in getNavTargetObj, constantFromPropsTitle' +
-      JSON.stringify(constantFromPropsTitle)
+    'in getNavTargetObj, titleToUse ' +
+      JSON.stringify(titleToUse) +
+      'appSectionToUse ' +
+      JSON.stringify(appSectionToUse)
   );
 
   const returnObj = {
