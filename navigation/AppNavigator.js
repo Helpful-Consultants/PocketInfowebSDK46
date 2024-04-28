@@ -346,7 +346,7 @@ export default AppNavigator = (props) => {
 
   return (
     <NavigationContainer>
-      <DrawerNavigator />
+      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
     </NavigationContainer>
   );
 };
