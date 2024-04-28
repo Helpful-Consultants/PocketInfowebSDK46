@@ -478,37 +478,54 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log('in Home useEffect 1, storing in state', 'data', data);
+      alert(
+        'in Home useEffect 1, storing in state',
+        'data',
+        JSON.stringify(data)
+      );
       setPushDataObj(data);
     } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in Home useEffect 1 dataError', 'data', data);
+      alert('in Home useEffect 1 dataError', 'data', JSON.stringify(data));
       setPushDataObj(data);
     } else {
-      alert('in Home useEffect 1 no data in state', 'data', data);
+      alert(
+        'in Home useEffect 1 no data in state',
+        'data',
+        JSON.stringify(data)
+      );
     }
   }); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    alert('in Home useEffect 2 pushDataObj', pushDataObj);
+    alert('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
-      alert('in Home pushDataObj.hasOwnProperty(dataError)', pushDataObj);
+      alert(
+        'in Home pushDataObj.hasOwnProperty(dataError)',
+        JSON.stringify(pushDataObj)
+      );
       navigation.navigate('NewsTabs', { screen: 'News' });
     } else if (pushDataObj && pushDataObj.hasOwnProperty('targetScreen')) {
-      alert('in Home pushDataObj.hasOwnProperty(targetScreen)', pushDataObj);
+      alert(
+        'in Home pushDataObj.hasOwnProperty(targetScreen)',
+        JSON.stringify(pushDataObj)
+      );
       const targetObj = getNavTargetObj(pushDataObj.targetScreen);
-      alert('in Home after getNavTargetObj', targetObj);
+      alert('in Home after getNavTargetObj', JSON.stringify(targetObj));
       if (
         targetObj &&
         targetObj.hasOwnProperty('targetScreen') &&
         targetObj.hasOwnProperty('targetSection')
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        alert('in in Home end of getPushDataObjFn targetObj: ', targetObj);
+        alert(
+          'in in Home end of getPushDataObjFn targetObj: ',
+          JSON.stringify(targetObj)
+        );
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
         alert(
           'in Home useEffect, tempNotificationTarget',
-          tempNotificationTarget
+          JSON.stringify(tempNotificationTarget)
         );
         const constantFromTargetSection = tempNotificationTarget.targetSection
           ? tempNotificationTarget.targetSection
@@ -516,21 +533,31 @@ export default HomeScreen = (props) => {
               .toUpperCase()
           : '';
         // setPushDataObj(null);
-        if (constantFromTargetSection === AppSections.HOME) {
+        if (
+          constantFromTargetSection &&
+          constantFromTargetSection === AppSections.HOME
+        ) {
           alert('in Home useEffect, e');
           //   navigation.navigate('Home');
         } else {
+          alert(
+            'in Home useEffect ready to navigate to',
+            JSON.stringify(tempNotificationTarget)
+          );
           //   navigation.navigate(tempNotificationTarget.targetSection, {
           //     screen: tempNotificationTarget.targetScreen,
           //   });
         }
         // setPushDataObj(data);
       } else {
-        alert('in Home Target object is not useable.', targetObj);
+        alert(
+          'in Home Target object is not useable.',
+          JSON.stringify(targetObj)
+        );
       }
     }
     if (pushDataObj != null) {
-      alert('in Home at zz', pushDataObj);
+      alert('in Home at zz', JSON.stringify(pushDataObj));
     }
   }, [pushDataObj]); // stops it looping
 
