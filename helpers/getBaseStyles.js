@@ -320,7 +320,7 @@ export default getBaseStyles = (props) => {
     },
     containerSignIn: {
       marginHorizontal: paddingSize,
-      flex: 1,
+      //   flex: 1,
     },
     // LtpListScreen
     containerFlexAndMargin: {
