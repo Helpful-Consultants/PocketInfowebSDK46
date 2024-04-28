@@ -5,4 +5,4 @@ export const AppStoreBuildNumbers = {
   IOS_EXTRA: '141', // it is a string
 };
 
-export const APP_CHANGE_INFO_STRING = 'Changes: Notifications 10';
+export const APP_CHANGE_INFO_STRING = 'Changes: Notifications 11';

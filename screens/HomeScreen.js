@@ -478,35 +478,35 @@ export default HomeScreen = (props) => {
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
-      console.log(
-        'in Home useEffect 1, storing in state data' + JSON.stringify(data)
-      );
+      //   console.log(
+      //     'in Home useEffect 1, storing in state data' + JSON.stringify(data)
+      //   );
       setPushDataObj(data);
     } else if (data && data.hasOwnProperty('dataError')) {
-      console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
+      //   console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
       setPushDataObj(data);
-    } else {
-      console.log(
-        'in Home useEffect 1 no data in state data' + JSON.stringify(data)
-      );
+      // } else {
+      //   console.log(
+      //     'in Home useEffect 1 no data in state data' + JSON.stringify(data)
+      //   );
     }
   }); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
+    // console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj?.hasOwnProperty('dataError')) {
-      console.log(
-        'in Home pushDataObj.hasOwnProperty(dataError)' +
-          JSON.stringify(pushDataObj)
-      );
+      //   console.log(
+      //     'in Home pushDataObj.hasOwnProperty(dataError)' +
+      //       JSON.stringify(pushDataObj)
+      //   );
       navigation.navigate('NewsTabs', { screen: 'News' });
     } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      console.log(
-        'in Home pushDataObj.hasOwnProperty(targetScreen)' +
-          JSON.stringify(pushDataObj)
-      );
+      //   console.log(
+      //     'in Home pushDataObj.hasOwnProperty(targetScreen)' +
+      //       JSON.stringify(pushDataObj)
+      //   );
       const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
+      //   console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
       if (
         targetObj?.hasOwnProperty('targetScreen') &&
         targetObj.targetScreen &&
@@ -514,40 +514,40 @@ export default HomeScreen = (props) => {
         targetObj.targetSection
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
+        // console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
-        console.log(
-          'in Home useEffect, tempNotificationTarget',
-          JSON.stringify(tempNotificationTarget)
-        );
+        // console.log(
+        //   'in Home useEffect, tempNotificationTarget',
+        //   JSON.stringify(tempNotificationTarget)
+        // );
         const constantFromTargetSection =
           tempNotificationTarget?.targetSection
             .replace?.(/\s/g, '')
             .toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
-          console.log('in Home useEffect, e');
+          //   console.log('in Home useEffect, e');
           navigation.navigate('Home');
         } else {
-          console.log(
-            'in Home useEffect ready to navigate to' +
-              JSON.stringify(tempNotificationTarget)
-          );
+          //   console.log(
+          //     'in Home useEffect ready to navigate to' +
+          //       JSON.stringify(tempNotificationTarget)
+          //   );
           navigation.navigate(tempNotificationTarget.targetSection, {
             screen: tempNotificationTarget.targetScreen,
           });
         }
         // setPushDataObj(data);
-      } else {
-        console.log(
-          'in Home Target object is not useable.' + JSON.stringify(targetObj)
-        );
+        //   } else {
+        //     console.log(
+        //       'in Home Target object is not useable.' + JSON.stringify(targetObj)
+        //     );
       }
     }
-    if (pushDataObj != null) {
-      console.log('in Home at zz' + JSON.stringify(pushDataObj));
-    }
+    // if (pushDataObj != null) {
+    //   console.log('in Home at zz' + JSON.stringify(pushDataObj));
+    // }
   }, [pushDataObj]); // stops it looping
 
   useEffect(() => {

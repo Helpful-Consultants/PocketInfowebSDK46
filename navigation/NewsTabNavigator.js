@@ -93,69 +93,76 @@ export default NewsTabNavigator = ({ navigation, route }) => {
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log('in NewsNav useEffect 1, storing in state', 'data', data);
+      //   console.log(
+      //     'in Home useEffect 1, storing in state data' + JSON.stringify(data)
+      //   );
       setPushDataObj(data);
     } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in NewsNav useEffect 1 dataError', 'data', data);
+      //   console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
       setPushDataObj(data);
-    } else {
-      //   console.log('in NewsNav useEffect 1 no data in state', 'data', data);
+      // } else {
+      //   console.log(
+      //     'in Home useEffect 1 no data in state data' + JSON.stringify(data)
+      //   );
     }
   }); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    // console.log('in NewsNav useEffect 2 pushDataObj', pushDataObj);
-    if (pushDataObj && pushDataObj.hasOwnProperty('dataError')) {
+    // console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
+    if (pushDataObj?.hasOwnProperty('dataError')) {
       //   console.log(
-      //     'in NewsNav pushDataObj.hasOwnProperty(dataError)',
-      //     pushDataObj
+      //     'in Home pushDataObj.hasOwnProperty(dataError)' +
+      //       JSON.stringify(pushDataObj)
       //   );
       navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj && pushDataObj.hasOwnProperty('targetScreen')) {
+    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
       //   console.log(
-      //     'in NewsNav pushDataObj.hasOwnProperty(targetScreen)',
-      //     pushDataObj
+      //     'in Home pushDataObj.hasOwnProperty(targetScreen)' +
+      //       JSON.stringify(pushDataObj)
       //   );
-      const targetObj = getNavTargetObj(pushDataObj.targetScreen);
-      //   console.log('in NewsNav after getNavTargetObj', targetObj);
+      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
+      //   console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
       if (
-        targetObj &&
-        targetObj.hasOwnProperty('targetScreen') &&
-        targetObj.hasOwnProperty('targetSection')
+        targetObj?.hasOwnProperty('targetScreen') &&
+        targetObj.targetScreen &&
+        targetObj?.hasOwnProperty('targetSection') &&
+        targetObj.targetSection
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        // console.log(
-        //   'in NewsNav end of getPushDataObjFn targetObj: ',
-        //   targetObj
-        // );
+        // console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
         // console.log(
-        //   'in NewsNav useEffect, tempNotificationTarget',
-        //   tempNotificationTarget
+        //   'in Home useEffect, tempNotificationTarget',
+        //   JSON.stringify(tempNotificationTarget)
         // );
-        const constantFromTargetSection = tempNotificationTarget.targetSection
-          ? tempNotificationTarget.targetSection
-              .replace(/\s/g, '')
-              .toUpperCase()
-          : '';
+        const constantFromTargetSection =
+          tempNotificationTarget?.targetSection
+            .replace?.(/\s/g, '')
+            .toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in NewsNav useEffect, e');
+          //   console.log('in Home useEffect, e');
           navigation.navigate('Home');
         } else {
+          //   console.log(
+          //     'in Home useEffect ready to navigate to' +
+          //       JSON.stringify(tempNotificationTarget)
+          //   );
           navigation.navigate(tempNotificationTarget.targetSection, {
             screen: tempNotificationTarget.targetScreen,
           });
         }
         // setPushDataObj(data);
-      } else {
-        // console.log('in NewsNav Target object is not useable.', targetObj);
+        //   } else {
+        //     console.log(
+        //       'in Home Target object is not useable.' + JSON.stringify(targetObj)
+        //     );
       }
     }
-    if (pushDataObj != null) {
-      //   console.log('in NewsNav at zz', pushDataObj);
-    }
+    // if (pushDataObj != null) {
+    //   console.log('in Home at zz' + JSON.stringify(pushDataObj));
+    // }
   }, [pushDataObj]); // stops it looping
 
   useEffect(() => {

@@ -41,7 +41,6 @@ import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
 import { setBadgeCountAsync } from '../helpers/appBadge';
-import getNavTargetObj from '../helpers/getNavTargetObj';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
