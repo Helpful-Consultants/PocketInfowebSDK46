@@ -1,4 +1,4 @@
-const appChangeInfoString = 'Changes: SDK 50 N';
+const appChangeInfoString = 'Changes: SDK 50 N KB';
 
 // const getAppInfo = () => {
 //   //   console.log(objArr.length, key, order);
