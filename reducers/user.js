@@ -30,7 +30,7 @@ export const selectFetchParamsObj = createSelector(
     return {
       userBrand,
       userIntId: userData
-        ? typeof userData[0].intid !== 'undefined'
+        ? typeof userData[0].intId !== 'undefined'
           ? userData[0].intId.toString()
           : ''
         : '',
