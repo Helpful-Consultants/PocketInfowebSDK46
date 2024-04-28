@@ -149,9 +149,7 @@ export default JobsScreen = (props) => {
   //   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log(items);
   let itemsToShow =
-    searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : userWipsItems;
+    searchInput?.length > minSearchLength ? filteredItems : userWipsItems;
   //   console.log(itemsToShow);
   //   console.log(
   //     'JOBS *****  Rendering Jobs screen ',
