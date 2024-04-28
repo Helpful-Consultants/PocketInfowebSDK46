@@ -584,10 +584,12 @@ export default FindToolsScreen = (props) => {
       //   console.log(
       //     'in findtools useffect to create booked tools list YES running code'
       //   );
-      if (dealerWipsItems && dealerWipsItems.length > 0) {
+      if (dealerWipsItems?.length > 0) {
         dealerWipsItems.forEach((wip) => {
-          if (wip.tools && wip.tools.length > 0) {
-            wip.tools.forEach((tool) => bookedToolsList.push(tool.tools_id));
+          if (wip.tools?.length > 0) {
+            wip.tools.forEach(
+              (tool) => tool.tools_id ?? bookedToolsList.push(tool.tools_id)
+            );
           }
         });
       }
@@ -668,7 +670,7 @@ export default FindToolsScreen = (props) => {
       //     dealerToolsFetchTime,
       //     dealerWipsFetchTime
       //   );
-      let concatItems = dealerToolsItems.concat(uniqueLtpItems);
+      let concatItems = dealerToolsItems?.concat?.(uniqueLtpItems) ?? [];
       setCombinedItems(concatItems);
     } else {
       //   console.log(
@@ -682,8 +684,8 @@ export default FindToolsScreen = (props) => {
 
   let itemsToShow =
     searchInput && searchInput.length > minSearchLength
-      ? filteredItems.slice(0, 100)
-      : combinedItems.slice(0, 100);
+      ? filteredItems?.slice(0, 100) ?? []
+      : combinedItems?.slice(0, 100) ?? [];
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: { wipNumber: '' },

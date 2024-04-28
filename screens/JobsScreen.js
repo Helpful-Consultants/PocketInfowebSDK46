@@ -144,7 +144,7 @@ export default JobsScreen = (props) => {
     }, [getItems])
   );
 
-  const dataCount = (userWipsItems && userWipsItems.length) || 0;
+  const dataCount = userWipsItems?.length || 0;
   //   console.log(userWipsItems);
   //   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log(items);
