@@ -53,7 +53,7 @@ export const setUserRequestedDemoData = ({ requestedDemoData }) => ({
 export const setUserRequestedDemoApp = ({ showDemoApp }) => ({
   type: Types.SET_USER_REQUESTED_DEMO_APP,
   payload: {
-    showDemoApp: showDemoApp,
+    showDemoApp,
     fish: 'cake',
   },
 });

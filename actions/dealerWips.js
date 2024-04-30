@@ -59,7 +59,7 @@ export const deleteDealerWipToolRequest = (payload) => {
   //   console.log(payload);
   return {
     type: Types.DELETE_DEALER_WIP_TOOL_REQUEST,
-    payload: payload,
+    payload,
   };
 };
 

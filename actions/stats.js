@@ -12,7 +12,7 @@ export const getStatsStart = () => ({
 export const getStatsRequest = ({ dealerId }) => ({
   type: Types.GET_STATS_REQUEST,
   payload: {
-    dealerId: dealerId,
+    dealerId,
   },
 });
 

@@ -19,7 +19,7 @@ export const setOdisDisplayTimestamp = (displayTime) => ({
 export const getOdisRequest = ({ userBrand }) => ({
   type: Types.GET_ODIS_REQUEST,
   payload: {
-    userBrand: userBrand,
+    userBrand,
   },
 });
 
