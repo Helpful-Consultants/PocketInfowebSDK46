@@ -8,7 +8,8 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "jest": {
     "preset": "jest-expo"
@@ -98,9 +99,16 @@
     "@babel/code-frame": "^7.24.2",
     "@babel/core": "^7.24.4",
     "@types/react": "~18.2.74",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
     "babel-preset-expo": "^10.0.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-config-universe": "^12.0.1",
+    "eslint-plugin-import": "^2.29.1",
     "jest": "^29.7.0",
     "jest-expo": "~50.0.4",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.3"
   },
   "resolutions": {},
@@ -108,5 +116,8 @@
     "@rneui/themed": {
       "@rneui/base": "4.0.0-rc.8"
     }
+  },
+  "eslintConfig": {
+    "extends": "universe/native"
   }
 }
