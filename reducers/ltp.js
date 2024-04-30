@@ -38,25 +38,6 @@ export const selectSortedUniqueLtpTools = createSelector(
   }
 );
 
-// export const selectSortedUniqueLtpTools = createSelector(
-//   (state) => state.ltp.ltpItems || [],
-
-//   //   (ltpItems) =>
-//   //     ltpItems.filter(
-//   //       (item, index, self) =>
-//   //         index === self.findIndex((t) => t.orderPartNo === item.orderPartNo)
-//   //       )
-//   (ltpItems) => {
-//     let uniqueLtpItems = getSortedUniqueLtpItems(ltpItems);
-//     // console.log(
-//     //   'in selectSortedUniqueLtpTools ',
-//     //   ltpItems.length,
-//     //   uniqueLtpItems.length
-//     // );
-//     return uniqueLtpItems;
-//   }
-// );
-
 export default function ltp(state = INITIAL_STATE, action) {
   //   console.log(Types);
   //   console.log('action.type is:', action.type);
