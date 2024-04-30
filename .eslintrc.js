@@ -2,15 +2,16 @@ module.exports = {
   extends: ['universe/native'],
   plugins: ['prettier', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
-    eqeqeq: 'error',
+    // eqeqeq: 'error',
     'no-console': 'warn',
     'prettier/prettier': 'error',
     'react/display-name': 'off',
     'react/no-children-prop': 'off',
     // if you use React 17+; otherwise, turn this on
-    'react/react-in-jsx-scope': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   parserOptions: {
     ecmaVersion: 6,
