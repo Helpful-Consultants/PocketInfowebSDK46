@@ -1,55 +1,40 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useFocusEffect } from '@react-navigation/native';
-import * as Updates from 'expo-updates';
-import * as Notifications from 'expo-notifications';
-import { getPushDataObject } from 'native-notify';
-import getNavTargetObj from '../helpers/getNavTargetObj';
-import Constants from 'expo-constants';
-import { AppSections } from '../constants/AppParts';
-import { AppStoreBuildNumbers } from '../constants/AppVersions';
 // import * as Permissions from 'expo-permissions';
-import {
-  ActivityIndicator,
-  Linking,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
 // import { useSafeArea } from 'react-native-safe-area-context';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
+import { Text } from '@rneui/themed';
+import { differenceInMinutes } from 'date-fns';
+import Constants from 'expo-constants';
+// import * as Notifications from 'expo-notifications';
+import * as Updates from 'expo-updates';
+import { getPushDataObject } from 'native-notify';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Linking, Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import Touchable from 'react-native-platform-touchable';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import { differenceInMinutes } from 'date-fns';
-import AppNameWithLogo from '../components/AppNameWithLogo';
-import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
-import BadgedText from '../components/BadgedText';
-import Colors from '../constants/Colors';
-import {
-  getUserRequest,
-  revalidateUserCredentials,
-  signOutUserRequest,
-} from '../actions/user';
-import { getOdisRequest } from '../actions/odis';
-import { emptyDealerToolsRequest } from '../actions/dealerTools';
-import {
-  getDealerWipsRequest,
-  emptyDealerWipsRequest,
-} from '../actions/dealerWips';
-import { getNewsRequest } from '../actions/news';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
-import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import { emptyDealerToolsRequest } from '../actions/dealerTools';
+import { getDealerWipsRequest, emptyDealerWipsRequest } from '../actions/dealerWips';
 import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
-import { selectFetchParamsObj } from '../reducers/user';
+import { getNewsRequest } from '../actions/news';
+import { getOdisRequest } from '../actions/odis';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import { getUserRequest, revalidateUserCredentials, signOutUserRequest } from '../actions/user';
+import AppNameWithLogo from '../components/AppNameWithLogo';
+import BadgedText from '../components/BadgedText';
+import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
+import { AppSections } from '../constants/AppParts';
+import { AppStoreBuildNumbers } from '../constants/AppVersions';
+import Colors from '../constants/Colors';
+import getBaseStyles from '../helpers/getBaseStyles';
+import getNavTargetObj from '../helpers/getNavTargetObj';
 // import { setUserRequestedDemoApp } from '../actions/user';
-import {
-  selectBookedOutToolsForUser,
-  selectDealerWipsForUser,
-} from '../reducers/dealerWips';
+import { selectBookedOutToolsForUser, selectDealerWipsForUser } from '../reducers/dealerWips';
+// import { selectFetchParamsObj } from '../reducers/user';
 
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
@@ -59,25 +44,18 @@ const buttonTextColor = Colors.vwgWhite;
 // var gridCellHeight = PixelRatio.getPixelSizeForLayoutSize(200);
 // var gridCellWidth = PixelRatio.getPixelSizeForLayoutSize(200);
 // console.log(screenHeight, screenWidth);
-var iconSize = RFPercentage(5);
+const iconSize = RFPercentage(5);
 
-export default HomeScreen = (props) => {
+const HomeScreen = (props) => {
   const dispatch = useDispatch();
   //   const navigation = useNavigation();
 
   const { navigation } = props;
   const insets = useSafeAreaInsets();
   //   console.log('Constants', Constants);
-  const appOS =
-    Platform && Platform.OS
-      ? Platform.OS === 'ios'
-        ? 'ios'
-        : 'android'
-      : null;
+  const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
   const appName =
-    Constants && Constants.expoConfig && Constants.expoConfig.name
-      ? Constants.expoConfig.name
-      : 'Test app';
+    Constants && Constants.expoConfig && Constants.expoConfig.name ? Constants.expoConfig.name : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
 
   //   console.log(Constants);
@@ -87,10 +65,9 @@ export default HomeScreen = (props) => {
         ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : Constants.expoConfig.android &&
-          Constants.expoConfig.android.versionCode
-        ? Constants.expoConfig.android.versionCode
-        : null
+        : Constants.expoConfig.android && Constants.expoConfig.android.versionCode
+          ? Constants.expoConfig.android.versionCode
+          : null
       : null;
 
   //   console.log('^^^^^^^^buildNumber is', buildNumber);
@@ -99,19 +76,11 @@ export default HomeScreen = (props) => {
   const isUpdateNeeded = buildNumber
     ? appOS === 'ios'
       ? appEdition === 'extra'
-        ? buildNumber !== AppStoreBuildNumbers.IOS_EXTRA // it is a string
-          ? true
-          : false
-        : buildNumber !== AppStoreBuildNumbers.IOS_PRO // it is a string
-        ? true
-        : false
+        ? buildNumber !== AppStoreBuildNumbers.IOS_EXTRA
+        : buildNumber !== AppStoreBuildNumbers.IOS_PRO
       : appEdition === 'extra' // android
-      ? buildNumber !== AppStoreBuildNumbers.ANDROID_EXTRA // it is a number
-        ? true
-        : false
-      : buildNumber !== AppStoreBuildNumbers.ANDROID_PRO // it is a number
-      ? true
-      : false
+        ? buildNumber !== AppStoreBuildNumbers.ANDROID_EXTRA
+        : buildNumber !== AppStoreBuildNumbers.ANDROID_PRO
     : true;
   //   const isUpdateNeeded = false;
 
@@ -126,26 +95,24 @@ export default HomeScreen = (props) => {
   //const crashMe = CrashObj;
 
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
-  const userError = useSelector((state) => state.user.error);
+  //   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
   //   console.log('IN HOME !!!!! 1f');
-  const userIntId = useSelector((state) => state.user.userIntId);
+  //   const userIntId = useSelector((state) => state.user.userIntId);
   //   const notificationTarget = useSelector(
   //     (state) => state.user.notificationTarget
   //   );
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const showingDemoApp = false;
-  const showingUpdateAppPrompt = true;
+  //   const showingUpdateAppPrompt = true;
 
   //   console.log('IN HOME !!!!! 1g');
 
   //   const userPin = useSelector((state) => state.user.userPin);
   //   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
-  const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const unseenCriticalNews = useSelector(
-    (state) => state.news.unseenCriticalNews
-  );
+  //   const fetchParamsObj = useSelector(selectFetchParamsObj);
+  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
   const userBookedOutTools = useSelector(selectBookedOutToolsForUser);
   const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
@@ -154,32 +121,19 @@ export default HomeScreen = (props) => {
   const isLoadingNews = useSelector((state) => state.news.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
   const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
-  const isLoadingCalibrationExpiry = useSelector(
-    (state) => state.calibrationExpiry.isLoading
-  );
-  const serviceMeasuresRedCount = useSelector(
-    (state) => state.serviceMeasures.redCount
-  );
-  const serviceMeasuresAmberCount = useSelector(
-    (state) => state.serviceMeasures.amberCount
-  );
-  const calibrationExpiryRedCount = useSelector(
-    (state) => state.calibrationExpiry.redCount
-  );
-  const calibrationExpiryAmberCount = useSelector(
-    (state) => state.calibrationExpiry.amberCount
-  );
+  const isLoadingCalibrationExpiry = useSelector((state) => state.calibrationExpiry.isLoading);
+  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
+  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
+  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
+  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const odisChangesToHighlight = useSelector(
-    (state) => state.odis.changesToHighlight
-  );
+  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
   const odisRedCount = useSelector((state) => state.odis.redCount);
   const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
   const [notificationsRedCount, setNotificationsRedCount] = useState(0);
   const [notificationsAmberCount, setNotificationsAmberCount] = useState(0);
-  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] =
-    useState(0);
+  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] = useState(0);
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
   const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
@@ -199,11 +153,7 @@ export default HomeScreen = (props) => {
 
   const getAllItems = useCallback(
     (fetchParamsObj) => {
-      if (
-        fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        fetchParamsObj.userIntId
-      ) {
+      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
         dispatch(
           getUserRequest({
             userIntId: fetchParamsObj.userIntId,
@@ -218,19 +168,15 @@ export default HomeScreen = (props) => {
         dispatch(getLtpRequest(fetchParamsObj));
       }
     },
-    [fetchParamsObj]
+    [dispatch]
   );
   const getLtpItems = useCallback(
     (fetchParamsObj) => {
-      if (
-        fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        fetchParamsObj.userIntId
-      ) {
+      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
         dispatch(getLtpRequest(fetchParamsObj));
       }
     },
-    [fetchParamsObj]
+    [dispatch]
   );
   //   const getPushDataObjFn = async () => {
   //     console.log('in getPushDataObjFn');
@@ -283,7 +229,7 @@ export default HomeScreen = (props) => {
     //   fetchParamsObj && fetchParamsObj.userIntId
     // );
     getLtpItems();
-  }, [fetchParamsObj]);
+  }, [getLtpItems]);
 
   useEffect(() => {
     if (
@@ -309,7 +255,7 @@ export default HomeScreen = (props) => {
     isLoadingLtp,
   ]);
 
-  const getUpdatesAsync = async () => {
+  const getUpdatesAsync = useCallback(async () => {
     //   console.log('in home screen getUpdatesAsync');
     try {
       // const update = await Updates.checkForUpdateAsync(listener(event));
@@ -332,41 +278,7 @@ export default HomeScreen = (props) => {
       setIsUpdatingAppVersion(false);
       //   console.log('updateAvailable error', e);
     }
-  };
-
-  const checkAppUpdates = () => {
-    const now = Date.now();
-    // console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-    // console.log(
-    //   'in checkAppUpdates now',
-    //   now,
-    //   'time checked',
-    //   timeCheckedAppVersion,
-    //   differenceInMinutes(now, timeCheckedAppVersion)
-    // );
-    if (timeCheckedAppVersion) {
-      setShouldCheckAppVersion(true);
-
-      if (differenceInMinutes(now, timeCheckedAppVersion) > 10) {
-        setTimeCheckedAppVersion(now);
-        setIsCheckingAppVersion(true);
-        getUpdatesAsync();
-      } else {
-        setIsCheckingAppVersion(false);
-        dispatch(revalidateUserCredentials('HomeScreen'));
-        getAllItems();
-      }
-    } else {
-      //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
-      //   console.log('timeCheckedAppVersion now', now);
-      setTimeCheckedAppVersion(now);
-      //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
-      setIsCheckingAppVersion(true);
-      //   console.log('isCheckingAppVersion', isCheckingAppVersion);
-      //   console.log('calling getUpdatesAsync');
-      getUpdatesAsync();
-    }
-  };
+  });
 
   const requestSignOutHandler = useCallback(() => {
     // console.log('in homescreen requestSignOutHandler');
@@ -377,7 +289,7 @@ export default HomeScreen = (props) => {
     dispatch(emptyLtpRequest());
     dispatch(signOutUserRequest({ calledBy: 'HomeScreen' }));
     // navigation.navigate('AuthLoading');
-  });
+  }, [dispatch]);
 
   //   console.log('IN HOME !!!!!  5');
 
@@ -424,28 +336,19 @@ export default HomeScreen = (props) => {
   const gridRows = 8;
 
   const openAppStore = () => {
-    const androidAppLinkPro =
-      'market://details?id=com.helpfulconsultants.pocketinfowebpro';
-    const androidAppLinkExtra =
-      'market://details?id=com.helpfulconsultants.pocketinfowebextra';
-    const iosAppLinkPro =
-      'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
-    const iosAppLinkExtra =
-      'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-    const appOS =
-      Platform && Platform.OS
-        ? Platform.OS === 'ios'
-          ? 'ios'
-          : 'android'
-        : null;
+    const androidAppLinkPro = 'market://details?id=com.helpfulconsultants.pocketinfowebpro';
+    const androidAppLinkExtra = 'market://details?id=com.helpfulconsultants.pocketinfowebextra';
+    const iosAppLinkPro = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
+    const iosAppLinkExtra = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
+    const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
     const appLink =
       appOS === 'ios'
         ? appEdition === 'extra'
           ? iosAppLinkExtra
           : iosAppLinkPro
         : appEdition === 'extra'
-        ? androidAppLinkExtra
-        : androidAppLinkPro;
+          ? androidAppLinkExtra
+          : androidAppLinkPro;
     // console.log('appOS is', appOS);
     // console.log('appLink is', appLink);
 
@@ -458,23 +361,24 @@ export default HomeScreen = (props) => {
     );
   };
 
-  const getPushDataObjFn = async () => {
-    // console.log('in Home in getPushDataObjFn');
+  const getPushDataObjFn = useCallback(async () => {
+    // console.log('in NewsNav in getPushDataObjFn');
     // let data = {};
     try {
-      data = await getPushDataObject();
-      //   console.log('in Home getPushDataObjFn finished', data);
+      const fetchedData = await getPushDataObject();
+      //   console.log('in NewsNav getPushDataObjFn finished', data);
       //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
       //     setPushDataTargetScreen(pushDataObj.targetScreen);
       //   }
+      return fetchedData;
     } catch (err) {
-      //   console.log('in Home getPushDataObjFn err', err);
+      console.log('in NewsNav getPushDataObjFn err', err);
+      return {};
     }
-    // console.log('in Home end of getPushDataObjFn', data);
-  };
+    // console.log('in NewsNav end of getPushDataObjFn', data);
+  }, []);
   // let data = getPushDataObject();
-  let data = {};
-  getPushDataObjFn();
+  const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
@@ -490,7 +394,7 @@ export default HomeScreen = (props) => {
       //     'in Home useEffect 1 no data in state data' + JSON.stringify(data)
       //   );
     }
-  }); // must not have any dependency on pushDataObj
+  }, [data]); // must not have any dependency on pushDataObj
 
   useEffect(() => {
     // console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
@@ -522,9 +426,7 @@ export default HomeScreen = (props) => {
         //   JSON.stringify(tempNotificationTarget)
         // );
         const constantFromTargetSection =
-          tempNotificationTarget?.targetSection
-            .replace?.(/\s/g, '')
-            .toUpperCase?.() ?? '';
+          tempNotificationTarget?.targetSection.replace?.(/\s/g, '').toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
           //   console.log('in Home useEffect, e');
@@ -548,7 +450,7 @@ export default HomeScreen = (props) => {
     // if (pushDataObj != null) {
     //   console.log('in Home at zz' + JSON.stringify(pushDataObj));
     // }
-  }, [pushDataObj]); // stops it looping
+  }, [pushDataObj, navigation]); // stops it looping
 
   useEffect(() => {
     //   console.log(
@@ -556,21 +458,13 @@ export default HomeScreen = (props) => {
     //     ltpLoansAmberCount,
     //     ltpLoansRedCount
     //   );
-    const tempNotifiableOdisRedCount =
-      typeof odisRedCount === 'number' && odisRedCount > 0 ? 1 : 0;
+    const tempNotifiableOdisRedCount = typeof odisRedCount === 'number' && odisRedCount > 0 ? 1 : 0;
     const tempNotifiableCalibrationExpiryRedCount =
-      typeof calibrationExpiryRedCount === 'number' &&
-      calibrationExpiryRedCount > 0
-        ? calibrationExpiryRedCount
-        : 0;
+      typeof calibrationExpiryRedCount === 'number' && calibrationExpiryRedCount > 0 ? calibrationExpiryRedCount : 0;
     const tempNotifiableServiceMeasuresRedCount =
-      typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0
-        ? serviceMeasuresRedCount
-        : 0;
+      typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0 ? serviceMeasuresRedCount : 0;
     const tempNotifiableLtpLoansRedCount =
-      typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0
-        ? ltpLoansRedCount
-        : 0;
+      typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0 ? ltpLoansRedCount : 0;
 
     setNotificationsRedCount(
       tempNotifiableOdisRedCount +
@@ -580,20 +474,14 @@ export default HomeScreen = (props) => {
     );
 
     const tempNotifiableCalibrationExpiryAmberCount =
-      typeof calibrationExpiryAmberCount === 'number' &&
-      calibrationExpiryAmberCount > 0
+      typeof calibrationExpiryAmberCount === 'number' && calibrationExpiryAmberCount > 0
         ? calibrationExpiryAmberCount
         : 0;
     const tempNotifiableLtpLoansAmberCount =
-      typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0
-        ? ltpLoansAmberCount
-        : 0;
+      typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0 ? ltpLoansAmberCount : 0;
 
     const tempNotifiableServiceMeasuresAmberCount =
-      typeof serviceMeasuresAmberCount === 'number' &&
-      serviceMeasuresAmberCount > 0
-        ? serviceMeasuresAmberCount
-        : 0;
+      typeof serviceMeasuresAmberCount === 'number' && serviceMeasuresAmberCount > 0 ? serviceMeasuresAmberCount : 0;
     setNotificationsAmberCount(
       tempNotifiableCalibrationExpiryAmberCount +
         tempNotifiableLtpLoansAmberCount +
@@ -608,9 +496,7 @@ export default HomeScreen = (props) => {
         tempNotifiableLtpLoansAmberCount +
         tempNotifiableServiceMeasuresAmberCount
     );
-    setLtpLoansTotalAlertCount(
-      tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount
-    );
+    setLtpLoansTotalAlertCount(tempNotifiableLtpLoansRedCount + tempNotifiableLtpLoansAmberCount);
   }, [
     calibrationExpiryRedCount,
     calibrationExpiryAmberCount,
@@ -629,7 +515,39 @@ export default HomeScreen = (props) => {
       //     setSearchInput('');
       //   }
       //   console.log('in home useFocusEffect');
+      const checkAppUpdates = () => {
+        const now = Date.now();
+        // console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+        // console.log(
+        //   'in checkAppUpdates now',
+        //   now,
+        //   'time checked',
+        //   timeCheckedAppVersion,
+        //   differenceInMinutes(now, timeCheckedAppVersion)
+        // );
+        if (timeCheckedAppVersion) {
+          setShouldCheckAppVersion(true);
 
+          if (differenceInMinutes(now, timeCheckedAppVersion) > 10) {
+            setTimeCheckedAppVersion(now);
+            setIsCheckingAppVersion(true);
+            getUpdatesAsync();
+          } else {
+            setIsCheckingAppVersion(false);
+            dispatch(revalidateUserCredentials('HomeScreen'));
+            getAllItems();
+          }
+        } else {
+          //   console.log('no timeCheckedAppVersion', timeCheckedAppVersion);
+          //   console.log('timeCheckedAppVersion now', now);
+          setTimeCheckedAppVersion(now);
+          //   console.log('timeCheckedAppVersion', timeCheckedAppVersion);
+          setIsCheckingAppVersion(true);
+          //   console.log('isCheckingAppVersion', isCheckingAppVersion);
+          //   console.log('calling getUpdatesAsync');
+          getUpdatesAsync();
+        }
+      };
       getAllItems();
       checkAppUpdates();
       if (__DEV__) {
@@ -641,7 +559,7 @@ export default HomeScreen = (props) => {
         setShouldCheckAppVersion(true);
         checkAppUpdates();
       }
-    }, [getAllItems])
+    }, [getAllItems, dispatch, getUpdatesAsync, timeCheckedAppVersion])
   );
 
   //   useEffect(() => {
@@ -713,10 +631,8 @@ export default HomeScreen = (props) => {
         <View style={baseStyles.containerFlexCentredJustfiedGrow}>
           {showReloadDialogue === true ? (
             <View>
-              <Text style={baseStyles.textSmall}>
-                There is a new version of this app.
-              </Text>
-              <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
+              <Text style={baseStyles.textSmall}>There is a new version of this app.</Text>
+              <ActivityIndicator size="large" color={Colors.vwgDeepBlue} />
 
               <Text style={baseStyles.textSmall}>Updating...</Text>
             </View>
@@ -731,13 +647,9 @@ export default HomeScreen = (props) => {
                 {shouldCheckAppVersion ? (
                   //prod mode
                   isCheckingAppVersion ? (
-                    <Text style={baseStyles.textSmallColouredCentred}>
-                      Checking you have the latest app version...
-                    </Text>
+                    <Text style={baseStyles.textSmallColouredCentred}>Checking you have the latest app version...</Text>
                   ) : isLoadingAny ? (
-                    <Text style={baseStyles.textSmallColouredCentred}>
-                      Syncing your data...
-                    </Text>
+                    <Text style={baseStyles.textSmallColouredCentred}>Syncing your data...</Text>
                   ) : (
                     // dummy to keep layout
                     <Text
@@ -752,9 +664,7 @@ export default HomeScreen = (props) => {
                   )
                 ) : isLoadingAny ? (
                   //dev mode - no OTA app refressh
-                  <Text style={baseStyles.textSmallColouredCentred}>
-                    Syncing your data...
-                  </Text>
+                  <Text style={baseStyles.textSmallColouredCentred}>Syncing your data...</Text>
                 ) : (
                   // dummy to keep layout
                   <Text
@@ -772,42 +682,34 @@ export default HomeScreen = (props) => {
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('WipTabs', { screen: 'Find Tools' })
-                    }
+                    onPress={() => navigation.navigate('WipTabs', { screen: 'Find Tools' })}
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'build' : 'build'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
 
-                      <Text style={baseStyles.textHomeGridCell}>
-                        Find Tools
-                      </Text>
+                      <Text style={baseStyles.textHomeGridCell}>Find Tools</Text>
                     </View>
                   </Touchable>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('WipTabs', { screen: 'My Jobs' })
-                    }
+                    onPress={() => navigation.navigate('WipTabs', { screen: 'My Jobs' })}
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'clipboard' : 'clipboard'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
                       <Text style={baseStyles.textHomeGridCell}>
-                        {`My Jobs`}
+                        My Jobs
                         {userWipsItems && userWipsItems.length > 0 ? (
-                          <Text style={baseStyles.textHomeGridCellCount}>
-                            {` (${userWipsItems.length})`}
-                          </Text>
+                          <Text style={baseStyles.textHomeGridCellCount}>{` (${userWipsItems.length})`}</Text>
                         ) : null}
                       </Text>
                     </View>
@@ -824,12 +726,8 @@ export default HomeScreen = (props) => {
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
-                        name={
-                          Platform.OS === 'ios'
-                            ? 'return-down-back'
-                            : 'return-down-back'
-                        }
-                        type='ionicon'
+                        name={Platform.OS === 'ios' ? 'return-down-back' : 'return-down-back'}
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -840,132 +738,103 @@ export default HomeScreen = (props) => {
                               ...baseStyles.textHomeGridCell,
                               marginTop: -6,
                             }}
-                          >{`Booked`}</Text>
+                          >
+                            Booked
+                          </Text>
                           <Text style={baseStyles.textHomeGridCell}>
-                            {`Tools`}
-                            <Text style={baseStyles.textHomeGridCellCount}>
-                              {` (${userBookedOutTools.length})`}
-                            </Text>
+                            Tools
+                            <Text style={baseStyles.textHomeGridCellCount}>{` (${userBookedOutTools.length})`}</Text>
                           </Text>
                         </View>
                       ) : (
-                        <Text
-                          style={baseStyles.textHomeGridCell}
-                        >{`Booked Tools`}</Text>
+                        <Text style={baseStyles.textHomeGridCell}>Booked Tools</Text>
                       )}
                     </View>
                   </Touchable>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('WipTabs', { screen: 'Loan Tools' })
-                    }
+                    onPress={() => navigation.navigate('WipTabs', { screen: 'Loan Tools' })}
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
-                        name={
-                          Platform.OS === 'ios'
-                            ? 'swap-horizontal'
-                            : 'swap-horizontal'
-                        }
-                        type='ionicon'
+                        name={Platform.OS === 'ios' ? 'swap-horizontal' : 'swap-horizontal'}
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
 
-                      <Text style={baseStyles.textHomeGridCell}>
-                        Loan Tool List
-                      </Text>
+                      <Text style={baseStyles.textHomeGridCell}>Loan Tool List</Text>
                     </View>
                   </Touchable>
                 </View>
-                {
-                  <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
-                    <Touchable
-                      style={baseStyles.viewHomeGridCell}
-                      onPress={() =>
-                        navigation.navigate('RemindersTabs', {
-                          screen: 'Alerts',
-                        })
-                      }
-                    >
-                      <View style={baseStyles.viewColumnFlexCentre}>
-                        <Ionicons
-                          name={
-                            Platform.OS === 'ios'
-                              ? 'alert-circle'
-                              : 'alert-circle'
-                          }
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={
-                            (typeof notificationsRedCount === 'number' &&
-                              notificationsRedCount > 0) ||
-                            (notificationsAmberCount &&
-                              notificationsAmberCount > 0)
-                          }
-                          focused={false}
-                          text={'Alerts'}
-                          value={
-                            (typeof notificationsRedCount === 'number' &&
-                              notificationsRedCount > 0) ||
-                            (typeof notificationsAmberCount === 'number' &&
-                              notificationsAmberCount > 0)
-                              ? '+'
-                              : null
-                          }
-                          showSevereAlert={
-                            typeof notificationsRedCount === 'number' &&
-                            notificationsRedCount > 0
-                              ? true
-                              : false
-                          }
-                        />
-                      </View>
-                    </Touchable>
-                    <Touchable
-                      style={baseStyles.viewHomeGridCell}
-                      onPress={() =>
-                        navigation.navigate('RemindersTabs', {
-                          screen: 'LTP Loans',
-                        })
-                      }
-                    >
-                      <View style={baseStyles.viewColumnFlexCentre}>
-                        <Ionicons
-                          name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
-                          type='ionicon'
-                          color={buttonTextColor}
-                          size={iconSize}
-                        />
-                        <BadgedText
-                          showBadge={
-                            (typeof ltpLoansRedCount === 'number' &&
-                              ltpLoansRedCount > 0) ||
-                            (typeof ltpLoansAmberCount === 'number' &&
-                              ltpLoansAmberCount > 0)
-                              ? '+'
-                              : 0
-                          }
-                          focused={false}
-                          text={'LTP Loans'}
-                          value={
-                            (typeof ltpLoansRedCount === 'number' &&
-                              ltpLoansRedCount > 0) ||
-                            (typeof ltpLoansAmberCount === 'number' &&
-                              ltpLoansAmberCount > 0)
-                              ? '+'
-                              : null
-                          }
-                          showSevereAlert={ltpLoansRedCount > 0 ? true : false}
-                        />
-                      </View>
-                    </Touchable>
-                  </View>
-                }
+                <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('RemindersTabs', {
+                        screen: 'Alerts',
+                      })
+                    }
+                  >
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'alert-circle' : 'alert-circle'}
+                        type="ionicon"
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={
+                          (typeof notificationsRedCount === 'number' && notificationsRedCount > 0) ||
+                          (notificationsAmberCount && notificationsAmberCount > 0)
+                        }
+                        focused={false}
+                        text="Alerts"
+                        value={
+                          (typeof notificationsRedCount === 'number' && notificationsRedCount > 0) ||
+                          (typeof notificationsAmberCount === 'number' && notificationsAmberCount > 0)
+                            ? '+'
+                            : null
+                        }
+                        showSevereAlert={!!(typeof notificationsRedCount === 'number' && notificationsRedCount > 0)}
+                      />
+                    </View>
+                  </Touchable>
+                  <Touchable
+                    style={baseStyles.viewHomeGridCell}
+                    onPress={() =>
+                      navigation.navigate('RemindersTabs', {
+                        screen: 'LTP Loans',
+                      })
+                    }
+                  >
+                    <View style={baseStyles.viewColumnFlexCentre}>
+                      <Ionicons
+                        name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
+                        type="ionicon"
+                        color={buttonTextColor}
+                        size={iconSize}
+                      />
+                      <BadgedText
+                        showBadge={
+                          (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) ||
+                          (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0)
+                            ? '+'
+                            : 0
+                        }
+                        focused={false}
+                        text="LTP Loans"
+                        value={
+                          (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) ||
+                          (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0)
+                            ? '+'
+                            : null
+                        }
+                        showSevereAlert={ltpLoansRedCount > 0}
+                      />
+                    </View>
+                  </Touchable>
+                </View>
                 <View style={baseStyles.viewRowFlexCentreJustifiedAligned}>
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
@@ -978,53 +847,32 @@ export default HomeScreen = (props) => {
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'document' : 'document'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
                       <BadgedText
-                        showBadge={
-                          typeof unseenCriticalNews === 'number' &&
-                          unseenCriticalNews > 0
-                            ? 1
-                            : 0
-                        }
+                        showBadge={typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0 ? 1 : 0}
                         focused={false}
-                        text={'News'}
-                        value={
-                          typeof unseenCriticalNews === 'number' &&
-                          unseenCriticalNews > 0
-                            ? '+'
-                            : null
-                        }
-                        showSevereAlert={true}
+                        text="News"
+                        value={typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0 ? '+' : null}
+                        showSevereAlert
                       />
                     </View>
                   </Touchable>
 
                   <Touchable
                     style={baseStyles.viewHomeGridCell}
-                    onPress={() =>
-                      navigation.navigate('NewsTabs', { screen: 'Elsa2Go' })
-                    }
+                    onPress={() => navigation.navigate('NewsTabs', { screen: 'Elsa2Go' })}
                   >
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
-                        name={
-                          Platform.OS === 'ios'
-                            ? 'phone-portrait'
-                            : 'phone-portrait'
-                        }
-                        type='ionicon'
+                        name={Platform.OS === 'ios' ? 'phone-portrait' : 'phone-portrait'}
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
-                      <BadgedText
-                        showBadge={false}
-                        focused={false}
-                        text={'Elsa2Go'}
-                        value={'+'}
-                      />
+                      <BadgedText showBadge={false} focused={false} text="Elsa2Go" value="+" />
                     </View>
                   </Touchable>
                 </View>
@@ -1057,15 +905,10 @@ export default HomeScreen = (props) => {
                     : 'Pocket Infoweb is only available to registered users of Tools Infoweb.'}
                 </Text>
                 <Text style={baseStyles.textSignedInSmall}>
-                  {userIsValidated && dealerName
-                    ? `${dealerName}`
-                    : 'No jobs can be shown till you are signed in'}
+                  {userIsValidated && dealerName ? `${dealerName}` : 'No jobs can be shown till you are signed in'}
                 </Text>
               </View>
-              <Touchable
-                style={{ marginTop: 0 }}
-                onPress={() => requestSignOutHandler()}
-              >
+              <Touchable style={{ marginTop: 0 }} onPress={() => requestSignOutHandler()}>
                 <View
                   style={{
                     ...baseStyles.viewRowFlexCentreJustifiedAligned,
@@ -1073,18 +916,12 @@ export default HomeScreen = (props) => {
                   }}
                 >
                   <Ionicons
-                    name={
-                      Platform.OS === 'ios'
-                        ? 'log-out-outline'
-                        : 'log-out-outline'
-                    }
-                    type='ionicon'
+                    name={Platform.OS === 'ios' ? 'log-out-outline' : 'log-out-outline'}
+                    type="ionicon"
                     size={20}
                     color={Colors.vwgDeepBlue}
                   />
-                  <Text
-                    style={baseStyles.textLargeColouredCentred}
-                  >{` Sign out to change user`}</Text>
+                  <Text style={baseStyles.textLargeColouredCentred}>{` Sign out to change user`}</Text>
                 </View>
               </Touchable>
             </View>
@@ -1094,3 +931,4 @@ export default HomeScreen = (props) => {
     </View>
   );
 };
+export default HomeScreen;

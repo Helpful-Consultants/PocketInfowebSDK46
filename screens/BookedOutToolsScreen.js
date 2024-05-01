@@ -1,24 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import { Text } from '@rneui/themed';
+import { useCallback, useEffect, useState } from 'react';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
-import { sortObjectList } from '../helpers/objects';
-import { revalidateUserCredentials } from '../actions/user';
-import {
-  deleteDealerWipRequest,
-  deleteDealerWipToolRequest,
-  getDealerWipsRequest,
-} from '../actions/dealerWips';
-import Urls from '../constants/Urls';
-import Colors from '../constants/Colors';
+import { useDispatch, useSelector } from 'react-redux';
+
 import BookedOutToolsList from './BookedOutToolsList';
+import { deleteDealerWipRequest, deleteDealerWipToolRequest, getDealerWipsRequest } from '../actions/dealerWips';
+import { revalidateUserCredentials } from '../actions/user';
+import Colors from '../constants/Colors';
+import Urls from '../constants/Urls';
+import { sortObjectList } from '../helpers/objects';
+import { selectBookedOutToolsForUser, selectDealerWipsForUser } from '../reducers/dealerWips';
 import { selectFetchParamsObj } from '../reducers/user';
-import {
-  selectBookedOutToolsForUser,
-  selectDealerWipsForUser,
-} from '../reducers/dealerWips';
 
 const minSearchLength = 1;
 
@@ -70,9 +64,7 @@ export default BookedOutToolsScreen = (props) => {
     // console.log(searchInput, userBookedOutTools);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = userBookedOutTools
-        ? searchItems(userBookedOutTools, searchInput)
-        : [];
+      const newFilteredItems = userBookedOutTools ? searchItems(userBookedOutTools, searchInput) : [];
       setFilteredItems(newFilteredItems);
     }
   };
@@ -96,19 +88,19 @@ export default BookedOutToolsScreen = (props) => {
     // console.log('in confirmreturnToolHandler', currentTool);
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
-      let payload = {
+      const payload = {
         wipObj: currentJob,
-        fetchParamsObj: fetchParamsObj,
+        fetchParamsObj,
       };
 
       //   console.log('delete wip ' + currentJob.id);
       //   console.log('delete wip ', payload);
       setTimeout(() => deleteDealerWip(payload), 300);
     } else {
-      let payload = {
+      const payload = {
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        fetchParamsObj: fetchParamsObj,
+        fetchParamsObj,
       };
       //   console.log('remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('for wip wip ', payload);
@@ -189,10 +181,7 @@ export default BookedOutToolsScreen = (props) => {
   //   console.log('BOT *****  in userBookedOutTools', userBookedOutTools);
   const dataCount = (userBookedOutTools && userBookedOutTools.length) || 0;
 
-  let itemsToShow =
-    searchInput && searchInput.length > minSearchLength
-      ? filteredItems
-      : userBookedOutTools;
+  const itemsToShow = searchInput && searchInput.length > minSearchLength ? filteredItems : userBookedOutTools;
 
   //   console.log(
   //     'BOT ***** RENDERING booked out tools screen !!!!!!!!!!!!!!!!!!!'
@@ -201,7 +190,7 @@ export default BookedOutToolsScreen = (props) => {
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>
       <SearchBarWithRefresh
-        dataName={'booked out tools'}
+        dataName="booked out tools"
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
@@ -210,30 +199,22 @@ export default BookedOutToolsScreen = (props) => {
         dataStatusCode={dataStatusCode}
         dataCount={userWipsItems.length}
       />
-      {dataError ? null : searchInput &&
-        searchInput.length &&
-        searchInput.length >= minSearchLength ? (
-        itemsToShow &&
-        itemsToShow.length &&
-        itemsToShow.length > 0 ? null : userBookedOutTools &&
+      {dataError ? null : searchInput && searchInput.length && searchInput.length >= minSearchLength ? (
+        itemsToShow && itemsToShow.length && itemsToShow.length > 0 ? null : userBookedOutTools &&
           userBookedOutTools.length &&
           userBookedOutTools.length > 0 ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>
-              Your search found no results.
-            </Text>
+            <Text style={baseStyles.textPromptRibbon}>Your search found no results.</Text>
           </View>
         ) : (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>
-              You have no jobs yet to search.
-            </Text>
+            <Text style={baseStyles.textPromptRibbon}>You have no jobs yet to search.</Text>
           </View>
         )
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing jobs'}
+          errorSummary="Error syncing jobs"
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -257,14 +238,14 @@ export default BookedOutToolsScreen = (props) => {
         <AwesomeAlert
           show={isAlertVisible}
           showProgress={false}
-          title='Return tool'
+          title="Return tool"
           message={`Have you returned ${currentTool.partNumber} (${currentTool.toolNumber}) to its correct location?`}
-          closeOnTouchOutside={true}
+          closeOnTouchOutside
           closeOnHardwareBackPress={false}
-          showCancelButton={true}
-          showConfirmButton={true}
-          cancelText='Not yet'
-          confirmText='Yes'
+          showCancelButton
+          showConfirmButton
+          cancelText="Not yet"
+          confirmText="Yes"
           confirmButtonColor={Colors.vwgMintGreen}
           cancelButtonColor={Colors.vwgWarmRed}
           onCancelPressed={() => {

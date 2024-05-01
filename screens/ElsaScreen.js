@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { Image, Platform, Text, useWindowDimensions, View } from 'react-native';
-import { useSelector } from 'react-redux';
-import Touchable from 'react-native-platform-touchable';
-import * as WebBrowser from 'expo-web-browser';
 import { Ionicons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
+import { useState } from 'react';
+import { Image, Platform, Text, useWindowDimensions, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 import { RFPercentage } from 'react-native-responsive-fontsize';
+import { useSelector } from 'react-redux';
+
 import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
 
 const catalogueUrl = 'https://grp.volkswagenag.com/';
 const buttonTextColor = Colors.vwgWhite;
-let iconSize = RFPercentage(5);
+const iconSize = RFPercentage(5);
 
 export default ElsaScreen = (props) => {
   const windowDim = useWindowDimensions();
@@ -34,7 +35,7 @@ export default ElsaScreen = (props) => {
       setBrowserResult(null);
     }
 
-    let result = await WebBrowser.openBrowserAsync(catalogueUrl);
+    const result = await WebBrowser.openBrowserAsync(catalogueUrl);
     setBrowserResult(result);
   };
 
@@ -49,7 +50,7 @@ export default ElsaScreen = (props) => {
       <Text style={baseStyles.textItemMain}>
         The Volkswagen Group Aftersales application, Elsa2Go, is now available.
       </Text>
-      <Text style={baseStyles.textItemMain}></Text>
+      <Text style={baseStyles.textItemMain} />
       <Touchable
         style={{
           ...baseStyles.viewHomeGridCell,
@@ -61,23 +62,15 @@ export default ElsaScreen = (props) => {
         <View style={baseStyles.viewColumnFlexCentre}>
           <Ionicons
             name={Platform.OS === 'ios' ? 'phone-portrait' : 'phone-portrait'}
-            type='ionicon'
+            type="ionicon"
             color={buttonTextColor}
             size={iconSize}
           />
-          <BadgedText
-            showBadge={false}
-            focused={false}
-            text={'Open Elsa2Go'}
-            value={'+'}
-          />
+          <BadgedText showBadge={false} focused={false} text="Open Elsa2Go" value="+" />
         </View>
       </Touchable>
-      <Text style={baseStyles.textItemMain}></Text>
-      <Image
-        source={require('../assets/images/elsa2go.jpg')}
-        style={baseStyles.inlineImageElsa}
-      ></Image>
+      <Text style={baseStyles.textItemMain} />
+      <Image source={require('../assets/images/elsa2go.jpg')} style={baseStyles.inlineImageElsa} />
     </View>
   ) : (
     <View
@@ -87,21 +80,15 @@ export default ElsaScreen = (props) => {
         marginHorizontal: 10,
       }}
     >
+      <Text style={baseStyles.textItemMain}>The Volkswagen Group Aftersales application, Elsa2Go, is coming soon.</Text>
+      <Text style={baseStyles.textItemMain} />
       <Text style={baseStyles.textItemMain}>
-        The Volkswagen Group Aftersales application, Elsa2Go, is coming soon.
+        Look out for further information at Tools Infoweb. If you've got notifications enabled for Pocket Infoweb you'll
+        be notified directly on your phone.
       </Text>
-      <Text style={baseStyles.textItemMain}></Text>
-      <Text style={baseStyles.textItemMain}>
-        Look out for further information at Tools Infoweb. If you've got
-        notifications enabled for Pocket Infoweb you'll be notified directly on
-        your phone.
-      </Text>
-      <Text style={baseStyles.textItemMain}></Text>
-      <Text style={baseStyles.textItemMain}></Text>
-      <Image
-        source={require('../assets/images/elsa2go.jpg')}
-        style={baseStyles.inlineImageElsa}
-      ></Image>
+      <Text style={baseStyles.textItemMain} />
+      <Text style={baseStyles.textItemMain} />
+      <Image source={require('../assets/images/elsa2go.jpg')} style={baseStyles.inlineImageElsa} />
     </View>
   );
 };

@@ -1,25 +1,22 @@
-import React, { useCallback, useState } from 'react';
-import { Dimensions, useWindowDimensions, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
+import { Dimensions, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
+import StatsSummary from './StatsSummary';
+import { getDealerToolsRequest } from '../actions/dealerTools';
+import { getStatsRequest } from '../actions/stats';
+import { revalidateUserCredentials } from '../actions/user';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
-import { revalidateUserCredentials } from '../actions/user';
-import { getStatsRequest } from '../actions/stats';
-import { getDealerToolsRequest } from '../actions/dealerTools';
-import StatsSummary from './StatsSummary';
 import { selectFetchParamsObj } from '../reducers/user';
 
 export default StatsScreen = (props) => {
   const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const statsObj = useSelector((state) => state.stats.statsItems[0]);
-  const dealerWipsItems = useSelector(
-    (state) => state.dealerWips.dealerWipsItems
-  );
-  const dealerToolsItems = useSelector(
-    (state) => state.dealerTools.dealerToolsItems
-  );
+  const dealerWipsItems = useSelector((state) => state.dealerWips.dealerWipsItems);
+  const dealerToolsItems = useSelector((state) => state.dealerTools.dealerToolsItems);
   const userDataObj = useSelector((state) => state.user.userData[0]);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const isLoading = useSelector((state) => state.stats.isLoading);
@@ -59,8 +56,7 @@ export default StatsScreen = (props) => {
     getItems();
   };
 
-  const userDataPresent =
-    (userDataObj && Object.keys(userDataObj).length > 0) || 0;
+  const userDataPresent = (userDataObj && Object.keys(userDataObj).length > 0) || 0;
 
   const statsDataCount = (statsObj && Object.keys(statsObj).length > 0) || 0;
 
@@ -74,11 +70,7 @@ export default StatsScreen = (props) => {
       userDataObj.intId &&
       dealerWipsItems &&
       dealerWipsItems.length > 0 &&
-      dealerWipsItems.filter(
-        (item) =>
-          item.userIntId &&
-          item.userIntId.toString() == userDataObj.intId.toString()
-      )) ||
+      dealerWipsItems.filter((item) => item.userIntId && item.userIntId.toString() == userDataObj.intId.toString())) ||
     [];
 
   //   console.log('dealerWipsItems ', userWipsItems);
@@ -92,13 +84,8 @@ export default StatsScreen = (props) => {
   //   console.log('statsobj', statsObj && statsObj);
 
   const effectiveness =
-    statsObj &&
-    statsObj.loggedTools &&
-    dealerToolsItems &&
-    dealerToolsItems.length
-      ? ((100 * statsObj.loggedTools) / dealerToolsItems.length)
-          .toFixed(0)
-          .toString() + '%'
+    statsObj && statsObj.loggedTools && dealerToolsItems && dealerToolsItems.length
+      ? ((100 * statsObj.loggedTools) / dealerToolsItems.length).toFixed(0).toString() + '%'
       : 'N/A';
 
   //   console.log('rendering Stats screen');
@@ -106,8 +93,8 @@ export default StatsScreen = (props) => {
   return (
     <View>
       <DataAlertBarWithRefresh
-        dataName={'stats'}
-        someDataExpected={true}
+        dataName="stats"
+        someDataExpected
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
@@ -116,7 +103,7 @@ export default StatsScreen = (props) => {
       />
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the stats data'}
+          errorSummary="Error syncing the stats data"
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}

@@ -3,7 +3,7 @@ module.exports = {
   plugins: ['prettier', 'react', 'react-hooks', '@typescript-eslint'],
   rules: {
     // eqeqeq: 'error',
-    'no-console': 'warn',
+    'no-console': 'off',
     'prettier/prettier': 'error',
     'react/display-name': 'off',
     'react/no-children-prop': 'off',
@@ -12,9 +12,11 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/prefer-default-export': ['warn', { target: 'single' }],
+    'no-unused-vars': 'off',
   },
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,

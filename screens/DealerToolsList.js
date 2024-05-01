@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  ScrollView,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
-import Touchable from 'react-native-platform-touchable';
 import { Ionicons } from '@expo/vector-icons';
 import { Icon, ListItem } from '@rneui/themed';
+import { useEffect, useState } from 'react';
+import { FlatList, Platform, StyleSheet, ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import Touchable from 'react-native-platform-touchable';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+
 import Colors from '../constants/Colors';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
@@ -48,7 +41,7 @@ export default function DealerToolsList(props) {
 
   //   console.log('toolBasket', toolBasket && toolBasket);
 
-  let toolBasketList = [];
+  const toolBasketList = [];
   toolBasket && toolBasket.forEach((tool) => toolBasketList.push(tool.id));
   //   useEffect(() => {
   //     let list = [];
@@ -61,18 +54,15 @@ export default function DealerToolsList(props) {
 
   const findLastBookedOutByFromTool = (item) => {
     // console.log('findLastBookedOutByFromTool', item);
-    let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
+    const lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
 
     if (lastWIP.length > 0) {
       //   console.log('lastWIP ', lastWIP);
-      const matchingJobs = dealerWipsItems.filter(
-        (item) => item.wipNumber.toString() === lastWIP.toString()
-      );
+      const matchingJobs = dealerWipsItems.filter((item) => item.wipNumber.toString() === lastWIP.toString());
 
       if (matchingJobs.length > 0) {
         const personObj = {
-          intId:
-            matchingJobs[0].createdBy && matchingJobs[0].userIntId.toString(),
+          intId: matchingJobs[0].createdBy && matchingJobs[0].userIntId.toString(),
           name: matchingJobs[0].createdBy && matchingJobs[0].createdBy,
         };
 
@@ -94,15 +84,13 @@ export default function DealerToolsList(props) {
   const findWipforTool = (toolId) => {
     // console.log('findWipforTool', toolId);
     // let lastWIP = (item && item.lastWIP && item.lastWIP.toString()) || '';
-    let matchingJobs = [];
+    const matchingJobs = [];
 
     toolId &&
       dealerWipsItems &&
       dealerWipsItems.forEach((wip) => {
         if (wip.tools && wip.tools.length > 0) {
-          wip.tools.forEach(
-            (tool) => tool.tools_id === toolId && matchingJobs.push(wip)
-          );
+          wip.tools.forEach((tool) => tool.tools_id === toolId && matchingJobs.push(wip));
         }
       });
 
@@ -139,10 +127,9 @@ export default function DealerToolsList(props) {
         containerStyle={{
           backgroundColor: item.loanToolNo
             ? Colors.vwgVeryVeryVeryLightGray
-            : (booked && booked === true) ||
-              (inToolBasket && inToolBasket === true)
-            ? Colors.vwgVeryVeryLightGray
-            : Colors.vwgWhite,
+            : (booked && booked === true) || (inToolBasket && inToolBasket === true)
+              ? Colors.vwgVeryVeryLightGray
+              : Colors.vwgWhite,
         }}
       >
         <ListItem.Content>
@@ -151,23 +138,20 @@ export default function DealerToolsList(props) {
               ...baseStyles.textLinkBoldLarge,
               color: item.loanToolNo
                 ? Colors.vwgVeryDarkGray
-                : (booked && booked === true) ||
-                  (inToolBasket && inToolBasket === true)
-                ? Colors.vwgVeryDarkGray
-                : Colors.vwgLink,
+                : (booked && booked === true) || (inToolBasket && inToolBasket === true)
+                  ? Colors.vwgVeryDarkGray
+                  : Colors.vwgLink,
             }}
           >
             {item.partNumber
               ? `${item.partNumber} ${
-                  (item.toolNumber && !item.partNumber) ||
-                  (item.toolNumber && item.toolNumber !== item.partNumber)
+                  (item.toolNumber && !item.partNumber) || (item.toolNumber && item.toolNumber !== item.partNumber)
                     ? `(${item.toolNumber})`
                     : ``
                 }`
               : `${item.loanToolNo}${
                   (item.supplierPartNo && !item.orderPartNo) ||
-                  (item.supplierPartNo &&
-                    item.supplierPartNo !== item.orderPartNo)
+                  (item.supplierPartNo && item.supplierPartNo !== item.orderPartNo)
                     ? ` - ${item.supplierPartNo}`
                     : ``
                 }`}
@@ -176,44 +160,29 @@ export default function DealerToolsList(props) {
             style={{
               backgroundColor: item.loanToolNo
                 ? Colors.vwgVeryVeryVeryLightGray
-                : (booked && booked === true) ||
-                  (inToolBasket && inToolBasket === true)
-                ? Colors.vwgVeryVeryLightGray
-                : Colors.vwgWhite,
+                : (booked && booked === true) || (inToolBasket && inToolBasket === true)
+                  ? Colors.vwgVeryVeryLightGray
+                  : Colors.vwgWhite,
               marginTop: 3,
             }}
           >
-            {
-              <View>
-                <Text style={{ ...baseStyles.textSmall }}>
-                  {item.partDescription
-                    ? item.partDescription
-                    : item.toolDescription}
-                </Text>
-                {item.loanToolNo ? (
-                  <View>
-                    {item.orderPartNo ? (
-                      <Text style={{ ...baseStyles.text }}>
-                        {item.orderPartNo}
-                      </Text>
-                    ) : null}
-                    <Text style={{ ...baseStyles.textSmall }}>
-                      Available through the Loan Tool Programme
-                    </Text>
-                  </View>
-                ) : item.location ? (
-                  <Text
-                    style={{ ...baseStyles.textSmall }}
-                  >{`Storage location: ${item.location}`}</Text>
-                ) : (
-                  <Text style={{ ...baseStyles.text }}>
-                    Storage location not recorded
-                  </Text>
-                )}
+            <View>
+              <Text style={{ ...baseStyles.textSmall }}>
+                {item.partDescription ? item.partDescription : item.toolDescription}
+              </Text>
+              {item.loanToolNo ? (
+                <View>
+                  {item.orderPartNo ? <Text style={{ ...baseStyles.text }}>{item.orderPartNo}</Text> : null}
+                  <Text style={{ ...baseStyles.textSmall }}>Available through the Loan Tool Programme</Text>
+                </View>
+              ) : item.location ? (
+                <Text style={{ ...baseStyles.textSmall }}>{`Storage location: ${item.location}`}</Text>
+              ) : (
+                <Text style={{ ...baseStyles.text }}>Storage location not recorded</Text>
+              )}
 
-                {lastJobDetails}
-              </View>
-            }
+              {lastJobDetails}
+            </View>
           </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
@@ -261,7 +230,9 @@ export default function DealerToolsList(props) {
                   ...baseStyles.text,
                   color: Colors.vwgWarmRed,
                 }}
-              >{`Already booked out to you`}</Text>
+              >
+                Already booked out to you
+              </Text>
               {`, on job '${bookedByWip}'`}
             </Text>
           );
@@ -280,10 +251,7 @@ export default function DealerToolsList(props) {
         if (toolBasketList.includes(item.id)) {
           inToolBasket = true;
           lastJobDetails = (
-            <Touchable
-              style={baseStyles.touchableNoMargin}
-              onPress={() => toggleBaskethandler(true)}
-            >
+            <Touchable style={baseStyles.touchableNoMargin} onPress={() => toggleBaskethandler(true)}>
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={{
@@ -353,12 +321,7 @@ export default function DealerToolsList(props) {
     }
 
     return item.loanToolNo ? (
-      <CustomListItem
-        item={item}
-        booked={booked}
-        lastJobDetails={lastJobDetails}
-        bookedByUser={bookedByUser}
-      ></CustomListItem>
+      <CustomListItem item={item} booked={booked} lastJobDetails={lastJobDetails} bookedByUser={bookedByUser} />
     ) : // ) : bookedByUser === true ? (
     booked && booked === true ? (
       <CustomListItem
@@ -367,7 +330,7 @@ export default function DealerToolsList(props) {
         lastJobDetails={lastJobDetails}
         bookedByUser={bookedByUser}
         inToolBasket={inToolBasket}
-      ></CustomListItem>
+      />
     ) : inToolBasket && inToolBasket === true ? (
       <CustomListItem
         item={item}
@@ -375,19 +338,16 @@ export default function DealerToolsList(props) {
         lastJobDetails={lastJobDetails}
         bookedByUser={bookedByUser}
         inToolBasket={inToolBasket}
-      ></CustomListItem>
+      />
     ) : (
-      <Touchable
-        style={baseStyles.touchableNoMargin}
-        onPress={() => selectItemHandler(item, personName)}
-      >
+      <Touchable style={baseStyles.touchableNoMargin} onPress={() => selectItemHandler(item, personName)}>
         <CustomListItem
           item={item}
           booked={booked}
           lastJobDetails={lastJobDetails}
           bookedByUser={bookedByUser}
           inToolBasket={inToolBasket}
-        ></CustomListItem>
+        />
       </Touchable>
     );
   };
@@ -406,15 +366,10 @@ export default function DealerToolsList(props) {
   useEffect(() => {
     // console.log('in use effect');
     // console.log(items[0]);
-    let newList = (
+    const newList = (
       <FlatList
         data={items && items}
-        renderItem={(itemData) => (
-          <FlatListItem
-            item={itemData.item}
-            selectItemHandler={selectItemHandler}
-          />
-        )}
+        renderItem={(itemData) => <FlatListItem item={itemData.item} selectItemHandler={selectItemHandler} />}
         keyExtractor={(item) => item.loanToolNo || item.id}
         ListHeaderComponent={getHeader}
       />

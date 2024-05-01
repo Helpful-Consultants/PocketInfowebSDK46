@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '../constants/Colors';
-import ErrorDetails from '../components/ErrorDetails';
-import { revalidateUserCredentials } from '../actions/user';
-import {
-  getLtpLoansRequest,
-  setLtpLoansDisplayTimestamp,
-} from '../actions/ltpLoans';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+
 import LtpLoansList from './LtpLoansList';
-import searchItems from '../helpers/searchItems';
+import { getLtpLoansRequest, setLtpLoansDisplayTimestamp } from '../actions/ltpLoans';
+import { revalidateUserCredentials } from '../actions/user';
+import ErrorDetails from '../components/ErrorDetails';
+import Colors from '../constants/Colors';
 import { sortObjListByDate } from '../helpers/dates';
+import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
@@ -129,7 +127,7 @@ export default LtpLoansScreen = (props) => {
   //   console.log('in ltpLoans screen - point 6');
 
   const items = !isLoading && !dataError ? ltpLoansItems : [];
-  let ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
+  const ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
 
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');
@@ -151,7 +149,7 @@ export default LtpLoansScreen = (props) => {
   const searchInputHandler = (searchInput) => {
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      let newFilteredItems = searchItems(ltpLoansSorted, searchInput);
+      const newFilteredItems = searchItems(ltpLoansSorted, searchInput);
       //   console.log(
       //     'LtpLoans Screen  searchInputHandler for: ',
       //     searchInput && searchInput,
@@ -179,7 +177,7 @@ export default LtpLoansScreen = (props) => {
   //   let itemsToShow =
   //     searchInput && searchInput.length > minSearchLength ? filteredItems : items;
   //   console.log('in ltpLoans screen - point 9');
-  let itemsToShow = !isLoading
+  const itemsToShow = !isLoading
     ? searchInput && searchInput.length > minSearchLength
       ? filteredItems
       : ltpLoansSorted
@@ -197,7 +195,7 @@ export default LtpLoansScreen = (props) => {
   return (
     <View style={baseStyles.containerFlex}>
       <SearchBarWithRefresh
-        dataName={'LTP Loans'}
+        dataName="LTP Loans"
         someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -209,24 +207,18 @@ export default LtpLoansScreen = (props) => {
       />
       {showingDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data - change in menu.
-          </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+          <Text style={baseStyles.textPromptRibbon}>Showing sample data - change in menu.</Text>
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
       {dataError ? null : itemsToShow && itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>
-              Your search found no results.
-            </Text>
+            <Text style={baseStyles.textPromptRibbon}>Your search found no results.</Text>
           </View>
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
-            <Text style={baseStyles.textPromptRibbon}>
-              No live LTP loans to show.
-            </Text>
+            <Text style={baseStyles.textPromptRibbon}>No live LTP loans to show.</Text>
             {/* <Text style={baseStyles.textPromptRibbon}>
               Showing sample data - change in menu.
             </Text> */}
@@ -235,14 +227,14 @@ export default LtpLoansScreen = (props) => {
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing Service Measures'}
+          errorSummary="Error syncing Service Measures"
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
         />
       ) : (
         <ScrollView>
-          <LtpLoansList items={itemsToShow} showFullDetails={true} />
+          <LtpLoansList items={itemsToShow} showFullDetails />
         </ScrollView>
       )}
     </View>

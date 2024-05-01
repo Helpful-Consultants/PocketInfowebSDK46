@@ -1,18 +1,19 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
-import Colors from '../constants/Colors';
-import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
-import ErrorDetails from '../components/ErrorDetails';
-import { revalidateUserCredentials } from '../actions/user';
+import { useDispatch, useSelector } from 'react-redux';
+
+import OdisVersions from './OdisVersions';
 import {
   getOdisRequest,
   //   incrementOdisViewCount,
   setOdisDisplayTimestamp,
 } from '../actions/odis';
-import OdisVersions from './OdisVersions';
+import { revalidateUserCredentials } from '../actions/user';
+import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
+import ErrorDetails from '../components/ErrorDetails';
+import Colors from '../constants/Colors';
 import { selectFetchParamsObj } from '../reducers/user';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
@@ -128,8 +129,8 @@ export default OdisScreen = (props) => {
   return (
     <View style={baseStyles.containerFlexCentred}>
       <DataAlertBarWithRefresh
-        dataName={'ODIS version data'}
-        someDataExpected={true}
+        dataName="ODIS version data"
+        someDataExpected
         refreshRequestHandler={refreshRequestHandler}
         isLoading={isLoading}
         dataError={dataError}
@@ -153,26 +154,18 @@ export default OdisScreen = (props) => {
           >
             Showing sample data - change in menu.
           </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWarmOrange} />
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWarmOrange} />
         </View>
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing the ODIS data'}
+          errorSummary="Error syncing the ODIS data"
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
         />
-      ) : !isLoading &&
-        !dataError &&
-        odisObj &&
-        Object.keys(odisObj).length > 0 ? (
-        <OdisVersions
-          itemsObj={odisObj}
-          userBrand={userBrand}
-          viewCount={odisViewCount}
-          fetchTime={odisFetchTime}
-        />
+      ) : !isLoading && !dataError && odisObj && Object.keys(odisObj).length > 0 ? (
+        <OdisVersions itemsObj={odisObj} userBrand={userBrand} viewCount={odisViewCount} fetchTime={odisFetchTime} />
       ) : null}
     </View>
   );

@@ -1,19 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
-import { Text } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
-import * as WebBrowser from 'expo-web-browser';
-import { createFilter } from 'react-native-search-filter';
 import { Ionicons } from '@expo/vector-icons';
-import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
-import ErrorDetails from '../components/ErrorDetails';
-import { revalidateUserCredentials } from '../actions/user';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { Text } from '@rneui/themed';
+import * as WebBrowser from 'expo-web-browser';
+import { useCallback, useEffect, useState } from 'react';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
+import { createFilter } from 'react-native-search-filter';
+import { useDispatch, useSelector } from 'react-redux';
+
+import NewsLinks from './NewsLinks';
 import { getNewsRequest, setNewsDisplayTimestamp } from '../actions/news';
+import { revalidateUserCredentials } from '../actions/user';
+import ErrorDetails from '../components/ErrorDetails';
+import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
-import NewsLinks from './NewsLinks';
 // import newsDummyData from '../dummyData/newsDummyData.js';
 
 const KEYS_TO_FILTERS = ['headline', 'newstext'];
@@ -74,18 +74,18 @@ export default NewsScreen = (props) => {
   );
   const pressOpenHandler = async (url) => {
     // console.log('in pressOpenHandler', url);
-    let checkedUrl = checkUrl(url);
+    const checkedUrl = checkUrl(url);
     // console.log(checkedUrl);
 
     if (Platform.OS === 'ios') {
       //   let result = await WebBrowser.openAuthSessionAsync(checkedUrl);
       WebBrowser.dismissBrowser();
-      let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      const result = await WebBrowser.openBrowserAsync(checkedUrl);
       //   console.log(result);
       setBrowserResult(result);
     } else {
       //   WebBrowser.dismissBrowser();
-      let result = await WebBrowser.openBrowserAsync(checkedUrl);
+      const result = await WebBrowser.openBrowserAsync(checkedUrl);
       setBrowserResult(result);
     }
   };
@@ -133,15 +133,13 @@ export default NewsScreen = (props) => {
   //   console.log('isLoading ', isLoading, 'dataError ', dataError);
   //   console.log(items);
 
-  const filteredItems =
-    (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) ||
-    [];
+  const filteredItems = (!isLoading && items.filter(createFilter(searchInput, KEYS_TO_FILTERS))) || [];
 
   return (
     <View style={baseStyles.container}>
       <SearchBarWithRefresh
-        dataName={'news'}
-        someDataExpected={true}
+        dataName="news"
+        someDataExpected
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
@@ -152,15 +150,13 @@ export default NewsScreen = (props) => {
       />
       {showingDemoData ? (
         <View style={baseStyles.viewDummyDataRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>
-            Showing sample data - change in menu.
-          </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+          <Text style={baseStyles.textPromptRibbon}>Showing sample data - change in menu.</Text>
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary={'Error syncing news items'}
+          errorSummary="Error syncing news items"
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -169,9 +165,7 @@ export default NewsScreen = (props) => {
         <ScrollView>
           {filteredItems && filteredItems.length > 0 ? (
             <View style={baseStyles.viewPromptRibbon}>
-              <Text style={baseStyles.textPromptRibbon}>
-                Touch an item to see it on Tools Infoweb.
-              </Text>
+              <Text style={baseStyles.textPromptRibbon}>Touch an item to see it on Tools Infoweb.</Text>
             </View>
           ) : null}
           <NewsLinks
