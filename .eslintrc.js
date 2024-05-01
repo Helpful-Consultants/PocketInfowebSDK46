@@ -12,9 +12,10 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'prefer-object-spread': 'error',
   },
   parserOptions: {
-    ecmaVersion: 6,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       jsx: true,
