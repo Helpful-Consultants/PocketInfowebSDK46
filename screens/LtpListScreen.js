@@ -1,17 +1,17 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Text } from '@rneui/themed';
-import { useCallback, useEffect, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
+import { Text } from '@rneui/themed';
 
-import LtpList from './LtpList';
-import { getLtpRequest } from '../actions/ltp';
 import { revalidateUserCredentials } from '../actions/user';
-import ErrorDetails from '../components/ErrorDetails';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
-import Urls from '../constants/Urls';
-import getBaseStyles from '../helpers/getBaseStyles';
+import ErrorDetails from '../components/ErrorDetails';
 import { sortObjectList } from '../helpers/objects';
+import getBaseStyles from '../helpers/getBaseStyles';
+import { getLtpRequest } from '../actions/ltp';
+import Urls from '../constants/Urls';
+import LtpList from './LtpList';
 import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
 // import stringCleaner from '../helpers/stringCleaner';
@@ -119,8 +119,8 @@ export default LtpListScreen = (props) => {
   return (
     <View style={baseStyles.containerFlexAndMargin}>
       <SearchBarWithRefresh
-        dataName="LTP items"
-        someDataExpected
+        dataName={'LTP items'}
+        someDataExpected={true}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
         searchInput={searchInput}
@@ -132,21 +132,27 @@ export default LtpListScreen = (props) => {
       {dataError ? null : itemsToShow.length === 0 ? (
         searchInput.length >= minSearchLength ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>Your search found no results.</Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              Your search found no results.
+            </Text>
           </View>
         ) : isLoading ? null : (
           <View style={baseStyles.viewPromptRibbon}>
-            <Text style={baseStyles.textPromptRibbon}>No LTP items to show. Try the refresh button.</Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              No LTP items to show. Try the refresh button.
+            </Text>
           </View>
         )
       ) : (
         <View style={baseStyles.viewPromptRibbon}>
-          <Text style={baseStyles.textPromptRibbon}>Book these on the LTP website.</Text>
+          <Text style={baseStyles.textPromptRibbon}>
+            Book these on the LTP website.
+          </Text>
         </View>
       )}
       {dataError ? (
         <ErrorDetails
-          errorSummary="Error syncing LTP"
+          errorSummary={'Error syncing LTP'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}

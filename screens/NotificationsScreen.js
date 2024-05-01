@@ -1,18 +1,24 @@
-import { Ionicons } from '@expo/vector-icons';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  ImageBackground,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { RFPercentage } from 'react-native-responsive-fontsize';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
-import { getLtpLoansRequest } from '../actions/ltpLoans';
-import { getNewsRequest } from '../actions/news';
-import { getOdisRequest } from '../actions/odis';
-import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
-import ErrorDetails from '../components/ErrorDetails';
-import InlineIcon from '../components/InlineIcon';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import ErrorDetails from '../components/ErrorDetails';
+import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
+import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
+import { getLtpLoansRequest } from '../actions/ltpLoans';
+import { getOdisRequest } from '../actions/odis';
+import { getNewsRequest } from '../actions/news';
+import InlineIcon from '../components/InlineIcon';
 import { selectFetchParamsObj } from '../reducers/user';
 
 // const backgroundImage = { uri: 'https://reactjs.org/logo-og.png' };
@@ -24,39 +30,77 @@ export default NotificationsScreen = (props) => {
   const dispatch = useDispatch();
   const showingDemoData = useSelector((state) => state.user.showingDemoData);
   const userBrand = useSelector((state) => state.user.userBrand);
-  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
   const odisRedCount = useSelector((state) => state.odis.redCount);
-  const calibrationExpiryOverdueCount = useSelector((state) => state.calibrationExpiry.overdueCount);
-  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
-  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
-  const calibrationExpiryTotalCount = useSelector((state) => state.calibrationExpiry.totalCount);
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
+  const calibrationExpiryTotalCount = useSelector(
+    (state) => state.calibrationExpiry.totalCount
+  );
   const ltpLoansTotalCount = useSelector((state) => state.ltpLoans.totalCount);
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
-  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
-  const serviceMeasuresTotalCount = useSelector((state) => state.serviceMeasures.totalCount);
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const serviceMeasuresTotalCount = useSelector(
+    (state) => state.serviceMeasures.totalCount
+  );
 
   const userDataObj = useSelector((state) => state.user.userData[0]);
-  const userRequestedDemoData = useSelector((state) => state.user.requestedDemoData);
+  const userRequestedDemoData = useSelector(
+    (state) => state.user.requestedDemoData
+  );
   const [isLoadingAny, setIsLoadingAny] = useState(false);
   const [dataNameInPlay, setDataNameInPlay] = useState('');
   const [dataErrorAny, setDataErrorAny] = useState('');
   const [dataStatusCodeAny, setDataStatusCodeAny] = useState('');
   const [dataErrorUrlAny, setDataErrorUrlAny] = useState('');
   const [dataErrorSummary, setDataErrorSummary] = useState('');
-  const isLoadingCalibrationExpiry = useSelector((state) => state.calibrationExpiry.isLoading);
+  const isLoadingCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.isLoading
+  );
   const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
   const dataErrorLtpLoans = useSelector((state) => state.ltpLoans.error);
-  const dataStatusCodeLtpLoans = useSelector((state) => state.ltpLoans.statusCode);
-  const dataErrorUrlLtpLoans = useSelector((state) => state.ltpLoans.dataErrorUrl);
-  const isLoadingServiceMeasures = useSelector((state) => state.serviceMeasures.isLoading);
-  const dataErrorServiceMeasures = useSelector((state) => state.serviceMeasures.error);
-  const dataStatusCodeServiceMeasures = useSelector((state) => state.serviceMeasures.statusCode);
-  const dataErrorUrlServiceMeasures = useSelector((state) => state.serviceMeasures.dataErrorUrl);
-  const dataErrorCalibrationExpiry = useSelector((state) => state.calibrationExpiry.error);
-  const dataStatusCodeCalibrationExpiry = useSelector((state) => state.calibrationExpiry.statusCode);
-  const dataErrorUrlCalibrationExpiry = useSelector((state) => state.calibrationExpiry.dataErrorUrl);
+  const dataStatusCodeLtpLoans = useSelector(
+    (state) => state.ltpLoans.statusCode
+  );
+  const dataErrorUrlLtpLoans = useSelector(
+    (state) => state.ltpLoans.dataErrorUrl
+  );
+  const isLoadingServiceMeasures = useSelector(
+    (state) => state.serviceMeasures.isLoading
+  );
+  const dataErrorServiceMeasures = useSelector(
+    (state) => state.serviceMeasures.error
+  );
+  const dataStatusCodeServiceMeasures = useSelector(
+    (state) => state.serviceMeasures.statusCode
+  );
+  const dataErrorUrlServiceMeasures = useSelector(
+    (state) => state.serviceMeasures.dataErrorUrl
+  );
+  const dataErrorCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.error
+  );
+  const dataStatusCodeCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.statusCode
+  );
+  const dataErrorUrlCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.dataErrorUrl
+  );
   const [isOpenCalibrationExpiry, setIsOpenCalibrationExpiry] = useState(false);
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
@@ -78,12 +122,21 @@ export default NotificationsScreen = (props) => {
   }, [dispatch, fetchParamsObj]);
 
   useEffect(() => {
-    if (isLoadingCalibrationExpiry || isLoadingLtpLoans || isLoadingServiceMeasures) {
+    if (
+      isLoadingCalibrationExpiry ||
+      isLoadingLtpLoans ||
+      isLoadingServiceMeasures
+    ) {
       setIsLoadingAny(true);
     } else {
       setIsLoadingAny(false);
     }
-  }, [isLoadingCalibrationExpiry, isLoadingLtpLoans, isLoadingServiceMeasures, showingDemoData]);
+  }, [
+    isLoadingCalibrationExpiry,
+    isLoadingLtpLoans,
+    isLoadingServiceMeasures,
+    showingDemoData,
+  ]);
 
   useEffect(() => {
     if (dataErrorLtpLoans) {
@@ -158,25 +211,37 @@ export default NotificationsScreen = (props) => {
           }}
         >
           <Text style={{ ...baseStyles.textPromptRibbon, textAlign: 'left' }}>
-            Your Important Actions
+            {`Your Important Actions`}
             {isLoadingAny ? <Text>{` - Checking   `}</Text> : null}
           </Text>
-          {isLoadingAny ? <ActivityIndicator size="small" color="white" /> : null}
+          {isLoadingAny ? (
+            <ActivityIndicator size={'small'} color={'white'} />
+          ) : null}
         </View>
-        {!setIsLoadingAny && userRequestedDemoData && userRequestedDemoData === true ? (
+        {!setIsLoadingAny &&
+        userRequestedDemoData &&
+        userRequestedDemoData === true ? (
           <View style={baseStyles.viewDummyDataRibbon}>
-            <Text style={baseStyles.textPromptRibbon}>Showing sample data - change in menu.</Text>
-            <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
+            <Text style={baseStyles.textPromptRibbon}>
+              Showing sample data - change in menu.
+            </Text>
+            <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
           </View>
         ) : null}
 
         {odisRedCount ? (
           <TouchableOpacity
-            onPress={() => navigation.navigate('RemindersTabs', { screen: 'ODIS' })}
+            onPress={() =>
+              navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+            }
             style={{ backgroundColor: Colors.vwgWhite }}
           >
             <View style={baseStyles.viewSectionRibbon}>
-              <Ionicons name="tv" size={20} color={Colors.vwgBadgeSevereAlertColor} />
+              <Ionicons
+                name='tv'
+                size={20}
+                color={Colors.vwgBadgeSevereAlertColor}
+              />
               <Text style={baseStyles.textSectionRibbon}>
                 {`  Please see `}
                 <Text
@@ -188,16 +253,22 @@ export default NotificationsScreen = (props) => {
                   {`ODIS version changes   `}
                 </Text>
               </Text>
-              <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+              <Ionicons
+                name='open-outline'
+                size={16}
+                style={{ marginTop: 2 }}
+              />
             </View>
           </TouchableOpacity>
         ) : odisChangesToHighlight ? (
           <TouchableOpacity
-            onPress={() => navigation.navigate('RemindersTabs', { screen: 'ODIS' })}
+            onPress={() =>
+              navigation.navigate('RemindersTabs', { screen: 'ODIS' })
+            }
             style={{ backgroundColor: Colors.vwgWhite }}
           >
             <View style={baseStyles.viewSectionRibbon}>
-              <Ionicons name="tv" size={20} color={Colors.vwgBadgeAlertColor} />
+              <Ionicons name='tv' size={20} color={Colors.vwgBadgeAlertColor} />
               <Text style={baseStyles.textSectionRibbon}>
                 {`  See `}
                 <Text
@@ -209,7 +280,11 @@ export default NotificationsScreen = (props) => {
                   {`recent ODIS version changes  `}
                 </Text>
               </Text>
-              <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+              <Ionicons
+                name='open-outline'
+                size={16}
+                style={{ marginTop: 2 }}
+              />
             </View>
           </TouchableOpacity>
         ) : null}
@@ -217,7 +292,7 @@ export default NotificationsScreen = (props) => {
         {!isLoadingServiceMeasures ? (
           dataErrorServiceMeasures ? (
             <ErrorDetails
-              errorSummary="Error syncing Service Measures"
+              errorSummary={'Error syncing Service Measures'}
               dataStatusCode={dataStatusCodeServiceMeasures}
               errorHtml={dataErrorServiceMeasures}
               dataErrorUrl={dataErrorUrlServiceMeasures}
@@ -236,7 +311,11 @@ export default NotificationsScreen = (props) => {
                 >
                   {serviceMeasuresRedCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="checkbox" size={20} color={Colors.vwgBadgeSevereAlertColor} />
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
 
                       <Text style={baseStyles.textSectionRibbon}>
                         {`  See your`}
@@ -248,14 +327,24 @@ export default NotificationsScreen = (props) => {
                         >
                           {` urgent `}
 
-                          {serviceMeasuresRedCount > 1 ? `Service Measures  ` : `Service Measure  `}
+                          {serviceMeasuresRedCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure  `}
                         </Text>
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : serviceMeasuresAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="checkbox" size={20} color={Colors.vwgBadgeAlertColor} />
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
                       <Text style={baseStyles.textSectionRibbon}>
                         {`  See your`}
                         <Text
@@ -266,27 +355,43 @@ export default NotificationsScreen = (props) => {
                         >
                           {` expiring `}
 
-                          {serviceMeasuresAmberCount > 1 ? `Service Measures  ` : `Service Measure `}
+                          {serviceMeasuresAmberCount > 1
+                            ? `Service Measures  `
+                            : `Service Measure `}
                         </Text>
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="checkbox" size={20} color={Colors.vwgBadgeOKColor} />
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
                       <Text style={baseStyles.textSectionRibbon}>
                         {serviceMeasuresTotalCount > 1
                           ? `  See your open Service Measures  `
                           : `  See your open Service Measure  `}
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   )}
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name="checkbox" size={20} color={Colors.vwgBlack} />
-                  <Text style={baseStyles.textSectionRibbon}>{`   No expiring Service Measures`}</Text>
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`   No expiring Service Measures`}
+                  </Text>
                 </View>
               )}
             </View>
@@ -295,7 +400,7 @@ export default NotificationsScreen = (props) => {
         {!isLoadingLtpLoans ? (
           dataErrorLtpLoans ? (
             <ErrorDetails
-              errorSummary="Error syncing LTP Loans"
+              errorSummary={'Error syncing LTP Loans'}
               dataStatusCode={dataStatusCodeLtpLoans}
               errorHtml={dataErrorLtpLoans}
               dataErrorUrl={dataErrorUrlLtpLoans}
@@ -314,7 +419,11 @@ export default NotificationsScreen = (props) => {
                 >
                   {ltpLoansRedCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="calendar" size={20} color={Colors.vwgBadgeSevereAlertColor} />
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeSevereAlertColor}
+                      />
 
                       <Text style={baseStyles.textSectionRibbon}>
                         {`  See your`}
@@ -326,14 +435,24 @@ export default NotificationsScreen = (props) => {
                         >
                           {` urgent `}
 
-                          {ltpLoansTotalCount > 1 ? `LTP Loan returns  ` : `LTP Loan return  `}
+                          {ltpLoansTotalCount > 1
+                            ? `LTP Loan returns  `
+                            : `LTP Loan return  `}
                         </Text>
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : ltpLoansAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="calendar" size={20} color={Colors.vwgBadgeAlertColor} />
+                      <Ionicons
+                        name='calendar'
+                        size={20}
+                        color={Colors.vwgBadgeAlertColor}
+                      />
                       <Text style={baseStyles.textSectionRibbon}>
                         {`  See your`}
                         <Text
@@ -347,22 +466,38 @@ export default NotificationsScreen = (props) => {
                           {ltpLoansAmberCount > 1 ? `LTP Loans  ` : `LTP Loan `}
                         </Text>
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
-                      <Ionicons name="checkbox" size={20} color={Colors.vwgBadgeOKColor} />
+                      <Ionicons
+                        name='checkbox'
+                        size={20}
+                        color={Colors.vwgBadgeOKColor}
+                      />
                       <Text style={baseStyles.textSectionRibbon}>
-                        {ltpLoansTotalCount > 1 ? `  See your open LTP Loans  ` : `  See your open LTP Loan `}
+                        {ltpLoansTotalCount > 1
+                          ? `  See your open LTP Loans  `
+                          : `  See your open LTP Loan `}
                       </Text>
-                      <Ionicons name="open-outline" size={16} style={{ marginTop: 2 }} />
+                      <Ionicons
+                        name='open-outline'
+                        size={16}
+                        style={{ marginTop: 2 }}
+                      />
                     </View>
                   )}
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name="checkbox" size={20} color={Colors.vwgBlack} />
-                  <Text style={baseStyles.textSectionRibbon}>{`   No LTP Loans`}</Text>
+                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Text style={baseStyles.textSectionRibbon}>
+                    {`   No LTP Loans`}
+                  </Text>
                 </View>
               )}
             </View>
@@ -371,7 +506,7 @@ export default NotificationsScreen = (props) => {
         {!isLoadingCalibrationExpiry ? (
           dataErrorCalibrationExpiry ? (
             <ErrorDetails
-              errorSummary="Error syncing calibration expiry"
+              errorSummary={'Error syncing calibration expiry'}
               dataStatusCode={dataStatusCodeCalibrationExpiry}
               errorHtml={dataErrorCalibrationExpiry}
               dataErrorUrl={dataErrorUrlCalibrationExpiry}
@@ -386,10 +521,11 @@ export default NotificationsScreen = (props) => {
                 >
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
-                      name="timer"
+                      name='timer'
                       size={20}
                       color={
-                        calibrationExpiryOverdueCount > 0 || calibrationExpiryRedCount > 0
+                        calibrationExpiryOverdueCount > 0 ||
+                        calibrationExpiryRedCount > 0
                           ? Colors.vwgBadgeSevereAlertColor
                           : Colors.vwgBadgeAlertColor
                       }
@@ -408,13 +544,13 @@ export default NotificationsScreen = (props) => {
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name="timer" size={20} color={Colors.vwgBlack} />
+                  <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
                     {calibrationExpiryTotalCount > 1
                       ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
                       : calibrationExpiryTotalCount > 0
-                        ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
-                        : '  No pending Calibration Expiry Actions  '}
+                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                      : '  No pending Calibration Expiry Actions  '}
                   </Text>
                 </View>
               )}
@@ -430,8 +566,8 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType="font-awesome"
-                          iconName="thumbs-down"
+                          itemType='font-awesome'
+                          iconName={'thumbs-down'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeSevereAlertColor}
                         />
@@ -451,8 +587,8 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType="font-awesome"
-                          iconName="thumbs-up"
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeSevereAlertColor}
                         />
@@ -472,8 +608,8 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType="font-awesome"
-                          iconName="thumbs-up"
+                          itemType='font-awesome'
+                          iconName={'thumbs-up'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeAlertColor}
                         />
@@ -497,7 +633,9 @@ export default NotificationsScreen = (props) => {
                 ) : (
                   <View style={baseStyles.viewDataList}>
                     <View style={baseStyles.textDataListItem}>
-                      <Text style={baseStyles.textLeftAligned}>No calibration expirations in the next 60 days.</Text>
+                      <Text style={baseStyles.textLeftAligned}>
+                        No calibration expirations in the next 60 days.
+                      </Text>
                     </View>
                   </View>
                 )

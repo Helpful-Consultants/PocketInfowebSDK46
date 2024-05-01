@@ -1,19 +1,22 @@
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { Text } from '@rneui/themed';
-import { useCallback, useEffect, useState } from 'react';
-import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
-import AwesomeAlert from 'react-native-awesome-alerts';
 import { useDispatch, useSelector } from 'react-redux';
-
-import JobsList from './JobsList';
-import { deleteDealerWipRequest, deleteDealerWipToolRequest, getDealerWipsRequest } from '../actions/dealerWips';
-import { revalidateUserCredentials } from '../actions/user';
+import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
+import { Text } from '@rneui/themed';
+import AwesomeAlert from 'react-native-awesome-alerts';
 import ErrorDetails from '../components/ErrorDetails';
-import Colors from '../constants/Colors';
+import { revalidateUserCredentials } from '../actions/user';
+import {
+  deleteDealerWipRequest,
+  deleteDealerWipToolRequest,
+  getDealerWipsRequest,
+} from '../actions/dealerWips';
 import Urls from '../constants/Urls';
+import Colors from '../constants/Colors';
+import JobsList from './JobsList';
 import searchItems from '../helpers/searchItems';
-import { selectDealerWipsForUser } from '../reducers/dealerWips';
 import { selectFetchParamsObj } from '../reducers/user';
+import { selectDealerWipsForUser } from '../reducers/dealerWips';
 
 const minSearchLength = 1;
 
@@ -65,7 +68,9 @@ export default JobsScreen = (props) => {
     // console.log(searchInput);
     setSearchInput(searchInput);
     if (searchInput && searchInput.length > minSearchLength) {
-      const newFilteredItems = userWipsItems ? searchItems(userWipsItems, searchInput) : [];
+      let newFilteredItems = userWipsItems
+        ? searchItems(userWipsItems, searchInput)
+        : [];
       setFilteredItems(newFilteredItems);
     }
   };
@@ -82,18 +87,18 @@ export default JobsScreen = (props) => {
     // console.log('JOBS *****  in confirmreturnToolHandler', currentTool);
     setIsAlertVisible(false);
     if (currentJob && currentJob.tools && currentJob.tools.length === 1) {
-      const payload = {
+      let payload = {
         wipObj: currentJob,
-        fetchParamsObj,
+        fetchParamsObj: fetchParamsObj,
       };
       //   console.log('JOBS *****  delete wip ' + currentJob.id);
       //   console.log('JOBS *****  delete wip ', payload);
       setTimeout(() => deleteDealerWip(payload), 300);
     } else {
-      const payload = {
+      let payload = {
         wipObj: currentJob,
         wipToolLineId: currentTool.id,
-        fetchParamsObj,
+        fetchParamsObj: fetchParamsObj,
       };
       //   console.log('JOBS *****  remove ' + currentTool.tools_id + 'from ' + currentJob.id);
       //   console.log('JOBS *****  for wip wip ', payload);
@@ -143,7 +148,8 @@ export default JobsScreen = (props) => {
   //   console.log(userWipsItems);
   //   const items = (!isLoading && !dataError && userWipsItems) || [];
   //   console.log(items);
-  const itemsToShow = searchInput?.length > minSearchLength ? filteredItems : userWipsItems;
+  let itemsToShow =
+    searchInput?.length > minSearchLength ? filteredItems : userWipsItems;
   //   console.log(itemsToShow);
   //   console.log(
   //     'JOBS *****  Rendering Jobs screen ',
@@ -155,7 +161,7 @@ export default JobsScreen = (props) => {
   return (
     <View style={baseStyles.containerFlexPaddedBtm}>
       <SearchBarWithRefresh
-        dataName="jobs"
+        dataName={'jobs'}
         someDataExpected={false}
         refreshRequestHandler={refreshRequestHandler}
         searchInputHandler={searchInputHandler}
@@ -164,24 +170,34 @@ export default JobsScreen = (props) => {
         dataError={dataError}
         dataStatusCode={dataStatusCode}
         dataErrorUrl={dataErrorUrl}
-        dataCount={userWipsItems && userWipsItems.length ? userWipsItems.length : 0}
+        dataCount={
+          userWipsItems && userWipsItems.length ? userWipsItems.length : 0
+        }
       />
-      {dataError ? null : searchInput && searchInput.length && searchInput.length >= minSearchLength ? (
-        itemsToShow && itemsToShow.length && itemsToShow.length > 0 ? null : userWipsItems &&
+      {dataError ? null : searchInput &&
+        searchInput.length &&
+        searchInput.length >= minSearchLength ? (
+        itemsToShow &&
+        itemsToShow.length &&
+        itemsToShow.length > 0 ? null : userWipsItems &&
           userWipsItems.length &&
           userWipsItems > 0 ? (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>Your search found no results.</Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              Your search found no results.
+            </Text>
           </View>
         ) : (
           <View style={baseStyles.viewPromptRibbonNoneFound}>
-            <Text style={baseStyles.textPromptRibbon}>You have no jobs yet to search.</Text>
+            <Text style={baseStyles.textPromptRibbon}>
+              You have no jobs yet to search.
+            </Text>
           </View>
         )
       ) : null}
       {dataError ? (
         <ErrorDetails
-          errorSummary="Error syncing jobs"
+          errorSummary={'Error syncing jobs'}
           dataStatusCode={dataStatusCode}
           errorHtml={dataError}
           dataErrorUrl={dataErrorUrl}
@@ -193,7 +209,12 @@ export default JobsScreen = (props) => {
             items={itemsToShow}
             dataCount={dataCount}
             deleteDealerWipRequest={deleteDealerWip}
-            userIntId={(fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) || ''}
+            userIntId={
+              (fetchParamsObj &&
+                fetchParamsObj.userIntId &&
+                fetchParamsObj.userIntId) ||
+              ''
+            }
             baseImageUrl={Urls.toolImage}
             returnToolHandler={returnToolHandler}
             returnAllToolsHandler={returnAllToolsHandler}
@@ -206,14 +227,14 @@ export default JobsScreen = (props) => {
         <AwesomeAlert
           show={isAlertVisible}
           showProgress={false}
-          title="Return tool"
+          title='Return tool'
           message={`Have you returned ${currentTool.partNumber} (${currentTool.toolNumber}) to its correct location?`}
-          closeOnTouchOutside
+          closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
-          showCancelButton
-          showConfirmButton
-          cancelText="Not yet"
-          confirmText="Yes"
+          showCancelButton={true}
+          showConfirmButton={true}
+          cancelText='Not yet'
+          confirmText='Yes'
           confirmButtonColor={Colors.vwgMintGreen}
           cancelButtonColor={Colors.vwgWarmRed}
           onCancelPressed={() => {
