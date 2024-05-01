@@ -1,48 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions } from 'react-native';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { getPushDataObject } from 'native-notify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Dimensions, Platform, useWindowDimensions } from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector } from 'react-redux';
+
 import HeaderButton from '../components/HeaderButton';
-import TitleWithAppLogo from '../components/TitleWithAppLogo';
 import TabBarIcon from '../components/TabBarIcon';
+import TitleWithAppLogo from '../components/TitleWithAppLogo';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
-import NotificationsScreen from '../screens/NotificationsScreen';
-import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
-import LtpLoansScreen from '../screens/LtpLoansScreen';
-import OdisScreen from '../screens/OdisScreen';
-import Colors from '../constants/Colors';
 import { AppSections } from '../constants/AppParts';
+import Colors from '../constants/Colors';
+import getBaseStyles from '../helpers/getBaseStyles';
+import getNavTargetObj from '../helpers/getNavTargetObj';
+import LtpLoansScreen from '../screens/LtpLoansScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
+import OdisScreen from '../screens/OdisScreen';
+import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
-import getNavTargetObj from '../helpers/getNavTargetObj';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
-let navBarFontSize =
+const navBarFontSize =
   screenWidth > 1023
     ? baseFontSize * 1.3
     : screenWidth > 767
-    ? baseFontSize * 1.2
-    : screenWidth > 413
-    ? baseFontSize * 1.1
-    : screenWidth > 374
-    ? baseFontSize * 1
-    : baseFontSize * 1;
+      ? baseFontSize * 1.2
+      : screenWidth > 413
+        ? baseFontSize * 1.1
+        : screenWidth > 374
+          ? baseFontSize * 1
+          : baseFontSize * 1;
 
-let headerHeight =
-  screenWidth > 1023
-    ? 90
-    : screenWidth > 767
-    ? 80
-    : screenWidth > 413
-    ? 70
-    : screenWidth > 374
-    ? 60
-    : 60;
+// const headerHeight =
+//   screenWidth > 1023 ? 90 : screenWidth > 767 ? 80 : screenWidth > 413 ? 70 : screenWidth > 374 ? 60 : 60;
 // console.log('screenHeight', screenHeight);
 // console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
 
@@ -62,7 +56,7 @@ const RemindersTabs = createBottomTabNavigator();
 //   showBadgeServiceMeasures && showBadgeServiceMeasures
 // );
 
-export default RemindersTabNavigator = ({ navigation, route }) => {
+const RemindersTabNavigator = ({ navigation, route }) => {
   //   const dispatch = useDispatch();
   //   const thisSection = AppSections.REMINDERSTABS;
   //   const notificationTarget = useSelector(
@@ -72,89 +66,72 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   //     'notificationTarget state.user.notificationTarget',
   //     notificationTarget
   //   );
-  const showingDemoData = useSelector(
-    (state) => state.user.userRequestedDemoData
-  );
-  const calibrationExpiryOverdueCount = useSelector(
-    (state) => state.calibrationExpiry.overdueCount
-  );
-  const calibrationExpiryRedCount = useSelector(
-    (state) => state.calibrationExpiry.redCount
-  );
-  const calibrationExpiryAmberCount = useSelector(
-    (state) => state.calibrationExpiry.amberCount
-  );
+  const showingDemoData = useSelector((state) => state.user.userRequestedDemoData);
+  const calibrationExpiryOverdueCount = useSelector((state) => state.calibrationExpiry.overdueCount);
+  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
+  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const odisChangesToHighlight = useSelector(
-    (state) => state.odis.changesToHighlight
-  );
+  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
   const odisRedCount = useSelector((state) => state.odis.redCount);
-  const serviceMeasuresRedCount = useSelector(
-    (state) => state.serviceMeasures.redCount
-  );
-  const serviceMeasuresAmberCount = useSelector(
-    (state) => state.serviceMeasures.amberCount
-  );
-  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] =
-    useState(0);
+  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
+  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
+  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] = useState(0);
   const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
   const [pushDataObj, setPushDataObj] = useState(null);
-  const [pushDataReturned, setPushDataReturned] = useState(false);
-
-  //   const [pushDataTargetScreen, setPushDataTargetScreen] = useState(null);
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const getPushDataObjFn = async () => {
-    // console.log('in RemNav in getPushDataObjFn');
+  const getPushDataObjFn = useCallback(async () => {
+    // console.log('in NewsNav in getPushDataObjFn');
     // let data = {};
     try {
-      data = await getPushDataObject();
-      //   console.log('in RemNav getPushDataObjFn finished', data);
+      const fetchedData = await getPushDataObject();
+      //   console.log('in NewsNav getPushDataObjFn finished', data);
       //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
       //     setPushDataTargetScreen(pushDataObj.targetScreen);
       //   }
+      return fetchedData;
     } catch (err) {
-      //   console.log('in RemNav getPushDataObjFn err', err);
+      console.log('in NewsNav getPushDataObjFn err', err);
+      return {};
     }
-    // console.log('in RemNav end of getPushDataObjFn', data);
-  };
+    // console.log('in NewsNav end of getPushDataObjFn', data);
+  }, []);
   // let data = getPushDataObject();
-  let data = {};
-  getPushDataObjFn();
+  const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
       //   console.log(
-      //     'in Home useEffect 1, storing in state data' + JSON.stringify(data)
+      //     'in RemNav useEffect 1, storing in state data' + JSON.stringify(data)
       //   );
       setPushDataObj(data);
     } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
+      //   console.log('in RemNav useEffect 1 dataError' + JSON.stringify(data));
       setPushDataObj(data);
       // } else {
       //   console.log(
-      //     'in Home useEffect 1 no data in state data' + JSON.stringify(data)
+      //     'in RemNav useEffect 1 no data in state data' + JSON.stringify(data)
       //   );
     }
-  }); // must not have any dependency on pushDataObj
+  }, [data]); // must not have any dependency on pushDataObj
 
   useEffect(() => {
-    // console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
+    // console.log('in RemNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj?.hasOwnProperty('dataError')) {
       //   console.log(
-      //     'in Home pushDataObj.hasOwnProperty(dataError)' +
+      //     'in RemNav pushDataObj.hasOwnProperty(dataError)' +
       //       JSON.stringify(pushDataObj)
       //   );
       navigation.navigate('NewsTabs', { screen: 'News' });
     } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
       //   console.log(
-      //     'in Home pushDataObj.hasOwnProperty(targetScreen)' +
+      //     'in RemNav pushDataObj.hasOwnProperty(targetScreen)' +
       //       JSON.stringify(pushDataObj)
       //   );
       const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      //   console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
+      //   console.log('in RemNav after getNavTargetObj' + JSON.stringify(targetObj));
       if (
         targetObj?.hasOwnProperty('targetScreen') &&
         targetObj.targetScreen &&
@@ -162,24 +139,22 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         targetObj.targetSection
       ) {
         //   dispatch(setNotificationTarget(targetObj));
-        // console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
+        // console.log('in RemNav end targetObj: ' + JSON.stringify(targetObj));
         const tempNotificationTarget = { ...targetObj };
         //     (pushDataObj && pushDataObj.targetScreen) || null;
         // console.log(
-        //   'in Home useEffect, tempNotificationTarget',
+        //   'in RemNav useEffect, tempNotificationTarget',
         //   JSON.stringify(tempNotificationTarget)
         // );
         const constantFromTargetSection =
-          tempNotificationTarget?.targetSection
-            .replace?.(/\s/g, '')
-            .toUpperCase?.() ?? '';
+          tempNotificationTarget?.targetSection.replace?.(/\s/g, '').toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in Home useEffect, e');
+          //   console.log('in RemNav useEffect, e');
           navigation.navigate('Home');
         } else {
           //   console.log(
-          //     'in Home useEffect ready to navigate to' +
+          //     'in RemNav useEffect ready to navigate to' +
           //       JSON.stringify(tempNotificationTarget)
           //   );
           navigation.navigate(tempNotificationTarget.targetSection, {
@@ -189,33 +164,31 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         // setPushDataObj(data);
         //   } else {
         //     console.log(
-        //       'in Home Target object is not useable.' + JSON.stringify(targetObj)
+        //       'in RemNav Target object is not useable.' + JSON.stringify(targetObj)
         //     );
       }
     }
     // if (pushDataObj != null) {
-    //   console.log('in Home at zz' + JSON.stringify(pushDataObj));
+    //   console.log('in RemNav at zz' + JSON.stringify(pushDataObj));
     // }
-  }, [pushDataObj]); // stops it looping
+  }, [pushDataObj, navigation]); // stops it looping
 
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
       },
-      headerTitle: () => (
-        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
-      ),
+      headerTitle: () => <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />,
       headerLeftContainerStyle: { ...baseStyles.paddingLeft },
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='home'
-            iconName={'home'}
+            title="home"
+            iconName="home"
             onPress={() => {
-              {
-                /* console.log('pressed homescreen icon'); */
-              }
+              //   {
+              //     /* console.log('pressed homescreen icon'); */
+              //   }
               navigation.navigate('Home');
             }}
           />
@@ -224,8 +197,8 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='menu'
-            iconName={'menu'}
+            title="menu"
+            iconName="menu"
             onPress={() => {
               navigation.toggleDrawer();
             }}
@@ -233,7 +206,7 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation, route]);
+  }, [navigation, route, baseStyles.paddingLeft]);
 
   useEffect(() => {
     //   console.log(
@@ -247,43 +220,30 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
     //     tempNotifiableAlertsRedCount
     //   );
 
-    if (
-      typeof calibrationExpiryOverdueCount === 'number' &&
-      calibrationExpiryOverdueCount > 0
-    ) {
+    if (typeof calibrationExpiryOverdueCount === 'number' && calibrationExpiryOverdueCount > 0) {
       // console.log(
       //   'adding calibrationExpiryOverdueCount',
       //   calibrationExpiryOverdueCount
       // );
-      tempNotifiableAlertsRedCount =
-        tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
+      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
     }
-    if (
-      typeof calibrationExpiryRedCount === 'number' &&
-      calibrationExpiryRedCount > 0
-    ) {
+    if (typeof calibrationExpiryRedCount === 'number' && calibrationExpiryRedCount > 0) {
       // console.log(
       //   'adding calibrationExpiryRedCount',
       //   calibrationExpiryRedCount
       // );
-      tempNotifiableAlertsRedCount =
-        tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
+      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
     }
-    if (
-      typeof serviceMeasuresRedCount === 'number' &&
-      serviceMeasuresRedCount > 0
-    ) {
+    if (typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0) {
       // console.log(
       //   'adding tempNotifiableAlertsRedCount',
       //   serviceMeasuresRedCount
       // );
-      tempNotifiableAlertsRedCount =
-        tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
+      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
     }
     if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
       // console.log('adding ltpLoansRedCount', ltpLoansRedCount);
-      tempNotifiableAlertsRedCount =
-        tempNotifiableAlertsRedCount + ltpLoansRedCount;
+      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + ltpLoansRedCount;
     }
     if (typeof odisRedCount === 'number' && odisRedCount > 0) {
       // console.log('adding odisRedCount', odisRedCount);
@@ -320,28 +280,16 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   useEffect(() => {
     let tempNotifiableAlertsAmberCount = 0;
 
-    if (
-      typeof calibrationExpiryAmberCount === 'number' &&
-      calibrationExpiryAmberCount > 0
-    ) {
-      tempNotifiableAlertsAmberCount =
-        tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
+    if (typeof calibrationExpiryAmberCount === 'number' && calibrationExpiryAmberCount > 0) {
+      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
     }
-    if (
-      typeof serviceMeasuresAmberCount === 'number' &&
-      serviceMeasuresAmberCount > 0
-    ) {
-      tempNotifiableAlertsAmberCount =
-        tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
+    if (typeof serviceMeasuresAmberCount === 'number' && serviceMeasuresAmberCount > 0) {
+      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
     }
     if (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0) {
-      tempNotifiableAlertsAmberCount =
-        tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
+      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
     }
-    if (
-      typeof odisChangesToHighlight === 'number' &&
-      odisChangesToHighlight > 0
-    ) {
+    if (typeof odisChangesToHighlight === 'number' && odisChangesToHighlight > 0) {
       tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
     }
 
@@ -413,8 +361,8 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
 
   return (
     <RemindersTabs.Navigator //iOS
-      initialRouteName='Alerts' // ios and android
-      backBehavior='history' // ios and android
+      initialRouteName="Alerts" // ios and android
+      backBehavior="history" // ios and android
       // for android - start
       activeColor={Colors.vwgActiveLink} // android
       inactiveColor={Colors.vwgInactiveLink} // android
@@ -444,85 +392,58 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
       // for ios - end
     >
       <RemindersTabs.Screen
-        name='Alerts'
+        name="Alerts"
         component={NotificationsScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon focused={focused} name='alert-circle' size={size} />
-          ),
+          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="alert-circle" size={size} />,
           tabBarBadge:
             (notifiableAlertsRedCount && notifiableAlertsRedCount > 0) ||
             (notifiableAlertsAmberCount && notifiableAlertsAmberCount > 0)
               ? ''
               : null,
           tabBarBadgeStyle: {
-            color:
-              notifiableAlertsRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
-            backgroundColor:
-              notifiableAlertsRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
+            color: notifiableAlertsRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            backgroundColor: notifiableAlertsRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
           },
         }}
       />
       <RemindersTabs.Screen
-        name='Service Measures'
+        name="Service Measures"
         component={ServiceMeasuresScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon focused={focused} name='checkbox' size={size} />
-          ),
+          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="checkbox" size={size} />,
           tabBarBadge:
             (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
             (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
               ? ''
               : null,
           tabBarBadgeStyle: {
-            color:
-              serviceMeasuresRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
-            backgroundColor:
-              serviceMeasuresRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
+            color: serviceMeasuresRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            backgroundColor: serviceMeasuresRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
           },
         }}
       />
       <RemindersTabs.Screen
-        name='LTP Loans'
+        name="LTP Loans"
         component={LtpLoansScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => (
-            <TabBarIcon focused={focused} name='calendar' size={size} />
-          ),
+          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="calendar" size={size} />,
           tabBarBadge:
-            (ltpLoansRedCount && ltpLoansRedCount > 0) ||
-            (ltpLoansAmberCount && ltpLoansAmberCount > 0)
-              ? ''
-              : null,
+            (ltpLoansRedCount && ltpLoansRedCount > 0) || (ltpLoansAmberCount && ltpLoansAmberCount > 0) ? '' : null,
           tabBarBadgeStyle: {
-            color:
-              ltpLoansRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
-            backgroundColor:
-              ltpLoansRedCount > 0
-                ? Colors.vwgBadgeSevereAlertColor
-                : Colors.vwgWarmOrange,
+            color: ltpLoansRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            backgroundColor: ltpLoansRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
           },
         }}
       />
       <RemindersTabs.Screen
-        name='ODIS'
+        name="ODIS"
         component={OdisScreen}
         options={{
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon
               focused={focused}
-              name='tv'
+              name="tv"
               size={size}
               // alert={odisChangesToHighlight? false : true}
               alert={false}
@@ -534,14 +455,14 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
               odisRedCount && odisRedCount > 0
                 ? Colors.vwgBadgeSevereAlertColor
                 : odisChangesToHighlight && odisChangesToHighlight > 0
-                ? Colors.vwgBadgeAlertColor
-                : Colors.vwgBadgeColor,
+                  ? Colors.vwgBadgeAlertColor
+                  : Colors.vwgBadgeColor,
             backgroundColor:
               odisRedCount && odisRedCount > 0
                 ? Colors.vwgBadgeSevereAlertColor
                 : odisChangesToHighlight && odisChangesToHighlight > 0
-                ? Colors.vwgBadgeAlertColor
-                : Colors.vwgBadgeColor,
+                  ? Colors.vwgBadgeAlertColor
+                  : Colors.vwgBadgeColor,
           },
         }}
       />
@@ -549,3 +470,4 @@ export default RemindersTabNavigator = ({ navigation, route }) => {
   );
 };
 // End Tab navigator
+export default RemindersTabNavigator;

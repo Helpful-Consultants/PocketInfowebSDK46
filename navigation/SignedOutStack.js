@@ -1,7 +1,7 @@
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import SignInScreen from '../screens/SignInScreen';
+
 import ForgottenPasswordScreen from '../screens/ForgottenPasswordScreen';
+import SignInScreen from '../screens/SignInScreen';
 
 const defaultStackNavOptions = {
   headerShown: false,
@@ -10,19 +10,17 @@ const defaultStackNavOptions = {
 
 const Stack = createStackNavigator();
 
-export default SignedOutStack = () => {
+const SignedOutStack = () => {
   return (
     <Stack.Navigator screenOptions={defaultStackNavOptions}>
+      <Stack.Screen name="SignIn" component={SignInScreen} options={{ title: 'Sign in', headerShown: false }} />
       <Stack.Screen
-        name={'SignIn'}
-        component={SignInScreen}
-        options={{ title: 'Sign in', headerShown: false }}
-      />
-      <Stack.Screen
-        name={'ForgottenPassword'}
+        name="ForgottenPassword"
         component={ForgottenPasswordScreen}
         options={{ title: 'Need your PIN?', headerShown: true }}
       />
     </Stack.Navigator>
   );
 };
+
+export default SignedOutStack;

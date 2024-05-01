@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Platform,
-  Text,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+// import * as BackgroundFetch from 'expo-background-fetch';
+// import * as TaskManager from 'expo-task-manager';
+import { useEffect } from 'react';
+import { Button, Platform, Text, useWindowDimensions, View } from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavigationContainer } from '@react-navigation/native';
-import {
-  createDrawerNavigator,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import * as BackgroundFetch from 'expo-background-fetch';
-import * as TaskManager from 'expo-task-manager';
+
 //import { Ionicons } from '@expo/vector-icons';
 // import { setUserOutdatedCredentials } from '../actions/user';
 // import { setUserValidated } from '../actions/user';
+import NewsTabNavigator from './NewsTabNavigator';
+import RemindersTabNavigator from './RemindersTabNavigator';
+import SignedOutStack from './SignedOutStack';
+import WipTabNavigator from './WipTabNavigator';
 import { revalidateUserCredentials } from '../actions/user';
 //import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import {
@@ -27,20 +22,15 @@ import { revalidateUserCredentials } from '../actions/user';
 //   getManufacturer
 // } from 'react-native-device-info';
 // import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-
-import HomeScreen from '../screens/HomeScreen';
 import AppInfo from '../components/AppInfo';
-import DemoAppSwitch from '../components/DemoAppSwitch';
+// import DemoAppSwitch from '../components/DemoAppSwitch';
 import DemoDataSwitch from '../components/DemoDataSwitch';
 // import BackgroundFetchBlock from '../components/BackgroundFetchBlock';
 // import Tasks from '../constants/Tasks';
 import Colors from '../constants/Colors';
-import { AppSectionsByScreen } from '../constants/AppParts';
-import WipTabNavigator from './WipTabNavigator';
-import NewsTabNavigator from './NewsTabNavigator';
-import RemindersTabNavigator from './RemindersTabNavigator';
-import SignedOutStack from './SignedOutStack';
 import { setBadgeCountAsync } from '../helpers/appBadge';
+import getBaseStyles from '../helpers/getBaseStyles';
+import HomeScreen from '../screens/HomeScreen';
 
 // console.log(Constants && Constants);
 // console.log(Platform && Platform);
@@ -75,7 +65,7 @@ const CustomDrawerContent = (props) => {
         <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
           <DemoDataSwitch />
           <Button
-            title='Sentry Test'
+            title="Sentry Test"
             onPress={() => {
               throw new Error('Sentry test on ' + Platform.OS);
             }}
@@ -97,20 +87,18 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = (props) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
-  let showDataSwitch = true;
+  const showDataSwitch = true;
 
   //   console.log('Dwr Navigator props', props);
 
   return (
     <Drawer.Navigator
-      initialRouteName='Home'
+      initialRouteName="Home"
       headerShown={false}
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props) => (
-        <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
-      )}
+      drawerContent={(props) => <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />}
       screenOptions={{
         drawerActiveTintColor: Colors.vwgWhite,
         drawerInactiveTintColor: Colors.vwgWhite,
@@ -120,7 +108,7 @@ const DrawerNavigator = (props) => {
       }}
     >
       <Drawer.Screen
-        name='Home'
+        name="Home"
         component={HomeScreen}
         options={{
           drawerLabel: 'Home',
@@ -128,21 +116,21 @@ const DrawerNavigator = (props) => {
         }}
       />
       <Drawer.Screen
-        name='WipTabs'
+        name="WipTabs"
         component={WipTabNavigator}
         options={{
           drawerLabel: 'Find Tools, Jobs & LTP List',
         }}
       />
       <Drawer.Screen
-        name='NewsTabs'
+        name="NewsTabs"
         component={NewsTabNavigator}
         options={{
           drawerLabel: 'News & Stats',
         }}
       />
       <Drawer.Screen
-        name='RemindersTabs'
+        name="RemindersTabs"
         component={RemindersTabNavigator}
         options={{
           drawerLabel: 'Alerts, S Measures, Loans, ODIS',
@@ -152,25 +140,17 @@ const DrawerNavigator = (props) => {
   );
 };
 
-export default AppNavigator = (props) => {
+const AppNavigator = (props) => {
   const dispatch = useDispatch();
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
-  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
+  //   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const calibrationExpiryOverdueCount = useSelector(
-    (state) => state.calibrationExpiry.overdueCount
-  );
-  const calibrationExpiryRedCount = useSelector(
-    (state) => state.calibrationExpiry.redCount
-  );
-  const serviceMeasuresRedCount = useSelector(
-    (state) => state.serviceMeasures.redCount
-  );
+  const calibrationExpiryOverdueCount = useSelector((state) => state.calibrationExpiry.overdueCount);
+  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
+  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const unseenCriticalNews = useSelector(
-    (state) => state.news.unseenCriticalNews
-  );
+  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
   const odisRedCount = useSelector((state) => state.odis.redCount);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
@@ -205,39 +185,39 @@ export default AppNavigator = (props) => {
   //       : BackgroundFetch.BackgroundFetchResult.NoData;
   //   };
 
-  async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
-    console.log('in initBackgroundFetch', taskName, taskFn, interval);
-    TaskManager.defineTask(taskName, taskFn);
+  //   async function initBackgroundFetch(taskName, taskFn, interval = 60 * 15) {
+  //     // console.log('in initBackgroundFetch', taskName, taskFn, interval);
+  //     TaskManager.defineTask(taskName, taskFn);
 
-    const status = await BackgroundFetch.getStatusAsync();
-    switch (status) {
-      case BackgroundFetch.BackgroundFetchStatus.Restricted:
-      case BackgroundFetch.BackgroundFetchStatus.Denied:
-        console.log('Background execution is disabled');
-        return;
+  //     const status = await BackgroundFetch.getStatusAsync();
+  //     switch (status) {
+  //       case BackgroundFetch.BackgroundFetchStatus.Restricted:
+  //       case BackgroundFetch.BackgroundFetchStatus.Denied:
+  //         // console.log('Background execution is disabled');
+  //         return;
 
-      default: {
-        // console.log('Background execution allowed');
+  //       default: {
+  //         // console.log('Background execution allowed');
 
-        let tasks = await TaskManager.getRegisteredTasksAsync();
-        tasks = await TaskManager.getRegisteredTasksAsync();
-        // console.log('Registered tasks', tasks);
-        if (tasks.find((f) => f.taskName === taskName) == null) {
-          //   console.log('Registering task');
-          await BackgroundFetch.registerTaskAsync(taskName, {
-            minimumInterval: 60 * 1, // 1 minutes
-            stopOnTerminate: false, // android only,
-            startOnBoot: true, // android only);
-          });
-        } else {
-          //   console.log(`Task ${taskName} already registered, skipping`);
-        }
+  //         let tasks = await TaskManager.getRegisteredTasksAsync();
+  //         tasks = await TaskManager.getRegisteredTasksAsync();
+  //         // console.log('Registered tasks', tasks);
+  //         if (tasks.find((f) => f.taskName === taskName) == null) {
+  //           //   console.log('Registering task');
+  //           await BackgroundFetch.registerTaskAsync(taskName, {
+  //             minimumInterval: 60 * 1, // 1 minutes
+  //             stopOnTerminate: false, // android only,
+  //             startOnBoot: true, // android only);
+  //           });
+  //         } else {
+  //           //   console.log(`Task ${taskName} already registered, skipping`);
+  //         }
 
-        // console.log('Setting interval to', interval);
-        await BackgroundFetch.setMinimumIntervalAsync(interval);
-      }
-    }
-  }
+  //         // console.log('Setting interval to', interval);
+  //         await BackgroundFetch.setMinimumIntervalAsync(interval);
+  //       }
+  //     }
+  //   }
 
   useEffect(() => {
     //   if (userIsSignedIn && userIsSignedIn === true) {
@@ -260,39 +240,26 @@ export default AppNavigator = (props) => {
     //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
     //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
     //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     let tempNotifiableAlertsCount = 0;
 
-    if (
-      typeof calibrationExpiryOverdueCount === 'number' &&
-      calibrationExpiryOverdueCount > 0
-    ) {
-      tempNotifiableAlertsCount =
-        tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
+    if (typeof calibrationExpiryOverdueCount === 'number' && calibrationExpiryOverdueCount > 0) {
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
     }
-    if (
-      typeof calibrationExpiryRedCount === 'number' &&
-      calibrationExpiryRedCount > 0
-    ) {
-      tempNotifiableAlertsCount =
-        tempNotifiableAlertsCount + calibrationExpiryRedCount;
+    if (typeof calibrationExpiryRedCount === 'number' && calibrationExpiryRedCount > 0) {
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + calibrationExpiryRedCount;
     }
 
     if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
       tempNotifiableAlertsCount = tempNotifiableAlertsCount + ltpLoansRedCount;
     }
-    if (
-      typeof serviceMeasuresRedCount === 'number' &&
-      serviceMeasuresRedCount > 0
-    ) {
-      tempNotifiableAlertsCount =
-        tempNotifiableAlertsCount + serviceMeasuresRedCount;
+    if (typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0) {
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + serviceMeasuresRedCount;
     }
     if (typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0) {
-      tempNotifiableAlertsCount =
-        tempNotifiableAlertsCount + unseenCriticalNews;
+      tempNotifiableAlertsCount = tempNotifiableAlertsCount + unseenCriticalNews;
     }
     if (typeof odisRedCount === 'number' && odisRedCount > 0) {
       tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
@@ -326,15 +293,10 @@ export default AppNavigator = (props) => {
     serviceMeasuresRedCount,
     odisRedCount,
     showingDemoData,
+    unseenCriticalNews,
   ]); //testing objects
 
-  const allOK =
-    userIsValidated &&
-    userIsValidated === true &&
-    userIsSignedIn &&
-    userIsSignedIn === true
-      ? true
-      : false;
+  const allOK = !!(userIsValidated && userIsValidated === true && userIsSignedIn && userIsSignedIn === true);
 
   //   const AppStack = createStackNavigator();
 
@@ -343,9 +305,6 @@ export default AppNavigator = (props) => {
   //   const newPropsObj = { ...props, showingFullApp: true };
   //   console.log('AppNavigator, newPropsObj is: ', newPropsObj);
 
-  return (
-    <NavigationContainer>
-      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
-    </NavigationContainer>
-  );
+  return <NavigationContainer>{allOK === true ? <DrawerNavigator /> : <SignedOutStack />}</NavigationContainer>;
 };
+export default AppNavigator;
