@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Updates from 'expo-updates';
@@ -9,14 +9,7 @@ import Constants from 'expo-constants';
 import { AppSections } from '../constants/AppParts';
 import { AppStoreBuildNumbers } from '../constants/AppVersions';
 // import * as Permissions from 'expo-permissions';
-import {
-  ActivityIndicator,
-  Linking,
-  Platform,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Linking, Platform, ScrollView, useWindowDimensions, View } from 'react-native';
 // import { useSafeArea } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '@rneui/themed';
@@ -28,17 +21,10 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
-import {
-  getUserRequest,
-  revalidateUserCredentials,
-  signOutUserRequest,
-} from '../actions/user';
+import { getUserRequest, revalidateUserCredentials, signOutUserRequest } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
-import {
-  getDealerWipsRequest,
-  emptyDealerWipsRequest,
-} from '../actions/dealerWips';
+import { getDealerWipsRequest, emptyDealerWipsRequest } from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
@@ -46,10 +32,7 @@ import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { selectFetchParamsObj } from '../reducers/user';
 // import { setUserRequestedDemoApp } from '../actions/user';
-import {
-  selectBookedOutToolsForUser,
-  selectDealerWipsForUser,
-} from '../reducers/dealerWips';
+import { selectBookedOutToolsForUser, selectDealerWipsForUser } from '../reducers/dealerWips';
 
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
@@ -68,16 +51,9 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeAreaInsets();
   //   console.log('Constants', Constants);
-  const appOS =
-    Platform && Platform.OS
-      ? Platform.OS === 'ios'
-        ? 'ios'
-        : 'android'
-      : null;
+  const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
   const appName =
-    Constants && Constants.expoConfig && Constants.expoConfig.name
-      ? Constants.expoConfig.name
-      : 'Test app';
+    Constants && Constants.expoConfig && Constants.expoConfig.name ? Constants.expoConfig.name : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
 
   //   console.log(Constants);
@@ -87,10 +63,9 @@ export default HomeScreen = (props) => {
         ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : Constants.expoConfig.android &&
-          Constants.expoConfig.android.versionCode
-        ? Constants.expoConfig.android.versionCode
-        : null
+        : Constants.expoConfig.android && Constants.expoConfig.android.versionCode
+          ? Constants.expoConfig.android.versionCode
+          : null
       : null;
 
   //   console.log('^^^^^^^^buildNumber is', buildNumber);
@@ -103,15 +78,15 @@ export default HomeScreen = (props) => {
           ? true
           : false
         : buildNumber !== AppStoreBuildNumbers.IOS_PRO // it is a string
-        ? true
-        : false
+          ? true
+          : false
       : appEdition === 'extra' // android
-      ? buildNumber !== AppStoreBuildNumbers.ANDROID_EXTRA // it is a number
-        ? true
-        : false
-      : buildNumber !== AppStoreBuildNumbers.ANDROID_PRO // it is a number
-      ? true
-      : false
+        ? buildNumber !== AppStoreBuildNumbers.ANDROID_EXTRA // it is a number
+          ? true
+          : false
+        : buildNumber !== AppStoreBuildNumbers.ANDROID_PRO // it is a number
+          ? true
+          : false
     : true;
   //   const isUpdateNeeded = false;
 
@@ -143,9 +118,7 @@ export default HomeScreen = (props) => {
   //   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const unseenCriticalNews = useSelector(
-    (state) => state.news.unseenCriticalNews
-  );
+  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
   const userBookedOutTools = useSelector(selectBookedOutToolsForUser);
   const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
@@ -154,32 +127,19 @@ export default HomeScreen = (props) => {
   const isLoadingNews = useSelector((state) => state.news.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
   const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
-  const isLoadingCalibrationExpiry = useSelector(
-    (state) => state.calibrationExpiry.isLoading
-  );
-  const serviceMeasuresRedCount = useSelector(
-    (state) => state.serviceMeasures.redCount
-  );
-  const serviceMeasuresAmberCount = useSelector(
-    (state) => state.serviceMeasures.amberCount
-  );
-  const calibrationExpiryRedCount = useSelector(
-    (state) => state.calibrationExpiry.redCount
-  );
-  const calibrationExpiryAmberCount = useSelector(
-    (state) => state.calibrationExpiry.amberCount
-  );
+  const isLoadingCalibrationExpiry = useSelector((state) => state.calibrationExpiry.isLoading);
+  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
+  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
+  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
+  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const odisChangesToHighlight = useSelector(
-    (state) => state.odis.changesToHighlight
-  );
+  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
   const odisRedCount = useSelector((state) => state.odis.redCount);
   const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
   const [notificationsRedCount, setNotificationsRedCount] = useState(0);
   const [notificationsAmberCount, setNotificationsAmberCount] = useState(0);
-  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] =
-    useState(0);
+  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] = useState(0);
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
   const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
@@ -187,7 +147,7 @@ export default HomeScreen = (props) => {
   const [isAppUpdated, setIsAppUpdated] = useState(false);
   const [showReloadDialogue, setShowReloadDialogue] = useState(false);
   const [isLoadingAny, setIsLoadingAny] = useState(false);
-  const [pushDataObj, setPushDataObj] = useState(null);
+  const [pushDataObj, setPushDataObj] = useState({});
   //   const [pushDataTargetScreen, setPushDataTargetScreen] = useState(null);
 
   const windowDim = useWindowDimensions();
@@ -199,11 +159,7 @@ export default HomeScreen = (props) => {
 
   const getAllItems = useCallback(
     (fetchParamsObj) => {
-      if (
-        fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        fetchParamsObj.userIntId
-      ) {
+      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
         dispatch(
           getUserRequest({
             userIntId: fetchParamsObj.userIntId,
@@ -222,11 +178,7 @@ export default HomeScreen = (props) => {
   );
   const getLtpItems = useCallback(
     (fetchParamsObj) => {
-      if (
-        fetchParamsObj &&
-        fetchParamsObj.userIntId &&
-        fetchParamsObj.userIntId
-      ) {
+      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
         dispatch(getLtpRequest(fetchParamsObj));
       }
     },
@@ -424,28 +376,19 @@ export default HomeScreen = (props) => {
   const gridRows = 8;
 
   const openAppStore = () => {
-    const androidAppLinkPro =
-      'market://details?id=com.helpfulconsultants.pocketinfowebpro';
-    const androidAppLinkExtra =
-      'market://details?id=com.helpfulconsultants.pocketinfowebextra';
-    const iosAppLinkPro =
-      'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
-    const iosAppLinkExtra =
-      'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-    const appOS =
-      Platform && Platform.OS
-        ? Platform.OS === 'ios'
-          ? 'ios'
-          : 'android'
-        : null;
+    const androidAppLinkPro = 'market://details?id=com.helpfulconsultants.pocketinfowebpro';
+    const androidAppLinkExtra = 'market://details?id=com.helpfulconsultants.pocketinfowebextra';
+    const iosAppLinkPro = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
+    const iosAppLinkExtra = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
+    const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
     const appLink =
       appOS === 'ios'
         ? appEdition === 'extra'
           ? iosAppLinkExtra
           : iosAppLinkPro
         : appEdition === 'extra'
-        ? androidAppLinkExtra
-        : androidAppLinkPro;
+          ? androidAppLinkExtra
+          : androidAppLinkPro;
     // console.log('appOS is', appOS);
     // console.log('appLink is', appLink);
 

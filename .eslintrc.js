@@ -15,6 +15,20 @@ module.exports = {
     'prefer-object-spread': 'warn',
     'import/prefer-default-export': ['warn', { target: 'single' }],
     'no-unused-vars': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+        pathGroups: [
+          {
+            pattern: 'react',
+            group: 'external',
+            position: 'before',
+          },
+        ],
+        'newlines-between': 'always',
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,

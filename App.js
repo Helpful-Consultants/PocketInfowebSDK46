@@ -96,10 +96,10 @@ const sentryDist =
       Constants.expoConfig.ios.buildNumber
       ? Constants.expoConfig.ios.buildNumber
       : appOS === 'android' &&
-        Constants.expoConfig.android &&
-        Constants.expoConfig.android.versionCode
-      ? Constants.expoConfig.android.versionCode
-      : ''
+          Constants.expoConfig.android &&
+          Constants.expoConfig.android.versionCode
+        ? Constants.expoConfig.android.versionCode
+        : ''
     : '';
 // console.log('SENTRY_PROJECT', process.env.EXPO_PUBLIC_SENTRY_PROJECT);
 console.log('sentryDist for sentry', appOS, sentryDist);
@@ -419,9 +419,9 @@ export default function App(props) {
         <PersistGate loading={<Loading />} persistor={persistor}>
           <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
             {appOS === 'ios' ? (
-              <StatusBar barStyle='dark-content' />
+              <StatusBar barStyle="dark-content" />
             ) : (
-              <StatusBar backgroundColor='#3689b1' barStyle='light-content' />
+              <StatusBar backgroundColor="#3689b1" barStyle="light-content" />
             )}
             <AppNavigator />
           </View>
