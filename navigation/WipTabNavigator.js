@@ -64,15 +64,15 @@ const WipTabNavigator = ({ navigation, route }) => {
       //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
       //     setPushDataTargetScreen(pushDataObj.targetScreen);
       //   }
+      console.log('in WpNav getPushDataObjFn got', fetchedData);
       return fetchedData;
     } catch (err) {
       console.log('in WpNav getPushDataObjFn err', err);
       return {};
     }
     // console.log('in WpNav end of getPushDataObjFn', data);
-  }, []);
-  // let data = getPushDataObject();
-  const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
+  }, [getPushDataObject]);
+  const data = getPushDataObjFn();
 
   useEffect(() => {
     if (data && data.hasOwnProperty('targetScreen')) {
@@ -88,7 +88,7 @@ const WipTabNavigator = ({ navigation, route }) => {
       //     'in WpNav useEffect 1 no data in state data' + JSON.stringify(data)
       //   );
     }
-  }, [data]); // must not have any dependency on pushDataObj
+  }, []); // must not have any dependency on pushDataObj
 
   useEffect(() => {
     // console.log('in WpNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
