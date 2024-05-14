@@ -120,7 +120,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         //   JSON.stringify(tempNotificationTarget)
         // );
         const constantFromTargetSection =
-          tempNotificationTarget?.targetSection.replace?.(/\s/g, '').toUpperCase?.() ?? '';
+          tempNotificationTarget?.targetSection
+            .replace?.(/\s/g, '')
+            .toUpperCase?.() ?? '';
         // setPushDataObj(null);
         if (constantFromTargetSection === AppSections.HOME) {
           //   console.log('in WpNav useEffect, e');
@@ -152,7 +154,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
       },
       headerLeftContainerStyle: { ...baseStyles.paddingLeft },
-      headerTitle: () => <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />,
+      headerTitle: () => (
+        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
+      ),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -247,7 +251,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         component={FindToolsScreen}
         options={{
           lazy: true,
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="build" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="build" size={size} />
+          ),
         }}
       />
       <WipTabs.Screen
@@ -255,7 +261,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         component={BookedOutToolsScreen}
         options={{
           lazy: true,
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="return-down-back" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="return-down-back" size={size} />
+          ),
         }}
       />
       <WipTabs.Screen
@@ -263,7 +271,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         component={JobsScreen}
         options={{
           lazy: true,
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="clipboard" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="clipboard" size={size} />
+          ),
         }}
       />
       <WipTabs.Screen
@@ -271,7 +281,9 @@ const WipTabNavigator = ({ navigation, route }) => {
         component={LtpListScreen}
         options={{
           lazy: true,
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="swap-horizontal" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="swap-horizontal" size={size} />
+          ),
         }}
       />
     </WipTabs.Navigator>
