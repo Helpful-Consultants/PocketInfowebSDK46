@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { getPushDataObject } from 'native-notify';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux';
@@ -37,149 +37,63 @@ const navBarFontSize =
           ? baseFontSize * 1
           : baseFontSize * 1;
 
-// const headerHeight =
-//   screenWidth > 1023 ? 90 : screenWidth > 767 ? 80 : screenWidth > 413 ? 70 : screenWidth > 374 ? 60 : 60;
-// console.log('screenHeight', screenHeight);
-// console.log('screenWidth', screenWidth, 'navBarFontSize', navBarFontSize);
-
-// Start tab navigator
-
 const NewsTabs = createBottomTabNavigator();
 
-// console.log(
-//   'in news navigator, newsAlertCount ',
-//   newsAlertCount && newsAlertCount
-// );
-
 const NewsTabNavigator = ({ navigation, route }) => {
-  // const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  //   console.log(' NewsTabNavigator', navigation.navigate);
-  //   const dispatch = useDispatch();
-  //   const thisSection = AppSections.NEWSTABS;
   const unseenCriticalNews = useSelector(
     (state) => state.news.unseenCriticalNews
   );
-  //   const notificationTarget = useSelector(
-  //     (state) => state.user.notificationTarget
-  //   );
   const [pushDataObj, setPushDataObj] = useState(null);
-  //   const [pushDataTargetScreen, setPushDataTargetScreen] = useState(null);
   const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
-
-  const getPushDataObjFn = useCallback(async () => {
-    // console.log('in NewsNav in getPushDataObjFn');
-    // let data = {};
-    try {
-      const fetchedData = await getPushDataObject();
-      //   console.log('in NewsNav getPushDataObjFn finished', data);
-      //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
-      //     setPushDataTargetScreen(pushDataObj.targetScreen);
-      //   }
-      return fetchedData;
-    } catch (err) {
-      console.log('in NewsNav getPushDataObjFn err', err);
-      return {};
-    }
-    // console.log('in NewsNav end of getPushDataObjFn', data);
-  }, []);
-  // let data = getPushDataObject();
-  const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
+  const baseStyles = getBaseStyles(windowDim);
 
   useEffect(() => {
-    console.log('useEffect triggered with data:', data);
-
-    // Check if data is defined and an object
-    if (data && typeof data === 'object') {
-      if (data.hasOwnProperty('targetScreen')) {
-        console.log(
-          'in NewsNav useEffect 1, storing in state data: ' +
-            JSON.stringify(data)
-        );
-        setPushDataObj(data);
-      } else if (data.hasOwnProperty('dataError')) {
-        console.log(
-          'in NewsNav useEffect 1 dataError: ' + JSON.stringify(data)
-        );
-        setPushDataObj(data);
-      } else {
-        console.log(
-          'in NewsNav useEffect 1 no relevant data in state: ' +
-            JSON.stringify(data)
-        );
+    const fetchData = async () => {
+      try {
+        const data = await getPushDataObject();
+        if (data && typeof data === 'object') {
+          if (
+            data.hasOwnProperty('targetScreen') ||
+            data.hasOwnProperty('dataError')
+          ) {
+            setPushDataObj(data);
+          } else {
+            console.log('No relevant data:', JSON.stringify(data));
+          }
+        } else {
+          console.log('Data is undefined or not an object');
+        }
+      } catch (err) {
+        console.log('Error fetching push data:', err);
       }
-    } else {
-      console.log('data is undefined or not an object');
-    }
-  }, [data]); // must not have any dependency on pushDataObj
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
-    // console.log('in NewsNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj && typeof pushDataObj === 'object') {
-      if (pushDataObj?.hasOwnProperty('dataError')) {
-        //   console.log(
-        //     'in NewsNav pushDataObj.hasOwnProperty(dataError)' +
-        //       JSON.stringify(pushDataObj)
-        //   );
+      if (pushDataObj?.dataError) {
         navigation.navigate('NewsTabs', { screen: 'News' });
-      } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-        //   console.log(
-        //     'in NewsNav pushDataObj.hasOwnProperty(targetScreen)' +
-        //       JSON.stringify(pushDataObj)
-        //   );
-        const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-        //   console.log('in NewsNav after getNavTargetObj' + JSON.stringify(targetObj));
-        if (
-          targetObj &&
-          typeof targetObj === 'object' &&
-          targetObj.hasOwnProperty('targetScreen') &&
-          targetObj.targetScreen &&
-          targetObj.hasOwnProperty('targetSection') &&
-          targetObj.targetSection
-        ) {
-          //   dispatch(setNotificationTarget(targetObj));
-          // console.log('in NewsNav end targetObj: ' + JSON.stringify(targetObj));
-          const tempNotificationTarget = { ...targetObj };
-          //     (pushDataObj && pushDataObj.targetScreen) || null;
-          // console.log(
-          //   'in NewsNav useEffect, tempNotificationTarget',
-          //   JSON.stringify(tempNotificationTarget)
-          // );
-          const constantFromTargetSection =
-            tempNotificationTarget?.targetSection
-              .replace?.(/\s/g, '')
-              .toUpperCase?.() ?? '';
-          // setPushDataObj(null);
+      } else if (pushDataObj?.targetScreen) {
+        const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+        if (targetObj && targetObj.targetScreen && targetObj.targetSection) {
+          const constantFromTargetSection = targetObj.targetSection
+            .replace(/\s/g, '')
+            .toUpperCase();
           if (constantFromTargetSection === AppSections.HOME) {
-            //   console.log('in NewsNav useEffect, e');
             navigation.navigate('Home');
           } else {
-            //   console.log(
-            //     'in NewsNav useEffect ready to navigate to' +
-            //       JSON.stringify(tempNotificationTarget)
-            //   );
-            navigation.navigate(tempNotificationTarget.targetSection, {
-              screen: tempNotificationTarget.targetScreen,
+            navigation.navigate(targetObj.targetSection, {
+              screen: targetObj.targetScreen,
             });
           }
-          // setPushDataObj(data);
-          //   } else {
-          //     console.log(
-          //       'in NewsNav Target object is not useable.' + JSON.stringify(targetObj)
-          //     );
         }
       }
-    } else {
-      console.log('data is undefined or not an object');
     }
-    // if (pushDataObj != null) {
-    //   console.log('in NewsNav at zz' + JSON.stringify(pushDataObj));
-    // }
   }, [pushDataObj, navigation]); // stops it looping
 
   useEffect(() => {
-    // console.log('alerts:', alerts);
-
     navigation.setOptions({
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
@@ -193,9 +107,7 @@ const NewsTabNavigator = ({ navigation, route }) => {
           <Item
             title="home"
             iconName="home"
-            onPress={() => {
-              navigation.navigate('Home');
-            }}
+            onPress={() => navigation.navigate('Home')}
           />
         </HeaderButtons>
       ),
@@ -204,9 +116,7 @@ const NewsTabNavigator = ({ navigation, route }) => {
           <Item
             title="menu"
             iconName="menu"
-            onPress={() => {
-              navigation.toggleDrawer();
-            }}
+            onPress={navigation.toggleDrawer}
           />
         </HeaderButtons>
       ),
@@ -252,16 +162,9 @@ const NewsTabNavigator = ({ navigation, route }) => {
           tabBarIcon: ({ focused, size }) => (
             <TabBarIcon focused={focused} name="document" size={size} />
           ),
-          tabBarBadge:
-            typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0
-              ? ''
-              : null,
+          tabBarBadge: unseenCriticalNews > 0 ? '' : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeSevereAlertColor,
-            // width: 5,
-            //height: 5,
-            // right: 10,
-            // borderRadius: 2,
           },
         }}
       />
