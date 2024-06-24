@@ -250,7 +250,7 @@ defineBackgroundTask(
 
 // console.log('store', store);
 
-export default function App(props) {
+function App(props) {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
   //   const isAppReady = loadCachedResources();
@@ -430,3 +430,4 @@ export default function App(props) {
     </SafeAreaProvider>
   );
 }
+export default Sentry.wrap(App);
