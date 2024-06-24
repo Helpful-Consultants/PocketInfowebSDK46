@@ -63,7 +63,7 @@
           "url": "https://sentry.io/",
           "note": "Use SENTRY_AUTH_TOKEN env to authenticate with Sentry.",
           "organization": "helpful-consultants",
-          "project": "pocket-infoweb-extra"
+          "project": "pocket-infoweb"
         }
       ],
       "expo-font",
