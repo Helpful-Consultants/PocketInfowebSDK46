@@ -588,7 +588,7 @@ export default FindToolsScreen = (props) => {
         dealerWipsItems.forEach((wip) => {
           if (wip.tools?.length > 0) {
             wip.tools.forEach(
-              (tool) => tool.tools_id ?? bookedToolsList.push(tool.tools_id)
+              (tool) => tool.tools_id && bookedToolsList.push(tool.tools_id)
             );
           }
         });
