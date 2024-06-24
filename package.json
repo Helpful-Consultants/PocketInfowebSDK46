@@ -88,7 +88,8 @@
     "reselect": "^5.1.0",
     "stringify-entities": "^4.0.4",
     "url-parse": "^1.5.10",
-    "util": "^0.12.5"
+    "util": "^0.12.5",
+    "expo-network": "~5.8.0"
   },
   "expo": {
     "install": {
