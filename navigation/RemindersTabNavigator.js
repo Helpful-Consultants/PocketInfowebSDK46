@@ -66,17 +66,32 @@ const RemindersTabNavigator = ({ navigation, route }) => {
   //     'notificationTarget state.user.notificationTarget',
   //     notificationTarget
   //   );
-  const showingDemoData = useSelector((state) => state.user.userRequestedDemoData);
-  const calibrationExpiryOverdueCount = useSelector((state) => state.calibrationExpiry.overdueCount);
-  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
-  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
+  const showingDemoData = useSelector(
+    (state) => state.user.userRequestedDemoData
+  );
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
   const odisRedCount = useSelector((state) => state.odis.redCount);
-  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
-  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
-  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] = useState(0);
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const [notifiableAlertsAmberCount, setNotifiableAlertsAmberCount] =
+    useState(0);
   const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
   const [pushDataObj, setPushDataObj] = useState(null);
   const windowDim = useWindowDimensions();
@@ -102,71 +117,83 @@ const RemindersTabNavigator = ({ navigation, route }) => {
   const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
 
   useEffect(() => {
-    if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in RemNav useEffect 1, storing in state data' + JSON.stringify(data)
-      //   );
-      setPushDataObj(data);
-    } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in RemNav useEffect 1 dataError' + JSON.stringify(data));
-      setPushDataObj(data);
-      // } else {
-      //   console.log(
-      //     'in RemNav useEffect 1 no data in state data' + JSON.stringify(data)
-      //   );
+    if (data && typeof data === 'object') {
+      if (data.hasOwnProperty('targetScreen')) {
+        //   console.log(
+        //     'in RemNav useEffect 1, storing in state data' + JSON.stringify(data)
+        //   );
+        setPushDataObj(data);
+      } else if (data && data.hasOwnProperty('dataError')) {
+        //   console.log('in RemNav useEffect 1 dataError' + JSON.stringify(data));
+        setPushDataObj(data);
+        // } else {
+        //   console.log(
+        //     'in RemNav useEffect 1 no data in state data' + JSON.stringify(data)
+        //   );
+      }
+    } else {
+      console.log('data is undefined or not an object');
     }
   }, [data]); // must not have any dependency on pushDataObj
 
   useEffect(() => {
     // console.log('in RemNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
-    if (pushDataObj?.hasOwnProperty('dataError')) {
-      //   console.log(
-      //     'in RemNav pushDataObj.hasOwnProperty(dataError)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in RemNav pushDataObj.hasOwnProperty(targetScreen)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      //   console.log('in RemNav after getNavTargetObj' + JSON.stringify(targetObj));
-      if (
-        targetObj?.hasOwnProperty('targetScreen') &&
-        targetObj.targetScreen &&
-        targetObj?.hasOwnProperty('targetSection') &&
-        targetObj.targetSection
-      ) {
-        //   dispatch(setNotificationTarget(targetObj));
-        // console.log('in RemNav end targetObj: ' + JSON.stringify(targetObj));
-        const tempNotificationTarget = { ...targetObj };
-        //     (pushDataObj && pushDataObj.targetScreen) || null;
-        // console.log(
-        //   'in RemNav useEffect, tempNotificationTarget',
-        //   JSON.stringify(tempNotificationTarget)
-        // );
-        const constantFromTargetSection =
-          tempNotificationTarget?.targetSection.replace?.(/\s/g, '').toUpperCase?.() ?? '';
-        // setPushDataObj(null);
-        if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in RemNav useEffect, e');
-          navigation.navigate('Home');
-        } else {
-          //   console.log(
-          //     'in RemNav useEffect ready to navigate to' +
-          //       JSON.stringify(tempNotificationTarget)
-          //   );
-          navigation.navigate(tempNotificationTarget.targetSection, {
-            screen: tempNotificationTarget.targetScreen,
-          });
+    if (pushDataObj && typeof pushDataObj === 'object') {
+      if (pushDataObj?.hasOwnProperty('dataError')) {
+        //   console.log(
+        //     'in RemNav pushDataObj.hasOwnProperty(dataError)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        navigation.navigate('NewsTabs', { screen: 'News' });
+      } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
+        //   console.log(
+        //     'in RemNav pushDataObj.hasOwnProperty(targetScreen)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
+        //   console.log('in RemNav after getNavTargetObj' + JSON.stringify(targetObj));
+        if (
+          targetObj &&
+          typeof targetObj === 'object' &&
+          targetObj.hasOwnProperty('targetScreen') &&
+          targetObj.targetScreen &&
+          targetObj.hasOwnProperty('targetSection') &&
+          targetObj.targetSection
+        ) {
+          //   dispatch(setNotificationTarget(targetObj));
+          // console.log('in RemNav end targetObj: ' + JSON.stringify(targetObj));
+          const tempNotificationTarget = { ...targetObj };
+          //     (pushDataObj && pushDataObj.targetScreen) || null;
+          // console.log(
+          //   'in RemNav useEffect, tempNotificationTarget',
+          //   JSON.stringify(tempNotificationTarget)
+          // );
+          const constantFromTargetSection =
+            tempNotificationTarget?.targetSection
+              .replace?.(/\s/g, '')
+              .toUpperCase?.() ?? '';
+          // setPushDataObj(null);
+          if (constantFromTargetSection === AppSections.HOME) {
+            //   console.log('in RemNav useEffect, e');
+            navigation.navigate('Home');
+          } else {
+            //   console.log(
+            //     'in RemNav useEffect ready to navigate to' +
+            //       JSON.stringify(tempNotificationTarget)
+            //   );
+            navigation.navigate(tempNotificationTarget.targetSection, {
+              screen: tempNotificationTarget.targetScreen,
+            });
+          }
+          // setPushDataObj(data);
+          //   } else {
+          //     console.log(
+          //       'in RemNav Target object is not useable.' + JSON.stringify(targetObj)
+          //     );
         }
-        // setPushDataObj(data);
-        //   } else {
-        //     console.log(
-        //       'in RemNav Target object is not useable.' + JSON.stringify(targetObj)
-        //     );
       }
+    } else {
+      console.log('data is undefined or not an object');
     }
     // if (pushDataObj != null) {
     //   console.log('in RemNav at zz' + JSON.stringify(pushDataObj));
@@ -178,7 +205,9 @@ const RemindersTabNavigator = ({ navigation, route }) => {
       headerStyle: {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
       },
-      headerTitle: () => <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />,
+      headerTitle: () => (
+        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
+      ),
       headerLeftContainerStyle: { ...baseStyles.paddingLeft },
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -220,30 +249,43 @@ const RemindersTabNavigator = ({ navigation, route }) => {
     //     tempNotifiableAlertsRedCount
     //   );
 
-    if (typeof calibrationExpiryOverdueCount === 'number' && calibrationExpiryOverdueCount > 0) {
+    if (
+      typeof calibrationExpiryOverdueCount === 'number' &&
+      calibrationExpiryOverdueCount > 0
+    ) {
       // console.log(
       //   'adding calibrationExpiryOverdueCount',
       //   calibrationExpiryOverdueCount
       // );
-      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + calibrationExpiryOverdueCount;
     }
-    if (typeof calibrationExpiryRedCount === 'number' && calibrationExpiryRedCount > 0) {
+    if (
+      typeof calibrationExpiryRedCount === 'number' &&
+      calibrationExpiryRedCount > 0
+    ) {
       // console.log(
       //   'adding calibrationExpiryRedCount',
       //   calibrationExpiryRedCount
       // );
-      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + calibrationExpiryRedCount;
     }
-    if (typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0) {
+    if (
+      typeof serviceMeasuresRedCount === 'number' &&
+      serviceMeasuresRedCount > 0
+    ) {
       // console.log(
       //   'adding tempNotifiableAlertsRedCount',
       //   serviceMeasuresRedCount
       // );
-      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + serviceMeasuresRedCount;
     }
     if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
       // console.log('adding ltpLoansRedCount', ltpLoansRedCount);
-      tempNotifiableAlertsRedCount = tempNotifiableAlertsRedCount + ltpLoansRedCount;
+      tempNotifiableAlertsRedCount =
+        tempNotifiableAlertsRedCount + ltpLoansRedCount;
     }
     if (typeof odisRedCount === 'number' && odisRedCount > 0) {
       // console.log('adding odisRedCount', odisRedCount);
@@ -280,16 +322,28 @@ const RemindersTabNavigator = ({ navigation, route }) => {
   useEffect(() => {
     let tempNotifiableAlertsAmberCount = 0;
 
-    if (typeof calibrationExpiryAmberCount === 'number' && calibrationExpiryAmberCount > 0) {
-      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
+    if (
+      typeof calibrationExpiryAmberCount === 'number' &&
+      calibrationExpiryAmberCount > 0
+    ) {
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + calibrationExpiryAmberCount;
     }
-    if (typeof serviceMeasuresAmberCount === 'number' && serviceMeasuresAmberCount > 0) {
-      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
+    if (
+      typeof serviceMeasuresAmberCount === 'number' &&
+      serviceMeasuresAmberCount > 0
+    ) {
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + serviceMeasuresAmberCount;
     }
     if (typeof ltpLoansAmberCount === 'number' && ltpLoansAmberCount > 0) {
-      tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
+      tempNotifiableAlertsAmberCount =
+        tempNotifiableAlertsAmberCount + ltpLoansAmberCount;
     }
-    if (typeof odisChangesToHighlight === 'number' && odisChangesToHighlight > 0) {
+    if (
+      typeof odisChangesToHighlight === 'number' &&
+      odisChangesToHighlight > 0
+    ) {
       tempNotifiableAlertsAmberCount = tempNotifiableAlertsAmberCount + 1;
     }
 
@@ -395,15 +449,23 @@ const RemindersTabNavigator = ({ navigation, route }) => {
         name="Alerts"
         component={NotificationsScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="alert-circle" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="alert-circle" size={size} />
+          ),
           tabBarBadge:
             (notifiableAlertsRedCount && notifiableAlertsRedCount > 0) ||
             (notifiableAlertsAmberCount && notifiableAlertsAmberCount > 0)
               ? ''
               : null,
           tabBarBadgeStyle: {
-            color: notifiableAlertsRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
-            backgroundColor: notifiableAlertsRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            color:
+              notifiableAlertsRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              notifiableAlertsRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
           },
         }}
       />
@@ -411,15 +473,23 @@ const RemindersTabNavigator = ({ navigation, route }) => {
         name="Service Measures"
         component={ServiceMeasuresScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="checkbox" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="checkbox" size={size} />
+          ),
           tabBarBadge:
             (serviceMeasuresRedCount && serviceMeasuresRedCount > 0) ||
             (serviceMeasuresAmberCount && serviceMeasuresAmberCount > 0)
               ? ''
               : null,
           tabBarBadgeStyle: {
-            color: serviceMeasuresRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
-            backgroundColor: serviceMeasuresRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            color:
+              serviceMeasuresRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              serviceMeasuresRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
           },
         }}
       />
@@ -427,12 +497,23 @@ const RemindersTabNavigator = ({ navigation, route }) => {
         name="LTP Loans"
         component={LtpLoansScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="calendar" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="calendar" size={size} />
+          ),
           tabBarBadge:
-            (ltpLoansRedCount && ltpLoansRedCount > 0) || (ltpLoansAmberCount && ltpLoansAmberCount > 0) ? '' : null,
+            (ltpLoansRedCount && ltpLoansRedCount > 0) ||
+            (ltpLoansAmberCount && ltpLoansAmberCount > 0)
+              ? ''
+              : null,
           tabBarBadgeStyle: {
-            color: ltpLoansRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
-            backgroundColor: ltpLoansRedCount > 0 ? Colors.vwgBadgeSevereAlertColor : Colors.vwgWarmOrange,
+            color:
+              ltpLoansRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
+            backgroundColor:
+              ltpLoansRedCount > 0
+                ? Colors.vwgBadgeSevereAlertColor
+                : Colors.vwgWarmOrange,
           },
         }}
       />

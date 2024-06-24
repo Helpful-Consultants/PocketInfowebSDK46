@@ -56,7 +56,9 @@ const NewsTabNavigator = ({ navigation, route }) => {
   //   console.log(' NewsTabNavigator', navigation.navigate);
   //   const dispatch = useDispatch();
   //   const thisSection = AppSections.NEWSTABS;
-  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
+  );
   //   const notificationTarget = useSelector(
   //     (state) => state.user.notificationTarget
   //   );
@@ -85,71 +87,90 @@ const NewsTabNavigator = ({ navigation, route }) => {
   const data = useMemo(() => getPushDataObjFn(), [getPushDataObjFn]);
 
   useEffect(() => {
-    if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in NewsNav useEffect 1, storing in state data' + JSON.stringify(data)
-      //   );
-      setPushDataObj(data);
-    } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in NewsNav useEffect 1 dataError' + JSON.stringify(data));
-      setPushDataObj(data);
-      // } else {
-      //   console.log(
-      //     'in NewsNav useEffect 1 no data in state data' + JSON.stringify(data)
-      //   );
+    console.log('useEffect triggered with data:', data);
+
+    // Check if data is defined and an object
+    if (data && typeof data === 'object') {
+      if (data.hasOwnProperty('targetScreen')) {
+        console.log(
+          'in NewsNav useEffect 1, storing in state data: ' +
+            JSON.stringify(data)
+        );
+        setPushDataObj(data);
+      } else if (data.hasOwnProperty('dataError')) {
+        console.log(
+          'in NewsNav useEffect 1 dataError: ' + JSON.stringify(data)
+        );
+        setPushDataObj(data);
+      } else {
+        console.log(
+          'in NewsNav useEffect 1 no relevant data in state: ' +
+            JSON.stringify(data)
+        );
+      }
+    } else {
+      console.log('data is undefined or not an object');
     }
   }, [data]); // must not have any dependency on pushDataObj
 
   useEffect(() => {
     // console.log('in NewsNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
-    if (pushDataObj?.hasOwnProperty('dataError')) {
-      //   console.log(
-      //     'in NewsNav pushDataObj.hasOwnProperty(dataError)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in NewsNav pushDataObj.hasOwnProperty(targetScreen)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      //   console.log('in NewsNav after getNavTargetObj' + JSON.stringify(targetObj));
-      if (
-        targetObj?.hasOwnProperty('targetScreen') &&
-        targetObj.targetScreen &&
-        targetObj?.hasOwnProperty('targetSection') &&
-        targetObj.targetSection
-      ) {
-        //   dispatch(setNotificationTarget(targetObj));
-        // console.log('in NewsNav end targetObj: ' + JSON.stringify(targetObj));
-        const tempNotificationTarget = { ...targetObj };
-        //     (pushDataObj && pushDataObj.targetScreen) || null;
-        // console.log(
-        //   'in NewsNav useEffect, tempNotificationTarget',
-        //   JSON.stringify(tempNotificationTarget)
-        // );
-        const constantFromTargetSection =
-          tempNotificationTarget?.targetSection.replace?.(/\s/g, '').toUpperCase?.() ?? '';
-        // setPushDataObj(null);
-        if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in NewsNav useEffect, e');
-          navigation.navigate('Home');
-        } else {
-          //   console.log(
-          //     'in NewsNav useEffect ready to navigate to' +
-          //       JSON.stringify(tempNotificationTarget)
-          //   );
-          navigation.navigate(tempNotificationTarget.targetSection, {
-            screen: tempNotificationTarget.targetScreen,
-          });
+    if (pushDataObj && typeof pushDataObj === 'object') {
+      if (pushDataObj?.hasOwnProperty('dataError')) {
+        //   console.log(
+        //     'in NewsNav pushDataObj.hasOwnProperty(dataError)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        navigation.navigate('NewsTabs', { screen: 'News' });
+      } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
+        //   console.log(
+        //     'in NewsNav pushDataObj.hasOwnProperty(targetScreen)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
+        //   console.log('in NewsNav after getNavTargetObj' + JSON.stringify(targetObj));
+        if (
+          targetObj &&
+          typeof targetObj === 'object' &&
+          targetObj.hasOwnProperty('targetScreen') &&
+          targetObj.targetScreen &&
+          targetObj.hasOwnProperty('targetSection') &&
+          targetObj.targetSection
+        ) {
+          //   dispatch(setNotificationTarget(targetObj));
+          // console.log('in NewsNav end targetObj: ' + JSON.stringify(targetObj));
+          const tempNotificationTarget = { ...targetObj };
+          //     (pushDataObj && pushDataObj.targetScreen) || null;
+          // console.log(
+          //   'in NewsNav useEffect, tempNotificationTarget',
+          //   JSON.stringify(tempNotificationTarget)
+          // );
+          const constantFromTargetSection =
+            tempNotificationTarget?.targetSection
+              .replace?.(/\s/g, '')
+              .toUpperCase?.() ?? '';
+          // setPushDataObj(null);
+          if (constantFromTargetSection === AppSections.HOME) {
+            //   console.log('in NewsNav useEffect, e');
+            navigation.navigate('Home');
+          } else {
+            //   console.log(
+            //     'in NewsNav useEffect ready to navigate to' +
+            //       JSON.stringify(tempNotificationTarget)
+            //   );
+            navigation.navigate(tempNotificationTarget.targetSection, {
+              screen: tempNotificationTarget.targetScreen,
+            });
+          }
+          // setPushDataObj(data);
+          //   } else {
+          //     console.log(
+          //       'in NewsNav Target object is not useable.' + JSON.stringify(targetObj)
+          //     );
         }
-        // setPushDataObj(data);
-        //   } else {
-        //     console.log(
-        //       'in NewsNav Target object is not useable.' + JSON.stringify(targetObj)
-        //     );
       }
+    } else {
+      console.log('data is undefined or not an object');
     }
     // if (pushDataObj != null) {
     //   console.log('in NewsNav at zz' + JSON.stringify(pushDataObj));
@@ -164,7 +185,9 @@ const NewsTabNavigator = ({ navigation, route }) => {
         backgroundColor: Platform.OS === 'ios' ? 'white' : '#3689b1',
       },
       headerLeftContainerStyle: { ...baseStyles.paddingLeft },
-      headerTitle: () => <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />,
+      headerTitle: () => (
+        <TitleWithAppLogo title={getFocusedRouteNameFromRoute(route)} />
+      ),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -226,8 +249,13 @@ const NewsTabNavigator = ({ navigation, route }) => {
         name="News"
         component={NewsScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="document" size={size} />,
-          tabBarBadge: typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0 ? '' : null,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="document" size={size} />
+          ),
+          tabBarBadge:
+            typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0
+              ? ''
+              : null,
           tabBarBadgeStyle: {
             backgroundColor: Colors.vwgBadgeSevereAlertColor,
             // width: 5,
@@ -241,14 +269,18 @@ const NewsTabNavigator = ({ navigation, route }) => {
         name="Elsa2Go"
         component={ElsaScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="phone-portrait" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="phone-portrait" size={size} />
+          ),
         }}
       />
       <NewsTabs.Screen
         name="Stats"
         component={StatsScreen}
         options={{
-          tabBarIcon: ({ focused, size }) => <TabBarIcon focused={focused} name="stats-chart" size={size} />,
+          tabBarIcon: ({ focused, size }) => (
+            <TabBarIcon focused={focused} name="stats-chart" size={size} />
+          ),
         }}
       />
     </NewsTabs.Navigator>

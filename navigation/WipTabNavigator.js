@@ -75,73 +75,88 @@ const WipTabNavigator = ({ navigation, route }) => {
   const data = getPushDataObjFn();
 
   useEffect(() => {
-    if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in WpNav useEffect 1, storing in state data' + JSON.stringify(data)
-      //   );
-      setPushDataObj(data);
-    } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in WpNav useEffect 1 dataError' + JSON.stringify(data));
-      setPushDataObj(data);
-      // } else {
-      //   console.log(
-      //     'in WpNav useEffect 1 no data in state data' + JSON.stringify(data)
-      //   );
+    if (data && typeof data === 'object') {
+      if (data.hasOwnProperty('targetScreen')) {
+        //   console.log(
+        //     'in WpNav useEffect 1, storing in state data' + JSON.stringify(data)
+        //   );
+        setPushDataObj(data);
+      } else if (data && data.hasOwnProperty('dataError')) {
+        //   console.log('in WpNav useEffect 1 dataError' + JSON.stringify(data));
+        setPushDataObj(data);
+        // } else {
+        //   console.log(
+        //     'in WipTab useEffect 1 no data in state data' + JSON.stringify(data)
+        //   );
+      } else {
+        console.log(
+          'in NewsNav useEffect 1 no relevant data in state: ' +
+            JSON.stringify(data)
+        );
+      }
+    } else {
+      console.log('data is undefined or not an object');
     }
   }, []); // must not have any dependency on pushDataObj
 
   useEffect(() => {
     // console.log('in WpNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
-    if (pushDataObj?.hasOwnProperty('dataError')) {
-      //   console.log(
-      //     'in WpNav pushDataObj.hasOwnProperty(dataError)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in WpNav pushDataObj.hasOwnProperty(targetScreen)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      //   console.log('in WpNav after getNavTargetObj' + JSON.stringify(targetObj));
-      if (
-        targetObj?.hasOwnProperty('targetScreen') &&
-        targetObj.targetScreen &&
-        targetObj?.hasOwnProperty('targetSection') &&
-        targetObj.targetSection
-      ) {
-        //   dispatch(setNotificationTarget(targetObj));
-        // console.log('in WpNav end targetObj: ' + JSON.stringify(targetObj));
-        const tempNotificationTarget = { ...targetObj };
-        //     (pushDataObj && pushDataObj.targetScreen) || null;
-        // console.log(
-        //   'in WpNav useEffect, tempNotificationTarget',
-        //   JSON.stringify(tempNotificationTarget)
-        // );
-        const constantFromTargetSection =
-          tempNotificationTarget?.targetSection
-            .replace?.(/\s/g, '')
-            .toUpperCase?.() ?? '';
-        // setPushDataObj(null);
-        if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in WpNav useEffect, e');
-          navigation.navigate('Home');
-        } else {
-          //   console.log(
-          //     'in WpNav useEffect ready to navigate to' +
-          //       JSON.stringify(tempNotificationTarget)
-          //   );
-          navigation.navigate(tempNotificationTarget.targetSection, {
-            screen: tempNotificationTarget.targetScreen,
-          });
+    if (pushDataObj && typeof pushDataObj === 'object') {
+      if (pushDataObj?.hasOwnProperty('dataError')) {
+        //   console.log(
+        //     'in WpNav pushDataObj.hasOwnProperty(dataError)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        navigation.navigate('NewsTabs', { screen: 'News' });
+      } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
+        //   console.log(
+        //     'in WpNav pushDataObj.hasOwnProperty(targetScreen)' +
+        //       JSON.stringify(pushDataObj)
+        //   );
+        const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
+        //   console.log('in WpNav after getNavTargetObj' + JSON.stringify(targetObj));
+        if (
+          targetObj &&
+          typeof targetObj === 'object' &&
+          targetObj.hasOwnProperty('targetScreen') &&
+          targetObj.targetScreen &&
+          targetObj.hasOwnProperty('targetSection') &&
+          targetObj.targetSection
+        ) {
+          //   dispatch(setNotificationTarget(targetObj));
+          // console.log('in WpNav end targetObj: ' + JSON.stringify(targetObj));
+          const tempNotificationTarget = { ...targetObj };
+          //     (pushDataObj && pushDataObj.targetScreen) || null;
+          // console.log(
+          //   'in WpNav useEffect, tempNotificationTarget',
+          //   JSON.stringify(tempNotificationTarget)
+          // );
+          const constantFromTargetSection =
+            tempNotificationTarget?.targetSection
+              .replace?.(/\s/g, '')
+              .toUpperCase?.() ?? '';
+          // setPushDataObj(null);
+          if (constantFromTargetSection === AppSections.HOME) {
+            //   console.log('in WpNav useEffect, e');
+            navigation.navigate('Home');
+          } else {
+            //   console.log(
+            //     'in WpNav useEffect ready to navigate to' +
+            //       JSON.stringify(tempNotificationTarget)
+            //   );
+            navigation.navigate(tempNotificationTarget.targetSection, {
+              screen: tempNotificationTarget.targetScreen,
+            });
+          }
+          // setPushDataObj(data);
+          //   } else {
+          //     console.log(
+          //       'in WpNav Target object is not useable.' + JSON.stringify(targetObj)
+          //     );
         }
-        // setPushDataObj(data);
-        //   } else {
-        //     console.log(
-        //       'in WpNav Target object is not useable.' + JSON.stringify(targetObj)
-        //     );
       }
+    } else {
+      console.log('data is undefined or not an object');
     }
     // if (pushDataObj != null) {
     //   console.log('in WpNav at zz' + JSON.stringify(pushDataObj));
