@@ -136,6 +136,10 @@ console.log('sentryDist for sentry', appOS, sentryDist);
 Sentry.init({
   dsn: sentryDSN,
   debug: true,
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for tracing.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
 });
 
 runSagaMiddleware(); // run here so it isn't run on every render
