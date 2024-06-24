@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
+// import * as Network from 'expo-network';
 import { SearchBar, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -26,6 +27,24 @@ export default SearchBarWithRefresh = (props) => {
     searchInputHandler,
   } = props;
 
+  //   const appOS =
+  //     Platform && Platform.OS
+  //       ? Platform.OS === 'ios'
+  //         ? 'ios'
+  //         : 'android'
+  //       : null;
+  //   let isAirplaneMode = false;
+  //   if (appOS === 'android') {
+  //     isAirplaneMode = await Network.isAirplaneModeEnabledAsync();
+  //     console.log('isAirplaneMode:' + isAirplaneMode);
+  //   }
+  //   const networkObj = await Network.getNetworkStateAsync();
+  // {
+  //   type: NetworkStateType.CELLULAR,
+  //   isConnected: true,
+  //   isInternetReachable: true,
+  // }
+  //   console.log('networkObj', networkObj);
   const dataNameToUse = dataName || 'data';
   if (dataError) {
     // console.log('dataError: ', dataError);
