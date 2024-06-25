@@ -9,7 +9,14 @@ import Constants from 'expo-constants';
 import { AppSections } from '../constants/AppParts';
 import { AppStoreBuildNumbers } from '../constants/AppVersions';
 // import * as Permissions from 'expo-permissions';
-import { ActivityIndicator, Linking, Platform, ScrollView, useWindowDimensions, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Linking,
+  Platform,
+  ScrollView,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 // import { useSafeArea } from 'react-native-safe-area-context';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from '@rneui/themed';
@@ -21,10 +28,17 @@ import AppNameWithLogo from '../components/AppNameWithLogo';
 import OdisLinkWithStatus from '../components/OdisLinkWithStatus';
 import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
-import { getUserRequest, revalidateUserCredentials, signOutUserRequest } from '../actions/user';
+import {
+  getUserRequest,
+  revalidateUserCredentials,
+  signOutUserRequest,
+} from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
 import { emptyDealerToolsRequest } from '../actions/dealerTools';
-import { getDealerWipsRequest, emptyDealerWipsRequest } from '../actions/dealerWips';
+import {
+  getDealerWipsRequest,
+  emptyDealerWipsRequest,
+} from '../actions/dealerWips';
 import { getNewsRequest } from '../actions/news';
 import { getCalibrationExpiryRequest } from '../actions/calibrationExpiry';
 import { getServiceMeasuresRequest } from '../actions/serviceMeasures';
@@ -32,7 +46,10 @@ import { getLtpRequest, emptyLtpRequest } from '../actions/ltp';
 import { getLtpLoansRequest } from '../actions/ltpLoans';
 import { selectFetchParamsObj } from '../reducers/user';
 // import { setUserRequestedDemoApp } from '../actions/user';
-import { selectBookedOutToolsForUser, selectDealerWipsForUser } from '../reducers/dealerWips';
+import {
+  selectBookedOutToolsForUser,
+  selectDealerWipsForUser,
+} from '../reducers/dealerWips';
 
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
@@ -51,9 +68,16 @@ export default HomeScreen = (props) => {
   const { navigation } = props;
   const insets = useSafeAreaInsets();
   //   console.log('Constants', Constants);
-  const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
+  const appOS =
+    Platform && Platform.OS
+      ? Platform.OS === 'ios'
+        ? 'ios'
+        : 'android'
+      : null;
   const appName =
-    Constants && Constants.expoConfig && Constants.expoConfig.name ? Constants.expoConfig.name : 'Test app';
+    Constants && Constants.expoConfig && Constants.expoConfig.name
+      ? Constants.expoConfig.name
+      : 'Test app';
   const appEdition = appName.toLowerCase().includes('extra') ? 'extra' : 'pro';
 
   //   console.log(Constants);
@@ -63,7 +87,8 @@ export default HomeScreen = (props) => {
         ? Constants.expoConfig.ios && Constants.expoConfig.ios.buildNumber
           ? Constants.expoConfig.ios.buildNumber
           : null
-        : Constants.expoConfig.android && Constants.expoConfig.android.versionCode
+        : Constants.expoConfig.android &&
+            Constants.expoConfig.android.versionCode
           ? Constants.expoConfig.android.versionCode
           : null
       : null;
@@ -118,7 +143,9 @@ export default HomeScreen = (props) => {
   //   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerName = useSelector((state) => state.user.dealerName);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
-  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
+  );
   const userBookedOutTools = useSelector(selectBookedOutToolsForUser);
   const userWipsItems = useSelector(selectDealerWipsForUser);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
@@ -127,19 +154,32 @@ export default HomeScreen = (props) => {
   const isLoadingNews = useSelector((state) => state.news.isLoading);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);
   const isLoadingLtpLoans = useSelector((state) => state.ltpLoans.isLoading);
-  const isLoadingCalibrationExpiry = useSelector((state) => state.calibrationExpiry.isLoading);
-  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
-  const serviceMeasuresAmberCount = useSelector((state) => state.serviceMeasures.amberCount);
-  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
-  const calibrationExpiryAmberCount = useSelector((state) => state.calibrationExpiry.amberCount);
+  const isLoadingCalibrationExpiry = useSelector(
+    (state) => state.calibrationExpiry.isLoading
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
+  const serviceMeasuresAmberCount = useSelector(
+    (state) => state.serviceMeasures.amberCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const calibrationExpiryAmberCount = useSelector(
+    (state) => state.calibrationExpiry.amberCount
+  );
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
   const ltpLoansAmberCount = useSelector((state) => state.ltpLoans.amberCount);
-  const odisChangesToHighlight = useSelector((state) => state.odis.changesToHighlight);
+  const odisChangesToHighlight = useSelector(
+    (state) => state.odis.changesToHighlight
+  );
   const odisRedCount = useSelector((state) => state.odis.redCount);
   const [ltpLoansTotalAlertCount, setLtpLoansTotalAlertCount] = useState(0);
   const [notificationsRedCount, setNotificationsRedCount] = useState(0);
   const [notificationsAmberCount, setNotificationsAmberCount] = useState(0);
-  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] = useState(0);
+  const [notificationsTotalAlertCount, setNotificationsTotalAlertCount] =
+    useState(0);
   const [isCheckingAppVersion, setIsCheckingAppVersion] = useState(false);
   const [isUpdatingAppVersion, setIsUpdatingAppVersion] = useState(false);
   const [shouldCheckAppVersion, setShouldCheckAppVersion] = useState(false);
@@ -159,7 +199,11 @@ export default HomeScreen = (props) => {
 
   const getAllItems = useCallback(
     (fetchParamsObj) => {
-      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
+      if (
+        fetchParamsObj &&
+        fetchParamsObj.userIntId &&
+        fetchParamsObj.userIntId
+      ) {
         dispatch(
           getUserRequest({
             userIntId: fetchParamsObj.userIntId,
@@ -178,7 +222,11 @@ export default HomeScreen = (props) => {
   );
   const getLtpItems = useCallback(
     (fetchParamsObj) => {
-      if (fetchParamsObj && fetchParamsObj.userIntId && fetchParamsObj.userIntId) {
+      if (
+        fetchParamsObj &&
+        fetchParamsObj.userIntId &&
+        fetchParamsObj.userIntId
+      ) {
         dispatch(getLtpRequest(fetchParamsObj));
       }
     },
@@ -376,11 +424,20 @@ export default HomeScreen = (props) => {
   const gridRows = 8;
 
   const openAppStore = () => {
-    const androidAppLinkPro = 'market://details?id=com.helpfulconsultants.pocketinfowebpro';
-    const androidAppLinkExtra = 'market://details?id=com.helpfulconsultants.pocketinfowebextra';
-    const iosAppLinkPro = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
-    const iosAppLinkExtra = 'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
-    const appOS = Platform && Platform.OS ? (Platform.OS === 'ios' ? 'ios' : 'android') : null;
+    const androidAppLinkPro =
+      'market://details?id=com.helpfulconsultants.pocketinfowebpro';
+    const androidAppLinkExtra =
+      'market://details?id=com.helpfulconsultants.pocketinfowebextra';
+    const iosAppLinkPro =
+      'itms-apps://apps.apple.com/gb/app/pocket-infoweb/id1488802249';
+    const iosAppLinkExtra =
+      'itms-apps://apps.apple.com/gb/app/pocket-infoweb-extra/id1552850825';
+    const appOS =
+      Platform && Platform.OS
+        ? Platform.OS === 'ios'
+          ? 'ios'
+          : 'android'
+        : null;
     const appLink =
       appOS === 'ios'
         ? appEdition === 'extra'
@@ -401,97 +458,53 @@ export default HomeScreen = (props) => {
     );
   };
 
-  const getPushDataObjFn = async () => {
-    // console.log('in Home in getPushDataObjFn');
-    // let data = {};
-    try {
-      data = await getPushDataObject();
-      //   console.log('in Home getPushDataObjFn finished', data);
-      //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
-      //     setPushDataTargetScreen(pushDataObj.targetScreen);
-      //   }
-    } catch (err) {
-      //   console.log('in Home getPushDataObjFn err', err);
-    }
-    // console.log('in Home end of getPushDataObjFn', data);
-  };
-  // let data = getPushDataObject();
-  let data = {};
-  getPushDataObjFn();
-
   useEffect(() => {
-    if (data && data.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in Home useEffect 1, storing in state data' + JSON.stringify(data)
-      //   );
-      setPushDataObj(data);
-    } else if (data && data.hasOwnProperty('dataError')) {
-      //   console.log('in Home useEffect 1 dataError' + JSON.stringify(data));
-      setPushDataObj(data);
-      // } else {
-      //   console.log(
-      //     'in Home useEffect 1 no data in state data' + JSON.stringify(data)
-      //   );
-    }
-  }); // must not have any dependency on pushDataObj
-
-  useEffect(() => {
-    // console.log('in Home useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
-    if (pushDataObj?.hasOwnProperty('dataError')) {
-      //   console.log(
-      //     'in Home pushDataObj.hasOwnProperty(dataError)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      navigation.navigate('NewsTabs', { screen: 'News' });
-    } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-      //   console.log(
-      //     'in Home pushDataObj.hasOwnProperty(targetScreen)' +
-      //       JSON.stringify(pushDataObj)
-      //   );
-      const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-      //   console.log('in Home after getNavTargetObj' + JSON.stringify(targetObj));
-      if (
-        targetObj?.hasOwnProperty('targetScreen') &&
-        targetObj.targetScreen &&
-        targetObj?.hasOwnProperty('targetSection') &&
-        targetObj.targetSection
-      ) {
-        //   dispatch(setNotificationTarget(targetObj));
-        // console.log('in Home end targetObj: ' + JSON.stringify(targetObj));
-        const tempNotificationTarget = { ...targetObj };
-        //     (pushDataObj && pushDataObj.targetScreen) || null;
-        // console.log(
-        //   'in Home useEffect, tempNotificationTarget',
-        //   JSON.stringify(tempNotificationTarget)
-        // );
-        const constantFromTargetSection =
-          tempNotificationTarget?.targetSection
-            .replace?.(/\s/g, '')
-            .toUpperCase?.() ?? '';
-        // setPushDataObj(null);
-        if (constantFromTargetSection === AppSections.HOME) {
-          //   console.log('in Home useEffect, e');
-          navigation.navigate('Home');
+    const fetchData = async () => {
+      try {
+        const data = await getPushDataObject();
+        if (data && typeof data === 'object') {
+          if (
+            data.hasOwnProperty('targetScreen') ||
+            data.hasOwnProperty('dataError')
+          ) {
+            setPushDataObj(data);
+          } else {
+            console.log('No relevant data:', JSON.stringify(data));
+          }
         } else {
-          //   console.log(
-          //     'in Home useEffect ready to navigate to' +
-          //       JSON.stringify(tempNotificationTarget)
-          //   );
-          navigation.navigate(tempNotificationTarget.targetSection, {
-            screen: tempNotificationTarget.targetScreen,
-          });
+          console.log('Data is undefined or not an object');
         }
-        // setPushDataObj(data);
-        //   } else {
-        //     console.log(
-        //       'in Home Target object is not useable.' + JSON.stringify(targetObj)
-        //     );
+      } catch (err) {
+        console.log('Error fetching push data:', err);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures it runs only once on mount
+
+  useEffect(() => {
+    if (pushDataObj && typeof pushDataObj === 'object') {
+      if (pushDataObj?.dataError) {
+        navigation.navigate('NewsTabs', { screen: 'News' });
+      } else if (pushDataObj?.targetScreen) {
+        const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+        if (targetObj && targetObj.targetScreen && targetObj.targetSection) {
+          const targetSection = tempNotificationTarget?.targetSection;
+          const constantFromTargetSection =
+            typeof targetSection === 'string'
+              ? targetSection.replace(/\s/g, '').toUpperCase()
+              : '';
+          if (constantFromTargetSection === AppSections.HOME) {
+            navigation.navigate('Home');
+          } else {
+            navigation.navigate(targetObj.targetSection, {
+              screen: targetObj.targetScreen,
+            });
+          }
+        }
       }
     }
-    // if (pushDataObj != null) {
-    //   console.log('in Home at zz' + JSON.stringify(pushDataObj));
-    // }
-  }, [pushDataObj]); // stops it looping
+  }, [pushDataObj, navigation]); // stops it looping
 
   useEffect(() => {
     //   console.log(
@@ -659,7 +672,7 @@ export default HomeScreen = (props) => {
               <Text style={baseStyles.textSmall}>
                 There is a new version of this app.
               </Text>
-              <ActivityIndicator size='large' color={Colors.vwgDeepBlue} />
+              <ActivityIndicator size="large" color={Colors.vwgDeepBlue} />
 
               <Text style={baseStyles.textSmall}>Updating...</Text>
             </View>
@@ -722,7 +735,7 @@ export default HomeScreen = (props) => {
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'build' : 'build'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -741,7 +754,7 @@ export default HomeScreen = (props) => {
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'clipboard' : 'clipboard'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -772,7 +785,7 @@ export default HomeScreen = (props) => {
                             ? 'return-down-back'
                             : 'return-down-back'
                         }
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -811,7 +824,7 @@ export default HomeScreen = (props) => {
                             ? 'swap-horizontal'
                             : 'swap-horizontal'
                         }
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -839,7 +852,7 @@ export default HomeScreen = (props) => {
                               ? 'alert-circle'
                               : 'alert-circle'
                           }
-                          type='ionicon'
+                          type="ionicon"
                           color={buttonTextColor}
                           size={iconSize}
                         />
@@ -880,7 +893,7 @@ export default HomeScreen = (props) => {
                       <View style={baseStyles.viewColumnFlexCentre}>
                         <Ionicons
                           name={Platform.OS === 'ios' ? 'calendar' : 'calendar'}
-                          type='ionicon'
+                          type="ionicon"
                           color={buttonTextColor}
                           size={iconSize}
                         />
@@ -921,7 +934,7 @@ export default HomeScreen = (props) => {
                     <View style={baseStyles.viewColumnFlexCentre}>
                       <Ionicons
                         name={Platform.OS === 'ios' ? 'document' : 'document'}
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -958,7 +971,7 @@ export default HomeScreen = (props) => {
                             ? 'phone-portrait'
                             : 'phone-portrait'
                         }
-                        type='ionicon'
+                        type="ionicon"
                         color={buttonTextColor}
                         size={iconSize}
                       />
@@ -1021,7 +1034,7 @@ export default HomeScreen = (props) => {
                         ? 'log-out-outline'
                         : 'log-out-outline'
                     }
-                    type='ionicon'
+                    type="ionicon"
                     size={20}
                     color={Colors.vwgDeepBlue}
                   />

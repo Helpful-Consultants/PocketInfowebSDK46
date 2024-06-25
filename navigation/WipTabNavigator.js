@@ -55,112 +55,52 @@ const WipTabNavigator = ({ navigation, route }) => {
   const windowDim = useWindowDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
 
-  const getPushDataObjFn = useCallback(async () => {
-    // console.log('in WpNav in getPushDataObjFn');
-    // let data = {};
-    try {
-      const fetchedData = await getPushDataObject();
-      //   console.log('in WpNav getPushDataObjFn finished', data);
-      //   if (typeof data == 'object' && Object.hasOwn(data, 'targetScreen')) {
-      //     setPushDataTargetScreen(pushDataObj.targetScreen);
-      //   }
-      console.log('in WpNav getPushDataObjFn got', fetchedData);
-      return fetchedData;
-    } catch (err) {
-      console.log('in WpNav getPushDataObjFn err', err);
-      return {};
-    }
-    // console.log('in WpNav end of getPushDataObjFn', data);
-  }, [getPushDataObject]);
-  const data = getPushDataObjFn();
-
   useEffect(() => {
-    if (data && typeof data === 'object') {
-      if (data.hasOwnProperty('targetScreen')) {
-        //   console.log(
-        //     'in WpNav useEffect 1, storing in state data' + JSON.stringify(data)
-        //   );
-        setPushDataObj(data);
-      } else if (data && data.hasOwnProperty('dataError')) {
-        //   console.log('in WpNav useEffect 1 dataError' + JSON.stringify(data));
-        setPushDataObj(data);
-        // } else {
-        //   console.log(
-        //     'in WipTab useEffect 1 no data in state data' + JSON.stringify(data)
-        //   );
-      } else {
-        console.log(
-          'in NewsNav useEffect 1 no relevant data in state: ' +
-            JSON.stringify(data)
-        );
+    const fetchData = async () => {
+      try {
+        const data = await getPushDataObject();
+        if (data && typeof data === 'object') {
+          if (
+            data.hasOwnProperty('targetScreen') ||
+            data.hasOwnProperty('dataError')
+          ) {
+            setPushDataObj(data);
+          } else {
+            console.log('No relevant data:', JSON.stringify(data));
+          }
+        } else {
+          console.log('Data is undefined or not an object');
+        }
+      } catch (err) {
+        console.log('Error fetching push data:', err);
       }
-    } else {
-      console.log('data is undefined or not an object');
-    }
-  }, []); // must not have any dependency on pushDataObj
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
-    // console.log('in WpNav useEffect 2 pushDataObj', JSON.stringify(pushDataObj));
     if (pushDataObj && typeof pushDataObj === 'object') {
-      if (pushDataObj?.hasOwnProperty('dataError')) {
-        //   console.log(
-        //     'in WpNav pushDataObj.hasOwnProperty(dataError)' +
-        //       JSON.stringify(pushDataObj)
-        //   );
+      if (pushDataObj?.dataError) {
         navigation.navigate('NewsTabs', { screen: 'News' });
-      } else if (pushDataObj?.hasOwnProperty('targetScreen')) {
-        //   console.log(
-        //     'in WpNav pushDataObj.hasOwnProperty(targetScreen)' +
-        //       JSON.stringify(pushDataObj)
-        //   );
-        const targetObj = getNavTargetObj(pushDataObj?.targetScreen);
-        //   console.log('in WpNav after getNavTargetObj' + JSON.stringify(targetObj));
-        if (
-          targetObj &&
-          typeof targetObj === 'object' &&
-          targetObj.hasOwnProperty('targetScreen') &&
-          targetObj.targetScreen &&
-          targetObj.hasOwnProperty('targetSection') &&
-          targetObj.targetSection
-        ) {
-          //   dispatch(setNotificationTarget(targetObj));
-          // console.log('in WpNav end targetObj: ' + JSON.stringify(targetObj));
-          const tempNotificationTarget = { ...targetObj };
-          //     (pushDataObj && pushDataObj.targetScreen) || null;
-          // console.log(
-          //   'in WpNav useEffect, tempNotificationTarget',
-          //   JSON.stringify(tempNotificationTarget)
-          // );
+      } else if (pushDataObj?.targetScreen) {
+        const targetObj = getNavTargetObj(pushDataObj.targetScreen);
+        if (targetObj && targetObj.targetScreen && targetObj.targetSection) {
+          const targetSection = tempNotificationTarget?.targetSection;
           const constantFromTargetSection =
-            tempNotificationTarget?.targetSection
-              .replace?.(/\s/g, '')
-              .toUpperCase?.() ?? '';
-          // setPushDataObj(null);
+            typeof targetSection === 'string'
+              ? targetSection.replace(/\s/g, '').toUpperCase()
+              : '';
           if (constantFromTargetSection === AppSections.HOME) {
-            //   console.log('in WpNav useEffect, e');
             navigation.navigate('Home');
           } else {
-            //   console.log(
-            //     'in WpNav useEffect ready to navigate to' +
-            //       JSON.stringify(tempNotificationTarget)
-            //   );
-            navigation.navigate(tempNotificationTarget.targetSection, {
-              screen: tempNotificationTarget.targetScreen,
+            navigation.navigate(targetObj.targetSection, {
+              screen: targetObj.targetScreen,
             });
           }
-          // setPushDataObj(data);
-          //   } else {
-          //     console.log(
-          //       'in WpNav Target object is not useable.' + JSON.stringify(targetObj)
-          //     );
         }
       }
-    } else {
-      console.log('data is undefined or not an object');
     }
-    // if (pushDataObj != null) {
-    //   console.log('in WpNav at zz' + JSON.stringify(pushDataObj));
-    // }
   }, [pushDataObj, navigation]); // stops it looping
 
   useEffect(() => {

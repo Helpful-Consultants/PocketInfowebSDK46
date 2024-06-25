@@ -78,9 +78,11 @@ const NewsTabNavigator = ({ navigation, route }) => {
       } else if (pushDataObj?.targetScreen) {
         const targetObj = getNavTargetObj(pushDataObj.targetScreen);
         if (targetObj && targetObj.targetScreen && targetObj.targetSection) {
-          const constantFromTargetSection = targetObj.targetSection
-            .replace(/\s/g, '')
-            .toUpperCase();
+          const targetSection = tempNotificationTarget?.targetSection;
+          const constantFromTargetSection =
+            typeof targetSection === 'string'
+              ? targetSection.replace(/\s/g, '').toUpperCase()
+              : '';
           if (constantFromTargetSection === AppSections.HOME) {
             navigation.navigate('Home');
           } else {
