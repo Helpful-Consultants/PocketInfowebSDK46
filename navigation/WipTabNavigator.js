@@ -58,7 +58,8 @@ const WipTabNavigator = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getPushDataObject();
+        // const data = await getPushDataObject();
+        const data = {};
         if (data && typeof data === 'object') {
           if (
             data.hasOwnProperty('targetScreen') ||
@@ -66,10 +67,10 @@ const WipTabNavigator = ({ navigation, route }) => {
           ) {
             setPushDataObj(data);
           } else {
-            console.log('No relevant data:', JSON.stringify(data));
+            console.log('Wip Nav - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('Data is undefined or not an object');
+          console.log('Wip Nav - Data is undefined or not an object');
         }
       } catch (err) {
         console.log('Wip Nav - Error fetching push data:', err);

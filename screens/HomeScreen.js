@@ -461,18 +461,24 @@ export default HomeScreen = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getPushDataObject();
+        // const data = await getPushDataObject();
+        const data = {};
         if (data && typeof data === 'object') {
+          console.log('Data is an object:', JSON.stringify(data));
           if (
             data.hasOwnProperty('targetScreen') ||
             data.hasOwnProperty('dataError')
           ) {
+            console.log(
+              'Home - Data has targetScreen or dataError:',
+              JSON.stringify(data)
+            );
             setPushDataObj(data);
           } else {
-            console.log('No relevant data:', JSON.stringify(data));
+            console.log('Home - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('Data is undefined or not an object');
+          console.log('Home - Data is undefined or not an object');
         }
       } catch (err) {
         console.log('Home - Error fetching push data:', err);
