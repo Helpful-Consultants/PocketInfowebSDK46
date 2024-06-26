@@ -131,7 +131,7 @@ const RemindersTabNavigator = ({ navigation, route }) => {
           console.log('Data is undefined or not an object');
         }
       } catch (err) {
-        console.log('Error fetching push data:', err);
+        console.log(' Nav - Error fetching push data:', err);
       }
     };
 

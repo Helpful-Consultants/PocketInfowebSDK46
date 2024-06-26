@@ -475,7 +475,7 @@ export default HomeScreen = (props) => {
           console.log('Data is undefined or not an object');
         }
       } catch (err) {
-        console.log('Error fetching push data:', err);
+        console.log('Home - Error fetching push data:', err);
       }
     };
 
