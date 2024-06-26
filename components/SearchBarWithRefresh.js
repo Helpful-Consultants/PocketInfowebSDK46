@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-// import * as Network from 'expo-network';
+import * as Network from 'expo-network';
 import { SearchBar, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
@@ -27,13 +27,13 @@ export default SearchBarWithRefresh = (props) => {
     searchInputHandler,
   } = props;
 
-  //   const appOS =
-  //     Platform && Platform.OS
-  //       ? Platform.OS === 'ios'
-  //         ? 'ios'
-  //         : 'android'
-  //       : null;
-  //   let isAirplaneMode = false;
+  const appOS =
+    Platform && Platform.OS
+      ? Platform.OS === 'ios'
+        ? 'ios'
+        : 'android'
+      : null;
+  let isAirplaneMode = false;
   //   if (appOS === 'android') {
   //     isAirplaneMode = await Network.isAirplaneModeEnabledAsync();
   //     console.log('isAirplaneMode:' + isAirplaneMode);
@@ -102,12 +102,12 @@ export default SearchBarWithRefresh = (props) => {
             onChangeText={searchInputHandler}
             value={searchInput}
             searchIcon={null}
-            placeholder='Type here to search...'
+            placeholder="Type here to search..."
             platform={Platform.OS === 'ios' ? 'ios' : 'android'}
             containerStyle={baseStyles.searchBarContainer}
             inputStyle={baseStyles.searchBarTextInput}
             inputContainerStyle={baseStyles.searchBarInputContainer}
-            autoCapitalize='none'
+            autoCapitalize="none"
             showCancel={false} // iOS only
             cancelButtonTitle={'Clear'}
             cancelButtonProps={{
