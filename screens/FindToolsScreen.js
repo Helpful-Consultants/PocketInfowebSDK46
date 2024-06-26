@@ -38,7 +38,7 @@ import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
 import { setUserRequestedDemoApp } from '../actions/user';
 import { selectDealerWips } from '../reducers/dealerWips';
-import { selectLastWipProcessedInfo } from '../reducers/dealerWips';
+// import { selectLastWipProcessedInfo } from '../reducers/dealerWips';
 import { selectLastWipProcessedObj } from '../reducers/dealerWips';
 import { selectLastWipProcessedId } from '../reducers/dealerWips';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
@@ -181,6 +181,8 @@ export default FindToolsScreen = (props) => {
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const userName = useSelector((state) => state.user.userName);
   const userBrand = useSelector((state) => state.user.userBrand);
+  const dealerWipsItems =
+    useSelector((state) => state.dealerWips.dealerWipsItems) || [];
   const dealerToolsItems = useSelector(
     (state) => state.dealerTools.dealerToolsItems
   );
@@ -191,7 +193,7 @@ export default FindToolsScreen = (props) => {
     (state) => state.dealerWips.fetchTime
   );
   const ltpFetchTime = useSelector((state) => state.ltp.fetchTime);
-  const dealerWipsItems = useSelector(selectDealerWips);
+  //   const dealerWipsItems = useSelector(selectDealerWips);
   const uniqueLtpItems = useSelector(selectSortedUniqueLtpTools);
   const isLoadingUser = useSelector((state) => state.user.isLoading);
   const showingDemoApp = false;
@@ -206,13 +208,16 @@ export default FindToolsScreen = (props) => {
   const isLoadingWips = useSelector((state) => state.dealerWips.isLoading);
   const isSendingWip = useSelector((state) => state.dealerWips.isSending);
   const dataErrorWips = useSelector((state) => state.dealerWips.error);
+  const lastWipProcessedInfo = useSelector(
+    (state) => state.dealerWips.lastWipProcessed
+  );
   const dataErrorUrlWips = useSelector(
     (state) => state.dealerWips.dataErrorUrl
   );
   const dataStatusCodeWips = useSelector(
     (state) => state.dealerWips.statusCode
   );
-  const lastWipProcessedInfo = useSelector(selectLastWipProcessedInfo);
+  //   const lastWipProcessedInfo = useSelector(selectLastWipProcessedInfo);
   const lastWipProcessedObj = useSelector(selectLastWipProcessedObj);
   const lastWipProcessedId = useSelector(selectLastWipProcessedId);
   const isLoadingLtp = useSelector((state) => state.ltp.isLoading);

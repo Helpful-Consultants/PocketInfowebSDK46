@@ -18,12 +18,6 @@ const INITIAL_STATE = {
   fetchTime: null,
 };
 
-export const selectDealerWips = createSelector(
-  (state) => state.dealerWips.dealerWipsItems,
-
-  (dealerWipsItems) => dealerWipsItems || []
-);
-
 // export const selectDealerWipsForUser = createSelector(
 //   (state) => state.dealerWips.dealerWipsItems,
 //   (state) => state.dealerWips.userIntId,
@@ -131,11 +125,11 @@ export const selectBookedOutToolsForUser = createSelector(
   }
 );
 
-export const selectLastWipProcessedInfo = createSelector(
-  (state) => state.dealerWips.lastWipProcessed,
+// export const selectLastWipProcessedInfo = createSelector(
+//   (state) => state.dealerWips.lastWipProcessed,
 
-  (lastWipProcessed) => lastWipProcessed
-);
+//   (lastWipProcessed) => lastWipProcessed
+// );
 
 export const selectLastWipProcessedObj = createSelector(
   (state) => state.dealerWips.lastWipProcessed,
