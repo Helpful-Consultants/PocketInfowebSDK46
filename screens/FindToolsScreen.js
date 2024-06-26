@@ -118,61 +118,75 @@ const formReducer = (state, action) => {
 //   return retValue;
 // };
 
+// const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
+//   let retValue = null;
+
+//   unavailableToolsArr.forEach((item, index) => {
+//     if (item.tools_id && item.tools_id === toolId) {
+//       // ( 'FT ***** match on', item.tools_id);
+//       retValue = `Unavailable. Now booked out to ${
+//         item.updatedBy && item.updatedBy
+//       }, job ${item.wipNumber && item.wipNumber}`;
+//     }
+//   });
+//   // (
+//   //     'in identifyUnavailableTool',
+//   //     toolId,
+//   //     unavailableToolsArr,
+//   //     'retvalue',
+//   //     retValue
+//   //   );
+//   return retValue;
+// };
+
 const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
-  let retValue = null;
+  // Find the item with matching toolId
+  const item = unavailableToolsArr.find((item) => item.tools_id === toolId);
 
-  unavailableToolsArr.forEach((item, index) => {
-    if (item.tools_id && item.tools_id === toolId) {
-      // ( 'FT ***** match on', item.tools_id);
-      retValue = `Unavailable. Now booked out to ${
-        item.updatedBy && item.updatedBy
-      }, job ${item.wipNumber && item.wipNumber}`;
-    }
-  });
-  // (
-  //     'in identifyUnavailableTool',
-  //     toolId,
-  //     unavailableToolsArr,
-  //     'retvalue',
-  //     retValue
-  //   );
-  return retValue;
+  // If found, return the formatted string, otherwise return null
+  if (item) {
+    const updatedBy = item.updatedBy || 'Unknown';
+    const wipNumber = item.wipNumber || 'Unknown job';
+    return `Unavailable. Now booked out to ${updatedBy}, job ${wipNumber}`;
+  }
+
+  return null;
 };
 
-const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
-  let retValue = null;
-  //   if (dealerWips && dealerWips.length) {
-  //   ( 'FT ***** dealerWips[0]', dealerWips[0]);
-  //   }
-  dealerWips.forEach((item) => {
-    // console.log(
-    //   'in loop',
-    //   item.wipNumber && item.wipNumber,
-    //   item.id && item.id
-    // );
-    if (
-      item.wipNumber &&
-      item.wipNumber === wipNumber &&
-      item.userIntId &&
-      item.userIntId.toString() === userIntId
-    ) {
-      // ( 'FT ***** match on', item.tools_id);
-      retValue = item.id.toString();
-    }
-  });
-  // (
-  //     'in getWipIdByWipNumber',
-  //     'wipNumber',
-  //     wipNumber,
-  //     'userIntId',
-  //     userIntId,
-  //     'dealerWips',
-  //     dealerWips.length,
-  //     'retvalue',
-  //     retValue
-  //   );
-  return retValue;
-};
+// const getWipIdByWipNumber = (wipNumber, userIntId, dealerWips) => {
+//   let retValue = null;
+//   //   if (dealerWips && dealerWips.length) {
+//   //   ( 'FT ***** dealerWips[0]', dealerWips[0]);
+//   //   }
+//   dealerWips.forEach((item) => {
+//     // console.log(
+//     //   'in loop',
+//     //   item.wipNumber && item.wipNumber,
+//     //   item.id && item.id
+//     // );
+//     if (
+//       item.wipNumber &&
+//       item.wipNumber === wipNumber &&
+//       item.userIntId &&
+//       item.userIntId.toString() === userIntId
+//     ) {
+//       // ( 'FT ***** match on', item.tools_id);
+//       retValue = item.id.toString();
+//     }
+//   });
+//   // (
+//   //     'in getWipIdByWipNumber',
+//   //     'wipNumber',
+//   //     wipNumber,
+//   //     'userIntId',
+//   //     userIntId,
+//   //     'dealerWips',
+//   //     dealerWips.length,
+//   //     'retvalue',
+//   //     retValue
+//   //   );
+//   return retValue;
+// };
 
 export default FindToolsScreen = (props) => {
   const windowDim = useWindowDimensions();
