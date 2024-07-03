@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import * as Network from 'expo-network';
+// import * as Network from 'expo-network';
 import { SearchBar, Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
