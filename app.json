@@ -6,7 +6,7 @@
     "description": "Find your tools inventory.",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "1.4.01",
+    "version": "1.4.02",
     "icon": "./assets/images/icon-extra.png",
     "orientation": "portrait",
     "splash": {
@@ -69,9 +69,6 @@
       "expo-font",
       "expo-secure-store"
     ],
-    "hooks": {
-      "postPublish": []
-    },
     "extra": {
       "eas": {
         "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
