@@ -76,9 +76,9 @@ export default AppInfo = (props) => {
           ? Constants.expoConfig.ios.buildNumber
           : null
         : Constants.expoConfig.android &&
-          Constants.expoConfig.android.versionCode
-        ? Constants.expoConfig.android.versionCode
-        : null
+            Constants.expoConfig.android.versionCode
+          ? Constants.expoConfig.android.versionCode
+          : null
       : null;
   const runtimeVersion =
     Constants && Constants.expoConfig && Constants.expoConfig.runtimeVersion
@@ -92,6 +92,7 @@ export default AppInfo = (props) => {
   //   console.log('runtimeVersion', runtimeVersion);
 
   const channel = Updates && Updates.channel ? Updates.channel : null;
+  const updateId = Updates && Updates.updateId ? Updates.updateId : null;
   const isUpdatedOTA = Updates
     ? Updates.isEmbeddedLaunch
       ? false
@@ -160,6 +161,7 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
+      <Text style={baseStyles.panelTextAppInfo}>Update: {updateId}</Text>
       <Text style={baseStyles.panelTextAppInfo}>{APP_CHANGE_INFO_STRING}</Text>
     </View>
   );
