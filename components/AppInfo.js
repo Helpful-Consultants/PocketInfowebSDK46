@@ -161,8 +161,8 @@ export default AppInfo = (props) => {
           style={baseStyles.panelTextAppInfo}
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
-      <Text style={baseStyles.panelTextAppInfo}>Update: {updateId}</Text>
       <Text style={baseStyles.panelTextAppInfo}>{APP_CHANGE_INFO_STRING}</Text>
+      <Text style={baseStyles.panelTextAppInfo}>Update ID: {updateId}</Text>
     </View>
   );
 };
