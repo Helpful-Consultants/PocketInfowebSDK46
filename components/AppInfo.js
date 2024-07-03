@@ -155,6 +155,7 @@ export default AppInfo = (props) => {
         {appVersion ? `/${appVersion}` : null}
         {channel ? `/${channel}` : null}
         {isUpdatedOTA ? '/OTA' : null}
+        {updateId ? `/${updateId?.substring(0, 8)}` : null}
       </Text>
       {Platform && Platform.constants && Platform.constants.Model ? (
         <Text
@@ -162,7 +163,6 @@ export default AppInfo = (props) => {
         >{`Model ${Platform.constants.Model}`}</Text>
       ) : null}
       <Text style={baseStyles.panelTextAppInfo}>{APP_CHANGE_INFO_STRING}</Text>
-      <Text style={baseStyles.panelTextAppInfo}>Update ID: {updateId}</Text>
     </View>
   );
 };
