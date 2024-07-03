@@ -29,3 +29,4 @@ eas.json
 ios/
 android/
 metro.config.js
+credentials.json
