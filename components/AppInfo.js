@@ -172,7 +172,7 @@ export default AppInfo = (props) => {
   style={{
     ...baseStyles.panelTextBrand,
     color: Colors.vwgCoolOrange,
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
   }}
 >
   Showing new features

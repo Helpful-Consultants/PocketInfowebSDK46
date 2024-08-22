@@ -21,12 +21,12 @@ export default getBaseStyles = (props) => {
     width >= 1024
       ? 180
       : width >= 768
-      ? 140
-      : width >= 411
-      ? 5
-      : width >= 375
-      ? 5
-      : 5;
+        ? 140
+        : width >= 411
+          ? 5
+          : width >= 375
+            ? 5
+            : 5;
 
   let fontFactor = scale
     ? scale >= 3.5
@@ -34,14 +34,14 @@ export default getBaseStyles = (props) => {
         ? scale * 6
         : scale * 5
       : scale >= 3
-      ? width >= 768
-        ? scale * 6
-        : scale * 5.5
-      : scale >= 2
-      ? width >= 768
-        ? scale * 10
-        : scale * 8
-      : scale * 8
+        ? width >= 768
+          ? scale * 6
+          : scale * 5.5
+        : scale >= 2
+          ? width >= 768
+            ? scale * 10
+            : scale * 8
+          : scale * 8
     : scale * 8;
 
   let gridHeight = height
@@ -49,25 +49,25 @@ export default getBaseStyles = (props) => {
       ? height >= 1200
         ? 140
         : height >= 1024
-        ? 115
-        : height >= 840
-        ? 115
-        : height >= 720
-        ? 98
-        : height >= 630
-        ? 80
-        : 68
+          ? 115
+          : height >= 840
+            ? 115
+            : height >= 720
+              ? 98
+              : height >= 630
+                ? 80
+                : 68
       : height >= 1200
-      ? 160
-      : height >= 1024
-      ? 120
-      : height >= 840
-      ? 125
-      : height >= 720
-      ? 110
-      : height >= 630
-      ? 100
-      : 88
+        ? 160
+        : height >= 1024
+          ? 120
+          : height >= 840
+            ? 125
+            : height >= 720
+              ? 110
+              : height >= 630
+                ? 100
+                : 88
     : 80;
 
   let gridWidth =
@@ -77,16 +77,16 @@ export default getBaseStyles = (props) => {
           ? '45%'
           : '45%'
         : scale >= 3
-        ? width >= 768
-          ? '45%'
-          : '45%'
-        : scale >= 2
-        ? width >= 768
-          ? '37%'
-          : width >= 600
-          ? '45%'
-          : '45%'
-        : '45%'
+          ? width >= 768
+            ? '45%'
+            : '45%'
+          : scale >= 2
+            ? width >= 768
+              ? '37%'
+              : width >= 600
+                ? '45%'
+                : '45%'
+            : '45%'
       : '45%';
 
   //   console.log('gridHeight!!!!!!!!', gridHeight);
@@ -111,80 +111,90 @@ export default getBaseStyles = (props) => {
     width >= 1024
       ? 500
       : width >= 768
-      ? 400
-      : width >= 411
-      ? 360
-      : width >= 375
-      ? 300
-      : '90%';
+        ? 400
+        : width >= 411
+          ? 360
+          : width >= 375
+            ? 300
+            : '90%';
 
   let baseText = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
+    color: Colors.vwgVeryDarkGray,
+    fontSize: baseFontSize,
+  };
+  let baseTextHead = {
+    fontFamily: 'TheGroupHEAD-Light',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSize,
   };
   let baseTextBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSize,
   };
   let baseTextColoured = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgDeepBlue,
     fontSize: baseFontSize,
   };
   let baseTextColouredBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
+    color: Colors.vwgDeepBlue,
+    fontSize: baseFontSize,
+  };
+  let baseTextColouredHead = {
+    fontFamily: 'TheGroupHEAD-Light',
     color: Colors.vwgDeepBlue,
     fontSize: baseFontSize,
   };
   let baseTextSmall = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
   };
   let baseTextLarge = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeLarge,
   };
   let baseTextLargeBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeLarge,
   };
   let baseTextLargerBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeLarger,
   };
   let baseTextSmallBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
   };
   let baseTextSmallColoured = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgDeepBlue,
     fontSize: baseFontSizeSmall,
   };
   let baseLinkText = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgLink,
     fontSize: baseFontSize,
   };
   let baseLinkTextBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
     fontSize: baseFontSize,
   };
   let baseLinkTextLarge = {
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgLink,
     fontSize: baseFontSizeLarge,
   };
   let baseLinkTextLargeBold = {
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
     fontSize: baseFontSizeLarge,
   };
@@ -340,22 +350,22 @@ export default getBaseStyles = (props) => {
         width >= 1024
           ? 180
           : width >= 768
-          ? 150
-          : width >= 411
-          ? 120
-          : width >= 375
-          ? 90
-          : 60,
+            ? 150
+            : width >= 411
+              ? 120
+              : width >= 375
+                ? 90
+                : 60,
       height:
         width >= 1024
           ? 120
           : width >= 768
-          ? 100
-          : width >= 411
-          ? 80
-          : width >= 375
-          ? 60
-          : 40,
+            ? 100
+            : width >= 411
+              ? 80
+              : width >= 375
+                ? 60
+                : 40,
       resizeMode: 'contain',
       marginTop: 0,
     },
@@ -442,14 +452,16 @@ export default getBaseStyles = (props) => {
       width: panelWidth,
     },
     panelTextNav: {
+      ...baseText,
       fontSize: panelTextFontSize,
       color: Colors.vwgWhite,
       fontSize: baseFontSizeSmaller,
     },
     panelTextAppName: {
-      ...baseTextBold,
+      ...baseText,
       color: Colors.vwgBlack,
       fontSize: baseFontSizeLarge,
+      textTransform: 'uppercase',
       paddingTop: 20,
     },
     panelTextBrand: {
@@ -714,8 +726,9 @@ export default getBaseStyles = (props) => {
     },
     textAppName: {
       ...baseText,
-      color: Colors.vwgBlack,
+      color: Colors.vwgHeaderTitle,
       fontSize: appNameFontSize,
+      textTransform: 'uppercase',
     },
     textItemTitle: {
       flexWrap: 'wrap',
@@ -724,12 +737,12 @@ export default getBaseStyles = (props) => {
         width >= 1024
           ? fontFactor * 1
           : width >= 768
-          ? fontFactor * 1
-          : width >= 411
-          ? fontFactor * 0.9
-          : width >= 375
-          ? fontFactor * 0.9
-          : fontFactor * 0.9,
+            ? fontFactor * 1
+            : width >= 411
+              ? fontFactor * 0.9
+              : width >= 375
+                ? fontFactor * 0.9
+                : fontFactor * 0.9,
     },
     textItemTitleHighlighted: {
       flexWrap: 'wrap',
@@ -739,12 +752,12 @@ export default getBaseStyles = (props) => {
         width >= 1024
           ? fontFactor * 1
           : width >= 768
-          ? fontFactor * 1
-          : width >= 411
-          ? fontFactor * 0.9
-          : width >= 375
-          ? fontFactor * 0.9
-          : fontFactor * 0.9,
+            ? fontFactor * 1
+            : width >= 411
+              ? fontFactor * 0.9
+              : width >= 375
+                ? fontFactor * 0.9
+                : fontFactor * 0.9,
     },
     textItemMain: {
       ...baseText,
@@ -839,12 +852,12 @@ export default getBaseStyles = (props) => {
       paddingHorizontal: 15,
     },
     textScreenTitle: {
-      ...baseTextBold,
+      ...baseText,
       textAlign: 'justify',
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeLarge,
       paddingLeft: 5,
       color: Colors.vwgHeaderTitle,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: Platform.OS === 'ios' ? 'uppercase' : 'uppercase',
     },
     textHomeGridCell: {
       ...baseText,
@@ -886,20 +899,20 @@ export default getBaseStyles = (props) => {
         height >= 1200
           ? 5
           : height >= 1024
-          ? 5
-          : height >= 840
-          ? 5
-          : height >= 720
-          ? gridRows && gridRows === 8
-            ? 4
-            : 5
-          : height >= 630
-          ? gridRows && gridRows === 8
-            ? 4
-            : 5
-          : gridRows && gridRows === 8
-          ? 4
-          : 5,
+            ? 5
+            : height >= 840
+              ? 5
+              : height >= 720
+                ? gridRows && gridRows === 8
+                  ? 4
+                  : 5
+                : height >= 630
+                  ? gridRows && gridRows === 8
+                    ? 4
+                    : 5
+                  : gridRows && gridRows === 8
+                    ? 4
+                    : 5,
       shadowColor: 'black',
       // shadowOpacity: 0.26,
       shadowOffset: { width: 0, height: 2 },

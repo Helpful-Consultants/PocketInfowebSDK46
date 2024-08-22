@@ -1,9 +1,19 @@
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 // import * as BackgroundFetch from 'expo-background-fetch';
 // import * as TaskManager from 'expo-task-manager';
 import { useEffect } from 'react';
-import { Button, Platform, Text, useWindowDimensions, View } from 'react-native';
+import {
+  Button,
+  Platform,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 // import Touchable from 'react-native-platform-touchable';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -55,7 +65,7 @@ const CustomDrawerContent = (props) => {
           marginLeft: 10,
           marginTop: 10,
           marginBottom: 5,
-          fontFamily: 'the-sans-bold',
+          fontFamily: 'TheGroupTEXT-Bold',
         }}
       >
         QUICK LINKS
@@ -98,13 +108,14 @@ const DrawerNavigator = (props) => {
       drawerStyle={{
         width: baseStyles.panelWidth.width,
       }}
-      drawerContent={(props) => <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />}
+      drawerContent={(props) => (
+        <CustomDrawerContent {...props} showDataSwitch={showDataSwitch} />
+      )}
       screenOptions={{
         drawerActiveTintColor: Colors.vwgWhite,
         drawerInactiveTintColor: Colors.vwgWhite,
         drawerActiveBackgroundColor: Colors.vwgActiveLink,
         drawerInactiveBackgroundColor: Colors.vwgInactiveLink,
-        labelStyle: baseStyles.panelTextNav,
       }}
     >
       <Drawer.Screen
@@ -113,6 +124,7 @@ const DrawerNavigator = (props) => {
         options={{
           drawerLabel: 'Home',
           headerShown: false,
+          drawerLabelStyle: baseStyles.panelTextNav,
         }}
       />
       <Drawer.Screen
@@ -120,6 +132,7 @@ const DrawerNavigator = (props) => {
         component={WipTabNavigator}
         options={{
           drawerLabel: 'Find Tools, Jobs & LTP List',
+          drawerLabelStyle: baseStyles.panelTextNav,
         }}
       />
       <Drawer.Screen
@@ -127,6 +140,7 @@ const DrawerNavigator = (props) => {
         component={NewsTabNavigator}
         options={{
           drawerLabel: 'News & Stats',
+          drawerLabelStyle: baseStyles.panelTextNav,
         }}
       />
       <Drawer.Screen
@@ -134,6 +148,7 @@ const DrawerNavigator = (props) => {
         component={RemindersTabNavigator}
         options={{
           drawerLabel: 'Alerts, S Measures, Loans, ODIS',
+          drawerLabelStyle: baseStyles.panelTextNav,
         }}
       />
     </Drawer.Navigator>
@@ -146,11 +161,19 @@ const AppNavigator = (props) => {
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
   //   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
-  const calibrationExpiryOverdueCount = useSelector((state) => state.calibrationExpiry.overdueCount);
-  const calibrationExpiryRedCount = useSelector((state) => state.calibrationExpiry.redCount);
-  const serviceMeasuresRedCount = useSelector((state) => state.serviceMeasures.redCount);
+  const calibrationExpiryOverdueCount = useSelector(
+    (state) => state.calibrationExpiry.overdueCount
+  );
+  const calibrationExpiryRedCount = useSelector(
+    (state) => state.calibrationExpiry.redCount
+  );
+  const serviceMeasuresRedCount = useSelector(
+    (state) => state.serviceMeasures.redCount
+  );
   const ltpLoansRedCount = useSelector((state) => state.ltpLoans.redCount);
-  const unseenCriticalNews = useSelector((state) => state.news.unseenCriticalNews);
+  const unseenCriticalNews = useSelector(
+    (state) => state.news.unseenCriticalNews
+  );
   const odisRedCount = useSelector((state) => state.odis.redCount);
   //   console.log('AppNavigator, userIsValidated', userIsValidated);
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
@@ -245,21 +268,34 @@ const AppNavigator = (props) => {
   useEffect(() => {
     let tempNotifiableAlertsCount = 0;
 
-    if (typeof calibrationExpiryOverdueCount === 'number' && calibrationExpiryOverdueCount > 0) {
-      tempNotifiableAlertsCount = tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
+    if (
+      typeof calibrationExpiryOverdueCount === 'number' &&
+      calibrationExpiryOverdueCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + calibrationExpiryOverdueCount;
     }
-    if (typeof calibrationExpiryRedCount === 'number' && calibrationExpiryRedCount > 0) {
-      tempNotifiableAlertsCount = tempNotifiableAlertsCount + calibrationExpiryRedCount;
+    if (
+      typeof calibrationExpiryRedCount === 'number' &&
+      calibrationExpiryRedCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + calibrationExpiryRedCount;
     }
 
     if (typeof ltpLoansRedCount === 'number' && ltpLoansRedCount > 0) {
       tempNotifiableAlertsCount = tempNotifiableAlertsCount + ltpLoansRedCount;
     }
-    if (typeof serviceMeasuresRedCount === 'number' && serviceMeasuresRedCount > 0) {
-      tempNotifiableAlertsCount = tempNotifiableAlertsCount + serviceMeasuresRedCount;
+    if (
+      typeof serviceMeasuresRedCount === 'number' &&
+      serviceMeasuresRedCount > 0
+    ) {
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + serviceMeasuresRedCount;
     }
     if (typeof unseenCriticalNews === 'number' && unseenCriticalNews > 0) {
-      tempNotifiableAlertsCount = tempNotifiableAlertsCount + unseenCriticalNews;
+      tempNotifiableAlertsCount =
+        tempNotifiableAlertsCount + unseenCriticalNews;
     }
     if (typeof odisRedCount === 'number' && odisRedCount > 0) {
       tempNotifiableAlertsCount = tempNotifiableAlertsCount + 1;
@@ -296,7 +332,12 @@ const AppNavigator = (props) => {
     unseenCriticalNews,
   ]); //testing objects
 
-  const allOK = !!(userIsValidated && userIsValidated === true && userIsSignedIn && userIsSignedIn === true);
+  const allOK = !!(
+    userIsValidated &&
+    userIsValidated === true &&
+    userIsSignedIn &&
+    userIsSignedIn === true
+  );
 
   //   const AppStack = createStackNavigator();
 
@@ -305,6 +346,10 @@ const AppNavigator = (props) => {
   //   const newPropsObj = { ...props, showingFullApp: true };
   //   console.log('AppNavigator, newPropsObj is: ', newPropsObj);
 
-  return <NavigationContainer>{allOK === true ? <DrawerNavigator /> : <SignedOutStack />}</NavigationContainer>;
+  return (
+    <NavigationContainer>
+      {allOK === true ? <DrawerNavigator /> : <SignedOutStack />}
+    </NavigationContainer>
+  );
 };
 export default AppNavigator;

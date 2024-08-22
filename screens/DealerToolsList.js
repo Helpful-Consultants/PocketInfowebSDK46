@@ -140,21 +140,21 @@ export default function DealerToolsList(props) {
           backgroundColor: item.loanToolNo
             ? Colors.vwgVeryVeryVeryLightGray
             : (booked && booked === true) ||
-              (inToolBasket && inToolBasket === true)
-            ? Colors.vwgVeryVeryLightGray
-            : Colors.vwgWhite,
+                (inToolBasket && inToolBasket === true)
+              ? Colors.vwgVeryVeryLightGray
+              : Colors.vwgWhite,
         }}
       >
         <ListItem.Content>
           <ListItem.Title
             style={{
-              ...baseStyles.textLinkBoldLarge,
+              ...baseStyles.textLinkBold,
               color: item.loanToolNo
                 ? Colors.vwgVeryDarkGray
                 : (booked && booked === true) ||
-                  (inToolBasket && inToolBasket === true)
-                ? Colors.vwgVeryDarkGray
-                : Colors.vwgLink,
+                    (inToolBasket && inToolBasket === true)
+                  ? Colors.vwgVeryDarkGray
+                  : Colors.vwgLink,
             }}
           >
             {item.partNumber
@@ -177,9 +177,9 @@ export default function DealerToolsList(props) {
               backgroundColor: item.loanToolNo
                 ? Colors.vwgVeryVeryVeryLightGray
                 : (booked && booked === true) ||
-                  (inToolBasket && inToolBasket === true)
-                ? Colors.vwgVeryVeryLightGray
-                : Colors.vwgWhite,
+                    (inToolBasket && inToolBasket === true)
+                  ? Colors.vwgVeryVeryLightGray
+                  : Colors.vwgWhite,
               marginTop: 3,
             }}
           >
@@ -324,14 +324,14 @@ export default function DealerToolsList(props) {
       //     lastJobDetails = (
       //       <Text
       //         style={{
-      //           fontFamily: 'the-sans',
+      //           fontFamily: 'TheGroupTEXT-Regular',
       //           fontSize: RFPercentage(2.0),
       //           color: Colors.vwgWarmRed
       //         }}
       //       >
       //         <Text
       //           style={{
-      //             fontFamily: 'the-sans-bold',
+      //             fontFamily: 'the-group-text-bold',
       //             fontSize: RFPercentage(2.0),
       //             color: Colors.vwgWarmRed
       //           }}
@@ -343,7 +343,7 @@ export default function DealerToolsList(props) {
       //     lastJobDetails = (
       //       <Text
       //         style={{
-      //           fontFamily: 'the-sans',
+      //           fontFamily: 'TheGroupTEXT-Regular',
       //           fontSize: RFPercentage(2.0),
       //           color: Colors.vwgWarmRed
       //         }}

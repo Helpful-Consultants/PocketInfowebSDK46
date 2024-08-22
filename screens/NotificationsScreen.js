@@ -225,7 +225,7 @@ export default NotificationsScreen = (props) => {
             <Text style={baseStyles.textPromptRibbon}>
               Showing sample data - change in menu.
             </Text>
-            <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+            <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
           </View>
         ) : null}
 
@@ -238,7 +238,7 @@ export default NotificationsScreen = (props) => {
           >
             <View style={baseStyles.viewSectionRibbon}>
               <Ionicons
-                name='tv'
+                name="tv"
                 size={20}
                 color={Colors.vwgBadgeSevereAlertColor}
               />
@@ -247,14 +247,14 @@ export default NotificationsScreen = (props) => {
                 <Text
                   style={{
                     ...baseStyles.textSectionRibbon,
-                    fontFamily: 'the-sans-bold',
+                    fontFamily: 'TheGroupTEXT-Bold',
                   }}
                 >
                   {`ODIS version changes   `}
                 </Text>
               </Text>
               <Ionicons
-                name='open-outline'
+                name="open-outline"
                 size={16}
                 style={{ marginTop: 2 }}
               />
@@ -268,20 +268,20 @@ export default NotificationsScreen = (props) => {
             style={{ backgroundColor: Colors.vwgWhite }}
           >
             <View style={baseStyles.viewSectionRibbon}>
-              <Ionicons name='tv' size={20} color={Colors.vwgBadgeAlertColor} />
+              <Ionicons name="tv" size={20} color={Colors.vwgBadgeAlertColor} />
               <Text style={baseStyles.textSectionRibbon}>
                 {`  See `}
                 <Text
                   style={{
                     ...baseStyles.textSectionRibbon,
-                    fontFamily: 'the-sans-bold',
+                    fontFamily: 'TheGroupTEXT-Bold',
                   }}
                 >
                   {`recent ODIS version changes  `}
                 </Text>
               </Text>
               <Ionicons
-                name='open-outline'
+                name="open-outline"
                 size={16}
                 style={{ marginTop: 2 }}
               />
@@ -312,7 +312,7 @@ export default NotificationsScreen = (props) => {
                   {serviceMeasuresRedCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='checkbox'
+                        name="checkbox"
                         size={20}
                         color={Colors.vwgBadgeSevereAlertColor}
                       />
@@ -322,7 +322,7 @@ export default NotificationsScreen = (props) => {
                         <Text
                           style={{
                             ...baseStyles.textSectionRibbon,
-                            fontFamily: 'the-sans-bold',
+                            fontFamily: 'TheGroupTEXT-Bold',
                           }}
                         >
                           {` urgent `}
@@ -333,7 +333,7 @@ export default NotificationsScreen = (props) => {
                         </Text>
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -341,7 +341,7 @@ export default NotificationsScreen = (props) => {
                   ) : serviceMeasuresAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='checkbox'
+                        name="checkbox"
                         size={20}
                         color={Colors.vwgBadgeAlertColor}
                       />
@@ -350,7 +350,7 @@ export default NotificationsScreen = (props) => {
                         <Text
                           style={{
                             ...baseStyles.textSectionRibbon,
-                            fontFamily: 'the-sans-bold',
+                            fontFamily: 'TheGroupTEXT-Bold',
                           }}
                         >
                           {` expiring `}
@@ -361,7 +361,7 @@ export default NotificationsScreen = (props) => {
                         </Text>
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -369,7 +369,7 @@ export default NotificationsScreen = (props) => {
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='checkbox'
+                        name="checkbox"
                         size={20}
                         color={Colors.vwgBadgeOKColor}
                       />
@@ -379,7 +379,7 @@ export default NotificationsScreen = (props) => {
                           : `  See your open Service Measure  `}
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -388,7 +388,7 @@ export default NotificationsScreen = (props) => {
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Ionicons name="checkbox" size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
                     {`   No expiring Service Measures`}
                   </Text>
@@ -420,7 +420,7 @@ export default NotificationsScreen = (props) => {
                   {ltpLoansRedCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='calendar'
+                        name="calendar"
                         size={20}
                         color={Colors.vwgBadgeSevereAlertColor}
                       />
@@ -430,7 +430,7 @@ export default NotificationsScreen = (props) => {
                         <Text
                           style={{
                             ...baseStyles.textSectionRibbon,
-                            fontFamily: 'the-sans-bold',
+                            fontFamily: 'TheGroupTEXT-Bold',
                           }}
                         >
                           {` urgent `}
@@ -441,7 +441,7 @@ export default NotificationsScreen = (props) => {
                         </Text>
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -449,7 +449,7 @@ export default NotificationsScreen = (props) => {
                   ) : ltpLoansAmberCount > 0 ? (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='calendar'
+                        name="calendar"
                         size={20}
                         color={Colors.vwgBadgeAlertColor}
                       />
@@ -458,7 +458,7 @@ export default NotificationsScreen = (props) => {
                         <Text
                           style={{
                             ...baseStyles.textSectionRibbon,
-                            fontFamily: 'the-sans-bold',
+                            fontFamily: 'TheGroupTEXT-Bold',
                           }}
                         >
                           {` expiring `}
@@ -467,7 +467,7 @@ export default NotificationsScreen = (props) => {
                         </Text>
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -475,7 +475,7 @@ export default NotificationsScreen = (props) => {
                   ) : (
                     <View style={baseStyles.viewSectionRibbon}>
                       <Ionicons
-                        name='checkbox'
+                        name="checkbox"
                         size={20}
                         color={Colors.vwgBadgeOKColor}
                       />
@@ -485,7 +485,7 @@ export default NotificationsScreen = (props) => {
                           : `  See your open LTP Loan `}
                       </Text>
                       <Ionicons
-                        name='open-outline'
+                        name="open-outline"
                         size={16}
                         style={{ marginTop: 2 }}
                       />
@@ -494,7 +494,7 @@ export default NotificationsScreen = (props) => {
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name='checkbox' size={20} color={Colors.vwgBlack} />
+                  <Ionicons name="checkbox" size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
                     {`   No LTP Loans`}
                   </Text>
@@ -521,7 +521,7 @@ export default NotificationsScreen = (props) => {
                 >
                   <View style={baseStyles.viewSectionRibbon}>
                     <Ionicons
-                      name='timer'
+                      name="timer"
                       size={20}
                       color={
                         calibrationExpiryOverdueCount > 0 ||
@@ -544,13 +544,13 @@ export default NotificationsScreen = (props) => {
                 </TouchableOpacity>
               ) : (
                 <View style={baseStyles.viewSectionRibbon}>
-                  <Ionicons name='timer' size={20} color={Colors.vwgBlack} />
+                  <Ionicons name="timer" size={20} color={Colors.vwgBlack} />
                   <Text style={baseStyles.textSectionRibbon}>
                     {calibrationExpiryTotalCount > 1
                       ? ` ${calibrationExpiryTotalCount} Calibration Expiry Actions `
                       : calibrationExpiryTotalCount > 0
-                      ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
-                      : '  No pending Calibration Expiry Actions  '}
+                        ? ` ${calibrationExpiryTotalCount} Calibration Expiry Action  `
+                        : '  No pending Calibration Expiry Actions  '}
                   </Text>
                 </View>
               )}
@@ -566,7 +566,7 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType='font-awesome'
+                          itemType="font-awesome"
                           iconName={'thumbs-down'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeSevereAlertColor}
@@ -587,7 +587,7 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType='font-awesome'
+                          itemType="font-awesome"
                           iconName={'thumbs-up'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeSevereAlertColor}
@@ -608,7 +608,7 @@ export default NotificationsScreen = (props) => {
                         }}
                       >
                         <InlineIcon
-                          itemType='font-awesome'
+                          itemType="font-awesome"
                           iconName={'thumbs-up'}
                           iconSize={RFPercentage(2.4)}
                           iconColor={Colors.vwgBadgeAlertColor}

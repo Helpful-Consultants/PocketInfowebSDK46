@@ -257,14 +257,14 @@ export default BookedOutToolsScreen = (props) => {
         <AwesomeAlert
           show={isAlertVisible}
           showProgress={false}
-          title='Return tool'
+          title="Return tool"
           message={`Have you returned ${currentTool.partNumber} (${currentTool.toolNumber}) to its correct location?`}
           closeOnTouchOutside={true}
           closeOnHardwareBackPress={false}
           showCancelButton={true}
           showConfirmButton={true}
-          cancelText='Not yet'
-          confirmText='Yes'
+          cancelText="Not yet"
+          confirmText="Yes"
           confirmButtonColor={Colors.vwgMintGreen}
           cancelButtonColor={Colors.vwgWarmRed}
           onCancelPressed={() => {
@@ -284,7 +284,10 @@ export default BookedOutToolsScreen = (props) => {
             ...baseStyles.textLargeColouredCentred,
             textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
           }}
-          messageStyle={{ fontFamily: 'the-sans', textAlign: 'center' }}
+          messageStyle={{
+            fontFamily: 'TheGroupTEXT-Regular',
+            textAlign: 'center',
+          }}
           confirmButtonTextStyle={{
             ...baseStyles.buttonTitle,
             textAlign: 'center',

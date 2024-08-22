@@ -28,12 +28,12 @@ export const loadCachedResources = () => {
             require('../assets/images/no-image-placeholder.png'),
           ]),
           Font.loadAsync({
-            'the-sans': require('../assets/fonts/VWAGTheSans-Regular.ttf'),
-            'the-sans-bold': require('../assets/fonts/VWAGTheSans-Bold.ttf'),
-            'the-sans-light': require('../assets/fonts/VWAGTheSans-Light.ttf'),
-            'the-group-text': require('./assets/fonts/TheGroupTEXT-regular.ttf'),
-            'the-group-bold': require('./assets/fonts/TheGroupTEXT-Bold.ttf'),
-            'the-group-head': require('./assets/fonts/TheGroupHEAD-Light.ttf'),
+            // 'the-sans': require('../assets/fonts/VWAGTheSans-Regular.ttf'),
+            // 'the-sans-bold': require('../assets/fonts/VWAGTheSans-Bold.ttf'),
+            // 'the-sans-light': require('../assets/fonts/VWAGTheSans-Light.ttf'),
+            'TheGroupTEXT-Regular': require('./assets/fonts/TheGroupTEXT-regular.ttf'),
+            'TheGroupTEXT-Bold': require('./assets/fonts/TheGroupTEXT-Bold.ttf'),
+            'TheGroupHEAD-Light': require('./assets/fonts/TheGroupHEAD-Light.ttf'),
           }),
         ]);
         console.log(' loadResourcesAsync done');

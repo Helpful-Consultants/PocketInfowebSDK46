@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   textStyleForNumberBadge: {
     fontSize: RFPercentage(2.4),
-    fontFamily: 'the-sans',
+    fontFamily: 'TheGroupTEXT-Regular',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   textStyleForTextBadge: {
     fontSize: 1,
-    fontFamily: 'the-sans-bold',
+    fontFamily: 'TheGroupTEXT-Bold',
     textAlign: 'center',
     // paddingRight: 2
     paddingHorizontal: 0,

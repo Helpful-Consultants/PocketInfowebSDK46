@@ -168,7 +168,7 @@ export default function DealerToolsList(props) {
                             marginBottom: 3,
                             paddingLeft: 0,
                             marginRight: 10,
-                            fontFamily: 'the-sans',
+                            fontFamily: 'TheGroupTEXT-Regular',
                             fontSize: RFPercentage(2.1)
                           }}
                         >{`Last booked out by: ${job.createdBy}, job ${item.lastWIP}`}</Text>

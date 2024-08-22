@@ -196,6 +196,7 @@ const WipTabNavigator = ({ navigation, route }) => {
         tabBarLabelStyle: {
           //ios
           fontSize: navBarFontSize,
+          fontFamily: 'TheGroupTEXT-Regular',
         },
         tabBarLabelPosition: 'below-icon', //io
         sceneContainerStyle: { backgroundColor: 'white' }, // ios
