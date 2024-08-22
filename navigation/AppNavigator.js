@@ -48,6 +48,8 @@ import HomeScreen from '../screens/HomeScreen';
 const CustomDrawerContent = (props) => {
   //   const { showDataSwitch } = props;
   //   console.log('CustomDrawerContent props.showDataSwitch', showDataSwitch);
+  const windowDim = useWindowDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
   const userDataObj = useSelector((state) => state.user.userData[0]);
 
   return (
@@ -68,7 +70,7 @@ const CustomDrawerContent = (props) => {
           fontFamily: 'TheGroupTEXT-Bold',
         }}
       >
-        QUICK LINKS
+        Quick Links
       </Text>
       <DrawerItemList {...props} style={{ marginBottom: 20 }} />
       {userDataObj?.userName.toLowerCase?.().indexOf('upstone') > -1 ? (
@@ -79,6 +81,7 @@ const CustomDrawerContent = (props) => {
             onPress={() => {
               throw new Error('Sentry test on ' + Platform.OS);
             }}
+            titleStyle={baseStyles.buttonTitle}
           />
         </View>
       ) : (

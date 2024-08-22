@@ -97,6 +97,7 @@ export default getBaseStyles = (props) => {
   let baseFontSizeSmall = fontFactor * 0.9;
   let baseFontSizeSmaller = fontFactor * 0.8;
   let baseFontSizeLarge = fontFactor * 1.1;
+  let baseFontSizeLargish = fontFactor * 1.05;
   let baseFontSizeLarger = fontFactor * 1.2;
   let baseFontSizeLargest = fontFactor * 1.4;
 
@@ -854,7 +855,7 @@ export default getBaseStyles = (props) => {
     textScreenTitle: {
       ...baseText,
       textAlign: 'justify',
-      fontSize: baseFontSizeLarge,
+      fontSize: baseFontSizeLargish,
       paddingLeft: 5,
       color: Colors.vwgHeaderTitle,
       textTransform: Platform.OS === 'ios' ? 'uppercase' : 'uppercase',
