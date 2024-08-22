@@ -1045,7 +1045,7 @@ export default HomeScreen = (props) => {
                     color={Colors.vwgDeepBlue}
                   />
                   <Text
-                    style={baseStyles.textLargeColouredCentred}
+                    style={baseStyles.textColouredCentred}
                   >{` Sign out to change user`}</Text>
                 </View>
               </Touchable>

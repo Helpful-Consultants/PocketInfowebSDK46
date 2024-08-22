@@ -568,6 +568,11 @@ export default getBaseStyles = (props) => {
       ...baseTextSmall,
       color: Colors.vwgWarmRed,
     },
+    textColouredCentred: {
+      ...baseTextColoured,
+      fontSize: baseFontSize,
+      textAlign: 'center',
+    },
     textLargeColouredCentred: {
       ...baseTextColoured,
       fontSize: baseFontSizeLarger,

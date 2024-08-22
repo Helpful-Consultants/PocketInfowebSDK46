@@ -15,6 +15,10 @@ const vwgAlertColor = '#e2a933';
 const vwgBadgeAlertColor = '#e2a933';
 const vwgBadgeOKColor = '#95a844';
 const vwgBadgeSevereAlertColor = '#d13032';
+const vwgVeryVeryDarkTeal = '#002733';
+const vwgVeryDarkTeal = '#163b46';
+const vwgVeryVeryLightGreen = '#c2fe06';
+const vwgVeryLightGreen = '#008c82';
 
 export default {
   tintColor,
@@ -22,7 +26,9 @@ export default {
   vwgAlertColor: vwgAlertColor,
   vwgBadgeOKColor: vwgBadgeOKColor,
   vwgBadgeAlertColor: vwgBadgeAlertColor,
+  newvwgBadgeAlertColor: vwgVeryVeryLightGreen,
   vwgBadgeSevereAlertColor: vwgBadgeSevereAlertColor,
+  newvwgBadgeSevereAlertColor: vwgVeryVeryLightGreen,
   vwgLink: vwgLinkColor,
   vwgHeader: vwgHeaderColor,
   vwgAndroidNav: vwgAndroidNavColor,
@@ -54,7 +60,14 @@ export default {
   vwgLightSkyBlue: '#c6dfe7',
   vwgSkyBlue: '#80b0c8',
   vwgDarkSkyBlue: '#4777a3',
+  zvwgDeepBlue: '#132632',
+  zzvwgDeepBlue: '#132632',
   vwgDeepBlue: '#004466',
+  newvwgDeepBlue: '#002733',
+  vwgVeryVeryLightGreen: vwgVeryVeryLightGreen,
+  vwgVeryLightGreen: vwgVeryLightGreen,
+  vwgVeryVeryDarkTeal: vwgVeryVeryDarkTeal,
+  vwgVeryDarkTeal: vwgVeryDarkTeal,
   vwgWarmLightBlue: '#3689b1',
   vwgWarmMidBlue: '#0b4a76',
   vwgCoolLightIosBlue: '#4a9ced',
