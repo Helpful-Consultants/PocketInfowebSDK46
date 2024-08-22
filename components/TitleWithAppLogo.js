@@ -37,6 +37,7 @@ export default function TitleWithAppLogo({ title }) {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
+        marginLeft: -16,
       }}
     >
       <Image
@@ -50,22 +51,22 @@ export default function TitleWithAppLogo({ title }) {
             windowDim.width >= 1024
               ? 38
               : windowDim.width >= 768
-              ? 32
-              : windowDim.width >= 411
-              ? 32
-              : windowDim.width >= 375
-              ? 26
-              : 22,
+                ? 32
+                : windowDim.width >= 411
+                  ? 32
+                  : windowDim.width >= 375
+                    ? 26
+                    : 22,
           height:
             windowDim.width >= 1024
               ? 38
               : windowDim.width >= 768
-              ? 32
-              : windowDim.width >= 411
-              ? 32
-              : windowDim.width >= 375
-              ? 26
-              : 22,
+                ? 32
+                : windowDim.width >= 411
+                  ? 32
+                  : windowDim.width >= 375
+                    ? 26
+                    : 22,
         }}
       />
       <Text style={{ ...baseStyles.textScreenTitle }}>{titleToUse}</Text>
