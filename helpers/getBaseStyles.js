@@ -107,7 +107,7 @@ export default getBaseStyles = (props) => {
   //       gridRows && gridRows === 8 ? fontFactor * 1.7 : fontFactor * 2;
 
   let appNameFontSize =
-    gridRows && gridRows === 8 ? fontFactor * 1.4 : fontFactor * 1.6;
+    gridRows && gridRows === 8 ? fontFactor * 1.3 : fontFactor * 1.6;
   let panelTextFontSize = fontFactor * 1.1;
   let navBarFontSize = fontFactor * 1;
 
