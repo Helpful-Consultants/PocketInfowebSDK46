@@ -29,11 +29,11 @@ export const selectSortedUniqueLtpTools = createSelector(
       return comparison;
     });
 
-    console.log(
-      'in selectSortedUniqueLtpTools ',
-      ltpItems.length,
-      uniqueLtpItems.length
-    );
+    // console.log(
+    //   'in selectSortedUniqueLtpTools ',
+    //   ltpItems.length,
+    //   uniqueLtpItems.length
+    // );
     return ltpItemsSorted;
   }
 );
