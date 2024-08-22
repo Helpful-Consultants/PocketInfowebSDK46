@@ -1,7 +1,7 @@
 import { Platform, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import Colors from '../constants/Colors';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 
 export default getBaseStyles = (props) => {
   const { fontScale, height, scale, width } = props;
