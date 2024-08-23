@@ -712,14 +712,14 @@ export default FindToolsScreen = (props) => {
                 inputStyle={baseStyles.textBasketInputJob}
                 value={formState.inputValues.wipNumber}
                 onChangeText={inputChangeHandler.bind(this, 'wipNumber')}
-                placeholder='Job number/job name'
+                placeholder="Job number/job name"
                 required
-                autoCapitalize='none'
+                autoCapitalize="none"
                 autoCorrect={false}
-                returnKeyType='done'
+                returnKeyType="done"
                 onSubmitEditing={(text) => console.log(text)}
                 errorStyle={{ color: Colors.errorText }}
-                errorText='Job number'
+                errorText="Job number"
               />
             </View>
           </View>
@@ -740,8 +740,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Back'
-            type='outline'
+            title="Back"
+            type="outline"
             onPress={() => basketBackHandler()}
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
@@ -758,9 +758,9 @@ export default FindToolsScreen = (props) => {
             }
           />
           <Button
-            title='Confirm'
+            title="Confirm"
             disabled={formState.formIsValid ? false : true}
-            type='solid'
+            type="solid"
             onPress={() => {
               saveToJobRequestHandler();
               setMode('sending');
@@ -786,7 +786,7 @@ export default FindToolsScreen = (props) => {
       <View>
         <View style={baseStyles.viewRowBasket}>
           <View style={baseStyles.viewRowFlexLeftPadded}>
-            <ActivityIndicator size='small' color={Colors.vwgDeepBlue} />
+            <ActivityIndicator size="small" color={Colors.vwgDeepBlue} />
             <View>
               <Text style={baseStyles.textColoured}>
                 {`  ${toolBasket.length} ${
@@ -813,8 +813,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Close'
-            type='clear'
+            title="Close"
+            type="clear"
             onPress={() => {
               acceptMessageHandler();
             }}
@@ -842,7 +842,7 @@ export default FindToolsScreen = (props) => {
             />
             <Text
               style={{
-                ...baseStyles.textLinkLarger,
+                ...baseStyles.textLinkVeryLarge,
                 textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
             >
@@ -852,8 +852,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Cancel'
-            type='outline'
+            title="Cancel"
+            type="outline"
             onPress={() => removeBasketHandler()}
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
@@ -871,7 +871,7 @@ export default FindToolsScreen = (props) => {
                 ? `Book out this tool`
                 : `Book out these tools`
             }
-            type='solid'
+            type="solid"
             onPress={() => bookToolsHandler()}
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
@@ -905,8 +905,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Close'
-            type='clear'
+            title="Close"
+            type="clear"
             onPress={() => {
               acceptMessageHandler();
             }}
@@ -936,8 +936,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Cancel booking'
-            type='outline'
+            title="Cancel booking"
+            type="outline"
             onPress={() => deleteWipRequestHandler()}
             titleStyle={baseStyles.buttonTitleWithIconCancel}
             buttonStyle={baseStyles.buttonCancel}
@@ -961,7 +961,7 @@ export default FindToolsScreen = (props) => {
                 ? `Keep available`
                 : `Keep available`
             }
-            type='solid'
+            type="solid"
             onPress={() => dropUnavailableHandler()}
             titleStyle={baseStyles.buttonTitleWithIcon}
             buttonStyle={baseStyles.buttonConfirm}
@@ -995,8 +995,8 @@ export default FindToolsScreen = (props) => {
         </View>
         <View style={baseStyles.viewRowBasket}>
           <Button
-            title='Close'
-            type='clear'
+            title="Close"
+            type="clear"
             onPress={() => {
               acceptNotBookedMessageHandler();
             }}
@@ -1143,8 +1143,8 @@ export default FindToolsScreen = (props) => {
       avoidKeyboard={true}
       style={styles.drawerContainer}
       backdropOpacity={0.6}
-      animationIn='slideInUp'
-      animationOut='slideOutDown'
+      animationIn="slideInUp"
+      animationOut="slideOutDown"
     >
       <View style={styles.drawerContent}>
         <View>
@@ -1181,8 +1181,8 @@ export default FindToolsScreen = (props) => {
           {toolBasket && toolBasket.length > 1
             ? ` (${toolBasket.length} items)`
             : toolBasket && toolBasket.length > 0
-            ? ` (${toolBasket.length} item)`
-            : null}
+              ? ` (${toolBasket.length} item)`
+              : null}
         </Text>
       </TouchableOpacity>
     </View>
@@ -1268,12 +1268,12 @@ export default FindToolsScreen = (props) => {
             <AwesomeAlert
               show={isDupPickedAlertVisible}
               showProgress={false}
-              title='Duplicate'
+              title="Duplicate"
               message={`You already have that tool in your basket `}
               closeOnTouchOutside={true}
               closeOnHardwareBackPress={false}
               showConfirmButton={true}
-              confirmText='Close'
+              confirmText="Close"
               confirmButtonColor={Colors.vwgDeepBlue}
               onConfirmPressed={() => {
                 cancelDupPickedHandler();

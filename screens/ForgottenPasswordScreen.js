@@ -26,7 +26,7 @@ export default ForgottenPasswordScreen = (props) => {
         >
           <Text
             style={{
-              ...baseStyles.textLargerCentred,
+              ...baseStyles.textVeryLargeCentred,
               marginTop: 30,
               marginBottom: 25,
               marginHorizontal: 20,
@@ -39,7 +39,7 @@ export default ForgottenPasswordScreen = (props) => {
           <View style={baseStyles.viewRowFlexCentred}>
             <Text
               style={{
-                ...baseStyles.textLargerCentred,
+                ...baseStyles.textVeryLargeCentred,
                 marginVertical: 3,
                 marginHorizontal: 20,
               }}
@@ -51,7 +51,7 @@ export default ForgottenPasswordScreen = (props) => {
           <View style={baseStyles.viewRowFlexCentred}>
             <Text
               style={{
-                ...baseStyles.textLargerCentred,
+                ...baseStyles.textVeryLargeCentred,
                 marginVertical: 3,
                 marginHorizontal: 20,
               }}
@@ -63,7 +63,7 @@ export default ForgottenPasswordScreen = (props) => {
           <View style={baseStyles.viewRowFlexCentred}>
             <Text
               style={{
-                ...baseStyles.textLargerCentred,
+                ...baseStyles.textVeryLargeCentred,
                 marginVertical: 3,
               }}
             >
@@ -75,7 +75,7 @@ export default ForgottenPasswordScreen = (props) => {
         <View style={baseStyles.viewRowFlexCentred}>
           <Text
             style={{
-              ...baseStyles.textLargerCentred,
+              ...baseStyles.textVeryLargeCentred,
               marginVertical: 3,
             }}
           >
@@ -84,15 +84,15 @@ export default ForgottenPasswordScreen = (props) => {
         </View>
 
         <Button
-          title='Check registration on toolsinfoweb.co.uk'
-          type='clear'
+          title="Check registration on toolsinfoweb.co.uk"
+          type="clear"
           onPress={() => {
             Linking.openURL(Urls.toolsInfoweb);
           }}
           buttonStyle={{
             marginTop: 20,
           }}
-          titleStyle={baseStyles.textLinkLarger}
+          titleStyle={baseStyles.textLinkVeryLarge}
         />
         <Text
           style={{

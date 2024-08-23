@@ -914,7 +914,7 @@ export default FindToolsScreen = (props) => {
             />
             <Text
               style={{
-                ...baseStyles.textLinkLarger,
+                ...baseStyles.textLinkLarge,
                 textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
               }}
             >
