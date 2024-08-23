@@ -483,13 +483,14 @@ export default getBaseStyles = (props) => {
     panelTextAppName: {
       ...baseText,
       color: Colors.vwgBlack,
-      fontSize: baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
       textTransform: 'uppercase',
       paddingTop: 20,
     },
     panelTextBrand: {
       ...baseTextBold,
       paddingTop: 5,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     panelTextAppInfo: {
       ...baseText,
