@@ -1,4 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen';
+import '@expo/metro-runtime';
 // import * as Notifications from 'expo-notifications';
 import registerNNPushToken from 'native-notify';
 import * as Device from 'expo-device';
