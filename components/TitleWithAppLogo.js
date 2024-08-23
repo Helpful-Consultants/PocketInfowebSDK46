@@ -37,7 +37,7 @@ export default function TitleWithAppLogo({ title }) {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        marginLeft: -16,
+        marginLeft: Platform.OS === 'ios' ? -16 : 0,
       }}
     >
       <Image
