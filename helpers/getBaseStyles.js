@@ -14,6 +14,7 @@ export default getBaseStyles = (props) => {
 
   const gridRows = 8;
   //   console.log('gridRows', gridRows);
+  const isIOS = Platform.OS === 'ios' ? true : false;
 
   const bottomTabHeight = height && height >= 1333 ? 100 : 80;
 
@@ -94,20 +95,17 @@ export default getBaseStyles = (props) => {
   //   console.log('fontFactor!!!!!!!!', fontFactor);
 
   let baseFontSize = fontFactor * 1;
-  let baseFontSizeSmall =
-    Platform.OS === 'ios' ? fontFactor * 0.9 : fontFactor * 0.8;
-  let baseFontSizeVerySmall =
-    Platform.OS === 'ios' ? fontFactor * 0.8 : fontFactor * 0.7;
-  let baseFontSizeVeryVerySmall =
-    Platform.OS === 'ios' ? fontFactor * 0.7 : fontFactor * 0.6;
+  let baseFontSizeSmall = isIOS ? fontFactor * 0.9 : fontFactor * 0.8;
+  let baseFontSizeVerySmall = isIOS ? fontFactor * 0.8 : fontFactor * 0.7;
+  let baseFontSizeVeryVerySmall = isIOS ? fontFactor * 0.7 : fontFactor * 0.6;
   let baseFontSizeLarge = fontFactor * 1.1;
   let baseFontSizeVeryLarge = fontFactor * 1.2;
 
   let letterSpacingScale = {
-    tighter: Platform.OS === 'ios' ? 0 : -0.2,
-    muchTighter: Platform.OS === 'ios' ? 0 : -0.5,
-    normal: Platform.OS === 'ios' ? 0 : -0.1,
-    wider: Platform.OS === 'ios' ? 0 : 0.3,
+    tighter: isIOS ? 0 : -0.2,
+    muchTighter: isIOS ? 0 : -0.5,
+    normal: isIOS ? 0 : -0.1,
+    wider: isIOS ? 0 : 0.3,
   }; // Decrease the spacing between letters
 
   //   console.log('letterSpacingScale!!!!!!!!', letterSpacingScale);
@@ -117,7 +115,7 @@ export default getBaseStyles = (props) => {
 
   let appNameFontSize =
     gridRows && gridRows === 8 ? fontFactor * 1.3 : fontFactor * 1.6;
-  let panelTextFontSize = fontFactor * 1.1;
+  let panelTextFontSize = isIOS ? fontFactor * 1.0 : fontFactor * 0.7;
   let navBarFontSize = fontFactor * 1;
 
   let panelWidth =
@@ -134,92 +132,92 @@ export default getBaseStyles = (props) => {
   let baseText = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextHead = {
     fontFamily: 'TheGroupHEAD-Light',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextColoured = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgDeepBlue,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextColouredBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgDeepBlue,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextColouredHead = {
     fontFamily: 'TheGroupHEAD-Light',
     color: Colors.vwgDeepBlue,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseTextSmall = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeSmall,
+    fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     letterSpacing: letterSpacingScale.muchTighter,
   };
   let baseTextLarge = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeLarge,
+    fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
   };
   let baseTextLargeBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeLarge,
+    fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
   };
-  let baseTextLargerBold = {
+  let baseTextVeryLargeBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeVeryLarge,
+    fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
   };
   let baseTextSmallBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeSmall,
+    fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
   };
   let baseTextSmallColoured = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgDeepBlue,
-    fontSize: baseFontSizeSmall,
+    fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
   };
   let baseLinkText = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgLink,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
   };
   let baseLinkTextBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
-    fontSize: baseFontSize,
+    fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     letterSpacing: letterSpacingScale.tighter,
   };
   let baseLinkTextSmallBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
-    fontSize: baseFontSizeSmall,
+    fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     letterSpacing: letterSpacingScale.tighter,
   };
 
   let baseLinkTextLarge = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgLink,
-    fontSize: baseFontSizeLarge,
+    fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
     letterSpacing: letterSpacingScale.tighter,
   };
   let baseLinkTextLargeBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
-    fontSize: baseFontSizeLarge,
+    fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
   };
 
   const baseStyles = StyleSheet.create({
@@ -234,49 +232,45 @@ export default getBaseStyles = (props) => {
     },
     buttonClose: {
       backgroundColor: Colors.vwgDeepBlue,
-      borderRadius: Platform.OS === 'ios' ? 3 : 2,
-      elevation: Platform.OS === 'ios' ? 0 : 5,
+      borderRadius: isIOS ? 3 : 2,
+      elevation: isIOS ? 0 : 5,
     },
     buttonConfirm: {
       backgroundColor: Colors.vwgLink,
-      borderRadius: Platform.OS === 'ios' ? 3 : 2,
-      elevation: Platform.OS === 'ios' ? 0 : 5,
+      borderRadius: isIOS ? 3 : 2,
+      elevation: isIOS ? 0 : 5,
     },
     buttonCancel: {
       borderColor: Colors.vwgWarmRed,
-      borderRadius: Platform.OS === 'ios' ? 3 : 0,
+      borderRadius: isIOS ? 3 : 0,
     },
     buttonTitle: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWhite,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: isIOS ? 'none' : 'uppercase',
     },
     buttonTitleSmall: {
       ...baseText,
       fontSize: baseFontSize,
       color: Colors.vwgWhite,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: isIOS ? 'none' : 'uppercase',
     },
     buttonTitleWithIcon: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWhite,
       paddingLeft: 5,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: isIOS ? 'none' : 'uppercase',
     },
     buttonTitleCancel: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWarmRed,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: isIOS ? 'none' : 'uppercase',
     },
     buttonTitleWithIconCancel: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWarmRed,
       paddingLeft: 5,
-      textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
+      textTransform: isIOS ? 'none' : 'uppercase',
     },
     buttonSignIn: {
       marginVertical: 5,
@@ -457,7 +451,6 @@ export default getBaseStyles = (props) => {
     },
     navBarText: {
       ...baseTextBold,
-      fontSize: baseFontSizeLarge,
     },
     navBarTextFocused: {
       ...baseText,
@@ -478,34 +471,37 @@ export default getBaseStyles = (props) => {
       ...baseText,
       fontSize: panelTextFontSize,
       color: Colors.vwgWhite,
-      fontSize: baseFontSizeVerySmall,
     },
     panelTextAppName: {
       ...baseText,
       color: Colors.vwgBlack,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
       textTransform: 'uppercase',
       paddingTop: 20,
     },
     panelTextBrand: {
       ...baseTextBold,
       paddingTop: 5,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     panelTextAppInfo: {
       ...baseText,
-      fontSize: baseFontSizeVerySmall,
+      fontSize:
+        Platform.OS === 'ios'
+          ? baseFontSizeVerySmall
+          : baseFontSizeVeryVerySmall,
       paddingTop: 5,
     },
     textExtraApp: {
       ...baseText,
-      fontSize: baseFontSizeVerySmall,
+      fontSize:
+        Platform.OS === 'ios'
+          ? baseFontSizeVerySmall
+          : baseFontSizeVeryVerySmall,
       paddingTop: 2,
     },
     textUpdateApp: {
       ...baseText,
       textTransform: 'uppercase',
-      fontSize: baseFontSizeLarge,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
       paddingTop: 2,
     },
     // PANEL - END
@@ -524,7 +520,7 @@ export default getBaseStyles = (props) => {
     searchBarInputContainer: {
       backgroundColor: Colors.vwgVeryVeryLightGray,
       borderColor: Colors.vwgSearchBarInputContainer,
-      borderRadius: Platform.OS === 'ios' ? 10 : 20,
+      borderRadius: isIOS ? 10 : 20,
       height: 30,
       paddingLeft: 5,
     },
@@ -539,16 +535,16 @@ export default getBaseStyles = (props) => {
     searchBarRowTextNoData: {
       ...baseText,
       color: Colors.vwgDarkSkyBlue,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarRowTextError: {
       ...baseText,
       color: Colors.vwgWarmRed,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarTextInput: {
       ...baseText,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarTextCancel: {
       ...baseText,
@@ -561,6 +557,7 @@ export default getBaseStyles = (props) => {
 
     text: {
       ...baseText,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     },
     textError: {
       ...baseText,
@@ -574,7 +571,7 @@ export default getBaseStyles = (props) => {
     },
     textColouredBold: {
       ...baseTextColouredBold,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     },
     textSmallColoured: {
       ...baseTextSmallColoured,
@@ -593,17 +590,17 @@ export default getBaseStyles = (props) => {
     },
     textColouredCentred: {
       ...baseTextColoured,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
       textAlign: 'center',
     },
     textLargeColouredCentred: {
       ...baseTextColoured,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
       textAlign: 'center',
     },
     textBold: {
       ...baseTextColouredBold,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeVerySmall,
     },
     textLink: {
       ...baseLinkText,
@@ -611,7 +608,7 @@ export default getBaseStyles = (props) => {
     returnLink: {
       ...baseLinkText,
       color: Colors.vwgLink,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeVerySmall,
     },
     textLinkBold: {
       ...baseLinkTextBold,
@@ -624,21 +621,20 @@ export default getBaseStyles = (props) => {
     },
     textLinkLarge: {
       ...baseLinkText,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSizeSmall,
     },
     textLinkVeryLarge: {
       ...baseLinkText,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeVeryLarge : baseFontSize,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
     },
     textLeftAligned: {
       ...baseText,
       textAlign: 'left',
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeVerySmall,
     },
     textLeftAlignedSmall: {
       ...baseTextSmall,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
       textAlign: 'left',
     },
     textLeftAlignedLarge: {
@@ -648,31 +644,23 @@ export default getBaseStyles = (props) => {
     textLoanToolNumber: {
       ...baseTextBold,
       textAlign: 'left',
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textLeftAlignedBold: {
       ...baseTextBold,
       textAlign: 'left',
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textLeftAlignedBoldSmall: {
       ...baseTextSmallBold,
       textAlign: 'left',
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textLeftAlignedBoldLarge: {
       ...baseTextLargeBold,
       textAlign: 'left',
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSize,
     },
     textLeftAlignedBoldVeryLarge: {
       ...baseTextVeryLargeBold,
       textAlign: 'left',
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeVeryLarge : baseFontSizeLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSizeLarge,
     },
     textCentred: {
       ...baseText,
@@ -680,19 +668,16 @@ export default getBaseStyles = (props) => {
     },
     textVeryLargeCentred: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
     },
     textReopenClosedBasket: {
-      ...baseText,
-      fontSize: baseFontSizeLarge,
+      ...baseTextLarge,
       color: Colors.vwgWhite,
     },
     textConfirmation: {
       ...baseTextBold,
       textAlign: 'left',
       color: Colors.vwgMintGreen,
-      fontSize: baseFontSizeVeryLarge,
     },
     textLoading: {
       ...baseText,
@@ -705,20 +690,19 @@ export default getBaseStyles = (props) => {
     },
     textLoading: {
       ...baseTextColoured,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
       textAlign: 'center',
       marginBottom: 50,
     },
     textJobSummary: {
       ...baseTextColouredBold,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSizeSmall,
       textAlign: 'left',
     },
     textJobDate: {
       ...baseTextSmall,
       color: Colors.vwgMidDarkGray,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
       textAlign: 'left',
     },
     // StatsSummary
@@ -726,13 +710,12 @@ export default getBaseStyles = (props) => {
       ...baseText,
       paddingHorizontal: 10,
       textAlign: 'center',
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     },
     // OdisScreen
     textOdisVersion: {
       ...baseTextBold,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // OdisScreen
     textOdisVersionSmaller: {
@@ -741,19 +724,17 @@ export default getBaseStyles = (props) => {
     textOdisVersionSmallerHighlighted: {
       ...baseTextSmall,
       color: Colors.vwgWarmOrange,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // OdisScreen
     textOdisVersionHighlighted: {
       ...baseTextBold,
       color: Colors.vwgWarmOrange,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textToolNumber: {
       ...baseLinkTextBold,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeVerySmall,
       letterSpacing:
         Platform.OS === 'ios'
           ? letterSpacingScale.tighter
@@ -762,7 +743,7 @@ export default getBaseStyles = (props) => {
     },
     partDescription: {
       ...baseText,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeVerySmall,
     },
     // StatsSummary
     textStatsTitle: {
@@ -773,43 +754,36 @@ export default getBaseStyles = (props) => {
       paddingHorizontal: 10,
       marginBottom: 0,
       textAlign: 'center',
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     },
     //HighlightedDate
     textDate: {
       ...baseTextSmall,
       paddingTop: 5,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     //HighlightedDate
     textDateHighlighted: {
       ...baseTextSmallBold,
       color: Colors.vwgCoolOrange,
       paddingTop: 5,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // LtpListScreen JobsScreen BookedOutToolsScreen
     textPromptRibbon: {
       ...baseText,
       textAlign: 'center',
       color: Colors.vwgWhite,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
-
     textSectionRibbon: {
       ...baseText,
       textAlign: 'center',
       color: Colors.vwgBlack,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     textNoData: {
       ...baseText,
       textAlign: 'left',
       marginLeft: 5,
       color: Colors.vwgBlack,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     textAppName: {
       ...baseText,
@@ -869,7 +843,7 @@ export default getBaseStyles = (props) => {
     textItemMain: {
       ...baseText,
       textAlign: 'justify',
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
     },
     //SignInScreen
     textError: {
@@ -877,7 +851,7 @@ export default getBaseStyles = (props) => {
       marginTop: 5,
       marginBottom: 3,
       color: Colors.vwgWarmRed,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
       textAlign: 'center',
       paddingHorizontal: 15,
     },
@@ -887,7 +861,7 @@ export default getBaseStyles = (props) => {
       marginTop: 3,
       marginBottom: 3,
       color: Colors.vwgWarmMidBlue,
-      fontSize: baseFontSizeLarge,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
       lineHeight: 19,
       textAlign: 'left',
     },
@@ -896,20 +870,19 @@ export default getBaseStyles = (props) => {
       marginTop: 3,
       marginBottom: 0,
       color: Colors.vwgWarmMidBlue,
-      fontSize: baseFontSizeLarge,
+      fontSize: isIOS ? baseFontSizeLarge : baseFontSize,
       //   lineHeight: 19,
       textAlign: 'left',
     },
     textBasketInputJob: {
       ...baseText,
-      fontSize: baseFontSizeVeryLarge,
     },
     textInputLabel: {
       ...baseTextColoured,
       marginTop: 10,
       marginBottom: 3,
       color: Colors.vwgDarkSkyBlue,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
       lineHeight: 19,
       textAlign: 'center',
     },
@@ -925,14 +898,13 @@ export default getBaseStyles = (props) => {
     //SignInScreen
     textSignedIn: {
       ...baseText,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
       marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
     textSignedInSmall: {
       ...baseText,
-      fontSize:
-        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
       marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
@@ -944,7 +916,7 @@ export default getBaseStyles = (props) => {
     },
     textInstructionsSmall: {
       ...baseText,
-      fontSize: baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
       marginHorizontal: 30,
       marginVertical: 10,
       textAlign: 'center',
@@ -956,21 +928,21 @@ export default getBaseStyles = (props) => {
       marginTop: 5,
       marginBottom: 3,
       color: Colors.vwgMintGreen,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: isIOS ? baseFontSizeVeryLarge : baseFontSize,
       textAlign: 'center',
       paddingHorizontal: 15,
     },
     textScreenTitle: {
       ...baseText,
       textAlign: 'justify',
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
       paddingLeft: 5,
       color: Colors.vwgHeaderTitle,
-      textTransform: Platform.OS === 'ios' ? 'uppercase' : 'uppercase',
+      textTransform: isIOS ? 'uppercase' : 'uppercase',
     },
     textHomeGridCell: {
       ...baseText,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSize : baseFontSizeSmall,
       //color: gridRows === 8 ? Colors.vwgCoolOrange : Colors.vwgWhite,
       color: Colors.vwgWhite,
       lineHeight: baseFontSizeVeryLarge,
@@ -979,7 +951,7 @@ export default getBaseStyles = (props) => {
     textHomeGridCellCount: {
       ...baseText,
       color: Colors.vwgWhite,
-      fontSize: baseFontSizeSmall,
+      fontSize: isIOS ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // TEXT - END
     // TOUCHABLE - START
@@ -998,7 +970,7 @@ export default getBaseStyles = (props) => {
       justifyContent: 'center',
       alignItems: 'center',
       // width: PixelRatio.getPixelSizeForLayoutSize(50),
-      //height: Platform.OS === 'ios' ? RFPercentage(14) : RFPercentage(20),
+      //height: isIOS ? RFPercentage(14) : RFPercentage(20),
       height: gridHeight,
       borderColor: Colors.vwgDeepBlue,
       borderStyle: 'solid',
@@ -1027,13 +999,13 @@ export default getBaseStyles = (props) => {
       shadowOffset: { width: 0, height: 2 },
       // shadowRadius: 10,
       // elevation: 5,
-      shadowOpacity: Platform.OS === 'ios' ? 0 : 0.26,
+      shadowOpacity: isIOS ? 0 : 0.26,
       //   shadowOffset: { width: 0, height: 2 },
-      shadowRadius: Platform.OS === 'ios' ? 0 : 10,
-      elevation: Platform.OS === 'ios' ? 0 : 5,
-      borderRadius: Platform.OS === 'ios' ? 3 : 4,
+      shadowRadius: isIOS ? 0 : 10,
+      elevation: isIOS ? 0 : 5,
+      borderRadius: isIOS ? 3 : 4,
       // height: PixelRatio.getPixelSizeForLayoutSize(40),
-      // width: Platform.OS === 'ios' ? RFPercentage(23.5) : RFPercentage(34),
+      // width: isIOS ? RFPercentage(23.5) : RFPercentage(34),
       width: gridWidth,
     },
 
@@ -1126,8 +1098,7 @@ export default getBaseStyles = (props) => {
     // LtpListScreen JobsScreen BookedOutToolsScreen
     viewPromptRibbon: {
       padding: 10,
-      backgroundColor:
-        Platform.OS === 'ios' ? Colors.vwgDarkSkyBlue : Colors.vwgInfoBar,
+      backgroundColor: isIOS ? Colors.vwgDarkSkyBlue : Colors.vwgInfoBar,
     },
     viewSectionRibbon: {
       padding: 5,
