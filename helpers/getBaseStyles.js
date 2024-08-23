@@ -624,11 +624,11 @@ export default getBaseStyles = (props) => {
     },
     textLinkLarge: {
       ...baseLinkText,
-      fontSize: baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
     },
-    textLinkLarger: {
+    textLinkVeryLarge: {
       ...baseLinkText,
-      fontSize: baseFontSizeVeryLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeVeryLarge : baseFontSize,
     },
     textLeftAligned: {
       ...baseText,
@@ -668,8 +668,8 @@ export default getBaseStyles = (props) => {
       textAlign: 'left',
       fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSize,
     },
-    textLeftAlignedBoldLarger: {
-      ...baseTextLargerBold,
+    textLeftAlignedBoldVeryLarge: {
+      ...baseTextVeryLargeBold,
       textAlign: 'left',
       fontSize:
         Platform.OS === 'ios' ? baseFontSizeVeryLarge : baseFontSizeLarge,
@@ -678,7 +678,7 @@ export default getBaseStyles = (props) => {
       ...baseText,
       textAlign: 'center',
     },
-    textLargerCentred: {
+    textVeryLargeCentred: {
       ...baseText,
       fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
