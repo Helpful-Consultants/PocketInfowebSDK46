@@ -148,7 +148,7 @@ export default function DealerToolsList(props) {
         <ListItem.Content>
           <ListItem.Title
             style={{
-              ...baseStyles.textLinkBold,
+              ...baseStyles.textLinkSmallBold,
               color: item.loanToolNo
                 ? Colors.vwgVeryDarkGray
                 : (booked && booked === true) ||
@@ -180,7 +180,7 @@ export default function DealerToolsList(props) {
                     (inToolBasket && inToolBasket === true)
                   ? Colors.vwgVeryVeryLightGray
                   : Colors.vwgWhite,
-              marginTop: 3,
+              marginTop: Platform.OS === 'ios' ? 3 : 0,
             }}
           >
             {
@@ -193,7 +193,7 @@ export default function DealerToolsList(props) {
                 {item.loanToolNo ? (
                   <View>
                     {item.orderPartNo ? (
-                      <Text style={{ ...baseStyles.text }}>
+                      <Text style={{ ...baseStyles.textSmall }}>
                         {item.orderPartNo}
                       </Text>
                     ) : null}
@@ -206,7 +206,7 @@ export default function DealerToolsList(props) {
                     style={{ ...baseStyles.textSmall }}
                   >{`Storage location: ${item.location}`}</Text>
                 ) : (
-                  <Text style={{ ...baseStyles.text }}>
+                  <Text style={{ ...baseStyles.textSmall }}>
                     Storage location not recorded
                   </Text>
                 )}
@@ -252,13 +252,13 @@ export default function DealerToolsList(props) {
           lastJobDetails = (
             <Text
               style={{
-                ...baseStyles.text,
+                ...baseStyles.textSmall,
                 color: Colors.vwgWarmRed,
               }}
             >
               <Text
                 style={{
-                  ...baseStyles.text,
+                  ...baseStyles.textSmall,
                   color: Colors.vwgWarmRed,
                 }}
               >{`Already booked out to you`}</Text>
@@ -287,7 +287,7 @@ export default function DealerToolsList(props) {
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text
                   style={{
-                    ...baseStyles.text,
+                    ...baseStyles.textSmall,
                   }}
                 >
                   {`Already in your `}

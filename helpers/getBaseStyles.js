@@ -94,14 +94,23 @@ export default getBaseStyles = (props) => {
   //   console.log('fontFactor!!!!!!!!', fontFactor);
 
   let baseFontSize = fontFactor * 1;
-  let baseFontSizeSmall = fontFactor * 0.9;
-  let baseFontSizeSmaller = fontFactor * 0.8;
+  let baseFontSizeSmall =
+    Platform.OS === 'ios' ? fontFactor * 0.9 : fontFactor * 0.8;
+  let baseFontSizeSmaller =
+    Platform.OS === 'ios' ? fontFactor * 0.8 : fontFactor * 0.7;
   let baseFontSizeLarge = fontFactor * 1.1;
   let baseFontSizeLargish = fontFactor * 1.05;
   let baseFontSizeLarger = fontFactor * 1.2;
   let baseFontSizeLargest = fontFactor * 1.4;
 
-  //   console.log('baseFontSizeLarger!!!!!!!!', baseFontSizeLarger);
+  let letterSpacingScale = {
+    tighter: Platform.OS === 'ios' ? 0 : -0.2,
+    muchTighter: Platform.OS === 'ios' ? 0 : -0.5,
+    normal: Platform.OS === 'ios' ? 0 : -0.1,
+    wider: Platform.OS === 'ios' ? 0 : 0.3,
+  }; // Decrease the spacing between letters
+
+  //   console.log('letterSpacingScale!!!!!!!!', letterSpacingScale);
 
   //   let appNameFontSize =
   //       gridRows && gridRows === 8 ? fontFactor * 1.7 : fontFactor * 2;
@@ -156,6 +165,7 @@ export default getBaseStyles = (props) => {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgVeryDarkGray,
     fontSize: baseFontSizeSmall,
+    letterSpacing: letterSpacingScale.muchTighter,
   };
   let baseTextLarge = {
     fontFamily: 'TheGroupTEXT-Regular',
@@ -191,11 +201,20 @@ export default getBaseStyles = (props) => {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgLink,
     fontSize: baseFontSize,
+    letterSpacing: letterSpacingScale.tighter,
   };
+  let baseLinkTextSmallBold = {
+    fontFamily: 'TheGroupTEXT-Bold',
+    color: Colors.vwgLink,
+    fontSize: baseFontSizeSmall,
+    letterSpacing: letterSpacingScale.tighter,
+  };
+
   let baseLinkTextLarge = {
     fontFamily: 'TheGroupTEXT-Regular',
     color: Colors.vwgLink,
     fontSize: baseFontSizeLarge,
+    letterSpacing: letterSpacingScale.tighter,
   };
   let baseLinkTextLargeBold = {
     fontFamily: 'TheGroupTEXT-Bold',
@@ -519,14 +538,16 @@ export default getBaseStyles = (props) => {
     searchBarRowTextNoData: {
       ...baseText,
       color: Colors.vwgDarkSkyBlue,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarRowTextError: {
       ...baseText,
       color: Colors.vwgWarmRed,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarTextInput: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
     },
     searchBarTextCancel: {
       ...baseText,
@@ -552,6 +573,7 @@ export default getBaseStyles = (props) => {
     },
     textColouredBold: {
       ...baseTextColouredBold,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     textSmallColoured: {
       ...baseTextSmallColoured,
@@ -570,7 +592,8 @@ export default getBaseStyles = (props) => {
     },
     textColouredCentred: {
       ...baseTextColoured,
-      fontSize: baseFontSize,
+
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       textAlign: 'center',
     },
     textLargeColouredCentred: {
@@ -586,6 +609,9 @@ export default getBaseStyles = (props) => {
     },
     textLinkBold: {
       ...baseLinkTextBold,
+    },
+    textLinkSmallBold: {
+      ...baseLinkTextSmallBold,
     },
     textLinkBoldLarge: {
       ...baseLinkTextLargeBold,
@@ -691,7 +717,7 @@ export default getBaseStyles = (props) => {
     },
     textToolNumber: {
       ...baseLinkTextBold,
-      fontSize: baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       textAlign: 'left',
     },
     // StatsSummary
@@ -718,10 +744,12 @@ export default getBaseStyles = (props) => {
     },
     // LtpListScreen JobsScreen BookedOutToolsScreen
     textPromptRibbon: {
-      ...baseTextLarge,
+      ...baseText,
       textAlign: 'center',
       color: Colors.vwgWhite,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
     },
+
     textSectionRibbon: {
       ...baseText,
       textAlign: 'center',
@@ -735,7 +763,7 @@ export default getBaseStyles = (props) => {
     },
     textAppName: {
       ...baseText,
-      color: Colors.vwgHeaderTitle,
+      letterSpacing: letterSpacingScale.tighter,
       fontSize: appNameFontSize,
       textTransform: 'uppercase',
     },
@@ -826,13 +854,13 @@ export default getBaseStyles = (props) => {
     //SignInScreen
     textSignedIn: {
       ...baseText,
-      fontSize: gridRows && gridRows === 8 ? baseFontSize : baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
     textSignedInSmall: {
       ...baseText,
-      fontSize: baseFontSizeSmall,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeSmaller,
       marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
@@ -863,14 +891,14 @@ export default getBaseStyles = (props) => {
     textScreenTitle: {
       ...baseText,
       textAlign: 'justify',
-      fontSize: baseFontSizeLargish,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLargish : baseFontSize,
       paddingLeft: 5,
       color: Colors.vwgHeaderTitle,
       textTransform: Platform.OS === 'ios' ? 'uppercase' : 'uppercase',
     },
     textHomeGridCell: {
       ...baseText,
-      fontSize: gridRows === 8 ? baseFontSize : baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       //color: gridRows === 8 ? Colors.vwgCoolOrange : Colors.vwgWhite,
       color: Colors.vwgWhite,
       lineHeight: baseFontSizeLarger,
