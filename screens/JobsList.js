@@ -85,7 +85,7 @@ export default function DealerToolsList(props) {
                       >
                         <Text
                           style={{
-                            ...baseStyles.textLink,
+                            ...baseStyles.returnLink,
                             textAlign: 'right',
                           }}
                         >
@@ -141,16 +141,16 @@ export default function DealerToolsList(props) {
                     >
                       <Text
                         style={{
-                          ...baseStyles.text,
+                          ...baseStyles.partDescription,
                           marginRight: 10,
-                          marginBottom: 3,
+                          marginBottom: 2,
                           paddingLeft: 0,
                         }}
                       >{`${item.partDescription}`}</Text>
 
                       <Text
                         style={{
-                          ...baseStyles.text,
+                          ...baseStyles.partDescription,
                           marginRight: 10,
                           marginBottom: 3,
                           paddingLeft: 0,
@@ -264,7 +264,7 @@ export default function DealerToolsList(props) {
                     <View>
                       <Text
                         style={{
-                          ...baseStyles.textSmallLight,
+                          ...baseStyles.textJobDate,
                         }}
                       >
                         {getFriendlyDisplayShortTimeAndLongDate(

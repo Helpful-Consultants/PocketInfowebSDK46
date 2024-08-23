@@ -38,7 +38,7 @@ export default function LtpLoansList(props) {
       <View style={baseStyles.containerNoMargin}>
         <View>
           <Text
-            style={baseStyles.textLeftAlignedBoldLarge}
+            style={baseStyles.textLeftAlignedBold}
           >{`${item.loanToolNo} - ${item.toolDescription}`}</Text>
         </View>
         <View>

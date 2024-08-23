@@ -234,7 +234,7 @@ export default ServiceMeasuresScreen = (props) => {
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
           </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
       {dataError ? (

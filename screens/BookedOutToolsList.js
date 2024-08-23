@@ -112,7 +112,7 @@ export default function BookedOutToolsList(props) {
                       {i === 0 ? (
                         <Text
                           style={{
-                            ...baseStyles.textLink,
+                            ...baseStyles.returnLink,
                             textAlign: 'right',
                             // backgroundColor: 'blue',
                           }}
@@ -160,14 +160,14 @@ export default function BookedOutToolsList(props) {
                     <View style={{ flexDirection: 'column', paddingLeft: 10 }}>
                       <Text
                         style={{
-                          ...baseStyles.text,
+                          ...baseStyles.partDescription,
                           marginBottom: 3,
                         }}
                       >{`${item.partDescription}`}</Text>
                       {item.location.length > 0 ? (
                         <Text
                           style={{
-                            ...baseStyles.text,
+                            ...baseStyles.partDescription,
                             marginBottom: 3,
                           }}
                         >{`Storage Location: ${item.location}`}</Text>
@@ -175,7 +175,7 @@ export default function BookedOutToolsList(props) {
                       {item.wipNumber.length > 0 ? (
                         <Text
                           style={{
-                            ...baseStyles.text,
+                            ...baseStyles.partDescription,
                             marginBottom: 3,
                           }}
                         >{`Booked out to job '${item.wipNumber}'`}</Text>

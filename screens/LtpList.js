@@ -36,7 +36,7 @@ export default function LtpList(props) {
     return (
       <ListItem bottomDivider>
         <ListItem.Content style={baseStyles.containerNoMargin}>
-          <ListItem.Title style={baseStyles.textLeftAlignedBold}>
+          <ListItem.Title style={baseStyles.textLoanToolNumber}>
             {`${item.loanToolNo}${
               (item.supplierPartNo && !item.orderPartNo) ||
               (item.supplierPartNo &&
@@ -50,7 +50,7 @@ export default function LtpList(props) {
             {
               <View>
                 <Text
-                  style={baseStyles.textLeftAligned}
+                  style={baseStyles.textLeftAlignedSmall}
                 >{`${item.toolDescription}`}</Text>
                 {item.orderPartNo &&
                 item.orderPartNo.toLowerCase() !==

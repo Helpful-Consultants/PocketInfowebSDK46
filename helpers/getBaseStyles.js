@@ -96,12 +96,12 @@ export default getBaseStyles = (props) => {
   let baseFontSize = fontFactor * 1;
   let baseFontSizeSmall =
     Platform.OS === 'ios' ? fontFactor * 0.9 : fontFactor * 0.8;
-  let baseFontSizeSmaller =
+  let baseFontSizeVerySmall =
     Platform.OS === 'ios' ? fontFactor * 0.8 : fontFactor * 0.7;
+  let baseFontSizeVeryVerySmall =
+    Platform.OS === 'ios' ? fontFactor * 0.7 : fontFactor * 0.6;
   let baseFontSizeLarge = fontFactor * 1.1;
-  let baseFontSizeLargish = fontFactor * 1.05;
-  let baseFontSizeLarger = fontFactor * 1.2;
-  let baseFontSizeLargest = fontFactor * 1.4;
+  let baseFontSizeVeryLarge = fontFactor * 1.2;
 
   let letterSpacingScale = {
     tighter: Platform.OS === 'ios' ? 0 : -0.2,
@@ -180,7 +180,7 @@ export default getBaseStyles = (props) => {
   let baseTextLargerBold = {
     fontFamily: 'TheGroupTEXT-Bold',
     color: Colors.vwgVeryDarkGray,
-    fontSize: baseFontSizeLarger,
+    fontSize: baseFontSizeVeryLarge,
   };
   let baseTextSmallBold = {
     fontFamily: 'TheGroupTEXT-Bold',
@@ -248,7 +248,7 @@ export default getBaseStyles = (props) => {
     },
     buttonTitle: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWhite,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
@@ -260,20 +260,20 @@ export default getBaseStyles = (props) => {
     },
     buttonTitleWithIcon: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWhite,
       paddingLeft: 5,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
     buttonTitleCancel: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWarmRed,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
     },
     buttonTitleWithIconCancel: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       color: Colors.vwgWarmRed,
       paddingLeft: 5,
       textTransform: Platform.OS === 'ios' ? 'none' : 'uppercase',
@@ -420,7 +420,7 @@ export default getBaseStyles = (props) => {
     },
     // IMAGE - END
     // NAV BAR - START
-    navBarFontSize: baseFontSizeLarger,
+    navBarFontSize: baseFontSizeVeryLarge,
     // navBar
     navBarNonPaddedView: {},
     navBarPaddedView: {
@@ -478,7 +478,7 @@ export default getBaseStyles = (props) => {
       ...baseText,
       fontSize: panelTextFontSize,
       color: Colors.vwgWhite,
-      fontSize: baseFontSizeSmaller,
+      fontSize: baseFontSizeVerySmall,
     },
     panelTextAppName: {
       ...baseText,
@@ -493,12 +493,12 @@ export default getBaseStyles = (props) => {
     },
     panelTextAppInfo: {
       ...baseText,
-      fontSize: baseFontSizeSmaller,
+      fontSize: baseFontSizeVerySmall,
       paddingTop: 5,
     },
     textExtraApp: {
       ...baseText,
-      fontSize: baseFontSizeSmaller,
+      fontSize: baseFontSizeVerySmall,
       paddingTop: 2,
     },
     textUpdateApp: {
@@ -592,20 +592,25 @@ export default getBaseStyles = (props) => {
     },
     textColouredCentred: {
       ...baseTextColoured,
-
       fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       textAlign: 'center',
     },
     textLargeColouredCentred: {
       ...baseTextColoured,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
     },
     textBold: {
       ...baseTextColouredBold,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
     },
     textLink: {
       ...baseLinkText,
+    },
+    returnLink: {
+      ...baseLinkText,
+      color: Colors.vwgLink,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
     },
     textLinkBold: {
       ...baseLinkTextBold,
@@ -622,35 +627,51 @@ export default getBaseStyles = (props) => {
     },
     textLinkLarger: {
       ...baseLinkText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
     },
     textLeftAligned: {
       ...baseText,
       textAlign: 'left',
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
     },
     textLeftAlignedSmall: {
       ...baseTextSmall,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
       textAlign: 'left',
     },
     textLeftAlignedLarge: {
       ...baseTextLarge,
       textAlign: 'left',
     },
+    textLoanToolNumber: {
+      ...baseTextBold,
+      textAlign: 'left',
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
+    },
     textLeftAlignedBold: {
       ...baseTextBold,
       textAlign: 'left',
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textLeftAlignedBoldSmall: {
       ...baseTextSmallBold,
       textAlign: 'left',
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textLeftAlignedBoldLarge: {
       ...baseTextLargeBold,
       textAlign: 'left',
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSize,
     },
     textLeftAlignedBoldLarger: {
       ...baseTextLargerBold,
       textAlign: 'left',
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeVeryLarge : baseFontSizeLarge,
     },
     textCentred: {
       ...baseText,
@@ -658,7 +679,7 @@ export default getBaseStyles = (props) => {
     },
     textLargerCentred: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
     },
     textReopenClosedBasket: {
@@ -670,7 +691,7 @@ export default getBaseStyles = (props) => {
       ...baseTextBold,
       textAlign: 'left',
       color: Colors.vwgMintGreen,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
     },
     textLoading: {
       ...baseText,
@@ -683,13 +704,20 @@ export default getBaseStyles = (props) => {
     },
     textLoading: {
       ...baseTextColoured,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
       marginBottom: 50,
     },
     textJobSummary: {
       ...baseTextColouredBold,
-      fontSize: baseFontSizeLarge,
+      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      textAlign: 'left',
+    },
+    textJobDate: {
+      ...baseTextSmall,
+      color: Colors.vwgMidDarkGray,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
       textAlign: 'left',
     },
     // StatsSummary
@@ -697,10 +725,13 @@ export default getBaseStyles = (props) => {
       ...baseText,
       paddingHorizontal: 10,
       textAlign: 'center',
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     // OdisScreen
     textOdisVersion: {
       ...baseTextBold,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // OdisScreen
     textOdisVersionSmaller: {
@@ -709,57 +740,75 @@ export default getBaseStyles = (props) => {
     textOdisVersionSmallerHighlighted: {
       ...baseTextSmall,
       color: Colors.vwgWarmOrange,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // OdisScreen
     textOdisVersionHighlighted: {
       ...baseTextBold,
       color: Colors.vwgWarmOrange,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     textToolNumber: {
       ...baseLinkTextBold,
-      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
+      letterSpacing:
+        Platform.OS === 'ios'
+          ? letterSpacingScale.tighter
+          : letterSpacingScale.muchTightertighter,
       textAlign: 'left',
+    },
+    partDescription: {
+      ...baseText,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeVerySmall,
     },
     // StatsSummary
     textStatsTitle: {
       ...baseTextColouredBold,
-      fontSize: baseFontSize,
       //   color: 'teal',
       paddingTop: 15,
       paddingBottom: 5,
       paddingHorizontal: 10,
       marginBottom: 0,
       textAlign: 'center',
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     //HighlightedDate
     textDate: {
       ...baseTextSmall,
       paddingTop: 5,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     //HighlightedDate
     textDateHighlighted: {
       ...baseTextSmallBold,
       color: Colors.vwgCoolOrange,
       paddingTop: 5,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
     },
     // LtpListScreen JobsScreen BookedOutToolsScreen
     textPromptRibbon: {
       ...baseText,
       textAlign: 'center',
       color: Colors.vwgWhite,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLarge : baseFontSizeSmall,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
 
     textSectionRibbon: {
       ...baseText,
       textAlign: 'center',
       color: Colors.vwgBlack,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     textNoData: {
       ...baseText,
       textAlign: 'left',
       marginLeft: 5,
       color: Colors.vwgBlack,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     textAppName: {
       ...baseText,
@@ -771,34 +820,55 @@ export default getBaseStyles = (props) => {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
       fontSize:
-        width >= 1024
-          ? fontFactor * 1
-          : width >= 768
+        Platform.OS === 'ios'
+          ? width >= 1024
             ? fontFactor * 1
-            : width >= 411
-              ? fontFactor * 0.9
-              : width >= 375
+            : width >= 768
+              ? fontFactor * 1
+              : width >= 411
                 ? fontFactor * 0.9
-                : fontFactor * 0.9,
+                : width >= 375
+                  ? fontFactor * 0.9
+                  : fontFactor * 0.9
+          : width >= 1024
+            ? fontFactor * 0.8
+            : width >= 768
+              ? fontFactor * 0.8
+              : width >= 411
+                ? fontFactor * 0.7
+                : width >= 375
+                  ? fontFactor * 0.7
+                  : fontFactor * 0.7,
     },
     textItemTitleHighlighted: {
       flexWrap: 'wrap',
       ...baseLinkTextBold,
       color: Colors.vwgWarmRed,
       fontSize:
-        width >= 1024
-          ? fontFactor * 1
-          : width >= 768
+        Platform.OS === 'ios'
+          ? width >= 1024
             ? fontFactor * 1
-            : width >= 411
-              ? fontFactor * 0.9
-              : width >= 375
+            : width >= 768
+              ? fontFactor * 1
+              : width >= 411
                 ? fontFactor * 0.9
-                : fontFactor * 0.9,
+                : width >= 375
+                  ? fontFactor * 0.9
+                  : fontFactor * 0.9
+          : width >= 1024
+            ? fontFactor * 0.8
+            : width >= 768
+              ? fontFactor * 0.8
+              : width >= 411
+                ? fontFactor * 0.7
+                : width >= 375
+                  ? fontFactor * 0.7
+                  : fontFactor * 0.7,
     },
     textItemMain: {
       ...baseText,
       textAlign: 'justify',
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
     },
     //SignInScreen
     textError: {
@@ -806,7 +876,7 @@ export default getBaseStyles = (props) => {
       marginTop: 5,
       marginBottom: 3,
       color: Colors.vwgWarmRed,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
       paddingHorizontal: 15,
     },
@@ -831,14 +901,14 @@ export default getBaseStyles = (props) => {
     },
     textBasketInputJob: {
       ...baseText,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
     },
     textInputLabel: {
       ...baseTextColoured,
       marginTop: 10,
       marginBottom: 3,
       color: Colors.vwgDarkSkyBlue,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       lineHeight: 19,
       textAlign: 'center',
     },
@@ -860,7 +930,8 @@ export default getBaseStyles = (props) => {
     },
     textSignedInSmall: {
       ...baseText,
-      fontSize: Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeSmaller,
+      fontSize:
+        Platform.OS === 'ios' ? baseFontSizeSmall : baseFontSizeVerySmall,
       marginTop: gridRows && gridRows === 8 ? 2 : 5,
       textAlign: 'center',
     },
@@ -884,14 +955,14 @@ export default getBaseStyles = (props) => {
       marginTop: 5,
       marginBottom: 3,
       color: Colors.vwgMintGreen,
-      fontSize: baseFontSizeLarger,
+      fontSize: baseFontSizeVeryLarge,
       textAlign: 'center',
       paddingHorizontal: 15,
     },
     textScreenTitle: {
       ...baseText,
       textAlign: 'justify',
-      fontSize: Platform.OS === 'ios' ? baseFontSizeLargish : baseFontSize,
+      fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       paddingLeft: 5,
       color: Colors.vwgHeaderTitle,
       textTransform: Platform.OS === 'ios' ? 'uppercase' : 'uppercase',
@@ -901,7 +972,7 @@ export default getBaseStyles = (props) => {
       fontSize: Platform.OS === 'ios' ? baseFontSize : baseFontSizeSmall,
       //color: gridRows === 8 ? Colors.vwgCoolOrange : Colors.vwgWhite,
       color: Colors.vwgWhite,
-      lineHeight: baseFontSizeLarger,
+      lineHeight: baseFontSizeVeryLarge,
       textAlign: 'center',
     },
     textHomeGridCellCount: {

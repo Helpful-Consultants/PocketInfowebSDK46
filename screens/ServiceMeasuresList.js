@@ -46,7 +46,7 @@ export default function ServiceMeasuresList(props) {
       <View style={baseStyles.containerNoMargin}>
         <View>
           <Text
-            style={baseStyles.textLeftAlignedBoldLarge}
+            style={baseStyles.textLeftAlignedBold}
           >{`${item.menuText}`}</Text>
         </View>
         {showFullDetails && showFullDetails === true ? (
@@ -57,7 +57,7 @@ export default function ServiceMeasuresList(props) {
             }}
           >
             <InlineIcon
-              itemType='font-awesome'
+              itemType="font-awesome"
               iconName={measureIsLive ? 'calendar-check' : 'calendar-times'}
               iconSize={RFPercentage(2.4)}
               iconColor={
@@ -86,7 +86,7 @@ export default function ServiceMeasuresList(props) {
         ) : null}
         <View style={baseStyles.viewRowFlexCentreAligned}>
           <InlineIcon
-            itemType='font-awesome'
+            itemType="font-awesome"
             iconName={item.retailerStatus ? 'praying-hands' : 'hands'}
             iconSize={RFPercentage(2)}
             iconColor={

@@ -125,7 +125,7 @@ export default function OdisVersions(props) {
           </View>
 
           {item.lastUpdated && item.lastUpdated.length > 0 ? (
-            <Text style={baseStyles.textOdisVersionSmaller}>
+            <Text style={baseStyles.textDate}>
               {`Last changed ${getShortDisplayDate(item.lastUpdated)}`}
             </Text>
           ) : null}
