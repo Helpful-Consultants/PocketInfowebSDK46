@@ -5,4 +5,4 @@ export const AppStoreBuildNumbers = {
   IOS_EXTRA: '143', // it is a string
 };
 
-export const APP_CHANGE_INFO_STRING = 'Changes: Corporate Identity.';
+export const APP_CHANGE_INFO_STRING = 'Changes: Corporate Identity';
