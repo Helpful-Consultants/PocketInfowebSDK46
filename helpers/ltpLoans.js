@@ -11,18 +11,15 @@ export const getLtpLoansCountsObj = (ltpLoansItems) => {
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     ltpLoansItems.map((item) => {
       const timeToEnd =
-        item.endDateDue && item.endDateDue.length > 0
-          ? item.endDateDue &&
-            getDateDifference(
-              nowDate,
-              item.endDateDue,
-              'getLtpLoansCountsObj'
-            ) + 1 // add 1 for today
+        item.useByDate && item.useByDate.length > 0
+          ? item.useByDate &&
+            getDateDifference(nowDate, item.useByDate, 'getLtpLoansCountsObj') +
+              1 // add 1 for today
           : null;
       //   console.log(
       //     'in getLtpLoansCountsObj; ',
       //     'item.endDate',
-      //     item.endDateDue,
+      //     item.useByDate,
       //     'nowDate',
       //     nowDate,
       //     'timeToEnd',
@@ -70,12 +67,12 @@ export const getLtpLoanStatus = (nowDate, item) => {
   }
   // console.log(item.loanToolNo, 'not returned');
 
-  //   console.log(item.loanToolNo, 'endDueDate', item.endDateDue);
+  //   console.log(item.loanToolNo, 'endDueDate', item.useByDate);
 
   const parsedStartDate =
     (item && item.startDate && item.startDate.length > 0) || null;
   const parsedDueDate =
-    (item && item.endDateDue && item.endDateDue.length > 0) || null;
+    (item && item.useByDate && item.useByDate.length > 0) || null;
 
   //   console.log(
   //     item.loanToolNo,
@@ -103,7 +100,7 @@ export const getOpenLtpLoansItems = (nowDate, ltpLoansItems) => {
   if (ltpLoansItems && ltpLoansItems.length > 0) {
     openLtpLoansItems = ltpLoansItems.filter(
       (item) =>
-        item.startDate && item.endDateDue && getLtpLoanStatus(nowDate, item)
+        item.startDate && item.useByDate && getLtpLoanStatus(nowDate, item)
     );
   }
   // console.log('LtpLoansItemsFiltered', openLtpLoansItems);

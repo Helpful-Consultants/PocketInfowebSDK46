@@ -129,7 +129,7 @@ export default LtpLoansScreen = (props) => {
   //   console.log('in ltpLoans screen - point 6');
 
   const items = !isLoading && !dataError ? ltpLoansItems : [];
-  let ltpLoansSorted = sortObjListByDate(items, 'endDateDue', 'asc');
+  let ltpLoansSorted = sortObjListByDate(items, 'useByDate', 'asc');
 
   //   if (!userIsValidated) {
   //     navigation && navigation.navigate && navigation.navigate('Auth');

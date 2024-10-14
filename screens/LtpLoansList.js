@@ -29,7 +29,7 @@ export default function LtpLoansList(props) {
     if (item && item.dateCreated && item.expiryDate) {
       measureIsLive = getLtpLoanStatus(nowDate, item);
     }
-    const parsedEndDueDate = (item.endDateDue && item.endDateDue) || null;
+    const parsedEndDueDate = (item.useByDate && item.useByDate) || null;
 
     const daysLeft = getDateDifference(nowDate, parsedEndDueDate) + 1;
     // console.log(item.loanToolNo, 'ddddddaysLeft', daysLeft);
@@ -42,7 +42,7 @@ export default function LtpLoansList(props) {
           >{`${item.loanToolNo} - ${item.toolDescription}`}</Text>
         </View>
         <View>
-          {item.startDate || item.endDateDue ? (
+          {item.startDate || item.useByDate ? (
             <View
               style={{
                 ...baseStyles.viewRowFlexCentreAligned,
@@ -57,9 +57,9 @@ export default function LtpLoansList(props) {
                       'getFormattedLtpLoan'
                     )}`
                   : null}
-                {item.endDateDue
+                {item.useByDate
                   ? ` to ${getFriendlyDisplayLongDate(
-                      item.endDateDue,
+                      item.useByDate,
                       'getFormattedLtpLoan'
                     )}`
                   : null}
