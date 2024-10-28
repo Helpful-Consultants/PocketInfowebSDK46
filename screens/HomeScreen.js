@@ -30,7 +30,8 @@ import BadgedText from '../components/BadgedText';
 import Colors from '../constants/Colors';
 import {
   getUserRequest,
-  revalidateUserCredentials,
+  //   revalidateUserCredentials,
+  setUserValidated,
   signOutUserRequest,
 } from '../actions/user';
 import { getOdisRequest } from '../actions/odis';
@@ -50,7 +51,7 @@ import {
   selectBookedOutToolsForUser,
   selectDealerWipsForUser,
 } from '../reducers/dealerWips';
-
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
 // import Constants from 'expo-constants';
@@ -126,6 +127,8 @@ export default HomeScreen = (props) => {
   //const crashMe = CrashObj;
 
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const userError = useSelector((state) => state.user.error);
   const userName = useSelector((state) => state.user.userName);
   //   console.log('IN HOME !!!!! 1f');
@@ -353,7 +356,7 @@ export default HomeScreen = (props) => {
         getUpdatesAsync();
       } else {
         setIsCheckingAppVersion(false);
-        dispatch(revalidateUserCredentials('HomeScreen'));
+        // dispatch(revalidateUserCredentials('HomeScreen'));
         getAllItems();
       }
     } else {
@@ -489,6 +492,35 @@ export default HomeScreen = (props) => {
   }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
+    if (userIsSignedIn && userIsSignedIn === true) {
+      if (userCredsLastChecked) {
+        console.log('RemNav userCredsLastChecked', userCredsLastChecked);
+        const now = new Date();
+        const lastChecked = new Date(userCredsLastChecked);
+        // Calculate the age of credentials in minutes
+        console.log('(now - lastChecked):', now - lastChecked);
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // one hour
+        console.log('ageOfCredentials:', ageOfCredentials);
+        if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+          dispatch(setUserValidated());
+          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+        } else {
+          console.log(
+            'ageOfCredentials over limit so re-check needed',
+            ageOfCredentials
+          );
+          //   dispatch(setUserOutdatedCredentials());
+          console.log('&&&&&&&&& dispatch( getUserRequest())');
+          if (fetchParamsObj && fetchParamsObj.userIntId) {
+            dispatch(
+              getUserRequest({
+                userIntId: fetchParamsObj.userIntId,
+              })
+            );
+          }
+        }
+      }
+    }
     if (pushDataObj && typeof pushDataObj === 'object') {
       if (pushDataObj?.dataError) {
         navigation.navigate('NewsTabs', { screen: 'News' });
@@ -510,7 +542,7 @@ export default HomeScreen = (props) => {
         }
       }
     }
-  }, [pushDataObj, navigation]); // stops it looping
+  }, [pushDataObj, navigation, userIsValidated]); // stops it looping
 
   useEffect(() => {
     //   console.log(
@@ -597,7 +629,7 @@ export default HomeScreen = (props) => {
       if (__DEV__) {
         // console.log('no update check because DEV');
         setShouldCheckAppVersion(false);
-        dispatch(revalidateUserCredentials({ calledBy: 'HomeScreen' }));
+        // dispatch(revalidateUserCredentials({ calledBy: 'HomeScreen' }));
         getAllItems();
       } else {
         setShouldCheckAppVersion(true);

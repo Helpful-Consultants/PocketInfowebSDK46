@@ -4,8 +4,7 @@ import { getPushDataObject } from 'native-notify';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import TabBarIcon from '../components/TabBarIcon';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -18,6 +17,9 @@ import LtpLoansScreen from '../screens/LtpLoansScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
 import OdisScreen from '../screens/OdisScreen';
 import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
+import { getUserRequest, setUserValidated } from '../actions/user';
+import { selectFetchParamsObj } from '../reducers/user';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
 
@@ -57,7 +59,7 @@ const RemindersTabs = createBottomTabNavigator();
 // );
 
 const RemindersTabNavigator = ({ navigation, route }) => {
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   //   const thisSection = AppSections.REMINDERSTABS;
   //   const notificationTarget = useSelector(
   //     (state) => state.user.notificationTarget
@@ -66,6 +68,10 @@ const RemindersTabNavigator = ({ navigation, route }) => {
   //     'notificationTarget state.user.notificationTarget',
   //     notificationTarget
   //   );
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoData = useSelector(
     (state) => state.user.userRequestedDemoData
   );
@@ -140,6 +146,41 @@ const RemindersTabNavigator = ({ navigation, route }) => {
   }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
+    // if (!userIsValidated) {
+    //   // If not authenticated, navigate to sign-in screen
+    //   //   navigation.navigate('SignIn'); // Ensure this matches your navigation setup
+    //   dispatch(signOutUserRequest({ calledBy: 'RemNav' }));
+    //   return; // Exit early if the user is not authenticated
+    // }
+    if (userIsSignedIn && userIsSignedIn === true) {
+      if (userCredsLastChecked) {
+        console.log('RemNav userCredsLastChecked', userCredsLastChecked);
+        const now = new Date();
+        const lastChecked = new Date(userCredsLastChecked);
+        // Calculate the age of credentials in minutes
+        console.log('(now - lastChecked):', now - lastChecked);
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // one hour
+        console.log('ageOfCredentials:', ageOfCredentials);
+        if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+          dispatch(setUserValidated());
+          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+        } else {
+          console.log(
+            'ageOfCredentials over limit so re-check needed',
+            ageOfCredentials
+          );
+          //   dispatch(setUserOutdatedCredentials());
+          console.log('&&&&&&&&& dispatch( getUserRequest())');
+          if (fetchParamsObj && fetchParamsObj.userIntId) {
+            dispatch(
+              getUserRequest({
+                userIntId: fetchParamsObj.userIntId,
+              })
+            );
+          }
+        }
+      }
+    }
     if (pushDataObj && typeof pushDataObj === 'object') {
       if (pushDataObj?.dataError) {
         navigation.navigate('NewsTabs', { screen: 'News' });
@@ -161,7 +202,7 @@ const RemindersTabNavigator = ({ navigation, route }) => {
         }
       }
     }
-  }, [pushDataObj, navigation]); // stops it looping
+  }, [pushDataObj, navigation, userIsValidated]); // stops it looping
 
   useEffect(() => {
     navigation.setOptions({

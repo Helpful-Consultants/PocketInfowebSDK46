@@ -4,8 +4,7 @@ import { getPushDataObject } from 'native-notify';
 import React, { useEffect, useState } from 'react';
 import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
 import TabBarIcon from '../components/TabBarIcon';
 import TitleWithAppLogo from '../components/TitleWithAppLogo';
@@ -17,11 +16,14 @@ import getNavTargetObj from '../helpers/getNavTargetObj';
 import ElsaScreen from '../screens/ElsaScreen';
 import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 // import CatalogueScreen from '../screens/CatalogueScreen';
 // import OdisScreen from '../screens/OdisScreen';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
 
+import { selectFetchParamsObj } from '../reducers/user';
+import { getUserRequest, setUserValidated } from '../actions/user';
 const screenWidth = Math.round(Dimensions.get('window').width);
 // const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -40,6 +42,11 @@ const navBarFontSize =
 const NewsTabs = createBottomTabNavigator();
 
 const NewsTabNavigator = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
+  const userIsValidated = useSelector((state) => state.user.userIsValidated);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const unseenCriticalNews = useSelector(
     (state) => state.news.unseenCriticalNews
   );
@@ -73,6 +80,41 @@ const NewsTabNavigator = ({ navigation, route }) => {
   }, []); // Empty dependency array ensures it runs only once on mount
 
   useEffect(() => {
+    // if (!userIsValidated) {
+    //   // If not authenticated, navigate to sign-in screen
+    //   //   navigation.navigate('SignIn'); // Ensure this matches your navigation setup
+    //   dispatch(signOutUserRequest({ calledBy: 'NewsNav' }));
+    //   return; // Exit early if the user is not authenticated
+    // }
+    if (userIsSignedIn && userIsSignedIn === true) {
+      if (userCredsLastChecked) {
+        console.log('NewsNav userCredsLastChecked', userCredsLastChecked);
+        const now = new Date();
+        const lastChecked = new Date(userCredsLastChecked);
+        // Calculate the age of credentials in minutes
+        console.log('(now - lastChecked):', now - lastChecked);
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // one hour
+        console.log('ageOfCredentials:', ageOfCredentials);
+        if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+          dispatch(setUserValidated());
+          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+        } else {
+          console.log(
+            'ageOfCredentials over limit so re-check needed',
+            ageOfCredentials
+          );
+          //   dispatch(setUserOutdatedCredentials());
+          console.log('&&&&&&&&& dispatch( getUserRequest())');
+          if (fetchParamsObj && fetchParamsObj.userIntId) {
+            dispatch(
+              getUserRequest({
+                userIntId: fetchParamsObj.userIntId,
+              })
+            );
+          }
+        }
+      }
+    }
     if (pushDataObj && typeof pushDataObj === 'object') {
       if (pushDataObj?.dataError) {
         navigation.navigate('NewsTabs', { screen: 'News' });
@@ -94,7 +136,7 @@ const NewsTabNavigator = ({ navigation, route }) => {
         }
       }
     }
-  }, [pushDataObj, navigation]); // stops it looping
+  }, [pushDataObj, navigation, userIsValidated]); // stops it looping
 
   useEffect(() => {
     navigation.setOptions({

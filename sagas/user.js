@@ -18,6 +18,7 @@ function* getUser({ payload }) {
     try {
       const result = yield call(api.getUser, {
         userIntId: payload.userIntId,
+        // userIntId: '858880', to force failure
       });
       //   console.log('in user saga - 200');
       //   console.log('result is:', result && result);
@@ -62,9 +63,13 @@ function* getUser({ payload }) {
           // yield put(wipsActions.getDealerWipsRequest(fetchParamsObj));
           // yield put(toolsActions.getDealerToolsStart());
           // yield put(toolsActions.getDealerToolsRequest(fetchParamsObj));
-        } else if (result.data[0].userId && result.data[0].userId.length > 0) {
-          //   console.log('in user saga - bad 200');
-          //   console.log(result.data && result.data[0]);
+        } else if (
+          result.data[0].userId &&
+          (result.data[0].userId.length > 0 ||
+            result.data[0].intUserId.length > 0)
+        ) {
+          console.log('in user saga - bad 200');
+          console.log(result.data && result.data[0]);
 
           const message =
             (result.data[0].userName && result.data[0].username) ||
@@ -89,7 +94,7 @@ function* getUser({ payload }) {
           console.log(result && result);
           yield put(
             actions.userError({
-              error: 'Unable to check your User ID at Tools Infoweb',
+              error: 'Unable to confirm your User ID at Tools Infoweb',
               statusCode:
                 (result.request.status && result.request.status) || null,
               dataErrorUrl:
@@ -107,7 +112,7 @@ function* getUser({ payload }) {
         //   console.log(result && result);
         yield put(
           actions.userError({
-            error: 'Unable to check your User ID at Tools Infoweb',
+            error: 'Unable to confirm your User ID at Tools Infoweb',
             statusCode:
               (result.request.status && result.request.status) || null,
             dataErrorUrl:
@@ -182,7 +187,7 @@ function* getUser({ payload }) {
         if (error.message.indexOf(' 500') !== -1) {
           statusCode = 500;
         }
-        errorText = 'Unable to check your User ID!: ' + error.message;
+        errorText = 'Unable to confirm your User ID!: ' + error.message;
       }
       yield put(
         actions.userError({
@@ -193,6 +198,7 @@ function* getUser({ payload }) {
       );
     }
   } else {
+    console.log('in user saga - no payload', errorText, statusCode);
     errorText = 'Please sign in again for security ';
     yield put(
       actions.userError({
@@ -205,12 +211,12 @@ function* getUser({ payload }) {
 }
 
 function* checkUserCredentials({ payload }) {
-  //   console.log(
-  //     'in user creds saga - checkUserCreds called for',
-  //     payload && payload
-  //   );
+  console.log(
+    'in user creds saga - checkUserCreds called for',
+    payload && payload
+  );
   let statusCode = null;
-  let errorText = 'An error occurred when trying to check the user creds';
+  let errorText = 'Error in confirming user creds';
   let dataErrorUrl = null;
 
   if (payload && payload.email && payload.pin) {
@@ -221,9 +227,9 @@ function* checkUserCredentials({ payload }) {
         email: payload.email,
         pin: payload.pin,
       });
-      //   console.log('in user creds saga - 200!');
+      console.log('in user creds saga - 200!');
       //   console.log('result is:', result && result);
-      //   console.log('result is:', result.data[0]);
+      console.log('result is:', result.data[0]);
       // console.log('result userId is:', result.data[0].userId);
       // console.log('result intIdis:', result.data[0].intId);
 
@@ -277,7 +283,7 @@ function* checkUserCredentials({ payload }) {
           console.log(result && result);
           yield put(
             actions.userError({
-              error: 'Unable to check your User ID at Tools Infoweb',
+              error: 'Cannot confirm your User ID at Tools Infoweb',
               statusCode:
                 (result.request.status && result.request.status) || null,
               dataErrorUrl:
@@ -295,7 +301,7 @@ function* checkUserCredentials({ payload }) {
         //   console.log(result && result);
         yield put(
           actions.userError({
-            error: 'Unable to check your User ID at Tools Infoweb',
+            error: 'Cannot confirm user ID at Tools Infoweb',
             statusCode:
               (result.request.status && result.request.status) || null,
             dataErrorUrl:
@@ -370,7 +376,8 @@ function* checkUserCredentials({ payload }) {
         if (error.message.indexOf(' 500') !== -1) {
           statusCode = 500;
         }
-        errorText = 'Unable to check your User ID: ' + error.message;
+
+        errorText = 'Cannot confirm user ID: ' + error.message;
       }
       yield put(
         actions.userError({

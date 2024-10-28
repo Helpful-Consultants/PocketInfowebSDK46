@@ -18,13 +18,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 //import { Ionicons } from '@expo/vector-icons';
-// import { setUserOutdatedCredentials } from '../actions/user';
-// import { setUserValidated } from '../actions/user';
+
 import NewsTabNavigator from './NewsTabNavigator';
 import RemindersTabNavigator from './RemindersTabNavigator';
 import SignedOutStack from './SignedOutStack';
 import WipTabNavigator from './WipTabNavigator';
-import { revalidateUserCredentials } from '../actions/user';
+import { selectFetchParamsObj } from '../reducers/user';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import {
+  getUserRequest,
+  setUserOutdatedCredentials,
+  setUserValidated,
+} from '../actions/user';
 //import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 // import {
 //   getBrand,
@@ -160,9 +165,10 @@ const DrawerNavigator = (props) => {
 
 const AppNavigator = (props) => {
   const dispatch = useDispatch();
+  const fetchParamsObj = useSelector(selectFetchParamsObj);
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
-  //   const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const calibrationExpiryOverdueCount = useSelector(
     (state) => state.calibrationExpiry.overdueCount
@@ -182,7 +188,6 @@ const AppNavigator = (props) => {
   //   console.log('AppNavigator, userIsSignedIn', userIsSignedIn);
   //   console.log('AppNavigator,userCredsLastChecked', userCredsLastChecked);
 
-  //   const ageOfCredentialsLimit = 3;
   //   return <AuthLoadingScreen />;
 
   //   console.log('AppNavigator props', props && props);
@@ -246,27 +251,66 @@ const AppNavigator = (props) => {
   //   }
 
   useEffect(() => {
-    //   if (userIsSignedIn && userIsSignedIn === true) {
-    //     if (userCredsLastChecked) {
-    //       console.log('now:', now);
-    //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
-    //       console.log('ageOfCredentials:', ageOfCredentials);
-    //       if (ageOfCredentials <= ageOfCredentialsLimit) {
-    //         dispatch(setUserValidated());
-    //         console.log('ageOfCredentials good', ageOfCredentials);
-    //       } else {
-    //         console.log('ageOfCredentials bad', ageOfCredentials);
-    //         dispatch(setUserOutdatedCredentials());
-    //       }
-    //     }
-    //   }
+    const result = 24715 / (1000 * 60);
+    console.log('result', result);
+    if (userIsSignedIn && userIsSignedIn === true) {
+      if (userCredsLastChecked) {
+        console.log('userCredsLastChecked', userCredsLastChecked);
+        const now = new Date();
+        const lastChecked = new Date(userCredsLastChecked);
+        // Calculate the age of credentials in minutes
+        console.log('(now - lastChecked):', now - lastChecked);
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // one hour
+        console.log('ageOfCredentials:', ageOfCredentials);
+        if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+          dispatch(setUserValidated());
+          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+        } else {
+          console.log(
+            'ageOfCredentials over limit so re-check needed',
+            ageOfCredentials
+          );
+          dispatch(setUserOutdatedCredentials());
+          console.log('&&&&&&&&& dispatch( getUserRequest())');
+          if (fetchParamsObj && fetchParamsObj.userIntId) {
+            dispatch(
+              getUserRequest({
+                userIntId: fetchParamsObj.userIntId,
+              })
+            );
+          }
+        }
+      }
+    }
     //   revalidateUser();
-    dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
-
+    //   dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
     //   console.log('AppNavigator, userIsValidated 2', userIsValidated);
     //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
     //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
   }, [dispatch]);
+
+  //   useEffect(() => {
+  //   if (userIsSignedIn && userIsSignedIn === true) {
+  //     if (userCredsLastChecked) {
+  //       console.log('now:', now);
+  //       let ageOfCredentials = now.diff(userCredsLastChecked, 'minutes');
+  //       console.log('ageOfCredentials:', ageOfCredentials);
+  //       if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+  //         dispatch(setUserValidated());
+  //         console.log('ageOfCredentials good', ageOfCredentials);
+  //       } else {
+  //         console.log('ageOfCredentials bad', ageOfCredentials);
+  //         dispatch(setUserOutdatedCredentials());
+  //       }
+  //     }
+  //   }
+  //   revalidateUser();
+  // dispatch(revalidateUserCredentials({ calledBy: 'AppNavigator' }));
+
+  // console.log('AppNavigator, userIsValidated 2', userIsValidated);
+  //   console.log('AppNavigator, userIsSignedIn 2', userIsSignedIn);
+  //   console.log('AppNavigator,userCredsLastChecked 2 ', userCredsLastChecked);
+  //   }, [dispatch]);
 
   useEffect(() => {
     let tempNotifiableAlertsCount = 0;
