@@ -132,13 +132,13 @@ const RemindersTabNavigator = ({ navigation, route }) => {
           ) {
             setPushDataObj(data);
           } else {
-            console.log('Rem Nav - No relevant data:', JSON.stringify(data));
+            // console.log('Rem Nav - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('Rem Nav - undefined or not an object');
+          //   console.log('Rem Nav - undefined or not an object');
         }
       } catch (err) {
-        console.log('Rem Nav - Error fetching push data:', err);
+        // console.log('Rem Nav - Error fetching push data:', err);
       }
     };
 
@@ -159,7 +159,7 @@ const RemindersTabNavigator = ({ navigation, route }) => {
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
         // console.log('(now - lastChecked):', now - lastChecked);
-        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in hours
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in minutes
         // console.log('ageOfCredentials:', ageOfCredentials);
         if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
           dispatch(setUserValidated());

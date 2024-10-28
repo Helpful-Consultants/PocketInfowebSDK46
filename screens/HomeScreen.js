@@ -468,24 +468,24 @@ export default HomeScreen = (props) => {
         // const data = await getPushDataObject();
         const data = {};
         if (data && typeof data === 'object') {
-          console.log('Data is an object:', JSON.stringify(data));
+          //   console.log('Data is an object:', JSON.stringify(data));
           if (
             data.hasOwnProperty('targetScreen') ||
             data.hasOwnProperty('dataError')
           ) {
-            console.log(
-              'Home - Data has targetScreen or dataError:',
-              JSON.stringify(data)
-            );
+            // console.log(
+            //   'Home - Data has targetScreen or dataError:',
+            //   JSON.stringify(data)
+            // );
             setPushDataObj(data);
           } else {
-            console.log('Home - No relevant data:', JSON.stringify(data));
+            // console.log('Home - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('Home - Data is undefined or not an object');
+          //   console.log('Home - Data is undefined or not an object');
         }
       } catch (err) {
-        console.log('Home - Error fetching push data:', err);
+        // console.log('Home - Error fetching push data:', err);
       }
     };
 
@@ -500,7 +500,7 @@ export default HomeScreen = (props) => {
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
         // console.log('(now - lastChecked):', now - lastChecked);
-        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in hours
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in minutes
         // console.log('ageOfCredentials:', ageOfCredentials);
         if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
           dispatch(setUserValidated());

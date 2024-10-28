@@ -66,13 +66,13 @@ const NewsTabNavigator = ({ navigation, route }) => {
           ) {
             setPushDataObj(data);
           } else {
-            console.log('News Nav - No relevant data:', JSON.stringify(data));
+            // console.log('News Nav - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('News Nav - Data is undefined or not an object');
+          //   console.log('News Nav - Data is undefined or not an object');
         }
       } catch (err) {
-        console.log('News Nav - Error fetching push data:', err);
+        // console.log('News Nav - Error fetching push data:', err);
       }
     };
 

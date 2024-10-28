@@ -72,13 +72,13 @@ const WipTabNavigator = ({ navigation, route }) => {
           ) {
             setPushDataObj(data);
           } else {
-            console.log('Wip Nav - No relevant data:', JSON.stringify(data));
+            // console.log('Wip Nav - No relevant data:', JSON.stringify(data));
           }
         } else {
-          console.log('Wip Nav - Data is undefined or not an object');
+          //   console.log('Wip Nav - Data is undefined or not an object');
         }
       } catch (err) {
-        console.log('Wip Nav - Error fetching push data:', err);
+        // console.log('Wip Nav - Error fetching push data:', err);
       }
     };
 
@@ -94,12 +94,12 @@ const WipTabNavigator = ({ navigation, route }) => {
     // }
     if (userIsSignedIn && userIsSignedIn === true) {
       if (userCredsLastChecked) {
-        console.log('WipNav userCredsLastChecked', userCredsLastChecked);
+        // console.log('WipNav userCredsLastChecked', userCredsLastChecked);
         const now = new Date();
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
         // console.log('(now - lastChecked):', now - lastChecked);
-        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in hours
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in minutes
         // console.log('ageOfCredentials:', ageOfCredentials);
         if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
           dispatch(setUserValidated());

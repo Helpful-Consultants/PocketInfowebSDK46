@@ -258,7 +258,7 @@ const AppNavigator = (props) => {
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
         // console.log('(now - lastChecked):', now - lastChecked);
-        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in hours
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in minutes
         // console.log('ageOfCredentials:', ageOfCredentials);
         if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
           dispatch(setUserValidated());
