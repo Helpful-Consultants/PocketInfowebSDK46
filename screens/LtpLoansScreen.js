@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import ErrorDetails from '../components/ErrorDetails';
-import { revalidateUserCredentials } from '../actions/user';
 import {
   getLtpLoansRequest,
   setLtpLoansDisplayTimestamp,

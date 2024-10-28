@@ -11,7 +11,6 @@ const INITIAL_STATE = {
   userId: null,
   userPin: null,
   userName: null,
-  userIsValidated: false,
   lastUpdate: null,
   isLoading: false,
   error: null,
@@ -32,14 +31,6 @@ export const selectFetchParamsObj = createSelector(
       userIntId: userData?.[0]?.intId.toString?.() ?? '',
       dealerId: userData?.[0]?.dealerId ?? '',
     };
-    console.log(
-      '************** in selectFetchParamsObj',
-      userData,
-      userBrand,
-      'retObj',
-      retObj
-    );
-    return retObj;
   }
 );
 
