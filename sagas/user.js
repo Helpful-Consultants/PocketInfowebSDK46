@@ -227,9 +227,9 @@ function* checkUserCredentials({ payload }) {
         email: payload.email,
         pin: payload.pin,
       });
-      console.log('in user creds saga - 200!');
+      //   console.log('in user creds saga - 200!');
       //   console.log('result is:', result && result);
-      console.log('result is:', result.data[0]);
+      //   console.log('result is:', result.data[0]);
       // console.log('result userId is:', result.data[0].userId);
       // console.log('result intIdis:', result.data[0].intId);
 

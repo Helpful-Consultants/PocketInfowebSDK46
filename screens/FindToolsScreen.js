@@ -37,14 +37,15 @@ import DealerToolsList from './DealerToolsList';
 import searchItems from '../helpers/searchItems';
 import { selectFetchParamsObj } from '../reducers/user';
 import { setUserRequestedDemoApp } from '../actions/user';
+import { getUserRequest, setUserValidated } from '../actions/user';
 import { selectDealerWips } from '../reducers/dealerWips';
 // import { selectLastWipProcessedInfo } from '../reducers/dealerWips';
 import { selectLastWipProcessedObj } from '../reducers/dealerWips';
 import { selectLastWipProcessedId } from '../reducers/dealerWips';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
+import { InfoTypesAlertAges } from '../constants/InfoTypes';
 
 const minSearchLength = 1;
-
 const screenHeight = Math.round(Dimensions.get('window').height);
 const maxModalHeight = screenHeight - 150;
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -194,6 +195,8 @@ export default FindToolsScreen = (props) => {
   const dispatch = useDispatch();
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const userName = useSelector((state) => state.user.userName);
+  const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
+  const userCredsLastChecked = useSelector((state) => state.user.lastUpdate);
   const userBrand = useSelector((state) => state.user.userBrand);
   const dealerWipsItems =
     useSelector((state) => state.dealerWips.dealerWipsItems) || [];
@@ -530,6 +533,37 @@ export default FindToolsScreen = (props) => {
       setIsBasketVisible(true);
     }
   };
+  useEffect(() => {
+    if (userIsSignedIn && userIsSignedIn === true) {
+      if (userCredsLastChecked) {
+        // console.log('HomeScreen userCredsLastChecked', userCredsLastChecked);
+        const now = new Date();
+        const lastChecked = new Date(userCredsLastChecked);
+        // Calculate the age of credentials in minutes
+        // console.log('(now - lastChecked):', now - lastChecked);
+        const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // in hours
+        // console.log('ageOfCredentials:', ageOfCredentials);
+        if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
+          dispatch(setUserValidated());
+          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+        } else {
+          console.log(
+            'ageOfCredentials over limit so re-check needed',
+            ageOfCredentials
+          );
+          //   dispatch(setUserOutdatedCredentials());
+          //   console.log('&&&&&&&&& dispatch( getUserRequest())');
+          if (fetchParamsObj && fetchParamsObj.userIntId) {
+            dispatch(
+              getUserRequest({
+                userIntId: fetchParamsObj.userIntId,
+              })
+            );
+          }
+        }
+      }
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     // console.log(
