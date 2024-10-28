@@ -251,8 +251,6 @@ const AppNavigator = (props) => {
   //   }
 
   useEffect(() => {
-    const result = 24715 / (1000 * 60);
-    console.log('result', result);
     if (userIsSignedIn && userIsSignedIn === true) {
       if (userCredsLastChecked) {
         // console.log('userCredsLastChecked', userCredsLastChecked);
