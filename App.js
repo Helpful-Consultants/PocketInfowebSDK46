@@ -141,6 +141,11 @@ Sentry.init({
   // of transactions for tracing.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+  integrations: [
+    new Sentry.ReactNativeTracing({
+      enableUserInteractionTracing: true,
+    }),
+  ],
 });
 
 runSagaMiddleware(); // run here so it isn't run on every render
