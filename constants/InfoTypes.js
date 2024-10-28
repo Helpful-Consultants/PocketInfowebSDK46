@@ -8,12 +8,13 @@ export const InfoTypes = {
 };
 
 export const InfoTypesAlertUnits = {
-  CALIBRATION_EXPIRY: 'days',
-  LTP_LOANS: 'days',
-  NEWS: 'days',
-  NOTIFICATIONS: 'days',
-  ODIS: 'days',
-  SERVICE_MEASURES: 'days',
+  CALIBRATION_EXPIRY: 'DAYS',
+  LTP_LOANS: 'DAYS',
+  NEWS: 'DAYS',
+  NOTIFICATIONS: 'DAYS',
+  ODIS: 'DAYS',
+  SERVICE_MEASURES: 'DAYS',
+  USER: 'MINUTES',
 };
 
 export const InfoTypesAlertAges = {
@@ -23,4 +24,5 @@ export const InfoTypesAlertAges = {
   ODIS_RED_PERIOD: 4,
   SERVICE_MEASURES_RED_PERIOD: 3,
   SERVICE_MEASURES_AMBER_PERIOD: 8,
+  USER_CREDENTIALS: 60,
 };
