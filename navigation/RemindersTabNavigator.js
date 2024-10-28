@@ -154,23 +154,23 @@ const RemindersTabNavigator = ({ navigation, route }) => {
     // }
     if (userIsSignedIn && userIsSignedIn === true) {
       if (userCredsLastChecked) {
-        console.log('RemNav userCredsLastChecked', userCredsLastChecked);
+        // console.log('RemNav userCredsLastChecked', userCredsLastChecked);
         const now = new Date();
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
-        console.log('(now - lastChecked):', now - lastChecked);
+        // console.log('(now - lastChecked):', now - lastChecked);
         const ageOfCredentials = Math.floor((now - lastChecked) / (1000 * 60)); // one hour
-        console.log('ageOfCredentials:', ageOfCredentials);
+        // console.log('ageOfCredentials:', ageOfCredentials);
         if (ageOfCredentials <= InfoTypesAlertAges.USER_CREDENTIALS) {
           dispatch(setUserValidated());
-          console.log('ageOfCredentials under limit OK', ageOfCredentials);
+          //   console.log('ageOfCredentials under limit OK', ageOfCredentials);
         } else {
-          console.log(
-            'ageOfCredentials over limit so re-check needed',
-            ageOfCredentials
-          );
+          //   console.log(
+          //     'ageOfCredentials over limit so re-check needed',
+          //     ageOfCredentials
+          //   );
           //   dispatch(setUserOutdatedCredentials());
-          console.log('&&&&&&&&& dispatch( getUserRequest())');
+          //   console.log('&&&&&&&&& dispatch( getUserRequest())');
           if (fetchParamsObj && fetchParamsObj.userIntId) {
             dispatch(
               getUserRequest({
