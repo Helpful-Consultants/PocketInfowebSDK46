@@ -64,6 +64,7 @@ var iconSize = RFPercentage(5);
 
 export default HomeScreen = (props) => {
   const dispatch = useDispatch();
+
   //   const navigation = useNavigation();
 
   const { navigation } = props;
@@ -494,7 +495,7 @@ export default HomeScreen = (props) => {
   useEffect(() => {
     if (userIsSignedIn && userIsSignedIn === true) {
       if (userCredsLastChecked) {
-        console.log('RemNav userCredsLastChecked', userCredsLastChecked);
+        console.log('HomeScreen userCredsLastChecked', userCredsLastChecked);
         const now = new Date();
         const lastChecked = new Date(userCredsLastChecked);
         // Calculate the age of credentials in minutes
