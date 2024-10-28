@@ -1,13 +1,13 @@
 {
   "expo": {
     "jsEngine": "hermes",
-    "name": "Pocket Infoweb Extra",
-    "slug": "PocketInfoweb-Extra",
+    "name": "Pocket Infoweb",
+    "slug": "PocketInfoweb-Dev",
     "description": "Find your tools inventory.",
     "privacy": "unlisted",
     "platforms": ["ios", "android"],
-    "version": "1.4.05",
-    "icon": "./assets/images/icon-extra.png",
+    "version": "1.4.04",
+    "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -18,13 +18,13 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 500,
-      "url": "https://u.expo.dev/69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+      "url": "https://u.expo.dev/0a540561-d833-425b-8955-13bf1915cc35"
     },
     "assetBundlePatterns": ["assets/images/*", "assets/fonts/*"],
     "ios": {
       "supportsTablet": true,
       "buildNumber": "143",
-      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebextra",
+      "bundleIdentifier": "com.helpfulconsultants.pocketinfowebpro",
       "config": {
         "usesNonExemptEncryption": false
       },
@@ -34,8 +34,8 @@
     },
     "android": {
       "versionCode": 38,
-      "package": "com.helpfulconsultants.pocketinfowebextra",
-      "googleServicesFile": "./google-services-extra.json",
+      "package": "com.helpfulconsultants.pocketinfowebpro",
+      "googleServicesFile": "./google-services-pro.json",
       "permissions": [
         "CHANGE_BADGE",
         "com.anddoes.launcher.permission.UPDATE_COUNT",
@@ -63,7 +63,7 @@
           "url": "https://sentry.io/",
           "note": "Use SENTRY_AUTH_TOKEN env to authenticate with Sentry.",
           "organization": "helpful-consultants",
-          "project": "pocket-infoweb-extra"
+          "project": "pocket-infoweb"
         }
       ],
       "expo-font",
@@ -71,7 +71,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "69c7d7b3-db22-4ac9-a2c1-acfbfdc95297"
+        "projectId": "0a540561-d833-425b-8955-13bf1915cc35"
       }
     },
     "runtimeVersion": {
