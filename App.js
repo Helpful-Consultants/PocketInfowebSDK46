@@ -31,6 +31,7 @@ import {
 import { handleBackgroundNotification } from './helpers/notifications';
 // import { loadCachedResources } from './helpers/loadCachedResources';
 import * as Sentry from '@sentry/react-native';
+import { initSentry } from './helpers/initSentry'; //
 // import '@expo/match-media';
 // import { useMediaQuery } from 'react-responsive';
 // import { Ionicons } from '@expo/vector-icons';
@@ -71,17 +72,18 @@ axios.defaults.baseURL = 'https://www.toolsinfoweb.co.uk';
 //   }
 // };
 
-let sentryDSN =
-  'https://753764f4208a4f429c2c21d20a45adf0@o359939.ingest.sentry.io/3578989';
+initSentry();
+// let sentryDSN =
+//   'https://753764f4208a4f429c2c21d20a45adf0@o359939.ingest.sentry.io/3578989';
 
-const appName =
-  Constants && Constants.expoConfig && Constants.expoConfig.name
-    ? Constants.expoConfig.name
-    : 'Test app';
-if (appName.toLowerCase().includes('extra')) {
-  sentryDSN =
-    'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
-}
+// const appName =
+//   Constants && Constants.expoConfig && Constants.expoConfig.name
+//     ? Constants.expoConfig.name
+//     : 'Test app';
+// if (appName.toLowerCase().includes('extra')) {
+//   sentryDSN =
+//     'https://179ccb307bf249eeafa60884b960924a@o359939.ingest.sentry.io/5806088';
+// }
 
 // Sentry.init({
 //   dsn: sentryDSN,
@@ -134,19 +136,23 @@ console.log('sentryDist for sentry', appOS, sentryDist);
 // });
 
 // enableInExpoDevelopment: true/false depetermines whether Sentry is enabled in dev mode
-Sentry.init({
-  dsn: sentryDSN,
-  debug: true,
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for tracing.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-  integrations: [
-    new Sentry.ReactNativeTracing({
-      enableUserInteractionTracing: true,
-    }),
-  ],
-});
+
+// moved to sentry helper
+// Sentry.init({
+//   dsn: sentryDSN,
+//   debug: true,
+//   // Set tracesSampleRate to 1.0 to capture 100%
+//   // of transactions for tracing.
+//   // We recommend adjusting this value in production
+//   tracesSampleRate: 1.0,
+//   integrations: [
+//     new Sentry.ReactNativeTracing({
+//       enableUserInteractionTracing: true,
+//       tracingOrigins: ['localhost', 'myapp.io'], // Add your app’s origins here
+//
+//     }),
+//   ],
+// });
 
 runSagaMiddleware(); // run here so it isn't run on every render
 
