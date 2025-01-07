@@ -437,18 +437,21 @@ function App(props) {
 
   return (
     <SafeAreaProvider>
-      <Provider store={store}>
-        <PersistGate loading={<Loading />} persistor={persistor}>
-          <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
-            {appOS === 'ios' ? (
-              <StatusBar barStyle="dark-content" />
-            ) : (
-              <StatusBar backgroundColor="#3689b1" barStyle="light-content" />
-            )}
-            <AppNavigator />
-          </View>
-        </PersistGate>
-      </Provider>
+      {/* Wrap the top-level components with DimensionsProvider */}
+      <DimensionsProvider>
+        <Provider store={store}>
+          <PersistGate loading={<Loading />} persistor={persistor}>
+            <View style={baseStyles.containerFlex} onLayout={onLayoutRootView}>
+              {appOS === 'ios' ? (
+                <StatusBar barStyle="dark-content" />
+              ) : (
+                <StatusBar backgroundColor="#3689b1" barStyle="light-content" />
+              )}
+              <AppNavigator />
+            </View>
+          </PersistGate>
+        </Provider>
+      </DimensionsProvider>
     </SafeAreaProvider>
   );
 }
