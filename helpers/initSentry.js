@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/react-native';
 import Constants from 'expo-constants';
-// import { ReactNavigationInstrumentation } from '@sentry/react-navigation';
 
 // Configure and initialize Sentry here
 export const initSentry = () => {
@@ -25,7 +24,7 @@ export const initSentry = () => {
     integrations: [
       new Sentry.ReactNativeTracing({
         // We don’t need routingInstrumentation for managed Expo
-        enableUserInteractionTracing: true,
+        // enableUserInteractionTracing: true,
         tracingOrigins: ['https://www.toolsinfoweb.co.uk/'], // Specify your app’s origins if needed
       }),
     ],

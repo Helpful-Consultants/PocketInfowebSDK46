@@ -29,6 +29,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
+import { DimensionsProvider } from './helpers/dimensionsProvider';
 // import { loadCachedResources } from './helpers/loadCachedResources';
 import * as Sentry from '@sentry/react-native';
 import { initSentry } from './helpers/initSentry'; //
@@ -309,8 +310,10 @@ function App(props) {
 
   console.log('device', Device.isDevice);
   // Device.isDevice && registerForPush;
-  // Device.isDevice && registerForPush();
-  registerForPush();
+  if (Device.isDevice) {
+    registerForPush();
+  }
+  //   registerForPush();
   //   registerNNPushToken(20905, 'DJT3KwE2V9QURLP8wQSG1z');
 
   //   console.log('registerNNPushToken', registerNNPushToken);
