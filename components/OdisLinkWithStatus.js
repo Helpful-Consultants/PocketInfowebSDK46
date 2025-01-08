@@ -1,20 +1,23 @@
-import React from 'react';
 import { Dimensions, Platform, useWindowDimensions } from 'react-native';
+import React, { useMemo } from 'react';
 import Touchable from 'react-native-platform-touchable';
 import Colors from '../constants/Colors';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import BlinkingView from './BlinkingView';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
-var { screenHeight, screenWidth } = Dimensions.get('window');
-var gridHeight = screenHeight * 0.18;
-var gridWidth = screenWidth * 0.3;
-// console.log(screenHeight, screenWidth);
 var iconSize = RFPercentage(5);
 var iconSizeSmall = RFPercentage(3.5);
 
 export default function OdisLinkWithStatus(props) {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
+  var gridHeight = windowDim.height * 0.18;
+  var gridWidth = windowDim.width * 0.3;
   //   console.log('%%%%%% in OdisLinkWithStatus ');
   //   const items = props.items[0].brandVersions || [];
   //   const items = odisDummyData[0].brandVersions || [];
@@ -38,7 +41,7 @@ export default function OdisLinkWithStatus(props) {
     >
       <BlinkingView
         iconName={'tv'}
-        iconType='ionicon'
+        iconType="ionicon"
         iconSize={iconSizeSmall}
         text={
           showAlert ? 'See changed ODIS versions' : 'See current ODIS versions'

@@ -1,19 +1,13 @@
-import React from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import React, { useMemo } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Badge, Text } from '@rneui/themed';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-
-const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
+// const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 const tempNumberBadgeTopMargin = RFPercentage(0.8);
 const numberBadgeTopMargin =
   tempNumberBadgeTopMargin && 5 - tempNumberBadgeTopMargin;
@@ -45,7 +39,7 @@ const textBadgeRightMargin =
 export default function BadgedText(props) {
   //   console.log(props);
   const { value, status, showBadge, text, showSevereAlert } = props;
-  const windowDim = useWindowDimensions();
+  const windowDim = useDimensions();
   const baseStyles = windowDim && getBaseStyles({ ...windowDim });
 
   const valueA = '+';
@@ -61,6 +55,16 @@ export default function BadgedText(props) {
   //   console.log('textBadgeRightMargin', textBadgeRightMargin);
 
   //   console.log('IN BADGED TEXT!!!!!!!!!!!!!!!!', props);
+
+  const iconSize = useMemo(() => {
+    if (windowDim.height > 1333) {
+      return 24;
+    } else if (windowDim.height > 767) {
+      return 18;
+    }
+    return 18; // This is your fallback value in case no condition is met
+    // This is your fallback value in case no condition is met
+  }, [windowDim.height]);
 
   return (
     <View
@@ -90,8 +94,8 @@ export default function BadgedText(props) {
                 ? styles.badgeStyleForLargeNumber
                 : styles.badgeStyleForNumber
               : showSevereAlert
-              ? styles.badgeStyleForTextSevere
-              : styles.badgeStyleForText
+                ? styles.badgeStyleForTextSevere
+                : styles.badgeStyleForText
           }
           textStyle={
             valueIsNumeric
