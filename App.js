@@ -29,7 +29,7 @@ import {
   //   fetchData,
 } from './helpers/taskManagement';
 import { handleBackgroundNotification } from './helpers/notifications';
-import { DimensionsProvider } from './helpers/dimensionsProvider';
+import { DimensionsProvider } from './helpers/dimensions';
 // import { loadCachedResources } from './helpers/loadCachedResources';
 import * as Sentry from '@sentry/react-native';
 import { initSentry } from './helpers/initSentry'; //

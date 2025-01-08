@@ -11,9 +11,11 @@ export const useDimensions = () => {
 
 export const DimensionsProvider = ({ children }) => {
   const [dimensions, setDimensions] = useState(Dimensions.get('screen'));
+  console.log('LLLLTP in dimensionsProvider dimensions', dimensions);
 
   useEffect(() => {
     // Listen for screen orientation/size changes
+    // console.log('LLLLTP in dimensionsProvider useEffect on widow size change');
     const onChange = ({ window }) => {
       setDimensions(window); // Update dimensions when orientation changes
     };
