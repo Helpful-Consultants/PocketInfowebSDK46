@@ -52,10 +52,6 @@ import { useDimensions } from '../helpers/dimensions';
 import getBaseStyles from '../helpers/getBaseStyles';
 
 const minSearchLength = 1;
-// const screenHeight = Math.round(Dimensions.get('window').height);
-
-// const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
-// console.log( 'FT ***** bottomTabHeight', bottomTabHeight && bottomTabHeight);
 
 // function debounceLeading(func, timeout = 300) {
 //   let timer;
