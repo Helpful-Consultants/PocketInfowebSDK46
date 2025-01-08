@@ -1,8 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { getPushDataObject } from 'native-notify';
-import React, { useEffect, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
@@ -11,33 +11,21 @@ import TitleWithAppLogo from '../components/TitleWithAppLogo';
 // import BadgedTabBarText from '../components/BadgedTabBarText';
 import { AppSections } from '../constants/AppParts';
 import Colors from '../constants/Colors';
-import getBaseStyles from '../helpers/getBaseStyles';
+// import getBaseStyles from '../helpers/getBaseStyles';
 import getNavTargetObj from '../helpers/getNavTargetObj';
 import ElsaScreen from '../screens/ElsaScreen';
 import NewsScreen from '../screens/NewsScreen';
 import StatsScreen from '../screens/StatsScreen';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { useDimensions } from '../helpers/dimensions';
 // import CatalogueScreen from '../screens/CatalogueScreen';
 // import OdisScreen from '../screens/OdisScreen';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
-
 import { selectFetchParamsObj } from '../reducers/user';
 import { getUserRequest, setUserValidated } from '../actions/user';
-const screenWidth = Math.round(Dimensions.get('window').width);
-// const screenHeight = Math.round(Dimensions.get('window').height);
 
 const baseFontSize = 12;
-const navBarFontSize =
-  screenWidth > 1023
-    ? baseFontSize * 1.3
-    : screenWidth > 767
-      ? baseFontSize * 1.2
-      : screenWidth > 413
-        ? baseFontSize * 1.1
-        : screenWidth > 374
-          ? baseFontSize * 1
-          : baseFontSize * 1;
 
 const NewsTabs = createBottomTabNavigator();
 
@@ -51,8 +39,22 @@ const NewsTabNavigator = ({ navigation, route }) => {
     (state) => state.news.unseenCriticalNews
   );
   const [pushDataObj, setPushDataObj] = useState(null);
-  const windowDim = useWindowDimensions();
-  const baseStyles = getBaseStyles(windowDim);
+  const windowDim = useDimensions();
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in tabbariconscreenWidth', width);
+  const navBarFontSize = useMemo(() => {
+    if (windowDim.width > 1023) {
+      return baseFontSize * 1.3;
+    } else if (windowDim.width > 767) {
+      return baseFontSize * 1.2;
+    } else if (windowDim.width > 413) {
+      return baseFontSize * 1.1;
+    } else if (windowDim.width > 374) {
+      return baseFontSize * 1;
+    }
+    return baseFontSize; // This is your fallback value in case no condition is met
+    // This is your fallback value in case no condition is met
+  }, [windowDim.width]);
 
   useEffect(() => {
     const fetchData = async () => {

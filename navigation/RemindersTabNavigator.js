@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { getPushDataObject } from 'native-notify';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Dimensions, Platform, useWindowDimensions } from 'react-native';
+import { Platform } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useDispatch, useSelector } from 'react-redux';
 import HeaderButton from '../components/HeaderButton';
@@ -20,22 +20,11 @@ import ServiceMeasuresScreen from '../screens/ServiceMeasuresScreen';
 import { getUserRequest, setUserValidated } from '../actions/user';
 import { selectFetchParamsObj } from '../reducers/user';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { useDimensions } from '../helpers/dimensions';
 // import { setNotificationTarget } from '../actions/user';
 // import { resetNotificationTarget } from '../actions/user';
 
-const screenWidth = Math.round(Dimensions.get('window').width);
-// const screenHeight = Math.round(Dimensions.get('window').height);
 const baseFontSize = 12;
-const navBarFontSize =
-  screenWidth > 1023
-    ? baseFontSize * 1.3
-    : screenWidth > 767
-      ? baseFontSize * 1.2
-      : screenWidth > 413
-        ? baseFontSize * 1.1
-        : screenWidth > 374
-          ? baseFontSize * 1
-          : baseFontSize * 1;
 
 // const headerHeight =
 //   screenWidth > 1023 ? 90 : screenWidth > 767 ? 80 : screenWidth > 413 ? 70 : screenWidth > 374 ? 60 : 60;
@@ -100,8 +89,22 @@ const RemindersTabNavigator = ({ navigation, route }) => {
     useState(0);
   const [notifiableAlertsRedCount, setNotifiableAlertsRedCount] = useState(0);
   const [pushDataObj, setPushDataObj] = useState(null);
-  const windowDim = useWindowDimensions();
+  const windowDim = useDimensions();
   const baseStyles = windowDim && getBaseStyles(windowDim);
+  //   console.log('in tabbariconscreenWidth', width);
+  const navBarFontSize = useMemo(() => {
+    if (windowDim.width > 1023) {
+      return baseFontSize * 1.3;
+    } else if (windowDim.width > 767) {
+      return baseFontSize * 1.2;
+    } else if (windowDim.width > 413) {
+      return baseFontSize * 1.1;
+    } else if (windowDim.width > 374) {
+      return baseFontSize * 1;
+    }
+    return baseFontSize; // This is your fallback value in case no condition is met
+    // This is your fallback value in case no condition is met
+  }, [windowDim.width]);
 
   //   useEffect(() => {
   //     console.log('in reminders tab useeffect, data is:', data);
