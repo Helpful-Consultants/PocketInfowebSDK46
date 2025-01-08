@@ -58,10 +58,14 @@
       }
     },
     "preview": {
-      "android": {
-        "buildType": "apk"
+      "distribution": "internal",
+      "node": "20.0.0",
+      "ios": {
+        "channel": "ios-staging"
       },
-      "distribution": "internal"
+      "android": {
+        "channel": "android-staging"
+      }
     }
   },
   "submit": {
