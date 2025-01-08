@@ -1,10 +1,15 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  useWindowDimensions,
   View,
 } from 'react-native';
 // import SafeAreaView from 'react-native-safe-area-view';
@@ -17,6 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import AppNameWithLogo from '../components/AppNameWithLogo';
 import { checkUserCredentialsRequest } from '../actions/user';
+import { useDimensions } from '../helpers/dimensions';
 import getBaseStyles from '../helpers/getBaseStyles';
 
 import Types from '../constants/Types';
@@ -45,9 +51,14 @@ const formReducer = (state, action) => {
 };
 
 export default SignInScreen = (props) => {
-  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
+  useState(false);
   const [error, setError] = useState();
   const userIsValidated = useSelector((state) => state.user.userIsValidated);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
@@ -57,7 +68,7 @@ export default SignInScreen = (props) => {
 
   //   console.log('windowDim', windowDim && windowDim);
   //   console.log('in sign in, windowDim:', windowDim);
-  const baseStyles = windowDim && getBaseStyles(windowDim);
+
   //   console.log('in sign in, baseStyles:', baseStyles);
 
   //   console.log('in sign in, userIsSignedIn', userIsSignedIn);
@@ -161,14 +172,14 @@ export default SignInScreen = (props) => {
           autoFocus
           value={formState.inputValues.email}
           onChangeText={inputChangeHandler.bind(this, 'email')}
-          label='User ID - your toolsinfoweb.co.uk email address'
+          label="User ID - your toolsinfoweb.co.uk email address"
           containerStyle={baseStyles.viewInputContainerSignIn}
           textInputStyle={baseStyles.textInputStyleSignIn}
           labelStyle={baseStyles.textInputLabelSignIn}
           required
           email
-          autoCapitalize='none'
-          placeholder='e.g. janedoe@dtauto.co.uk'
+          autoCapitalize="none"
+          placeholder="e.g. janedoe@dtauto.co.uk"
           leftIcon={{
             type: 'ionicon',
             name: Platform.OS === 'ios' ? 'mail' : 'mail',
@@ -176,43 +187,43 @@ export default SignInScreen = (props) => {
             paddingRight: 10,
             paddingTop: 4,
           }}
-          keyboardType='email-address'
+          keyboardType="email-address"
           autoCorrect={false}
-          returnKeyType='next'
+          returnKeyType="next"
           onSubmitEditing={(text) => console.log(text)}
           errorStyle={{ color: Colors.errorText }}
-          errorText='The email you sign in to toolsinfoweb.co.uk with'
+          errorText="The email you sign in to toolsinfoweb.co.uk with"
         />
 
         <Input
           value={formState.inputValues.pin}
           onChangeText={inputChangeHandler.bind(this, 'pin')}
-          label='Your Pocket Infoweb access PIN*'
+          label="Your Pocket Infoweb access PIN*"
           labelStyle={baseStyles.textInputLabelSignIn}
           containerStyle={baseStyles.viewInputContainerSignIn}
           textInputStyle={baseStyles.textInputStyleSignIn}
           required
           maxLength={6}
-          placeholder='Six digits, e.g. 123456'
+          placeholder="Six digits, e.g. 123456"
           leftIcon={{
             type: 'ionicon',
             name: Platform.OS === 'ios' ? 'key' : 'key',
             color: Colors.vwgDarkSkyBlue,
             paddingRight: 10,
           }}
-          keyboardType='numeric'
+          keyboardType="numeric"
           secureTextEntry
-          returnKeyType='done'
+          returnKeyType="done"
           onSubmitEditing={(text) => console.log(text)}
-          errorText='Use the 6 digit PIN you got from toolsinfoweb.co.uk'
+          errorText="Use the 6 digit PIN you got from toolsinfoweb.co.uk"
           errorStyle={{ color: 'red' }}
         />
         <View>
           {isLoading ? (
-            <ActivityIndicator size='small' color={Colors.vwgNiceBlue} />
+            <ActivityIndicator size="small" color={Colors.vwgNiceBlue} />
           ) : (
             <Button
-              title='Sign in'
+              title="Sign in"
               disabled={formState.formIsValid ? false : true}
               onPress={submitHandler}
               buttonStyle={baseStyles.buttonSignIn}
@@ -239,8 +250,8 @@ export default SignInScreen = (props) => {
             </Text>
 
             <Button
-              title='Trouble signing in? Need a PIN?'
-              type='clear'
+              title="Trouble signing in? Need a PIN?"
+              type="clear"
               onPress={() => {
                 props.navigation.navigate('ForgottenPassword');
               }}

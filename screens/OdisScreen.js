@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, useWindowDimensions, View } from 'react-native';
+import { Text, View } from 'react-native';
 import Colors from '../constants/Colors';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 import {
   getOdisRequest,
   //   incrementOdisViewCount,
@@ -17,10 +19,12 @@ import { selectFetchParamsObj } from '../reducers/user';
 // import odisDummyData from '../dummyData/odisDummyData.js';
 
 export default OdisScreen = (props) => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
-
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const userBrand = useSelector((state) => state.user.userBrand);
   const odisObj = useSelector((state) => state.odis.odisData);
   const fetchParamsObj = useSelector(selectFetchParamsObj);
@@ -153,7 +157,7 @@ export default OdisScreen = (props) => {
           >
             Showing sample data - change in menu.
           </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWarmOrange} />
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWarmOrange} />
         </View>
       ) : null}
       {dataError ? (

@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Dimensions, useWindowDimensions, View } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import DataAlertBarWithRefresh from '../components/DataAlertBarWithRefresh';
@@ -9,10 +9,16 @@ import { getStatsRequest } from '../actions/stats';
 import { getDealerToolsRequest } from '../actions/dealerTools';
 import StatsSummary from './StatsSummary';
 import { selectFetchParamsObj } from '../reducers/user';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
 export default StatsScreen = (props) => {
-  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const statsObj = useSelector((state) => state.stats.statsItems[0]);
   const dealerWipsItems = useSelector(
     (state) => state.dealerWips.dealerWipsItems

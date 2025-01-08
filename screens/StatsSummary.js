@@ -1,6 +1,8 @@
-import React from 'react';
-import { useWindowDimensions, ScrollView, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { ScrollView, View } from 'react-native';
 import { Text } from '@rneui/themed';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
 // import statsGrab from '../assets/images/stats.jpg';
 
@@ -10,8 +12,11 @@ export default function StatsSummary(props) {
   //   console.log('props.statsItems');
   //   const items = props.items[0].brandVersions || [];
   //   console.log(props);
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const {
     statsObj,
     userDataObj,

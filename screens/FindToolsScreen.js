@@ -1,15 +1,19 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   ActivityIndicator,
-  Dimensions,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import { Button, Divider, Input, Text } from '@rneui/themed';
@@ -44,12 +48,13 @@ import { selectLastWipProcessedObj } from '../reducers/dealerWips';
 import { selectLastWipProcessedId } from '../reducers/dealerWips';
 // import dealerToolsDummyData from '../dummyData/dealerToolsDummyData.js';
 import { InfoTypesAlertAges } from '../constants/InfoTypes';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
 const minSearchLength = 1;
-const screenHeight = Math.round(Dimensions.get('window').height);
-const maxModalHeight = screenHeight - 150;
-const screenWidth = Math.round(Dimensions.get('window').width);
-const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
+// const screenHeight = Math.round(Dimensions.get('window').height);
+
+// const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
 // console.log( 'FT ***** bottomTabHeight', bottomTabHeight && bottomTabHeight);
 
 // function debounceLeading(func, timeout = 300) {
@@ -190,9 +195,16 @@ const getUnavailableToolDetails = (toolId, unavailableToolsArr) => {
 // };
 
 export default FindToolsScreen = (props) => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
+  const windowDim = useDimensions();
+  //   const maxModalHeight = windowDim.height - 150;
+  const bottomTabHeight =
+    windowDim.height && windowDim.height > 1333 ? 100 : 80;
+  const baseStyles = windowDim && getBaseStyles(windowDim);
+  const styles = useMemo(
+    () => getStyles(windowDim),
+    [windowDim.width, windowDim.height]
+  );
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const userName = useSelector((state) => state.user.userName);
   const userIsSignedIn = useSelector((state) => state.user.userIsSignedIn);
@@ -1248,8 +1260,8 @@ export default FindToolsScreen = (props) => {
       onBackdropPress={() => backdropPressHandler()}
       onSwipeComplete={() => backdropPressHandler()}
       propagateSwipe={true}
-      deviceHeight={screenHeight}
-      deviceWidth={screenWidth}
+      deviceHeight={windowDim.height}
+      deviceWidth={windowDim.width}
       avoidKeyboard={true}
       style={styles.drawerContainer}
       backdropOpacity={0.6}
@@ -1413,10 +1425,10 @@ export default FindToolsScreen = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const getStyles = (windowDim) => ({
   container: {
     flex: 1,
-    marginBottom: screenHeight && screenHeight > 1333 ? 140 : 140,
+    marginBottom: windowDim.height && windowDim.height > 1333 ? 140 : 140,
   },
   drawerContainer: {
     justifyContent: 'flex-end',
@@ -1431,7 +1443,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   basketContents: {
-    maxHeight: maxModalHeight,
+    maxHeight: windowDim.height ? windowDim.height - 150 : 500,
     paddingTop: 0,
     marginBottom: 0,
     paddingHorizontal: 0,
@@ -1451,14 +1463,6 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingBottom: 0,
     paddingLeft: 10,
-  },
-  basketItemNumbers: { flexDirection: 'column', width: '50%' },
-  basketItemDesc: { flexDirection: 'column', width: '32%' },
-  basketItemImg: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
   },
   closedBasket: {
     position: 'absolute',

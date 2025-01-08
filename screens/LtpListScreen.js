@@ -1,30 +1,31 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dimensions, Platform, useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import { Text } from '@rneui/themed';
-
 import { revalidateUserCredentials } from '../actions/user';
 import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { sortObjectList } from '../helpers/objects';
-import getBaseStyles from '../helpers/getBaseStyles';
 import { getLtpRequest } from '../actions/ltp';
 import Urls from '../constants/Urls';
 import LtpList from './LtpList';
 import searchItems from '../helpers/searchItems';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 import { selectFetchParamsObj } from '../reducers/user';
 // import stringCleaner from '../helpers/stringCleaner';
 // import ltpDummyData from '../dummyData/ltpDummyData.js';
 const minSearchLength = 1;
 
-const screenHeight = Math.round(Dimensions.get('window').height);
-const bottomTabHeight = screenHeight && screenHeight > 1333 ? 100 : 80;
-
 export default LtpListScreen = (props) => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
   const dispatch = useDispatch();
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
+
   const fetchParamsObj = useSelector(selectFetchParamsObj);
   const ltpItems = useSelector((state) => state.ltp.ltpItems);
   const isLoading = useSelector((state) => state.ltp.isLoading);
@@ -34,6 +35,11 @@ export default LtpListScreen = (props) => {
   const [searchInput, setSearchInput] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemsToShow, setItemsToShow] = useState([]);
+  //   useEffect(() => {
+  //     console.log('windowDim changed:', windowDim);
+  //   }, [windowDim]);
+  const bottomTabHeight =
+    windowDim.height && windowDim.height > 1333 ? 100 : 80;
 
   const getItems = useCallback(() => {
     // console.log(

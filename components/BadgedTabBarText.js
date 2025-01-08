@@ -5,10 +5,6 @@ import { useWindowDimensions, View } from 'react-native';
 import { Badge, Text } from '@rneui/themed';
 // import { Ionicons } from '@expo/vector-icons';
 // import Colors from '../constants/Colors';
-
-// const screenWidth = Math.round(Dimensions.get('window').width);
-// const screenHeight = Math.round(Dimensions.get('window').height);
-
 // const iconSize = screenHeight && screenHeight > 1333 ? 24 : 18;
 
 // console.log('screenHeight', screenHeight);

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,13 +13,19 @@ import LtpLoansList from './LtpLoansList';
 import searchItems from '../helpers/searchItems';
 import { sortObjListByDate } from '../helpers/dates';
 import { selectFetchParamsObj } from '../reducers/user';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 // import ltpLoansDummyData from '../dummyData/ltpLoansDummyData.js';
 
 const minSearchLength = 1;
 
 export default LtpLoansScreen = (props) => {
-  const windowDim = useWindowDimensions();
   const dispatch = useDispatch();
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const ltpLoansItems = useSelector((state) => state.ltpLoans.ltpLoansItems);
   const ltpLoansFetchTime = useSelector((state) => state.ltpLoans.fetchTime);
   const [searchInput, setSearchInput] = useState('');
@@ -30,8 +36,11 @@ export default LtpLoansScreen = (props) => {
   const dataError = useSelector((state) => state.ltpLoans.error);
   const dataStatusCode = useSelector((state) => state.ltpLoans.statusCode);
   const dataErrorUrl = useSelector((state) => state.ltpLoans.dataErrorUrl);
-  const baseStyles = windowDim && getBaseStyles(windowDim);
   const [filteredItems, setFilteredItems] = useState([]);
+
+  //   useEffect(() => {
+  //     console.log('windowDim changed:', windowDim);
+  //   }, [windowDim]);
 
   //   console.log('in ltpLoans screen - userDataObj is set to ', userDataObj);
 

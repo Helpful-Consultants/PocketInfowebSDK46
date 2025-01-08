@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Platform, ScrollView, useWindowDimensions, View } from 'react-native';
+import { Platform, ScrollView, View } from 'react-native';
 import { Text } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
@@ -11,6 +11,8 @@ import SearchBarWithRefresh from '../components/SearchBarWithRefresh';
 import ErrorDetails from '../components/ErrorDetails';
 import { revalidateUserCredentials } from '../actions/user';
 import { getNewsRequest, setNewsDisplayTimestamp } from '../actions/news';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 import Colors from '../constants/Colors';
 import Urls from '../constants/Urls';
 import NewsLinks from './NewsLinks';
@@ -27,10 +29,13 @@ const checkUrl = (rawUrl) => {
 };
 
 export default NewsScreen = (props) => {
-  const windowDim = useWindowDimensions();
-  const baseStyles = windowDim && getBaseStyles(windowDim);
   //   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const newsItems = useSelector((state) => state.news.newsItems);
   const newsFetchTime = useSelector((state) => state.news.fetchTime);
   //   const userIsValidated = useSelector((state) => state.user.userIsValidated);
@@ -155,7 +160,7 @@ export default NewsScreen = (props) => {
           <Text style={baseStyles.textPromptRibbon}>
             Showing sample data - change in menu.
           </Text>
-          <Ionicons name='arrow-up' size={20} color={Colors.vwgWhite} />
+          <Ionicons name="arrow-up" size={20} color={Colors.vwgWhite} />
         </View>
       ) : null}
       {dataError ? (

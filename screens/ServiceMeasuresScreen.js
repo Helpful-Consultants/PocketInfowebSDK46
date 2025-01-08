@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, Text, useWindowDimensions, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,6 +13,8 @@ import {
 } from '../actions/serviceMeasures';
 import ServiceMeasuresList from './ServiceMeasuresList';
 import { sortObjListByDate } from '../helpers/dates';
+import { useDimensions } from '../helpers/dimensions';
+import getBaseStyles from '../helpers/getBaseStyles';
 
 import searchItems from '../helpers/searchItems';
 // import userDummyData from '../dummyData/userDummyData.js';
@@ -22,7 +24,11 @@ import searchItems from '../helpers/searchItems';
 const minSearchLength = 1;
 
 export default ServiceMeasuresScreen = (props) => {
-  const windowDim = useWindowDimensions();
+  const windowDim = useDimensions();
+  const baseStyles = useMemo(
+    () => windowDim && getBaseStyles(windowDim),
+    [windowDim]
+  );
   const dispatch = useDispatch();
   const serviceMeasuresItems = useSelector(
     (state) => state.serviceMeasures.serviceMeasuresItems
@@ -47,7 +53,7 @@ export default ServiceMeasuresScreen = (props) => {
   const showingDemoData = useSelector((state) => state.user.requestedDemoData);
   const [searchInput, setSearchInput] = useState('');
   const [isRefreshNeeded, setIsRefreshNeeded] = useState(false);
-  const baseStyles = windowDim && getBaseStyles(windowDim);
+
   const [filteredItems, setFilteredItems] = useState([]);
 
   //   console.log(
