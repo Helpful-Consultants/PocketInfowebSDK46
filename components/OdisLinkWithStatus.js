@@ -1,4 +1,3 @@
-import { Dimensions, Platform, useWindowDimensions } from 'react-native';
 import React, { useMemo } from 'react';
 import Touchable from 'react-native-platform-touchable';
 import Colors from '../constants/Colors';
