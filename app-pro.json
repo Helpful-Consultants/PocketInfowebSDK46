@@ -6,7 +6,7 @@
     "description": "Find your tools inventory.",
     "privacy": "unlisted",
     "platforms": ["ios", "android"],
-    "version": "1.4.04",
+    "version": "1.4.05",
     "icon": "./assets/images/icon.png",
     "orientation": "portrait",
     "splash": {
